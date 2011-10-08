@@ -1,0 +1,17 @@
+GdataAtom
+GdataAuth
+GdataAuthResponse
+GdataCalendar
+GdataCalendarService
+GdataClientLogin
+GdataConfig
+GdataConversation
+GdataCore
+GdataCurl
+GdataMonad
+GdataOAuth1
+GdataOAuth2
+GdataPipe
+GdataRequest
+GdataService
+GdataUtils

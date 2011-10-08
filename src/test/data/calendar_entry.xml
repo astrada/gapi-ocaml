@@ -1,0 +1,11 @@
+<entry xmlns='http://www.w3.org/2005/Atom'
+       xmlns:gd='http://schemas.google.com/g/2005'
+       xmlns:gCal='http://schemas.google.com/gCal/2005'>
+  <title type='text'>Little League Schedule</title>
+  <summary type='text'>This calendar contains the practice schedule and game times.</summary>
+  <gCal:timezone value='America/Los_Angeles'></gCal:timezone>
+  <gCal:hidden value='false'></gCal:hidden>
+  <gCal:color value='#2952A3'></gCal:color>
+  <gd:where valueString='Oakland'></gd:where>
+</entry>
+
