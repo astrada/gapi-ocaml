@@ -1,0 +1,648 @@
+# RELAX NG Compact Syntax Grammar
+# Description: Google Contacts: feed of contacts
+
+namespace app = "http://www.w3.org/2007/app"
+namespace atom = "http://www.w3.org/2005/Atom"
+namespace gContact = "http://schemas.google.com/contact/2008"
+namespace gd = "http://schemas.google.com/g/2005"
+namespace openSearch = "http://a9.com/-/spec/opensearch/1.1/"
+
+start = contacts_contactFeed | contacts_contactEntry
+
+
+# Person's additional (often: middle) name
+
+gdata_additionalName = element gd:additionalName {
+    attribute yomi { xsd:string }?,
+    xsd:string }
+
+
+# Used in work addresses.  Also for 'in care of' or 'c/o'
+
+gdata_agent = element gd:agent { xsd:string }
+
+
+# Describes an author
+
+atom_author = element atom:author { attribute xml:lang { xsd:string }?, (
+    atom_email? &
+    atom_name &
+    atom_uri? ) }
+
+
+# Contact's billing information
+
+contacts_billingInformation = element gContact:billingInformation {
+    xsd:string? }
+
+
+# Contact's birth date
+
+contacts_birthday = element gContact:birthday { attribute when { xsd:string }? }
+
+
+# Contact related calendar link
+
+contacts_calendarLink = element gContact:calendarLink {
+    attribute href { xsd:string },
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { "free-busy" | "home" | "work" }? }
+
+
+# Describes a category
+
+atom_category = element atom:category {
+    attribute label { xsd:string }?,
+    attribute scheme { xsd:string }?,
+    attribute term { xsd:string },
+    attribute xml:lang { xsd:string }? }
+
+
+# Can be city, village, town, borough, etc
+
+gdata_city = element gd:city { xsd:string }
+
+
+# Describes a contact entry
+
+contacts_contactEntry = element atom:entry { attribute gd:etag { xsd:string }?, (
+    app_edited? &
+    atom_content? &
+    atom_id &
+    atom_updated &
+    contacts_billingInformation? &
+    contacts_birthday? &
+    contacts_calendarLink* &
+    contacts_contactKind &
+    contacts_contactLink+ &
+    contacts_directoryServer? &
+    contacts_event* &
+    contacts_externalId* &
+    contacts_gender? &
+    contacts_groupMembershipInfo* &
+    contacts_hobby* &
+    contacts_initials? &
+    contacts_jot* &
+    contacts_language* &
+    contacts_maidenName? &
+    contacts_mileage? &
+    contacts_nickname? &
+    contacts_occupation? &
+    contacts_priority? &
+    contacts_relation* &
+    contacts_sensitivity? &
+    contacts_shortName? &
+    contacts_subject? &
+    contacts_userDefinedField* &
+    contacts_website* &
+    element atom:title { atom_textConstruct } &
+    gdata_deleted? &
+    gdata_email* &
+    gdata_extendedProperty* &
+    gdata_im* &
+    gdata_name? &
+    gdata_organization* &
+    gdata_phoneNumber* &
+    gdata_postalAddress* &
+    gdata_structuredPostalAddress* &
+    gdata_where? ) }
+
+
+# Describes a contact feed
+
+contacts_contactFeed = element atom:feed { attribute gd:etag { xsd:string }?, (
+    atom_author+ &
+    atom_generator &
+    atom_id &
+    atom_updated &
+    contacts_contactEntry* &
+    contacts_contactKind &
+    contacts_contactLink+ &
+    element atom:title { atom_textConstruct } &
+    opensearch_itemsPerPage &
+    opensearch_startIndex &
+    opensearch_totalResults ) }
+
+
+# Describes a contact kind
+
+contacts_contactKind = element atom:category {
+    attribute scheme { "http://schemas.google.com/g/2005#kind" },
+    attribute term { "http://schemas.google.com/contact/2008#contact" } }
+
+
+# Extends the base Link class with contact extensions
+
+contacts_contactLink = element atom:link {
+    attribute href { xsd:string },
+    attribute length { xsd:long }?,
+    attribute rel { "alternate" | "edit" |
+    "http://schemas.google.com/contacts/2008/rel#edit-photo" |
+    "http://schemas.google.com/contacts/2008/rel#photo" |
+    "http://schemas.google.com/g/2005#batch" |
+    "http://schemas.google.com/g/2005#feed" |
+    "http://schemas.google.com/g/2005#post" | "next" | "previous" | "self" },
+    attribute title { xsd:string }?,
+    attribute type { "application/atom+xml" | "image/*" | "text/html" } }
+
+
+# Describes a content
+
+atom_content = element atom:content {
+    attribute src { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }?,
+    xsd:string? }
+
+
+# Describes a contributor
+
+atom_contributor = element atom:contributor {
+    attribute xml:lang { xsd:string }?,
+    ( atom_email? &
+    atom_name &
+    atom_uri? ) }
+
+
+# Describes an Atom publication control status
+
+app_control = element app:control { app_draft }
+
+
+# The country name
+
+gdata_country = element gd:country {
+    attribute gd:code { xsd:string }?,
+    xsd:string? }
+
+
+# Denotes an entry has been deleted
+
+gdata_deleted = element gd:deleted { empty }
+
+
+# Contact's directory server
+
+contacts_directoryServer = element gContact:directoryServer { xsd:string? }
+
+
+# Value of the app:draft tag
+
+app_draft = element app:draft { xsd:string }
+
+
+# Value of the app:edited tag
+
+app_edited = element app:edited { (xsd:date | xsd:dateTime) }
+
+
+# Describes an author's email address
+
+atom_email = element atom:email { xsd:string }
+
+
+# Describes an email address
+
+gdata_email = element gd:email {
+    attribute address { xsd:string },
+    attribute displayName { xsd:string }?,
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { xsd:string }? }
+
+
+# Describes a Google Data API Entry
+
+gdata_entry = element atom:entry { attribute gd:etag { xsd:string }?, (
+    app_control? &
+    app_edited? &
+    atom_author* &
+    atom_category* &
+    atom_content? &
+    atom_contributor* &
+    atom_id &
+    atom_link* &
+    atom_published? &
+    atom_updated &
+    element atom:rights { atom_textConstruct }? &
+    element atom:summary { atom_textConstruct }? &
+    element atom:title { atom_textConstruct } ) }
+
+
+# Describes a nested entry link
+
+gdata_entryLink = element gd:entryLink {
+    attribute href { xsd:string }?,
+    attribute readOnly { xsd:boolean }?,
+    attribute rel { xsd:string }?,
+    gdata_entry? }
+
+
+# Contact's events
+
+contacts_event = element gContact:event {
+    attribute label { xsd:string }?,
+    attribute rel { xsd:string }?,
+    gdata_when }
+
+
+# Stores a limited amount of custom data as an auxiliary property of the
+# enclosing entity
+
+gdata_extendedProperty = element gd:extendedProperty {
+    attribute name { xsd:string },
+    attribute realm { xsd:string }?,
+    attribute value { xsd:string }?,
+    anyElement? }
+
+
+# Contact's external id field
+
+contacts_externalId = element gContact:externalId {
+    attribute label { xsd:string }?,
+    attribute rel { xsd:string }?,
+    attribute value { xsd:string } }
+
+
+# Person's family name
+
+gdata_familyName = element gd:familyName {
+    attribute yomi { xsd:string }?,
+    xsd:string }
+
+
+# User-formatted, full address
+
+gdata_formattedAddress = element gd:formattedAddress { xsd:string }
+
+
+# Person's full, formatted name
+
+gdata_fullName = element gd:fullName {
+    attribute yomi { xsd:string }?,
+    xsd:string }
+
+
+# Contact's gender
+
+contacts_gender = element gContact:gender {
+    attribute value { "female" | "male" } }
+
+
+# Describes the generator
+
+atom_generator = element atom:generator {
+    attribute uri { xsd:string }?,
+    attribute version { xsd:string }?,
+    xsd:string }
+
+
+# Person's given name
+
+gdata_givenName = element gd:givenName {
+    attribute yomi { xsd:string }?,
+    xsd:string }
+
+
+# Denotes contact's group membership
+
+contacts_groupMembershipInfo = element gContact:groupMembershipInfo {
+    attribute deleted { xsd:boolean }?,
+    attribute href { xsd:string } }
+
+
+# Contact's hobby
+
+contacts_hobby = element gContact:hobby { xsd:string? }
+
+
+# Used in places where houses or buildings have names
+
+gdata_houseName = element gd:housename { xsd:string }
+
+
+# Describes a unique identifier
+
+atom_id = element atom:id { xsd:string }
+
+
+# Describes an instant messaging address
+
+gdata_im = element gd:im {
+    attribute address { xsd:string },
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute protocol { xsd:string }?,
+    attribute rel { xsd:string }? }
+
+
+# Contact's initials
+
+contacts_initials = element gContact:initials { xsd:string }
+
+
+# Describes the number of items that will be returned per page for paged feeds
+
+opensearch_itemsPerPage = element openSearch:itemsPerPage { xsd:int }
+
+
+# Contact's jot
+
+contacts_jot = element gContact:jot {
+    attribute rel { "home" | "keywords" | "other" | "user" | "work" },
+    xsd:string? }
+
+
+# Contact's language field
+
+contacts_language = element gContact:language {
+    attribute label { xsd:string }?,
+    attribute xml:lang { xsd:string }? }
+
+
+# Describes an external link type
+
+atom_link = element atom:link {
+    attribute href { xsd:string },
+    attribute hreflang { xsd:string }?,
+    attribute length { xsd:long }?,
+    attribute rel { xsd:string }?,
+    attribute title { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }? }
+
+
+# Contact's maiden name
+
+contacts_maidenName = element gContact:maidenName { xsd:string }
+
+
+# Contact's mileage
+
+contacts_mileage = element gContact:mileage { xsd:string? }
+
+
+# Describes an author's human-readable name
+
+atom_name = element atom:name { xsd:string }
+
+
+# Name of a person in a structured form
+
+gdata_name = element gd:name { (
+    gdata_additionalName? &
+    gdata_familyName? &
+    gdata_fullName? &
+    gdata_givenName? &
+    gdata_namePrefix? &
+    gdata_nameSuffix? ) }
+
+
+# Prefix to a person's name
+
+gdata_namePrefix = element gd:namePrefix { xsd:string }
+
+
+# Suffix to a person's name
+
+gdata_nameSuffix = element gd:nameSuffix { xsd:string }
+
+
+# Neighborhood. Used to disambiguate a street
+
+gdata_neighborhood = element gd:neighborhood { xsd:string }
+
+
+# Contact's nickname
+
+contacts_nickname = element gContact:nickname { xsd:string }
+
+
+# Contact's hobby
+
+contacts_occupation = element gContact:occupation { xsd:string? }
+
+
+# Department in the organization
+
+gdata_orgDepartment = element gd:orgDepartment { xsd:string }
+
+
+# Job description
+
+gdata_orgJobDescription = element gd:orgJobDescription { xsd:string }
+
+
+# Name of organization
+
+gdata_orgName = element gd:orgName {
+    attribute yomi { xsd:string }?,
+    xsd:string }
+
+
+# Organization symbol/ticker
+
+gdata_orgSymbol = element gd:orgSymbol { xsd:string }
+
+
+# Position in organization
+
+gdata_orgTitle = element gd:orgTitle { xsd:string }
+
+
+# Describes an organization (like Company)
+
+gdata_organization = element gd:organization {
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { xsd:string }?,
+    ( gdata_orgDepartment? &
+    gdata_orgJobDescription? &
+    gdata_orgName? &
+    gdata_orgSymbol? &
+    gdata_orgTitle? &
+    gdata_where? ) }
+
+
+# Describes a phone number
+
+gdata_phoneNumber = element gd:phoneNumber {
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { xsd:string }?,
+    xsd:string }
+
+
+# P.O. box
+
+gdata_poBox = element gd:pobox { xsd:string }
+
+
+# Postal code
+
+gdata_postCode = element gd:postcode { xsd:string }
+
+
+# Describes a postal address
+
+gdata_postalAddress = element gd:postalAddress {
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { xsd:string }?,
+    xsd:string }
+
+
+# Contact's priority
+
+contacts_priority = element gContact:priority {
+    attribute rel { "high" | "low" | "normal" } }
+
+
+# Describes a creation timestamp
+
+atom_published = element atom:published { (xsd:date | xsd:dateTime) }
+
+
+# Region is state, province, county (in Ireland), Land (in Germany), d?partement
+# (in France),
+# etc
+
+gdata_region = element gd:region { xsd:string }
+
+
+# Contact's relation
+
+contacts_relation = element gContact:relation {
+    attribute label { xsd:string }?,
+    attribute rel { "assistant" | "brother" | "child" | "domestic-partner" |
+    "father" | "friend" | "manager" | "mother" | "parent" | "partner" |
+    "referred-by" | "relative" | "sister" | "spouse" }?,
+    xsd:string? }
+
+
+# Describes a reminder on an event
+
+gdata_reminder = element gd:reminder { attribute absoluteTime { (
+    xsd:date | xsd:dateTime) }?,
+    attribute days { xsd:int }?,
+    attribute hours { xsd:int }?,
+    attribute method { xsd:string }?,
+    attribute minutes { xsd:int }? }
+
+
+# Contact's sensitivity
+
+contacts_sensitivity = element gContact:sensitivity {
+    attribute rel { "confidential" | "normal" | "personal" | "private" } }
+
+
+# Contact's short name
+
+contacts_shortName = element gContact:shortName { xsd:string }
+
+
+# Describes the starting index of the contained entries for paged feeds
+
+opensearch_startIndex = element openSearch:startIndex { xsd:int }
+
+
+# Describes a street
+
+gdata_street = element gd:street { xsd:string }
+
+
+# Describes a structured postal address
+
+gdata_structuredPostalAddress = element gd:structuredPostalAddress {
+    attribute label { xsd:string }?,
+    attribute mailClass { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { xsd:string }?,
+    attribute usage { xsd:string }?,
+    ( gdata_agent? &
+    gdata_city? &
+    gdata_country? &
+    gdata_formattedAddress? &
+    gdata_houseName? &
+    gdata_neighborhood? &
+    gdata_poBox? &
+    gdata_postCode? &
+    gdata_region? &
+    gdata_street? &
+    gdata_subregion? ) }
+
+
+# Contact's subject
+
+contacts_subject = element gContact:subject { xsd:string? }
+
+
+# Subregion is county (US), province (in Italy), etc
+
+gdata_subregion = element gd:subregion { xsd:string }
+
+
+# Describes a text construct containing either plain text, HTML, or XHTML
+
+atom_textConstruct = attribute src { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }?,
+    xsd:string?
+
+
+# Describes the total number of results associated with this feed
+
+opensearch_totalResults = element openSearch:totalResults { xsd:int }
+
+
+# Describes a last updated timestamp
+
+atom_updated = element atom:updated { (xsd:date | xsd:dateTime) }
+
+
+# Describes the URI associated with an author
+
+atom_uri = element atom:uri { xsd:string }
+
+
+# Contact's user defined field
+
+contacts_userDefinedField = element gContact:userDefinedField {
+    attribute key { xsd:string },
+    attribute value { xsd:string } }
+
+
+# Contact related website
+
+contacts_website = element gContact:website {
+    attribute href { xsd:string },
+    attribute label { xsd:string }?,
+    attribute primary { xsd:boolean }?,
+    attribute rel { "blog" | "ftp" | "home" | "home-page" | "other" | "profile"
+    | "work" }? }
+
+
+# Describes a period of time
+
+gdata_when = element gd:when { attribute endTime { (
+    xsd:date | xsd:dateTime) }?,
+    attribute startTime { (xsd:date | xsd:dateTime) },
+    attribute valueString { xsd:string }?,
+    gdata_reminder* }
+
+
+# Describes a place (not necessarily a specific geographical location)
+
+gdata_where = element gd:where {
+    attribute label { xsd:string }?,
+    attribute rel { xsd:string }?,
+    attribute valueString { xsd:string }?,
+    gdata_entryLink? }
+
+# defines any arbitrary XML element
+
+anyElement = element * { (
+    attribute * { text }
+    | text
+    | anyElement )* }

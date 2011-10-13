@@ -53,5 +53,7 @@ type opensearch_itemsPerPage = int
 
 type opensearch_startIndex = int
 
+type opensearch_totalResults = int
+
 type app_edited = string
 

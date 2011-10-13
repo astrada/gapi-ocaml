@@ -2,6 +2,7 @@ GdataAtom
 GdataAuth
 GdataAuthResponse
 GdataCalendar
+GdataCalendarEvent
 GdataCalendarService
 GdataClientLogin
 GdataConfig
