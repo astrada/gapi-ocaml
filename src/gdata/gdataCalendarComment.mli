@@ -12,8 +12,8 @@ type calendar_calendarCommentEntry = {
   cce_title : GdataAtom.atom_textConstruct;
   cce_messageKind : GdataAtom.atom_category;
   cce_extensions :
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t
-    list;
+    (GdataCore.Metadata.xml,
+     GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
 }
 
 val empty_commentEntry : calendar_calendarCommentEntry
@@ -33,8 +33,8 @@ type calendar_calendarCommentFeed = {
   ccf_startIndex : GdataAtom.opensearch_startIndex;
   ccf_totalResults : GdataAtom.opensearch_totalResults;
   ccf_extensions :
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t
-    list;
+    (GdataCore.Metadata.xml,
+     GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
 }
 
 val empty_commentFeed : calendar_calendarCommentFeed

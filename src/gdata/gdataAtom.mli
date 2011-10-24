@@ -14,34 +14,38 @@ type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
 
-type atom_author =
-    { a_lang : string;
-      a_email : atom_email;
-      a_name : atom_name;
-      a_uri : atom_uri }
+type atom_author = {
+  a_lang : string;
+  a_email : atom_email;
+  a_name : atom_name;
+  a_uri : atom_uri
+}
 
 val empty_author : atom_author
 
-type atom_category =
-  { c_label : string;
-    c_scheme : string;
-    c_term : string;
-    c_lang : string }
+type atom_category = {
+  c_label : string;
+  c_scheme : string;
+  c_term : string;
+  c_lang : string
+}
 
 val empty_category : atom_category
 
-type atom_generator =
-  { g_uri : string;
-    g_version : string;
-    g_value : string }
+type atom_generator = {
+  g_uri : string;
+  g_version : string;
+  g_value : string
+}
 
 val empty_generator : atom_generator
 
-type atom_textConstruct =
-  { tc_src : string;
-    tc_type : string;
-    tc_lang : string;
-    tc_value : string }
+type atom_textConstruct = {
+  tc_src : string;
+  tc_type : string;
+  tc_lang : string;
+  tc_value : string
+}
 
 val empty_text : atom_textConstruct
 
