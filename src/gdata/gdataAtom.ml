@@ -215,12 +215,13 @@ let render_bool_attribute ?(default = false) namespace name value =
     name
     value
 
-let render_date_attribute namespace name value =
-  render_attribute
-    ~default:(GdataDate.to_string GdataDate.epoch)
+let render_date_attribute ?(default = GdataDate.epoch) namespace name value =
+  render_generic_attribute
+    GdataDate.to_string
+    default
     namespace
     name
-    (GdataDate.to_string value)
+    value
 
 let render_text ?(default = "") value =
   if value <> default then

@@ -120,6 +120,7 @@ val render_bool_attribute :
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
 
 val render_date_attribute :
+  ?default:GdataDate.t ->
   string ->
   string ->
   GdataDate.t ->
