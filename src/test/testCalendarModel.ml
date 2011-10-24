@@ -174,6 +174,21 @@ let test_parse_calendar_event_entry () =
       "test/data/test_parse_calendar_event_entry.xml"
       (GdataRequest.data_to_xml_string tree)
 
+let test_parse_calendar_event_feed () =
+  let ch = open_in "test/data/event_feed.xml" in
+  let feed = GdataRequest.parse_xml
+               (fun () -> input_byte ch)
+               GdataCalendarEvent.parse_calendar_event_feed in
+    assert_equal ~msg:"feed author"
+      "Jo March"
+      (List.hd feed.GdataCalendarEvent.cef_authors).GdataAtom.a_name;
+    assert_equal ~msg:"feed title"
+      "Jo March"
+      feed.GdataCalendarEvent.cef_title.GdataAtom.tc_value;
+    assert_equal ~msg:"entry count"
+      1
+      (List.length feed.GdataCalendarEvent.cef_entries)
+
 let suite = "Calendar Model test" >:::
   ["test_parse_personal_settings" >:: test_parse_personal_settings;
    "test_parse_calendar_feed" >:: test_parse_calendar_feed;
@@ -181,6 +196,6 @@ let suite = "Calendar Model test" >:::
    "test_parse_calendar_entry_with_extensions"
      >:: test_parse_calendar_entry_with_extensions;
    "test_calendar_entry_to_data_model" >:: test_calendar_entry_to_data_model;
-   "test_parse_calendar_event_entry"
-     >:: test_parse_calendar_event_entry]
+   "test_parse_calendar_event_entry" >:: test_parse_calendar_event_entry;
+   "test_parse_calendar_event_feed" >:: test_parse_calendar_event_feed]
 
