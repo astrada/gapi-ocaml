@@ -63,6 +63,118 @@ type calendar_timeZoneProperty = string
 
 type calendar_timesCleanedProperty = int
 
+type gdata_attendeeStatus = string
+
+type calendar_resourceProperty = {
+  rp_id : string;
+  rp_value : bool
+}
+
+let empty_resourceProperty = {
+  rp_id = "";
+  rp_value = false
+}
+
+type calendar_calendarWho = {
+  cw_email : string;
+  cw_rel : string;
+  cw_value : string;
+  cw_resource : calendar_resourceProperty;
+  cw_attendeeStatus : gdata_attendeeStatus
+}
+
+let empty_who = {
+  cw_email = "";
+  cw_rel = "";
+  cw_value = "";
+  cw_resource = empty_resourceProperty;
+  cw_attendeeStatus = ""
+}
+
+type gdata_kind = {
+  k_scheme : string;
+  k_term : string
+}
+
+let eventKind = {
+  k_scheme = "http://schemas.google.com/g/2005#kind";
+  k_term = "http://schemas.google.com/g/2005#event"
+}
+
+type gdata_eventStatus = string
+
+type calendar_icalUIDProperty = string
+
+type gdata_reminder = {
+  r_absoluteTime : GdataDate.t;
+  r_days : int;
+  r_hours : int;
+  r_method : string;
+  r_minutes : int
+}
+
+let empty_reminder = {
+  r_absoluteTime = GdataDate.epoch;
+  r_days = 0;
+  r_hours = 0;
+  r_method = "";
+  r_minutes = 0
+}
+
+type gdata_when = {
+  w_endTime : GdataDate.t;
+  w_startTime : GdataDate.t;
+  w_value : string;
+  w_reminders : gdata_reminder list
+}
+
+let empty_when = {
+  w_endTime = GdataDate.epoch;
+  w_startTime = GdataDate.epoch;
+  w_value = "";
+  w_reminders = []
+}
+
+type gdata_originalEvent = {
+  oe_href : string;
+  oe_id : string;
+  oe_when : gdata_when
+}
+
+let empty_originalEvent = {
+  oe_href = "";
+  oe_id = "";
+  oe_when = empty_when
+}
+
+type calendar_privateCopyProperty = bool
+
+type calendar_quickAddProperty = bool
+
+type gdata_recurrence = string
+
+type calendar_sendEventNotificationsProperty = bool
+
+type calendar_sequenceNumberProperty = int
+
+type calendar_syncEventProperty = bool
+
+type gdata_transparency = string
+
+type gdata_visibility = string
+
+type calendar_calendarExtendedProperty = {
+  cep_name : string;
+  cep_realm : string;
+  cep_value : string
+}
+
+let empty_extendedProperty = {
+  cep_name = "";
+  cep_realm = "";
+  cep_value = ""
+}
+
 type calendar_calendarEntry = {
   ce_etag : string;
   ce_kind : string;
@@ -226,6 +338,150 @@ let parse_where where tree =
         ([`Attribute; `Name "valueString"; `Namespace ""],
          GdataCore.Value.String v) ->
         v
+    | _ ->
+        assert false
+
+let parse_extendedProperty property tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "name"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { property with cep_name = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "realm"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { property with cep_realm = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "value"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { property with cep_value = v }
+    | _ ->
+        assert false
+
+let parse_resourceProperty resource tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "id"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { resource with rp_id = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "value"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { resource with rp_value = bool_of_string v }
+    | _ ->
+        assert false
+
+let parse_attendeeStatus where tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "value"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        v
+    | _ ->
+        assert false
+
+let parse_who who tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "email"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { who with cw_email = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "rel"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { who with cw_rel = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "valueString"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { who with cw_value = v }
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "resource"; `Namespace ns],
+         cs) when ns = ns_gCal ->
+        GdataAtom.parse_children
+          parse_resourceProperty
+          empty_resourceProperty
+          (fun property -> { who with cw_resource = property })
+          cs
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "attendeeStatus"; `Namespace ns],
+         cs) when ns = ns_gd ->
+        GdataAtom.parse_children
+          parse_attendeeStatus
+          ""
+          (fun status -> { who with cw_attendeeStatus = status })
+          cs
+    | _ ->
+        assert false
+
+let parse_reminder reminder tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "absoluteTime"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { reminder with r_absoluteTime = GdataDate.of_string v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "days"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { reminder with r_days = int_of_string v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "hours"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { reminder with r_hours = int_of_string v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "method"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { reminder with r_method = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "minutes"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { reminder with r_minutes = int_of_string v }
+    | _ ->
+        assert false
+
+let parse_when cwhen tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "startTime"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { cwhen with w_startTime = GdataDate.of_string v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "endTime"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { cwhen with w_endTime = GdataDate.of_string v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "valueString"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { cwhen with w_value = v }
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "reminder"; `Namespace ns],
+         cs) when ns = ns_gd ->
+        GdataAtom.parse_children
+          parse_reminder
+          empty_reminder
+          (fun reminder ->
+             { cwhen with w_reminders = reminder :: cwhen.w_reminders })
+          cs
+    | _ ->
+        assert false
+
+let parse_originalEvent event tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "href"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { event with oe_href = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "id"; `Namespace ns],
+         GdataCore.Value.String v) when ns = "" ->
+        { event with oe_id = v }
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "when"; `Namespace ns],
+         cs) when ns = ns_gd ->
+        GdataAtom.parse_children
+          parse_when
+          empty_when
+          (fun cwhen -> { event with oe_when = cwhen })
+          cs
     | _ ->
         assert false
 
@@ -529,6 +785,49 @@ let render_link link =
 
 let render_where where =
   GdataAtom.render_value ~attribute:"valueString" ns_gd "where" where
+
+let render_extendedProperty property =
+  GdataAtom.render_element ns_gd "extendedProperty"
+    [GdataAtom.render_attribute "" "name" property.cep_name;
+     GdataAtom.render_attribute "" "realm" property.cep_realm;
+     GdataAtom.render_attribute "" "value" property.cep_value]
+
+let render_resourceProperty property =
+  GdataAtom.render_element ns_gd "resource"
+    [GdataAtom.render_attribute "" "id" property.rp_id;
+     GdataAtom.render_attribute "" "value" (string_of_bool property.rp_value)]
+
+let render_attendeeStatus status =
+  GdataAtom.render_value ~attribute:"value" ns_gd "who" status
+
+let render_who who =
+  GdataAtom.render_element ns_gd "resource"
+    [GdataAtom.render_attribute "" "email" who.cw_email;
+     GdataAtom.render_attribute "" "rel" who.cw_rel;
+     GdataAtom.render_attribute "" "valueString" who.cw_value;
+     render_resourceProperty who.cw_resource;
+     render_attendeeStatus who.cw_attendeeStatus]
+
+let render_reminder reminder =
+  GdataAtom.render_element ns_gd "reminder"
+    [GdataAtom.render_date_attribute "" "absoluteTime" reminder.r_absoluteTime;
+     GdataAtom.render_attribute "" "days" (string_of_int reminder.r_days);
+     GdataAtom.render_attribute "" "hours" (string_of_int reminder.r_hours);
+     GdataAtom.render_attribute "" "method" reminder.r_method;
+     GdataAtom.render_attribute "" "minutes" (string_of_int reminder.r_minutes)]
+
+let render_when cwhen =
+  GdataAtom.render_element ns_gd "when"
+    [GdataAtom.render_date_attribute "" "startTime" cwhen.w_startTime;
+     GdataAtom.render_date_attribute "" "endTime" cwhen.w_endTime;
+     GdataAtom.render_attribute "" "valueString" cwhen.w_value;
+     GdataAtom.render_element_list render_reminder cwhen.w_reminders]
+
+let render_originalEvent event =
+  GdataAtom.render_element ns_gd "originalEvent"
+    [GdataAtom.render_attribute "" "href" event.oe_href;
+     GdataAtom.render_attribute "" "id" event.oe_id;
+     render_when event.oe_when]
 
 let calendar_entry_to_data_model entry =
   let entry_element =
