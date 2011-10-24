@@ -1,3 +1,7 @@
+val ns_gCal : string
+val ns_gd : string
+val ns_acl : string
+
 type calendar_accessLevelProperty = string
 
 type calendar_webContentGadgetPref =
@@ -45,7 +49,7 @@ type calendar_calendarEntry =
       ce_categories : GdataAtom.atom_category list;
       ce_contributors : GdataAtom.atom_contributor list;
       ce_id : GdataAtom.atom_id;
-      ce_content : GdataAtom.atom_outOfLineContent;
+      ce_content : GdataAtom.atom_content;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
       ce_edited : GdataAtom.app_edited;
@@ -83,6 +87,16 @@ type calendar_calendarFeed =
 
 val empty_feed : calendar_calendarFeed
 
+val parse_link :
+  calendar_calendarLink ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  calendar_calendarLink
+
+val parse_where :
+  calendar_calendarWhere ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  calendar_calendarWhere
+
 val parse_calendar_feed :
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
   calendar_calendarFeed
@@ -91,7 +105,15 @@ val parse_calendar_entry :
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
   calendar_calendarEntry
 
-val tree_of_calendar_entry :
+val render_link :
+  calendar_calendarLink ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_where :
+  calendar_calendarWhere ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val calendar_entry_to_data_model :
   calendar_calendarEntry ->
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t
 

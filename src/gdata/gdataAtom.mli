@@ -1,3 +1,7 @@
+val ns_atom : string
+val ns_app : string
+val ns_openSearch : string
+
 type atom_email = string
 
 type atom_name = string
@@ -6,9 +10,9 @@ type atom_uri = string
 
 type atom_id = string
 
-type atom_published = string
+type atom_published = GdataDate.t
 
-type atom_updated = string
+type atom_updated = GdataDate.t
 
 type atom_author =
     { a_lang : string;
@@ -17,12 +21,6 @@ type atom_author =
       a_uri : atom_uri }
 
 val empty_author : atom_author
-
-type atom_outOfLineContent =
-  { oolc_src : string;
-    oolc_type : string }
-
-val empty_content : atom_outOfLineContent
 
 type atom_category =
   { c_label : string;
@@ -47,6 +45,10 @@ type atom_textConstruct =
 
 val empty_text : atom_textConstruct
 
+type atom_content = atom_textConstruct
+
+val empty_content : atom_content
+
 type atom_contributor = atom_author
 
 type opensearch_itemsPerPage = int
@@ -55,5 +57,137 @@ type opensearch_startIndex = int
 
 type opensearch_totalResults = int
 
-type app_edited = string
+type app_edited = GdataDate.t
+
+val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
+
+val parse_category :
+  atom_category ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  atom_category
+
+val parse_text :
+  atom_textConstruct ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  atom_textConstruct
+
+val parse_author :
+  atom_author ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  atom_author
+
+val parse_generator :
+  atom_generator ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  atom_generator
+
+val parse_content :
+  atom_content ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  atom_content
+
+val render_attribute :
+  ?default:string ->
+  string ->
+  string ->
+  string ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_generic_attribute :
+  ('a -> string) ->
+  'a ->
+  string ->
+  string ->
+  'a ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_int_attribute :
+  ?default:int ->
+  string ->
+  string ->
+  int ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_bool_attribute :
+  ?default:bool ->
+  string ->
+  string ->
+  bool ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_date_attribute :
+  string ->
+  string ->
+  GdataDate.t ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_text :
+  ?default:string ->
+  string ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_text_element :
+  ?default:string ->
+  string ->
+  string ->
+  string ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_date_element :
+  string ->
+  string ->
+  GdataDate.t ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_element :
+  string ->
+  string ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list list ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_element_list : ('a -> 'b list) -> 'a list -> 'b list
+
+val render_value :
+  ?default:string ->
+  ?attribute:string ->
+  string ->
+  string ->
+  string ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_int_value :
+  ?attribute:string ->
+  string ->
+  string ->
+  int ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_bool_value :
+  ?attribute:string ->
+  string ->
+  string ->
+  bool ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_author :
+  string ->
+  atom_author ->
+  (GdataCore.Metadata.xml , GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_category :
+  atom_category ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_content :
+  atom_content ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_text_construct :
+  string ->
+  atom_textConstruct ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_generator :
+  atom_generator ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
 

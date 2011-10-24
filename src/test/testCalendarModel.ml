@@ -67,7 +67,7 @@ let test_parse_calendar_entry_with_extensions () =
       ]
       entry.GdataCalendar.ce_extensions
 
-let test_tree_of_calendar_entry () =
+let test_calendar_entry_to_data_model () =
   let entry =
     { GdataCalendar.empty_entry with
           GdataCalendar.ce_id = "id";
@@ -107,11 +107,11 @@ let test_tree_of_calendar_entry () =
           ];
           GdataCalendar.ce_content =
             { GdataAtom.empty_content with
-                  GdataAtom.oolc_src = "src";
+                  GdataAtom.tc_src = "src";
             };
-          GdataCalendar.ce_published = "2010-05-15T20:00:00.000Z";
-          GdataCalendar.ce_updated = "2011-08-16T12:00:00.000Z";
-          GdataCalendar.ce_edited = "2011-06-06T15:00:00.000Z";
+          GdataCalendar.ce_published = GdataDate.of_string "2010-05-15T20:00:00.000Z";
+          GdataCalendar.ce_updated = GdataDate.of_string "2011-08-16T12:00:00.000Z";
+          GdataCalendar.ce_edited = GdataDate.of_string "2011-06-06T15:00:00.000Z";
           GdataCalendar.ce_accesslevel = "accesslevel";
           GdataCalendar.ce_links = [
             { GdataCalendar.empty_link with
@@ -159,9 +159,19 @@ let test_tree_of_calendar_entry () =
                   GdataAtom.tc_value = "title";
             };
     } in
-  let tree = GdataCalendar.tree_of_calendar_entry entry in
+  let tree = GdataCalendar.calendar_entry_to_data_model entry in
     TestHelper.assert_equal_file
-      "test/data/test_tree_of_calendar_entry.xml"
+      "test/data/test_calendar_entry_to_data_model.xml"
+      (GdataRequest.data_to_xml_string tree)
+
+let test_parse_calendar_event_entry () =
+  let ch = open_in "test/data/event_entry.xml" in
+  let entry = GdataRequest.parse_xml
+                (fun () -> input_byte ch)
+                GdataCalendarEvent.parse_calendar_event_entry in
+  let tree = GdataCalendarEvent.calendar_event_entry_to_data_model entry in
+    TestHelper.assert_equal_file
+      "test/data/test_parse_calendar_event_entry.xml"
       (GdataRequest.data_to_xml_string tree)
 
 let suite = "Calendar Model test" >:::
@@ -170,5 +180,7 @@ let suite = "Calendar Model test" >:::
    "test_parse_calendar_entry" >:: test_parse_calendar_entry;
    "test_parse_calendar_entry_with_extensions"
      >:: test_parse_calendar_entry_with_extensions;
-   "test_tree_of_calendar_entry" >:: test_tree_of_calendar_entry]
+   "test_calendar_entry_to_data_model" >:: test_calendar_entry_to_data_model;
+   "test_parse_calendar_event_entry"
+     >:: test_parse_calendar_event_entry]
 

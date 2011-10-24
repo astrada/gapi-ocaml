@@ -58,7 +58,7 @@ let create_new_calendar
   GdataService.service_request_with_data
     ~version
     entry
-    GdataCalendar.tree_of_calendar_entry 
+    GdataCalendar.calendar_entry_to_data_model 
     GdataRequest.Create
     url
     (GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry)
@@ -78,7 +78,7 @@ let update_calendar
       ~version
       ?etag
       entry
-      GdataCalendar.tree_of_calendar_entry 
+      GdataCalendar.calendar_entry_to_data_model 
       GdataRequest.Update
       url
       (GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry)
@@ -109,7 +109,7 @@ let add_new_subscription
   GdataService.service_request_with_data
     ~version
     entry
-    GdataCalendar.tree_of_calendar_entry
+    GdataCalendar.calendar_entry_to_data_model
     GdataRequest.Create
     url
     (GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry)

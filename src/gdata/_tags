@@ -12,7 +12,11 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
                   pkg_extlib, pkg_json-wheel
 <gdataAuth.*> : pkg_netstring, pkg_extlib
 <gdataRequest.*> : pkg_netstring, pkg_extlib, pkg_xmlm
+<gdataAtom.*> : pkg_extlib, pkg_xmlm
 <gdataCalendar.*> : pkg_extlib, pkg_xmlm
+<gdataCalendarEvent.*> : pkg_extlib, pkg_xmlm
+<gdataCalendarComment.*> : pkg_extlib, pkg_xmlm
 <gdataService.*> : pkg_extlib
 <gdataCalendarService.*> : pkg_netstring, pkg_curl, pkg_extlib, pkg_xmlm
+<gdataDate.*> : pkg_netstring
 

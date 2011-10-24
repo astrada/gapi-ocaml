@@ -1,9 +1,6 @@
 open GdataUtils.Op
 
 (* Calendar data types *)
-let ns_atom = "http://www.w3.org/2005/Atom"
-let ns_app = "http://www.w3.org/2007/app"
-let ns_openSearch = "http://a9.com/-/spec/opensearch/1.1/"
 let ns_gCal = "http://schemas.google.com/gCal/2005"
 let ns_gd = "http://schemas.google.com/g/2005"
 let ns_acl = "http://schemas.google.com/acl/2007"
@@ -73,7 +70,7 @@ type calendar_calendarEntry = {
   ce_categories : GdataAtom.atom_category list;
   ce_contributors : GdataAtom.atom_contributor list;
   ce_id : GdataAtom.atom_id;
-  ce_content : GdataAtom.atom_outOfLineContent;
+  ce_content : GdataAtom.atom_content;
   ce_published : GdataAtom.atom_published;
   ce_updated : GdataAtom.atom_updated;
   ce_edited : GdataAtom.app_edited;
@@ -99,9 +96,9 @@ let empty_entry = {
   ce_contributors = [];
   ce_id = "";
   ce_content = GdataAtom.empty_content;
-  ce_published = "";
-  ce_updated = "";
-  ce_edited = "";
+  ce_published = GdataDate.epoch;
+  ce_updated = GdataDate.epoch;
+  ce_edited = GdataDate.epoch;
   ce_accesslevel = "";
   ce_links = [];
   ce_where = [];
@@ -140,7 +137,7 @@ let empty_feed = {
   cf_contributors = [];
   cf_generator = GdataAtom.empty_generator;
   cf_id = "";
-  cf_updated = "";
+  cf_updated = GdataDate.epoch;
   cf_entries = [];
   cf_links = [];
   cf_title = GdataAtom.empty_text;
@@ -151,56 +148,6 @@ let empty_feed = {
 
 
 (* Calendar feed: parsing *)
-let parse_children parse_child empty_element update cs =
-  let element = List.fold_left
-                  parse_child
-                  empty_element
-                  cs
-  in
-    update element
-
-let parse_category category tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "label"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with GdataAtom.c_label = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "scheme"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with GdataAtom.c_scheme = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "term"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with GdataAtom.c_term = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { category with GdataAtom.c_lang = v }
-    | _ ->
-        assert false
-
-let parse_text text tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "src"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { text with GdataAtom.tc_src = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { text with GdataAtom.tc_type = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { text with GdataAtom.tc_lang = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Text],
-         GdataCore.Value.String v) ->
-        { text with GdataAtom.tc_value = v }
-    | _ ->
-        assert false
-
 let parse_webContentGadgetPref wcgp tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -231,7 +178,7 @@ let parse_webContent webContent tree =
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
          cs) when ns = ns_gCal ->
-        parse_children
+        GdataAtom.parse_children
           parse_webContentGadgetPref
           empty_webContentGadgetPref
           (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
@@ -265,65 +212,11 @@ let parse_link link tree =
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "webContent"; `Namespace ns],
          cs) when ns = ns_gCal ->
-        parse_children
+        GdataAtom.parse_children
           parse_webContent
           empty_webContent 
           (fun webContent -> { link with cl_webContent = webContent })
           cs
-    | _ ->
-        assert false
-
-let parse_author author tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { author with GdataAtom.a_lang = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "name"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { author with GdataAtom.a_name = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "email"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { author with GdataAtom.a_email = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "uri"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { author with GdataAtom.a_uri = v }
-    | _ ->
-        assert false
-
-let parse_generator generator tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "version"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { generator with GdataAtom.g_version = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "uri"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { generator with GdataAtom.g_uri = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Text],
-         GdataCore.Value.String v) ->
-        { generator with GdataAtom.g_value = v }
-    | _ ->
-        assert false
-
-let parse_content content tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "src"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { content with GdataAtom.oolc_src = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { content with GdataAtom.oolc_type = v }
     | _ ->
         assert false
 
@@ -348,25 +241,25 @@ let parse_entry entry tree =
         { entry with ce_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_author
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_author
           GdataAtom.empty_author
           (fun author -> { entry with ce_authors = author :: entry.ce_authors })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "category"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_category
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_category
           GdataAtom.empty_category
           (fun category -> { entry with ce_categories = category :: entry.ce_categories })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "contributor"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_author
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_author
           GdataAtom.empty_author
           (fun contributor -> { entry with ce_contributors =
                                   contributor :: entry.ce_contributors })
@@ -374,31 +267,31 @@ let parse_entry entry tree =
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "id"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
         { entry with ce_id = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "content"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_content
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_content
           GdataAtom.empty_content
           (fun content -> { entry with ce_content = content })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "published"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { entry with ce_published = v }
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+        { entry with ce_published = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "updated"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { entry with ce_updated = v }
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+        { entry with ce_updated = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "edited"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_app ->
-        { entry with ce_updated = v }
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_app ->
+        { entry with ce_updated = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "accesslevel"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
@@ -407,8 +300,8 @@ let parse_entry entry tree =
         { entry with ce_accesslevel = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "link"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
           parse_link
           empty_link
           (fun link -> { entry with ce_links = link :: entry.ce_links })
@@ -416,7 +309,7 @@ let parse_entry entry tree =
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "where"; `Namespace ns],
          cs) when ns = ns_gd ->
-        parse_children
+        GdataAtom.parse_children
           parse_where
           ""
           (fun where -> { entry with ce_where = where :: entry.ce_where })
@@ -459,17 +352,17 @@ let parse_entry entry tree =
         { entry with ce_timesCleaned = int_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "summary"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_text
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_text
           GdataAtom.empty_text
           (fun summary -> { entry with ce_summary = summary })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "title"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_text
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_text
           GdataAtom.empty_text
           (fun title -> { entry with ce_title = title })
           cs
@@ -493,80 +386,80 @@ let parse_feed feed tree =
         { feed with cf_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_author
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_author
           GdataAtom.empty_author
           (fun author -> { feed with cf_authors = author :: feed.cf_authors })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "category"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_category
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_category
           GdataAtom.empty_category
           (fun category -> { feed with cf_categories = category :: feed.cf_categories })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "contributor"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_author
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_author
           GdataAtom.empty_author
           (fun contributor -> { feed with cf_contributors =
                                   contributor :: feed.cf_contributors })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "generator"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_generator
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_generator
           GdataAtom.empty_generator
           (fun generator -> { feed with cf_generator = generator })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "id"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
         { feed with cf_id = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "updated"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { feed with cf_updated = v }
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+        { feed with cf_updated = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "entry"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
           parse_entry
           empty_entry
           (fun entry -> { feed with cf_entries = entry :: feed.cf_entries })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "link"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
           parse_link
           empty_link
           (fun link -> { feed with cf_links = link :: feed.cf_links })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "title"; `Namespace ns],
-         cs) when ns = ns_atom ->
-        parse_children
-          parse_text
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.parse_text
           GdataAtom.empty_text
           (fun title -> { feed with cf_title = title })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "itemsPerPage"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_openSearch ->
         { feed with cf_itemsPerPage = int_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "startIndex"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_openSearch ->
         { feed with cf_startIndex = int_of_string v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name _; `Namespace ns],
@@ -581,8 +474,8 @@ let parse_calendar_feed tree =
     match tree with
         GdataCore.AnnotatedTree.Node
           ([`Element; `Name "feed"; `Namespace ns],
-           cs) when ns = ns_atom ->
-          parse_children
+           cs) when ns = GdataAtom.ns_atom ->
+          GdataAtom.parse_children
             parse_feed
             empty_feed
             Std.identity
@@ -597,8 +490,8 @@ let parse_calendar_entry tree =
     match tree with
         GdataCore.AnnotatedTree.Node
           ([`Element; `Name "entry"; `Namespace ns],
-           cs) when ns = ns_atom ->
-          parse_children
+           cs) when ns = GdataAtom.ns_atom ->
+          GdataAtom.parse_children
             parse_entry
             empty_entry
             Std.identity
@@ -611,144 +504,63 @@ let parse_calendar_entry tree =
 
 
 (* Calendar feed: rendering *)
-let tree_of_calendar_entry entry =
-  let render_attribute ?(default = "") namespace name value =
-    if value <> default then
-      [GdataCore.AnnotatedTree.Leaf (
-        [`Attribute; `Name name; `Namespace namespace],
-        GdataCore.Value.String value)]
-    else
-      []
-  in
-
-  let render_text ?(default = "") value =
-    if value <> default then
-      [GdataCore.AnnotatedTree.Leaf (
-        [`Text],
-        GdataCore.Value.String value)]
-    else
-      []
-  in
- 
-  let render_text_element ?(default = "") namespace name value =
-    if value <> default then
-      [GdataCore.AnnotatedTree.Node (
-        [`Element; `Name name; `Namespace namespace],
-        render_text ~default value)]
-    else
-      []
-  in
-
-  let render_element namespace name children_list =
-    let children = List.concat children_list in
-      if children <> [] then
-        [GdataCore.AnnotatedTree.Node (
-          [`Element; `Name name; `Namespace namespace],
-          children)]
-      else
-        []
-  in
-
-  let render_element_list render element_list =
-    element_list
-      |> List.map render
-      |> List.concat
-  in
-
-  let render_value ?default ?(attribute = "value") namespace name value =
-    render_element namespace name
-      [render_attribute ?default "" attribute value]
-  in
-
-  let render_author element_name author =
-    render_element ns_atom element_name
-      [render_attribute Xmlm.ns_xml "lang" author.GdataAtom.a_lang;
-       render_text_element ns_atom "email" author.GdataAtom.a_email;
-       render_text_element ns_atom "name" author.GdataAtom.a_name;
-       render_text_element ns_atom "uri" author.GdataAtom.a_uri]
-  in
-
-  let render_category category =
-    render_element ns_atom "category"
-      [render_attribute "" "label" category.GdataAtom.c_label;
-       render_attribute "" "scheme" category.GdataAtom.c_scheme;
-       render_attribute "" "term" category.GdataAtom.c_term;
-       render_attribute Xmlm.ns_xml "lang" category.GdataAtom.c_lang]
-  in
-
-  let render_content content =
-    render_element ns_atom "content"
-      [render_attribute "" "src" content.GdataAtom.oolc_src;
-       render_attribute "" "type" content.GdataAtom.oolc_type]
-  in
-
-  let render_link link =
-    let render_webContent webContent =
-      let render_webContentGadgetPref webContentGadgetPref =
-        render_element ns_gCal "webContentGadgetPref"
-          [render_attribute "" "name" webContentGadgetPref.wcgp_name;
-           render_attribute "" "value" webContentGadgetPref.wcgp_value]
-      in
-
-      render_element ns_gCal "webContent"
-        [render_attribute ~default:"0" "" "height" (string_of_int webContent.wc_height);
-         render_attribute "" "url" webContent.wc_url;
-         render_attribute ~default:"0" "" "width" (string_of_int webContent.wc_width);
-         render_element_list render_webContentGadgetPref webContent.wc_webContentGadgetPrefs]
+let render_link link =
+  let render_webContent webContent =
+    let render_webContentGadgetPref webContentGadgetPref =
+      GdataAtom.render_element ns_gCal "webContentGadgetPref"
+        [GdataAtom.render_attribute "" "name" webContentGadgetPref.wcgp_name;
+         GdataAtom.render_attribute "" "value" webContentGadgetPref.wcgp_value]
     in
 
-    render_element ns_atom "link"
-      [render_attribute "" "href" link.cl_href;
-       render_attribute ~default:"0" "" "length" (Int64.to_string link.cl_length);
-       render_attribute "" "rel" link.cl_rel;
-       render_attribute "" "title" link.cl_title;
-       render_attribute "" "type" link.cl_type;
-       render_webContent link.cl_webContent]
+    GdataAtom.render_element ns_gCal "webContent"
+      [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
+       GdataAtom.render_attribute "" "url" webContent.wc_url;
+       GdataAtom.render_int_attribute "" "width" webContent.wc_width;
+       GdataAtom.render_element_list render_webContentGadgetPref webContent.wc_webContentGadgetPrefs]
   in
 
-  let render_where where =
-    render_value ~attribute:"valueString" ns_gd "where" where
-  in
+  GdataAtom.render_element GdataAtom.ns_atom "link"
+    [GdataAtom.render_attribute "" "href" link.cl_href;
+     GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.cl_length;
+     GdataAtom.render_attribute "" "rel" link.cl_rel;
+     GdataAtom.render_attribute "" "title" link.cl_title;
+     GdataAtom.render_attribute "" "type" link.cl_type;
+     render_webContent link.cl_webContent]
 
-  let render_text_construct name text_construct =
-    render_element ns_atom name
-      [render_attribute "" "src" text_construct.GdataAtom.tc_src;
-       render_attribute "" "type" text_construct.GdataAtom.tc_type;
-       render_attribute Xmlm.ns_xml "lang" text_construct.GdataAtom.tc_lang;
-       render_text text_construct.GdataAtom.tc_value]
-  in
+let render_where where =
+  GdataAtom.render_value ~attribute:"valueString" ns_gd "where" where
 
+let calendar_entry_to_data_model entry =
   let entry_element =
     (* TODO: better namespace handling *)
-    render_element ns_atom "entry"
-      [render_attribute Xmlm.ns_xmlns "xmlns" ns_atom;
-       render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
-       render_attribute Xmlm.ns_xmlns "gd" ns_gd;
-       render_attribute Xmlm.ns_xmlns "app" ns_app;
-       render_attribute ns_gd "kind" entry.ce_kind;
-       render_element_list (render_author "author") entry.ce_authors;
-       render_element_list render_category entry.ce_categories;
-       render_element_list (render_author "contributor") entry.ce_contributors;
-       render_text_element ns_atom "id" entry.ce_id;
-       render_content entry.ce_content;
-       render_text_element ns_atom "published" entry.ce_published;
-       render_text_element ns_atom "updated" entry.ce_updated;
-       render_text_element ns_app "edited" entry.ce_edited;
-       render_value ns_gCal "accesslevel" entry.ce_accesslevel;
-       render_element_list render_link entry.ce_links;
-       render_element_list render_where entry.ce_where;
-       render_value ns_gCal "color" entry.ce_color;
-       render_value ns_gCal "hidden" (string_of_bool entry.ce_hidden);
-       render_value ns_gCal "selected" (string_of_bool entry.ce_selected);
-       render_value ns_gCal "timezone" entry.ce_timezone;
-       render_value ~default:"0" ns_gCal "timesCleaned" (string_of_int entry.ce_timesCleaned);
-       render_text_construct "summary" entry.ce_summary;
-       render_text_construct "title" entry.ce_title;
+    GdataAtom.render_element GdataAtom.ns_atom "entry"
+      [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" ns_gd;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
+       GdataAtom.render_attribute ns_gd "kind" entry.ce_kind;
+       GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
+       GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
+       GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
+       GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
+       GdataAtom.render_content entry.ce_content;
+       GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
+       GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
+       GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ce_edited;
+       GdataAtom.render_value ns_gCal "accesslevel" entry.ce_accesslevel;
+       GdataAtom.render_element_list render_link entry.ce_links;
+       GdataAtom.render_element_list render_where entry.ce_where;
+       GdataAtom.render_value ns_gCal "color" entry.ce_color;
+       GdataAtom.render_bool_value ns_gCal "hidden" entry.ce_hidden;
+       GdataAtom.render_bool_value ns_gCal "selected" entry.ce_selected;
+       GdataAtom.render_value ns_gCal "timezone" entry.ce_timezone;
+       GdataAtom.render_int_value ns_gCal "timesCleaned" entry.ce_timesCleaned;
+       GdataAtom.render_text_construct "summary" entry.ce_summary;
+       GdataAtom.render_text_construct "title" entry.ce_title;
        entry.ce_extensions]
   in
 
     List.hd entry_element
-  
 (* END Calendar feed: rendering *)
 
 
@@ -775,7 +587,7 @@ let parse_personal_settings tree =
     match tree with
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "entry"; `Namespace ns],
-           cs) when ns = ns_atom ->
+           cs) when ns = GdataAtom.ns_atom ->
           List.iter parse_entry cs
       | _ ->
           ()
@@ -785,7 +597,7 @@ let parse_personal_settings tree =
     match tree with
         GdataCore.AnnotatedTree.Node
           ([`Element; `Name "feed"; `Namespace ns],
-           cs) when ns = ns_atom ->
+           cs) when ns = GdataAtom.ns_atom ->
           List.iter parse_feed cs
       | _ ->
           assert false
