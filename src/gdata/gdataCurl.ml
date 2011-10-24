@@ -154,8 +154,11 @@ let set_postfields key_value_list (state : [`Created] t) =
              Curl.set_postfieldsize curl 0;
              Curl.set_postfields curl ""
          | _ ->
-             Curl.set_postfields curl
-               (Netencoding.Url.mk_url_encoded_parameters key_value_list)
+             let encoded_string = Netencoding.Url.mk_url_encoded_parameters
+                                    key_value_list
+             in
+               Curl.set_postfieldsize curl (String.length encoded_string);
+               Curl.set_postfields curl encoded_string
     )
     state
 
