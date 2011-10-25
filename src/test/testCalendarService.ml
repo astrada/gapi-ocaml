@@ -136,12 +136,26 @@ let test_add_new_subscription () =
              "http://www.google.com/calendar/feeds/default/calendars/en.australian%23holiday%40group.v.calendar.google.com"
              new_entry.GdataCalendar.ce_id)
 
+let test_retrieve_events () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (feed, session') = GdataCalendarService.retrieve_events session in
+         assert_equal
+           "http://www.google.com/calendar/feeds/default/private/full"
+           feed.GdataCalendarEvent.cef_id;
+         assert_bool
+           "ETag should not be empty"
+           (session'.GdataConversation.Session.etag <> ""))
+
+
 let suite = "Calendar Service test" >:::
-  ["test_personal_settings" >:: test_personal_settings;
+  [(*"test_personal_settings" >:: test_personal_settings;
    "test_all_calendars" >:: test_all_calendars;
    "test_own_calendars" >:: test_own_calendars;
    "test_create_new_calendar" >:: test_create_new_calendar;
    "test_delete_calendar" >:: test_delete_calendar;
    "test_update_calendar" >:: test_update_calendar;
-   "test_add_new_subscription" >:: test_add_new_subscription]
+   "test_add_new_subscription" >:: test_add_new_subscription;*)
+   "test_retrieve_events" >:: test_retrieve_events]
 

@@ -43,3 +43,9 @@ val add_new_subscription :
   GdataConversation.Session.t ->
   GdataCalendar.calendar_calendarEntry * GdataConversation.Session.t
 
+val retrieve_events :
+  ?url:string ->
+  ?etag:string ->
+  GdataConversation.Session.t ->
+  GdataCalendarEvent.calendar_calendarEventFeed * GdataConversation.Session.t
+

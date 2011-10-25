@@ -115,3 +115,14 @@ let add_new_subscription
     (GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry)
     session
 
+let retrieve_events
+      ?(url = "https://www.google.com/calendar/feeds/default/private/full")
+      ?etag
+      session =
+  GdataService.service_request
+    ~version
+    ?etag
+    url
+    (GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_feed)
+    session
+
