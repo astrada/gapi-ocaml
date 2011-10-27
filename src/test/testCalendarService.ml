@@ -148,14 +148,61 @@ let test_retrieve_events () =
            "ETag should not be empty"
            (session'.GdataConversation.Session.etag <> ""))
 
+let test_create_new_event () =
+  let ch = open_in "test/data/new_event_entry.xml" in
+  let entry = GdataRequest.parse_xml
+                (fun () -> input_byte ch)
+                GdataCalendarEvent.parse_calendar_event_entry in
+    TestHelper.test_request
+      TestHelper.build_oauth2_auth
+      (fun session ->
+         let (new_entry, session) =
+           GdataCalendarService.create_new_event entry session in
+         let id = new_entry.GdataCalendarEvent.cee_id in
+         let (feed, session) = GdataCalendarService.retrieve_events session in
+           assert_bool
+             "Created entry id not found in event feed"
+             (List.exists
+                (fun e -> e.GdataCalendarEvent.cee_id = id)
+                feed.GdataCalendarEvent.cef_entries);
+           ignore (GdataCalendarService.delete_event
+                     new_entry
+                     session))
+
+let test_update_event () =
+  let ch = open_in "test/data/new_event_entry.xml" in
+  let entry = GdataRequest.parse_xml
+                (fun () -> input_byte ch)
+                GdataCalendarEvent.parse_calendar_event_entry in
+    TestHelper.test_request
+      TestHelper.build_oauth2_auth
+      (fun session ->
+         let (new_entry, session) =
+           GdataCalendarService.create_new_event entry session in
+         let updated_entry =
+           { new_entry with
+                 GdataCalendarEvent.cee_where = ["Tennis club"] } in
+         let (server_updated_entry, session) =
+           GdataCalendarService.update_event updated_entry session in
+         let (_, session) =
+           GdataCalendarService.refresh_event server_updated_entry session
+         in
+           ignore (GdataCalendarService.delete_event
+                     server_updated_entry
+                     session);
+           assert_equal
+             updated_entry.GdataCalendarEvent.cee_where
+             server_updated_entry.GdataCalendarEvent.cee_where)
 
 let suite = "Calendar Service test" >:::
-  [(*"test_personal_settings" >:: test_personal_settings;
+  ["test_personal_settings" >:: test_personal_settings;
    "test_all_calendars" >:: test_all_calendars;
    "test_own_calendars" >:: test_own_calendars;
    "test_create_new_calendar" >:: test_create_new_calendar;
    "test_delete_calendar" >:: test_delete_calendar;
    "test_update_calendar" >:: test_update_calendar;
-   "test_add_new_subscription" >:: test_add_new_subscription;*)
-   "test_retrieve_events" >:: test_retrieve_events]
+   "test_add_new_subscription" >:: test_add_new_subscription;
+   "test_retrieve_events" >:: test_retrieve_events;
+   "test_create_new_event" >:: test_create_new_event;
+   "test_update_calendar" >:: test_update_event]
 
