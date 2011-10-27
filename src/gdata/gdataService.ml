@@ -1,4 +1,5 @@
 let service_request
+      ?query_parameters
       ?data_to_upload
       ?version
       ?etag
@@ -6,6 +7,10 @@ let service_request
       url
       parse_response
       session =
+  let query_url = Option.map_default
+                    (fun params -> GdataUtils.merge_query_string params url)
+                    url
+                    query_parameters in
   let post_data =
     Option.map
       (fun data ->
@@ -18,7 +23,7 @@ let service_request
       ?version
       ?etag
       request_type
-      url
+      query_url
       parse_response
       session
 

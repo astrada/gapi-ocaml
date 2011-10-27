@@ -194,6 +194,25 @@ let test_update_event () =
              updated_entry.GdataCalendarEvent.cee_where
              server_updated_entry.GdataCalendarEvent.cee_where)
 
+let test_retrieve_events_with_parameters () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters =
+         { GdataCalendarService.QueryParameters.default with
+               GdataCalendarService.QueryParameters.start_min =
+                 GdataDate.of_string "2021-10-10T00:00:00.000Z";
+               GdataCalendarService.QueryParameters.start_max =
+                 GdataDate.of_string "2021-10-10T00:00:00.000Z" } in
+       let (feed, session') =
+         GdataCalendarService.retrieve_events
+           ~parameters
+           session
+       in
+         assert_equal
+           0
+           (List.length feed.GdataCalendarEvent.cef_entries))
+
 let suite = "Calendar Service test" >:::
   ["test_personal_settings" >:: test_personal_settings;
    "test_all_calendars" >:: test_all_calendars;
@@ -204,5 +223,7 @@ let suite = "Calendar Service test" >:::
    "test_add_new_subscription" >:: test_add_new_subscription;
    "test_retrieve_events" >:: test_retrieve_events;
    "test_create_new_event" >:: test_create_new_event;
-   "test_update_calendar" >:: test_update_event]
+   "test_update_calendar" >:: test_update_event;
+   "test_retrieve_events_with_parameters"
+     >:: test_retrieve_events_with_parameters]
 

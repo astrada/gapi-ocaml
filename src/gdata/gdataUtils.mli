@@ -10,3 +10,5 @@ end
 
 val is_weak_etag : string -> bool
 
+val merge_query_string : (string * string) list -> string -> string
+

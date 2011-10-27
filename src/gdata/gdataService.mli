@@ -1,4 +1,5 @@
 val service_request :
+  ?query_parameters:(string * string) list ->
   ?data_to_upload:(GdataCore.Metadata.xml,
                    GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
   ?version:string ->

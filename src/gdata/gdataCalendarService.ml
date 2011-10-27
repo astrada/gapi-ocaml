@@ -1,3 +1,94 @@
+open GdataUtils.Op
+
+module QueryParameters =
+struct
+  type t = {
+    author : string;
+    category : string;
+    fields : string;
+    max_results : int;
+    published_min : GdataDate.t;
+    published_max : GdataDate.t;
+    q : string;
+    start_index : int;
+    strict : bool;
+    updated_min : GdataDate.t;
+    updated_max : GdataDate.t;
+    ctz : string;
+    future_events : bool;
+    max_attendees : int;
+    orderby : string;
+    recurrence_expansion_start : GdataDate.t;
+    recurrence_expansion_end : GdataDate.t;
+    singleevents : bool;
+    showdeleted : bool;
+    showhidden : bool;
+    sortorder : string;
+    start_min : GdataDate.t;
+    start_max : GdataDate.t
+  }
+
+  let default = {
+    author = "";
+    category = "";
+    fields = "";
+    max_results = 0;
+    published_min = GdataDate.epoch;
+    published_max = GdataDate.epoch;
+    q = "";
+    start_index = 0;
+    strict = false;
+    updated_min = GdataDate.epoch;
+    updated_max = GdataDate.epoch;
+    ctz = "";
+    future_events = false;
+    max_attendees = 0;
+    orderby = "";
+    recurrence_expansion_start = GdataDate.epoch;
+    recurrence_expansion_end = GdataDate.epoch;
+    singleevents = false;
+    showdeleted = false;
+    showhidden = false;
+    sortorder = "";
+    start_min = GdataDate.epoch;
+    start_max = GdataDate.epoch
+  }
+
+  let to_key_value_list qp =
+    let param get to_string name = 
+      let value = get qp in
+        if value <> get default then
+          [(name, to_string value)]
+        else
+          []
+    in
+      [param (fun p -> p.author) Std.identity "author";
+       param (fun p -> p.category) Std.identity "category";
+       param (fun p -> p.fields) Std.identity "fields";
+       param (fun p -> p.max_results) string_of_int "max-results";
+       param (fun p -> p.published_min) GdataDate.to_string "published-min";
+       param (fun p -> p.published_max) GdataDate.to_string "published-max";
+       param (fun p -> p.q) Std.identity "q";
+       param (fun p -> p.start_index) string_of_int "start-index";
+       param (fun p -> p.strict) string_of_bool "strict";
+       param (fun p -> p.updated_min) GdataDate.to_string "updated-min";
+       param (fun p -> p.updated_max) GdataDate.to_string "updated-max";
+       param (fun p -> p.ctz) Std.identity "ctz";
+       param (fun p -> p.future_events) string_of_bool "future-events";
+       param (fun p -> p.max_attendees) string_of_int "max-attendees";
+       param (fun p -> p.orderby) Std.identity "orderby";
+       param (fun p -> p.recurrence_expansion_start) GdataDate.to_string "recurrence-expansion-start";
+       param (fun p -> p.recurrence_expansion_end) GdataDate.to_string "recurrence-expansion-end";
+       param (fun p -> p.singleevents) string_of_bool "singleevents";
+       param (fun p -> p.showdeleted) string_of_bool "showdeleted";
+       param (fun p -> p.showhidden) string_of_bool "showhidden";
+       param (fun p -> p.sortorder) Std.identity "sortorder";
+       param (fun p -> p.start_min) GdataDate.to_string "start-min";
+       param (fun p -> p.start_max) GdataDate.to_string "start-max"]
+      |> List.concat
+
+end
+
 let version = "2"
 
 let parse_calendar_feed =
@@ -5,6 +96,9 @@ let parse_calendar_feed =
 
 let parse_calendar_entry =
   GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry
+
+let parse_event_feed =
+  GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_feed
 
 let parse_event_entry =
   GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry
@@ -129,13 +223,18 @@ let add_new_subscription
 let retrieve_events
       ?(url = "https://www.google.com/calendar/feeds/default/private/full")
       ?etag
+      ?parameters
       session =
-  GdataService.service_request
-    ~version
-    ?etag
-    url
-    (GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_feed)
-    session
+  let query_parameters = Option.map
+                           QueryParameters.to_key_value_list
+                           parameters in
+    GdataService.service_request
+      ?query_parameters
+      ~version
+      ?etag
+      url
+      parse_event_feed
+      session
 
 let refresh_event
       entry

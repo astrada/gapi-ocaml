@@ -1,3 +1,36 @@
+module QueryParameters :
+sig
+  type t = {
+    author : string;
+    category : string;
+    fields : string;
+    max_results : int;
+    published_min : GdataDate.t;
+    published_max : GdataDate.t;
+    q : string;
+    start_index : int;
+    strict : bool;
+    updated_min : GdataDate.t;
+    updated_max : GdataDate.t;
+    ctz : string;
+    future_events : bool;
+    max_attendees : int;
+    orderby : string;
+    recurrence_expansion_start : GdataDate.t;
+    recurrence_expansion_end : GdataDate.t;
+    singleevents : bool;
+    showdeleted : bool;
+    showhidden : bool;
+    sortorder : string;
+    start_min : GdataDate.t;
+    start_max : GdataDate.t
+  }
+
+  val default : t
+
+  val to_key_value_list : t -> (string * string) list
+end
+
 val personal_settings :
   ?url:string ->
   ?etag:string ->
@@ -46,6 +79,7 @@ val add_new_subscription :
 val retrieve_events :
   ?url:string ->
   ?etag:string ->
+  ?parameters:QueryParameters.t ->
   GdataConversation.Session.t ->
   GdataCalendarEvent.calendar_calendarEventFeed * GdataConversation.Session.t
 
