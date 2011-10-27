@@ -20,6 +20,16 @@ let set_curl_options option_list curl =
     )
     option_list
 
+(* private *)
+let reader netchannel bytes =
+  let result = String.create bytes in
+    try
+      let len = netchannel#input result 0 bytes in
+        String.sub result 0 len
+    with End_of_file ->
+      netchannel#close_in ();
+      ""
+
 let global_init () : [`Initialized] t =
   Curl.global_init Curl.CURLINIT_GLOBALALL;
   Initialized
@@ -128,17 +138,9 @@ let set_httpbody body (state : [`Created] t) =
   with_curl
     (fun curl ->
        let ch = new Netchannels.input_string body in
-       let reader bytes =
-         let result = String.create bytes in
-           try
-             let len = ch#input result 0 bytes in
-               String.sub result 0 len
-           with End_of_file ->
-             ch#close_in ();
-             ""
-       in
+       let readfunction = reader ch in
          Curl.set_postfieldsize curl (String.length body);
-         Curl.set_readfunction curl reader)
+         Curl.set_readfunction curl readfunction)
     state
 
 let set_customrequest http_method (state : [`Created] t) =
@@ -152,13 +154,17 @@ let set_postfields key_value_list (state : [`Created] t) =
        match key_value_list with
            [] ->
              Curl.set_postfieldsize curl 0;
-             Curl.set_postfields curl ""
+             Curl.set_readfunction curl (fun _ -> "")
          | _ ->
              let encoded_string = Netencoding.Url.mk_url_encoded_parameters
-                                    key_value_list
-             in
+                                    key_value_list in
+             let ch = new Netchannels.input_string encoded_string in
+             let readfunction = reader ch in
                Curl.set_postfieldsize curl (String.length encoded_string);
-               Curl.set_postfields curl encoded_string
+               (* using readfunction instead of set_postfields because there is
+                * no way to reset postfields buffer using current version of
+                * ocurl (doesn't implement curl_easy_reset) *)
+               Curl.set_readfunction curl readfunction
     )
     state
 
