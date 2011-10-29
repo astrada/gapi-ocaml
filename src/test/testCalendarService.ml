@@ -37,9 +37,9 @@ let test_all_calendars () =
          assert_equal
            "http://www.google.com/calendar/feeds/default/allcalendars/full"
            feed.GdataCalendar.cf_id;
-         assert_bool
+         TestHelper.assert_not_empty
            "ETag should not be empty"
-           (session'.GdataConversation.Session.etag <> ""))
+           session'.GdataConversation.Session.etag)
 
 let test_own_calendars () =
   TestHelper.test_request
@@ -49,9 +49,9 @@ let test_own_calendars () =
          assert_equal
            "http://www.google.com/calendar/feeds/default/owncalendars/full"
            feed.GdataCalendar.cf_id;
-         assert_bool
+         TestHelper.assert_not_empty
            "ETag should not be empty"
-           (session'.GdataConversation.Session.etag <> ""))
+           session'.GdataConversation.Session.etag)
 
 let test_create_new_calendar () =
   let entry = new_calendar_entry "test_create_new_calendar" in
@@ -144,9 +144,9 @@ let test_retrieve_events () =
          assert_equal
            "http://www.google.com/calendar/feeds/default/private/full"
            feed.GdataCalendarEvent.cef_id;
-         assert_bool
+         TestHelper.assert_not_empty
            "ETag should not be empty"
-           (session'.GdataConversation.Session.etag <> ""))
+           session'.GdataConversation.Session.etag)
 
 let test_create_new_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
@@ -265,6 +265,22 @@ let test_create_recurring_event () =
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
                 feed.GdataCalendarEvent.cef_entries))
 
+let test_retrieve_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (own, session') = GdataCalendarService.own_calendars session in
+       let entry = List.hd own.GdataCalendar.cf_entries in
+       let (feed, session'') = GdataCalendarService.retrieve_acl
+                                 entry
+                                 session in
+         TestHelper.assert_not_empty
+           "Feed ID should not be empty"
+           feed.GdataCalendarACL.af_id;
+         TestHelper.assert_not_empty
+           "ETag should not be empty"
+           session''.GdataConversation.Session.etag)
+
 let suite = "Calendar Service test" >:::
   ["test_personal_settings" >:: test_personal_settings;
    "test_all_calendars" >:: test_all_calendars;
@@ -279,5 +295,6 @@ let suite = "Calendar Service test" >:::
    "test_retrieve_events_with_parameters"
      >:: test_retrieve_events_with_parameters;
    "test_create_quick_add_event" >:: test_create_quick_add_event;
-   "test_create_recurring_event" >:: test_recurring_event]
+   "test_create_recurring_event" >:: test_recurring_event;
+   "test_retrieve_acl" >:: test_retrieve_acl]
 

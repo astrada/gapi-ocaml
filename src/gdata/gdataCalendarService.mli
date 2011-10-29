@@ -104,3 +104,9 @@ val delete_event :
   GdataConversation.Session.t ->
   unit * GdataConversation.Session.t
 
+val retrieve_acl :
+  ?etag:string ->
+  GdataCalendar.calendar_calendarEntry ->
+  GdataConversation.Session.t ->
+  GdataCalendarACL.calendar_aclFeed * GdataConversation.Session.t
+

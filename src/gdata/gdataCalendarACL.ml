@@ -24,6 +24,7 @@ type calendar_aclEntry = {
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;
   ae_updated : GdataAtom.atom_updated;
+  ae_edited : GdataAtom.app_edited;
   ae_links : GdataCalendar.calendar_calendarLink list;
   ae_title : GdataAtom.atom_textConstruct;
   ae_scope : acl_scope;
@@ -39,6 +40,7 @@ let empty_entry = {
   ae_id = "";
   ae_content = GdataAtom.empty_text;
   ae_updated = GdataDate.epoch;
+  ae_edited = GdataDate.epoch;
   ae_links = [];
   ae_title = GdataAtom.empty_text;
   ae_scope = empty_scope;
@@ -145,6 +147,11 @@ let parse_entry entry tree =
          [GdataCore.AnnotatedTree.Leaf
             ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
         { entry with ae_updated = GdataDate.of_string v }
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "edited"; `Namespace ns],
+         [GdataCore.AnnotatedTree.Leaf
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_app ->
+        { entry with ae_edited = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
@@ -329,6 +336,7 @@ let acl_entry_to_data_model entry =
        GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
        GdataAtom.render_content entry.ae_content;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
+       GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ae_edited;
        GdataAtom.render_element_list GdataCalendar.render_link entry.ae_links;
        GdataAtom.render_value ns_gAcl "role" entry.ae_role;
        render_scope entry.ae_scope;

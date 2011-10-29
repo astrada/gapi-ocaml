@@ -547,7 +547,7 @@ let parse_entry entry tree =
         ([`Element; `Name "edited"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_app ->
-        { entry with ce_updated = GdataDate.of_string v }
+        { entry with ce_edited = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "accesslevel"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf

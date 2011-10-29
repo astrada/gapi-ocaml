@@ -284,3 +284,17 @@ let delete_event
       GdataRequest.parse_empty_response
       session
 
+let retrieve_acl
+      ?etag
+      entry
+      session =
+  let url = GdataCalendar.find_url
+              GdataCalendar.Rel.Acl
+              entry.GdataCalendar.ce_links in
+  GdataService.service_request
+    ~version
+    ?etag
+    url
+    (GdataRequest.parse_xml_response GdataCalendarACL.parse_acl_feed)
+    session
+
