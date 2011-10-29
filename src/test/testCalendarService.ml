@@ -160,15 +160,14 @@ let test_create_new_event () =
            GdataCalendarService.create_new_event entry session in
          let id = new_entry.GdataCalendarEvent.cee_id in
          let (feed, session) = GdataCalendarService.retrieve_events session in
+           ignore (GdataCalendarService.delete_event
+                     new_entry
+                     session);
            assert_bool
              "Created entry id not found in event feed"
              (List.exists
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
-                feed.GdataCalendarEvent.cef_entries);
-           ignore (GdataCalendarService.delete_event
-                     new_entry
-                     session))
-
+                feed.GdataCalendarEvent.cef_entries)) 
 let test_update_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
   let entry = GdataRequest.parse_xml
@@ -213,6 +212,59 @@ let test_retrieve_events_with_parameters () =
            0
            (List.length feed.GdataCalendarEvent.cef_entries))
 
+let test_create_quick_add_event () =
+  let entry =
+    { GdataCalendarEvent.empty_eventEntry with
+          GdataCalendarEvent.cee_quickAdd = true;
+          GdataCalendarEvent.cee_content =
+            { GdataAtom.empty_text with
+                  GdataAtom.tc_type = "text";
+                  GdataAtom.tc_value = "Tennis with John November 11 3pm-3:30pm"
+            }
+    }
+  in
+    TestHelper.test_request
+      TestHelper.build_oauth2_auth
+      (fun session ->
+         let (new_entry, session) =
+           GdataCalendarService.create_new_event entry session in
+         let w = List.hd (new_entry.GdataCalendarEvent.cee_when) in
+           ignore (GdataCalendarService.delete_event
+                     new_entry
+                     session);
+           assert_bool
+             "startTime"
+             (ExtString.String.exists
+                (GdataDate.to_string w.GdataCalendar.w_startTime) "15:00:00");
+           assert_bool
+             "endTime"
+             (ExtString.String.exists
+                (GdataDate.to_string w.GdataCalendar.w_endTime) "15:30:00"))
+
+let test_create_recurring_event () =
+  let ch = open_in "test/data/recurrence.xml" in
+  let entry = GdataRequest.parse_xml
+                (fun () -> input_byte ch)
+                GdataCalendarEvent.parse_calendar_event_entry in
+  let entry = { entry with
+                    GdataCalendarEvent.cee_recurrence = "DTSTART;VALUE=DATE:20100505\r\nDTEND;VALUE=DATE:20100506\r\nRRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20100904\r\n"
+  } in
+    TestHelper.test_request
+      TestHelper.build_oauth2_auth
+      (fun session ->
+         let (new_entry, session) =
+           GdataCalendarService.create_new_event entry session in
+         let id = new_entry.GdataCalendarEvent.cee_id in
+         let (feed, session) = GdataCalendarService.retrieve_events session in
+           ignore (GdataCalendarService.delete_event
+                     new_entry
+                     session);
+           assert_bool
+             "Created entry id not found in event feed"
+             (List.exists
+                (fun e -> e.GdataCalendarEvent.cee_id = id)
+                feed.GdataCalendarEvent.cef_entries))
+
 let suite = "Calendar Service test" >:::
   ["test_personal_settings" >:: test_personal_settings;
    "test_all_calendars" >:: test_all_calendars;
@@ -225,5 +277,7 @@ let suite = "Calendar Service test" >:::
    "test_create_new_event" >:: test_create_new_event;
    "test_update_calendar" >:: test_update_event;
    "test_retrieve_events_with_parameters"
-     >:: test_retrieve_events_with_parameters]
+     >:: test_retrieve_events_with_parameters;
+   "test_create_quick_add_event" >:: test_create_quick_add_event;
+   "test_create_recurring_event" >:: test_recurring_event]
 

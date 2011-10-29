@@ -450,6 +450,18 @@ let parse_entry entry tree =
              GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_icalUID = v }
     | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "privateCopy"; `Namespace ns],
+         [GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "value"; `Namespace ""],
+             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+        { entry with cee_privateCopy = bool_of_string v }
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "quickadd"; `Namespace ns],
+         [GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "value"; `Namespace ""],
+             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+        { entry with cee_quickAdd = bool_of_string v }
+    | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "sequence"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
@@ -477,6 +489,12 @@ let parse_entry entry tree =
           GdataCalendar.empty_originalEvent
           (fun event -> { entry with cee_originalEvent = event })
           cs
+    | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "recurrence"; `Namespace ns],
+         [GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "value"; `Namespace ""],
+             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+        { entry with cee_recurrence = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "transparency"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
@@ -702,13 +720,16 @@ let calendar_event_entry_to_data_model entry =
        GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
        GdataAtom.render_element_list GdataCalendar.render_where entry.cee_where;
        GdataAtom.render_element_list GdataCalendar.render_who entry.cee_who;
-       GdataAtom.render_value ~attribute:"value" GdataCalendar.ns_gd "uid" entry.cee_icalUID;
-       GdataAtom.render_int_value ~attribute:"value" GdataCalendar.ns_gd "sequence" entry.cee_sequenceNumber;
+       GdataAtom.render_value GdataCalendar.ns_gd "uid" entry.cee_icalUID;
+       GdataAtom.render_bool_value GdataCalendar.ns_gCal "privateCopy" entry.cee_privateCopy;
+       GdataAtom.render_bool_value GdataCalendar.ns_gCal "quickadd" entry.cee_quickAdd;
+       GdataAtom.render_int_value GdataCalendar.ns_gd "sequence" entry.cee_sequenceNumber;
        GdataAtom.render_text_construct "title" entry.cee_title;
-       GdataAtom.render_value ~attribute:"value" GdataCalendar.ns_gd "eventStatus" entry.cee_eventStatus;
+       GdataAtom.render_value GdataCalendar.ns_gd "eventStatus" entry.cee_eventStatus;
        GdataCalendar.render_originalEvent entry.cee_originalEvent;
-       GdataAtom.render_value ~attribute:"value" GdataCalendar.ns_gd "transparency" entry.cee_transparency;
-       GdataAtom.render_value ~attribute:"value" GdataCalendar.ns_gd "visibility" entry.cee_visibility;
+       GdataAtom.render_text_element GdataCalendar.ns_gd "recurrence" entry.cee_recurrence;
+       GdataAtom.render_value GdataCalendar.ns_gd "transparency" entry.cee_transparency;
+       GdataAtom.render_value GdataCalendar.ns_gd "visibility" entry.cee_visibility;
        GdataAtom.render_element_list GdataCalendar.render_when entry.cee_when;
        entry.cee_extensions]
   in

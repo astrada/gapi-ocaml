@@ -1,0 +1,16 @@
+<entry xmlns='http://www.w3.org/2005/Atom'
+    xmlns:gd='http://schemas.google.com/g/2005'>
+  <category scheme='http://schemas.google.com/g/2005#kind'
+    term='http://schemas.google.com/g/2005#event'></category>
+  <title type='text'>Tuesday Tennis Lessons with Jane</title>
+  <content type='text'>Meet on Tuesdays for a quick lesson.</content>
+  <gd:transparency
+    value='http://schemas.google.com/g/2005#event.opaque'>
+  </gd:transparency>
+  <gd:eventStatus
+    value='http://schemas.google.com/g/2005#event.confirmed'>
+  </gd:eventStatus>
+  <gd:where valueString='Rolling Lawn Courts'></gd:where>
+</entry>
+
+

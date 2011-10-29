@@ -4,7 +4,6 @@ module QueryParameters =
 struct
   type t = {
     author : string;
-    category : string;
     fields : string;
     max_results : int;
     published_min : GdataDate.t;
@@ -30,7 +29,6 @@ struct
 
   let default = {
     author = "";
-    category = "";
     fields = "";
     max_results = 0;
     published_min = GdataDate.epoch;
@@ -63,7 +61,6 @@ struct
           []
     in
       [param (fun p -> p.author) Std.identity "author";
-       param (fun p -> p.category) Std.identity "category";
        param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.max_results) string_of_int "max-results";
        param (fun p -> p.published_min) GdataDate.to_string "published-min";

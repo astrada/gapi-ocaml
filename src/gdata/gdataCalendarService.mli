@@ -2,7 +2,7 @@ module QueryParameters :
 sig
   type t = {
     author : string;
-    category : string;
+(*    category : string; Calendar doesn't support category queries *)
     fields : string;
     max_results : int;
     published_min : GdataDate.t;
