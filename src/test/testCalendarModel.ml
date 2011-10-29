@@ -189,6 +189,36 @@ let test_parse_calendar_event_feed () =
       1
       (List.length feed.GdataCalendarEvent.cef_entries)
 
+let test_parse_acl_feed () =
+  let ch = open_in "test/data/acl_feed.xml" in
+  let feed = GdataRequest.parse_xml
+               (fun () -> input_byte ch)
+               GdataCalendarACL.parse_acl_feed in
+  let entry = List.nth feed.GdataCalendarACL.af_entries 1 in
+    assert_equal ~msg:"feed title"
+      "Elizabeth Bennet's access control list"
+      feed.GdataCalendarACL.af_title.GdataAtom.tc_value;
+    assert_equal ~msg:"entry count"
+      2
+      (List.length feed.GdataCalendarACL.af_entries);
+    assert_equal ~msg:"entry scope type"
+      "user"
+      (entry.GdataCalendarACL.ae_scope.GdataCalendarACL.as_type);
+    assert_equal ~msg:"entry scope value"
+      "liz@gmail.com"
+      (entry.GdataCalendarACL.ae_scope.GdataCalendarACL.as_value)
+
+let test_acl_entry_to_data_model () =
+  let ch = open_in "test/data/acl_feed.xml" in
+  let feed = GdataRequest.parse_xml
+               (fun () -> input_byte ch)
+               GdataCalendarACL.parse_acl_feed in
+  let entry = List.nth feed.GdataCalendarACL.af_entries 1 in
+  let tree = GdataCalendarACL.acl_entry_to_data_model entry in
+    TestHelper.assert_equal_file
+      "test/data/test_acl_entry_to_data_model.xml"
+      (GdataRequest.data_to_xml_string tree)
+
 let suite = "Calendar Model test" >:::
   ["test_parse_personal_settings" >:: test_parse_personal_settings;
    "test_parse_calendar_feed" >:: test_parse_calendar_feed;
@@ -197,5 +227,7 @@ let suite = "Calendar Model test" >:::
      >:: test_parse_calendar_entry_with_extensions;
    "test_calendar_entry_to_data_model" >:: test_calendar_entry_to_data_model;
    "test_parse_calendar_event_entry" >:: test_parse_calendar_event_entry;
-   "test_parse_calendar_event_feed" >:: test_parse_calendar_event_feed]
+   "test_parse_calendar_event_feed" >:: test_parse_calendar_event_feed;
+   "test_parse_acl_feed" >:: test_parse_acl_feed;
+   "test_acl_entry_to_data_model" >:: test_acl_entry_to_data_model]
 
