@@ -128,7 +128,6 @@ val empty_extendedProperty : calendar_calendarExtendedProperty
 
 type calendar_calendarEntry = {
   ce_etag : string;
-  ce_kind : string;
   ce_authors : GdataAtom.atom_author list;
   ce_categories : GdataAtom.atom_category list;
   ce_contributors : GdataAtom.atom_contributor list;

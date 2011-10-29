@@ -177,7 +177,6 @@ let empty_extendedProperty = {
 
 type calendar_calendarEntry = {
   ce_etag : string;
-  ce_kind : string;
   ce_authors : GdataAtom.atom_author list;
   ce_categories : GdataAtom.atom_category list;
   ce_contributors : GdataAtom.atom_contributor list;
@@ -202,7 +201,6 @@ type calendar_calendarEntry = {
 
 let empty_entry = {
   ce_etag = "";
-  ce_kind = "";
   ce_authors = [];
   ce_categories = [];
   ce_contributors = [];
@@ -270,8 +268,8 @@ let parse_webContentGadgetPref wcgp tree =
         ([`Attribute; `Name "value"; `Namespace ""],
          GdataCore.Value.String v) ->
         { wcgp with wcgp_value = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_webContent webContent tree =
   match tree with
@@ -296,8 +294,8 @@ let parse_webContent webContent tree =
           (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
                            wcgp :: webContent.wc_webContentGadgetPrefs })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_link link tree =
   match tree with
@@ -329,8 +327,8 @@ let parse_link link tree =
           empty_webContent 
           (fun webContent -> { link with cl_webContent = webContent })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_where where tree =
   match tree with
@@ -338,8 +336,8 @@ let parse_where where tree =
         ([`Attribute; `Name "valueString"; `Namespace ""],
          GdataCore.Value.String v) ->
         v
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_extendedProperty property tree =
   match tree with
@@ -355,8 +353,8 @@ let parse_extendedProperty property tree =
         ([`Attribute; `Name "value"; `Namespace ns],
          GdataCore.Value.String v) when ns = "" ->
         { property with cep_value = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_resourceProperty resource tree =
   match tree with
@@ -368,8 +366,8 @@ let parse_resourceProperty resource tree =
         ([`Attribute; `Name "value"; `Namespace ns],
          GdataCore.Value.String v) when ns = "" ->
         { resource with rp_value = bool_of_string v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_attendeeStatus where tree =
   match tree with
@@ -377,8 +375,8 @@ let parse_attendeeStatus where tree =
         ([`Attribute; `Name "value"; `Namespace ""],
          GdataCore.Value.String v) ->
         v
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_who who tree =
   match tree with
@@ -410,8 +408,8 @@ let parse_who who tree =
           ""
           (fun status -> { who with cw_attendeeStatus = status })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_reminder reminder tree =
   match tree with
@@ -435,8 +433,8 @@ let parse_reminder reminder tree =
         ([`Attribute; `Name "minutes"; `Namespace ns],
          GdataCore.Value.String v) when ns = "" ->
         { reminder with r_minutes = int_of_string v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_when cwhen tree =
   match tree with
@@ -461,8 +459,8 @@ let parse_when cwhen tree =
           (fun reminder ->
              { cwhen with w_reminders = reminder :: cwhen.w_reminders })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_originalEvent event tree =
   match tree with
@@ -482,8 +480,8 @@ let parse_originalEvent event tree =
           empty_when
           (fun cwhen -> { event with oe_when = cwhen })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_entry entry tree =
   match tree with
@@ -491,10 +489,6 @@ let parse_entry entry tree =
         ([`Attribute; `Name "etag"; `Namespace ns],
          GdataCore.Value.String v) when ns = ns_gd ->
         { entry with ce_etag = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = ns_gd ->
-        { entry with ce_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
@@ -722,8 +716,7 @@ let parse_feed feed tree =
          _) when ns = Xmlm.ns_xmlns ->
         feed
     | e ->
-        (* TODO: error handling *)
-        assert false
+        GdataUtils.unexpected e
 
 let parse_calendar_feed tree =
   let parse_root tree =
@@ -736,8 +729,8 @@ let parse_calendar_feed tree =
             empty_feed
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 
@@ -752,8 +745,8 @@ let parse_calendar_entry tree =
             empty_entry
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 (* END Calendar feed: parsing *)
@@ -837,7 +830,6 @@ let calendar_entry_to_data_model entry =
        GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
        GdataAtom.render_attribute Xmlm.ns_xmlns "gd" ns_gd;
        GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-       GdataAtom.render_attribute ns_gd "kind" entry.ce_kind;
        GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
        GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
        GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
@@ -898,8 +890,8 @@ let parse_personal_settings tree =
           ([`Element; `Name "feed"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           List.iter parse_feed cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree;
     settings

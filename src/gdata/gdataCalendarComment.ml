@@ -281,8 +281,8 @@ let parse_commentsFeedLink link tree =
           empty_commentFeed
           (fun title -> { link with cc_commentFeed = title })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_comments comments tree =
   match tree with
@@ -294,8 +294,8 @@ let parse_comments comments tree =
           empty_comments
           Std.identity
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_comment_feed tree =
   let parse_root tree =
@@ -308,8 +308,8 @@ let parse_comment_feed tree =
             empty_commentFeed
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 
@@ -324,8 +324,8 @@ let parse_comment_entry tree =
             empty_commentEntry
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 (* END Calendar comment feed: parsing *)

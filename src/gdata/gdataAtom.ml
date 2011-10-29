@@ -113,8 +113,8 @@ let parse_category category tree =
         ([`Attribute; `Name "lang"; `Namespace ns],
          GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
         { category with c_lang = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_text text tree =
   match tree with
@@ -134,8 +134,8 @@ let parse_text text tree =
         ([`Text],
          GdataCore.Value.String v) ->
         { text with tc_value = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_author author tree =
   match tree with
@@ -158,8 +158,8 @@ let parse_author author tree =
          [GdataCore.AnnotatedTree.Leaf
             ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
         { author with a_uri = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_generator generator tree =
   match tree with
@@ -175,8 +175,8 @@ let parse_generator generator tree =
         ([`Text],
          GdataCore.Value.String v) ->
         { generator with g_value = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_content = parse_text
 (* END Parsing *)

@@ -28,3 +28,12 @@ let merge_query_string parameters url =
                      neturl in
     Neturl.string_of_url new_neturl
 
+let unexpected e =
+  match e with
+      GdataCore.AnnotatedTree.Leaf (metadata, _) ->
+        failwith ("Unexpected leaf: "
+                  ^ (GdataCore.Metadata.description metadata))
+    | GdataCore.AnnotatedTree.Node (metadata, _) ->
+        failwith ("Unexpected node: "
+                  ^ (GdataCore.Metadata.description metadata))
+

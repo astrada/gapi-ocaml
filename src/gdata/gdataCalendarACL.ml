@@ -328,6 +328,7 @@ let acl_entry_to_data_model entry =
     GdataAtom.render_element GdataAtom.ns_atom "entry"
       [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
        GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataCalendar.ns_gd;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
        GdataAtom.render_attribute Xmlm.ns_xmlns "gAcl" ns_gAcl;
        GdataAtom.render_attribute GdataCalendar.ns_gd "kind" entry.ae_kind;
        GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ae_authors;

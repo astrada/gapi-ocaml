@@ -72,6 +72,8 @@ sig
 
   val node_type : ([> xml_node_type ] as 'a) list -> 'a
 
+  val description : xml -> string
+
 end
 
 module HttpMethod :

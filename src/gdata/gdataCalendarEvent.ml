@@ -127,6 +127,7 @@ let empty_eventEntry = {
 
 type calendar_calendarEventFeed = {
   cef_etag : string;
+  cef_kind : string;
   cef_authors : GdataAtom.atom_author list;
   cef_contributors : GdataAtom.atom_contributor list;
   cef_generator : GdataAtom.atom_generator;
@@ -141,12 +142,12 @@ type calendar_calendarEventFeed = {
   cef_eventKind : GdataCalendar.gdata_kind;
   cef_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
   cef_startIndex : GdataAtom.opensearch_startIndex;
-  cef_totalResults : GdataAtom.opensearch_totalResults;
-  cef_extensions : (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  cef_totalResults : GdataAtom.opensearch_totalResults
 }
 
 let empty_eventFeed = {
   cef_etag = "";
+  cef_kind = "";
   cef_authors = [];
   cef_contributors = [];
   cef_generator = GdataAtom.empty_generator;
@@ -161,8 +162,7 @@ let empty_eventFeed = {
   cef_eventKind = GdataCalendar.eventKind;
   cef_itemsPerPage = 0;
   cef_startIndex = 0;
-  cef_totalResults = 0;
-  cef_extensions = []
+  cef_totalResults = 0
 }
 (* END Calendar event data types *)
 
@@ -324,8 +324,8 @@ let parse_recurrenceExceptionEntryLink entry tree =
           empty_recurrenceExceptionEntry
           Std.identity
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_recurrenceException ex tree =
   match tree with
@@ -341,8 +341,8 @@ let parse_recurrenceException ex tree =
           empty_recurrenceExceptionEntry
           (fun entry -> { ex with cre_entry = entry })
           cs
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_entry entry tree =
   match tree with
@@ -529,6 +529,10 @@ let parse_feed feed tree =
         ([`Attribute; `Name "etag"; `Namespace ns],
          GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
         { feed with cef_etag = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "kind"; `Namespace ns],
+         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+        { feed with cef_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
@@ -623,14 +627,12 @@ let parse_feed feed tree =
          [GdataCore.AnnotatedTree.Leaf
             ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_openSearch ->
         { feed with cef_totalResults = int_of_string v }
-
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name _; `Namespace ns],
          _) when ns = Xmlm.ns_xmlns ->
         feed
-    | extension ->
-        let extensions = extension :: feed.cef_extensions in
-          { feed with cef_extensions = extensions }
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_calendar_event_feed tree =
   let parse_root tree =
@@ -643,8 +645,8 @@ let parse_calendar_event_feed tree =
             empty_eventFeed
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 
@@ -659,8 +661,8 @@ let parse_calendar_event_entry tree =
             empty_eventEntry
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 (* END Calendar event feed: parsing *)

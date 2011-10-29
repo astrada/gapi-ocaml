@@ -202,5 +202,5 @@ let assert_equal_file file_name s =
     with End_of_file ->
       Buffer.contents buffer
   in
-    OUnit.assert_equal file_content s
+    OUnit.assert_equal ~printer:Std.identity file_content s
 

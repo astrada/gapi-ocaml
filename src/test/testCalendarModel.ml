@@ -71,7 +71,6 @@ let test_calendar_entry_to_data_model () =
   let entry =
     { GdataCalendar.empty_entry with
           GdataCalendar.ce_id = "id";
-          GdataCalendar.ce_kind = "kind";
           GdataCalendar.ce_authors = [
             { GdataAtom.a_lang = "en-US";
               GdataAtom.a_email = "author1@test.com";

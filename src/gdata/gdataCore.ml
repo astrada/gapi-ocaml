@@ -125,6 +125,22 @@ module Metadata = struct
            | _ -> false)
       metadata
 
+  let description metadata =
+    let n = try name metadata with Not_found -> "" in
+    let p = try prefix metadata with Not_found -> "" in
+    let ns = try namespace metadata with Not_found -> "" in
+    let nt =
+      try
+        match node_type metadata with
+            `Element -> "Element"
+          | `Attribute -> "Attribute"
+          | `Text -> "Text"
+          | `Cdata -> "CData"
+          | _ -> assert false
+      with Not_found -> "" 
+    in
+      Printf.sprintf "type=%s name=%s prefix=%s namespace=%s" nt n p ns
+
 end
 
 module HttpMethod =

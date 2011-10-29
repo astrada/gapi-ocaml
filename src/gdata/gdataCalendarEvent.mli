@@ -72,6 +72,7 @@ val empty_eventEntry : calendar_calendarEventEntry
 
 type calendar_calendarEventFeed = {
   cef_etag : string;
+  cef_kind : string;
   cef_authors : GdataAtom.atom_author list;
   cef_contributors : GdataAtom.atom_contributor list;
   cef_generator : GdataAtom.atom_generator;
@@ -86,10 +87,7 @@ type calendar_calendarEventFeed = {
   cef_eventKind : GdataCalendar.gdata_kind;
   cef_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
   cef_startIndex : GdataAtom.opensearch_startIndex;
-  cef_totalResults : GdataAtom.opensearch_totalResults;
-  cef_extensions :
-    (GdataCore.Metadata.xml,
-     GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  cef_totalResults : GdataAtom.opensearch_totalResults
 }
 
 val empty_eventFeed : calendar_calendarEventFeed
