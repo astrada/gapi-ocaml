@@ -15,7 +15,7 @@ let to_string date =
   let result = Netdate.format ~fmt:"%Y-%m-%dT%T" date in
     result ^ ".000" ^ tz
 
-let rfc3339_regexp = Str.regexp "^\\([0-9][0-9][0-9][0-9]\\)-\\([0-9][0-9]\\)-\\([0-9][0-9]\\)T\\([0-9][0-9]\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)\\(\\.[0-9]+\\)?\\(Z\\|\\([-+]\\)\\([0-9][0-9]\\):\\([0-9][0-9]\\)\\)$"
+let rfc3339_regexp = Str.regexp "^\\([0-9][0-9][0-9][0-9]\\)-\\([0-9][0-9]\\)-\\([0-9][0-9]\\)\\(T\\([0-9][0-9]\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)\\(\\.[0-9]+\\)?\\(Z\\|\\([-+]\\)\\([0-9][0-9]\\):\\([0-9][0-9]\\)\\)\\)?$"
 
 let of_string date_string =
   let matched n =
@@ -28,27 +28,38 @@ let of_string date_string =
         let year = parse_int 1 in
         let month = parse_int 2 in
         let day = parse_int 3 in
-        let hour = parse_int 4 in
-        let minute = parse_int 5 in
-        let second = parse_int 6 in
-        let timezone = matched 8 in
-        let (tz_sign, tz_hour, tz_minute) =
-          if timezone = "Z" then
-            (1, 0, 0)
-          else
-            let sign = matched 9 in
-              ((if sign = "+" then 1 else -1), parse_int 10, parse_int 11)
+        let full_date = {
+              Netdate.year = year;
+              Netdate.month = month;
+              Netdate.day = day;
+              Netdate.hour = 0;
+              Netdate.minute = 0;
+              Netdate.second = 0;
+              Netdate.zone = 0;
+              Netdate.week_day = -1 }
         in
-          { Netdate.year = year;
-            Netdate.month = month;
-            Netdate.day = day;
-            Netdate.hour = hour;
-            Netdate.minute = minute;
-            Netdate.second = second;
-            Netdate.zone = tz_sign * (tz_hour * 60 + tz_minute);
-            Netdate.week_day = -1
-          }
+          try
+            let hour = parse_int 5 in
+            let minute = parse_int 6 in
+            let second = parse_int 7 in
+            let timezone = matched 9 in
+            let (tz_sign, tz_hour, tz_minute) =
+              if timezone = "Z" then
+                (1, 0, 0)
+              else
+                let sign = matched 10 in
+                  ((if sign = "+" then 1 else -1), parse_int 11, parse_int 12)
+            in
+              { full_date with
+                    Netdate.hour = hour;
+                    Netdate.minute = minute;
+                    Netdate.second = second;
+                    Netdate.zone = tz_sign * (tz_hour * 60 + tz_minute);
+                    Netdate.week_day = -1
+              }
+          with Not_found ->
+            full_date
       end
     else
-      failwith "Invalid RFC3339 date"
+      failwith ("Invalid RFC3339 date: " ^ date_string)
 

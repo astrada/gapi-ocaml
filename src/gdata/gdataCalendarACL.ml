@@ -23,6 +23,7 @@ type calendar_aclEntry = {
   ae_contributors : GdataAtom.atom_contributor list;
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;
+  ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
   ae_links : GdataCalendar.calendar_calendarLink list;
@@ -39,6 +40,7 @@ let empty_entry = {
   ae_contributors = [];
   ae_id = "";
   ae_content = GdataAtom.empty_text;
+  ae_published = GdataDate.epoch;
   ae_updated = GdataDate.epoch;
   ae_edited = GdataDate.epoch;
   ae_links = [];
@@ -91,8 +93,8 @@ let parse_scope scope tree =
         ([`Attribute; `Name "value"; `Namespace ns],
          GdataCore.Value.String v) when ns = "" ->
         { scope with as_value = v }
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_entry entry tree =
   match tree with
@@ -143,6 +145,11 @@ let parse_entry entry tree =
           (fun content -> { entry with ae_content = content })
           cs
     | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "published"; `Namespace ns],
+         [GdataCore.AnnotatedTree.Leaf
+            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+        { entry with ae_published = GdataDate.of_string v }
+    | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "updated"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
@@ -186,8 +193,8 @@ let parse_entry entry tree =
         ([`Attribute; `Name _; `Namespace ns],
          _) when ns = Xmlm.ns_xmlns ->
         entry
-    | _ ->
-        assert false
+    | e ->
+        GdataUtils.unexpected e
 
 let parse_feed feed tree =
   match tree with
@@ -281,7 +288,7 @@ let parse_feed feed tree =
          _) when ns = Xmlm.ns_xmlns ->
         feed
     | e ->
-        assert false
+        GdataUtils.unexpected e
 
 let parse_acl_feed tree =
   let parse_root tree =
@@ -294,8 +301,8 @@ let parse_acl_feed tree =
             empty_feed
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 
@@ -310,8 +317,8 @@ let parse_acl_entry tree =
             empty_entry
             Std.identity
             cs
-      | _ ->
-          assert false
+      | e ->
+          GdataUtils.unexpected e
   in
     parse_root tree
 (* END Calendar ACL feed: parsing *)
@@ -337,7 +344,6 @@ let acl_entry_to_data_model entry =
        GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
        GdataAtom.render_content entry.ae_content;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
-       GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ae_edited;
        GdataAtom.render_element_list GdataCalendar.render_link entry.ae_links;
        GdataAtom.render_value ns_gAcl "role" entry.ae_role;
        render_scope entry.ae_scope;

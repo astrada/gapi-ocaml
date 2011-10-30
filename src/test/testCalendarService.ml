@@ -18,6 +18,20 @@ let new_calendar_entry title =
                   };
   }
 
+let acl_entry =
+  { GdataCalendarACL.empty_entry with
+        GdataCalendarACL.ae_categories = [
+          { GdataAtom.empty_category with
+                GdataAtom.c_scheme =
+                  "http://schemas.google.com/g/2005#kind";
+                GdataAtom.c_term =
+                  "http://schemas.google.com/acl/2007#accessRule" } ];
+        GdataCalendarACL.ae_scope =
+          { GdataCalendarACL.as_type = "user";
+            GdataCalendarACL.as_value = "darcy@gmail.com" };
+        GdataCalendarACL.ae_role =
+          "http://schemas.google.com/gCal/2005#editor" }
+
 let test_personal_settings () =
   TestHelper.test_request
     TestHelper.build_client_login_auth
@@ -33,25 +47,25 @@ let test_all_calendars () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let (feed, session') = GdataCalendarService.all_calendars session in
+       let (feed, session) = GdataCalendarService.all_calendars session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/allcalendars/full"
            feed.GdataCalendar.cf_id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session'.GdataConversation.Session.etag)
+           session.GdataConversation.Session.etag)
 
 let test_own_calendars () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let (feed, session') = GdataCalendarService.own_calendars session in
+       let (feed, session) = GdataCalendarService.own_calendars session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/owncalendars/full"
            feed.GdataCalendar.cf_id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session'.GdataConversation.Session.etag)
+           session.GdataConversation.Session.etag)
 
 let test_create_new_calendar () =
   let entry = new_calendar_entry "test_create_new_calendar" in
@@ -140,13 +154,13 @@ let test_retrieve_events () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let (feed, session') = GdataCalendarService.retrieve_events session in
+       let (feed, session) = GdataCalendarService.retrieve_events session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/private/full"
            feed.GdataCalendarEvent.cef_id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session'.GdataConversation.Session.etag)
+           session.GdataConversation.Session.etag)
 
 let test_create_new_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
@@ -168,6 +182,7 @@ let test_create_new_event () =
              (List.exists
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
                 feed.GdataCalendarEvent.cef_entries)) 
+
 let test_update_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
   let entry = GdataRequest.parse_xml
@@ -203,7 +218,7 @@ let test_retrieve_events_with_parameters () =
                  GdataDate.of_string "2021-10-10T00:00:00.000Z";
                GdataCalendarService.QueryParameters.start_max =
                  GdataDate.of_string "2021-10-10T00:00:00.000Z" } in
-       let (feed, session') =
+       let (feed, session) =
          GdataCalendarService.retrieve_events
            ~parameters
            session
@@ -269,9 +284,9 @@ let test_retrieve_acl () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let (own, session') = GdataCalendarService.own_calendars session in
+       let (own, session) = GdataCalendarService.own_calendars session in
        let entry = List.hd own.GdataCalendar.cf_entries in
-       let (feed, session'') = GdataCalendarService.retrieve_acl
+       let (feed, session) = GdataCalendarService.retrieve_acl
                                  entry
                                  session in
          TestHelper.assert_not_empty
@@ -279,7 +294,52 @@ let test_retrieve_acl () =
            feed.GdataCalendarACL.af_id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session''.GdataConversation.Session.etag)
+           session.GdataConversation.Session.etag)
+
+let test_create_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (own, session) = GdataCalendarService.own_calendars session in
+       let calendar_entry = List.hd own.GdataCalendar.cf_entries in
+       let (new_entry, session) =
+         GdataCalendarService.create_acl acl_entry calendar_entry session in
+       let id = new_entry.GdataCalendarACL.ae_id in
+       let (feed, session) = GdataCalendarService.retrieve_acl
+                                 calendar_entry
+                                 session in
+         ignore (GdataCalendarService.delete_acl
+                   new_entry
+                   session);
+         assert_bool
+           "Created entry id not found in acl feed"
+           (List.exists
+              (fun e -> e.GdataCalendarACL.ae_id = id)
+              feed.GdataCalendarACL.af_entries)) 
+
+let test_update_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (own, session) = GdataCalendarService.own_calendars session in
+       let calendar_entry = List.hd own.GdataCalendar.cf_entries in
+       let (new_entry, session) =
+         GdataCalendarService.create_acl acl_entry calendar_entry session in
+       let updated_entry =
+         { new_entry with
+               GdataCalendarACL.ae_role =
+                 "http://schemas.google.com/gCal/2005#read" } in
+       let (server_updated_entry, session) =
+         GdataCalendarService.update_acl updated_entry session in
+       let (_, session) =
+         GdataCalendarService.refresh_acl server_updated_entry session
+       in
+         ignore (GdataCalendarService.delete_acl
+                   server_updated_entry
+                   session);
+         assert_equal
+           updated_entry.GdataCalendarACL.ae_role
+           server_updated_entry.GdataCalendarACL.ae_role)
 
 let suite = "Calendar Service test" >:::
   ["test_personal_settings" >:: test_personal_settings;
@@ -295,6 +355,8 @@ let suite = "Calendar Service test" >:::
    "test_retrieve_events_with_parameters"
      >:: test_retrieve_events_with_parameters;
    "test_create_quick_add_event" >:: test_create_quick_add_event;
-   "test_create_recurring_event" >:: test_recurring_event;
-   "test_retrieve_acl" >:: test_retrieve_acl]
+   "test_create_recurring_event" >:: test_create_recurring_event;
+   "test_retrieve_acl" >:: test_retrieve_acl;
+   "test_create_acl" >:: test_create_acl;
+   "test_update_acl" >:: test_update_acl*
 

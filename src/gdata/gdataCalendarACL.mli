@@ -17,6 +17,7 @@ type calendar_aclEntry = {
   ae_contributors : GdataAtom.atom_contributor list;
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;
+  ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
   ae_links : GdataCalendar.calendar_calendarLink list;

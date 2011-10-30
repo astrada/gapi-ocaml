@@ -35,12 +35,14 @@ val empty_recurrenceException : calendar_calendarRecurrenceException
 
 type calendar_calendarEventEntry = {
   cee_etag : string;
+  cee_kind : string;
   cee_authors : GdataAtom.atom_author list;
   cee_content : GdataAtom.atom_content;
   cee_contributors : GdataAtom.atom_contributor list;
   cee_id : GdataAtom.atom_id;
   cee_published : GdataAtom.atom_published;
   cee_updated : GdataAtom.atom_updated;
+  cee_edited : GdataAtom.app_edited;
   cee_comments : GdataCalendarComment.calendar_calendarComments;
   cee_extendedProperties : GdataCalendar.calendar_calendarExtendedProperty list;
   cee_links : GdataCalendar.calendar_calendarLink list;
@@ -63,6 +65,10 @@ type calendar_calendarEventEntry = {
   cee_transparency : GdataCalendar.gdata_transparency;
   cee_visibility : GdataCalendar.gdata_visibility;
   cee_when : GdataCalendar.gdata_when list;
+  cee_anyoneCanAddSelf : bool;
+  cee_guestsCanInviteOthers : bool;
+  cee_guestsCanModify : bool;
+  cee_guestsCanSeeGuests : bool;
   cee_extensions :
     (GdataCore.Metadata.xml,
      GdataCore.Value.t) GdataCore.AnnotatedTree.t list

@@ -100,6 +100,12 @@ let parse_event_feed =
 let parse_event_entry =
   GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry
 
+let parse_acl_feed =
+  GdataRequest.parse_xml_response GdataCalendarACL.parse_acl_feed
+
+let parse_acl_entry =
+  GdataRequest.parse_xml_response GdataCalendarACL.parse_acl_entry
+
 let get_url_etag links etag =
   let url = GdataCalendar.find_url GdataCalendar.Rel.Edit links in
   let etag =
@@ -119,6 +125,11 @@ let get_url_etag_event entry =
   get_url_etag
     entry.GdataCalendarEvent.cee_links
     entry.GdataCalendarEvent.cee_etag
+
+let get_url_etag_acl entry =
+  get_url_etag
+    entry.GdataCalendarACL.ae_links
+    entry.GdataCalendarACL.ae_etag
 
 let personal_settings
       ?(url = "https://www.google.com/calendar/feeds/default/settings")
@@ -290,11 +301,67 @@ let retrieve_acl
       session =
   let url = GdataCalendar.find_url
               GdataCalendar.Rel.Acl
-              entry.GdataCalendar.ce_links in
-  GdataService.service_request
-    ~version
-    ?etag
-    url
-    (GdataRequest.parse_xml_response GdataCalendarACL.parse_acl_feed)
-    session
+              entry.GdataCalendar.ce_links
+  in
+    GdataService.service_request
+      ~version
+      ?etag
+      url
+      parse_acl_feed
+      session
+
+let refresh_acl
+      entry
+      session =
+  let (url, etag) = get_url_etag_acl entry in
+    GdataService.service_query_with_default
+      ~version
+      ?etag
+      entry
+      url
+      parse_acl_entry
+      session
+
+let create_acl
+      acl_entry
+      calendar_entry
+      session =
+  let url = GdataCalendar.find_url
+              GdataCalendar.Rel.Acl
+              calendar_entry.GdataCalendar.ce_links
+  in
+    GdataService.service_request_with_data
+      ~version
+      acl_entry
+      GdataCalendarACL.acl_entry_to_data_model 
+      GdataRequest.Create
+      url
+      parse_acl_entry
+      session
+
+let update_acl
+      entry
+      session =
+  let (url, etag) = get_url_etag_acl entry in
+    GdataService.service_request_with_data
+      ~version
+      ?etag
+      entry
+      GdataCalendarACL.acl_entry_to_data_model 
+      GdataRequest.Update
+      url
+      parse_acl_entry
+      session
+
+let delete_acl
+      entry
+      session =
+  let (url, etag) = get_url_etag_acl entry in
+    GdataService.service_request
+      ~version
+      ?etag
+      ~request_type:GdataRequest.Delete
+      url
+      GdataRequest.parse_empty_response
+      session
 
