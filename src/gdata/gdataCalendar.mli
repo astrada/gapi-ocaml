@@ -301,3 +301,19 @@ sig
 
 end
 
+module Entry :
+sig
+  type t = calendar_calendarEntry
+
+  val empty : t
+
+  val to_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+  val of_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t -> t
+
+end
+

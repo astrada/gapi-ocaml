@@ -14,13 +14,13 @@ let test_parse_calendar_feed () =
   let ch = open_in "test/data/all_calendars.xml" in
   let feed = GdataRequest.parse_xml
                (fun () -> input_byte ch)
-               GdataCalendar.parse_calendar_feed in
+               GdataCalendarFeed.parse_calendar_feed in
     assert_equal ~msg:"feed author"
       "Coach"
-      (List.hd feed.GdataCalendar.cf_authors).GdataAtom.a_name;
+      (List.hd feed.GdataCalendarFeed.f_authors).GdataAtom.a_name;
     assert_equal ~msg:"feed title"
       "Coach's Calendar List"
-      feed.GdataCalendar.cf_title.GdataAtom.tc_value
+      feed.GdataCalendarFeed.f_title.GdataAtom.tc_value
 
 let test_parse_calendar_entry () =
   let ch = open_in "test/data/calendar_entry.xml" in

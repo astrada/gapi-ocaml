@@ -6,6 +6,7 @@ GdataCalendar
 GdataCalendarACL
 GdataCalendarComment
 GdataCalendarEvent
+GdataCalendarFeed
 GdataCalendarService
 GdataClientLogin
 GdataComment

@@ -820,35 +820,35 @@ let render_originalEvent event =
      GdataAtom.render_attribute "" "id" event.oe_id;
      render_when event.oe_when]
 
-let calendar_entry_to_data_model entry =
-  let entry_element =
-    (* TODO: better namespace handling *)
-    GdataAtom.render_element GdataAtom.ns_atom "entry"
-      [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-       GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
-       GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
-       GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
-       GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
-       GdataAtom.render_content entry.ce_content;
-       GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
-       GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
-       GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ce_edited;
-       GdataAtom.render_value ns_gCal "accesslevel" entry.ce_accesslevel;
-       GdataAtom.render_element_list render_link entry.ce_links;
-       GdataAtom.render_element_list render_where entry.ce_where;
-       GdataAtom.render_value ns_gCal "color" entry.ce_color;
-       GdataAtom.render_bool_value ns_gCal "hidden" entry.ce_hidden;
-       GdataAtom.render_bool_value ns_gCal "selected" entry.ce_selected;
-       GdataAtom.render_value ns_gCal "timezone" entry.ce_timezone;
-       GdataAtom.render_int_value ns_gCal "timesCleaned" entry.ce_timesCleaned;
-       GdataAtom.render_text_construct "summary" entry.ce_summary;
-       GdataAtom.render_text_construct "title" entry.ce_title;
-       entry.ce_extensions]
-  in
+let render_entry entry =
+  (* TODO: better namespace handling *)
+  GdataAtom.render_element GdataAtom.ns_atom "entry"
+    [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
+     GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
+     GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
+     GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
+     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
+     GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
+     GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
+     GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
+     GdataAtom.render_content entry.ce_content;
+     GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
+     GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
+     GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ce_edited;
+     GdataAtom.render_value ns_gCal "accesslevel" entry.ce_accesslevel;
+     GdataAtom.render_element_list render_link entry.ce_links;
+     GdataAtom.render_element_list render_where entry.ce_where;
+     GdataAtom.render_value ns_gCal "color" entry.ce_color;
+     GdataAtom.render_bool_value ns_gCal "hidden" entry.ce_hidden;
+     GdataAtom.render_bool_value ns_gCal "selected" entry.ce_selected;
+     GdataAtom.render_value ns_gCal "timezone" entry.ce_timezone;
+     GdataAtom.render_int_value ns_gCal "timesCleaned" entry.ce_timesCleaned;
+     GdataAtom.render_text_construct "summary" entry.ce_summary;
+     GdataAtom.render_text_construct "title" entry.ce_title;
+     entry.ce_extensions]
 
+let calendar_entry_to_data_model entry =
+  let entry_element = render_entry entry in
     List.hd entry_element
 (* END Calendar feed: rendering *)
 
@@ -940,6 +940,18 @@ struct
   let to_xml_data_model = render_link
 
   let of_xml_data_model = parse_link
+
+end
+
+module Entry =
+struct
+  type t = calendar_calendarEntry
+
+  let empty = empty_entry
+
+  let to_xml_data_model = render_entry
+
+  let of_xml_data_model = parse_entry
 
 end
 
