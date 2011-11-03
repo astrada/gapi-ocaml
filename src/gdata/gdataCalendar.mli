@@ -171,7 +171,7 @@ type calendar_calendarFeed = {
 val empty_feed : calendar_calendarFeed
 
 val parse_link :
-                               calendar_calendarLink ->
+  calendar_calendarLink ->
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
   calendar_calendarLink
 

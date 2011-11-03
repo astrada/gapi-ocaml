@@ -15,6 +15,10 @@ type atom_uri = string
 
 type atom_id = string
 
+type atom_icon = string
+
+type atom_logo = string
+
 type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
@@ -281,6 +285,13 @@ let render_text_element ?(default = "") namespace name value =
       render_text ~default value)]
   else
     []
+
+let render_int_element namespace name value =
+  render_text_element
+    ~default:"0"
+    namespace
+    name
+    (string_of_int value)
 
 let render_date_element namespace name value =
   render_text_element

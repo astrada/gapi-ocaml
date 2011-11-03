@@ -12,6 +12,10 @@ type atom_uri = string
 
 type atom_id = string
 
+type atom_icon = string
+
+type atom_logo = string
+
 type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
@@ -153,6 +157,12 @@ val render_text_element :
   string ->
   string ->
   string ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_int_element :
+  string ->
+  string ->
+  int ->
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
 
 val render_date_element :
