@@ -1,6 +1,8 @@
 val ns_atom : string
 val ns_app : string
 val ns_openSearch : string
+val ns_gd : string
+val ns_gAcl : string
 
 type atom_email = string
 
@@ -55,6 +57,16 @@ val empty_content : atom_content
 
 type atom_contributor = atom_author
 
+type atom_link = {
+  l_href : string;
+  l_length : Int64.t;
+  l_rel : string;
+  l_title : string;
+  l_type : string
+}
+
+val empty_link : atom_link
+
 type opensearch_itemsPerPage = int
 
 type opensearch_startIndex = int
@@ -89,6 +101,11 @@ val parse_content :
   atom_content ->
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
   atom_content
+
+val parse_link :
+  atom_link ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  atom_link
 
 val render_attribute :
   ?default:string ->
@@ -195,4 +212,41 @@ val render_text_construct :
 val render_generator :
   atom_generator ->
   (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+val render_link :
+  atom_link ->
+  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+module Rel :
+sig
+  type t =
+      Self
+    | Alternate
+    | Edit
+    | Feed
+    | Post
+    | Batch
+    | Acl
+
+  val to_string : t -> string
+
+end
+
+val find_url : Rel.t -> atom_link list -> string
+
+module Link :
+sig
+  type t = atom_link
+
+  val empty : t
+
+  val to_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+  val of_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t -> t
+
+end
 

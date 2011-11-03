@@ -1,5 +1,3 @@
-val ns_gAcl : string
-
 type acl_scope = {
   as_type : string;
   as_value : string
@@ -20,7 +18,7 @@ type calendar_aclEntry = {
   ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
-  ae_links : GdataCalendar.calendar_calendarLink list;
+  ae_links : GdataAtom.atom_link list;
   ae_title : GdataAtom.atom_textConstruct;
   ae_scope : acl_scope;
   ae_role : acl_role
@@ -38,7 +36,7 @@ type calendar_aclFeed = {
   af_id : GdataAtom.atom_id;
   af_updated : GdataAtom.atom_updated;
   af_entries : calendar_aclEntry list;
-  af_links : GdataCalendar.calendar_calendarLink list;
+  af_links : GdataAtom.atom_link list;
   af_title : GdataAtom.atom_textConstruct;
   af_totalResults : GdataAtom.opensearch_totalResults;
   af_startIndex : GdataAtom.opensearch_startIndex

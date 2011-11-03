@@ -1,6 +1,4 @@
 val ns_gCal : string
-val ns_gd : string
-val ns_acl : string
 
 type calendar_accessLevelProperty = string
 
@@ -286,4 +284,20 @@ sig
 end
 
 val find_url : Rel.t -> calendar_calendarLink list -> string
+
+module Link :
+sig
+  type t = calendar_calendarLink
+
+  val empty : t
+
+  val to_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+  val of_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t -> t
+
+end
 

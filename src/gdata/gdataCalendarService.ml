@@ -127,9 +127,16 @@ let get_url_etag_event entry =
     entry.GdataCalendarEvent.cee_etag
 
 let get_url_etag_acl entry =
-  get_url_etag
-    entry.GdataCalendarACL.ae_links
-    entry.GdataCalendarACL.ae_etag
+  let url = GdataAtom.find_url
+              GdataAtom.Rel.Edit
+              entry.GdataCalendarACL.ae_links in
+  let etag =
+    if entry.GdataCalendarACL.ae_etag = "" then
+      None
+    else
+      Some entry.GdataCalendarACL.ae_etag
+  in
+    (url, etag)
 
 let personal_settings
       ?(url = "https://www.google.com/calendar/feeds/default/settings")

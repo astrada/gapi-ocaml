@@ -184,7 +184,7 @@ let parse_recurrenceExceptionEntry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with cree_etag = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -238,7 +238,7 @@ let parse_recurrenceExceptionEntry entry tree =
         { entry with cree_updated = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "comments"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendarComment.parse_comments
           GdataCalendarComment.empty_comments
@@ -254,7 +254,7 @@ let parse_recurrenceExceptionEntry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "where"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_where
           ""
@@ -262,7 +262,7 @@ let parse_recurrenceExceptionEntry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "who"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_who
           GdataCalendar.empty_who
@@ -292,11 +292,11 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "eventStatus"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cree_eventStatus = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "originalEvent"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_originalEvent
           GdataCalendar.empty_originalEvent
@@ -306,17 +306,17 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "transparency"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cree_transparency = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "visibility"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cree_visibility = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "when"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_when
           GdataCalendar.empty_when
@@ -347,7 +347,7 @@ let parse_recurrenceException ex tree =
         { ex with cre_specialized = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "entryLink"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           parse_recurrenceExceptionEntryLink
           empty_recurrenceExceptionEntry
@@ -360,11 +360,11 @@ let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with cee_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with cee_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -414,7 +414,7 @@ let parse_entry entry tree =
         { entry with cee_edited = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "comments"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendarComment.parse_comments
           GdataCalendarComment.empty_comments
@@ -422,7 +422,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "extendedProperty"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_extendedProperty
           GdataCalendar.empty_extendedProperty
@@ -440,7 +440,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "recurrenceException"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           parse_recurrenceException
           empty_recurrenceException
@@ -450,7 +450,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "where"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_where
           ""
@@ -458,7 +458,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "who"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_who
           GdataCalendar.empty_who
@@ -504,11 +504,11 @@ let parse_entry entry tree =
         ([`Element; `Name "eventStatus"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_eventStatus = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "originalEvent"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_originalEvent
           GdataCalendar.empty_originalEvent
@@ -518,23 +518,23 @@ let parse_entry entry tree =
         ([`Element; `Name "recurrence"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_recurrence = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "transparency"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_transparency = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "visibility"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gd ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_visibility = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "when"; `Namespace ns],
-         cs) when ns = GdataCalendar.ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           GdataCalendar.parse_when
           GdataCalendar.empty_when
@@ -576,11 +576,11 @@ let parse_feed feed tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { feed with cef_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { feed with cef_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -724,7 +724,7 @@ let parse_calendar_event_entry tree =
 (* Calendar event feed: rendering *)
 let render_recurrenceExceptionEntry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_attribute GdataCalendar.ns_gd "etag" entry.cree_etag;
+    [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.cree_etag;
      GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cree_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.cree_categories;
      GdataAtom.render_content entry.cree_content;
@@ -736,22 +736,22 @@ let render_recurrenceExceptionEntry entry =
      GdataAtom.render_element_list GdataCalendar.render_link entry.cree_links;
      GdataAtom.render_element_list GdataCalendar.render_where entry.cree_where;
      GdataAtom.render_element_list GdataCalendar.render_who entry.cree_who;
-     GdataAtom.render_value GdataCalendar.ns_gd "uid" entry.cree_icalUID;
-     GdataAtom.render_int_value GdataCalendar.ns_gd "sequence" entry.cree_sequenceNumber;
+     GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cree_icalUID;
+     GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cree_sequenceNumber;
      GdataAtom.render_text_construct "title" entry.cree_title;
-     GdataAtom.render_value GdataCalendar.ns_gd "eventStatus" entry.cree_eventStatus;
+     GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cree_eventStatus;
      GdataCalendar.render_originalEvent entry.cree_originalEvent;
-     GdataAtom.render_value GdataCalendar.ns_gd "transparency" entry.cree_transparency;
-     GdataAtom.render_value GdataCalendar.ns_gd "visibility" entry.cree_visibility;
+     GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cree_transparency;
+     GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cree_visibility;
      GdataAtom.render_element_list GdataCalendar.render_when entry.cree_when;
      entry.cree_extensions]
 
 let render_recurrenceExceptionEntryLink entry =
-  GdataAtom.render_element GdataCalendar.ns_gd "entryLink"
+  GdataAtom.render_element GdataAtom.ns_gd "entryLink"
     [render_recurrenceExceptionEntry entry]
 
 let render_recurrenceException ex =
-  GdataAtom.render_element GdataCalendar.ns_gd "recurrenceException"
+  GdataAtom.render_element GdataAtom.ns_gd "recurrenceException"
     [GdataAtom.render_bool_attribute "" "specialized" ex.cre_specialized;
      render_recurrenceExceptionEntryLink ex.cre_entry]
 
@@ -761,9 +761,9 @@ let calendar_event_entry_to_data_model entry =
     GdataAtom.render_element GdataAtom.ns_atom "entry"
       [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
        GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" GdataCalendar.ns_gCal;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataCalendar.ns_gd;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
        GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-       GdataAtom.render_attribute GdataCalendar.ns_gd "kind" entry.cee_kind;
+       GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
        GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cee_authors;
        GdataAtom.render_content entry.cee_content;
        GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.cee_contributors;
@@ -777,20 +777,20 @@ let calendar_event_entry_to_data_model entry =
        GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
        GdataAtom.render_element_list GdataCalendar.render_where entry.cee_where;
        GdataAtom.render_element_list GdataCalendar.render_who entry.cee_who;
-       GdataAtom.render_value GdataCalendar.ns_gd "uid" entry.cee_icalUID;
+       GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cee_icalUID;
        GdataAtom.render_bool_value GdataCalendar.ns_gCal "privateCopy" entry.cee_privateCopy;
        GdataAtom.render_bool_value GdataCalendar.ns_gCal "quickadd" entry.cee_quickAdd;
-       GdataAtom.render_int_value GdataCalendar.ns_gd "sequence" entry.cee_sequenceNumber;
+       GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cee_sequenceNumber;
        GdataAtom.render_text_construct "title" entry.cee_title;
        GdataAtom.render_category
          { GdataAtom.empty_category with
                GdataAtom.c_scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
                GdataAtom.c_term = entry.cee_eventKind.GdataCalendar.k_term };
-       GdataAtom.render_value GdataCalendar.ns_gd "eventStatus" entry.cee_eventStatus;
+       GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
        GdataCalendar.render_originalEvent entry.cee_originalEvent;
-       GdataAtom.render_text_element GdataCalendar.ns_gd "recurrence" entry.cee_recurrence;
-       GdataAtom.render_value GdataCalendar.ns_gd "transparency" entry.cee_transparency;
-       GdataAtom.render_value GdataCalendar.ns_gd "visibility" entry.cee_visibility;
+       GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;
+       GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cee_transparency;
+       GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cee_visibility;
        GdataAtom.render_element_list GdataCalendar.render_when entry.cee_when;
        GdataAtom.render_bool_value GdataCalendar.ns_gCal "anyoneCanAddSelf" entry.cee_anyoneCanAddSelf;
        GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanInviteOthers" entry.cee_guestsCanInviteOthers;

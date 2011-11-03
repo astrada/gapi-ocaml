@@ -2,8 +2,6 @@ open GdataUtils.Op
 
 (* Calendar data types *)
 let ns_gCal = "http://schemas.google.com/gCal/2005"
-let ns_gd = "http://schemas.google.com/g/2005"
-let ns_acl = "http://schemas.google.com/acl/2007"
 
 type calendar_accessLevelProperty = string
 
@@ -402,7 +400,7 @@ let parse_who who tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "attendeeStatus"; `Namespace ns],
-         cs) when ns = ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           parse_attendeeStatus
           ""
@@ -452,7 +450,7 @@ let parse_when cwhen tree =
         { cwhen with w_value = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "reminder"; `Namespace ns],
-         cs) when ns = ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           parse_reminder
           empty_reminder
@@ -474,7 +472,7 @@ let parse_originalEvent event tree =
         { event with oe_id = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "when"; `Namespace ns],
-         cs) when ns = ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           parse_when
           empty_when
@@ -487,7 +485,7 @@ let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with ce_etag = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -558,7 +556,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "where"; `Namespace ns],
-         cs) when ns = ns_gd ->
+         cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
           parse_where
           ""
@@ -628,11 +626,11 @@ let parse_feed feed tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { feed with cf_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { feed with cf_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -777,24 +775,24 @@ let render_link link =
      render_webContent link.cl_webContent]
 
 let render_where where =
-  GdataAtom.render_value ~attribute:"valueString" ns_gd "where" where
+  GdataAtom.render_value ~attribute:"valueString" GdataAtom.ns_gd "where" where
 
 let render_extendedProperty property =
-  GdataAtom.render_element ns_gd "extendedProperty"
+  GdataAtom.render_element GdataAtom.ns_gd "extendedProperty"
     [GdataAtom.render_attribute "" "name" property.cep_name;
      GdataAtom.render_attribute "" "realm" property.cep_realm;
      GdataAtom.render_attribute "" "value" property.cep_value]
 
 let render_resourceProperty property =
-  GdataAtom.render_element ns_gd "resource"
+  GdataAtom.render_element GdataAtom.ns_gd "resource"
     [GdataAtom.render_attribute "" "id" property.rp_id;
      GdataAtom.render_attribute "" "value" (string_of_bool property.rp_value)]
 
 let render_attendeeStatus status =
-  GdataAtom.render_value ~attribute:"value" ns_gd "who" status
+  GdataAtom.render_value ~attribute:"value" GdataAtom.ns_gd "who" status
 
 let render_who who =
-  GdataAtom.render_element ns_gd "resource"
+  GdataAtom.render_element GdataAtom.ns_gd "resource"
     [GdataAtom.render_attribute "" "email" who.cw_email;
      GdataAtom.render_attribute "" "rel" who.cw_rel;
      GdataAtom.render_attribute "" "valueString" who.cw_value;
@@ -802,7 +800,7 @@ let render_who who =
      render_attendeeStatus who.cw_attendeeStatus]
 
 let render_reminder reminder =
-  GdataAtom.render_element ns_gd "reminder"
+  GdataAtom.render_element GdataAtom.ns_gd "reminder"
     [GdataAtom.render_date_attribute "" "absoluteTime" reminder.r_absoluteTime;
      GdataAtom.render_attribute "" "days" (string_of_int reminder.r_days);
      GdataAtom.render_attribute "" "hours" (string_of_int reminder.r_hours);
@@ -810,14 +808,14 @@ let render_reminder reminder =
      GdataAtom.render_attribute "" "minutes" (string_of_int reminder.r_minutes)]
 
 let render_when cwhen =
-  GdataAtom.render_element ns_gd "when"
+  GdataAtom.render_element GdataAtom.ns_gd "when"
     [GdataAtom.render_date_attribute "" "startTime" cwhen.w_startTime;
      GdataAtom.render_date_attribute "" "endTime" cwhen.w_endTime;
      GdataAtom.render_attribute "" "valueString" cwhen.w_value;
      GdataAtom.render_element_list render_reminder cwhen.w_reminders]
 
 let render_originalEvent event =
-  GdataAtom.render_element ns_gd "originalEvent"
+  GdataAtom.render_element GdataAtom.ns_gd "originalEvent"
     [GdataAtom.render_attribute "" "href" event.oe_href;
      GdataAtom.render_attribute "" "id" event.oe_id;
      render_when event.oe_when]
@@ -828,7 +826,7 @@ let calendar_entry_to_data_model entry =
     GdataAtom.render_element GdataAtom.ns_atom "entry"
       [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
        GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" ns_gd;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
        GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
        GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
        GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
@@ -916,11 +914,11 @@ struct
         Self -> "self"
       | Alternate -> "alternate"
       | Edit -> "edit"
-      | Feed -> ns_gd ^ "#feed"
-      | Post -> ns_gd ^ "#post"
-      | Batch -> ns_gd ^ "#batch"
+      | Feed -> GdataAtom.ns_gd ^ "#feed"
+      | Post -> GdataAtom.ns_gd ^ "#post"
+      | Batch -> GdataAtom.ns_gd ^ "#batch"
       | EventFeed -> ns_gCal ^ "#eventFeed"
-      | Acl -> ns_acl ^ "#accessControlList"
+      | Acl -> GdataAtom.ns_gAcl ^ "#accessControlList"
 
 end
 
@@ -932,4 +930,16 @@ let find_url rel links =
   in
     link.cl_href
 (* END Feed: utilities *)
+
+module Link =
+struct
+  type t = calendar_calendarLink
+
+  let empty = empty_link
+
+  let to_xml_data_model = render_link
+
+  let of_xml_data_model = parse_link
+
+end
 

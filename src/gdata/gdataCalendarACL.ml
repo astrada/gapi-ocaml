@@ -1,8 +1,6 @@
 open GdataUtils.Op
 
 (* Calendar ACL data types *)
-let ns_gAcl = "http://schemas.google.com/acl/2007"
-
 type acl_scope = {
   as_type : string;
   as_value : string
@@ -26,7 +24,7 @@ type calendar_aclEntry = {
   ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
-  ae_links : GdataCalendar.calendar_calendarLink list;
+  ae_links : GdataAtom.atom_link list;
   ae_title : GdataAtom.atom_textConstruct;
   ae_scope : acl_scope;
   ae_role : acl_role
@@ -59,7 +57,7 @@ type calendar_aclFeed = {
   af_id : GdataAtom.atom_id;
   af_updated : GdataAtom.atom_updated;
   af_entries : calendar_aclEntry list;
-  af_links : GdataCalendar.calendar_calendarLink list;
+  af_links : GdataAtom.atom_link list;
   af_title : GdataAtom.atom_textConstruct;
   af_totalResults : GdataAtom.opensearch_totalResults;
   af_startIndex : GdataAtom.opensearch_startIndex
@@ -100,11 +98,11 @@ let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with ae_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with ae_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -163,8 +161,8 @@ let parse_entry entry tree =
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataCalendar.parse_link
-          GdataCalendar.empty_link
+          GdataAtom.parse_link
+          GdataAtom.empty_link
           (fun link -> { entry with ae_links = link :: entry.ae_links })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -177,7 +175,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "scope"; `Namespace ns],
-         cs) when ns = ns_gAcl ->
+         cs) when ns = GdataAtom.ns_gAcl ->
         GdataAtom.parse_children
           parse_scope
           empty_scope
@@ -187,7 +185,7 @@ let parse_entry entry tree =
         ([`Element; `Name "role"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = ns_gAcl ->
+             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gAcl ->
         { entry with ae_role = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name _; `Namespace ns],
@@ -200,11 +198,11 @@ let parse_feed feed tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { feed with af_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataCalendar.ns_gd ->
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { feed with af_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -261,8 +259,8 @@ let parse_feed feed tree =
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataCalendar.parse_link
-          GdataCalendar.empty_link
+          GdataAtom.parse_link
+          GdataAtom.empty_link
           (fun link -> { feed with af_links = link :: feed.af_links })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -326,7 +324,7 @@ let parse_acl_entry tree =
 
 (* Calendar ACL feed: rendering *)
 let render_scope scope =
-  GdataAtom.render_element ns_gAcl "scope"
+  GdataAtom.render_element GdataAtom.ns_gAcl "scope"
     [GdataAtom.render_attribute "" "type" scope.as_type;
      GdataAtom.render_attribute "" "value" scope.as_value]
 
@@ -334,18 +332,18 @@ let acl_entry_to_data_model entry =
   let entry_element =
     GdataAtom.render_element GdataAtom.ns_atom "entry"
       [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataCalendar.ns_gd;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
        GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gAcl" ns_gAcl;
-       GdataAtom.render_attribute GdataCalendar.ns_gd "kind" entry.ae_kind;
+       GdataAtom.render_attribute Xmlm.ns_xmlns "gAcl" GdataAtom.ns_gAcl;
+       GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
        GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ae_authors;
        GdataAtom.render_element_list GdataAtom.render_category entry.ae_categories;
        GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ae_contributors;
        GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
        GdataAtom.render_content entry.ae_content;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
-       GdataAtom.render_element_list GdataCalendar.render_link entry.ae_links;
-       GdataAtom.render_value ns_gAcl "role" entry.ae_role;
+       GdataAtom.render_element_list GdataAtom.render_link entry.ae_links;
+       GdataAtom.render_value GdataAtom.ns_gAcl "role" entry.ae_role;
        render_scope entry.ae_scope;
        GdataAtom.render_text_construct "title" entry.ae_title]
   in
