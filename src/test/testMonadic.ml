@@ -21,11 +21,11 @@ let test_monadic_session () =
          assert_equal
            ~msg:"Own calendar feed id"
            "http://www.google.com/calendar/feeds/default/owncalendars/full"
-           own.GdataCalendar.cf_id;
+           own.GdataCalendar.Feed.f_id;
          assert_equal
            ~msg:"All calendar feed id"
            "http://www.google.com/calendar/feeds/default/allcalendars/full"
-           all.GdataCalendar.cf_id;
+           all.GdataCalendar.Feed.f_id;
          TestHelper.assert_false
            "Etag should be different"
            (new_session.GdataConversation.Session.etag =
@@ -50,11 +50,11 @@ let test_monadic_session_perform () =
          assert_equal
            ~msg:"Own calendar feed id"
            "http://www.google.com/calendar/feeds/default/owncalendars/full"
-           own.GdataCalendar.cf_id;
+           own.GdataCalendar.Feed.f_id;
          assert_equal
            ~msg:"All calendar feed id"
            "http://www.google.com/calendar/feeds/default/allcalendars/full"
-           all.GdataCalendar.cf_id;
+           all.GdataCalendar.Feed.f_id;
          TestHelper.assert_false
            "Etag"
            (new_session.GdataConversation.Session.etag =

@@ -2,11 +2,11 @@ open OUnit
 
 (* Collect the tests of different modules into one test suite *)
 let suite = "Google API Ocaml client test suite" >::: 
-  [(*TestAuth.suite;
-   TestCalendarService.suite;*)
-   TestCalendarModel.suite;
-   (*TestMonadic.suite;*)
+  [TestCalendarModel.suite;
    TestDate.suite;
+   (*TestAuth.suite;
+   TestCalendarService.suite;
+   TestMonadic.suite;*)
    ]
 
 let _ =

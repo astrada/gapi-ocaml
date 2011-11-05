@@ -11,8 +11,20 @@ struct
       done;
       table
 
+  let save table filename =
+    let out_ch = open_out filename in
+      Hashtbl.iter
+        (fun key value ->
+           Printf.fprintf out_ch "%s=%s\n" key value)
+        table;
+      close_out out_ch
+
   let get table key =
     Hashtbl.find table key
+
+  let set table key value =
+    Hashtbl.replace table key value
+
 end
 
 let build_client_login_auth test_config =
@@ -83,7 +95,7 @@ let do_request
 let config_file_name = "test/test.config"
 
 let test_request
-      ?(configfile=config_file_name)
+      ?(configfile = config_file_name)
       ?(handle_exception = raise)
       build_auth
       interact =
@@ -97,7 +109,7 @@ let test_request
       handle_exception
 
 let test_request_noauth
-      ?(configfile=config_file_name)
+      ?(configfile = config_file_name)
       ?(handle_exception = raise)
       interact =
   let test_config = Config.parse configfile in
