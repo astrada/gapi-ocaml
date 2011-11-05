@@ -758,11 +758,7 @@ let render_recurrenceException ex =
 let render_entry entry =
   (* TODO: better namespace handling *)
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" GdataCalendar.ns_gCal;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-     GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
+    [GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
      GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cee_authors;
      GdataAtom.render_content entry.cee_content;
      GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.cee_contributors;
@@ -798,8 +794,10 @@ let render_entry entry =
      entry.cee_extensions]
 
 let calendar_event_entry_to_data_model entry =
-  let entry_element = render_entry entry in
-    List.hd entry_element
+  GdataAtom.element_to_data_model
+    GdataCalendar.get_calendar_prefix
+    render_entry 
+    entry
 (* END Calendar event feed: rendering *)
 
 module Entry =

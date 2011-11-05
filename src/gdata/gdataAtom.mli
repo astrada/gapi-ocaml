@@ -227,6 +227,12 @@ val render_link :
   atom_link ->
   GdataCore.xml_data_model list
 
+val element_to_data_model :
+  (string -> string) ->
+  ('a -> GdataCore.xml_data_model list) ->
+  'a ->
+  GdataCore.xml_data_model
+
 module Rel :
 sig
   type t =
@@ -243,6 +249,8 @@ sig
 end
 
 val find_url : Rel.t -> atom_link list -> string
+
+val get_standard_prefix : string -> string
 
 module Link :
 sig

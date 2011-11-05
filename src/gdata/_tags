@@ -2,7 +2,7 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 
 # Packages deps
 <gdataCore.*> : pkg_extlib
-<gdataUtils.*> : pkg_netstring, pkg_extlib
+<gdataUtils.*> : pkg_netstring, pkg_extlib, pkg_xmlm
 <gdataPipe.*> : pkg_netstring
 <gdataCurl.*> : pkg_netstring, pkg_curl
 <gdataConfig.*> : pkg_curl

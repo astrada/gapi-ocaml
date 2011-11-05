@@ -609,6 +609,10 @@ let parse_calendar_entry tree =
 
 
 (* Calendar feed: rendering *)
+let get_calendar_prefix namespace =
+  if namespace = ns_gCal then "gCal"
+  else GdataAtom.get_standard_prefix namespace
+
 let render_link link =
   let render_webContent webContent =
     let render_webContentGadgetPref webContentGadgetPref =
@@ -681,11 +685,7 @@ let render_originalEvent event =
 let render_entry entry =
   (* TODO: better namespace handling *)
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
+    [GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
      GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
@@ -706,8 +706,10 @@ let render_entry entry =
      entry.ce_extensions]
 
 let calendar_entry_to_data_model entry =
-  let entry_element = render_entry entry in
-    List.hd entry_element
+  GdataAtom.element_to_data_model
+    get_calendar_prefix
+    render_entry 
+    entry
 (* END Calendar feed: rendering *)
 
 

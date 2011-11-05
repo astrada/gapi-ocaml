@@ -188,11 +188,7 @@ let render_scope scope =
 
 let render_entry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-     GdataAtom.render_attribute Xmlm.ns_xmlns "gAcl" GdataAtom.ns_gAcl;
-     GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
+    [GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
      GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ae_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.ae_categories;
      GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ae_contributors;
@@ -205,8 +201,10 @@ let render_entry entry =
      GdataAtom.render_text_construct "title" entry.ae_title]
 
 let acl_entry_to_data_model entry =
-  let entry_element = render_entry entry in
-    List.hd entry_element
+  GdataAtom.element_to_data_model
+    GdataAtom.get_standard_prefix
+    render_entry 
+    entry
 (* END Calendar ACL feed: rendering *)
 
 module Entry =

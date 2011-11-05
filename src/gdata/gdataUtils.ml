@@ -37,3 +37,43 @@ let unexpected e =
         failwith ("Unexpected node: "
                   ^ (GdataCore.Metadata.description metadata))
 
+let build_namespace_table get_prefix tree =
+  let table = Hashtbl.create 16 in
+  let add_namespace meta _ =
+    let namespace =
+      try GdataCore.Metadata.namespace meta with Not_found -> ""
+    in
+      if namespace <> "" && namespace <> Xmlm.ns_xml then
+        let prefix =
+          try
+            GdataCore.Metadata.prefix meta
+          with Not_found -> get_prefix namespace
+        in
+          Hashtbl.replace table namespace prefix
+      else
+        ()
+  in
+    GdataCore.AnnotatedTree.fold
+      add_namespace
+      add_namespace
+      tree;
+    Hashtbl.fold
+      (fun key value xs -> (key, value) :: xs)
+      table
+      []
+
+let append_namespaces ns_table tree =
+  match tree with
+      GdataCore.AnnotatedTree.Node (m, cs) ->
+        let attributes =
+          List.map
+            (fun (ns, p) ->
+               GdataCore.AnnotatedTree.Leaf (
+                 [`Attribute; `Name p; `Namespace Xmlm.ns_xmlns],
+                 GdataCore.Value.String ns))
+            ns_table
+        in
+          GdataCore.AnnotatedTree.Node (m, cs @ attributes )
+    | GdataCore.AnnotatedTree.Leaf _ ->
+        tree
+

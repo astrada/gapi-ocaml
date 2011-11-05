@@ -222,17 +222,10 @@ struct
       [render_commentsFeedLink comments]
 
   let comment_entry_to_data_model entry =
-    let entry_element =
-      GdataAtom.render_element GdataAtom.ns_atom "entry"
-        [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-         GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
-         GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-         (* TODO:
-         GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" GdataCalendar.ns_gCal;
-          *)
-         Entry.to_xml_data_model entry]
-    in
-      List.hd entry_element
+    GdataAtom.element_to_data_model
+      GdataAtom.get_standard_prefix
+      Entry.to_xml_data_model 
+      entry
   (* END Calendar comment: rendering *)
 end
 

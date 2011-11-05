@@ -199,6 +199,8 @@ val parse_calendar_entry :
   GdataCore.xml_data_model ->
   calendar_calendarEntry
 
+val get_calendar_prefix : string -> string
+
 val render_link :
   calendar_calendarLink ->
   GdataCore.xml_data_model list

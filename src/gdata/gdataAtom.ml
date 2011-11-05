@@ -360,6 +360,11 @@ let render_link link =
      render_attribute "" "rel" link.l_rel;
      render_attribute "" "title" link.l_title;
      render_attribute "" "type" link.l_type]
+
+let element_to_data_model get_prefix render_element element =
+  let xml_element = render_element element |> List.hd in
+  let ns_table = GdataUtils.build_namespace_table get_prefix xml_element in
+    GdataUtils.append_namespaces ns_table xml_element
 (* END Rendering *)
 
 (* Feed: utilities *)
@@ -393,6 +398,14 @@ let find_url rel links =
                links
   in
     link.l_href
+
+let get_standard_prefix namespace =
+  if namespace = ns_atom then "xmlns"
+  else if namespace = ns_app then "app"
+  else if namespace = ns_openSearch then "openSearch"
+  else if namespace = ns_gd then "gd"
+  else if namespace = ns_gAcl then "gAcl"
+  else ""
 (* END Feed: utilities *)
 
 module Link =
@@ -583,11 +596,7 @@ struct
 
   let to_xml_data_model feed =
     render_element ns_atom "feed"
-      [(*render_attribute Xmlm.ns_xmlns "xmlns" ns_atom;*)
-       (* TODO: render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;*)
-       (*render_attribute Xmlm.ns_xmlns "gd" ns_gd;*)
-       (*render_attribute Xmlm.ns_xmlns "app" ns_app;*)
-       render_attribute ns_gd "etag" feed.etag;
+      [render_attribute ns_gd "etag" feed.etag;
        render_attribute ns_gd "kind" feed.kind;
        render_element_list (render_author "author") feed.authors;
        render_element_list render_category feed.categories;
