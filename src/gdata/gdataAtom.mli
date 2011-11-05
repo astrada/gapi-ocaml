@@ -260,3 +260,48 @@ sig
 
 end
 
+module MakeFeed :
+  functor (Entry : GdataCore.DATA) ->
+  functor (Link : GdataCore.DATA) ->
+sig
+  type t = {
+    f_etag : string;
+    f_kind : string;
+    f_authors : atom_author list;
+    f_categories : atom_category list;
+    f_contributors : atom_contributor list;
+    f_generator : atom_generator;
+    f_icon : atom_icon;
+    f_id : atom_id;
+    f_updated : atom_updated;
+    f_entries : Entry.t list;
+    f_links : Link.t list;
+    f_logo : atom_logo;
+    f_rights : atom_textConstruct;
+    f_subtitle : atom_textConstruct;
+    f_title : atom_textConstruct;
+    f_totalResults : opensearch_totalResults;
+    f_itemsPerPage : opensearch_itemsPerPage;
+    f_startIndex : opensearch_startIndex;
+    f_extensions :
+      (GdataCore.Metadata.xml,
+       GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
+  }
+
+  val empty : t
+
+  val of_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+    t
+
+  val to_xml_data_model :
+    t ->
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+
+  val parse_feed :
+    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+    t
+
+end
+

@@ -10,7 +10,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_id : GdataAtom.atom_id;
   cree_published : GdataAtom.atom_published;
   cree_updated : GdataAtom.atom_updated;
-  cree_comments : GdataCalendarComment.calendar_calendarComments;
+  cree_comments : GdataCalendar.Comments.comments;
   cree_links : GdataCalendar.calendar_calendarLink list;
   cree_where : GdataCalendar.calendar_calendarWhere list;
   cree_who : GdataCalendar.calendar_calendarWho list;
@@ -34,7 +34,7 @@ let empty_recurrenceExceptionEntry = {
   cree_id = "";
   cree_published = GdataDate.epoch;
   cree_updated = GdataDate.epoch;
-  cree_comments = GdataCalendarComment.empty_comments;
+  cree_comments = GdataCalendar.Comments.empty_comments;
   cree_links = [];
   cree_where = [];
   cree_who = [];
@@ -69,7 +69,7 @@ type calendar_calendarEventEntry = {
   cee_published : GdataAtom.atom_published;
   cee_updated : GdataAtom.atom_updated;
   cee_edited : GdataAtom.app_edited;
-  cee_comments : GdataCalendarComment.calendar_calendarComments;
+  cee_comments : GdataCalendar.Comments.comments;
   cee_extendedProperties : GdataCalendar.calendar_calendarExtendedProperty list;
   cee_links : GdataCalendar.calendar_calendarLink list;
   cee_recurrenceExceptions : calendar_calendarRecurrenceException list;
@@ -108,7 +108,7 @@ let empty_eventEntry = {
   cee_published = GdataDate.epoch;
   cee_updated = GdataDate.epoch;
   cee_edited = GdataDate.epoch;
-  cee_comments = GdataCalendarComment.empty_comments;
+  cee_comments = GdataCalendar.Comments.empty_comments;
   cee_extendedProperties = [];
   cee_links = [];
   cee_recurrenceExceptions = [];
@@ -240,8 +240,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "comments"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendarComment.parse_comments
-          GdataCalendarComment.empty_comments
+          GdataCalendar.Comments.parse_comments
+          GdataCalendar.Comments.empty_comments
           (fun comments -> { entry with cree_comments = comments })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -416,8 +416,8 @@ let parse_entry entry tree =
         ([`Element; `Name "comments"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendarComment.parse_comments
-          GdataCalendarComment.empty_comments
+          GdataCalendar.Comments.parse_comments
+          GdataCalendar.Comments.empty_comments
           (fun comments -> { entry with cee_comments = comments })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -732,7 +732,7 @@ let render_recurrenceExceptionEntry entry =
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cree_id;
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cree_published;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cree_updated;
-     GdataCalendarComment.render_comments entry.cree_comments;
+     GdataCalendar.Comments.render_comments entry.cree_comments;
      GdataAtom.render_element_list GdataCalendar.render_link entry.cree_links;
      GdataAtom.render_element_list GdataCalendar.render_where entry.cree_where;
      GdataAtom.render_element_list GdataCalendar.render_who entry.cree_who;
@@ -771,7 +771,7 @@ let calendar_event_entry_to_data_model entry =
        GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cee_published;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cee_updated;
        GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.cee_edited;
-       GdataCalendarComment.render_comments entry.cee_comments;
+       GdataCalendar.Comments.render_comments entry.cee_comments;
        GdataAtom.render_element_list GdataCalendar.render_extendedProperty entry.cee_extendedProperties;
        GdataAtom.render_element_list GdataCalendar.render_link entry.cee_links;
        GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;

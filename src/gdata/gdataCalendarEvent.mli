@@ -7,7 +7,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_id : GdataAtom.atom_id;
   cree_published : GdataAtom.atom_published;
   cree_updated : GdataAtom.atom_updated;
-  cree_comments : GdataCalendarComment.calendar_calendarComments;
+  cree_comments : GdataCalendar.Comments.comments;
   cree_links : GdataCalendar.calendar_calendarLink list;
   cree_where : GdataCalendar.calendar_calendarWhere list;
   cree_who : GdataCalendar.calendar_calendarWho list;
@@ -43,7 +43,7 @@ type calendar_calendarEventEntry = {
   cee_published : GdataAtom.atom_published;
   cee_updated : GdataAtom.atom_updated;
   cee_edited : GdataAtom.app_edited;
-  cee_comments : GdataCalendarComment.calendar_calendarComments;
+  cee_comments : GdataCalendar.Comments.comments;
   cee_extendedProperties : GdataCalendar.calendar_calendarExtendedProperty list;
   cee_links : GdataCalendar.calendar_calendarLink list;
   cee_recurrenceExceptions : calendar_calendarRecurrenceException list;

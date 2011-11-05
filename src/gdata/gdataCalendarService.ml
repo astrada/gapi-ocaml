@@ -101,10 +101,10 @@ let parse_event_entry =
   GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry
 
 let parse_acl_feed =
-  GdataRequest.parse_xml_response GdataCalendarACL.parse_acl_feed
+  GdataRequest.parse_xml_response GdataACL.Feed.parse_feed
 
 let parse_acl_entry =
-  GdataRequest.parse_xml_response GdataCalendarACL.parse_acl_entry
+  GdataRequest.parse_xml_response GdataACL.parse_acl_entry
 
 let get_url_etag links etag =
   let url = GdataCalendar.find_url GdataCalendar.Rel.Edit links in
@@ -129,12 +129,12 @@ let get_url_etag_event entry =
 let get_url_etag_acl entry =
   let url = GdataAtom.find_url
               GdataAtom.Rel.Edit
-              entry.GdataCalendarACL.ae_links in
+              entry.GdataACL.ae_links in
   let etag =
-    if entry.GdataCalendarACL.ae_etag = "" then
+    if entry.GdataACL.ae_etag = "" then
       None
     else
-      Some entry.GdataCalendarACL.ae_etag
+      Some entry.GdataACL.ae_etag
   in
     (url, etag)
 
@@ -340,7 +340,7 @@ let create_acl
     GdataService.service_request_with_data
       ~version
       acl_entry
-      GdataCalendarACL.acl_entry_to_data_model 
+      GdataACL.acl_entry_to_data_model 
       GdataRequest.Create
       url
       parse_acl_entry
@@ -354,7 +354,7 @@ let update_acl
       ~version
       ?etag
       entry
-      GdataCalendarACL.acl_entry_to_data_model 
+      GdataACL.acl_entry_to_data_model 
       GdataRequest.Update
       url
       parse_acl_entry

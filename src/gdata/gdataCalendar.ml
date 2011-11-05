@@ -955,3 +955,7 @@ struct
 
 end
 
+module Feed = GdataAtom.MakeFeed(Entry)(Link)
+
+module Comments = GdataComments.Make(Link)
+

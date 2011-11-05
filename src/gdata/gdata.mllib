@@ -1,15 +1,12 @@
+GdataACL
 GdataAtom
-GdataAtomFeed
 GdataAuth
 GdataAuthResponse
 GdataCalendar
-GdataCalendarACL
-GdataCalendarComment
 GdataCalendarEvent
-GdataCalendarFeed
 GdataCalendarService
 GdataClientLogin
-GdataComment
+GdataComments
 GdataConfig
 GdataConversation
 GdataCore
