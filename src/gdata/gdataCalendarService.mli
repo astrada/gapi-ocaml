@@ -81,7 +81,7 @@ val retrieve_events :
   ?etag:string ->
   ?parameters:QueryParameters.t ->
   GdataConversation.Session.t ->
-  GdataCalendarEvent.calendar_calendarEventFeed * GdataConversation.Session.t
+  GdataCalendarEvent.Feed.t * GdataConversation.Session.t
 
 val refresh_event :
   GdataCalendarEvent.calendar_calendarEventEntry ->

@@ -755,50 +755,64 @@ let render_recurrenceException ex =
     [GdataAtom.render_bool_attribute "" "specialized" ex.cre_specialized;
      render_recurrenceExceptionEntryLink ex.cre_entry]
 
-let calendar_event_entry_to_data_model entry =
-  let entry_element =
-    (* TODO: better namespace handling *)
-    GdataAtom.render_element GdataAtom.ns_atom "entry"
-      [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" GdataCalendar.ns_gCal;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
-       GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
-       GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
-       GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cee_authors;
-       GdataAtom.render_content entry.cee_content;
-       GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.cee_contributors;
-       GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cee_id;
-       GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cee_published;
-       GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cee_updated;
-       GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.cee_edited;
-       GdataCalendar.Comments.render_comments entry.cee_comments;
-       GdataAtom.render_element_list GdataCalendar.render_extendedProperty entry.cee_extendedProperties;
-       GdataAtom.render_element_list GdataCalendar.render_link entry.cee_links;
-       GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
-       GdataAtom.render_element_list GdataCalendar.render_where entry.cee_where;
-       GdataAtom.render_element_list GdataCalendar.render_who entry.cee_who;
-       GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cee_icalUID;
-       GdataAtom.render_bool_value GdataCalendar.ns_gCal "privateCopy" entry.cee_privateCopy;
-       GdataAtom.render_bool_value GdataCalendar.ns_gCal "quickadd" entry.cee_quickAdd;
-       GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cee_sequenceNumber;
-       GdataAtom.render_text_construct "title" entry.cee_title;
-       GdataAtom.render_category
-         { GdataAtom.empty_category with
-               GdataAtom.c_scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
-               GdataAtom.c_term = entry.cee_eventKind.GdataCalendar.k_term };
-       GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
-       GdataCalendar.render_originalEvent entry.cee_originalEvent;
-       GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;
-       GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cee_transparency;
-       GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cee_visibility;
-       GdataAtom.render_element_list GdataCalendar.render_when entry.cee_when;
-       GdataAtom.render_bool_value GdataCalendar.ns_gCal "anyoneCanAddSelf" entry.cee_anyoneCanAddSelf;
-       GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanInviteOthers" entry.cee_guestsCanInviteOthers;
-       GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanModify" entry.cee_guestsCanModify;
-       GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanSeeGuests" entry.cee_guestsCanSeeGuests;
-       entry.cee_extensions]
-  in
+let render_entry entry =
+  (* TODO: better namespace handling *)
+  GdataAtom.render_element GdataAtom.ns_atom "entry"
+    [GdataAtom.render_attribute Xmlm.ns_xmlns "xmlns" GdataAtom.ns_atom;
+     GdataAtom.render_attribute Xmlm.ns_xmlns "gCal" GdataCalendar.ns_gCal;
+     GdataAtom.render_attribute Xmlm.ns_xmlns "gd" GdataAtom.ns_gd;
+     GdataAtom.render_attribute Xmlm.ns_xmlns "app" GdataAtom.ns_app;
+     GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
+     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cee_authors;
+     GdataAtom.render_content entry.cee_content;
+     GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.cee_contributors;
+     GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cee_id;
+     GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cee_published;
+     GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cee_updated;
+     GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.cee_edited;
+     GdataCalendar.Comments.render_comments entry.cee_comments;
+     GdataAtom.render_element_list GdataCalendar.render_extendedProperty entry.cee_extendedProperties;
+     GdataAtom.render_element_list GdataCalendar.render_link entry.cee_links;
+     GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
+     GdataAtom.render_element_list GdataCalendar.render_where entry.cee_where;
+     GdataAtom.render_element_list GdataCalendar.render_who entry.cee_who;
+     GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cee_icalUID;
+     GdataAtom.render_bool_value GdataCalendar.ns_gCal "privateCopy" entry.cee_privateCopy;
+     GdataAtom.render_bool_value GdataCalendar.ns_gCal "quickadd" entry.cee_quickAdd;
+     GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cee_sequenceNumber;
+     GdataAtom.render_text_construct "title" entry.cee_title;
+     GdataAtom.render_category
+       { GdataAtom.empty_category with
+             GdataAtom.c_scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
+             GdataAtom.c_term = entry.cee_eventKind.GdataCalendar.k_term };
+     GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
+     GdataCalendar.render_originalEvent entry.cee_originalEvent;
+     GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;
+     GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cee_transparency;
+     GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cee_visibility;
+     GdataAtom.render_element_list GdataCalendar.render_when entry.cee_when;
+     GdataAtom.render_bool_value GdataCalendar.ns_gCal "anyoneCanAddSelf" entry.cee_anyoneCanAddSelf;
+     GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanInviteOthers" entry.cee_guestsCanInviteOthers;
+     GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanModify" entry.cee_guestsCanModify;
+     GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanSeeGuests" entry.cee_guestsCanSeeGuests;
+     entry.cee_extensions]
 
+let calendar_event_entry_to_data_model entry =
+  let entry_element = render_entry entry in
     List.hd entry_element
 (* END Calendar event feed: rendering *)
+
+module Entry =
+struct
+  type t = calendar_calendarEventEntry
+
+  let empty = empty_eventEntry
+
+  let to_xml_data_model = render_entry
+
+  let of_xml_data_model = parse_entry
+
+end
+
+module Feed = GdataAtom.MakeFeed(Entry)(GdataCalendar.Link)
 

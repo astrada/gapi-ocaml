@@ -72,28 +72,6 @@ type calendar_calendarEventEntry = {
 
 val empty_eventEntry : calendar_calendarEventEntry
 
-type calendar_calendarEventFeed = {
-  cef_etag : string;
-  cef_kind : string;
-  cef_authors : GdataAtom.atom_author list;
-  cef_contributors : GdataAtom.atom_contributor list;
-  cef_generator : GdataAtom.atom_generator;
-  cef_id : GdataAtom.atom_id;
-  cef_updated : GdataAtom.atom_updated;
-  cef_entries : calendar_calendarEventEntry list;
-  cef_links : GdataCalendar.calendar_calendarLink list;
-  cef_timezone : GdataCalendar.calendar_timeZoneProperty;
-  cef_timesCleaned : GdataCalendar.calendar_timesCleanedProperty;
-  cef_subtitle : GdataAtom.atom_textConstruct;
-  cef_title : GdataAtom.atom_textConstruct;
-  cef_eventKind : GdataCalendar.gdata_kind;
-  cef_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
-  cef_startIndex : GdataAtom.opensearch_startIndex;
-  cef_totalResults : GdataAtom.opensearch_totalResults
-}
-
-val empty_eventFeed : calendar_calendarEventFeed
-
 val parse_recurrenceExceptionEntry :
   calendar_calendarRecurrenceExceptionEntry ->
   GdataCore.xml_data_model ->
@@ -103,10 +81,6 @@ val parse_recurrenceException :
   calendar_calendarRecurrenceException ->
   GdataCore.xml_data_model ->
   calendar_calendarRecurrenceException
-
-val parse_calendar_event_feed :
-  GdataCore.xml_data_model ->
-  calendar_calendarEventFeed
 
 val parse_calendar_event_entry :
   GdataCore.xml_data_model ->
@@ -123,4 +97,50 @@ val render_recurrenceException :
 val calendar_event_entry_to_data_model :
   calendar_calendarEventEntry ->
   GdataCore.xml_data_model
+
+module Entry :
+sig
+  type t = calendar_calendarEventEntry
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module Feed :
+sig
+  type t = GdataAtom.MakeFeed(Entry)(GdataCalendar.Link).t = {
+    f_etag : string;
+    f_kind : string;
+    f_authors : GdataAtom.atom_author list;
+    f_categories : GdataAtom.atom_category list;
+    f_contributors : GdataAtom.atom_contributor list;
+    f_generator : GdataAtom.atom_generator;
+    f_icon : GdataAtom.atom_icon;
+    f_id : GdataAtom.atom_id;
+    f_updated : GdataAtom.atom_updated;
+    f_entries : Entry.t list;
+    f_links : GdataCalendar.Link.t list;
+    f_logo : GdataAtom.atom_logo;
+    f_rights : GdataAtom.atom_textConstruct;
+    f_subtitle : GdataAtom.atom_textConstruct;
+    f_title : GdataAtom.atom_textConstruct;
+    f_totalResults : GdataAtom.opensearch_totalResults;
+    f_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
+    f_startIndex : GdataAtom.opensearch_startIndex;
+    f_extensions : GdataCore.xml_data_model list
+  }
+
+  val empty : t
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val parse_feed : GdataCore.xml_data_model -> t
+
+end
 

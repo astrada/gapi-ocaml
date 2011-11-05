@@ -95,7 +95,7 @@ let parse_calendar_entry =
   GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry
 
 let parse_event_feed =
-  GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_feed
+  GdataRequest.parse_xml_response GdataCalendarEvent.Feed.parse_feed
 
 let parse_event_entry =
   GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry

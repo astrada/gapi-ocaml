@@ -177,16 +177,16 @@ let test_parse_calendar_event_feed () =
   let ch = open_in "test/data/event_feed.xml" in
   let feed = GdataRequest.parse_xml
                (fun () -> input_byte ch)
-               GdataCalendarEvent.parse_calendar_event_feed in
+               GdataCalendarEvent.Feed.parse_feed in
     assert_equal ~msg:"feed author"
       "Jo March"
-      (List.hd feed.GdataCalendarEvent.cef_authors).GdataAtom.a_name;
+      (List.hd feed.GdataCalendarEvent.Feed.f_authors).GdataAtom.a_name;
     assert_equal ~msg:"feed title"
       "Jo March"
-      feed.GdataCalendarEvent.cef_title.GdataAtom.tc_value;
+      feed.GdataCalendarEvent.Feed.f_title.GdataAtom.tc_value;
     assert_equal ~msg:"entry count"
       1
-      (List.length feed.GdataCalendarEvent.cef_entries)
+      (List.length feed.GdataCalendarEvent.Feed.f_entries)
 
 let test_parse_acl_feed () =
   let ch = open_in "test/data/acl_feed.xml" in

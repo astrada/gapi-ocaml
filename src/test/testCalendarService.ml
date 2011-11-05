@@ -157,7 +157,7 @@ let test_retrieve_events () =
        let (feed, session) = GdataCalendarService.retrieve_events session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/private/full"
-           feed.GdataCalendarEvent.cef_id;
+           feed.GdataCalendarEvent.Feed.f_id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GdataConversation.Session.etag)
@@ -181,7 +181,7 @@ let test_create_new_event () =
              "Created entry id not found in event feed"
              (List.exists
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
-                feed.GdataCalendarEvent.cef_entries)) 
+                feed.GdataCalendarEvent.Feed.f_entries)) 
 
 let test_update_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
@@ -225,7 +225,7 @@ let test_retrieve_events_with_parameters () =
        in
          assert_equal
            0
-           (List.length feed.GdataCalendarEvent.cef_entries))
+           (List.length feed.GdataCalendarEvent.Feed.f_entries))
 
 let test_create_quick_add_event () =
   let entry =
@@ -278,7 +278,7 @@ let test_create_recurring_event () =
              "Created entry id not found in event feed"
              (List.exists
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
-                feed.GdataCalendarEvent.cef_entries))
+                feed.GdataCalendarEvent.Feed.f_entries))
 
 let test_retrieve_acl () =
   TestHelper.test_request
