@@ -22,7 +22,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_transparency : GdataCalendar.gdata_transparency;
   cree_visibility : GdataCalendar.gdata_visibility;
   cree_when : GdataCalendar.gdata_when list;
-  cree_extensions : (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  cree_extensions : GdataCore.xml_data_model list
 }
 
 let empty_recurrenceExceptionEntry = {
@@ -95,7 +95,7 @@ type calendar_calendarEventEntry = {
   cee_guestsCanInviteOthers : bool;
   cee_guestsCanModify : bool;
   cee_guestsCanSeeGuests : bool;
-  cee_extensions : (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  cee_extensions : GdataCore.xml_data_model list
 }
 
 let empty_eventEntry = {

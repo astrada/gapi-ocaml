@@ -194,7 +194,7 @@ type calendar_calendarEntry = {
   ce_timesCleaned : calendar_timesCleanedProperty;
   ce_summary : GdataAtom.atom_textConstruct;
   ce_title : GdataAtom.atom_textConstruct;
-  ce_extensions : (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  ce_extensions : GdataCore.xml_data_model list
 }
 
 let empty_entry = {
@@ -219,38 +219,6 @@ let empty_entry = {
   ce_summary = GdataAtom.empty_text;
   ce_title = GdataAtom.empty_text;
   ce_extensions = []
-}
-
-type calendar_calendarFeed = {
-  cf_etag : string;
-  cf_kind : string;
-  cf_authors : GdataAtom.atom_author list;
-  cf_categories : GdataAtom.atom_category list;
-  cf_contributors : GdataAtom.atom_contributor list;
-  cf_generator : GdataAtom.atom_generator;
-  cf_id : GdataAtom.atom_id;
-  cf_updated : GdataAtom.atom_updated;
-  cf_entries : calendar_calendarEntry list;
-  cf_links : calendar_calendarLink list;
-  cf_title : GdataAtom.atom_textConstruct;
-  cf_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
-  cf_startIndex : GdataAtom.opensearch_startIndex
-}
-
-let empty_feed = {
-  cf_etag = "";
-  cf_kind = "";
-  cf_authors = [];
-  cf_categories = [];
-  cf_contributors = [];
-  cf_generator = GdataAtom.empty_generator;
-  cf_id = "";
-  cf_updated = GdataDate.epoch;
-  cf_entries = [];
-  cf_links = [];
-  cf_title = GdataAtom.empty_text;
-  cf_itemsPerPage = 0;
-  cf_startIndex = 0
 }
 (* END Calendar data types *)
 
@@ -621,116 +589,6 @@ let parse_entry entry tree =
     | extension ->
         let extensions = extension :: entry.ce_extensions in
           { entry with ce_extensions = extensions }
-
-let parse_feed feed tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
-        { feed with cf_etag = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
-        { feed with cf_kind = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "author"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
-          (fun author -> { feed with cf_authors = author :: feed.cf_authors })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "category"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          GdataAtom.parse_category
-          GdataAtom.empty_category
-          (fun category -> { feed with cf_categories = category :: feed.cf_categories })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "contributor"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
-          (fun contributor -> { feed with cf_contributors =
-                                  contributor :: feed.cf_contributors })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "generator"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          GdataAtom.parse_generator
-          GdataAtom.empty_generator
-          (fun generator -> { feed with cf_generator = generator })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "id"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
-        { feed with cf_id = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "updated"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
-        { feed with cf_updated = GdataDate.of_string v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "entry"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          parse_entry
-          empty_entry
-          (fun entry -> { feed with cf_entries = entry :: feed.cf_entries })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "link"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          parse_link
-          empty_link
-          (fun link -> { feed with cf_links = link :: feed.cf_links })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "title"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          GdataAtom.parse_text
-          GdataAtom.empty_text
-          (fun title -> { feed with cf_title = title })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "itemsPerPage"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_openSearch ->
-        { feed with cf_itemsPerPage = int_of_string v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "startIndex"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_openSearch ->
-        { feed with cf_startIndex = int_of_string v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name _; `Namespace ns],
-         _) when ns = Xmlm.ns_xmlns ->
-        feed
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_calendar_feed tree =
-  let parse_root tree =
-    match tree with
-        GdataCore.AnnotatedTree.Node
-          ([`Element; `Name "feed"; `Namespace ns],
-           cs) when ns = GdataAtom.ns_atom ->
-          GdataAtom.parse_children
-            parse_feed
-            empty_feed
-            Std.identity
-            cs
-      | e ->
-          GdataUtils.unexpected e
-  in
-    parse_root tree
 
 let parse_calendar_entry tree =
   let parse_root tree =

@@ -12,8 +12,6 @@ val is_weak_etag : string -> bool
 
 val merge_query_string : (string * string) list -> string -> string
 
-val unexpected :
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-  'a
+val unexpected : GdataCore.xml_data_model -> 'a
 
 

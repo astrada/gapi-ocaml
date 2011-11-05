@@ -128,19 +128,17 @@ sig
 
 end
 
+type xml_data_model = (Metadata.xml, Value.t) AnnotatedTree.t
+
 module type DATA =
 sig
   type t
 
   val empty : t
 
-  val to_xml_data_model :
-    t ->
-    (Metadata.xml, Value.t) AnnotatedTree.t list
+  val to_xml_data_model : t -> xml_data_model list
 
-  val of_xml_data_model :
-    t ->
-    (Metadata.xml, Value.t) AnnotatedTree.t -> t
+  val of_xml_data_model : t -> xml_data_model -> t
 
 end
 

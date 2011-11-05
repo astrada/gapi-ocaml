@@ -12,9 +12,7 @@ sig
     ce_links : Link.t list;
     ce_title : GdataAtom.atom_textConstruct;
     ce_category : GdataAtom.atom_category;
-    ce_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
+    ce_extensions : GdataCore.xml_data_model list
   }
 
   val empty_commentEntry : commentEntry
@@ -33,9 +31,7 @@ sig
     cf_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
     cf_startIndex : GdataAtom.opensearch_startIndex;
     cf_totalResults : GdataAtom.opensearch_totalResults;
-    cf_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+    cf_extensions : GdataCore.xml_data_model list
   }
 
   val empty_commentFeed : commentFeed
@@ -52,24 +48,24 @@ sig
 
   val parse_comments :
     comments ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+    GdataCore.xml_data_model ->
     comments
 
   val parse_comment_feed :
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+    GdataCore.xml_data_model ->
     commentFeed
 
   val parse_comment_entry :
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+    GdataCore.xml_data_model ->
     commentEntry
 
   val comment_entry_to_data_model :
     commentEntry ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t
+    GdataCore.xml_data_model
 
   val render_comments :
     comments ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+    GdataCore.xml_data_model list
 
 end
 

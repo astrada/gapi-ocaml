@@ -8,25 +8,21 @@ type request_type =
 
 val render_xml :
   Buffer.t ->
-  (GdataCore.Metadata.xml,
-   GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   unit
 
 val data_to_xml_string :
   ?buffer_size:int ->
-  (GdataCore.Metadata.xml,
-   GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   string
 
 val parse_xml :
   (unit -> int) ->
-  ((GdataCore.Metadata.xml,
-    GdataCore.Value.t) GdataCore.AnnotatedTree.t -> 'a) ->
+  (GdataCore.xml_data_model -> 'a) ->
   'a
 
 val parse_xml_response :
-  ((GdataCore.Metadata.xml,
-    GdataCore.Value.t) GdataCore.AnnotatedTree.t -> 'a) ->
+  (GdataCore.xml_data_model -> 'a) ->
   GdataPipe.OcamlnetPipe.t ->
   'a
 

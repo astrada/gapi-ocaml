@@ -26,13 +26,9 @@ type calendar_aclEntry = {
 
 val empty_entry : calendar_aclEntry
 
-val parse_acl_entry :
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-  calendar_aclEntry
+val parse_acl_entry : GdataCore.xml_data_model -> calendar_aclEntry
 
-val acl_entry_to_data_model :
-  calendar_aclEntry ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t
+val acl_entry_to_data_model : calendar_aclEntry -> GdataCore.xml_data_model
 
 module Entry :
 sig
@@ -40,14 +36,9 @@ sig
 
   val empty : t
 
-  val to_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
 
-  val of_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-    t
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
 end
 
@@ -72,25 +63,16 @@ sig
     f_totalResults : GdataAtom.opensearch_totalResults;
     f_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
     f_startIndex : GdataAtom.opensearch_startIndex;
-    f_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
+    f_extensions : GdataCore.xml_data_model list
   }
 
   val empty : t
 
-  val of_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-    t
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
-  val to_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
 
-  val parse_feed :
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-    t
+  val parse_feed : GdataCore.xml_data_model -> t
 
 end
 

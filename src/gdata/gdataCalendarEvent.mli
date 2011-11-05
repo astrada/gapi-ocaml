@@ -19,9 +19,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_transparency : GdataCalendar.gdata_transparency;
   cree_visibility : GdataCalendar.gdata_visibility;
   cree_when : GdataCalendar.gdata_when list;
-  cree_extensions :
-    (GdataCore.Metadata.xml,
-     GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  cree_extensions : GdataCore.xml_data_model list
 }
 
 val empty_recurrenceExceptionEntry : calendar_calendarRecurrenceExceptionEntry
@@ -69,9 +67,7 @@ type calendar_calendarEventEntry = {
   cee_guestsCanInviteOthers : bool;
   cee_guestsCanModify : bool;
   cee_guestsCanSeeGuests : bool;
-  cee_extensions :
-    (GdataCore.Metadata.xml,
-     GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  cee_extensions : GdataCore.xml_data_model list
 }
 
 val empty_eventEntry : calendar_calendarEventEntry
@@ -100,31 +96,31 @@ val empty_eventFeed : calendar_calendarEventFeed
 
 val parse_recurrenceExceptionEntry :
   calendar_calendarRecurrenceExceptionEntry ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   calendar_calendarRecurrenceExceptionEntry
 
 val parse_recurrenceException :
   calendar_calendarRecurrenceException ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   calendar_calendarRecurrenceException
 
 val parse_calendar_event_feed :
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   calendar_calendarEventFeed
 
 val parse_calendar_event_entry :
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   calendar_calendarEventEntry
 
 val render_recurrenceExceptionEntry :
   calendar_calendarRecurrenceExceptionEntry ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_recurrenceException :
   calendar_calendarRecurrenceException ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val calendar_event_entry_to_data_model :
   calendar_calendarEventEntry ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t
+  GdataCore.xml_data_model
 

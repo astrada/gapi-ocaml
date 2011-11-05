@@ -83,32 +83,32 @@ val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
 
 val parse_category :
   atom_category ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   atom_category
 
 val parse_text :
   atom_textConstruct ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   atom_textConstruct
 
 val parse_author :
   atom_author ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   atom_author
 
 val parse_generator :
   atom_generator ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   atom_generator
 
 val parse_content :
   atom_content ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   atom_content
 
 val parse_link :
   atom_link ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   atom_link
 
 val render_attribute :
@@ -116,7 +116,7 @@ val render_attribute :
   string ->
   string ->
   string ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_generic_attribute :
   ('a -> string) ->
@@ -124,58 +124,58 @@ val render_generic_attribute :
   string ->
   string ->
   'a ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_int_attribute :
   ?default:int ->
   string ->
   string ->
   int ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_bool_attribute :
   ?default:bool ->
   string ->
   string ->
   bool ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_date_attribute :
   ?default:GdataDate.t ->
   string ->
   string ->
   GdataDate.t ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_text :
   ?default:string ->
   string ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_text_element :
   ?default:string ->
   string ->
   string ->
   string ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_int_element :
   string ->
   string ->
   int ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_date_element :
   string ->
   string ->
   GdataDate.t ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_element :
   string ->
   string ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list list ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list list ->
+  GdataCore.xml_data_model list
 
 val render_element_list : ('a -> 'b list) -> 'a list -> 'b list
 
@@ -185,47 +185,47 @@ val render_value :
   string ->
   string ->
   string ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_int_value :
   ?attribute:string ->
   string ->
   string ->
   int ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_bool_value :
   ?attribute:string ->
   string ->
   string ->
   bool ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_author :
   string ->
   atom_author ->
-  (GdataCore.Metadata.xml , GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_category :
   atom_category ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_content :
   atom_content ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_text_construct :
   string ->
   atom_textConstruct ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_generator :
   atom_generator ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 val render_link :
   atom_link ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  GdataCore.xml_data_model list
 
 module Rel :
 sig
@@ -250,13 +250,9 @@ sig
 
   val empty : t
 
-  val to_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
 
-  val of_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t -> t
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
 end
 
@@ -283,25 +279,16 @@ sig
     f_totalResults : opensearch_totalResults;
     f_itemsPerPage : opensearch_itemsPerPage;
     f_startIndex : opensearch_startIndex;
-    f_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
+    f_extensions : GdataCore.xml_data_model list
   }
 
   val empty : t
 
-  val of_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-    t
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
-  val to_xml_data_model :
-    t ->
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
 
-  val parse_feed :
-    (GdataCore.Metadata.xml, GdataCore.Value.t) GdataCore.AnnotatedTree.t ->
-    t
+  val parse_feed : GdataCore.xml_data_model -> t
 
 end
 

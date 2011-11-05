@@ -14,9 +14,7 @@ struct
     ce_links : Link.t list;
     ce_title : GdataAtom.atom_textConstruct;
     ce_category : GdataAtom.atom_category;
-    ce_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+    ce_extensions : GdataCore.xml_data_model list
   }
 
   let empty_commentEntry = {
@@ -47,9 +45,7 @@ struct
     cf_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
     cf_startIndex : GdataAtom.opensearch_startIndex;
     cf_totalResults : GdataAtom.opensearch_totalResults;
-    cf_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list
+    cf_extensions : GdataCore.xml_data_model list
   }
 
   let empty_commentFeed = {

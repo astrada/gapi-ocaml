@@ -89,7 +89,7 @@ end
 let version = "2"
 
 let parse_calendar_feed =
-  GdataRequest.parse_xml_response GdataCalendar.parse_calendar_feed
+  GdataRequest.parse_xml_response GdataCalendar.Feed.parse_feed
 
 let parse_calendar_entry =
   GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry

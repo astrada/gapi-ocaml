@@ -430,9 +430,7 @@ struct
     f_totalResults : opensearch_totalResults;
     f_itemsPerPage : opensearch_itemsPerPage;
     f_startIndex : opensearch_startIndex;
-    f_extensions :
-      (GdataCore.Metadata.xml,
-       GdataCore.Value.t) GdataCore.AnnotatedTree.t list;
+    f_extensions : GdataCore.xml_data_model list
   }
 
   let empty = {

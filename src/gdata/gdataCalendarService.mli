@@ -41,13 +41,13 @@ val all_calendars :
   ?url:string ->
   ?etag:string ->
   GdataConversation.Session.t ->
-  GdataCalendar.calendar_calendarFeed * GdataConversation.Session.t
+  GdataCalendar.Feed.t * GdataConversation.Session.t
 
 val own_calendars :
   ?url:string ->
   ?etag:string ->
   GdataConversation.Session.t ->
-  GdataCalendar.calendar_calendarFeed * GdataConversation.Session.t
+  GdataCalendar.Feed.t * GdataConversation.Session.t
 
 val refresh_calendar :
   GdataCalendar.calendar_calendarEntry ->
