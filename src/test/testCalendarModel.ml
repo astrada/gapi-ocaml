@@ -17,10 +17,10 @@ let test_parse_calendar_feed () =
                GdataCalendar.Feed.parse_feed in
     assert_equal ~msg:"feed author"
       "Coach"
-      (List.hd feed.GdataCalendar.Feed.f_authors).GdataAtom.a_name;
+      (List.hd feed.GdataCalendar.Feed.authors).GdataAtom.a_name;
     assert_equal ~msg:"feed title"
       "Coach's Calendar List"
-      feed.GdataCalendar.Feed.f_title.GdataAtom.tc_value
+      feed.GdataCalendar.Feed.title.GdataAtom.tc_value
 
 let test_parse_calendar_entry () =
   let ch = open_in "test/data/calendar_entry.xml" in
@@ -180,26 +180,26 @@ let test_parse_calendar_event_feed () =
                GdataCalendarEvent.Feed.parse_feed in
     assert_equal ~msg:"feed author"
       "Jo March"
-      (List.hd feed.GdataCalendarEvent.Feed.f_authors).GdataAtom.a_name;
+      (List.hd feed.GdataCalendarEvent.Feed.authors).GdataAtom.a_name;
     assert_equal ~msg:"feed title"
       "Jo March"
-      feed.GdataCalendarEvent.Feed.f_title.GdataAtom.tc_value;
+      feed.GdataCalendarEvent.Feed.title.GdataAtom.tc_value;
     assert_equal ~msg:"entry count"
       1
-      (List.length feed.GdataCalendarEvent.Feed.f_entries)
+      (List.length feed.GdataCalendarEvent.Feed.entries)
 
 let test_parse_acl_feed () =
   let ch = open_in "test/data/acl_feed.xml" in
   let feed = GdataRequest.parse_xml
                (fun () -> input_byte ch)
                GdataACL.Feed.parse_feed in
-  let entry = List.nth feed.GdataACL.Feed.f_entries 1 in
+  let entry = List.nth feed.GdataACL.Feed.entries 1 in
     assert_equal ~msg:"feed title"
       "Elizabeth Bennet's access control list"
-      feed.GdataACL.Feed.f_title.GdataAtom.tc_value;
+      feed.GdataACL.Feed.title.GdataAtom.tc_value;
     assert_equal ~msg:"entry count"
       2
-      (List.length feed.GdataACL.Feed.f_entries);
+      (List.length feed.GdataACL.Feed.entries);
     assert_equal ~msg:"entry scope type"
       "user"
       (entry.GdataACL.ae_scope.GdataACL.as_type);
@@ -212,7 +212,7 @@ let test_acl_entry_to_data_model () =
   let feed = GdataRequest.parse_xml
                (fun () -> input_byte ch)
                GdataACL.Feed.parse_feed in
-  let entry = List.nth feed.GdataACL.Feed.f_entries 1 in
+  let entry = List.nth feed.GdataACL.Feed.entries 1 in
   let tree = GdataACL.acl_entry_to_data_model entry in
     TestHelper.assert_equal_file
       "test/data/test_acl_entry_to_data_model.xml"

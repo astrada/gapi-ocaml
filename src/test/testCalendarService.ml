@@ -50,7 +50,7 @@ let test_all_calendars () =
        let (feed, session) = GdataCalendarService.all_calendars session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/allcalendars/full"
-           feed.GdataCalendar.Feed.f_id;
+           feed.GdataCalendar.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GdataConversation.Session.etag)
@@ -62,7 +62,7 @@ let test_own_calendars () =
        let (feed, session) = GdataCalendarService.own_calendars session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/owncalendars/full"
-           feed.GdataCalendar.Feed.f_id;
+           feed.GdataCalendar.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GdataConversation.Session.etag)
@@ -82,7 +82,7 @@ let test_create_new_calendar () =
              "Created entry id not found in own calendars feed"
              (List.exists
                 (fun e -> e.GdataCalendar.ce_id = id)
-                feed.GdataCalendar.Feed.f_entries);
+                feed.GdataCalendar.Feed.entries);
            ignore (GdataCalendarService.delete_calendar
                      new_entry
                      session))
@@ -105,7 +105,7 @@ let test_delete_calendar () =
              "Deleted entry id found in own calendars feed"
              (List.exists
                 (fun e -> e.GdataCalendar.ce_id = id)
-                feed.GdataCalendar.Feed.f_entries))
+                feed.GdataCalendar.Feed.entries))
 
 let test_update_calendar () =
   let entry = new_calendar_entry "test_update_calendar" in
@@ -157,7 +157,7 @@ let test_retrieve_events () =
        let (feed, session) = GdataCalendarService.retrieve_events session in
          assert_equal
            "http://www.google.com/calendar/feeds/default/private/full"
-           feed.GdataCalendarEvent.Feed.f_id;
+           feed.GdataCalendarEvent.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GdataConversation.Session.etag)
@@ -181,7 +181,7 @@ let test_create_new_event () =
              "Created entry id not found in event feed"
              (List.exists
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
-                feed.GdataCalendarEvent.Feed.f_entries)) 
+                feed.GdataCalendarEvent.Feed.entries)) 
 
 let test_update_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
@@ -225,7 +225,7 @@ let test_retrieve_events_with_parameters () =
        in
          assert_equal
            0
-           (List.length feed.GdataCalendarEvent.Feed.f_entries))
+           (List.length feed.GdataCalendarEvent.Feed.entries))
 
 let test_create_quick_add_event () =
   let entry =
@@ -278,20 +278,20 @@ let test_create_recurring_event () =
              "Created entry id not found in event feed"
              (List.exists
                 (fun e -> e.GdataCalendarEvent.cee_id = id)
-                feed.GdataCalendarEvent.Feed.f_entries))
+                feed.GdataCalendarEvent.Feed.entries))
 
 let test_retrieve_acl () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (own, session) = GdataCalendarService.own_calendars session in
-       let entry = List.hd own.GdataCalendar.Feed.f_entries in
+       let entry = List.hd own.GdataCalendar.Feed.entries in
        let (feed, session) = GdataCalendarService.retrieve_acl
                                  entry
                                  session in
          TestHelper.assert_not_empty
            "Feed ID should not be empty"
-           feed.GdataACL.Feed.f_id;
+           feed.GdataACL.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GdataConversation.Session.etag)
@@ -301,7 +301,7 @@ let test_create_acl () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (own, session) = GdataCalendarService.own_calendars session in
-       let calendar_entry = List.hd own.GdataCalendar.Feed.f_entries in
+       let calendar_entry = List.hd own.GdataCalendar.Feed.entries in
        let (new_entry, session) =
          GdataCalendarService.create_acl acl_entry calendar_entry session in
        let id = new_entry.GdataACL.ae_id in
@@ -315,14 +315,14 @@ let test_create_acl () =
            "Created entry id not found in acl feed"
            (List.exists
               (fun e -> e.GdataACL.ae_id = id)
-              feed.GdataACL.Feed.f_entries)) 
+              feed.GdataACL.Feed.entries)) 
 
 let test_update_acl () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (own, session) = GdataCalendarService.own_calendars session in
-       let calendar_entry = List.hd own.GdataCalendar.Feed.f_entries in
+       let calendar_entry = List.hd own.GdataCalendar.Feed.entries in
        let (new_entry, session) =
          GdataCalendarService.create_acl acl_entry calendar_entry session in
        let updated_entry =

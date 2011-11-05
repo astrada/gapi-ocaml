@@ -28,25 +28,25 @@ sig
   module Feed :
   sig
     type t = GdataAtom.MakeFeed(Entry)(Link).t = {
-      f_etag : string;
-      f_kind : string;
-      f_authors : GdataAtom.atom_author list;
-      f_categories : GdataAtom.atom_category list;
-      f_contributors : GdataAtom.atom_contributor list;
-      f_generator : GdataAtom.atom_generator;
-      f_icon : GdataAtom.atom_icon;
-      f_id : GdataAtom.atom_id;
-      f_updated : GdataAtom.atom_updated;
-      f_entries : Entry.t list;
-      f_links : Link.t list;
-      f_logo : GdataAtom.atom_logo;
-      f_rights : GdataAtom.atom_textConstruct;
-      f_subtitle : GdataAtom.atom_textConstruct;
-      f_title : GdataAtom.atom_textConstruct;
-      f_totalResults : GdataAtom.opensearch_totalResults;
-      f_itemsPerPage : GdataAtom.opensearch_itemsPerPage;
-      f_startIndex : GdataAtom.opensearch_startIndex;
-      f_extensions : GdataCore.xml_data_model list
+      etag : string;
+      kind : string;
+      authors : GdataAtom.atom_author list;
+      categories : GdataAtom.atom_category list;
+      contributors : GdataAtom.atom_contributor list;
+      generator : GdataAtom.atom_generator;
+      icon : GdataAtom.atom_icon;
+      id : GdataAtom.atom_id;
+      updated : GdataAtom.atom_updated;
+      entries : Entry.t list;
+      links : Link.t list;
+      logo : GdataAtom.atom_logo;
+      rights : GdataAtom.atom_textConstruct;
+      subtitle : GdataAtom.atom_textConstruct;
+      title : GdataAtom.atom_textConstruct;
+      totalResults : GdataAtom.opensearch_totalResults;
+      itemsPerPage : GdataAtom.opensearch_itemsPerPage;
+      startIndex : GdataAtom.opensearch_startIndex;
+      extensions : GdataCore.xml_data_model list
     }
 
     val empty : t

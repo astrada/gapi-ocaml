@@ -412,47 +412,47 @@ module MakeFeed
   (Link : GdataCore.DATA) =
 struct
   type t = {
-    f_etag : string;
-    f_kind : string;
-    f_authors : atom_author list;
-    f_categories : atom_category list;
-    f_contributors : atom_contributor list;
-    f_generator : atom_generator;
-    f_icon : atom_icon;
-    f_id : atom_id;
-    f_updated : atom_updated;
-    f_entries : Entry.t list;
-    f_links : Link.t list;
-    f_logo : atom_logo;
-    f_rights : atom_textConstruct;
-    f_subtitle : atom_textConstruct;
-    f_title : atom_textConstruct;
-    f_totalResults : opensearch_totalResults;
-    f_itemsPerPage : opensearch_itemsPerPage;
-    f_startIndex : opensearch_startIndex;
-    f_extensions : GdataCore.xml_data_model list
+    etag : string;
+    kind : string;
+    authors : atom_author list;
+    categories : atom_category list;
+    contributors : atom_contributor list;
+    generator : atom_generator;
+    icon : atom_icon;
+    id : atom_id;
+    updated : atom_updated;
+    entries : Entry.t list;
+    links : Link.t list;
+    logo : atom_logo;
+    rights : atom_textConstruct;
+    subtitle : atom_textConstruct;
+    title : atom_textConstruct;
+    totalResults : opensearch_totalResults;
+    itemsPerPage : opensearch_itemsPerPage;
+    startIndex : opensearch_startIndex;
+    extensions : GdataCore.xml_data_model list
   }
 
   let empty = {
-    f_etag = "";
-    f_kind = "";
-    f_authors = [];
-    f_categories = [];
-    f_contributors = [];
-    f_generator = empty_generator;
-    f_icon = "";
-    f_id = "";
-    f_updated = GdataDate.epoch;
-    f_entries = [];
-    f_links = [];
-    f_logo = "";
-    f_rights = empty_text;
-    f_subtitle = empty_text;
-    f_title = empty_text;
-    f_totalResults = 0;
-    f_itemsPerPage = 0;
-    f_startIndex = 0;
-    f_extensions = []
+    etag = "";
+    kind = "";
+    authors = [];
+    categories = [];
+    contributors = [];
+    generator = empty_generator;
+    icon = "";
+    id = "";
+    updated = GdataDate.epoch;
+    entries = [];
+    links = [];
+    logo = "";
+    rights = empty_text;
+    subtitle = empty_text;
+    title = empty_text;
+    totalResults = 0;
+    itemsPerPage = 0;
+    startIndex = 0;
+    extensions = []
   }
 
   let of_xml_data_model feed tree =
@@ -460,18 +460,18 @@ struct
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
            GdataCore.Value.String v) when ns = ns_gd ->
-          { feed with f_etag = v }
+          { feed with etag = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
            GdataCore.Value.String v) when ns = ns_gd ->
-          { feed with f_kind = v }
+          { feed with kind = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
             parse_author
             empty_author
-            (fun author -> { feed with f_authors = author :: feed.f_authors })
+            (fun author -> { feed with authors = author :: feed.authors })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
@@ -479,7 +479,7 @@ struct
           parse_children
             parse_category
             empty_category
-            (fun category -> { feed with f_categories = category :: feed.f_categories })
+            (fun category -> { feed with categories = category :: feed.categories })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
@@ -487,8 +487,8 @@ struct
           parse_children
             parse_author
             empty_author
-            (fun contributor -> { feed with f_contributors =
-                                    contributor :: feed.f_contributors })
+            (fun contributor -> { feed with contributors =
+                                    contributor :: feed.contributors })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "generator"; `Namespace ns],
@@ -496,30 +496,30 @@ struct
           parse_children
             parse_generator
             empty_generator
-            (fun generator -> { feed with f_generator = generator })
+            (fun generator -> { feed with generator = generator })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "icon"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { feed with f_icon = v }
+          { feed with icon = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { feed with f_id = v }
+          { feed with id = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { feed with f_updated = GdataDate.of_string v }
+          { feed with updated = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "entry"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
             Entry.of_xml_data_model
             Entry.empty
-            (fun entry -> { feed with f_entries = entry :: feed.f_entries })
+            (fun entry -> { feed with entries = entry :: feed.entries })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
@@ -527,20 +527,20 @@ struct
           parse_children
             Link.of_xml_data_model
             Link.empty
-            (fun link -> { feed with f_links = link :: feed.f_links })
+            (fun link -> { feed with links = link :: feed.links })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "logo"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { feed with f_logo = v }
+          { feed with logo = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "rights"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
             parse_text
             empty_text
-            (fun rights -> { feed with f_rights = rights })
+            (fun rights -> { feed with rights = rights })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "subtitle"; `Namespace ns],
@@ -548,7 +548,7 @@ struct
           parse_children
             parse_text
             empty_text
-            (fun subtitle -> { feed with f_subtitle = subtitle })
+            (fun subtitle -> { feed with subtitle = subtitle })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
@@ -556,56 +556,56 @@ struct
           parse_children
             parse_text
             empty_text
-            (fun title -> { feed with f_title = title })
+            (fun title -> { feed with title = title })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "totalResults"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
-          { feed with f_totalResults = int_of_string v }
+          { feed with totalResults = int_of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "itemsPerPage"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
-          { feed with f_itemsPerPage = int_of_string v }
+          { feed with itemsPerPage = int_of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "startIndex"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
-          { feed with f_startIndex = int_of_string v }
+          { feed with startIndex = int_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
           feed
       | extension ->
-          let extensions = extension :: feed.f_extensions in
-            { feed with f_extensions = extensions }
+          let extensions = extension :: feed.extensions in
+            { feed with extensions = extensions }
 
   let to_xml_data_model feed =
     render_element ns_atom "feed"
-      [render_attribute Xmlm.ns_xmlns "xmlns" ns_atom;
+      [(*render_attribute Xmlm.ns_xmlns "xmlns" ns_atom;*)
        (* TODO: render_attribute Xmlm.ns_xmlns "gCal" ns_gCal;*)
-       render_attribute Xmlm.ns_xmlns "gd" ns_gd;
-       render_attribute Xmlm.ns_xmlns "app" ns_app;
-       render_attribute ns_gd "etag" feed.f_etag;
-       render_attribute ns_gd "kind" feed.f_kind;
-       render_element_list (render_author "author") feed.f_authors;
-       render_element_list render_category feed.f_categories;
-       render_element_list (render_author "contributor") feed.f_contributors;
-       render_generator feed.f_generator;
-       render_text_element ns_atom "icon" feed.f_icon;
-       render_text_element ns_atom "id" feed.f_id;
-       render_date_element ns_atom "updated" feed.f_updated;
-       render_element_list Entry.to_xml_data_model feed.f_entries;
-       render_element_list Link.to_xml_data_model feed.f_links;
-       render_text_element ns_atom "logo" feed.f_logo;
-       render_text_construct "rights" feed.f_rights;
-       render_text_construct "title" feed.f_title;
-       render_text_construct "subtitle" feed.f_subtitle;
-       render_int_element ns_openSearch "totalResults" feed.f_totalResults;
-       render_int_element ns_openSearch "itemsPerPage" feed.f_itemsPerPage;
-       render_int_element ns_openSearch "startIndex" feed.f_startIndex;
-       feed.f_extensions]
+       (*render_attribute Xmlm.ns_xmlns "gd" ns_gd;*)
+       (*render_attribute Xmlm.ns_xmlns "app" ns_app;*)
+       render_attribute ns_gd "etag" feed.etag;
+       render_attribute ns_gd "kind" feed.kind;
+       render_element_list (render_author "author") feed.authors;
+       render_element_list render_category feed.categories;
+       render_element_list (render_author "contributor") feed.contributors;
+       render_generator feed.generator;
+       render_text_element ns_atom "icon" feed.icon;
+       render_text_element ns_atom "id" feed.id;
+       render_date_element ns_atom "updated" feed.updated;
+       render_element_list Entry.to_xml_data_model feed.entries;
+       render_element_list Link.to_xml_data_model feed.links;
+       render_text_element ns_atom "logo" feed.logo;
+       render_text_construct "rights" feed.rights;
+       render_text_construct "title" feed.title;
+       render_text_construct "subtitle" feed.subtitle;
+       render_int_element ns_openSearch "totalResults" feed.totalResults;
+       render_int_element ns_openSearch "itemsPerPage" feed.itemsPerPage;
+       render_int_element ns_openSearch "startIndex" feed.startIndex;
+       feed.extensions]
 
   let parse_feed tree =
     let parse_root tree =

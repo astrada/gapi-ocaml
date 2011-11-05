@@ -261,25 +261,25 @@ module MakeFeed :
   functor (Link : GdataCore.DATA) ->
 sig
   type t = {
-    f_etag : string;
-    f_kind : string;
-    f_authors : atom_author list;
-    f_categories : atom_category list;
-    f_contributors : atom_contributor list;
-    f_generator : atom_generator;
-    f_icon : atom_icon;
-    f_id : atom_id;
-    f_updated : atom_updated;
-    f_entries : Entry.t list;
-    f_links : Link.t list;
-    f_logo : atom_logo;
-    f_rights : atom_textConstruct;
-    f_subtitle : atom_textConstruct;
-    f_title : atom_textConstruct;
-    f_totalResults : opensearch_totalResults;
-    f_itemsPerPage : opensearch_itemsPerPage;
-    f_startIndex : opensearch_startIndex;
-    f_extensions : GdataCore.xml_data_model list
+    etag : string;
+    kind : string;
+    authors : atom_author list;
+    categories : atom_category list;
+    contributors : atom_contributor list;
+    generator : atom_generator;
+    icon : atom_icon;
+    id : atom_id;
+    updated : atom_updated;
+    entries : Entry.t list;
+    links : Link.t list;
+    logo : atom_logo;
+    rights : atom_textConstruct;
+    subtitle : atom_textConstruct;
+    title : atom_textConstruct;
+    totalResults : opensearch_totalResults;
+    itemsPerPage : opensearch_itemsPerPage;
+    startIndex : opensearch_startIndex;
+    extensions : GdataCore.xml_data_model list
   }
 
   val empty : t
