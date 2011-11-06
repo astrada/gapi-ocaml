@@ -3,7 +3,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_kind : string;
   cree_authors : GdataAtom.Author.t list;
   cree_categories : GdataAtom.Category.t list;
-  cree_content : GdataAtom.atom_content;
+  cree_content : GdataAtom.Content.t;
   cree_contributors : GdataAtom.Contributor.t list;
   cree_id : GdataAtom.atom_id;
   cree_published : GdataAtom.atom_published;
@@ -14,7 +14,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_who : GdataCalendar.calendar_calendarWho list;
   cree_icalUID : GdataCalendar.calendar_icalUIDProperty;
   cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
-  cree_title : GdataAtom.atom_textConstruct;
+  cree_title : GdataAtom.Title.t;
   cree_eventStatus : GdataCalendar.gdata_eventStatus;
   cree_originalEvent : GdataCalendar.gdata_originalEvent;
   cree_transparency : GdataCalendar.gdata_transparency;
@@ -36,7 +36,7 @@ type calendar_calendarEventEntry = {
   cee_etag : string;
   cee_kind : string;
   cee_authors : GdataAtom.Author.t list;
-  cee_content : GdataAtom.atom_content;
+  cee_content : GdataAtom.Content.t;
   cee_contributors : GdataAtom.Contributor.t list;
   cee_id : GdataAtom.atom_id;
   cee_published : GdataAtom.atom_published;
@@ -54,8 +54,8 @@ type calendar_calendarEventEntry = {
   cee_sendEventNotifications : GdataCalendar.calendar_sendEventNotificationsProperty;
   cee_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
   cee_syncEvent : GdataCalendar.calendar_syncEventProperty;
-  cee_summary : GdataAtom.atom_textConstruct;
-  cee_title : GdataAtom.atom_textConstruct;
+  cee_summary : GdataAtom.Summary.t;
+  cee_title : GdataAtom.Title.t;
   cee_eventKind : GdataCalendar.gdata_kind;
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
   cee_originalEvent : GdataCalendar.gdata_originalEvent;

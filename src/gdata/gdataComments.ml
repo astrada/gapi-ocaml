@@ -10,13 +10,13 @@ sig
       ce_etag : string;
       ce_kind : string;
       ce_authors : GdataAtom.Author.t list;
-      ce_content : GdataAtom.atom_content;
+      ce_content : GdataAtom.Content.t;
       ce_contributors : GdataAtom.Contributor.t list;
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
       ce_links : link_t list;
-      ce_title : GdataAtom.atom_textConstruct;
+      ce_title : GdataAtom.Title.t;
       ce_category : GdataAtom.Category.t;
       ce_extensions : GdataCore.xml_data_model list
     }
@@ -77,13 +77,13 @@ struct
       ce_etag : string;
       ce_kind : string;
       ce_authors : GdataAtom.Author.t list;
-      ce_content : GdataAtom.atom_content;
+      ce_content : GdataAtom.Content.t;
       ce_contributors : GdataAtom.Contributor.t list;
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
       ce_links : Link.t list;
-      ce_title : GdataAtom.atom_textConstruct;
+      ce_title : GdataAtom.Title.t;
       ce_category : GdataAtom.Category.t;
       ce_extensions : GdataCore.xml_data_model list
     }
@@ -92,13 +92,13 @@ struct
       ce_etag = "";
       ce_kind = "";
       ce_authors = [];
-      ce_content = GdataAtom.empty_content;
+      ce_content = GdataAtom.Content.empty;
       ce_contributors = [];
       ce_id = "";
       ce_published = GdataDate.epoch;
       ce_updated = GdataDate.epoch;
       ce_links = [];
-      ce_title = GdataAtom.empty_text;
+      ce_title = GdataAtom.Title.empty;
       ce_category = GdataAtom.Category.empty;
       ce_extensions = []
     }
@@ -108,13 +108,13 @@ struct
         [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
          GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
          GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.ce_authors;
-         GdataAtom.render_content entry.ce_content;
+         GdataAtom.Content.to_xml_data_model entry.ce_content;
          GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ce_contributors;
          GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
          GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
          GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
          GdataAtom.render_element_list Link.to_xml_data_model entry.ce_links;
-         GdataAtom.render_text_construct "title" entry.ce_title;
+         GdataAtom.Title.to_xml_data_model entry.ce_title;
          GdataAtom.Category.to_xml_data_model entry.ce_category;
          entry.ce_extensions]
 
@@ -141,8 +141,8 @@ struct
             ([`Element; `Name "content"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
-              GdataAtom.parse_content
-              GdataAtom.empty_content
+              GdataAtom.Content.of_xml_data_model
+              GdataAtom.Content.empty
               (fun content -> { entry with ce_content = content })
               cs
         | GdataCore.AnnotatedTree.Node
@@ -181,8 +181,8 @@ struct
           ([`Element; `Name "title"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
-            GdataAtom.parse_text
-            GdataAtom.empty_text
+            GdataAtom.Title.of_xml_data_model
+            GdataAtom.Title.empty
             (fun title -> { entry with ce_title = title })
             cs
       | GdataCore.AnnotatedTree.Node

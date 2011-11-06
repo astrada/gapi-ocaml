@@ -255,23 +255,84 @@ struct
 
 end
 
-type atom_textConstruct = {
-  tc_src : string;
-  tc_type : string;
-  tc_lang : string;
-  tc_value : string
-}
+module type TEXTCONSTRUCT =
+sig
+  type t = {
+    tc_src : string;
+    tc_type : string;
+    tc_lang : string;
+    tc_value : string
+  }
 
-let empty_text = {
-  tc_src = "";
-  tc_type = "";
-  tc_lang = "";
-  tc_value = ""
-}
+  val empty : t
 
-type atom_content = atom_textConstruct
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
 
-let empty_content = empty_text
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module MakeTextConstruct
+  (M : sig val element_name : string end) =
+struct
+  type t = {
+    tc_src : string;
+    tc_type : string;
+    tc_lang : string;
+    tc_value : string
+  }
+
+  let empty = {
+    tc_src = "";
+    tc_type = "";
+    tc_lang = "";
+    tc_value = ""
+  }
+
+  let to_xml_data_model text_construct =
+    render_element ns_atom M.element_name
+      [render_attribute "" "src" text_construct.tc_src;
+       render_attribute "" "type" text_construct.tc_type;
+       render_attribute Xmlm.ns_xml "lang" text_construct.tc_lang;
+       render_text text_construct.tc_value]
+
+  let of_xml_data_model text tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "src"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { text with tc_src = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "type"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { text with tc_type = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "lang"; `Namespace ns],
+           GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+          { text with tc_lang = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Text],
+           GdataCore.Value.String v) ->
+          { text with tc_value = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
+
+module Content =
+  MakeTextConstruct(struct let element_name = "content" end)
+
+module Title =
+  MakeTextConstruct(struct let element_name = "title" end)
+
+module Subtitle =
+  MakeTextConstruct(struct let element_name = "subtitle" end)
+
+module Summary =
+  MakeTextConstruct(struct let element_name = "summary" end)
+
+module Rights =
+  MakeTextConstruct(struct let element_name = "rights" end)
 
 module Contributor =
 struct
@@ -304,41 +365,9 @@ let parse_children parse_child empty_element update cs =
   in
     update element
 
-let parse_text text tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "src"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { text with tc_src = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { text with tc_type = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { text with tc_lang = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Text],
-         GdataCore.Value.String v) ->
-        { text with tc_value = v }
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_content = parse_text
-
 (* END Parsing *)
 
 (* Rendering *)
-let render_text_construct name text_construct =
-  render_element ns_atom name
-    [render_attribute "" "src" text_construct.tc_src;
-     render_attribute "" "type" text_construct.tc_type;
-     render_attribute Xmlm.ns_xml "lang" text_construct.tc_lang;
-     render_text text_construct.tc_value]
-
-let render_content = render_text_construct "content"
-
 let element_to_data_model get_prefix render_element element =
   let xml_element = render_element element |> List.hd in
   let ns_table = GdataUtils.build_namespace_table get_prefix xml_element in
@@ -417,9 +446,9 @@ sig
     entries : entry_t list;
     links : link_t list;
     logo : atom_logo;
-    rights : atom_textConstruct;
-    subtitle : atom_textConstruct;
-    title : atom_textConstruct;
+    rights : Rights.t;
+    subtitle : Subtitle.t;
+    title : Title.t;
     totalResults : opensearch_totalResults;
     itemsPerPage : opensearch_itemsPerPage;
     startIndex : opensearch_startIndex;
@@ -457,9 +486,9 @@ struct
     entries : entry_t list;
     links : link_t list;
     logo : atom_logo;
-    rights : atom_textConstruct;
-    subtitle : atom_textConstruct;
-    title : atom_textConstruct;
+    rights : Rights.t;
+    subtitle : Subtitle.t;
+    title : Title.t;
     totalResults : opensearch_totalResults;
     itemsPerPage : opensearch_itemsPerPage;
     startIndex : opensearch_startIndex;
@@ -479,9 +508,9 @@ struct
     entries = [];
     links = [];
     logo = "";
-    rights = empty_text;
-    subtitle = empty_text;
-    title = empty_text;
+    rights = Rights.empty;
+    subtitle = Subtitle.empty;
+    title = Title.empty;
     totalResults = 0;
     itemsPerPage = 0;
     startIndex = 0;
@@ -571,24 +600,24 @@ struct
           ([`Element; `Name "rights"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_text
-            empty_text
+            Rights.of_xml_data_model
+            Rights.empty
             (fun rights -> { feed with rights = rights })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "subtitle"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_text
-            empty_text
+            Subtitle.of_xml_data_model
+            Subtitle.empty
             (fun subtitle -> { feed with subtitle = subtitle })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_text
-            empty_text
+            Title.of_xml_data_model
+            Title.empty
             (fun title -> { feed with title = title })
             cs
       | GdataCore.AnnotatedTree.Node
@@ -628,9 +657,9 @@ struct
        render_element_list Entry.to_xml_data_model feed.entries;
        render_element_list Link.to_xml_data_model feed.links;
        render_text_element ns_atom "logo" feed.logo;
-       render_text_construct "rights" feed.rights;
-       render_text_construct "title" feed.title;
-       render_text_construct "subtitle" feed.subtitle;
+       Rights.to_xml_data_model feed.rights;
+       Title.to_xml_data_model feed.title;
+       Subtitle.to_xml_data_model feed.subtitle;
        render_int_element ns_openSearch "totalResults" feed.totalResults;
        render_int_element ns_openSearch "itemsPerPage" feed.itemsPerPage;
        render_int_element ns_openSearch "startIndex" feed.startIndex;

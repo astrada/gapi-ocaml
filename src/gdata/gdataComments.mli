@@ -8,13 +8,13 @@ sig
       ce_etag : string;
       ce_kind : string;
       ce_authors : GdataAtom.Author.t list;
-      ce_content : GdataAtom.atom_content;
+      ce_content : GdataAtom.Content.t;
       ce_contributors : GdataAtom.Contributor.t list;
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
       ce_links : link_t list;
-      ce_title : GdataAtom.atom_textConstruct;
+      ce_title : GdataAtom.Title.t;
       ce_category : GdataAtom.Category.t;
       ce_extensions : GdataCore.xml_data_model list
     }

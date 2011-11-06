@@ -70,18 +70,35 @@ sig
 
 end
 
-type atom_textConstruct = {
-  tc_src : string;
-  tc_type : string;
-  tc_lang : string;
-  tc_value : string
-}
+module type TEXTCONSTRUCT =
+sig
+  type t = {
+    tc_src : string;
+    tc_type : string;
+    tc_lang : string;
+    tc_value : string
+  }
 
-val empty_text : atom_textConstruct
+  val empty : t
 
-type atom_content = atom_textConstruct
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
 
-val empty_content : atom_content
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module MakeTextConstruct :
+  functor (M : sig val element_name : string end) -> TEXTCONSTRUCT
+
+module Content : TEXTCONSTRUCT
+
+module Title : TEXTCONSTRUCT
+
+module Subtitle : TEXTCONSTRUCT
+
+module Summary : TEXTCONSTRUCT
+
+module Rights : TEXTCONSTRUCT
 
 module Contributor :
 sig
@@ -104,16 +121,6 @@ type opensearch_totalResults = int
 type app_edited = GdataDate.t
 
 val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
-
-val parse_text :
-  atom_textConstruct ->
-  GdataCore.xml_data_model ->
-  atom_textConstruct
-
-val parse_content :
-  atom_content ->
-  GdataCore.xml_data_model ->
-  atom_content
 
 val render_attribute :
   ?default:string ->
@@ -205,15 +212,6 @@ val render_bool_value :
   bool ->
   GdataCore.xml_data_model list
 
-val render_content :
-  atom_content ->
-  GdataCore.xml_data_model list
-
-val render_text_construct :
-  string ->
-  atom_textConstruct ->
-  GdataCore.xml_data_model list
-
 val element_to_data_model :
   (string -> string) ->
   ('a -> GdataCore.xml_data_model list) ->
@@ -257,9 +255,9 @@ sig
     entries : entry_t list;
     links : link_t list;
     logo : atom_logo;
-    rights : atom_textConstruct;
-    subtitle : atom_textConstruct;
-    title : atom_textConstruct;
+    rights : Rights.t;
+    subtitle : Subtitle.t;
+    title : Title.t;
     totalResults : opensearch_totalResults;
     itemsPerPage : opensearch_itemsPerPage;
     startIndex : opensearch_startIndex;

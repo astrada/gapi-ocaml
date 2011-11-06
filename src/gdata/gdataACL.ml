@@ -20,12 +20,12 @@ type calendar_aclEntry = {
   ae_categories : GdataAtom.Category.t list;
   ae_contributors : GdataAtom.Contributor.t list;
   ae_id : GdataAtom.atom_id;
-  ae_content : GdataAtom.atom_content;
+  ae_content : GdataAtom.Content.t;
   ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
   ae_links : GdataAtom.Link.t list;
-  ae_title : GdataAtom.atom_textConstruct;
+  ae_title : GdataAtom.Title.t;
   ae_scope : acl_scope;
   ae_role : acl_role
 }
@@ -37,12 +37,12 @@ let empty_entry = {
   ae_categories = [];
   ae_contributors = [];
   ae_id = "";
-  ae_content = GdataAtom.empty_text;
+  ae_content = GdataAtom.Content.empty;
   ae_published = GdataDate.epoch;
   ae_updated = GdataDate.epoch;
   ae_edited = GdataDate.epoch;
   ae_links = [];
-  ae_title = GdataAtom.empty_text;
+  ae_title = GdataAtom.Title.empty;
   ae_scope = empty_scope;
   ae_role = ""
 }
@@ -106,8 +106,8 @@ let parse_entry entry tree =
         ([`Element; `Name "content"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_content
-          GdataAtom.empty_content
+          GdataAtom.Content.of_xml_data_model
+          GdataAtom.Content.empty
           (fun content -> { entry with ae_content = content })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -137,8 +137,8 @@ let parse_entry entry tree =
         ([`Element; `Name "title"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_text
-          GdataAtom.empty_text
+          GdataAtom.Title.of_xml_data_model
+          GdataAtom.Title.empty
           (fun title -> { entry with ae_title = title })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -194,12 +194,12 @@ let render_entry entry =
      GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.ae_categories;
      GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ae_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
-     GdataAtom.render_content entry.ae_content;
+     GdataAtom.Content.to_xml_data_model entry.ae_content;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
      GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.ae_links;
      GdataAtom.render_value GdataAtom.ns_gAcl "role" entry.ae_role;
      render_scope entry.ae_scope;
-     GdataAtom.render_text_construct "title" entry.ae_title]
+     GdataAtom.Title.to_xml_data_model entry.ae_title]
 
 let acl_entry_to_data_model entry =
   GdataAtom.element_to_data_model

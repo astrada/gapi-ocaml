@@ -139,7 +139,7 @@ type calendar_calendarEntry = {
   ce_categories : GdataAtom.Category.t list;
   ce_contributors : GdataAtom.Contributor.t list;
   ce_id : GdataAtom.atom_id;
-  ce_content : GdataAtom.atom_content;
+  ce_content : GdataAtom.Content.t;
   ce_published : GdataAtom.atom_published;
   ce_updated : GdataAtom.atom_updated;
   ce_edited : GdataAtom.app_edited;
@@ -152,8 +152,8 @@ type calendar_calendarEntry = {
   ce_selected : calendar_selectedProperty;
   ce_timezone : calendar_timeZoneProperty;
   ce_timesCleaned : calendar_timesCleanedProperty;
-  ce_summary : GdataAtom.atom_textConstruct;
-  ce_title : GdataAtom.atom_textConstruct;
+  ce_summary : GdataAtom.Summary.t;
+  ce_title : GdataAtom.Title.t;
   ce_extensions : GdataCore.xml_data_model list
 }
 

@@ -281,7 +281,7 @@ type calendar_calendarEntry = {
   ce_categories : GdataAtom.Category.t list;
   ce_contributors : GdataAtom.Contributor.t list;
   ce_id : GdataAtom.atom_id;
-  ce_content : GdataAtom.atom_content;
+  ce_content : GdataAtom.Content.t;
   ce_published : GdataAtom.atom_published;
   ce_updated : GdataAtom.atom_updated;
   ce_edited : GdataAtom.app_edited;
@@ -294,8 +294,8 @@ type calendar_calendarEntry = {
   ce_selected : calendar_selectedProperty;
   ce_timezone : calendar_timeZoneProperty;
   ce_timesCleaned : calendar_timesCleanedProperty;
-  ce_summary : GdataAtom.atom_textConstruct;
-  ce_title : GdataAtom.atom_textConstruct;
+  ce_summary : GdataAtom.Summary.t;
+  ce_title : GdataAtom.Title.t;
   ce_extensions : GdataCore.xml_data_model list
 }
 
@@ -306,7 +306,7 @@ let empty_entry = {
   ce_categories = [];
   ce_contributors = [];
   ce_id = "";
-  ce_content = GdataAtom.empty_content;
+  ce_content = GdataAtom.Content.empty;
   ce_published = GdataDate.epoch;
   ce_updated = GdataDate.epoch;
   ce_edited = GdataDate.epoch;
@@ -319,8 +319,8 @@ let empty_entry = {
   ce_selected = false;
   ce_timezone = "";
   ce_timesCleaned = 0;
-  ce_summary = GdataAtom.empty_text;
-  ce_title = GdataAtom.empty_text;
+  ce_summary = GdataAtom.Summary.empty;
+  ce_title = GdataAtom.Title.empty;
   ce_extensions = []
 }
 (* END Calendar data types *)
@@ -524,8 +524,8 @@ let parse_entry entry tree =
         ([`Element; `Name "content"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_content
-          GdataAtom.empty_content
+          GdataAtom.Content.of_xml_data_model
+          GdataAtom.Content.empty
           (fun content -> { entry with ce_content = content })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -605,16 +605,16 @@ let parse_entry entry tree =
         ([`Element; `Name "summary"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_text
-          GdataAtom.empty_text
+          GdataAtom.Summary.of_xml_data_model
+          GdataAtom.Summary.empty
           (fun summary -> { entry with ce_summary = summary })
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "title"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_text
-          GdataAtom.empty_text
+          GdataAtom.Title.of_xml_data_model
+          GdataAtom.Title.empty
           (fun title -> { entry with ce_title = title })
           cs
     | GdataCore.AnnotatedTree.Leaf
@@ -702,7 +702,7 @@ let render_entry entry =
      GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.ce_categories;
      GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ce_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
-     GdataAtom.render_content entry.ce_content;
+     GdataAtom.Content.to_xml_data_model entry.ce_content;
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
      GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ce_edited;
@@ -714,8 +714,8 @@ let render_entry entry =
      GdataAtom.render_bool_value ns_gCal "selected" entry.ce_selected;
      GdataAtom.render_value ns_gCal "timezone" entry.ce_timezone;
      GdataAtom.render_int_value ns_gCal "timesCleaned" entry.ce_timesCleaned;
-     GdataAtom.render_text_construct "summary" entry.ce_summary;
-     GdataAtom.render_text_construct "title" entry.ce_title;
+     GdataAtom.Summary.to_xml_data_model entry.ce_summary;
+     GdataAtom.Title.to_xml_data_model entry.ce_title;
      entry.ce_extensions]
 
 let calendar_entry_to_data_model entry =

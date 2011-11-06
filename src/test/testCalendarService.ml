@@ -7,14 +7,14 @@ let new_calendar_entry title =
         GdataCalendar.ce_hidden = false;
         GdataCalendar.ce_timezone = "America/Los_Angeles";
         GdataCalendar.ce_summary =
-          { GdataAtom.empty_text with
-                GdataAtom.tc_type = "text";
-                GdataAtom.tc_value = "This calendar contains the practice schedule and game times.";
+          { GdataAtom.Summary.empty with
+                GdataAtom.Summary.tc_type = "text";
+                GdataAtom.Summary.tc_value = "This calendar contains the practice schedule and game times.";
           };
         GdataCalendar.ce_title =
-                  { GdataAtom.empty_text with
-                        GdataAtom.tc_type = "text";
-                        GdataAtom.tc_value = title;
+                  { GdataAtom.Title.empty with
+                        GdataAtom.Title.tc_type = "text";
+                        GdataAtom.Title.tc_value = title;
                   };
   }
 
@@ -232,9 +232,9 @@ let test_create_quick_add_event () =
     { GdataCalendarEvent.empty_eventEntry with
           GdataCalendarEvent.cee_quickAdd = true;
           GdataCalendarEvent.cee_content =
-            { GdataAtom.empty_text with
-                  GdataAtom.tc_type = "text";
-                  GdataAtom.tc_value = "Tennis with John November 11 3pm-3:30pm"
+            { GdataAtom.Content.empty with
+                  GdataAtom.Content.tc_type = "text";
+                  GdataAtom.Content.tc_value = "Tennis with John November 11 3pm-3:30pm"
             }
     }
   in

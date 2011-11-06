@@ -14,12 +14,12 @@ type calendar_aclEntry = {
   ae_categories : GdataAtom.Category.t list;
   ae_contributors : GdataAtom.Contributor.t list;
   ae_id : GdataAtom.atom_id;
-  ae_content : GdataAtom.atom_content;
+  ae_content : GdataAtom.Content.t;
   ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
   ae_links : GdataAtom.Link.t list;
-  ae_title : GdataAtom.atom_textConstruct;
+  ae_title : GdataAtom.Title.t;
   ae_scope : acl_scope;
   ae_role : acl_role
 }

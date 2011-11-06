@@ -6,7 +6,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_kind : string;
   cree_authors : GdataAtom.Author.t list;
   cree_categories : GdataAtom.Category.t list;
-  cree_content : GdataAtom.atom_content;
+  cree_content : GdataAtom.Content.t;
   cree_contributors : GdataAtom.Contributor.t list;
   cree_id : GdataAtom.atom_id;
   cree_published : GdataAtom.atom_published;
@@ -17,7 +17,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_who : GdataCalendar.calendar_calendarWho list;
   cree_icalUID : GdataCalendar.calendar_icalUIDProperty;
   cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
-  cree_title : GdataAtom.atom_textConstruct;
+  cree_title : GdataAtom.Title.t;
   cree_eventStatus : GdataCalendar.gdata_eventStatus;
   cree_originalEvent : GdataCalendar.gdata_originalEvent;
   cree_transparency : GdataCalendar.gdata_transparency;
@@ -31,7 +31,7 @@ let empty_recurrenceExceptionEntry = {
   cree_kind = "";
   cree_authors = [];
   cree_categories = [];
-  cree_content = GdataAtom.empty_content;
+  cree_content = GdataAtom.Content.empty;
   cree_contributors = [];
   cree_id = "";
   cree_published = GdataDate.epoch;
@@ -42,7 +42,7 @@ let empty_recurrenceExceptionEntry = {
   cree_who = [];
   cree_icalUID = "";
   cree_sequenceNumber = 0;
-  cree_title = GdataAtom.empty_text;
+  cree_title = GdataAtom.Title.empty;
   cree_eventStatus = "";
   cree_originalEvent = GdataCalendar.empty_originalEvent;
   cree_transparency = "";
@@ -65,7 +65,7 @@ type calendar_calendarEventEntry = {
   cee_etag : string;
   cee_kind : string;
   cee_authors : GdataAtom.Author.t list;
-  cee_content : GdataAtom.atom_content;
+  cee_content : GdataAtom.Content.t;
   cee_contributors : GdataAtom.Contributor.t list;
   cee_id : GdataAtom.atom_id;
   cee_published : GdataAtom.atom_published;
@@ -83,8 +83,8 @@ type calendar_calendarEventEntry = {
   cee_sendEventNotifications : GdataCalendar.calendar_sendEventNotificationsProperty;
   cee_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
   cee_syncEvent : GdataCalendar.calendar_syncEventProperty;
-  cee_summary : GdataAtom.atom_textConstruct;
-  cee_title : GdataAtom.atom_textConstruct;
+  cee_summary : GdataAtom.Summary.t;
+  cee_title : GdataAtom.Title.t;
   cee_eventKind : GdataCalendar.gdata_kind;
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
   cee_originalEvent : GdataCalendar.gdata_originalEvent;
@@ -104,7 +104,7 @@ let empty_eventEntry = {
   cee_etag = "";
   cee_kind = "";
   cee_authors = [];
-  cee_content = GdataAtom.empty_content;
+  cee_content = GdataAtom.Content.empty;
   cee_contributors = [];
   cee_id = "";
   cee_published = GdataDate.epoch;
@@ -122,8 +122,8 @@ let empty_eventEntry = {
   cee_sendEventNotifications = false;
   cee_sequenceNumber = 0;
   cee_syncEvent = false;
-  cee_summary = GdataAtom.empty_text;
-  cee_title = GdataAtom.empty_text;
+  cee_summary = GdataAtom.Summary.empty;
+  cee_title = GdataAtom.Title.empty;
   cee_eventKind = GdataCalendar.eventKind;
   cee_eventStatus = "";
   cee_originalEvent = GdataCalendar.empty_originalEvent;
@@ -174,8 +174,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "content"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_content
-          GdataAtom.empty_content
+          GdataAtom.Content.of_xml_data_model
+          GdataAtom.Content.empty
           (fun content -> { entry with cree_content = content })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -250,8 +250,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "title"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_text
-          GdataAtom.empty_text
+          GdataAtom.Title.of_xml_data_model
+          GdataAtom.Title.empty
           (fun title -> { entry with cree_title = title })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -345,8 +345,8 @@ let parse_entry entry tree =
         ([`Element; `Name "content"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_content
-          GdataAtom.empty_content
+          GdataAtom.Content.of_xml_data_model
+          GdataAtom.Content.empty
           (fun content -> { entry with cee_content = content })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -455,11 +455,19 @@ let parse_entry entry tree =
              GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_sequenceNumber = int_of_string v }
     | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "summary"; `Namespace ns],
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.Summary.of_xml_data_model
+          GdataAtom.Summary.empty
+          (fun summary -> { entry with cee_summary = summary })
+          cs
+    | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "title"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_text
-          GdataAtom.empty_text
+          GdataAtom.Title.of_xml_data_model
+          GdataAtom.Title.empty
           (fun title -> { entry with cee_title = title })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -563,7 +571,7 @@ let render_recurrenceExceptionEntry entry =
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cree_kind;
      GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.cree_authors;
      GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.cree_categories;
-     GdataAtom.render_content entry.cree_content;
+     GdataAtom.Content.to_xml_data_model entry.cree_content;
      GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.cree_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cree_id;
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cree_published;
@@ -574,7 +582,7 @@ let render_recurrenceExceptionEntry entry =
      GdataAtom.render_element_list GdataCalendar.render_who entry.cree_who;
      GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cree_icalUID;
      GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cree_sequenceNumber;
-     GdataAtom.render_text_construct "title" entry.cree_title;
+     GdataAtom.Title.to_xml_data_model entry.cree_title;
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cree_eventStatus;
      GdataCalendar.render_originalEvent entry.cree_originalEvent;
      GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cree_transparency;
@@ -597,7 +605,7 @@ let render_entry entry =
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.cee_etag;
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
      GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.cee_authors;
-     GdataAtom.render_content entry.cee_content;
+     GdataAtom.Content.to_xml_data_model entry.cee_content;
      GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.cee_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cee_id;
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cee_published;
@@ -613,7 +621,8 @@ let render_entry entry =
      GdataAtom.render_bool_value GdataCalendar.ns_gCal "privateCopy" entry.cee_privateCopy;
      GdataAtom.render_bool_value GdataCalendar.ns_gCal "quickadd" entry.cee_quickAdd;
      GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cee_sequenceNumber;
-     GdataAtom.render_text_construct "title" entry.cee_title;
+     GdataAtom.Summary.to_xml_data_model entry.cee_summary;
+     GdataAtom.Title.to_xml_data_model entry.cee_title;
      GdataAtom.Category.to_xml_data_model
        { GdataAtom.Category.empty with
              GdataAtom.Category.scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
