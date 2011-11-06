@@ -420,10 +420,12 @@ struct
 
 end
 
-module MakeFeed
-  (Entry : GdataCore.DATA)
-  (Link : GdataCore.DATA) =
-struct
+module type FEED =
+sig
+  type entry_t
+
+  type link_t
+
   type t = {
     etag : string;
     kind : string;
@@ -434,8 +436,48 @@ struct
     icon : atom_icon;
     id : atom_id;
     updated : atom_updated;
-    entries : Entry.t list;
-    links : Link.t list;
+    entries : entry_t list;
+    links : link_t list;
+    logo : atom_logo;
+    rights : atom_textConstruct;
+    subtitle : atom_textConstruct;
+    title : atom_textConstruct;
+    totalResults : opensearch_totalResults;
+    itemsPerPage : opensearch_itemsPerPage;
+    startIndex : opensearch_startIndex;
+    extensions : GdataCore.xml_data_model list
+  }
+
+  val empty : t
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val parse_feed : GdataCore.xml_data_model -> t
+
+end
+
+module MakeFeed
+  (Entry : GdataCore.DATA)
+  (Link : GdataCore.DATA) =
+struct
+  type entry_t = Entry.t
+
+  type link_t = Link.t
+
+  type t = {
+    etag : string;
+    kind : string;
+    authors : atom_author list;
+    categories : atom_category list;
+    contributors : atom_contributor list;
+    generator : atom_generator;
+    icon : atom_icon;
+    id : atom_id;
+    updated : atom_updated;
+    entries : entry_t list;
+    links : link_t list;
     logo : atom_logo;
     rights : atom_textConstruct;
     subtitle : atom_textConstruct;

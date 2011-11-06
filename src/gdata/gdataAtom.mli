@@ -264,10 +264,12 @@ sig
 
 end
 
-module MakeFeed :
-  functor (Entry : GdataCore.DATA) ->
-  functor (Link : GdataCore.DATA) ->
+module type FEED =
 sig
+  type entry_t
+
+  type link_t
+
   type t = {
     etag : string;
     kind : string;
@@ -278,8 +280,8 @@ sig
     icon : atom_icon;
     id : atom_id;
     updated : atom_updated;
-    entries : Entry.t list;
-    links : Link.t list;
+    entries : entry_t list;
+    links : link_t list;
     logo : atom_logo;
     rights : atom_textConstruct;
     subtitle : atom_textConstruct;
@@ -297,6 +299,16 @@ sig
   val to_xml_data_model : t -> GdataCore.xml_data_model list
 
   val parse_feed : GdataCore.xml_data_model -> t
+
+end
+
+module MakeFeed :
+  functor (Entry : GdataCore.DATA) ->
+  functor (Link : GdataCore.DATA) ->
+sig
+  include FEED
+    with type entry_t = Entry.t
+      and type link_t = Link.t
 
 end
 

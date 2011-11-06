@@ -1,6 +1,7 @@
-module Make :
-  functor (Link : GdataCore.DATA) ->
+module type COMMENTS =
 sig
+  type link_t
+
   module Entry :
   sig
     type t = {
@@ -11,7 +12,7 @@ sig
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
-      ce_links : Link.t list;
+      ce_links : link_t list;
       ce_title : GdataAtom.atom_textConstruct;
       ce_category : GdataAtom.atom_category;
       ce_extensions : GdataCore.xml_data_model list
@@ -27,35 +28,9 @@ sig
 
   module Feed :
   sig
-    type t = GdataAtom.MakeFeed(Entry)(Link).t = {
-      etag : string;
-      kind : string;
-      authors : GdataAtom.atom_author list;
-      categories : GdataAtom.atom_category list;
-      contributors : GdataAtom.atom_contributor list;
-      generator : GdataAtom.atom_generator;
-      icon : GdataAtom.atom_icon;
-      id : GdataAtom.atom_id;
-      updated : GdataAtom.atom_updated;
-      entries : Entry.t list;
-      links : Link.t list;
-      logo : GdataAtom.atom_logo;
-      rights : GdataAtom.atom_textConstruct;
-      subtitle : GdataAtom.atom_textConstruct;
-      title : GdataAtom.atom_textConstruct;
-      totalResults : GdataAtom.opensearch_totalResults;
-      itemsPerPage : GdataAtom.opensearch_itemsPerPage;
-      startIndex : GdataAtom.opensearch_startIndex;
-      extensions : GdataCore.xml_data_model list
-    }
-
-    val empty : t
-
-    val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-    val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-    val parse_feed : GdataCore.xml_data_model -> t
+    include GdataAtom.FEED
+      with type entry_t = Entry.t
+        and type link_t = link_t
 
   end
 
@@ -85,6 +60,14 @@ sig
   val render_comments :
     comments ->
     GdataCore.xml_data_model list
+
+end
+
+module Make :
+  functor (Link : GdataCore.DATA) ->
+sig
+  include COMMENTS
+    with type link_t = Link.t
 
 end
 
