@@ -189,31 +189,24 @@ struct
 
 end
 
-let parse_acl_entry tree =
-  let parse_root tree =
-    match tree with
-        GdataCore.AnnotatedTree.Node
-          ([`Element; `Name "entry"; `Namespace ns],
-           cs) when ns = GdataAtom.ns_atom ->
-          GdataAtom.parse_children
-            Entry.of_xml_data_model
-            Entry.empty
-            Std.identity
-            cs
-      | e ->
-          GdataUtils.unexpected e
-  in
-    parse_root tree
-
 let get_acl_prefix namespace =
   if namespace = ns_gAcl then "gAcl"
   else GdataAtom.get_standard_prefix namespace
 
-let acl_entry_to_data_model entry =
-  GdataAtom.element_to_data_model
-    get_acl_prefix
-    Entry.to_xml_data_model 
-    entry
+module EntryElement = GdataAtom.MakeElement
+                        (struct
+                           include Entry
+
+                           let element_name = "entry"
+
+                           let element_namespace = GdataAtom.ns_atom
+
+                           let get_prefix = get_acl_prefix
+                         end)
+
+let parse_acl_entry = EntryElement.parse_xml_tree
+
+let acl_entry_to_data_model = EntryElement.build_xml_tree
 
 module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
 

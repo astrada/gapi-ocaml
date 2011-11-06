@@ -258,19 +258,13 @@ sig
 end
 
 module Feed :
-sig
-  include GdataAtom.FEED
+  GdataAtom.FEED
     with type entry_t = Entry.t
       and type link_t = Link.t
 
-end
-
 module Comments :
-sig
-  include GdataComments.COMMENTS
+  GdataComments.COMMENTS
     with type link_t = Link.t
-
-end
 
 module Rel :
 sig

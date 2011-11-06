@@ -144,6 +144,53 @@ let element_to_data_model get_prefix render_element element =
 (* END Rendering *)
 
 (* Complex types *)
+module type ELEMENT =
+sig
+  type t
+
+  val parse_xml_tree : GdataCore.xml_data_model -> t
+
+  val build_xml_tree : t -> GdataCore.xml_data_model
+
+end
+
+module MakeElement
+  (M : sig
+     include GdataCore.DATA
+
+     val element_name : string
+
+     val element_namespace : string
+
+     val get_prefix : string -> string
+   end) =
+struct
+  type t = M.t
+
+  let parse_xml_tree tree =
+    let parse_root tree =
+      match tree with
+          GdataCore.AnnotatedTree.Node
+            ([`Element; `Name element_name; `Namespace ns],
+             cs) when ns = M.element_namespace ->
+            parse_children
+              M.of_xml_data_model
+              M.empty
+              Std.identity
+              cs
+        | e ->
+            GdataUtils.unexpected e
+    in
+      parse_root tree
+
+  let build_xml_tree element =
+    element_to_data_model
+      M.get_prefix
+      M.to_xml_data_model 
+      element
+
+end
+
 module type PERSONCONSTRUCT =
 sig
   type t = {

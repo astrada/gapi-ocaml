@@ -28,12 +28,9 @@ sig
   end
 
   module Feed :
-  sig
-    include GdataAtom.FEED
+    GdataAtom.FEED
       with type entry_t = Entry.t
         and type link_t = link_t
-
-  end
 
   type comments = {
     c_countHint : int;
@@ -66,9 +63,6 @@ end
 
 module Make :
   functor (Link : GdataCore.DATA) ->
-sig
-  include COMMENTS
+  COMMENTS
     with type link_t = Link.t
-
-end
 

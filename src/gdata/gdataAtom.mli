@@ -125,6 +125,29 @@ val element_to_data_model :
   'a ->
   GdataCore.xml_data_model
 
+module type ELEMENT =
+sig
+  type t
+
+  val parse_xml_tree : GdataCore.xml_data_model -> t
+
+  val build_xml_tree : t -> GdataCore.xml_data_model
+
+end
+
+module MakeElement :
+  functor (M : sig
+             include GdataCore.DATA
+
+             val element_name : string
+
+             val element_namespace : string
+             
+             val get_prefix : string -> string
+           end) ->
+  ELEMENT
+    with type t = M.t
+
 module type PERSONCONSTRUCT =
 sig
   type t = {
@@ -272,12 +295,10 @@ end
 module MakeFeed :
   functor (Entry : GdataCore.DATA) ->
   functor (Link : GdataCore.DATA) ->
-sig
-  include FEED
+  FEED
     with type entry_t = Entry.t
       and type link_t = Link.t
 
-end
 
 module Rel :
 sig

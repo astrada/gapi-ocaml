@@ -624,24 +624,7 @@ let parse_entry entry tree =
     | extension ->
         let extensions = extension :: entry.ce_extensions in
           { entry with ce_extensions = extensions }
-
-let parse_calendar_entry tree =
-  let parse_root tree =
-    match tree with
-        GdataCore.AnnotatedTree.Node
-          ([`Element; `Name "entry"; `Namespace ns],
-           cs) when ns = GdataAtom.ns_atom ->
-          GdataAtom.parse_children
-            parse_entry
-            empty_entry
-            Std.identity
-            cs
-      | e ->
-          GdataUtils.unexpected e
-  in
-    parse_root tree
 (* END Calendar feed: parsing *)
-
 
 (* Calendar feed: rendering *)
 let get_calendar_prefix namespace =
@@ -717,14 +700,7 @@ let render_entry entry =
      GdataAtom.Summary.to_xml_data_model entry.ce_summary;
      GdataAtom.Title.to_xml_data_model entry.ce_title;
      entry.ce_extensions]
-
-let calendar_entry_to_data_model entry =
-  GdataAtom.element_to_data_model
-    get_calendar_prefix
-    render_entry 
-    entry
 (* END Calendar feed: rendering *)
-
 
 (* Personal settings *)
 let parse_personal_settings tree =
@@ -780,6 +756,21 @@ struct
   let of_xml_data_model = parse_entry
 
 end
+
+module EntryElement = GdataAtom.MakeElement
+                        (struct
+                           include Entry
+
+                           let element_name = "entry"
+
+                           let element_namespace = GdataAtom.ns_atom
+
+                           let get_prefix = get_calendar_prefix
+                         end)
+
+let parse_calendar_entry = EntryElement.parse_xml_tree
+
+let calendar_entry_to_data_model = EntryElement.build_xml_tree
 
 module Feed = GdataAtom.MakeFeed(Entry)(Link)
 

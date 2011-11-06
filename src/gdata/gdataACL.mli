@@ -48,13 +48,9 @@ val parse_acl_entry : GdataCore.xml_data_model -> Entry.t
 
 val acl_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
 
-module Feed :
-sig
-  include GdataAtom.FEED
-    with type entry_t = Entry.t
-      and type link_t = GdataAtom.Link.t
-
-end
+module Feed : GdataAtom.FEED
+  with type entry_t = Entry.t
+    and type link_t = GdataAtom.Link.t
 
 module Rel :
 sig
