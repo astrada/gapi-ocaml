@@ -23,172 +23,6 @@ type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
 
-type atom_author = {
-  a_lang : string;
-  a_email : atom_email;
-  a_name : atom_name;
-  a_uri : atom_uri
-}
-
-let empty_author = {
-  a_lang = "";
-  a_email = "";
-  a_name = "";
-  a_uri = ""
-}
-
-type atom_category = {
-  c_label : string;
-  c_scheme : string;
-  c_term : string;
-  c_lang : string;
-}
-
-let empty_category = {
-  c_label = "";
-  c_scheme = "";
-  c_term = "";
-  c_lang = ""
-}
-
-type atom_generator = {
-  g_uri : string;
-  g_version : string;
-  g_value : string
-}
-
-let empty_generator = {
-  g_uri = "";
-  g_version = "";
-  g_value = ""
-}
-
-type atom_textConstruct = {
-  tc_src : string;
-  tc_type : string;
-  tc_lang : string;
-  tc_value : string
-}
-
-let empty_text = {
-  tc_src = "";
-  tc_type = "";
-  tc_lang = "";
-  tc_value = ""
-}
-
-type atom_content = atom_textConstruct
-
-let empty_content = empty_text
-
-type atom_contributor = atom_author
-
-type opensearch_itemsPerPage = int
-
-type opensearch_startIndex = int
-
-type opensearch_totalResults = int
-
-type app_edited = GdataDate.t
-(* END Atom data types *)
-
-(* Parsing *)
-let parse_children parse_child empty_element update cs =
-  let element = List.fold_left
-                  parse_child
-                  empty_element
-                  cs
-  in
-    update element
-
-let parse_category category tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "label"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with c_label = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "scheme"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with c_scheme = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "term"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with c_term = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { category with c_lang = v }
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_text text tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "src"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { text with tc_src = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { text with tc_type = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { text with tc_lang = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Text],
-         GdataCore.Value.String v) ->
-        { text with tc_value = v }
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_author author tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { author with a_lang = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "name"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { author with a_name = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "email"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { author with a_email = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "uri"; `Namespace ns],
-         [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-        { author with a_uri = v }
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_generator generator tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "version"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { generator with g_version = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "uri"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { generator with g_uri = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Text],
-         GdataCore.Value.String v) ->
-        { generator with g_value = v }
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_content = parse_text
-
-(* END Parsing *)
-
-(* Rendering *)
 let render_attribute ?(default = "") namespace name value =
   if value <> default then
     [GdataCore.AnnotatedTree.Leaf (
@@ -284,13 +118,197 @@ let render_int_value ?attribute namespace name value =
 let render_bool_value ?attribute namespace name value =
   render_value ~default:"false" ?attribute namespace name (string_of_bool value)
 
-let render_author element_name author =
-  render_element ns_atom element_name
-    [render_attribute Xmlm.ns_xml "lang" author.a_lang;
-     render_text_element ns_atom "email" author.a_email;
-     render_text_element ns_atom "name" author.a_name;
-     render_text_element ns_atom "uri" author.a_uri]
+module Author =
+struct
+  type t = {
+    a_lang : string;
+    a_email : atom_email;
+    a_name : atom_name;
+    a_uri : atom_uri
+  }
 
+  let empty = {
+    a_lang = "";
+    a_email = "";
+    a_name = "";
+    a_uri = ""
+  }
+
+  let render_author element_name author =
+    render_element ns_atom element_name
+      [render_attribute Xmlm.ns_xml "lang" author.a_lang;
+       render_text_element ns_atom "email" author.a_email;
+       render_text_element ns_atom "name" author.a_name;
+       render_text_element ns_atom "uri" author.a_uri]
+
+  let to_xml_data_model author =
+    render_author "author" author
+
+  let of_xml_data_model author tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "lang"; `Namespace ns],
+           GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+          { author with a_lang = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "name"; `Namespace ns],
+           [GdataCore.AnnotatedTree.Leaf
+              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+          { author with a_name = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "email"; `Namespace ns],
+           [GdataCore.AnnotatedTree.Leaf
+              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+          { author with a_email = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "uri"; `Namespace ns],
+           [GdataCore.AnnotatedTree.Leaf
+              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+          { author with a_uri = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
+
+type atom_category = {
+  c_label : string;
+  c_scheme : string;
+  c_term : string;
+  c_lang : string;
+}
+
+let empty_category = {
+  c_label = "";
+  c_scheme = "";
+  c_term = "";
+  c_lang = ""
+}
+
+type atom_generator = {
+  g_uri : string;
+  g_version : string;
+  g_value : string
+}
+
+let empty_generator = {
+  g_uri = "";
+  g_version = "";
+  g_value = ""
+}
+
+type atom_textConstruct = {
+  tc_src : string;
+  tc_type : string;
+  tc_lang : string;
+  tc_value : string
+}
+
+let empty_text = {
+  tc_src = "";
+  tc_type = "";
+  tc_lang = "";
+  tc_value = ""
+}
+
+type atom_content = atom_textConstruct
+
+let empty_content = empty_text
+
+module Contributor =
+struct
+  type t = Author.t
+
+  let empty = Author.empty
+
+  let to_xml_data_model contributor =
+    Author.render_author "contributor" contributor
+
+  let of_xml_data_model = Author.of_xml_data_model
+
+end
+
+type opensearch_itemsPerPage = int
+
+type opensearch_startIndex = int
+
+type opensearch_totalResults = int
+
+type app_edited = GdataDate.t
+(* END Atom data types *)
+
+(* Parsing *)
+let parse_children parse_child empty_element update cs =
+  let element = List.fold_left
+                  parse_child
+                  empty_element
+                  cs
+  in
+    update element
+
+let parse_category category tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "label"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { category with c_label = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "scheme"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { category with c_scheme = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "term"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { category with c_term = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "lang"; `Namespace ns],
+         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+        { category with c_lang = v }
+    | e ->
+        GdataUtils.unexpected e
+
+let parse_text text tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "src"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { text with tc_src = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "type"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { text with tc_type = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "lang"; `Namespace ns],
+         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+        { text with tc_lang = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Text],
+         GdataCore.Value.String v) ->
+        { text with tc_value = v }
+    | e ->
+        GdataUtils.unexpected e
+
+let parse_generator generator tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "version"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { generator with g_version = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "uri"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        { generator with g_uri = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Text],
+         GdataCore.Value.String v) ->
+        { generator with g_value = v }
+    | e ->
+        GdataUtils.unexpected e
+
+let parse_content = parse_text
+
+(* END Parsing *)
+
+(* Rendering *)
 let render_category category =
   render_element ns_atom "category"
     [render_attribute "" "label" category.c_label;
@@ -381,9 +399,9 @@ sig
   type t = {
     etag : string;
     kind : string;
-    authors : atom_author list;
+    authors : Author.t list;
     categories : atom_category list;
-    contributors : atom_contributor list;
+    contributors : Contributor.t list;
     generator : atom_generator;
     icon : atom_icon;
     id : atom_id;
@@ -421,9 +439,9 @@ struct
   type t = {
     etag : string;
     kind : string;
-    authors : atom_author list;
+    authors : Author.t list;
     categories : atom_category list;
-    contributors : atom_contributor list;
+    contributors : Contributor.t list;
     generator : atom_generator;
     icon : atom_icon;
     id : atom_id;
@@ -476,8 +494,8 @@ struct
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_author
-            empty_author
+            Author.of_xml_data_model
+            Author.empty
             (fun author -> { feed with authors = author :: feed.authors })
             cs
       | GdataCore.AnnotatedTree.Node
@@ -492,8 +510,8 @@ struct
           ([`Element; `Name "contributor"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_author
-            empty_author
+            Contributor.of_xml_data_model
+            Contributor.empty
             (fun contributor -> { feed with contributors =
                                     contributor :: feed.contributors })
             cs
@@ -592,9 +610,9 @@ struct
     render_element ns_atom "feed"
       [render_attribute ns_gd "etag" feed.etag;
        render_attribute ns_gd "kind" feed.kind;
-       render_element_list (render_author "author") feed.authors;
+       render_element_list Author.to_xml_data_model feed.authors;
        render_element_list render_category feed.categories;
-       render_element_list (render_author "contributor") feed.contributors;
+       render_element_list Contributor.to_xml_data_model feed.contributors;
        render_generator feed.generator;
        render_text_element ns_atom "icon" feed.icon;
        render_text_element ns_atom "id" feed.id;

@@ -1,10 +1,10 @@
 type calendar_calendarRecurrenceExceptionEntry = {
   cree_etag : string;
   cree_kind : string;
-  cree_authors : GdataAtom.atom_author list;
+  cree_authors : GdataAtom.Author.t list;
   cree_categories : GdataAtom.atom_category list;
   cree_content : GdataAtom.atom_content;
-  cree_contributors : GdataAtom.atom_contributor list;
+  cree_contributors : GdataAtom.Contributor.t list;
   cree_id : GdataAtom.atom_id;
   cree_published : GdataAtom.atom_published;
   cree_updated : GdataAtom.atom_updated;
@@ -35,9 +35,9 @@ val empty_recurrenceException : calendar_calendarRecurrenceException
 type calendar_calendarEventEntry = {
   cee_etag : string;
   cee_kind : string;
-  cee_authors : GdataAtom.atom_author list;
+  cee_authors : GdataAtom.Author.t list;
   cee_content : GdataAtom.atom_content;
-  cee_contributors : GdataAtom.atom_contributor list;
+  cee_contributors : GdataAtom.Contributor.t list;
   cee_id : GdataAtom.atom_id;
   cee_published : GdataAtom.atom_published;
   cee_updated : GdataAtom.atom_updated;

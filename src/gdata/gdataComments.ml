@@ -9,9 +9,9 @@ sig
     type t = {
       ce_etag : string;
       ce_kind : string;
-      ce_authors : GdataAtom.atom_author list;
+      ce_authors : GdataAtom.Author.t list;
       ce_content : GdataAtom.atom_content;
-      ce_contributors : GdataAtom.atom_contributor list;
+      ce_contributors : GdataAtom.Contributor.t list;
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
@@ -76,9 +76,9 @@ struct
     type t = {
       ce_etag : string;
       ce_kind : string;
-      ce_authors : GdataAtom.atom_author list;
+      ce_authors : GdataAtom.Author.t list;
       ce_content : GdataAtom.atom_content;
-      ce_contributors : GdataAtom.atom_contributor list;
+      ce_contributors : GdataAtom.Contributor.t list;
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;
@@ -107,9 +107,9 @@ struct
       GdataAtom.render_element GdataAtom.ns_atom "entry"
         [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
          GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
-         GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
+         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.ce_authors;
          GdataAtom.render_content entry.ce_content;
-         GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
+         GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ce_contributors;
          GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
          GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
          GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
@@ -132,8 +132,8 @@ struct
             ([`Element; `Name "author"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
-              GdataAtom.parse_author
-              GdataAtom.empty_author
+              GdataAtom.Author.of_xml_data_model
+              GdataAtom.Author.empty
               (fun author -> { entry with ce_authors =
                                  author :: entry.ce_authors })
               cs
@@ -149,8 +149,8 @@ struct
             ([`Element; `Name "contributor"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
-              GdataAtom.parse_author
-              GdataAtom.empty_author
+              GdataAtom.Contributor.of_xml_data_model
+              GdataAtom.Contributor.empty
               (fun contributor -> { entry with ce_contributors =
                                       contributor :: entry.ce_contributors })
               cs

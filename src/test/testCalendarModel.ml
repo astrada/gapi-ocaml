@@ -17,7 +17,7 @@ let test_parse_calendar_feed () =
                GdataCalendar.Feed.parse_feed in
     assert_equal ~msg:"feed author"
       "Coach"
-      (List.hd feed.GdataCalendar.Feed.authors).GdataAtom.a_name;
+      (List.hd feed.GdataCalendar.Feed.authors).GdataAtom.Author.a_name;
     assert_equal ~msg:"feed title"
       "Coach's Calendar List"
       feed.GdataCalendar.Feed.title.GdataAtom.tc_value
@@ -72,14 +72,14 @@ let test_calendar_entry_to_data_model () =
     { GdataCalendar.empty_entry with
           GdataCalendar.ce_id = "id";
           GdataCalendar.ce_authors = [
-            { GdataAtom.a_lang = "en-US";
-              GdataAtom.a_email = "author1@test.com";
-              GdataAtom.a_name = "author1";
-              GdataAtom.a_uri = "urn:uri";
+            { GdataAtom.Author.a_lang = "en-US";
+              GdataAtom.Author.a_email = "author1@test.com";
+              GdataAtom.Author.a_name = "author1";
+              GdataAtom.Author.a_uri = "urn:uri";
             };
-            { GdataAtom.empty_author with
-                  GdataAtom.a_email = "author2@test.com";
-                  GdataAtom.a_name = "author2";
+            { GdataAtom.Author.empty with
+                  GdataAtom.Author.a_email = "author2@test.com";
+                  GdataAtom.Author.a_name = "author2";
             };
           ];
           GdataCalendar.ce_categories = [
@@ -94,14 +94,14 @@ let test_calendar_entry_to_data_model () =
             }
           ];
           GdataCalendar.ce_contributors = [
-            { GdataAtom.a_lang = "en-US";
-              GdataAtom.a_email = "contributor1@test.com";
-              GdataAtom.a_name = "contributor1";
-              GdataAtom.a_uri = "urn:uri";
+            { GdataAtom.Author.a_lang = "en-US";
+              GdataAtom.Author.a_email = "contributor1@test.com";
+              GdataAtom.Author.a_name = "contributor1";
+              GdataAtom.Author.a_uri = "urn:uri";
             };
-            { GdataAtom.empty_author with
-                  GdataAtom.a_email = "contributor2@test.com";
-                  GdataAtom.a_name = "contributor2";
+            { GdataAtom.Author.empty with
+                  GdataAtom.Author.a_email = "contributor2@test.com";
+                  GdataAtom.Author.a_name = "contributor2";
             };
           ];
           GdataCalendar.ce_content =
@@ -180,7 +180,7 @@ let test_parse_calendar_event_feed () =
                GdataCalendarEvent.Feed.parse_feed in
     assert_equal ~msg:"feed author"
       "Jo March"
-      (List.hd feed.GdataCalendarEvent.Feed.authors).GdataAtom.a_name;
+      (List.hd feed.GdataCalendarEvent.Feed.authors).GdataAtom.Author.a_name;
     assert_equal ~msg:"feed title"
       "Jo March"
       feed.GdataCalendarEvent.Feed.title.GdataAtom.tc_value;

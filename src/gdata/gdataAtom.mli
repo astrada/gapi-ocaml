@@ -20,14 +20,22 @@ type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
 
-type atom_author = {
-  a_lang : string;
-  a_email : atom_email;
-  a_name : atom_name;
-  a_uri : atom_uri
-}
+module Author :
+sig
+  type t = {
+    a_lang : string;
+    a_email : atom_email;
+    a_name : atom_name;
+    a_uri : atom_uri
+  }
 
-val empty_author : atom_author
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type atom_category = {
   c_label : string;
@@ -59,7 +67,17 @@ type atom_content = atom_textConstruct
 
 val empty_content : atom_content
 
-type atom_contributor = atom_author
+module Contributor :
+sig
+  type t = Author.t
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type opensearch_itemsPerPage = int
 
@@ -80,11 +98,6 @@ val parse_text :
   atom_textConstruct ->
   GdataCore.xml_data_model ->
   atom_textConstruct
-
-val parse_author :
-  atom_author ->
-  GdataCore.xml_data_model ->
-  atom_author
 
 val parse_generator :
   atom_generator ->
@@ -186,11 +199,6 @@ val render_bool_value :
   bool ->
   GdataCore.xml_data_model list
 
-val render_author :
-  string ->
-  atom_author ->
-  GdataCore.xml_data_model list
-
 val render_category :
   atom_category ->
   GdataCore.xml_data_model list
@@ -241,9 +249,9 @@ sig
   type t = {
     etag : string;
     kind : string;
-    authors : atom_author list;
+    authors : Author.t list;
     categories : atom_category list;
-    contributors : atom_contributor list;
+    contributors : Contributor.t list;
     generator : atom_generator;
     icon : atom_icon;
     id : atom_id;

@@ -16,9 +16,9 @@ type acl_role = string
 type calendar_aclEntry = {
   ae_etag : string;
   ae_kind : string;
-  ae_authors : GdataAtom.atom_author list;
+  ae_authors : GdataAtom.Author.t list;
   ae_categories : GdataAtom.atom_category list;
-  ae_contributors : GdataAtom.atom_contributor list;
+  ae_contributors : GdataAtom.Contributor.t list;
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;
   ae_published : GdataAtom.atom_published;
@@ -76,8 +76,8 @@ let parse_entry entry tree =
         ([`Element; `Name "author"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
+          GdataAtom.Author.of_xml_data_model
+          GdataAtom.Author.empty
           (fun author -> { entry with ae_authors = author :: entry.ae_authors })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -92,8 +92,8 @@ let parse_entry entry tree =
         ([`Element; `Name "contributor"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
+          GdataAtom.Contributor.of_xml_data_model
+          GdataAtom.Contributor.empty
           (fun contributor -> { entry with ae_contributors =
                                   contributor :: entry.ae_contributors })
           cs
@@ -190,9 +190,9 @@ let render_entry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ae_etag;
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
-     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ae_authors;
+     GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.ae_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.ae_categories;
-     GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ae_contributors;
+     GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ae_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
      GdataAtom.render_content entry.ae_content;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;

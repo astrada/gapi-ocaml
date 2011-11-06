@@ -7,9 +7,9 @@ sig
     type t = {
       ce_etag : string;
       ce_kind : string;
-      ce_authors : GdataAtom.atom_author list;
+      ce_authors : GdataAtom.Author.t list;
       ce_content : GdataAtom.atom_content;
-      ce_contributors : GdataAtom.atom_contributor list;
+      ce_contributors : GdataAtom.Contributor.t list;
       ce_id : GdataAtom.atom_id;
       ce_published : GdataAtom.atom_published;
       ce_updated : GdataAtom.atom_updated;

@@ -4,10 +4,10 @@ open GdataUtils.Op
 type calendar_calendarRecurrenceExceptionEntry = {
   cree_etag : string;
   cree_kind : string;
-  cree_authors : GdataAtom.atom_author list;
+  cree_authors : GdataAtom.Author.t list;
   cree_categories : GdataAtom.atom_category list;
   cree_content : GdataAtom.atom_content;
-  cree_contributors : GdataAtom.atom_contributor list;
+  cree_contributors : GdataAtom.Contributor.t list;
   cree_id : GdataAtom.atom_id;
   cree_published : GdataAtom.atom_published;
   cree_updated : GdataAtom.atom_updated;
@@ -64,9 +64,9 @@ let empty_recurrenceException = {
 type calendar_calendarEventEntry = {
   cee_etag : string;
   cee_kind : string;
-  cee_authors : GdataAtom.atom_author list;
+  cee_authors : GdataAtom.Author.t list;
   cee_content : GdataAtom.atom_content;
-  cee_contributors : GdataAtom.atom_contributor list;
+  cee_contributors : GdataAtom.Contributor.t list;
   cee_id : GdataAtom.atom_id;
   cee_published : GdataAtom.atom_published;
   cee_updated : GdataAtom.atom_updated;
@@ -156,8 +156,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "author"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
+          GdataAtom.Author.of_xml_data_model
+          GdataAtom.Author.empty
           (fun author -> { entry with cree_authors =
                              author :: entry.cree_authors })
           cs
@@ -182,8 +182,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "contributor"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
+          GdataAtom.Contributor.of_xml_data_model
+          GdataAtom.Contributor.empty
           (fun contributor -> { entry with cree_contributors =
                                   contributor :: entry.cree_contributors })
           cs
@@ -336,8 +336,8 @@ let parse_entry entry tree =
         ([`Element; `Name "author"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
+          GdataAtom.Author.of_xml_data_model
+          GdataAtom.Author.empty
           (fun author -> { entry with cee_authors =
                              author :: entry.cee_authors })
           cs
@@ -353,8 +353,8 @@ let parse_entry entry tree =
         ([`Element; `Name "contributor"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_author
-          GdataAtom.empty_author
+          GdataAtom.Contributor.of_xml_data_model
+          GdataAtom.Contributor.empty
           (fun contributor -> { entry with cee_contributors =
                                   contributor :: entry.cee_contributors })
           cs
@@ -561,10 +561,10 @@ let render_recurrenceExceptionEntry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.cree_etag;
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cree_kind;
-     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cree_authors;
+     GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.cree_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.cree_categories;
      GdataAtom.render_content entry.cree_content;
-     GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.cree_contributors;
+     GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.cree_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cree_id;
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cree_published;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cree_updated;
@@ -596,9 +596,9 @@ let render_entry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.cee_etag;
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cee_kind;
-     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.cee_authors;
+     GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.cee_authors;
      GdataAtom.render_content entry.cee_content;
-     GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.cee_contributors;
+     GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.cee_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cee_id;
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cee_published;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cee_updated;

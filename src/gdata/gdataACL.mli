@@ -10,9 +10,9 @@ type acl_role = string
 type calendar_aclEntry = {
   ae_etag : string;
   ae_kind : string;
-  ae_authors : GdataAtom.atom_author list;
+  ae_authors : GdataAtom.Author.t list;
   ae_categories : GdataAtom.atom_category list;
-  ae_contributors : GdataAtom.atom_contributor list;
+  ae_contributors : GdataAtom.Contributor.t list;
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;
   ae_published : GdataAtom.atom_published;
