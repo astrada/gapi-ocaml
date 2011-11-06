@@ -18,17 +18,6 @@ type calendar_webContent = {
 
 val empty_webContent : calendar_webContent
 
-type calendar_calendarLink = {
-  cl_href : string;
-  cl_length : Int64.t;
-  cl_rel : string;
-  cl_title : string;
-  cl_type : string;
-  cl_webContent : calendar_webContent
-}
-
-val empty_link : calendar_calendarLink
-
 type calendar_calendarWhere = string
 
 type calendar_colorProperty = string
@@ -124,6 +113,25 @@ type calendar_calendarExtendedProperty = {
 
 val empty_extendedProperty : calendar_calendarExtendedProperty
 
+module Link :
+sig
+  type t = {
+    cl_href : string;
+    cl_length : Int64.t;
+    cl_rel : string;
+    cl_title : string;
+    cl_type : string;
+    cl_webContent : calendar_webContent
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
 type calendar_calendarEntry = {
   ce_etag : string;
   ce_kind : string;
@@ -136,7 +144,7 @@ type calendar_calendarEntry = {
   ce_updated : GdataAtom.atom_updated;
   ce_edited : GdataAtom.app_edited;
   ce_accesslevel : calendar_accessLevelProperty;
-  ce_links : calendar_calendarLink list;
+  ce_links : Link.t list;
   ce_where : calendar_calendarWhere list;
   ce_color : calendar_colorProperty;
   ce_hidden : calendar_hiddenProperty;
@@ -150,11 +158,6 @@ type calendar_calendarEntry = {
 }
 
 val empty_entry : calendar_calendarEntry
-
-val parse_link :
-  calendar_calendarLink ->
-  GdataCore.xml_data_model ->
-  calendar_calendarLink
 
 val parse_where :
   calendar_calendarWhere ->
@@ -202,10 +205,6 @@ val parse_calendar_entry :
 
 val get_calendar_prefix : string -> string
 
-val render_link :
-  calendar_calendarLink ->
-  GdataCore.xml_data_model list
-
 val render_where :
   calendar_calendarWhere ->
   GdataCore.xml_data_model list
@@ -246,30 +245,6 @@ val parse_personal_settings :
   GdataCore.xml_data_model ->
   (string, string) Hashtbl.t
 
-module Rel :
-sig
-  type t =
-    [ GdataAtom.Rel.t
-    | `EventFeed ]
-
-  val to_string : t -> string
-
-end
-
-val find_url : Rel.t -> calendar_calendarLink list -> string
-
-module Link :
-sig
-  type t = calendar_calendarLink
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
-
 module Entry :
 sig
   type t = calendar_calendarEntry
@@ -296,4 +271,16 @@ sig
     with type link_t = Link.t
 
 end
+
+module Rel :
+sig
+  type t =
+    [ GdataAtom.Rel.t
+    | `EventFeed ]
+
+  val to_string : t -> string
+
+end
+
+val find_url : Rel.t -> Link.t list -> string
 

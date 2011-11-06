@@ -12,7 +12,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_published : GdataAtom.atom_published;
   cree_updated : GdataAtom.atom_updated;
   cree_comments : GdataCalendar.Comments.comments;
-  cree_links : GdataCalendar.calendar_calendarLink list;
+  cree_links : GdataCalendar.Link.t list;
   cree_where : GdataCalendar.calendar_calendarWhere list;
   cree_who : GdataCalendar.calendar_calendarWho list;
   cree_icalUID : GdataCalendar.calendar_icalUIDProperty;
@@ -73,7 +73,7 @@ type calendar_calendarEventEntry = {
   cee_edited : GdataAtom.app_edited;
   cee_comments : GdataCalendar.Comments.comments;
   cee_extendedProperties : GdataCalendar.calendar_calendarExtendedProperty list;
-  cee_links : GdataCalendar.calendar_calendarLink list;
+  cee_links : GdataCalendar.Link.t list;
   cee_recurrenceExceptions : calendar_calendarRecurrenceException list;
   cee_where : GdataCalendar.calendar_calendarWhere list;
   cee_who : GdataCalendar.calendar_calendarWho list;
@@ -214,8 +214,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataCalendar.parse_link
-          GdataCalendar.empty_link
+          GdataCalendar.Link.of_xml_data_model
+          GdataCalendar.Link.empty
           (fun link -> { entry with cree_links = link :: entry.cree_links })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -400,8 +400,8 @@ let parse_entry entry tree =
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataCalendar.parse_link
-          GdataCalendar.empty_link
+          GdataCalendar.Link.of_xml_data_model
+          GdataCalendar.Link.empty
           (fun link -> { entry with cee_links = link :: entry.cee_links })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -569,7 +569,7 @@ let render_recurrenceExceptionEntry entry =
      GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.cree_published;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cree_updated;
      GdataCalendar.Comments.render_comments entry.cree_comments;
-     GdataAtom.render_element_list GdataCalendar.render_link entry.cree_links;
+     GdataAtom.render_element_list GdataCalendar.Link.to_xml_data_model entry.cree_links;
      GdataAtom.render_element_list GdataCalendar.render_where entry.cree_where;
      GdataAtom.render_element_list GdataCalendar.render_who entry.cree_who;
      GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cree_icalUID;
@@ -605,7 +605,7 @@ let render_entry entry =
      GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.cee_edited;
      GdataCalendar.Comments.render_comments entry.cee_comments;
      GdataAtom.render_element_list GdataCalendar.render_extendedProperty entry.cee_extendedProperties;
-     GdataAtom.render_element_list GdataCalendar.render_link entry.cee_links;
+     GdataAtom.render_element_list GdataCalendar.Link.to_xml_data_model entry.cee_links;
      GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
      GdataAtom.render_element_list GdataCalendar.render_where entry.cee_where;
      GdataAtom.render_element_list GdataCalendar.render_who entry.cee_who;

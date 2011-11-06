@@ -29,24 +29,6 @@ let empty_webContent = {
   wc_webContentGadgetPrefs = []
 }
 
-type calendar_calendarLink = {
-  cl_href : string;
-  cl_length : Int64.t;
-  cl_rel : string;
-  cl_title : string;
-  cl_type : string;
-  cl_webContent : calendar_webContent
-}
-
-let empty_link = {
-  cl_href = "";
-  cl_length = 0L;
-  cl_rel = "";
-  cl_title = "";
-  cl_type = "";
-  cl_webContent = empty_webContent
-}
-
 type calendar_calendarWhere = string
 
 type calendar_colorProperty = string
@@ -173,6 +155,125 @@ let empty_extendedProperty = {
   cep_value = ""
 }
 
+module Link =
+struct
+  type t = {
+    cl_href : string;
+    cl_length : Int64.t;
+    cl_rel : string;
+    cl_title : string;
+    cl_type : string;
+    cl_webContent : calendar_webContent
+  }
+
+  let empty = {
+    cl_href = "";
+    cl_length = 0L;
+    cl_rel = "";
+    cl_title = "";
+    cl_type = "";
+    cl_webContent = empty_webContent
+  }
+
+  let to_xml_data_model link =
+    let render_webContent webContent =
+      let render_webContentGadgetPref webContentGadgetPref =
+        GdataAtom.render_element ns_gCal "webContentGadgetPref"
+          [GdataAtom.render_attribute "" "name" webContentGadgetPref.wcgp_name;
+           GdataAtom.render_attribute "" "value" webContentGadgetPref.wcgp_value]
+      in
+
+      GdataAtom.render_element ns_gCal "webContent"
+        [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
+         GdataAtom.render_attribute "" "url" webContent.wc_url;
+         GdataAtom.render_int_attribute "" "width" webContent.wc_width;
+         GdataAtom.render_element_list render_webContentGadgetPref webContent.wc_webContentGadgetPrefs]
+    in
+
+    GdataAtom.render_element GdataAtom.ns_atom "link"
+      [GdataAtom.render_attribute "" "href" link.cl_href;
+       GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.cl_length;
+       GdataAtom.render_attribute "" "rel" link.cl_rel;
+       GdataAtom.render_attribute "" "title" link.cl_title;
+       GdataAtom.render_attribute "" "type" link.cl_type;
+       render_webContent link.cl_webContent]
+
+  let of_xml_data_model link tree =
+    let parse_webContentGadgetPref wcgp tree =
+      match tree with
+          GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "name"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { wcgp with wcgp_name = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "value"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { wcgp with wcgp_value = v }
+        | e ->
+            GdataUtils.unexpected e
+    in
+
+    let parse_webContent webContent tree =
+      match tree with
+          GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "height"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { webContent with wc_height = int_of_string v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "url"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { webContent with wc_url = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "width"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { webContent with wc_width = int_of_string v }
+        | GdataCore.AnnotatedTree.Node
+            ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
+             cs) when ns = ns_gCal ->
+            GdataAtom.parse_children
+              parse_webContentGadgetPref
+              empty_webContentGadgetPref
+              (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
+                               wcgp :: webContent.wc_webContentGadgetPrefs })
+              cs
+        | e ->
+            GdataUtils.unexpected e
+    in
+
+      match tree with
+          GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "href"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { link with cl_href = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "length"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { link with cl_length = Int64.of_string v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "rel"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { link with cl_rel = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "title"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { link with cl_title = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "type"; `Namespace ""],
+             GdataCore.Value.String v) ->
+            { link with cl_type = v }
+        | GdataCore.AnnotatedTree.Node
+            ([`Element; `Name "webContent"; `Namespace ns],
+             cs) when ns = ns_gCal ->
+            GdataAtom.parse_children
+              parse_webContent
+              empty_webContent 
+              (fun webContent -> { link with cl_webContent = webContent })
+              cs
+        | e ->
+            GdataUtils.unexpected e
+
+end
+
 type calendar_calendarEntry = {
   ce_etag : string;
   ce_kind : string;
@@ -185,7 +286,7 @@ type calendar_calendarEntry = {
   ce_updated : GdataAtom.atom_updated;
   ce_edited : GdataAtom.app_edited;
   ce_accesslevel : calendar_accessLevelProperty;
-  ce_links : calendar_calendarLink list;
+  ce_links : Link.t list;
   ce_where : calendar_calendarWhere list;
   ce_color : calendar_colorProperty;
   ce_hidden : calendar_hiddenProperty;
@@ -226,78 +327,6 @@ let empty_entry = {
 
 
 (* Calendar feed: parsing *)
-let parse_webContentGadgetPref wcgp tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "name"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { wcgp with wcgp_name = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "value"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { wcgp with wcgp_value = v }
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_webContent webContent tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "height"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { webContent with wc_height = int_of_string v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "url"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { webContent with wc_url = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "width"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { webContent with wc_width = int_of_string v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
-         cs) when ns = ns_gCal ->
-        GdataAtom.parse_children
-          parse_webContentGadgetPref
-          empty_webContentGadgetPref
-          (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
-                           wcgp :: webContent.wc_webContentGadgetPrefs })
-          cs
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_link link tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "href"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with cl_href = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "length"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with cl_length = Int64.of_string v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "rel"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with cl_rel = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "title"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with cl_title = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with cl_type = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "webContent"; `Namespace ns],
-         cs) when ns = ns_gCal ->
-        GdataAtom.parse_children
-          parse_webContent
-          empty_webContent 
-          (fun webContent -> { link with cl_webContent = webContent })
-          cs
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_where where tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -524,8 +553,8 @@ let parse_entry entry tree =
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          parse_link
-          empty_link
+          Link.of_xml_data_model
+          Link.empty
           (fun link -> { entry with ce_links = link :: entry.ce_links })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -619,29 +648,6 @@ let get_calendar_prefix namespace =
   if namespace = ns_gCal then "gCal"
   else GdataAtom.get_standard_prefix namespace
 
-let render_link link =
-  let render_webContent webContent =
-    let render_webContentGadgetPref webContentGadgetPref =
-      GdataAtom.render_element ns_gCal "webContentGadgetPref"
-        [GdataAtom.render_attribute "" "name" webContentGadgetPref.wcgp_name;
-         GdataAtom.render_attribute "" "value" webContentGadgetPref.wcgp_value]
-    in
-
-    GdataAtom.render_element ns_gCal "webContent"
-      [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
-       GdataAtom.render_attribute "" "url" webContent.wc_url;
-       GdataAtom.render_int_attribute "" "width" webContent.wc_width;
-       GdataAtom.render_element_list render_webContentGadgetPref webContent.wc_webContentGadgetPrefs]
-  in
-
-  GdataAtom.render_element GdataAtom.ns_atom "link"
-    [GdataAtom.render_attribute "" "href" link.cl_href;
-     GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.cl_length;
-     GdataAtom.render_attribute "" "rel" link.cl_rel;
-     GdataAtom.render_attribute "" "title" link.cl_title;
-     GdataAtom.render_attribute "" "type" link.cl_type;
-     render_webContent link.cl_webContent]
-
 let render_where where =
   GdataAtom.render_value ~attribute:"valueString" GdataAtom.ns_gd "where" where
 
@@ -701,7 +707,7 @@ let render_entry entry =
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
      GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.ce_edited;
      GdataAtom.render_value ns_gCal "accesslevel" entry.ce_accesslevel;
-     GdataAtom.render_element_list render_link entry.ce_links;
+     GdataAtom.render_element_list Link.to_xml_data_model entry.ce_links;
      GdataAtom.render_element_list render_where entry.ce_where;
      GdataAtom.render_value ns_gCal "color" entry.ce_color;
      GdataAtom.render_bool_value ns_gCal "hidden" entry.ce_hidden;
@@ -763,6 +769,22 @@ let parse_personal_settings tree =
 (* END Personal settings *)
 
 
+module Entry =
+struct
+  type t = calendar_calendarEntry
+
+  let empty = empty_entry
+
+  let to_xml_data_model = render_entry
+
+  let of_xml_data_model = parse_entry
+
+end
+
+module Feed = GdataAtom.MakeFeed(Entry)(Link)
+
+module Comments = GdataComments.Make(Link)
+
 (* Feed: utilities *)
 module Rel =
 struct
@@ -780,37 +802,9 @@ end
 let find_url rel links =
   let link = List.find
                (fun link ->
-                  link.cl_rel = Rel.to_string rel)
+                  link.Link.cl_rel = Rel.to_string rel)
                links
   in
-    link.cl_href
+    link.Link.cl_href
 (* END Feed: utilities *)
-
-module Link =
-struct
-  type t = calendar_calendarLink
-
-  let empty = empty_link
-
-  let to_xml_data_model = render_link
-
-  let of_xml_data_model = parse_link
-
-end
-
-module Entry =
-struct
-  type t = calendar_calendarEntry
-
-  let empty = empty_entry
-
-  let to_xml_data_model = render_entry
-
-  let of_xml_data_model = parse_entry
-
-end
-
-module Feed = GdataAtom.MakeFeed(Entry)(Link)
-
-module Comments = GdataComments.Make(Link)
 
