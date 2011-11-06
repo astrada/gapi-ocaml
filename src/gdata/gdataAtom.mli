@@ -20,7 +20,7 @@ type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
 
-module Author :
+module type PERSONCONSTRUCT =
 sig
   type t = {
     lang : string;
@@ -36,6 +36,14 @@ sig
   val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
 end
+
+module MakePersonConstruct :
+  functor (M : sig val element_name : string end) ->
+  PERSONCONSTRUCT
+
+module Author : PERSONCONSTRUCT
+
+module Contributor : PERSONCONSTRUCT
 
 module Category :
 sig
@@ -99,18 +107,6 @@ module Subtitle : TEXTCONSTRUCT
 module Summary : TEXTCONSTRUCT
 
 module Rights : TEXTCONSTRUCT
-
-module Contributor :
-sig
-  type t = Author.t
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
 
 type opensearch_itemsPerPage = int
 

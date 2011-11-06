@@ -118,7 +118,25 @@ let render_int_value ?attribute namespace name value =
 let render_bool_value ?attribute namespace name value =
   render_value ~default:"false" ?attribute namespace name (string_of_bool value)
 
-module Author =
+module type PERSONCONSTRUCT =
+sig
+  type t = {
+    lang : string;
+    email : atom_email;
+    name : atom_name;
+    uri : atom_uri
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module MakePersonConstruct
+  (M : sig val element_name : string end) =
 struct
   type t = {
     lang : string;
@@ -134,41 +152,44 @@ struct
     uri = ""
   }
 
-  let render_author element_name author =
-    render_element ns_atom element_name
-      [render_attribute Xmlm.ns_xml "lang" author.lang;
-       render_text_element ns_atom "email" author.email;
-       render_text_element ns_atom "name" author.name;
-       render_text_element ns_atom "uri" author.uri]
+  let to_xml_data_model person =
+    render_element ns_atom M.element_name
+      [render_attribute Xmlm.ns_xml "lang" person.lang;
+       render_text_element ns_atom "email" person.email;
+       render_text_element ns_atom "name" person.name;
+       render_text_element ns_atom "uri" person.uri]
 
-  let to_xml_data_model author =
-    render_author "author" author
-
-  let of_xml_data_model author tree =
+  let of_xml_data_model person tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-          { author with lang = v }
+          { person with lang = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "name"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { author with name = v }
+          { person with name = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "email"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { author with email = v }
+          { person with email = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "uri"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { author with uri = v }
+          { person with uri = v }
       | e ->
           GdataUtils.unexpected e
 
 end
+
+module Author =
+  MakePersonConstruct(struct let element_name = "author" end)
+
+module Contributor =
+  MakePersonConstruct(struct let element_name = "contributor" end)
 
 module Category =
 struct
@@ -333,19 +354,6 @@ module Summary =
 
 module Rights =
   MakeTextConstruct(struct let element_name = "rights" end)
-
-module Contributor =
-struct
-  type t = Author.t
-
-  let empty = Author.empty
-
-  let to_xml_data_model contributor =
-    Author.render_author "contributor" contributor
-
-  let of_xml_data_model = Author.of_xml_data_model
-
-end
 
 type opensearch_itemsPerPage = int
 

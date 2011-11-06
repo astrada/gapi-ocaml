@@ -94,14 +94,14 @@ let test_calendar_entry_to_data_model () =
             }
           ];
           GdataCalendar.ce_contributors = [
-            { GdataAtom.Author.lang = "en-US";
-              GdataAtom.Author.email = "contributor1@test.com";
-              GdataAtom.Author.name = "contributor1";
-              GdataAtom.Author.uri = "urn:uri";
+            { GdataAtom.Contributor.lang = "en-US";
+              GdataAtom.Contributor.email = "contributor1@test.com";
+              GdataAtom.Contributor.name = "contributor1";
+              GdataAtom.Contributor.uri = "urn:uri";
             };
-            { GdataAtom.Author.empty with
-                  GdataAtom.Author.email = "contributor2@test.com";
-                  GdataAtom.Author.name = "contributor2";
+            { GdataAtom.Contributor.empty with
+                  GdataAtom.Contributor.email = "contributor2@test.com";
+                  GdataAtom.Contributor.name = "contributor2";
             };
           ];
           GdataCalendar.ce_content =
