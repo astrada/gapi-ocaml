@@ -19,17 +19,17 @@ let new_calendar_entry title =
   }
 
 let acl_entry =
-  { GdataACL.empty_entry with
-        GdataACL.ae_categories = [
+  { GdataACL.Entry.empty with
+        GdataACL.Entry.ae_categories = [
           { GdataAtom.Category.empty with
                 GdataAtom.Category.scheme =
                   "http://schemas.google.com/g/2005#kind";
                 GdataAtom.Category.term =
                   "http://schemas.google.com/acl/2007#accessRule" } ];
-        GdataACL.ae_scope =
+        GdataACL.Entry.ae_scope =
           { GdataACL.Scope.stype = "user";
             GdataACL.Scope.value = "darcy@gmail.com" };
-        GdataACL.ae_role =
+        GdataACL.Entry.ae_role =
           "http://schemas.google.com/gCal/2005#editor" }
 
 let test_personal_settings () =
@@ -304,7 +304,7 @@ let test_create_acl () =
        let calendar_entry = List.hd own.GdataCalendar.Feed.entries in
        let (new_entry, session) =
          GdataCalendarService.create_acl acl_entry calendar_entry session in
-       let id = new_entry.GdataACL.ae_id in
+       let id = new_entry.GdataACL.Entry.ae_id in
        let (feed, session) = GdataCalendarService.retrieve_acl
                                  calendar_entry
                                  session in
@@ -314,7 +314,7 @@ let test_create_acl () =
          assert_bool
            "Created entry id not found in acl feed"
            (List.exists
-              (fun e -> e.GdataACL.ae_id = id)
+              (fun e -> e.GdataACL.Entry.ae_id = id)
               feed.GdataACL.Feed.entries)) 
 
 let test_update_acl () =
@@ -327,7 +327,7 @@ let test_update_acl () =
          GdataCalendarService.create_acl acl_entry calendar_entry session in
        let updated_entry =
          { new_entry with
-               GdataACL.ae_role =
+               GdataACL.Entry.ae_role =
                  "http://schemas.google.com/gCal/2005#read" } in
        let (server_updated_entry, session) =
          GdataCalendarService.update_acl updated_entry session in
@@ -338,8 +338,8 @@ let test_update_acl () =
                    server_updated_entry
                    session);
          assert_equal
-           updated_entry.GdataACL.ae_role
-           server_updated_entry.GdataACL.ae_role)
+           updated_entry.GdataACL.Entry.ae_role
+           server_updated_entry.GdataACL.Entry.ae_role)
 
 let suite = "Calendar Service test" >:::
   ["test_personal_settings" >:: test_personal_settings;

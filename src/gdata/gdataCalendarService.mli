@@ -111,23 +111,23 @@ val retrieve_acl :
   GdataACL.Feed.t * GdataConversation.Session.t
 
 val refresh_acl :
-  GdataACL.calendar_aclEntry ->
+  GdataACL.Entry.t ->
   GdataConversation.Session.t ->
-  GdataACL.calendar_aclEntry * GdataConversation.Session.t
+  GdataACL.Entry.t * GdataConversation.Session.t
 
 val create_acl :
-  GdataACL.calendar_aclEntry ->
-  GdataCalendar.calendar_calendarEntry ->
+  GdataACL.Entry.t ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
-  GdataACL.calendar_aclEntry * GdataConversation.Session.t
+  GdataACL.Entry.t * GdataConversation.Session.t
 
 val update_acl :
-  GdataACL.calendar_aclEntry ->
+  GdataACL.Entry.t ->
   GdataConversation.Session.t ->
-  GdataACL.calendar_aclEntry * GdataConversation.Session.t
+  GdataACL.Entry.t * GdataConversation.Session.t
 
 val delete_acl :
-  GdataACL.calendar_aclEntry ->
+  GdataACL.Entry.t ->
   GdataConversation.Session.t ->
   unit * GdataConversation.Session.t
 

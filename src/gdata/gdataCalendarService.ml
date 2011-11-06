@@ -127,12 +127,12 @@ let get_url_etag_event entry =
     entry.GdataCalendarEvent.cee_etag
 
 let get_url_etag_acl entry =
-  let url = GdataAtom.find_url `Edit entry.GdataACL.ae_links in
+  let url = GdataAtom.find_url `Edit entry.GdataACL.Entry.ae_links in
   let etag =
-    if entry.GdataACL.ae_etag = "" then
+    if entry.GdataACL.Entry.ae_etag = "" then
       None
     else
-      Some entry.GdataACL.ae_etag
+      Some entry.GdataACL.Entry.ae_etag
   in
     (url, etag)
 
