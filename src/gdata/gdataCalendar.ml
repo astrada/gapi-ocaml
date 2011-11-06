@@ -174,6 +174,7 @@ let empty_extendedProperty = {
 }
 
 type calendar_calendarEntry = {
+  ce_kind : string;
   ce_etag : string;
   ce_authors : GdataAtom.atom_author list;
   ce_categories : GdataAtom.atom_category list;
@@ -198,6 +199,7 @@ type calendar_calendarEntry = {
 }
 
 let empty_entry = {
+  ce_kind = "";
   ce_etag = "";
   ce_authors = [];
   ce_categories = [];
@@ -452,6 +454,10 @@ let parse_originalEvent event tree =
 let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "kind"; `Namespace ns],
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+        { entry with ce_kind = v }
+    | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
          GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with ce_etag = v }
@@ -683,9 +689,10 @@ let render_originalEvent event =
      render_when event.oe_when]
 
 let render_entry entry =
-  (* TODO: better namespace handling *)
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
+    [GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
+     GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
+     GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
      GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
@@ -760,25 +767,13 @@ let parse_personal_settings tree =
 module Rel =
 struct
   type t =
-      Self
-    | Alternate
-    | Edit
-    | Feed
-    | Post
-    | Batch
-    | EventFeed
-    | Acl
+    [ `EventFeed
+    | GdataAtom.Rel.t ]
 
   let to_string l  =
     match l with
-        Self -> "self"
-      | Alternate -> "alternate"
-      | Edit -> "edit"
-      | Feed -> GdataAtom.ns_gd ^ "#feed"
-      | Post -> GdataAtom.ns_gd ^ "#post"
-      | Batch -> GdataAtom.ns_gd ^ "#batch"
-      | EventFeed -> ns_gCal ^ "#eventFeed"
-      | Acl -> GdataAtom.ns_gAcl ^ "#accessControlList"
+        `EventFeed -> ns_gCal ^ "#eventFeed"
+      | #GdataAtom.Rel.t -> GdataAtom.Rel.to_string l
 
 end
 

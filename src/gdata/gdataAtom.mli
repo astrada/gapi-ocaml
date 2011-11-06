@@ -236,15 +236,15 @@ val element_to_data_model :
 module Rel :
 sig
   type t =
-      Self
-    | Alternate
-    | Edit
-    | Feed
-    | Post
-    | Batch
-    | Acl
+    [ `Self
+    | `Alternate
+    | `Edit
+    | `Feed
+    | `Post
+    | `Batch
+    | `Acl ]
 
-  val to_string : t -> string
+  val to_string : [> t] -> string
 
 end
 

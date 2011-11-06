@@ -125,6 +125,7 @@ type calendar_calendarExtendedProperty = {
 val empty_extendedProperty : calendar_calendarExtendedProperty
 
 type calendar_calendarEntry = {
+  ce_kind : string;
   ce_etag : string;
   ce_authors : GdataAtom.atom_author list;
   ce_categories : GdataAtom.atom_category list;
@@ -248,14 +249,8 @@ val parse_personal_settings :
 module Rel :
 sig
   type t =
-      Self
-    | Alternate
-    | Edit
-    | Feed
-    | Post
-    | Batch
-    | EventFeed
-    | Acl
+    [ GdataAtom.Rel.t
+    | `EventFeed ]
 
   val to_string : t -> string
 

@@ -371,23 +371,24 @@ let element_to_data_model get_prefix render_element element =
 module Rel =
 struct
   type t =
-      Self
-    | Alternate
-    | Edit
-    | Feed
-    | Post
-    | Batch
-    | Acl
+    [ `Self
+    | `Alternate
+    | `Edit
+    | `Feed
+    | `Post
+    | `Batch
+    | `Acl ]
 
   let to_string l  =
     match l with
-        Self -> "self"
-      | Alternate -> "alternate"
-      | Edit -> "edit"
-      | Feed -> ns_gd ^ "#feed"
-      | Post -> ns_gd ^ "#post"
-      | Batch -> ns_gd ^ "#batch"
-      | Acl -> ns_gAcl ^ "#accessControlList"
+        `Self -> "self"
+      | `Alternate -> "alternate"
+      | `Edit -> "edit"
+      | `Feed -> ns_gd ^ "#feed"
+      | `Post -> ns_gd ^ "#post"
+      | `Batch -> ns_gd ^ "#batch"
+      | `Acl -> ns_gAcl ^ "#accessControlList"
+      | _ -> failwith "BUG: Unexpected Rel value"
 
 end
 

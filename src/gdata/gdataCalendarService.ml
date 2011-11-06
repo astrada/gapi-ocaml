@@ -107,7 +107,7 @@ let parse_acl_entry =
   GdataRequest.parse_xml_response GdataACL.parse_acl_entry
 
 let get_url_etag links etag =
-  let url = GdataCalendar.find_url GdataCalendar.Rel.Edit links in
+  let url = GdataCalendar.find_url `Edit links in
   let etag =
     if etag = "" then
       None
@@ -127,9 +127,7 @@ let get_url_etag_event entry =
     entry.GdataCalendarEvent.cee_etag
 
 let get_url_etag_acl entry =
-  let url = GdataAtom.find_url
-              GdataAtom.Rel.Edit
-              entry.GdataACL.ae_links in
+  let url = GdataAtom.find_url `Edit entry.GdataACL.ae_links in
   let etag =
     if entry.GdataACL.ae_etag = "" then
       None
@@ -306,10 +304,7 @@ let retrieve_acl
       ?etag
       entry
       session =
-  let url = GdataCalendar.find_url
-              GdataCalendar.Rel.Acl
-              entry.GdataCalendar.ce_links
-  in
+  let url = GdataCalendar.find_url `Acl entry.GdataCalendar.ce_links in
     GdataService.service_request
       ~version
       ?etag
@@ -333,10 +328,7 @@ let create_acl
       acl_entry
       calendar_entry
       session =
-  let url = GdataCalendar.find_url
-              GdataCalendar.Rel.Acl
-              calendar_entry.GdataCalendar.ce_links
-  in
+  let url = GdataCalendar.find_url `Acl calendar_entry.GdataCalendar.ce_links in
     GdataService.service_request_with_data
       ~version
       acl_entry
