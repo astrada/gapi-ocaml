@@ -219,37 +219,37 @@ end
 module Generator =
 struct
   type t = {
-    g_uri : string;
-    g_version : string;
-    g_value : string
+    uri : string;
+    version : string;
+    value : string
   }
 
   let empty = {
-    g_uri = "";
-    g_version = "";
-    g_value = ""
+    uri = "";
+    version = "";
+    value = ""
   }
 
   let to_xml_data_model generator =
     render_element ns_atom "generator"
-      [render_attribute "" "version" generator.g_version;
-       render_attribute "" "uri" generator.g_uri;
-       render_text generator.g_value]
+      [render_attribute "" "version" generator.version;
+       render_attribute "" "uri" generator.uri;
+       render_text generator.value]
 
   let of_xml_data_model generator tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "version"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { generator with g_version = v }
+          { generator with version = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "uri"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { generator with g_uri = v }
+          { generator with uri = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Text],
            GdataCore.Value.String v) ->
-          { generator with g_value = v }
+          { generator with value = v }
       | e ->
           GdataUtils.unexpected e
 

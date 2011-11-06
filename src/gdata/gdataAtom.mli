@@ -57,9 +57,9 @@ end
 module Generator :
 sig
   type t = {
-    g_uri : string;
-    g_version : string;
-    g_value : string
+    uri : string;
+    version : string;
+    value : string
   }
 
   val empty : t
