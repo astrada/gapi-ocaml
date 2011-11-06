@@ -20,7 +20,7 @@ let test_parse_calendar_feed () =
       (List.hd feed.GdataCalendar.Feed.authors).GdataAtom.Author.name;
     assert_equal ~msg:"feed title"
       "Coach's Calendar List"
-      feed.GdataCalendar.Feed.title.GdataAtom.Title.tc_value
+      feed.GdataCalendar.Feed.title.GdataAtom.Title.value
 
 let test_parse_calendar_entry () =
   let ch = open_in "test/data/calendar_entry.xml" in
@@ -29,7 +29,7 @@ let test_parse_calendar_entry () =
                 GdataCalendar.parse_calendar_entry in
     assert_equal ~msg:"entry title"
       "Little League Schedule"
-      entry.GdataCalendar.ce_title.GdataAtom.Title.tc_value;
+      entry.GdataCalendar.ce_title.GdataAtom.Title.value;
     assert_equal ~msg:"entry timezone"
       "America/Los_Angeles"
       entry.GdataCalendar.ce_timezone
@@ -106,7 +106,7 @@ let test_calendar_entry_to_data_model () =
           ];
           GdataCalendar.ce_content =
             { GdataAtom.Content.empty with
-                  GdataAtom.Content.tc_src = "src";
+                  GdataAtom.Content.src = "src";
             };
           GdataCalendar.ce_published = GdataDate.of_string "2010-05-15T20:00:00.000Z";
           GdataCalendar.ce_updated = GdataDate.of_string "2011-08-16T12:00:00.000Z";
@@ -148,14 +148,14 @@ let test_calendar_entry_to_data_model () =
           GdataCalendar.ce_timezone = "America/Los_Angeles";
           GdataCalendar.ce_timesCleaned = 1;
           GdataCalendar.ce_summary =
-            { GdataAtom.Summary.tc_src = "src";
-              GdataAtom.Summary.tc_type = "type";
-              GdataAtom.Summary.tc_lang = "en-US";
-              GdataAtom.Summary.tc_value = "summary";
+            { GdataAtom.Summary.src = "src";
+              GdataAtom.Summary.ctype = "type";
+              GdataAtom.Summary.lang = "en-US";
+              GdataAtom.Summary.value = "summary";
             };
           GdataCalendar.ce_title =
             { GdataAtom.Title.empty with
-                  GdataAtom.Title.tc_value = "title";
+                  GdataAtom.Title.value = "title";
             };
     } in
   let tree = GdataCalendar.calendar_entry_to_data_model entry in
@@ -183,7 +183,7 @@ let test_parse_calendar_event_feed () =
       (List.hd feed.GdataCalendarEvent.Feed.authors).GdataAtom.Author.name;
     assert_equal ~msg:"feed title"
       "Jo March"
-      feed.GdataCalendarEvent.Feed.title.GdataAtom.Title.tc_value;
+      feed.GdataCalendarEvent.Feed.title.GdataAtom.Title.value;
     assert_equal ~msg:"entry count"
       1
       (List.length feed.GdataCalendarEvent.Feed.entries)
@@ -196,7 +196,7 @@ let test_parse_acl_feed () =
   let entry = List.nth feed.GdataACL.Feed.entries 1 in
     assert_equal ~msg:"feed title"
       "Elizabeth Bennet's access control list"
-      feed.GdataACL.Feed.title.GdataAtom.Title.tc_value;
+      feed.GdataACL.Feed.title.GdataAtom.Title.value;
     assert_equal ~msg:"entry count"
       2
       (List.length feed.GdataACL.Feed.entries);

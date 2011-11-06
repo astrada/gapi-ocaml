@@ -258,10 +258,10 @@ end
 module type TEXTCONSTRUCT =
 sig
   type t = {
-    tc_src : string;
-    tc_type : string;
-    tc_lang : string;
-    tc_value : string
+    src : string;
+    ctype : string;
+    lang : string;
+    value : string
   }
 
   val empty : t
@@ -276,44 +276,44 @@ module MakeTextConstruct
   (M : sig val element_name : string end) =
 struct
   type t = {
-    tc_src : string;
-    tc_type : string;
-    tc_lang : string;
-    tc_value : string
+    src : string;
+    ctype : string;
+    lang : string;
+    value : string
   }
 
   let empty = {
-    tc_src = "";
-    tc_type = "";
-    tc_lang = "";
-    tc_value = ""
+    src = "";
+    ctype = "";
+    lang = "";
+    value = ""
   }
 
   let to_xml_data_model text_construct =
     render_element ns_atom M.element_name
-      [render_attribute "" "src" text_construct.tc_src;
-       render_attribute "" "type" text_construct.tc_type;
-       render_attribute Xmlm.ns_xml "lang" text_construct.tc_lang;
-       render_text text_construct.tc_value]
+      [render_attribute "" "src" text_construct.src;
+       render_attribute "" "type" text_construct.ctype;
+       render_attribute Xmlm.ns_xml "lang" text_construct.lang;
+       render_text text_construct.value]
 
   let of_xml_data_model text tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "src"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { text with tc_src = v }
+          { text with src = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { text with tc_type = v }
+          { text with ctype = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-          { text with tc_lang = v }
+          { text with lang = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Text],
            GdataCore.Value.String v) ->
-          { text with tc_value = v }
+          { text with value = v }
       | e ->
           GdataUtils.unexpected e
 

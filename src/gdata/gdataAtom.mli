@@ -73,10 +73,10 @@ end
 module type TEXTCONSTRUCT =
 sig
   type t = {
-    tc_src : string;
-    tc_type : string;
-    tc_lang : string;
-    tc_value : string
+    src : string;
+    ctype : string;
+    lang : string;
+    value : string
   }
 
   val empty : t
