@@ -114,16 +114,16 @@ let test_calendar_entry_to_data_model () =
           GdataCalendar.ce_accesslevel = "accesslevel";
           GdataCalendar.ce_links = [
             { GdataCalendar.Link.empty with
-                  GdataCalendar.Link.cl_href = "http://href";
-                  GdataCalendar.Link.cl_rel = "self";
-                  GdataCalendar.Link.cl_type = "application/atom+xml";
+                  GdataCalendar.Link.href = "http://href";
+                  GdataCalendar.Link.rel = "self";
+                  GdataCalendar.Link.ltype = "application/atom+xml";
             };
-            { GdataCalendar.Link.cl_href = "http://href2";
-              GdataCalendar.Link.cl_length = Int64.of_int 10;
-              GdataCalendar.Link.cl_rel = "alternate";
-              GdataCalendar.Link.cl_title = "title";
-              GdataCalendar.Link.cl_type = "application/atom+xml";
-              GdataCalendar.Link.cl_webContent =
+            { GdataCalendar.Link.href = "http://href2";
+              GdataCalendar.Link.length = Int64.of_int 10;
+              GdataCalendar.Link.rel = "alternate";
+              GdataCalendar.Link.title = "title";
+              GdataCalendar.Link.ltype = "application/atom+xml";
+              GdataCalendar.Link.webContent =
                 { GdataCalendar.wc_height = 100;
                   GdataCalendar.wc_url = "http://webcontent";
                   GdataCalendar.wc_width = 200;

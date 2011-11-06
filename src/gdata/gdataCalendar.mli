@@ -116,12 +116,12 @@ val empty_extendedProperty : calendar_calendarExtendedProperty
 module Link :
 sig
   type t = {
-    cl_href : string;
-    cl_length : Int64.t;
-    cl_rel : string;
-    cl_title : string;
-    cl_type : string;
-    cl_webContent : calendar_webContent
+    href : string;
+    length : Int64.t;
+    rel : string;
+    title : string;
+    ltype : string;
+    webContent : calendar_webContent
   }
 
   val empty : t

@@ -158,21 +158,21 @@ let empty_extendedProperty = {
 module Link =
 struct
   type t = {
-    cl_href : string;
-    cl_length : Int64.t;
-    cl_rel : string;
-    cl_title : string;
-    cl_type : string;
-    cl_webContent : calendar_webContent
+    href : string;
+    length : Int64.t;
+    rel : string;
+    title : string;
+    ltype : string;
+    webContent : calendar_webContent
   }
 
   let empty = {
-    cl_href = "";
-    cl_length = 0L;
-    cl_rel = "";
-    cl_title = "";
-    cl_type = "";
-    cl_webContent = empty_webContent
+    href = "";
+    length = 0L;
+    rel = "";
+    title = "";
+    ltype = "";
+    webContent = empty_webContent
   }
 
   let to_xml_data_model link =
@@ -191,12 +191,12 @@ struct
     in
 
     GdataAtom.render_element GdataAtom.ns_atom "link"
-      [GdataAtom.render_attribute "" "href" link.cl_href;
-       GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.cl_length;
-       GdataAtom.render_attribute "" "rel" link.cl_rel;
-       GdataAtom.render_attribute "" "title" link.cl_title;
-       GdataAtom.render_attribute "" "type" link.cl_type;
-       render_webContent link.cl_webContent]
+      [GdataAtom.render_attribute "" "href" link.href;
+       GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.length;
+       GdataAtom.render_attribute "" "rel" link.rel;
+       GdataAtom.render_attribute "" "title" link.title;
+       GdataAtom.render_attribute "" "type" link.ltype;
+       render_webContent link.webContent]
 
   let of_xml_data_model link tree =
     let parse_webContentGadgetPref wcgp tree =
@@ -244,30 +244,30 @@ struct
           GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "href"; `Namespace ""],
              GdataCore.Value.String v) ->
-            { link with cl_href = v }
+            { link with href = v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "length"; `Namespace ""],
              GdataCore.Value.String v) ->
-            { link with cl_length = Int64.of_string v }
+            { link with length = Int64.of_string v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "rel"; `Namespace ""],
              GdataCore.Value.String v) ->
-            { link with cl_rel = v }
+            { link with rel = v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "title"; `Namespace ""],
              GdataCore.Value.String v) ->
-            { link with cl_title = v }
+            { link with title = v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "type"; `Namespace ""],
              GdataCore.Value.String v) ->
-            { link with cl_type = v }
+            { link with ltype = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "webContent"; `Namespace ns],
              cs) when ns = ns_gCal ->
             GdataAtom.parse_children
               parse_webContent
               empty_webContent 
-              (fun webContent -> { link with cl_webContent = webContent })
+              (fun webContent -> { link with webContent = webContent })
               cs
         | e ->
             GdataUtils.unexpected e
@@ -802,9 +802,9 @@ end
 let find_url rel links =
   let link = List.find
                (fun link ->
-                  link.Link.cl_rel = Rel.to_string rel)
+                  link.Link.rel = Rel.to_string rel)
                links
   in
-    link.Link.cl_href
+    link.Link.href
 (* END Feed: utilities *)
 
