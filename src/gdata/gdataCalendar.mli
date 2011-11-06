@@ -209,28 +209,28 @@ end
 module Entry :
 sig
   type t = {
-    ce_etag : string;
-    ce_kind : string;
-    ce_authors : GdataAtom.Author.t list;
-    ce_categories : GdataAtom.Category.t list;
-    ce_contributors : GdataAtom.Contributor.t list;
-    ce_id : GdataAtom.atom_id;
-    ce_content : GdataAtom.Content.t;
-    ce_published : GdataAtom.atom_published;
-    ce_updated : GdataAtom.atom_updated;
-    ce_edited : GdataAtom.app_edited;
-    ce_accesslevel : calendar_accessLevelProperty;
-    ce_links : Link.t list;
-    ce_where : calendar_calendarWhere list;
-    ce_color : calendar_colorProperty;
-    ce_hidden : calendar_hiddenProperty;
-    ce_overridename : calendar_overrideNameProperty;
-    ce_selected : calendar_selectedProperty;
-    ce_timezone : calendar_timeZoneProperty;
-    ce_timesCleaned : calendar_timesCleanedProperty;
-    ce_summary : GdataAtom.Summary.t;
-    ce_title : GdataAtom.Title.t;
-    ce_extensions : GdataCore.xml_data_model list
+    etag : string;
+    kind : string;
+    authors : GdataAtom.Author.t list;
+    categories : GdataAtom.Category.t list;
+    contributors : GdataAtom.Contributor.t list;
+    id : GdataAtom.atom_id;
+    content : GdataAtom.Content.t;
+    published : GdataAtom.atom_published;
+    updated : GdataAtom.atom_updated;
+    edited : GdataAtom.app_edited;
+    accesslevel : calendar_accessLevelProperty;
+    links : Link.t list;
+    where : calendar_calendarWhere list;
+    color : calendar_colorProperty;
+    hidden : calendar_hiddenProperty;
+    overridename : calendar_overrideNameProperty;
+    selected : calendar_selectedProperty;
+    timezone : calendar_timeZoneProperty;
+    timesCleaned : calendar_timesCleanedProperty;
+    summary : GdataAtom.Summary.t;
+    title : GdataAtom.Title.t;
+    extensions : GdataCore.xml_data_model list
   }
 
   val empty : t
