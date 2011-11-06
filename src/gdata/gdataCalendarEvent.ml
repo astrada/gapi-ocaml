@@ -616,8 +616,8 @@ let render_entry entry =
      GdataAtom.render_text_construct "title" entry.cee_title;
      GdataAtom.Category.to_xml_data_model
        { GdataAtom.Category.empty with
-             GdataAtom.Category.c_scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
-             GdataAtom.Category.c_term = entry.cee_eventKind.GdataCalendar.k_term };
+             GdataAtom.Category.scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
+             GdataAtom.Category.term = entry.cee_eventKind.GdataCalendar.k_term };
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
      GdataCalendar.render_originalEvent entry.cee_originalEvent;
      GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;

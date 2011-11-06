@@ -40,10 +40,10 @@ end
 module Category :
 sig
   type t = {
-    c_label : string;
-    c_scheme : string;
-    c_term : string;
-    c_lang : string
+    label : string;
+    scheme : string;
+    term : string;
+    lang : string
   }
 
   val empty : t

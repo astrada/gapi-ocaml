@@ -173,44 +173,44 @@ end
 module Category =
 struct
   type t = {
-    c_label : string;
-    c_scheme : string;
-    c_term : string;
-    c_lang : string;
+    label : string;
+    scheme : string;
+    term : string;
+    lang : string;
   }
 
   let empty = {
-    c_label = "";
-    c_scheme = "";
-    c_term = "";
-    c_lang = ""
+    label = "";
+    scheme = "";
+    term = "";
+    lang = ""
   }
 
   let to_xml_data_model category =
     render_element ns_atom "category"
-      [render_attribute "" "label" category.c_label;
-       render_attribute "" "scheme" category.c_scheme;
-       render_attribute "" "term" category.c_term;
-       render_attribute Xmlm.ns_xml "lang" category.c_lang]
+      [render_attribute "" "label" category.label;
+       render_attribute "" "scheme" category.scheme;
+       render_attribute "" "term" category.term;
+       render_attribute Xmlm.ns_xml "lang" category.lang]
 
   let of_xml_data_model category tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "label"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { category with c_label = v }
+          { category with label = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "scheme"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { category with c_scheme = v }
+          { category with scheme = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "term"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { category with c_term = v }
+          { category with term = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-          { category with c_lang = v }
+          { category with lang = v }
       | e ->
           GdataUtils.unexpected e
 

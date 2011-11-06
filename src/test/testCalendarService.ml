@@ -22,9 +22,9 @@ let acl_entry =
   { GdataACL.empty_entry with
         GdataACL.ae_categories = [
           { GdataAtom.Category.empty with
-                GdataAtom.Category.c_scheme =
+                GdataAtom.Category.scheme =
                   "http://schemas.google.com/g/2005#kind";
-                GdataAtom.Category.c_term =
+                GdataAtom.Category.term =
                   "http://schemas.google.com/acl/2007#accessRule" } ];
         GdataACL.ae_scope =
           { GdataACL.as_type = "user";
