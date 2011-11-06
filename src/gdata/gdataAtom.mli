@@ -54,13 +54,21 @@ sig
 
 end
 
-type atom_generator = {
-  g_uri : string;
-  g_version : string;
-  g_value : string
-}
+module Generator :
+sig
+  type t = {
+    g_uri : string;
+    g_version : string;
+    g_value : string
+  }
 
-val empty_generator : atom_generator
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type atom_textConstruct = {
   tc_src : string;
@@ -101,11 +109,6 @@ val parse_text :
   atom_textConstruct ->
   GdataCore.xml_data_model ->
   atom_textConstruct
-
-val parse_generator :
-  atom_generator ->
-  GdataCore.xml_data_model ->
-  atom_generator
 
 val parse_content :
   atom_content ->
@@ -211,10 +214,6 @@ val render_text_construct :
   atom_textConstruct ->
   GdataCore.xml_data_model list
 
-val render_generator :
-  atom_generator ->
-  GdataCore.xml_data_model list
-
 val element_to_data_model :
   (string -> string) ->
   ('a -> GdataCore.xml_data_model list) ->
@@ -251,7 +250,7 @@ sig
     authors : Author.t list;
     categories : Category.t list;
     contributors : Contributor.t list;
-    generator : atom_generator;
+    generator : Generator.t;
     icon : atom_icon;
     id : atom_id;
     updated : atom_updated;

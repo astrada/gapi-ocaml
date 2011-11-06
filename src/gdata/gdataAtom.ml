@@ -216,17 +216,44 @@ struct
 
 end
 
-type atom_generator = {
-  g_uri : string;
-  g_version : string;
-  g_value : string
-}
+module Generator =
+struct
+  type t = {
+    g_uri : string;
+    g_version : string;
+    g_value : string
+  }
 
-let empty_generator = {
-  g_uri = "";
-  g_version = "";
-  g_value = ""
-}
+  let empty = {
+    g_uri = "";
+    g_version = "";
+    g_value = ""
+  }
+
+  let to_xml_data_model generator =
+    render_element ns_atom "generator"
+      [render_attribute "" "version" generator.g_version;
+       render_attribute "" "uri" generator.g_uri;
+       render_text generator.g_value]
+
+  let of_xml_data_model generator tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "version"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { generator with g_version = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "uri"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { generator with g_uri = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Text],
+           GdataCore.Value.String v) ->
+          { generator with g_value = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type atom_textConstruct = {
   tc_src : string;
@@ -298,23 +325,6 @@ let parse_text text tree =
     | e ->
         GdataUtils.unexpected e
 
-let parse_generator generator tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "version"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { generator with g_version = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "uri"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { generator with g_uri = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Text],
-         GdataCore.Value.String v) ->
-        { generator with g_value = v }
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_content = parse_text
 
 (* END Parsing *)
@@ -328,12 +338,6 @@ let render_text_construct name text_construct =
      render_text text_construct.tc_value]
 
 let render_content = render_text_construct "content"
-
-let render_generator generator =
-  render_element ns_atom "generator"
-    [render_attribute "" "version" generator.g_version;
-     render_attribute "" "uri" generator.g_uri;
-     render_text generator.g_value]
 
 let element_to_data_model get_prefix render_element element =
   let xml_element = render_element element |> List.hd in
@@ -406,7 +410,7 @@ sig
     authors : Author.t list;
     categories : Category.t list;
     contributors : Contributor.t list;
-    generator : atom_generator;
+    generator : Generator.t;
     icon : atom_icon;
     id : atom_id;
     updated : atom_updated;
@@ -446,7 +450,7 @@ struct
     authors : Author.t list;
     categories : Category.t list;
     contributors : Contributor.t list;
-    generator : atom_generator;
+    generator : Generator.t;
     icon : atom_icon;
     id : atom_id;
     updated : atom_updated;
@@ -468,7 +472,7 @@ struct
     authors = [];
     categories = [];
     contributors = [];
-    generator = empty_generator;
+    generator = Generator.empty;
     icon = "";
     id = "";
     updated = GdataDate.epoch;
@@ -523,8 +527,8 @@ struct
           ([`Element; `Name "generator"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_generator
-            empty_generator
+            Generator.of_xml_data_model
+            Generator.empty
             (fun generator -> { feed with generator = generator })
             cs
       | GdataCore.AnnotatedTree.Node
@@ -617,7 +621,7 @@ struct
        render_element_list Author.to_xml_data_model feed.authors;
        render_element_list Category.to_xml_data_model feed.categories;
        render_element_list Contributor.to_xml_data_model feed.contributors;
-       render_generator feed.generator;
+       Generator.to_xml_data_model feed.generator;
        render_text_element ns_atom "icon" feed.icon;
        render_text_element ns_atom "id" feed.id;
        render_date_element ns_atom "updated" feed.updated;
