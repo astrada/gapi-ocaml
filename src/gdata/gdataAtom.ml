@@ -23,6 +23,26 @@ type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
 
+type opensearch_itemsPerPage = int
+
+type opensearch_startIndex = int
+
+type opensearch_totalResults = int
+
+type app_edited = GdataDate.t
+(* END Atom data types *)
+
+(* Parsing *)
+let parse_children parse_child empty_element update cs =
+  let element = List.fold_left
+                  parse_child
+                  empty_element
+                  cs
+  in
+    update element
+(* END Parsing *)
+
+(* Rendering *)
 let render_attribute ?(default = "") namespace name value =
   if value <> default then
     [GdataCore.AnnotatedTree.Leaf (
@@ -118,6 +138,13 @@ let render_int_value ?attribute namespace name value =
 let render_bool_value ?attribute namespace name value =
   render_value ~default:"false" ?attribute namespace name (string_of_bool value)
 
+let element_to_data_model get_prefix render_element element =
+  let xml_element = render_element element |> List.hd in
+  let ns_table = GdataUtils.build_namespace_table get_prefix xml_element in
+    GdataUtils.append_namespaces ns_table xml_element
+(* END Rendering *)
+
+(* Complex types *)
 module type PERSONCONSTRUCT =
 sig
   type t = {
@@ -354,33 +381,6 @@ module Summary =
 
 module Rights =
   MakeTextConstruct(struct let element_name = "rights" end)
-
-type opensearch_itemsPerPage = int
-
-type opensearch_startIndex = int
-
-type opensearch_totalResults = int
-
-type app_edited = GdataDate.t
-(* END Atom data types *)
-
-(* Parsing *)
-let parse_children parse_child empty_element update cs =
-  let element = List.fold_left
-                  parse_child
-                  empty_element
-                  cs
-  in
-    update element
-
-(* END Parsing *)
-
-(* Rendering *)
-let element_to_data_model get_prefix render_element element =
-  let xml_element = render_element element |> List.hd in
-  let ns_table = GdataUtils.build_namespace_table get_prefix xml_element in
-    GdataUtils.append_namespaces ns_table xml_element
-(* END Rendering *)
 
 module Link =
 struct
@@ -690,8 +690,9 @@ struct
       parse_root tree
 
 end
+(* END: Complex types *)
 
-(* Feed: utilities *)
+(* Utilities *)
 module Rel =
 struct
   type t =
@@ -731,5 +732,5 @@ let get_standard_prefix namespace =
   else if namespace = ns_gd then "gd"
   else if namespace = ns_gAcl then "gAcl"
   else ""
-(* END Feed: utilities *)
+(* END Utilities *)
 

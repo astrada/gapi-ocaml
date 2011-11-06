@@ -20,94 +20,6 @@ type atom_published = GdataDate.t
 
 type atom_updated = GdataDate.t
 
-module type PERSONCONSTRUCT =
-sig
-  type t = {
-    lang : string;
-    email : atom_email;
-    name : atom_name;
-    uri : atom_uri
-  }
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
-
-module MakePersonConstruct :
-  functor (M : sig val element_name : string end) ->
-  PERSONCONSTRUCT
-
-module Author : PERSONCONSTRUCT
-
-module Contributor : PERSONCONSTRUCT
-
-module Category :
-sig
-  type t = {
-    label : string;
-    scheme : string;
-    term : string;
-    lang : string
-  }
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
-
-module Generator :
-sig
-  type t = {
-    uri : string;
-    version : string;
-    value : string
-  }
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
-
-module type TEXTCONSTRUCT =
-sig
-  type t = {
-    src : string;
-    ctype : string;
-    lang : string;
-    value : string
-  }
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
-
-module MakeTextConstruct :
-  functor (M : sig val element_name : string end) -> TEXTCONSTRUCT
-
-module Content : TEXTCONSTRUCT
-
-module Title : TEXTCONSTRUCT
-
-module Subtitle : TEXTCONSTRUCT
-
-module Summary : TEXTCONSTRUCT
-
-module Rights : TEXTCONSTRUCT
-
 type opensearch_itemsPerPage = int
 
 type opensearch_startIndex = int
@@ -213,6 +125,94 @@ val element_to_data_model :
   ('a -> GdataCore.xml_data_model list) ->
   'a ->
   GdataCore.xml_data_model
+
+module type PERSONCONSTRUCT =
+sig
+  type t = {
+    lang : string;
+    email : atom_email;
+    name : atom_name;
+    uri : atom_uri
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module MakePersonConstruct :
+  functor (M : sig val element_name : string end) ->
+  PERSONCONSTRUCT
+
+module Author : PERSONCONSTRUCT
+
+module Contributor : PERSONCONSTRUCT
+
+module Category :
+sig
+  type t = {
+    label : string;
+    scheme : string;
+    term : string;
+    lang : string
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module Generator :
+sig
+  type t = {
+    uri : string;
+    version : string;
+    value : string
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module type TEXTCONSTRUCT =
+sig
+  type t = {
+    src : string;
+    ctype : string;
+    lang : string;
+    value : string
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+module MakeTextConstruct :
+  functor (M : sig val element_name : string end) -> TEXTCONSTRUCT
+
+module Content : TEXTCONSTRUCT
+
+module Title : TEXTCONSTRUCT
+
+module Subtitle : TEXTCONSTRUCT
+
+module Summary : TEXTCONSTRUCT
+
+module Rights : TEXTCONSTRUCT
 
 module Link :
 sig
