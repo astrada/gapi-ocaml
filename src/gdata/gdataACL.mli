@@ -1,11 +1,19 @@
 val ns_gAcl : string
 
-type acl_scope = {
-  as_type : string;
-  as_value : string
-}
+module Scope :
+sig
+  type t = {
+    as_type : string;
+    as_value : string
+  }
 
-val empty_scope : acl_scope
+  val empty : t
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+end
 
 type acl_role = string
 
@@ -22,7 +30,7 @@ type calendar_aclEntry = {
   ae_edited : GdataAtom.app_edited;
   ae_links : GdataAtom.Link.t list;
   ae_title : GdataAtom.Title.t;
-  ae_scope : acl_scope;
+  ae_scope : Scope.t;
   ae_role : acl_role
 }
 

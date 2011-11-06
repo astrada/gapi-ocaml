@@ -3,15 +3,37 @@ open GdataUtils.Op
 let ns_gAcl = "http://schemas.google.com/acl/2007"
 
 (* Calendar ACL data types *)
-type acl_scope = {
-  as_type : string;
-  as_value : string
-}
+module Scope =
+struct
+  type t = {
+    as_type : string;
+    as_value : string
+  }
 
-let empty_scope = {
-  as_type = "";
-  as_value = ""
-}
+  let empty = {
+    as_type = "";
+    as_value = ""
+  }
+
+  let to_xml_data_model scope =
+    GdataAtom.render_element ns_gAcl "scope"
+      [GdataAtom.render_attribute "" "type" scope.as_type;
+       GdataAtom.render_attribute "" "value" scope.as_value]
+
+  let of_xml_data_model scope tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "type"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { scope with as_type = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "value"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { scope with as_value = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type acl_role = string
 
@@ -28,7 +50,7 @@ type calendar_aclEntry = {
   ae_edited : GdataAtom.app_edited;
   ae_links : GdataAtom.Link.t list;
   ae_title : GdataAtom.Title.t;
-  ae_scope : acl_scope;
+  ae_scope : Scope.t;
   ae_role : acl_role
 }
 
@@ -45,25 +67,12 @@ let empty_entry = {
   ae_edited = GdataDate.epoch;
   ae_links = [];
   ae_title = GdataAtom.Title.empty;
-  ae_scope = empty_scope;
+  ae_scope = Scope.empty;
   ae_role = ""
 }
 (* END Calendar ACL data types *)
 
 (* Calendar ACL feed: parsing *)
-let parse_scope scope tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { scope with as_type = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "value"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { scope with as_value = v }
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -147,8 +156,8 @@ let parse_entry entry tree =
         ([`Element; `Name "scope"; `Namespace ns],
          cs) when ns = ns_gAcl ->
         GdataAtom.parse_children
-          parse_scope
-          empty_scope
+          Scope.of_xml_data_model
+          Scope.empty
           (fun scope -> { entry with ae_scope = scope })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -187,11 +196,6 @@ let get_acl_prefix namespace =
   if namespace = ns_gAcl then "gAcl"
   else GdataAtom.get_standard_prefix namespace
 
-let render_scope scope =
-  GdataAtom.render_element ns_gAcl "scope"
-    [GdataAtom.render_attribute "" "type" scope.as_type;
-     GdataAtom.render_attribute "" "value" scope.as_value]
-
 let render_entry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ae_etag;
@@ -204,7 +208,7 @@ let render_entry entry =
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
      GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.ae_links;
      GdataAtom.render_value ns_gAcl "role" entry.ae_role;
-     render_scope entry.ae_scope;
+     Scope.to_xml_data_model entry.ae_scope;
      GdataAtom.Title.to_xml_data_model entry.ae_title]
 
 let acl_entry_to_data_model entry =
