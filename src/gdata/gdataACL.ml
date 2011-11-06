@@ -1,5 +1,7 @@
 open GdataUtils.Op
 
+let ns_gAcl = "http://schemas.google.com/acl/2007"
+
 (* Calendar ACL data types *)
 type acl_scope = {
   as_type : string;
@@ -143,7 +145,7 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "scope"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_gAcl ->
+         cs) when ns = ns_gAcl ->
         GdataAtom.parse_children
           parse_scope
           empty_scope
@@ -153,7 +155,7 @@ let parse_entry entry tree =
         ([`Element; `Name "role"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gAcl ->
+             GdataCore.Value.String v)]) when ns = ns_gAcl ->
         { entry with ae_role = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name _; `Namespace ns],
@@ -181,8 +183,12 @@ let parse_acl_entry tree =
 
 
 (* Calendar ACL feed: rendering *)
+let get_acl_prefix namespace =
+  if namespace = ns_gAcl then "gAcl"
+  else GdataAtom.get_standard_prefix namespace
+
 let render_scope scope =
-  GdataAtom.render_element GdataAtom.ns_gAcl "scope"
+  GdataAtom.render_element ns_gAcl "scope"
     [GdataAtom.render_attribute "" "type" scope.as_type;
      GdataAtom.render_attribute "" "value" scope.as_value]
 
@@ -197,13 +203,13 @@ let render_entry entry =
      GdataAtom.Content.to_xml_data_model entry.ae_content;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
      GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.ae_links;
-     GdataAtom.render_value GdataAtom.ns_gAcl "role" entry.ae_role;
+     GdataAtom.render_value ns_gAcl "role" entry.ae_role;
      render_scope entry.ae_scope;
      GdataAtom.Title.to_xml_data_model entry.ae_title]
 
 let acl_entry_to_data_model entry =
   GdataAtom.element_to_data_model
-    GdataAtom.get_standard_prefix
+    get_acl_prefix
     render_entry 
     entry
 (* END Calendar ACL feed: rendering *)
@@ -221,4 +227,28 @@ struct
 end
 
 module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
+
+(* Utilities *)
+module Rel =
+struct
+  type t =
+    [ `Acl
+    | GdataAtom.Rel.t ]
+
+  let to_string l  =
+    match l with
+        `Acl -> ns_gAcl ^ "#accessControlList"
+      | #GdataAtom.Rel.t -> GdataAtom.Rel.to_string l
+      | _ -> failwith "BUG: Unexpected Rel value (GdataACL)"
+
+end
+
+let find_url rel links =
+  let link = List.find
+               (fun link ->
+                  link.GdataAtom.Link.rel = Rel.to_string rel)
+               links
+  in
+    link.GdataAtom.Link.href
+(* END Utilities *)
 

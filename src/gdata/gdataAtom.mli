@@ -2,7 +2,6 @@ val ns_atom : string
 val ns_app : string
 val ns_openSearch : string
 val ns_gd : string
-val ns_gAcl : string
 
 type atom_email = string
 
@@ -288,8 +287,7 @@ sig
     | `Edit
     | `Feed
     | `Post
-    | `Batch
-    | `Acl ]
+    | `Batch ]
 
   val to_string : [> t] -> string
 

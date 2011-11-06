@@ -1,3 +1,5 @@
+val ns_gAcl : string
+
 type acl_scope = {
   as_type : string;
   as_value : string
@@ -49,4 +51,18 @@ sig
       and type link_t = GdataAtom.Link.t
 
 end
+
+module Rel :
+sig
+  type t =
+    [ `Acl
+    | GdataAtom.Rel.t ]
+
+  val to_string : [> t] -> string
+
+end
+
+val find_url : Rel.t -> GdataAtom.Link.t list -> string
+
+val get_acl_prefix : string -> string
 

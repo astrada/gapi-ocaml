@@ -646,7 +646,7 @@ let parse_calendar_entry tree =
 (* Calendar feed: rendering *)
 let get_calendar_prefix namespace =
   if namespace = ns_gCal then "gCal"
-  else GdataAtom.get_standard_prefix namespace
+  else GdataACL.get_acl_prefix namespace
 
 let render_where where =
   GdataAtom.render_value ~attribute:"valueString" GdataAtom.ns_gd "where" where
@@ -785,17 +785,17 @@ module Feed = GdataAtom.MakeFeed(Entry)(Link)
 
 module Comments = GdataComments.Make(Link)
 
-(* Feed: utilities *)
+(* Utilities *)
 module Rel =
 struct
   type t =
     [ `EventFeed
-    | GdataAtom.Rel.t ]
+    | GdataACL.Rel.t ]
 
   let to_string l  =
     match l with
         `EventFeed -> ns_gCal ^ "#eventFeed"
-      | #GdataAtom.Rel.t -> GdataAtom.Rel.to_string l
+      | #GdataACL.Rel.t -> GdataACL.Rel.to_string l
 
 end
 
@@ -806,5 +806,5 @@ let find_url rel links =
                links
   in
     link.Link.href
-(* END Feed: utilities *)
+(* END Utilities *)
 

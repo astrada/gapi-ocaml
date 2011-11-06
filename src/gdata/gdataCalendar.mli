@@ -275,8 +275,8 @@ end
 module Rel :
 sig
   type t =
-    [ GdataAtom.Rel.t
-    | `EventFeed ]
+    [ `EventFeed
+    | GdataACL.Rel.t ]
 
   val to_string : t -> string
 

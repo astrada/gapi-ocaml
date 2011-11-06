@@ -5,7 +5,6 @@ let ns_atom = "http://www.w3.org/2005/Atom"
 let ns_app = "http://www.w3.org/2007/app"
 let ns_openSearch = "http://a9.com/-/spec/opensearch/1.1/"
 let ns_gd = "http://schemas.google.com/g/2005"
-let ns_gAcl = "http://schemas.google.com/acl/2007"
 
 type atom_email = string
 
@@ -701,8 +700,7 @@ struct
     | `Edit
     | `Feed
     | `Post
-    | `Batch
-    | `Acl ]
+    | `Batch ]
 
   let to_string l  =
     match l with
@@ -712,8 +710,7 @@ struct
       | `Feed -> ns_gd ^ "#feed"
       | `Post -> ns_gd ^ "#post"
       | `Batch -> ns_gd ^ "#batch"
-      | `Acl -> ns_gAcl ^ "#accessControlList"
-      | _ -> failwith "BUG: Unexpected Rel value"
+      | _ -> failwith "BUG: Unexpected Rel value (GdataAtom)"
 
 end
 
@@ -730,7 +727,6 @@ let get_standard_prefix namespace =
   else if namespace = ns_app then "app"
   else if namespace = ns_openSearch then "openSearch"
   else if namespace = ns_gd then "gd"
-  else if namespace = ns_gAcl then "gAcl"
   else ""
 (* END Utilities *)
 
