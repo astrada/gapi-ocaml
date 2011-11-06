@@ -27,8 +27,8 @@ let acl_entry =
                 GdataAtom.Category.term =
                   "http://schemas.google.com/acl/2007#accessRule" } ];
         GdataACL.ae_scope =
-          { GdataACL.Scope.as_type = "user";
-            GdataACL.Scope.as_value = "darcy@gmail.com" };
+          { GdataACL.Scope.stype = "user";
+            GdataACL.Scope.value = "darcy@gmail.com" };
         GdataACL.ae_role =
           "http://schemas.google.com/gCal/2005#editor" }
 

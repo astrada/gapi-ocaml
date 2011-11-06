@@ -6,30 +6,30 @@ let ns_gAcl = "http://schemas.google.com/acl/2007"
 module Scope =
 struct
   type t = {
-    as_type : string;
-    as_value : string
+    stype : string;
+    value : string
   }
 
   let empty = {
-    as_type = "";
-    as_value = ""
+    stype = "";
+    value = ""
   }
 
   let to_xml_data_model scope =
     GdataAtom.render_element ns_gAcl "scope"
-      [GdataAtom.render_attribute "" "type" scope.as_type;
-       GdataAtom.render_attribute "" "value" scope.as_value]
+      [GdataAtom.render_attribute "" "type" scope.stype;
+       GdataAtom.render_attribute "" "value" scope.value]
 
   let of_xml_data_model scope tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { scope with as_type = v }
+          { scope with stype = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "value"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { scope with as_value = v }
+          { scope with value = v }
       | e ->
           GdataUtils.unexpected e
 

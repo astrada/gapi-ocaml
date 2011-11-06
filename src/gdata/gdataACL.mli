@@ -3,8 +3,8 @@ val ns_gAcl : string
 module Scope :
 sig
   type t = {
-    as_type : string;
-    as_value : string
+    stype : string;
+    value : string
   }
 
   val empty : t

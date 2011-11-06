@@ -202,10 +202,10 @@ let test_parse_acl_feed () =
       (List.length feed.GdataACL.Feed.entries);
     assert_equal ~msg:"entry scope type"
       "user"
-      (entry.GdataACL.ae_scope.GdataACL.Scope.as_type);
+      (entry.GdataACL.ae_scope.GdataACL.Scope.stype);
     assert_equal ~msg:"entry scope value"
       "liz@gmail.com"
-      (entry.GdataACL.ae_scope.GdataACL.Scope.as_value)
+      (entry.GdataACL.ae_scope.GdataACL.Scope.value)
 
 let test_acl_entry_to_data_model () =
   let ch = open_in "test/data/acl_feed.xml" in
