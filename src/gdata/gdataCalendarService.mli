@@ -50,31 +50,31 @@ val own_calendars :
   GdataCalendar.Feed.t * GdataConversation.Session.t
 
 val refresh_calendar :
-  GdataCalendar.calendar_calendarEntry ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendar.calendar_calendarEntry * GdataConversation.Session.t
+  GdataCalendar.Entry.t * GdataConversation.Session.t
 
 val create_new_calendar :
   ?url:string ->
-  GdataCalendar.calendar_calendarEntry ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendar.calendar_calendarEntry * GdataConversation.Session.t
+  GdataCalendar.Entry.t * GdataConversation.Session.t
 
 val update_calendar :
-  GdataCalendar.calendar_calendarEntry ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendar.calendar_calendarEntry * GdataConversation.Session.t
+  GdataCalendar.Entry.t * GdataConversation.Session.t
 
 val delete_calendar :
-  GdataCalendar.calendar_calendarEntry ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
   unit * GdataConversation.Session.t
 
 val add_new_subscription :
   ?url:string ->
-  GdataCalendar.calendar_calendarEntry ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendar.calendar_calendarEntry * GdataConversation.Session.t
+  GdataCalendar.Entry.t * GdataConversation.Session.t
 
 val retrieve_events :
   ?url:string ->
@@ -106,7 +106,7 @@ val delete_event :
 
 val retrieve_acl :
   ?etag:string ->
-  GdataCalendar.calendar_calendarEntry ->
+  GdataCalendar.Entry.t ->
   GdataConversation.Session.t ->
   GdataACL.Feed.t * GdataConversation.Session.t
 

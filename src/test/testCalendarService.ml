@@ -1,17 +1,17 @@
 open OUnit
 
 let new_calendar_entry title =
-  { GdataCalendar.empty_entry with
-        GdataCalendar.ce_where = ["Oakland"];
-        GdataCalendar.ce_color = "#2952A3";
-        GdataCalendar.ce_hidden = false;
-        GdataCalendar.ce_timezone = "America/Los_Angeles";
-        GdataCalendar.ce_summary =
+  { GdataCalendar.Entry.empty with
+        GdataCalendar.Entry.ce_where = ["Oakland"];
+        GdataCalendar.Entry.ce_color = "#2952A3";
+        GdataCalendar.Entry.ce_hidden = false;
+        GdataCalendar.Entry.ce_timezone = "America/Los_Angeles";
+        GdataCalendar.Entry.ce_summary =
           { GdataAtom.Summary.empty with
                 GdataAtom.Summary.ctype = "text";
                 GdataAtom.Summary.value = "This calendar contains the practice schedule and game times.";
           };
-        GdataCalendar.ce_title =
+        GdataCalendar.Entry.ce_title =
                   { GdataAtom.Title.empty with
                         GdataAtom.Title.ctype = "text";
                         GdataAtom.Title.value = title;
@@ -76,12 +76,12 @@ let test_create_new_calendar () =
            GdataCalendarService.create_new_calendar entry session in
          let (_, session) =
            GdataCalendarService.refresh_calendar new_entry session in
-         let id = new_entry.GdataCalendar.ce_id in
+         let id = new_entry.GdataCalendar.Entry.ce_id in
          let (feed, session) = GdataCalendarService.own_calendars session in
            assert_bool
              "Created entry id not found in own calendars feed"
              (List.exists
-                (fun e -> e.GdataCalendar.ce_id = id)
+                (fun e -> e.GdataCalendar.Entry.ce_id = id)
                 feed.GdataCalendar.Feed.entries);
            ignore (GdataCalendarService.delete_calendar
                      new_entry
@@ -96,7 +96,7 @@ let test_delete_calendar () =
            GdataCalendarService.create_new_calendar entry session in
          let (_, session) =
            GdataCalendarService.refresh_calendar new_entry session in
-         let id = new_entry.GdataCalendar.ce_id in
+         let id = new_entry.GdataCalendar.Entry.ce_id in
          let (_, session) = GdataCalendarService.delete_calendar
                               new_entry
                               session in
@@ -104,7 +104,7 @@ let test_delete_calendar () =
            TestHelper.assert_false
              "Deleted entry id found in own calendars feed"
              (List.exists
-                (fun e -> e.GdataCalendar.ce_id = id)
+                (fun e -> e.GdataCalendar.Entry.ce_id = id)
                 feed.GdataCalendar.Feed.entries))
 
 let test_update_calendar () =
@@ -117,7 +117,7 @@ let test_update_calendar () =
          let (_, session) =
            GdataCalendarService.refresh_calendar new_entry session in
          let updated_entry = { new_entry with
-                                   GdataCalendar.ce_hidden = true } in
+                                   GdataCalendar.Entry.ce_hidden = true } in
          let (server_updated_entry, session) =
            GdataCalendarService.update_calendar updated_entry session in
          let (_, session) =
@@ -127,13 +127,13 @@ let test_update_calendar () =
                      server_updated_entry
                      session);
            assert_equal
-             updated_entry.GdataCalendar.ce_hidden
-             server_updated_entry.GdataCalendar.ce_hidden)
+             updated_entry.GdataCalendar.Entry.ce_hidden
+             server_updated_entry.GdataCalendar.Entry.ce_hidden)
 
 let test_add_new_subscription () =
   let entry =
-    { GdataCalendar.empty_entry with
-          GdataCalendar.ce_id = "en.australian#holiday@group.v.calendar.google.com" }
+    { GdataCalendar.Entry.empty with
+          GdataCalendar.Entry.ce_id = "en.australian#holiday@group.v.calendar.google.com" }
   in
     TestHelper.test_request
       TestHelper.build_oauth2_auth
@@ -148,7 +148,7 @@ let test_add_new_subscription () =
                      session);
            assert_equal
              "http://www.google.com/calendar/feeds/default/calendars/en.australian%23holiday%40group.v.calendar.google.com"
-             new_entry.GdataCalendar.ce_id)
+             new_entry.GdataCalendar.Entry.ce_id)
 
 let test_retrieve_events () =
   TestHelper.test_request

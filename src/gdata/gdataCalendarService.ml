@@ -118,8 +118,8 @@ let get_url_etag links etag =
 
 let get_url_etag_calendar entry =
   get_url_etag
-    entry.GdataCalendar.ce_links
-    entry.GdataCalendar.ce_etag
+    entry.GdataCalendar.Entry.ce_links
+    entry.GdataCalendar.Entry.ce_etag
 
 let get_url_etag_event entry =
   get_url_etag
@@ -304,7 +304,7 @@ let retrieve_acl
       ?etag
       entry
       session =
-  let url = GdataCalendar.find_url `Acl entry.GdataCalendar.ce_links in
+  let url = GdataCalendar.find_url `Acl entry.GdataCalendar.Entry.ce_links in
     GdataService.service_request
       ~version
       ?etag
@@ -328,7 +328,7 @@ let create_acl
       acl_entry
       calendar_entry
       session =
-  let url = GdataCalendar.find_url `Acl calendar_entry.GdataCalendar.ce_links in
+  let url = GdataCalendar.find_url `Acl calendar_entry.GdataCalendar.Entry.ce_links in
     GdataService.service_request_with_data
       ~version
       acl_entry

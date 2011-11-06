@@ -113,52 +113,6 @@ type calendar_calendarExtendedProperty = {
 
 val empty_extendedProperty : calendar_calendarExtendedProperty
 
-module Link :
-sig
-  type t = {
-    href : string;
-    length : Int64.t;
-    rel : string;
-    title : string;
-    ltype : string;
-    webContent : calendar_webContent
-  }
-
-  val empty : t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-end
-
-type calendar_calendarEntry = {
-  ce_etag : string;
-  ce_kind : string;
-  ce_authors : GdataAtom.Author.t list;
-  ce_categories : GdataAtom.Category.t list;
-  ce_contributors : GdataAtom.Contributor.t list;
-  ce_id : GdataAtom.atom_id;
-  ce_content : GdataAtom.Content.t;
-  ce_published : GdataAtom.atom_published;
-  ce_updated : GdataAtom.atom_updated;
-  ce_edited : GdataAtom.app_edited;
-  ce_accesslevel : calendar_accessLevelProperty;
-  ce_links : Link.t list;
-  ce_where : calendar_calendarWhere list;
-  ce_color : calendar_colorProperty;
-  ce_hidden : calendar_hiddenProperty;
-  ce_overridename : calendar_overrideNameProperty;
-  ce_selected : calendar_selectedProperty;
-  ce_timezone : calendar_timeZoneProperty;
-  ce_timesCleaned : calendar_timesCleanedProperty;
-  ce_summary : GdataAtom.Summary.t;
-  ce_title : GdataAtom.Title.t;
-  ce_extensions : GdataCore.xml_data_model list
-}
-
-val empty_entry : calendar_calendarEntry
-
 val parse_where :
   calendar_calendarWhere ->
   GdataCore.xml_data_model ->
@@ -199,10 +153,6 @@ val parse_originalEvent :
   GdataCore.xml_data_model ->
   gdata_originalEvent
 
-val parse_calendar_entry :
-  GdataCore.xml_data_model ->
-  calendar_calendarEntry
-
 val get_calendar_prefix : string -> string
 
 val render_where :
@@ -237,17 +187,16 @@ val render_originalEvent :
   gdata_originalEvent ->
   GdataCore.xml_data_model list
 
-val calendar_entry_to_data_model :
-  calendar_calendarEntry ->
-  GdataCore.xml_data_model
-
-val parse_personal_settings :
-  GdataCore.xml_data_model ->
-  (string, string) Hashtbl.t
-
-module Entry :
+module Link :
 sig
-  type t = calendar_calendarEntry
+  type t = {
+    href : string;
+    length : Int64.t;
+    rel : string;
+    title : string;
+    ltype : string;
+    webContent : calendar_webContent
+  }
 
   val empty : t
 
@@ -257,6 +206,49 @@ sig
 
 end
 
+module Entry :
+sig
+  type t = {
+    ce_etag : string;
+    ce_kind : string;
+    ce_authors : GdataAtom.Author.t list;
+    ce_categories : GdataAtom.Category.t list;
+    ce_contributors : GdataAtom.Contributor.t list;
+    ce_id : GdataAtom.atom_id;
+    ce_content : GdataAtom.Content.t;
+    ce_published : GdataAtom.atom_published;
+    ce_updated : GdataAtom.atom_updated;
+    ce_edited : GdataAtom.app_edited;
+    ce_accesslevel : calendar_accessLevelProperty;
+    ce_links : Link.t list;
+    ce_where : calendar_calendarWhere list;
+    ce_color : calendar_colorProperty;
+    ce_hidden : calendar_hiddenProperty;
+    ce_overridename : calendar_overrideNameProperty;
+    ce_selected : calendar_selectedProperty;
+    ce_timezone : calendar_timeZoneProperty;
+    ce_timesCleaned : calendar_timesCleanedProperty;
+    ce_summary : GdataAtom.Summary.t;
+    ce_title : GdataAtom.Title.t;
+    ce_extensions : GdataCore.xml_data_model list
+  }
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
+val parse_calendar_entry :
+  GdataCore.xml_data_model ->
+  Entry.t
+
+val calendar_entry_to_data_model :
+  Entry.t ->
+  GdataCore.xml_data_model
+
 module Feed :
   GdataAtom.FEED
     with type entry_t = Entry.t
@@ -265,6 +257,10 @@ module Feed :
 module Comments :
   GdataComments.COMMENTS
     with type link_t = Link.t
+
+val parse_personal_settings :
+  GdataCore.xml_data_model ->
+  (string, string) Hashtbl.t
 
 module Rel :
 sig

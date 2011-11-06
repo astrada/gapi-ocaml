@@ -29,10 +29,10 @@ let test_parse_calendar_entry () =
                 GdataCalendar.parse_calendar_entry in
     assert_equal ~msg:"entry title"
       "Little League Schedule"
-      entry.GdataCalendar.ce_title.GdataAtom.Title.value;
+      entry.GdataCalendar.Entry.ce_title.GdataAtom.Title.value;
     assert_equal ~msg:"entry timezone"
       "America/Los_Angeles"
-      entry.GdataCalendar.ce_timezone
+      entry.GdataCalendar.Entry.ce_timezone
 
 let test_parse_calendar_entry_with_extensions () =
   let ch = open_in "test/data/calendar_entry_with_extensions.xml" in
@@ -65,13 +65,13 @@ let test_parse_calendar_entry_with_extensions () =
               ])
           ])
       ]
-      entry.GdataCalendar.ce_extensions
+      entry.GdataCalendar.Entry.ce_extensions
 
 let test_calendar_entry_to_data_model () =
   let entry =
-    { GdataCalendar.empty_entry with
-          GdataCalendar.ce_id = "id";
-          GdataCalendar.ce_authors = [
+    { GdataCalendar.Entry.empty with
+          GdataCalendar.Entry.ce_id = "id";
+          GdataCalendar.Entry.ce_authors = [
             { GdataAtom.Author.lang = "en-US";
               GdataAtom.Author.email = "author1@test.com";
               GdataAtom.Author.name = "author1";
@@ -82,7 +82,7 @@ let test_calendar_entry_to_data_model () =
                   GdataAtom.Author.name = "author2";
             };
           ];
-          GdataCalendar.ce_categories = [
+          GdataCalendar.Entry.ce_categories = [
             { GdataAtom.Category.label = "label";
               GdataAtom.Category.scheme = "scheme";
               GdataAtom.Category.term = "term";
@@ -93,7 +93,7 @@ let test_calendar_entry_to_data_model () =
                   GdataAtom.Category.term = "term2";
             }
           ];
-          GdataCalendar.ce_contributors = [
+          GdataCalendar.Entry.ce_contributors = [
             { GdataAtom.Contributor.lang = "en-US";
               GdataAtom.Contributor.email = "contributor1@test.com";
               GdataAtom.Contributor.name = "contributor1";
@@ -104,15 +104,15 @@ let test_calendar_entry_to_data_model () =
                   GdataAtom.Contributor.name = "contributor2";
             };
           ];
-          GdataCalendar.ce_content =
+          GdataCalendar.Entry.ce_content =
             { GdataAtom.Content.empty with
                   GdataAtom.Content.src = "src";
             };
-          GdataCalendar.ce_published = GdataDate.of_string "2010-05-15T20:00:00.000Z";
-          GdataCalendar.ce_updated = GdataDate.of_string "2011-08-16T12:00:00.000Z";
-          GdataCalendar.ce_edited = GdataDate.of_string "2011-06-06T15:00:00.000Z";
-          GdataCalendar.ce_accesslevel = "accesslevel";
-          GdataCalendar.ce_links = [
+          GdataCalendar.Entry.ce_published = GdataDate.of_string "2010-05-15T20:00:00.000Z";
+          GdataCalendar.Entry.ce_updated = GdataDate.of_string "2011-08-16T12:00:00.000Z";
+          GdataCalendar.Entry.ce_edited = GdataDate.of_string "2011-06-06T15:00:00.000Z";
+          GdataCalendar.Entry.ce_accesslevel = "accesslevel";
+          GdataCalendar.Entry.ce_links = [
             { GdataCalendar.Link.empty with
                   GdataCalendar.Link.href = "http://href";
                   GdataCalendar.Link.rel = "self";
@@ -138,22 +138,22 @@ let test_calendar_entry_to_data_model () =
                 };
             };
           ];
-          GdataCalendar.ce_where = [
+          GdataCalendar.Entry.ce_where = [
             "where1";
             "where2";
           ];
-          GdataCalendar.ce_color = "#5A6986";
-          GdataCalendar.ce_hidden = true;
-          GdataCalendar.ce_selected = true;
-          GdataCalendar.ce_timezone = "America/Los_Angeles";
-          GdataCalendar.ce_timesCleaned = 1;
-          GdataCalendar.ce_summary =
+          GdataCalendar.Entry.ce_color = "#5A6986";
+          GdataCalendar.Entry.ce_hidden = true;
+          GdataCalendar.Entry.ce_selected = true;
+          GdataCalendar.Entry.ce_timezone = "America/Los_Angeles";
+          GdataCalendar.Entry.ce_timesCleaned = 1;
+          GdataCalendar.Entry.ce_summary =
             { GdataAtom.Summary.src = "src";
               GdataAtom.Summary.ctype = "type";
               GdataAtom.Summary.lang = "en-US";
               GdataAtom.Summary.value = "summary";
             };
-          GdataCalendar.ce_title =
+          GdataCalendar.Entry.ce_title =
             { GdataAtom.Title.empty with
                   GdataAtom.Title.value = "title";
             };
