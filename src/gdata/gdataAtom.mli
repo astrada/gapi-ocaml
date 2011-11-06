@@ -217,11 +217,11 @@ val element_to_data_model :
 module Link :
 sig
   type t = {
-    l_href : string;
-    l_length : Int64.t;
-    l_rel : string;
-    l_title : string;
-    l_type : string
+    href : string;
+    length : Int64.t;
+    rel : string;
+    title : string;
+    ltype : string
   }
 
   val empty : t

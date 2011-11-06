@@ -322,51 +322,51 @@ let element_to_data_model get_prefix render_element element =
 module Link =
 struct
   type t = {
-    l_href : string;
-    l_length : Int64.t;
-    l_rel : string;
-    l_title : string;
-    l_type : string
+    href : string;
+    length : Int64.t;
+    rel : string;
+    title : string;
+    ltype : string
   }
 
   let empty = {
-    l_href = "";
-    l_length = 0L;
-    l_rel = "";
-    l_title = "";
-    l_type = ""
+    href = "";
+    length = 0L;
+    rel = "";
+    title = "";
+    ltype = ""
   }
 
   let to_xml_data_model link =
     render_element ns_atom "link"
-      [render_attribute "" "href" link.l_href;
-       render_generic_attribute Int64.to_string Int64.zero "" "length" link.l_length;
-       render_attribute "" "rel" link.l_rel;
-       render_attribute "" "title" link.l_title;
-       render_attribute "" "type" link.l_type]
+      [render_attribute "" "href" link.href;
+       render_generic_attribute Int64.to_string Int64.zero "" "length" link.length;
+       render_attribute "" "rel" link.rel;
+       render_attribute "" "title" link.title;
+       render_attribute "" "type" link.ltype]
 
   let of_xml_data_model link tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "href"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { link with l_href = v }
+          { link with href = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "length"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { link with l_length = Int64.of_string v }
+          { link with length = Int64.of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "rel"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { link with l_rel = v }
+          { link with rel = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "title"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { link with l_title = v }
+          { link with title = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { link with l_type = v }
+          { link with ltype = v }
       | e ->
           GdataUtils.unexpected e
 
@@ -656,10 +656,10 @@ end
 let find_url rel links =
   let link = List.find
                (fun link ->
-                  link.Link.l_rel = Rel.to_string rel)
+                  link.Link.rel = Rel.to_string rel)
                links
   in
-    link.Link.l_href
+    link.Link.href
 
 let get_standard_prefix namespace =
   if namespace = ns_atom then "xmlns"
