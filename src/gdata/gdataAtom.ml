@@ -170,19 +170,51 @@ struct
 
 end
 
-type atom_category = {
-  c_label : string;
-  c_scheme : string;
-  c_term : string;
-  c_lang : string;
-}
+module Category =
+struct
+  type t = {
+    c_label : string;
+    c_scheme : string;
+    c_term : string;
+    c_lang : string;
+  }
 
-let empty_category = {
-  c_label = "";
-  c_scheme = "";
-  c_term = "";
-  c_lang = ""
-}
+  let empty = {
+    c_label = "";
+    c_scheme = "";
+    c_term = "";
+    c_lang = ""
+  }
+
+  let to_xml_data_model category =
+    render_element ns_atom "category"
+      [render_attribute "" "label" category.c_label;
+       render_attribute "" "scheme" category.c_scheme;
+       render_attribute "" "term" category.c_term;
+       render_attribute Xmlm.ns_xml "lang" category.c_lang]
+
+  let of_xml_data_model category tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "label"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { category with c_label = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "scheme"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { category with c_scheme = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "term"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { category with c_term = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "lang"; `Namespace ns],
+           GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+          { category with c_lang = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type atom_generator = {
   g_uri : string;
@@ -245,27 +277,6 @@ let parse_children parse_child empty_element update cs =
   in
     update element
 
-let parse_category category tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "label"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with c_label = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "scheme"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with c_scheme = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "term"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { category with c_term = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "lang"; `Namespace ns],
-         GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-        { category with c_lang = v }
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_text text tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -309,13 +320,6 @@ let parse_content = parse_text
 (* END Parsing *)
 
 (* Rendering *)
-let render_category category =
-  render_element ns_atom "category"
-    [render_attribute "" "label" category.c_label;
-     render_attribute "" "scheme" category.c_scheme;
-     render_attribute "" "term" category.c_term;
-     render_attribute Xmlm.ns_xml "lang" category.c_lang]
-
 let render_text_construct name text_construct =
   render_element ns_atom name
     [render_attribute "" "src" text_construct.tc_src;
@@ -400,7 +404,7 @@ sig
     etag : string;
     kind : string;
     authors : Author.t list;
-    categories : atom_category list;
+    categories : Category.t list;
     contributors : Contributor.t list;
     generator : atom_generator;
     icon : atom_icon;
@@ -440,7 +444,7 @@ struct
     etag : string;
     kind : string;
     authors : Author.t list;
-    categories : atom_category list;
+    categories : Category.t list;
     contributors : Contributor.t list;
     generator : atom_generator;
     icon : atom_icon;
@@ -502,8 +506,8 @@ struct
           ([`Element; `Name "category"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
-            parse_category
-            empty_category
+            Category.of_xml_data_model
+            Category.empty
             (fun category -> { feed with categories = category :: feed.categories })
             cs
       | GdataCore.AnnotatedTree.Node
@@ -611,7 +615,7 @@ struct
       [render_attribute ns_gd "etag" feed.etag;
        render_attribute ns_gd "kind" feed.kind;
        render_element_list Author.to_xml_data_model feed.authors;
-       render_element_list render_category feed.categories;
+       render_element_list Category.to_xml_data_model feed.categories;
        render_element_list Contributor.to_xml_data_model feed.contributors;
        render_generator feed.generator;
        render_text_element ns_atom "icon" feed.icon;

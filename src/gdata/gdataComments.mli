@@ -15,7 +15,7 @@ sig
       ce_updated : GdataAtom.atom_updated;
       ce_links : link_t list;
       ce_title : GdataAtom.atom_textConstruct;
-      ce_category : GdataAtom.atom_category;
+      ce_category : GdataAtom.Category.t;
       ce_extensions : GdataCore.xml_data_model list
     }
 

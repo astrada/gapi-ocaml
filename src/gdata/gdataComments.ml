@@ -17,7 +17,7 @@ sig
       ce_updated : GdataAtom.atom_updated;
       ce_links : link_t list;
       ce_title : GdataAtom.atom_textConstruct;
-      ce_category : GdataAtom.atom_category;
+      ce_category : GdataAtom.Category.t;
       ce_extensions : GdataCore.xml_data_model list
     }
 
@@ -84,7 +84,7 @@ struct
       ce_updated : GdataAtom.atom_updated;
       ce_links : Link.t list;
       ce_title : GdataAtom.atom_textConstruct;
-      ce_category : GdataAtom.atom_category;
+      ce_category : GdataAtom.Category.t;
       ce_extensions : GdataCore.xml_data_model list
     }
 
@@ -99,7 +99,7 @@ struct
       ce_updated = GdataDate.epoch;
       ce_links = [];
       ce_title = GdataAtom.empty_text;
-      ce_category = GdataAtom.empty_category;
+      ce_category = GdataAtom.Category.empty;
       ce_extensions = []
     }
 
@@ -115,7 +115,7 @@ struct
          GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
          GdataAtom.render_element_list Link.to_xml_data_model entry.ce_links;
          GdataAtom.render_text_construct "title" entry.ce_title;
-         GdataAtom.render_category entry.ce_category;
+         GdataAtom.Category.to_xml_data_model entry.ce_category;
          entry.ce_extensions]
 
     let of_xml_data_model entry tree =
@@ -189,8 +189,8 @@ struct
           ([`Element; `Name "category"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
-            GdataAtom.parse_category
-            GdataAtom.empty_category
+            GdataAtom.Category.of_xml_data_model
+            GdataAtom.Category.empty
             (fun category -> { entry with ce_category = category })
             cs
       | GdataCore.AnnotatedTree.Leaf

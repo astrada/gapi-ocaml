@@ -2,7 +2,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_etag : string;
   cree_kind : string;
   cree_authors : GdataAtom.Author.t list;
-  cree_categories : GdataAtom.atom_category list;
+  cree_categories : GdataAtom.Category.t list;
   cree_content : GdataAtom.atom_content;
   cree_contributors : GdataAtom.Contributor.t list;
   cree_id : GdataAtom.atom_id;

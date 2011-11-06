@@ -37,14 +37,22 @@ sig
 
 end
 
-type atom_category = {
-  c_label : string;
-  c_scheme : string;
-  c_term : string;
-  c_lang : string
-}
+module Category :
+sig
+  type t = {
+    c_label : string;
+    c_scheme : string;
+    c_term : string;
+    c_lang : string
+  }
 
-val empty_category : atom_category
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type atom_generator = {
   g_uri : string;
@@ -88,11 +96,6 @@ type opensearch_totalResults = int
 type app_edited = GdataDate.t
 
 val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
-
-val parse_category :
-  atom_category ->
-  GdataCore.xml_data_model ->
-  atom_category
 
 val parse_text :
   atom_textConstruct ->
@@ -199,10 +202,6 @@ val render_bool_value :
   bool ->
   GdataCore.xml_data_model list
 
-val render_category :
-  atom_category ->
-  GdataCore.xml_data_model list
-
 val render_content :
   atom_content ->
   GdataCore.xml_data_model list
@@ -250,7 +249,7 @@ sig
     etag : string;
     kind : string;
     authors : Author.t list;
-    categories : atom_category list;
+    categories : Category.t list;
     contributors : Contributor.t list;
     generator : atom_generator;
     icon : atom_icon;

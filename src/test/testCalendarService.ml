@@ -21,10 +21,10 @@ let new_calendar_entry title =
 let acl_entry =
   { GdataACL.empty_entry with
         GdataACL.ae_categories = [
-          { GdataAtom.empty_category with
-                GdataAtom.c_scheme =
+          { GdataAtom.Category.empty with
+                GdataAtom.Category.c_scheme =
                   "http://schemas.google.com/g/2005#kind";
-                GdataAtom.c_term =
+                GdataAtom.Category.c_term =
                   "http://schemas.google.com/acl/2007#accessRule" } ];
         GdataACL.ae_scope =
           { GdataACL.as_type = "user";

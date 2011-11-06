@@ -11,7 +11,7 @@ type calendar_aclEntry = {
   ae_etag : string;
   ae_kind : string;
   ae_authors : GdataAtom.Author.t list;
-  ae_categories : GdataAtom.atom_category list;
+  ae_categories : GdataAtom.Category.t list;
   ae_contributors : GdataAtom.Contributor.t list;
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;

@@ -136,7 +136,7 @@ type calendar_calendarEntry = {
   ce_etag : string;
   ce_kind : string;
   ce_authors : GdataAtom.Author.t list;
-  ce_categories : GdataAtom.atom_category list;
+  ce_categories : GdataAtom.Category.t list;
   ce_contributors : GdataAtom.Contributor.t list;
   ce_id : GdataAtom.atom_id;
   ce_content : GdataAtom.atom_content;

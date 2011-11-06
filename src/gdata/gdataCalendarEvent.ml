@@ -5,7 +5,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_etag : string;
   cree_kind : string;
   cree_authors : GdataAtom.Author.t list;
-  cree_categories : GdataAtom.atom_category list;
+  cree_categories : GdataAtom.Category.t list;
   cree_content : GdataAtom.atom_content;
   cree_contributors : GdataAtom.Contributor.t list;
   cree_id : GdataAtom.atom_id;
@@ -165,8 +165,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "category"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_category
-          GdataAtom.empty_category
+          GdataAtom.Category.of_xml_data_model
+          GdataAtom.Category.empty
           (fun category ->
              { entry with cree_categories = category :: entry.cree_categories })
           cs
@@ -562,7 +562,7 @@ let render_recurrenceExceptionEntry entry =
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.cree_etag;
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.cree_kind;
      GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.cree_authors;
-     GdataAtom.render_element_list GdataAtom.render_category entry.cree_categories;
+     GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.cree_categories;
      GdataAtom.render_content entry.cree_content;
      GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.cree_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.cree_id;
@@ -614,10 +614,10 @@ let render_entry entry =
      GdataAtom.render_bool_value GdataCalendar.ns_gCal "quickadd" entry.cee_quickAdd;
      GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cee_sequenceNumber;
      GdataAtom.render_text_construct "title" entry.cee_title;
-     GdataAtom.render_category
-       { GdataAtom.empty_category with
-             GdataAtom.c_scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
-             GdataAtom.c_term = entry.cee_eventKind.GdataCalendar.k_term };
+     GdataAtom.Category.to_xml_data_model
+       { GdataAtom.Category.empty with
+             GdataAtom.Category.c_scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
+             GdataAtom.Category.c_term = entry.cee_eventKind.GdataCalendar.k_term };
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
      GdataCalendar.render_originalEvent entry.cee_originalEvent;
      GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;

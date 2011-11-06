@@ -17,7 +17,7 @@ type calendar_aclEntry = {
   ae_etag : string;
   ae_kind : string;
   ae_authors : GdataAtom.Author.t list;
-  ae_categories : GdataAtom.atom_category list;
+  ae_categories : GdataAtom.Category.t list;
   ae_contributors : GdataAtom.Contributor.t list;
   ae_id : GdataAtom.atom_id;
   ae_content : GdataAtom.atom_content;
@@ -84,8 +84,8 @@ let parse_entry entry tree =
         ([`Element; `Name "category"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_category
-          GdataAtom.empty_category
+          GdataAtom.Category.of_xml_data_model
+          GdataAtom.Category.empty
           (fun category -> { entry with ae_categories = category :: entry.ae_categories })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -191,7 +191,7 @@ let render_entry entry =
     [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ae_etag;
      GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
      GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.ae_authors;
-     GdataAtom.render_element_list GdataAtom.render_category entry.ae_categories;
+     GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.ae_categories;
      GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ae_contributors;
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
      GdataAtom.render_content entry.ae_content;

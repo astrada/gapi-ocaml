@@ -83,14 +83,14 @@ let test_calendar_entry_to_data_model () =
             };
           ];
           GdataCalendar.ce_categories = [
-            { GdataAtom.c_label = "label";
-              GdataAtom.c_scheme = "scheme";
-              GdataAtom.c_term = "term";
-              GdataAtom.c_lang = "en-US";
+            { GdataAtom.Category.c_label = "label";
+              GdataAtom.Category.c_scheme = "scheme";
+              GdataAtom.Category.c_term = "term";
+              GdataAtom.Category.c_lang = "en-US";
             };
-            { GdataAtom.empty_category with
-                  GdataAtom.c_scheme = "scheme2";
-                  GdataAtom.c_term = "term2";
+            { GdataAtom.Category.empty with
+                  GdataAtom.Category.c_scheme = "scheme2";
+                  GdataAtom.Category.c_term = "term2";
             }
           ];
           GdataCalendar.ce_contributors = [
