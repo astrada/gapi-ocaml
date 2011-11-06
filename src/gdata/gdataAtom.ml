@@ -83,22 +83,6 @@ let empty_content = empty_text
 
 type atom_contributor = atom_author
 
-type atom_link = {
-  l_href : string;
-  l_length : Int64.t;
-  l_rel : string;
-  l_title : string;
-  l_type : string
-}
-
-let empty_link = {
-  l_href = "";
-  l_length = 0L;
-  l_rel = "";
-  l_title = "";
-  l_type = ""
-}
-
 type opensearch_itemsPerPage = int
 
 type opensearch_startIndex = int
@@ -202,30 +186,6 @@ let parse_generator generator tree =
 
 let parse_content = parse_text
 
-let parse_link link tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "href"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with l_href = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "length"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with l_length = Int64.of_string v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "rel"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with l_rel = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "title"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with l_title = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "type"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        { link with l_type = v }
-    | e ->
-        GdataUtils.unexpected e
 (* END Parsing *)
 
 (* Rendering *)
@@ -353,71 +313,62 @@ let render_generator generator =
      render_attribute "" "uri" generator.g_uri;
      render_text generator.g_value]
 
-let render_link link =
-  render_element ns_atom "link"
-    [render_attribute "" "href" link.l_href;
-     render_generic_attribute Int64.to_string Int64.zero "" "length" link.l_length;
-     render_attribute "" "rel" link.l_rel;
-     render_attribute "" "title" link.l_title;
-     render_attribute "" "type" link.l_type]
-
 let element_to_data_model get_prefix render_element element =
   let xml_element = render_element element |> List.hd in
   let ns_table = GdataUtils.build_namespace_table get_prefix xml_element in
     GdataUtils.append_namespaces ns_table xml_element
 (* END Rendering *)
 
-(* Feed: utilities *)
-module Rel =
-struct
-  type t =
-    [ `Self
-    | `Alternate
-    | `Edit
-    | `Feed
-    | `Post
-    | `Batch
-    | `Acl ]
-
-  let to_string l  =
-    match l with
-        `Self -> "self"
-      | `Alternate -> "alternate"
-      | `Edit -> "edit"
-      | `Feed -> ns_gd ^ "#feed"
-      | `Post -> ns_gd ^ "#post"
-      | `Batch -> ns_gd ^ "#batch"
-      | `Acl -> ns_gAcl ^ "#accessControlList"
-      | _ -> failwith "BUG: Unexpected Rel value"
-
-end
-
-let find_url rel links =
-  let link = List.find
-               (fun link ->
-                  link.l_rel = Rel.to_string rel)
-               links
-  in
-    link.l_href
-
-let get_standard_prefix namespace =
-  if namespace = ns_atom then "xmlns"
-  else if namespace = ns_app then "app"
-  else if namespace = ns_openSearch then "openSearch"
-  else if namespace = ns_gd then "gd"
-  else if namespace = ns_gAcl then "gAcl"
-  else ""
-(* END Feed: utilities *)
-
 module Link =
 struct
-  type t = atom_link
+  type t = {
+    l_href : string;
+    l_length : Int64.t;
+    l_rel : string;
+    l_title : string;
+    l_type : string
+  }
 
-  let empty = empty_link
+  let empty = {
+    l_href = "";
+    l_length = 0L;
+    l_rel = "";
+    l_title = "";
+    l_type = ""
+  }
 
-  let to_xml_data_model = render_link
+  let to_xml_data_model link =
+    render_element ns_atom "link"
+      [render_attribute "" "href" link.l_href;
+       render_generic_attribute Int64.to_string Int64.zero "" "length" link.l_length;
+       render_attribute "" "rel" link.l_rel;
+       render_attribute "" "title" link.l_title;
+       render_attribute "" "type" link.l_type]
 
-  let of_xml_data_model = parse_link
+  let of_xml_data_model link tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "href"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with l_href = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "length"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with l_length = Int64.of_string v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "rel"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with l_rel = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "title"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with l_title = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "type"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with l_type = v }
+      | e ->
+          GdataUtils.unexpected e
 
 end
 
@@ -676,4 +627,46 @@ struct
       parse_root tree
 
 end
+
+(* Feed: utilities *)
+module Rel =
+struct
+  type t =
+    [ `Self
+    | `Alternate
+    | `Edit
+    | `Feed
+    | `Post
+    | `Batch
+    | `Acl ]
+
+  let to_string l  =
+    match l with
+        `Self -> "self"
+      | `Alternate -> "alternate"
+      | `Edit -> "edit"
+      | `Feed -> ns_gd ^ "#feed"
+      | `Post -> ns_gd ^ "#post"
+      | `Batch -> ns_gd ^ "#batch"
+      | `Acl -> ns_gAcl ^ "#accessControlList"
+      | _ -> failwith "BUG: Unexpected Rel value"
+
+end
+
+let find_url rel links =
+  let link = List.find
+               (fun link ->
+                  link.Link.l_rel = Rel.to_string rel)
+               links
+  in
+    link.Link.l_href
+
+let get_standard_prefix namespace =
+  if namespace = ns_atom then "xmlns"
+  else if namespace = ns_app then "app"
+  else if namespace = ns_openSearch then "openSearch"
+  else if namespace = ns_gd then "gd"
+  else if namespace = ns_gAcl then "gAcl"
+  else ""
+(* END Feed: utilities *)
 

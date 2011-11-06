@@ -18,7 +18,7 @@ type calendar_aclEntry = {
   ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
-  ae_links : GdataAtom.atom_link list;
+  ae_links : GdataAtom.Link.t list;
   ae_title : GdataAtom.atom_textConstruct;
   ae_scope : acl_scope;
   ae_role : acl_role

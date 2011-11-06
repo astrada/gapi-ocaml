@@ -24,7 +24,7 @@ type calendar_aclEntry = {
   ae_published : GdataAtom.atom_published;
   ae_updated : GdataAtom.atom_updated;
   ae_edited : GdataAtom.app_edited;
-  ae_links : GdataAtom.atom_link list;
+  ae_links : GdataAtom.Link.t list;
   ae_title : GdataAtom.atom_textConstruct;
   ae_scope : acl_scope;
   ae_role : acl_role
@@ -129,8 +129,8 @@ let parse_entry entry tree =
         ([`Element; `Name "link"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
         GdataAtom.parse_children
-          GdataAtom.parse_link
-          GdataAtom.empty_link
+          GdataAtom.Link.of_xml_data_model
+          GdataAtom.Link.empty
           (fun link -> { entry with ae_links = link :: entry.ae_links })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -196,7 +196,7 @@ let render_entry entry =
      GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
      GdataAtom.render_content entry.ae_content;
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
-     GdataAtom.render_element_list GdataAtom.render_link entry.ae_links;
+     GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.ae_links;
      GdataAtom.render_value GdataAtom.ns_gAcl "role" entry.ae_role;
      render_scope entry.ae_scope;
      GdataAtom.render_text_construct "title" entry.ae_title]

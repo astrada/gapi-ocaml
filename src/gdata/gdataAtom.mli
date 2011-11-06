@@ -61,16 +61,6 @@ val empty_content : atom_content
 
 type atom_contributor = atom_author
 
-type atom_link = {
-  l_href : string;
-  l_length : Int64.t;
-  l_rel : string;
-  l_title : string;
-  l_type : string
-}
-
-val empty_link : atom_link
-
 type opensearch_itemsPerPage = int
 
 type opensearch_startIndex = int
@@ -105,11 +95,6 @@ val parse_content :
   atom_content ->
   GdataCore.xml_data_model ->
   atom_content
-
-val parse_link :
-  atom_link ->
-  GdataCore.xml_data_model ->
-  atom_link
 
 val render_attribute :
   ?default:string ->
@@ -223,38 +208,21 @@ val render_generator :
   atom_generator ->
   GdataCore.xml_data_model list
 
-val render_link :
-  atom_link ->
-  GdataCore.xml_data_model list
-
 val element_to_data_model :
   (string -> string) ->
   ('a -> GdataCore.xml_data_model list) ->
   'a ->
   GdataCore.xml_data_model
 
-module Rel :
-sig
-  type t =
-    [ `Self
-    | `Alternate
-    | `Edit
-    | `Feed
-    | `Post
-    | `Batch
-    | `Acl ]
-
-  val to_string : [> t] -> string
-
-end
-
-val find_url : Rel.t -> atom_link list -> string
-
-val get_standard_prefix : string -> string
-
 module Link :
 sig
-  type t = atom_link
+  type t = {
+    l_href : string;
+    l_length : Int64.t;
+    l_rel : string;
+    l_title : string;
+    l_type : string
+  }
 
   val empty : t
 
@@ -311,4 +279,23 @@ sig
       and type link_t = Link.t
 
 end
+
+module Rel :
+sig
+  type t =
+    [ `Self
+    | `Alternate
+    | `Edit
+    | `Feed
+    | `Post
+    | `Batch
+    | `Acl ]
+
+  val to_string : [> t] -> string
+
+end
+
+val find_url : Rel.t -> Link.t list -> string
+
+val get_standard_prefix : string -> string
 
