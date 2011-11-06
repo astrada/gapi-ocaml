@@ -1,5 +1,6 @@
 type calendar_calendarRecurrenceExceptionEntry = {
   cree_etag : string;
+  cree_kind : string;
   cree_authors : GdataAtom.atom_author list;
   cree_categories : GdataAtom.atom_category list;
   cree_content : GdataAtom.atom_content;
@@ -112,35 +113,9 @@ end
 
 module Feed :
 sig
-  type t = GdataAtom.MakeFeed(Entry)(GdataCalendar.Link).t = {
-    etag : string;
-    kind : string;
-    authors : GdataAtom.atom_author list;
-    categories : GdataAtom.atom_category list;
-    contributors : GdataAtom.atom_contributor list;
-    generator : GdataAtom.atom_generator;
-    icon : GdataAtom.atom_icon;
-    id : GdataAtom.atom_id;
-    updated : GdataAtom.atom_updated;
-    entries : Entry.t list;
-    links : GdataCalendar.Link.t list;
-    logo : GdataAtom.atom_logo;
-    rights : GdataAtom.atom_textConstruct;
-    subtitle : GdataAtom.atom_textConstruct;
-    title : GdataAtom.atom_textConstruct;
-    totalResults : GdataAtom.opensearch_totalResults;
-    itemsPerPage : GdataAtom.opensearch_itemsPerPage;
-    startIndex : GdataAtom.opensearch_startIndex;
-    extensions : GdataCore.xml_data_model list
-  }
-
-  val empty : t
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val parse_feed : GdataCore.xml_data_model -> t
+  include GdataAtom.FEED
+    with type entry_t = Entry.t
+      and type link_t = GdataCalendar.Link.t
 
 end
 

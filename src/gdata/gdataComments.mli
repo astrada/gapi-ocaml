@@ -6,6 +6,7 @@ sig
   sig
     type t = {
       ce_etag : string;
+      ce_kind : string;
       ce_authors : GdataAtom.atom_author list;
       ce_content : GdataAtom.atom_content;
       ce_contributors : GdataAtom.atom_contributor list;

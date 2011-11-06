@@ -188,7 +188,8 @@ let render_scope scope =
 
 let render_entry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
+    [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ae_etag;
+     GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
      GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ae_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.ae_categories;
      GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ae_contributors;

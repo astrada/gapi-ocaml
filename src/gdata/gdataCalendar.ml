@@ -174,8 +174,8 @@ let empty_extendedProperty = {
 }
 
 type calendar_calendarEntry = {
-  ce_kind : string;
   ce_etag : string;
+  ce_kind : string;
   ce_authors : GdataAtom.atom_author list;
   ce_categories : GdataAtom.atom_category list;
   ce_contributors : GdataAtom.atom_contributor list;
@@ -199,8 +199,8 @@ type calendar_calendarEntry = {
 }
 
 let empty_entry = {
-  ce_kind = "";
   ce_etag = "";
+  ce_kind = "";
   ce_authors = [];
   ce_categories = [];
   ce_contributors = [];
@@ -454,13 +454,13 @@ let parse_originalEvent event tree =
 let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
-        { entry with ce_kind = v }
-    | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
          GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
         { entry with ce_etag = v }
+    | GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "kind"; `Namespace ns],
+         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+        { entry with ce_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
          cs) when ns = GdataAtom.ns_atom ->
@@ -690,8 +690,8 @@ let render_originalEvent event =
 
 let render_entry entry =
   GdataAtom.render_element GdataAtom.ns_atom "entry"
-    [GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
-     GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
+    [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
+     GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
      GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
      GdataAtom.render_element_list GdataAtom.render_category entry.ce_categories;
      GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;

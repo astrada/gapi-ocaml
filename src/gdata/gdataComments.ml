@@ -8,6 +8,7 @@ sig
   sig
     type t = {
       ce_etag : string;
+      ce_kind : string;
       ce_authors : GdataAtom.atom_author list;
       ce_content : GdataAtom.atom_content;
       ce_contributors : GdataAtom.atom_contributor list;
@@ -74,6 +75,7 @@ struct
   struct
     type t = {
       ce_etag : string;
+      ce_kind : string;
       ce_authors : GdataAtom.atom_author list;
       ce_content : GdataAtom.atom_content;
       ce_contributors : GdataAtom.atom_contributor list;
@@ -88,6 +90,7 @@ struct
 
     let empty = {
       ce_etag = "";
+      ce_kind = "";
       ce_authors = [];
       ce_content = GdataAtom.empty_content;
       ce_contributors = [];
@@ -102,7 +105,9 @@ struct
 
     let to_xml_data_model entry =
       GdataAtom.render_element GdataAtom.ns_atom "entry"
-        [GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
+        [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
+         GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
+         GdataAtom.render_element_list (GdataAtom.render_author "author") entry.ce_authors;
          GdataAtom.render_content entry.ce_content;
          GdataAtom.render_element_list (GdataAtom.render_author "contributor") entry.ce_contributors;
          GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
@@ -119,6 +124,10 @@ struct
             ([`Attribute; `Name "etag"; `Namespace ns],
              GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
             { entry with ce_etag = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "kind"; `Namespace ns],
+             GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+            { entry with ce_kind = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "author"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
