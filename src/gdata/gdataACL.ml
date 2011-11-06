@@ -39,71 +39,71 @@ type acl_role = string
 module Entry =
 struct
   type t = {
-    ae_etag : string;
-    ae_kind : string;
-    ae_authors : GdataAtom.Author.t list;
-    ae_categories : GdataAtom.Category.t list;
-    ae_contributors : GdataAtom.Contributor.t list;
-    ae_id : GdataAtom.atom_id;
-    ae_content : GdataAtom.Content.t;
-    ae_published : GdataAtom.atom_published;
-    ae_updated : GdataAtom.atom_updated;
-    ae_edited : GdataAtom.app_edited;
-    ae_links : GdataAtom.Link.t list;
-    ae_title : GdataAtom.Title.t;
-    ae_scope : Scope.t;
-    ae_role : acl_role
+    etag : string;
+    kind : string;
+    authors : GdataAtom.Author.t list;
+    categories : GdataAtom.Category.t list;
+    contributors : GdataAtom.Contributor.t list;
+    id : GdataAtom.atom_id;
+    content : GdataAtom.Content.t;
+    published : GdataAtom.atom_published;
+    updated : GdataAtom.atom_updated;
+    edited : GdataAtom.app_edited;
+    links : GdataAtom.Link.t list;
+    title : GdataAtom.Title.t;
+    scope : Scope.t;
+    role : acl_role
   }
 
   let empty = {
-    ae_etag = "";
-    ae_kind = "";
-    ae_authors = [];
-    ae_categories = [];
-    ae_contributors = [];
-    ae_id = "";
-    ae_content = GdataAtom.Content.empty;
-    ae_published = GdataDate.epoch;
-    ae_updated = GdataDate.epoch;
-    ae_edited = GdataDate.epoch;
-    ae_links = [];
-    ae_title = GdataAtom.Title.empty;
-    ae_scope = Scope.empty;
-    ae_role = ""
+    etag = "";
+    kind = "";
+    authors = [];
+    categories = [];
+    contributors = [];
+    id = "";
+    content = GdataAtom.Content.empty;
+    published = GdataDate.epoch;
+    updated = GdataDate.epoch;
+    edited = GdataDate.epoch;
+    links = [];
+    title = GdataAtom.Title.empty;
+    scope = Scope.empty;
+    role = ""
   }
 
   let to_xml_data_model entry =
     GdataAtom.render_element GdataAtom.ns_atom "entry"
-      [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ae_etag;
-       GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ae_kind;
-       GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.ae_authors;
-       GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.ae_categories;
-       GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ae_contributors;
-       GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ae_id;
-       GdataAtom.Content.to_xml_data_model entry.ae_content;
-       GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ae_updated;
-       GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.ae_links;
-       GdataAtom.render_value ns_gAcl "role" entry.ae_role;
-       Scope.to_xml_data_model entry.ae_scope;
-       GdataAtom.Title.to_xml_data_model entry.ae_title]
+      [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.etag;
+       GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.kind;
+       GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
+       GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.categories;
+       GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.contributors;
+       GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
+       GdataAtom.Content.to_xml_data_model entry.content;
+       GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
+       GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
+       GdataAtom.render_value ns_gAcl "role" entry.role;
+       Scope.to_xml_data_model entry.scope;
+       GdataAtom.Title.to_xml_data_model entry.title]
 
   let of_xml_data_model entry tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
            GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
-          { entry with ae_etag = v }
+          { entry with etag = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
            GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
-          { entry with ae_kind = v }
+          { entry with kind = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
             GdataAtom.Author.of_xml_data_model
             GdataAtom.Author.empty
-            (fun author -> { entry with ae_authors = author :: entry.ae_authors })
+            (fun author -> { entry with authors = author :: entry.authors })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
@@ -111,7 +111,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Category.of_xml_data_model
             GdataAtom.Category.empty
-            (fun category -> { entry with ae_categories = category :: entry.ae_categories })
+            (fun category -> { entry with categories = category :: entry.categories })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
@@ -119,44 +119,44 @@ struct
           GdataAtom.parse_children
             GdataAtom.Contributor.of_xml_data_model
             GdataAtom.Contributor.empty
-            (fun contributor -> { entry with ae_contributors =
-                                    contributor :: entry.ae_contributors })
+            (fun contributor -> { entry with contributors =
+                                    contributor :: entry.contributors })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
-          { entry with ae_id = v }
+          { entry with id = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "content"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
             GdataAtom.Content.of_xml_data_model
             GdataAtom.Content.empty
-            (fun content -> { entry with ae_content = content })
+            (fun content -> { entry with content = content })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "published"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
-          { entry with ae_published = GdataDate.of_string v }
+          { entry with published = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
-          { entry with ae_updated = GdataDate.of_string v }
+          { entry with updated = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "edited"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_app ->
-          { entry with ae_edited = GdataDate.of_string v }
+          { entry with edited = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
             GdataAtom.Link.of_xml_data_model
             GdataAtom.Link.empty
-            (fun link -> { entry with ae_links = link :: entry.ae_links })
+            (fun link -> { entry with links = link :: entry.links })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
@@ -164,7 +164,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Title.of_xml_data_model
             GdataAtom.Title.empty
-            (fun title -> { entry with ae_title = title })
+            (fun title -> { entry with title = title })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "scope"; `Namespace ns],
@@ -172,14 +172,14 @@ struct
           GdataAtom.parse_children
             Scope.of_xml_data_model
             Scope.empty
-            (fun scope -> { entry with ae_scope = scope })
+            (fun scope -> { entry with scope = scope })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "role"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                GdataCore.Value.String v)]) when ns = ns_gAcl ->
-          { entry with ae_role = v }
+          { entry with role = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->

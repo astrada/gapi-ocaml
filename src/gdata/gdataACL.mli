@@ -20,20 +20,20 @@ type acl_role = string
 module Entry :
 sig
   type t = {
-    ae_etag : string;
-    ae_kind : string;
-    ae_authors : GdataAtom.Author.t list;
-    ae_categories : GdataAtom.Category.t list;
-    ae_contributors : GdataAtom.Contributor.t list;
-    ae_id : GdataAtom.atom_id;
-    ae_content : GdataAtom.Content.t;
-    ae_published : GdataAtom.atom_published;
-    ae_updated : GdataAtom.atom_updated;
-    ae_edited : GdataAtom.app_edited;
-    ae_links : GdataAtom.Link.t list;
-    ae_title : GdataAtom.Title.t;
-    ae_scope : Scope.t;
-    ae_role : acl_role
+    etag : string;
+    kind : string;
+    authors : GdataAtom.Author.t list;
+    categories : GdataAtom.Category.t list;
+    contributors : GdataAtom.Contributor.t list;
+    id : GdataAtom.atom_id;
+    content : GdataAtom.Content.t;
+    published : GdataAtom.atom_published;
+    updated : GdataAtom.atom_updated;
+    edited : GdataAtom.app_edited;
+    links : GdataAtom.Link.t list;
+    title : GdataAtom.Title.t;
+    scope : Scope.t;
+    role : acl_role
   }
 
   val empty : t
