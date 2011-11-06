@@ -121,25 +121,25 @@ let render_bool_value ?attribute namespace name value =
 module Author =
 struct
   type t = {
-    a_lang : string;
-    a_email : atom_email;
-    a_name : atom_name;
-    a_uri : atom_uri
+    lang : string;
+    email : atom_email;
+    name : atom_name;
+    uri : atom_uri
   }
 
   let empty = {
-    a_lang = "";
-    a_email = "";
-    a_name = "";
-    a_uri = ""
+    lang = "";
+    email = "";
+    name = "";
+    uri = ""
   }
 
   let render_author element_name author =
     render_element ns_atom element_name
-      [render_attribute Xmlm.ns_xml "lang" author.a_lang;
-       render_text_element ns_atom "email" author.a_email;
-       render_text_element ns_atom "name" author.a_name;
-       render_text_element ns_atom "uri" author.a_uri]
+      [render_attribute Xmlm.ns_xml "lang" author.lang;
+       render_text_element ns_atom "email" author.email;
+       render_text_element ns_atom "name" author.name;
+       render_text_element ns_atom "uri" author.uri]
 
   let to_xml_data_model author =
     render_author "author" author
@@ -149,22 +149,22 @@ struct
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
-          { author with a_lang = v }
+          { author with lang = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "name"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { author with a_name = v }
+          { author with name = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "email"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { author with a_email = v }
+          { author with email = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "uri"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
-          { author with a_uri = v }
+          { author with uri = v }
       | e ->
           GdataUtils.unexpected e
 

@@ -23,10 +23,10 @@ type atom_updated = GdataDate.t
 module Author :
 sig
   type t = {
-    a_lang : string;
-    a_email : atom_email;
-    a_name : atom_name;
-    a_uri : atom_uri
+    lang : string;
+    email : atom_email;
+    name : atom_name;
+    uri : atom_uri
   }
 
   val empty : t
