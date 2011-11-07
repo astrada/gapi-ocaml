@@ -104,21 +104,43 @@ type calendar_timesCleanedProperty = int
 
 type gdata_attendeeStatus = string
 
-type calendar_resourceProperty = {
-  rp_id : string;
-  rp_value : bool
-}
+module ResourceProperty =
+struct
+  type t = {
+    rp_id : string;
+    rp_value : bool
+  }
 
-let empty_resourceProperty = {
-  rp_id = "";
-  rp_value = false
-}
+  let empty = {
+    rp_id = "";
+    rp_value = false
+  }
+
+  let to_xml_data_model property =
+    GdataAtom.render_element GdataAtom.ns_gd "resource"
+      [GdataAtom.render_attribute "" "id" property.rp_id;
+       GdataAtom.render_attribute "" "value" (string_of_bool property.rp_value)]
+
+  let of_xml_data_model resource tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "id"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { resource with rp_id = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "value"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { resource with rp_value = bool_of_string v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type calendar_calendarWho = {
   cw_email : string;
   cw_rel : string;
   cw_value : string;
-  cw_resource : calendar_resourceProperty;
+  cw_resource : ResourceProperty.t;
   cw_attendeeStatus : gdata_attendeeStatus
 }
 
@@ -126,7 +148,7 @@ let empty_who = {
   cw_email = "";
   cw_rel = "";
   cw_value = "";
-  cw_resource = empty_resourceProperty;
+  cw_resource = ResourceProperty.empty;
   cw_attendeeStatus = ""
 }
 
@@ -242,19 +264,6 @@ let parse_extendedProperty property tree =
     | e ->
         GdataUtils.unexpected e
 
-let parse_resourceProperty resource tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "id"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { resource with rp_id = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "value"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { resource with rp_value = bool_of_string v }
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_attendeeStatus where tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -282,8 +291,8 @@ let parse_who who tree =
         ([`Element; `Name "resource"; `Namespace ns],
          cs) when ns = ns_gCal ->
         GdataAtom.parse_children
-          parse_resourceProperty
-          empty_resourceProperty
+          ResourceProperty.of_xml_data_model
+          ResourceProperty.empty
           (fun property -> { who with cw_resource = property })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -385,11 +394,6 @@ let render_extendedProperty property =
      GdataAtom.render_attribute "" "realm" property.cep_realm;
      GdataAtom.render_attribute "" "value" property.cep_value]
 
-let render_resourceProperty property =
-  GdataAtom.render_element GdataAtom.ns_gd "resource"
-    [GdataAtom.render_attribute "" "id" property.rp_id;
-     GdataAtom.render_attribute "" "value" (string_of_bool property.rp_value)]
-
 let render_attendeeStatus status =
   GdataAtom.render_value ~attribute:"value" GdataAtom.ns_gd "who" status
 
@@ -398,7 +402,7 @@ let render_who who =
     [GdataAtom.render_attribute "" "email" who.cw_email;
      GdataAtom.render_attribute "" "rel" who.cw_rel;
      GdataAtom.render_attribute "" "valueString" who.cw_value;
-     render_resourceProperty who.cw_resource;
+     ResourceProperty.to_xml_data_model who.cw_resource;
      render_attendeeStatus who.cw_attendeeStatus]
 
 let render_reminder reminder =

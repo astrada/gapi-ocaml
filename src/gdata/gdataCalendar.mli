@@ -50,18 +50,26 @@ type calendar_timesCleanedProperty = int
 
 type gdata_attendeeStatus = string
 
-type calendar_resourceProperty = {
-  rp_id : string;
-  rp_value : bool
-}
+module ResourceProperty :
+sig
+  type t = {
+    rp_id : string;
+    rp_value : bool
+  }
 
-val empty_resourceProperty : calendar_resourceProperty
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type calendar_calendarWho = {
   cw_email : string;
   cw_rel : string;
   cw_value : string;
-  cw_resource : calendar_resourceProperty;
+  cw_resource : ResourceProperty.t;
   cw_attendeeStatus : gdata_attendeeStatus
 }
 
@@ -139,11 +147,6 @@ val parse_extendedProperty :
   GdataCore.xml_data_model ->
   calendar_calendarExtendedProperty
 
-val parse_resourceProperty :
-  calendar_resourceProperty ->
-  GdataCore.xml_data_model ->
-  calendar_resourceProperty
-
 val parse_attendeeStatus :
   gdata_attendeeStatus ->
   GdataCore.xml_data_model ->
@@ -177,10 +180,6 @@ val render_where :
 
 val render_extendedProperty :
   calendar_calendarExtendedProperty ->
-  GdataCore.xml_data_model list
-
-val render_resourceProperty :
-  calendar_resourceProperty ->
   GdataCore.xml_data_model list
 
 val render_attendeeStatus :
