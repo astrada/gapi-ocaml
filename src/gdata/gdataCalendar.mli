@@ -17,14 +17,22 @@ sig
 
 end
 
-type calendar_webContent = {
-  wc_height : int;
-  wc_url : string;
-  wc_width : int;
-  wc_webContentGadgetPrefs : WebContentGadgetPref.t list
-}
+module WebContent :
+sig
+  type t = {
+    wc_height : int;
+    wc_url : string;
+    wc_width : int;
+    wc_webContentGadgetPrefs : WebContentGadgetPref.t list
+  }
 
-val empty_webContent : calendar_webContent
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type calendar_calendarWhere = string
 
@@ -203,7 +211,7 @@ sig
     rel : string;
     title : string;
     ltype : string;
-    webContent : calendar_webContent
+    webContent : WebContent.t
   }
 
   val empty : t

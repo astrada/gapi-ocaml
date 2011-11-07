@@ -37,19 +37,56 @@ struct
 
 end
 
-type calendar_webContent = {
-  wc_height : int;
-  wc_url : string;
-  wc_width : int;
-  wc_webContentGadgetPrefs : WebContentGadgetPref.t list
-}
+module WebContent =
+struct
+  type t = {
+    wc_height : int;
+    wc_url : string;
+    wc_width : int;
+    wc_webContentGadgetPrefs : WebContentGadgetPref.t list
+  }
 
-let empty_webContent = {
-  wc_height = 0;
-  wc_url = "";
-  wc_width = 0;
-  wc_webContentGadgetPrefs = []
-}
+  let empty = {
+    wc_height = 0;
+    wc_url = "";
+    wc_width = 0;
+    wc_webContentGadgetPrefs = []
+  }
+
+  let to_xml_data_model webContent =
+    GdataAtom.render_element ns_gCal "webContent"
+      [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
+       GdataAtom.render_attribute "" "url" webContent.wc_url;
+       GdataAtom.render_int_attribute "" "width" webContent.wc_width;
+       GdataAtom.render_element_list WebContentGadgetPref.to_xml_data_model webContent.wc_webContentGadgetPrefs]
+
+  let of_xml_data_model webContent tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "height"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { webContent with wc_height = int_of_string v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "url"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { webContent with wc_url = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "width"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { webContent with wc_width = int_of_string v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
+           cs) when ns = ns_gCal ->
+          GdataAtom.parse_children
+            WebContentGadgetPref.of_xml_data_model
+            WebContentGadgetPref.empty
+            (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
+                             wcgp :: webContent.wc_webContentGadgetPrefs })
+            cs
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type calendar_calendarWhere = string
 
@@ -394,7 +431,7 @@ struct
     rel : string;
     title : string;
     ltype : string;
-    webContent : calendar_webContent
+    webContent : WebContent.t
   }
 
   let empty = {
@@ -403,85 +440,50 @@ struct
     rel = "";
     title = "";
     ltype = "";
-    webContent = empty_webContent
+    webContent = WebContent.empty
   }
 
   let to_xml_data_model link =
-    let render_webContent webContent =
-      GdataAtom.render_element ns_gCal "webContent"
-        [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
-         GdataAtom.render_attribute "" "url" webContent.wc_url;
-         GdataAtom.render_int_attribute "" "width" webContent.wc_width;
-         GdataAtom.render_element_list WebContentGadgetPref.to_xml_data_model webContent.wc_webContentGadgetPrefs]
-    in
-
     GdataAtom.render_element GdataAtom.ns_atom "link"
       [GdataAtom.render_attribute "" "href" link.href;
        GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.length;
        GdataAtom.render_attribute "" "rel" link.rel;
        GdataAtom.render_attribute "" "title" link.title;
        GdataAtom.render_attribute "" "type" link.ltype;
-       render_webContent link.webContent]
+       WebContent.to_xml_data_model link.webContent]
 
   let of_xml_data_model link tree =
-    let parse_webContent webContent tree =
-      match tree with
-          GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "height"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { webContent with wc_height = int_of_string v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "url"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { webContent with wc_url = v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "width"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { webContent with wc_width = int_of_string v }
-        | GdataCore.AnnotatedTree.Node
-            ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
-             cs) when ns = ns_gCal ->
-            GdataAtom.parse_children
-              WebContentGadgetPref.of_xml_data_model
-              WebContentGadgetPref.empty
-              (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
-                               wcgp :: webContent.wc_webContentGadgetPrefs })
-              cs
-        | e ->
-            GdataUtils.unexpected e
-    in
-
-      match tree with
-          GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "href"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { link with href = v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "length"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { link with length = Int64.of_string v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "rel"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { link with rel = v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "title"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { link with title = v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "type"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { link with ltype = v }
-        | GdataCore.AnnotatedTree.Node
-            ([`Element; `Name "webContent"; `Namespace ns],
-             cs) when ns = ns_gCal ->
-            GdataAtom.parse_children
-              parse_webContent
-              empty_webContent 
-              (fun webContent -> { link with webContent = webContent })
-              cs
-        | e ->
-            GdataUtils.unexpected e
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "href"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with href = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "length"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with length = Int64.of_string v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "rel"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with rel = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "title"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with title = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "type"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { link with ltype = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "webContent"; `Namespace ns],
+           cs) when ns = ns_gCal ->
+          GdataAtom.parse_children
+            WebContent.of_xml_data_model
+            WebContent.empty
+            (fun webContent -> { link with webContent = webContent })
+            cs
+      | e ->
+          GdataUtils.unexpected e
 
 end
 
