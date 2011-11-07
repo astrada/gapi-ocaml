@@ -107,30 +107,30 @@ type gdata_attendeeStatus = string
 module ResourceProperty =
 struct
   type t = {
-    rp_id : string;
-    rp_value : bool
+    id : string;
+    value : bool
   }
 
   let empty = {
-    rp_id = "";
-    rp_value = false
+    id = "";
+    value = false
   }
 
   let to_xml_data_model property =
     GdataAtom.render_element GdataAtom.ns_gd "resource"
-      [GdataAtom.render_attribute "" "id" property.rp_id;
-       GdataAtom.render_attribute "" "value" (string_of_bool property.rp_value)]
+      [GdataAtom.render_attribute "" "id" property.id;
+       GdataAtom.render_attribute "" "value" (string_of_bool property.value)]
 
   let of_xml_data_model resource tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "id"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { resource with rp_id = v }
+          { resource with id = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "value"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { resource with rp_value = bool_of_string v }
+          { resource with value = bool_of_string v }
       | e ->
           GdataUtils.unexpected e
 

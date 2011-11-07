@@ -53,8 +53,8 @@ type gdata_attendeeStatus = string
 module ResourceProperty :
 sig
   type t = {
-    rp_id : string;
-    rp_value : bool
+    id : string;
+    value : bool
   }
 
   val empty : t
