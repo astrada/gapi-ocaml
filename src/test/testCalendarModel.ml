@@ -128,11 +128,11 @@ let test_calendar_entry_to_data_model () =
                   GdataCalendar.wc_url = "http://webcontent";
                   GdataCalendar.wc_width = 200;
                   GdataCalendar.wc_webContentGadgetPrefs = [
-                    { GdataCalendar.WebContentGadgetPref.wcgp_name = "name";
-                      GdataCalendar.WebContentGadgetPref.wcgp_value = "value";
+                    { GdataCalendar.WebContentGadgetPref.name = "name";
+                      GdataCalendar.WebContentGadgetPref.value = "value";
                     };
-                    { GdataCalendar.WebContentGadgetPref.wcgp_name = "name2";
-                      GdataCalendar.WebContentGadgetPref.wcgp_value = "value2";
+                    { GdataCalendar.WebContentGadgetPref.name = "name2";
+                      GdataCalendar.WebContentGadgetPref.value = "value2";
                     };
                   ];
                 };

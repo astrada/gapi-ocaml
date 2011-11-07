@@ -5,8 +5,8 @@ type calendar_accessLevelProperty = string
 module WebContentGadgetPref :
 sig
   type t = {
-    wcgp_name : string;
-    wcgp_value : string
+    name : string;
+    value : string
   }
 
   val empty : t

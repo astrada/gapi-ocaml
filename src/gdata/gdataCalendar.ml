@@ -8,30 +8,30 @@ type calendar_accessLevelProperty = string
 module WebContentGadgetPref =
 struct
   type t = {
-    wcgp_name : string;
-    wcgp_value : string;
+    name : string;
+    value : string;
   }
 
   let empty = {
-    wcgp_name = "";
-    wcgp_value = ""
+    name = "";
+    value = ""
   }
 
   let to_xml_data_model webContentGadgetPref =
     GdataAtom.render_element ns_gCal "webContentGadgetPref"
-      [GdataAtom.render_attribute "" "name" webContentGadgetPref.wcgp_name;
-       GdataAtom.render_attribute "" "value" webContentGadgetPref.wcgp_value]
+      [GdataAtom.render_attribute "" "name" webContentGadgetPref.name;
+       GdataAtom.render_attribute "" "value" webContentGadgetPref.value]
 
   let of_xml_data_model wcgp tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "name"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { wcgp with wcgp_name = v }
+          { wcgp with name = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "value"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { wcgp with wcgp_value = v }
+          { wcgp with value = v }
       | e ->
           GdataUtils.unexpected e
 
