@@ -19,7 +19,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_originalEvent : GdataCalendar.gdata_originalEvent;
   cree_transparency : GdataCalendar.gdata_transparency;
   cree_visibility : GdataCalendar.gdata_visibility;
-  cree_when : GdataCalendar.gdata_when list;
+  cree_when : GdataCalendar.When.t list;
   cree_extensions : GdataCore.xml_data_model list
 }
 
@@ -63,7 +63,7 @@ type calendar_calendarEventEntry = {
   cee_reminders : GdataCalendar.Reminder.t list;
   cee_transparency : GdataCalendar.gdata_transparency;
   cee_visibility : GdataCalendar.gdata_visibility;
-  cee_when : GdataCalendar.gdata_when list;
+  cee_when : GdataCalendar.When.t list;
   cee_anyoneCanAddSelf : bool;
   cee_guestsCanInviteOthers : bool;
   cee_guestsCanModify : bool;

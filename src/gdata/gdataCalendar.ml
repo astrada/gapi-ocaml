@@ -249,7 +249,6 @@ struct
        GdataAtom.render_attribute "" "method" reminder.rmethod;
        GdataAtom.render_attribute "" "minutes" (string_of_int reminder.minutes)]
 
-
   let of_xml_data_model reminder tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
@@ -277,30 +276,67 @@ struct
 
 end
 
-type gdata_when = {
-  w_endTime : GdataDate.t;
-  w_startTime : GdataDate.t;
-  w_value : string;
-  w_reminders : Reminder.t list
-}
+module When =
+struct
+  type t = {
+    w_endTime : GdataDate.t;
+    w_startTime : GdataDate.t;
+    w_value : string;
+    w_reminders : Reminder.t list
+  }
 
-let empty_when = {
-  w_endTime = GdataDate.epoch;
-  w_startTime = GdataDate.epoch;
-  w_value = "";
-  w_reminders = []
-}
+  let empty = {
+    w_endTime = GdataDate.epoch;
+    w_startTime = GdataDate.epoch;
+    w_value = "";
+    w_reminders = []
+  }
+
+  let to_xml_data_model cwhen =
+    GdataAtom.render_element GdataAtom.ns_gd "when"
+      [GdataAtom.render_date_attribute "" "startTime" cwhen.w_startTime;
+       GdataAtom.render_date_attribute "" "endTime" cwhen.w_endTime;
+       GdataAtom.render_attribute "" "valueString" cwhen.w_value;
+       GdataAtom.render_element_list Reminder.to_xml_data_model cwhen.w_reminders]
+
+  let of_xml_data_model cwhen tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "startTime"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { cwhen with w_startTime = GdataDate.of_string v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "endTime"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { cwhen with w_endTime = GdataDate.of_string v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "valueString"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { cwhen with w_value = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "reminder"; `Namespace ns],
+           cs) when ns = GdataAtom.ns_gd ->
+          GdataAtom.parse_children
+            Reminder.of_xml_data_model
+            Reminder.empty
+            (fun reminder ->
+               { cwhen with w_reminders = reminder :: cwhen.w_reminders })
+            cs
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type gdata_originalEvent = {
   oe_href : string;
   oe_id : string;
-  oe_when : gdata_when
+  oe_when : When.t
 }
 
 let empty_originalEvent = {
   oe_href = "";
   oe_id = "";
-  oe_when = empty_when
+  oe_when = When.empty
 }
 
 type calendar_privateCopyProperty = bool
@@ -359,32 +395,6 @@ let parse_extendedProperty property tree =
     | e ->
         GdataUtils.unexpected e
 
-let parse_when cwhen tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "startTime"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { cwhen with w_startTime = GdataDate.of_string v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "endTime"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { cwhen with w_endTime = GdataDate.of_string v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "valueString"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { cwhen with w_value = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "reminder"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_gd ->
-        GdataAtom.parse_children
-          Reminder.of_xml_data_model
-          Reminder.empty
-          (fun reminder ->
-             { cwhen with w_reminders = reminder :: cwhen.w_reminders })
-          cs
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_originalEvent event tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -399,8 +409,8 @@ let parse_originalEvent event tree =
         ([`Element; `Name "when"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          parse_when
-          empty_when
+          When.of_xml_data_model
+          When.empty
           (fun cwhen -> { event with oe_when = cwhen })
           cs
     | e ->
@@ -422,18 +432,11 @@ let render_extendedProperty property =
      GdataAtom.render_attribute "" "realm" property.cep_realm;
      GdataAtom.render_attribute "" "value" property.cep_value]
 
-let render_when cwhen =
-  GdataAtom.render_element GdataAtom.ns_gd "when"
-    [GdataAtom.render_date_attribute "" "startTime" cwhen.w_startTime;
-     GdataAtom.render_date_attribute "" "endTime" cwhen.w_endTime;
-     GdataAtom.render_attribute "" "valueString" cwhen.w_value;
-     GdataAtom.render_element_list Reminder.to_xml_data_model cwhen.w_reminders]
-
 let render_originalEvent event =
   GdataAtom.render_element GdataAtom.ns_gd "originalEvent"
     [GdataAtom.render_attribute "" "href" event.oe_href;
      GdataAtom.render_attribute "" "id" event.oe_id;
-     render_when event.oe_when]
+     When.to_xml_data_model event.oe_when]
 (* END Calendar feed: rendering *)
 
 module Link =

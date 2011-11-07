@@ -112,19 +112,27 @@ sig
 
 end
 
-type gdata_when = {
-  w_endTime : GdataDate.t;
-  w_startTime : GdataDate.t;
-  w_value : string;
-  w_reminders : Reminder.t list
-}
+module When :
+sig
+  type t = {
+    w_endTime : GdataDate.t;
+    w_startTime : GdataDate.t;
+    w_value : string;
+    w_reminders : Reminder.t list
+  }
 
-val empty_when : gdata_when
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type gdata_originalEvent = {
   oe_href : string;
   oe_id : string;
-  oe_when : gdata_when
+  oe_when : When.t
 }
 
 val empty_originalEvent : gdata_originalEvent
@@ -163,11 +171,6 @@ val parse_extendedProperty :
   GdataCore.xml_data_model ->
   calendar_calendarExtendedProperty
 
-val parse_when :
-  gdata_when ->
-  GdataCore.xml_data_model ->
-  gdata_when
-
 val parse_originalEvent :
   gdata_originalEvent ->
   GdataCore.xml_data_model ->
@@ -181,10 +184,6 @@ val render_where :
 
 val render_extendedProperty :
   calendar_calendarExtendedProperty ->
-  GdataCore.xml_data_model list
-
-val render_when :
-  gdata_when ->
   GdataCore.xml_data_model list
 
 val render_originalEvent :

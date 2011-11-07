@@ -22,7 +22,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_originalEvent : GdataCalendar.gdata_originalEvent;
   cree_transparency : GdataCalendar.gdata_transparency;
   cree_visibility : GdataCalendar.gdata_visibility;
-  cree_when : GdataCalendar.gdata_when list;
+  cree_when : GdataCalendar.When.t list;
   cree_extensions : GdataCore.xml_data_model list
 }
 
@@ -92,7 +92,7 @@ type calendar_calendarEventEntry = {
   cee_reminders : GdataCalendar.Reminder.t list;
   cee_transparency : GdataCalendar.gdata_transparency;
   cee_visibility : GdataCalendar.gdata_visibility;
-  cee_when : GdataCalendar.gdata_when list;
+  cee_when : GdataCalendar.When.t list;
   cee_anyoneCanAddSelf : bool;
   cee_guestsCanInviteOthers : bool;
   cee_guestsCanModify : bool;
@@ -284,8 +284,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "when"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendar.parse_when
-          GdataCalendar.empty_when
+          GdataCalendar.When.of_xml_data_model
+          GdataCalendar.When.empty
           (fun cwhen -> { entry with cree_when = cwhen :: entry.cree_when })
           cs
     | extension ->
@@ -518,8 +518,8 @@ let parse_entry entry tree =
         ([`Element; `Name "when"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendar.parse_when
-          GdataCalendar.empty_when
+          GdataCalendar.When.of_xml_data_model
+          GdataCalendar.When.empty
           (fun cwhen -> { entry with cee_when = cwhen :: entry.cee_when })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -595,7 +595,7 @@ let render_recurrenceExceptionEntry entry =
      GdataCalendar.render_originalEvent entry.cree_originalEvent;
      GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cree_transparency;
      GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cree_visibility;
-     GdataAtom.render_element_list GdataCalendar.render_when entry.cree_when;
+     GdataAtom.render_element_list GdataCalendar.When.to_xml_data_model entry.cree_when;
      entry.cree_extensions]
 
 let render_recurrenceExceptionEntryLink entry =
@@ -641,7 +641,7 @@ let render_entry entry =
      GdataAtom.render_element_list GdataCalendar.Reminder.to_xml_data_model entry.cee_reminders;
      GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cee_transparency;
      GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cee_visibility;
-     GdataAtom.render_element_list GdataCalendar.render_when entry.cee_when;
+     GdataAtom.render_element_list GdataCalendar.When.to_xml_data_model entry.cee_when;
      GdataAtom.render_bool_value GdataCalendar.ns_gCal "anyoneCanAddSelf" entry.cee_anyoneCanAddSelf;
      GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanInviteOthers" entry.cee_guestsCanInviteOthers;
      GdataAtom.render_bool_value GdataCalendar.ns_gCal "guestsCanModify" entry.cee_guestsCanModify;
