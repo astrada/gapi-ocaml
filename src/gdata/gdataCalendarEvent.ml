@@ -72,7 +72,7 @@ type calendar_calendarEventEntry = {
   cee_updated : GdataAtom.atom_updated;
   cee_edited : GdataAtom.app_edited;
   cee_comments : GdataCalendar.Comments.comments;
-  cee_extendedProperties : GdataCalendar.calendar_calendarExtendedProperty list;
+  cee_extendedProperties : GdataCalendar.ExtendedProperty.t list;
   cee_links : GdataCalendar.Link.t list;
   cee_recurrenceExceptions : calendar_calendarRecurrenceException list;
   cee_where : GdataCalendar.calendar_calendarWhere list;
@@ -390,8 +390,8 @@ let parse_entry entry tree =
         ([`Element; `Name "extendedProperty"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendar.parse_extendedProperty
-          GdataCalendar.empty_extendedProperty
+          GdataCalendar.ExtendedProperty.of_xml_data_model
+          GdataCalendar.ExtendedProperty.empty
           (fun property ->
              { entry with cee_extendedProperties =
                  property :: entry.cee_extendedProperties })
@@ -620,7 +620,7 @@ let render_entry entry =
      GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.cee_updated;
      GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.cee_edited;
      GdataCalendar.Comments.render_comments entry.cee_comments;
-     GdataAtom.render_element_list GdataCalendar.render_extendedProperty entry.cee_extendedProperties;
+     GdataAtom.render_element_list GdataCalendar.ExtendedProperty.to_xml_data_model entry.cee_extendedProperties;
      GdataAtom.render_element_list GdataCalendar.Link.to_xml_data_model entry.cee_links;
      GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
      GdataAtom.render_element_list GdataCalendar.render_where entry.cee_where;

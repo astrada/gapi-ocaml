@@ -386,17 +386,44 @@ type gdata_transparency = string
 
 type gdata_visibility = string
 
-type calendar_calendarExtendedProperty = {
-  cep_name : string;
-  cep_realm : string;
-  cep_value : string
-}
+module ExtendedProperty =
+struct
+  type t = {
+    cep_name : string;
+    cep_realm : string;
+    cep_value : string
+  }
 
-let empty_extendedProperty = {
-  cep_name = "";
-  cep_realm = "";
-  cep_value = ""
-}
+  let empty = {
+    cep_name = "";
+    cep_realm = "";
+    cep_value = ""
+  }
+
+  let to_xml_data_model property =
+    GdataAtom.render_element GdataAtom.ns_gd "extendedProperty"
+      [GdataAtom.render_attribute "" "name" property.cep_name;
+       GdataAtom.render_attribute "" "realm" property.cep_realm;
+       GdataAtom.render_attribute "" "value" property.cep_value]
+
+  let of_xml_data_model property tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "name"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { property with cep_name = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "realm"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { property with cep_realm = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "value"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { property with cep_value = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
 (* END Calendar data types *)
 
 (* Calendar feed: parsing *)
@@ -406,23 +433,6 @@ let parse_where where tree =
         ([`Attribute; `Name "valueString"; `Namespace ""],
          GdataCore.Value.String v) ->
         v
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_extendedProperty property tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "name"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { property with cep_name = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "realm"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { property with cep_realm = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "value"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { property with cep_value = v }
     | e ->
         GdataUtils.unexpected e
 
@@ -436,12 +446,6 @@ let get_calendar_prefix namespace =
 
 let render_where where =
   GdataAtom.render_value ~attribute:"valueString" GdataAtom.ns_gd "where" where
-
-let render_extendedProperty property =
-  GdataAtom.render_element GdataAtom.ns_gd "extendedProperty"
-    [GdataAtom.render_attribute "" "name" property.cep_name;
-     GdataAtom.render_attribute "" "realm" property.cep_realm;
-     GdataAtom.render_attribute "" "value" property.cep_value]
 
 (* END Calendar feed: rendering *)
 

@@ -161,32 +161,31 @@ type gdata_transparency = string
 
 type gdata_visibility = string
 
-type calendar_calendarExtendedProperty = {
-  cep_name : string;
-  cep_realm : string;
-  cep_value : string
-}
+module ExtendedProperty :
+sig
+  type t = {
+    cep_name : string;
+    cep_realm : string;
+    cep_value : string
+  }
 
-val empty_extendedProperty : calendar_calendarExtendedProperty
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 val parse_where :
   calendar_calendarWhere ->
   GdataCore.xml_data_model ->
   calendar_calendarWhere
 
-val parse_extendedProperty :
-  calendar_calendarExtendedProperty ->
-  GdataCore.xml_data_model ->
-  calendar_calendarExtendedProperty
-
 val get_calendar_prefix : string -> string
 
 val render_where :
   calendar_calendarWhere ->
-  GdataCore.xml_data_model list
-
-val render_extendedProperty :
-  calendar_calendarExtendedProperty ->
   GdataCore.xml_data_model list
 
 module Link :

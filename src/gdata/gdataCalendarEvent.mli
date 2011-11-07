@@ -43,7 +43,7 @@ type calendar_calendarEventEntry = {
   cee_updated : GdataAtom.atom_updated;
   cee_edited : GdataAtom.app_edited;
   cee_comments : GdataCalendar.Comments.comments;
-  cee_extendedProperties : GdataCalendar.calendar_calendarExtendedProperty list;
+  cee_extendedProperties : GdataCalendar.ExtendedProperty.t list;
   cee_links : GdataCalendar.Link.t list;
   cee_recurrenceExceptions : calendar_calendarRecurrenceException list;
   cee_where : GdataCalendar.calendar_calendarWhere list;
