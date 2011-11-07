@@ -5,6 +5,50 @@ let ns_gCal = "http://schemas.google.com/gCal/2005"
 
 type calendar_accessLevelProperty = string
 
+type calendar_colorProperty = string
+
+type calendar_hiddenProperty = bool
+
+type calendar_overrideNameProperty = string
+
+type calendar_selectedProperty = bool
+
+type calendar_timeZoneProperty = string
+
+type calendar_timesCleanedProperty = int
+
+type gdata_attendeeStatus = string
+
+type gdata_kind = {
+  k_scheme : string;
+  k_term : string
+}
+
+let eventKind = {
+  k_scheme = "http://schemas.google.com/g/2005#kind";
+  k_term = "http://schemas.google.com/g/2005#event"
+}
+
+type gdata_eventStatus = string
+
+type calendar_icalUIDProperty = string
+
+type calendar_privateCopyProperty = bool
+
+type calendar_quickAddProperty = bool
+
+type gdata_recurrence = string
+
+type calendar_sendEventNotificationsProperty = bool
+
+type calendar_sequenceNumberProperty = int
+
+type calendar_syncEventProperty = bool
+
+type gdata_transparency = string
+
+type gdata_visibility = string
+
 module WebContentGadgetPref =
 struct
   type t = {
@@ -87,20 +131,6 @@ struct
           GdataUtils.unexpected e
 
 end
-
-type calendar_colorProperty = string
-
-type calendar_hiddenProperty = bool
-
-type calendar_overrideNameProperty = string
-
-type calendar_selectedProperty = bool
-
-type calendar_timeZoneProperty = string
-
-type calendar_timesCleanedProperty = int
-
-type gdata_attendeeStatus = string
 
 module ResourceProperty =
 struct
@@ -206,20 +236,6 @@ struct
             GdataUtils.unexpected e
 
 end
-
-type gdata_kind = {
-  k_scheme : string;
-  k_term : string
-}
-
-let eventKind = {
-  k_scheme = "http://schemas.google.com/g/2005#kind";
-  k_term = "http://schemas.google.com/g/2005#event"
-}
-
-type gdata_eventStatus = string
-
-type calendar_icalUIDProperty = string
 
 module Reminder =
 struct
@@ -368,22 +384,6 @@ struct
 
 end
 
-type calendar_privateCopyProperty = bool
-
-type calendar_quickAddProperty = bool
-
-type gdata_recurrence = string
-
-type calendar_sendEventNotificationsProperty = bool
-
-type calendar_sequenceNumberProperty = int
-
-type calendar_syncEventProperty = bool
-
-type gdata_transparency = string
-
-type gdata_visibility = string
-
 module ExtendedProperty =
 struct
   type t = {
@@ -442,20 +442,6 @@ struct
           GdataUtils.unexpected e
 
 end
-
-(* END Calendar data types *)
-
-(* Calendar feed: parsing *)
-
-(* END Calendar feed: parsing *)
-
-
-(* Calendar feed: rendering *)
-let get_calendar_prefix namespace =
-  if namespace = ns_gCal then "gCal"
-  else GdataACL.get_acl_prefix namespace
-
-(* END Calendar feed: rendering *)
 
 module Link =
 struct
@@ -744,6 +730,26 @@ struct
 
 end
 
+module Feed = GdataAtom.MakeFeed(Entry)(Link)
+
+module Comments = GdataComments.Make(Link)
+(* END Calendar data types *)
+
+module EntryElement = GdataAtom.MakeElement
+                        (struct
+                           include Entry
+
+                           let element_name = "entry"
+
+                           let element_namespace = GdataAtom.ns_atom
+
+                           let get_prefix = get_calendar_prefix
+                         end)
+
+let parse_calendar_entry = EntryElement.parse_xml_tree
+
+let calendar_entry_to_data_model = EntryElement.build_xml_tree
+
 (* Personal settings *)
 let parse_personal_settings tree =
   let settings = Hashtbl.create 16 in
@@ -786,27 +792,11 @@ let parse_personal_settings tree =
     settings
 (* END Personal settings *)
 
-
-module EntryElement = GdataAtom.MakeElement
-                        (struct
-                           include Entry
-
-                           let element_name = "entry"
-
-                           let element_namespace = GdataAtom.ns_atom
-
-                           let get_prefix = get_calendar_prefix
-                         end)
-
-let parse_calendar_entry = EntryElement.parse_xml_tree
-
-let calendar_entry_to_data_model = EntryElement.build_xml_tree
-
-module Feed = GdataAtom.MakeFeed(Entry)(Link)
-
-module Comments = GdataComments.Make(Link)
-
 (* Utilities *)
+let get_calendar_prefix namespace =
+  if namespace = ns_gCal then "gCal"
+  else GdataACL.get_acl_prefix namespace
+
 module Rel =
 struct
   type t =

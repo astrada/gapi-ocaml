@@ -2,6 +2,47 @@ val ns_gCal : string
 
 type calendar_accessLevelProperty = string
 
+type calendar_colorProperty = string
+
+type calendar_hiddenProperty = bool
+
+type calendar_overrideNameProperty = string
+
+type calendar_selectedProperty = bool
+
+type calendar_timeZoneProperty = string
+
+type calendar_timesCleanedProperty = int
+
+type gdata_attendeeStatus = string
+
+type gdata_kind = {
+  k_scheme : string;
+  k_term : string
+}
+
+val eventKind : gdata_kind
+
+type gdata_eventStatus = string
+
+type calendar_icalUIDProperty = string
+
+type calendar_privateCopyProperty = bool
+
+type calendar_quickAddProperty = bool
+
+type gdata_recurrence = string
+
+type calendar_sendEventNotificationsProperty = bool
+
+type calendar_sequenceNumberProperty = int
+
+type calendar_syncEventProperty = bool
+
+type gdata_transparency = string
+
+type gdata_visibility = string
+
 module WebContentGadgetPref :
 sig
   type t = {
@@ -33,20 +74,6 @@ sig
   val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
 end
-
-type calendar_colorProperty = string
-
-type calendar_hiddenProperty = bool
-
-type calendar_overrideNameProperty = string
-
-type calendar_selectedProperty = bool
-
-type calendar_timeZoneProperty = string
-
-type calendar_timesCleanedProperty = int
-
-type gdata_attendeeStatus = string
 
 module ResourceProperty :
 sig
@@ -80,17 +107,6 @@ sig
   val of_xml_data_model : t -> GdataCore.xml_data_model -> t
 
 end
-
-type gdata_kind = {
-  k_scheme : string;
-  k_term : string
-}
-
-val eventKind : gdata_kind
-
-type gdata_eventStatus = string
-
-type calendar_icalUIDProperty = string
 
 module Reminder :
 sig
@@ -143,22 +159,6 @@ sig
 
 end
 
-type calendar_privateCopyProperty = bool
-
-type calendar_quickAddProperty = bool
-
-type gdata_recurrence = string
-
-type calendar_sendEventNotificationsProperty = bool
-
-type calendar_sequenceNumberProperty = int
-
-type calendar_syncEventProperty = bool
-
-type gdata_transparency = string
-
-type gdata_visibility = string
-
 module ExtendedProperty :
 sig
   type t = {
@@ -177,8 +177,6 @@ end
 
 module Where :
   GdataCore.DATA with type t = string
-
-val get_calendar_prefix : string -> string
 
 module Link :
 sig
@@ -234,14 +232,6 @@ sig
 
 end
 
-val parse_calendar_entry :
-  GdataCore.xml_data_model ->
-  Entry.t
-
-val calendar_entry_to_data_model :
-  Entry.t ->
-  GdataCore.xml_data_model
-
 module Feed :
   GdataAtom.FEED
     with type entry_t = Entry.t
@@ -251,9 +241,19 @@ module Comments :
   GdataComments.COMMENTS
     with type link_t = Link.t
 
+val parse_calendar_entry :
+  GdataCore.xml_data_model ->
+  Entry.t
+
+val calendar_entry_to_data_model :
+  Entry.t ->
+  GdataCore.xml_data_model
+
 val parse_personal_settings :
   GdataCore.xml_data_model ->
   (string, string) Hashtbl.t
+
+val get_calendar_prefix : string -> string
 
 module Rel :
 sig
