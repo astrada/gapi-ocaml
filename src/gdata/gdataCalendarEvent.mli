@@ -60,7 +60,7 @@ type calendar_calendarEventEntry = {
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
   cee_originalEvent : GdataCalendar.gdata_originalEvent;
   cee_recurrence : GdataCalendar.gdata_recurrence;
-  cee_reminders : GdataCalendar.gdata_reminder list;
+  cee_reminders : GdataCalendar.Reminder.t list;
   cee_transparency : GdataCalendar.gdata_transparency;
   cee_visibility : GdataCalendar.gdata_visibility;
   cee_when : GdataCalendar.gdata_when list;

@@ -89,7 +89,7 @@ type calendar_calendarEventEntry = {
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
   cee_originalEvent : GdataCalendar.gdata_originalEvent;
   cee_recurrence : GdataCalendar.gdata_recurrence;
-  cee_reminders : GdataCalendar.gdata_reminder list;
+  cee_reminders : GdataCalendar.Reminder.t list;
   cee_transparency : GdataCalendar.gdata_transparency;
   cee_visibility : GdataCalendar.gdata_visibility;
   cee_when : GdataCalendar.gdata_when list;
@@ -495,6 +495,14 @@ let parse_entry entry tree =
              GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_recurrence = v }
     | GdataCore.AnnotatedTree.Node
+        ([`Element; `Name "reminder"; `Namespace ns],
+         cs) when ns = GdataAtom.ns_gd ->
+        GdataAtom.parse_children
+          GdataCalendar.Reminder.of_xml_data_model
+          GdataCalendar.Reminder.empty
+          (fun reminder -> { entry with cee_reminders = reminder :: entry.cee_reminders })
+          cs
+    | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "transparency"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
@@ -630,6 +638,7 @@ let render_entry entry =
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
      GdataCalendar.render_originalEvent entry.cee_originalEvent;
      GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;
+     GdataAtom.render_element_list GdataCalendar.Reminder.to_xml_data_model entry.cee_reminders;
      GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cee_transparency;
      GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cee_visibility;
      GdataAtom.render_element_list GdataCalendar.render_when entry.cee_when;

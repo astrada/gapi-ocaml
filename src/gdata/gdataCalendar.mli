@@ -94,21 +94,29 @@ type gdata_eventStatus = string
 
 type calendar_icalUIDProperty = string
 
-type gdata_reminder = {
-  r_absoluteTime : GdataDate.t;
-  r_days : int;
-  r_hours : int;
-  r_method : string;
-  r_minutes : int
-}
+module Reminder :
+sig
+  type t = {
+    r_absoluteTime : GdataDate.t;
+    r_days : int;
+    r_hours : int;
+    r_method : string;
+    r_minutes : int
+  }
 
-val empty_reminder : gdata_reminder
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type gdata_when = {
   w_endTime : GdataDate.t;
   w_startTime : GdataDate.t;
   w_value : string;
-  w_reminders : gdata_reminder list
+  w_reminders : Reminder.t list
 }
 
 val empty_when : gdata_when
@@ -155,16 +163,6 @@ val parse_extendedProperty :
   GdataCore.xml_data_model ->
   calendar_calendarExtendedProperty
 
-val parse_attendeeStatus :
-  gdata_attendeeStatus ->
-  GdataCore.xml_data_model ->
-  gdata_attendeeStatus
-
-val parse_reminder :
-  gdata_reminder ->
-  GdataCore.xml_data_model ->
-  gdata_reminder
-
 val parse_when :
   gdata_when ->
   GdataCore.xml_data_model ->
@@ -183,14 +181,6 @@ val render_where :
 
 val render_extendedProperty :
   calendar_calendarExtendedProperty ->
-  GdataCore.xml_data_model list
-
-val render_attendeeStatus :
-  gdata_attendeeStatus ->
-  GdataCore.xml_data_model list
-
-val render_reminder :
-  gdata_reminder ->
   GdataCore.xml_data_model list
 
 val render_when :
