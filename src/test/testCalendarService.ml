@@ -250,11 +250,11 @@ let test_create_quick_add_event () =
            assert_bool
              "startTime"
              (ExtString.String.exists
-                (GdataDate.to_string w.GdataCalendar.w_startTime) "15:00:00");
+                (GdataDate.to_string w.GdataCalendar.When.startTime) "15:00:00");
            assert_bool
              "endTime"
              (ExtString.String.exists
-                (GdataDate.to_string w.GdataCalendar.w_endTime) "15:30:00"))
+                (GdataDate.to_string w.GdataCalendar.When.endTime) "15:30:00"))
 
 let test_create_recurring_event () =
   let ch = open_in "test/data/recurrence.xml" in

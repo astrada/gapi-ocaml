@@ -16,13 +16,6 @@ type calendar_timesCleanedProperty = int
 
 type gdata_attendeeStatus = string
 
-type gdata_kind = {
-  k_scheme : string;
-  k_term : string
-}
-
-val eventKind : gdata_kind
-
 type gdata_eventStatus = string
 
 type calendar_icalUIDProperty = string
@@ -245,6 +238,8 @@ val parse_calendar_entry :
   GdataCore.xml_data_model ->
   Entry.t
 
+val get_calendar_prefix : string -> string
+
 val calendar_entry_to_data_model :
   Entry.t ->
   GdataCore.xml_data_model
@@ -252,8 +247,6 @@ val calendar_entry_to_data_model :
 val parse_personal_settings :
   GdataCore.xml_data_model ->
   (string, string) Hashtbl.t
-
-val get_calendar_prefix : string -> string
 
 module Rel :
 sig

@@ -19,16 +19,6 @@ type calendar_timesCleanedProperty = int
 
 type gdata_attendeeStatus = string
 
-type gdata_kind = {
-  k_scheme : string;
-  k_term : string
-}
-
-let eventKind = {
-  k_scheme = "http://schemas.google.com/g/2005#kind";
-  k_term = "http://schemas.google.com/g/2005#event"
-}
-
 type gdata_eventStatus = string
 
 type calendar_icalUIDProperty = string
@@ -735,21 +725,6 @@ module Feed = GdataAtom.MakeFeed(Entry)(Link)
 module Comments = GdataComments.Make(Link)
 (* END Calendar data types *)
 
-module EntryElement = GdataAtom.MakeElement
-                        (struct
-                           include Entry
-
-                           let element_name = "entry"
-
-                           let element_namespace = GdataAtom.ns_atom
-
-                           let get_prefix = get_calendar_prefix
-                         end)
-
-let parse_calendar_entry = EntryElement.parse_xml_tree
-
-let calendar_entry_to_data_model = EntryElement.build_xml_tree
-
 (* Personal settings *)
 let parse_personal_settings tree =
   let settings = Hashtbl.create 16 in
@@ -796,6 +771,21 @@ let parse_personal_settings tree =
 let get_calendar_prefix namespace =
   if namespace = ns_gCal then "gCal"
   else GdataACL.get_acl_prefix namespace
+
+module EntryElement = GdataAtom.MakeElement
+                        (struct
+                           include Entry
+
+                           let element_name = "entry"
+
+                           let element_namespace = GdataAtom.ns_atom
+
+                           let get_prefix = get_calendar_prefix
+                         end)
+
+let parse_calendar_entry = EntryElement.parse_xml_tree
+
+let calendar_entry_to_data_model = EntryElement.build_xml_tree
 
 module Rel =
 struct

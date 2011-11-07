@@ -85,7 +85,7 @@ type calendar_calendarEventEntry = {
   cee_syncEvent : GdataCalendar.calendar_syncEventProperty;
   cee_summary : GdataAtom.Summary.t;
   cee_title : GdataAtom.Title.t;
-  cee_eventKind : GdataCalendar.gdata_kind;
+  cee_categories : GdataAtom.Category.t list;
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
   cee_originalEvent : GdataCalendar.OriginalEvent.t;
   cee_recurrence : GdataCalendar.gdata_recurrence;
@@ -124,7 +124,7 @@ let empty_eventEntry = {
   cee_syncEvent = false;
   cee_summary = GdataAtom.Summary.empty;
   cee_title = GdataAtom.Title.empty;
-  cee_eventKind = GdataCalendar.eventKind;
+  cee_categories = [];
   cee_eventStatus = "";
   cee_originalEvent = GdataCalendar.OriginalEvent.empty;
   cee_recurrence = "";
@@ -472,8 +472,12 @@ let parse_entry entry tree =
           cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "category"; `Namespace ns],
-         _) when ns = GdataAtom.ns_atom ->
-        { entry with cee_eventKind = GdataCalendar.eventKind }
+         cs) when ns = GdataAtom.ns_atom ->
+        GdataAtom.parse_children
+          GdataAtom.Category.of_xml_data_model
+          GdataAtom.Category.empty
+          (fun category -> { entry with cee_categories = category :: entry.cee_categories })
+          cs
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "eventStatus"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
@@ -631,10 +635,7 @@ let render_entry entry =
      GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cee_sequenceNumber;
      GdataAtom.Summary.to_xml_data_model entry.cee_summary;
      GdataAtom.Title.to_xml_data_model entry.cee_title;
-     GdataAtom.Category.to_xml_data_model
-       { GdataAtom.Category.empty with
-             GdataAtom.Category.scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
-             GdataAtom.Category.term = entry.cee_eventKind.GdataCalendar.k_term };
+     GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.cee_categories;
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
      GdataCalendar.OriginalEvent.to_xml_data_model entry.cee_originalEvent;
      GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;

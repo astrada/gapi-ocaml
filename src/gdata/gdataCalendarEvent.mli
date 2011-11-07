@@ -56,7 +56,7 @@ type calendar_calendarEventEntry = {
   cee_syncEvent : GdataCalendar.calendar_syncEventProperty;
   cee_summary : GdataAtom.Summary.t;
   cee_title : GdataAtom.Title.t;
-  cee_eventKind : GdataCalendar.gdata_kind;
+  cee_categories : GdataAtom.Category.t list;
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
   cee_originalEvent : GdataCalendar.OriginalEvent.t;
   cee_recurrence : GdataCalendar.gdata_recurrence;
