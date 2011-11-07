@@ -97,11 +97,11 @@ type calendar_icalUIDProperty = string
 module Reminder :
 sig
   type t = {
-    r_absoluteTime : GdataDate.t;
-    r_days : int;
-    r_hours : int;
-    r_method : string;
-    r_minutes : int
+    absoluteTime : GdataDate.t;
+    days : int;
+    hours : int;
+    rmethod : string;
+    minutes : int
   }
 
   val empty : t

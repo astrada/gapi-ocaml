@@ -226,28 +226,28 @@ type calendar_icalUIDProperty = string
 module Reminder =
 struct
   type t = {
-    r_absoluteTime : GdataDate.t;
-    r_days : int;
-    r_hours : int;
-    r_method : string;
-    r_minutes : int
+    absoluteTime : GdataDate.t;
+    days : int;
+    hours : int;
+    rmethod : string;
+    minutes : int
   }
 
   let empty = {
-    r_absoluteTime = GdataDate.epoch;
-    r_days = 0;
-    r_hours = 0;
-    r_method = "";
-    r_minutes = 0
+    absoluteTime = GdataDate.epoch;
+    days = 0;
+    hours = 0;
+    rmethod = "";
+    minutes = 0
   }
 
   let to_xml_data_model reminder =
     GdataAtom.render_element GdataAtom.ns_gd "reminder"
-      [GdataAtom.render_date_attribute "" "absoluteTime" reminder.r_absoluteTime;
-       GdataAtom.render_attribute "" "days" (string_of_int reminder.r_days);
-       GdataAtom.render_attribute "" "hours" (string_of_int reminder.r_hours);
-       GdataAtom.render_attribute "" "method" reminder.r_method;
-       GdataAtom.render_attribute "" "minutes" (string_of_int reminder.r_minutes)]
+      [GdataAtom.render_date_attribute "" "absoluteTime" reminder.absoluteTime;
+       GdataAtom.render_attribute "" "days" (string_of_int reminder.days);
+       GdataAtom.render_attribute "" "hours" (string_of_int reminder.hours);
+       GdataAtom.render_attribute "" "method" reminder.rmethod;
+       GdataAtom.render_attribute "" "minutes" (string_of_int reminder.minutes)]
 
 
   let of_xml_data_model reminder tree =
@@ -255,23 +255,23 @@ struct
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "absoluteTime"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { reminder with r_absoluteTime = GdataDate.of_string v }
+          { reminder with absoluteTime = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "days"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { reminder with r_days = int_of_string v }
+          { reminder with days = int_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "hours"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { reminder with r_hours = int_of_string v }
+          { reminder with hours = int_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "method"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { reminder with r_method = v }
+          { reminder with rmethod = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "minutes"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { reminder with r_minutes = int_of_string v }
+          { reminder with minutes = int_of_string v }
       | e ->
           GdataUtils.unexpected e
 
