@@ -279,40 +279,40 @@ end
 module When =
 struct
   type t = {
-    w_endTime : GdataDate.t;
-    w_startTime : GdataDate.t;
-    w_value : string;
-    w_reminders : Reminder.t list
+    endTime : GdataDate.t;
+    startTime : GdataDate.t;
+    value : string;
+    reminders : Reminder.t list
   }
 
   let empty = {
-    w_endTime = GdataDate.epoch;
-    w_startTime = GdataDate.epoch;
-    w_value = "";
-    w_reminders = []
+    endTime = GdataDate.epoch;
+    startTime = GdataDate.epoch;
+    value = "";
+    reminders = []
   }
 
   let to_xml_data_model cwhen =
     GdataAtom.render_element GdataAtom.ns_gd "when"
-      [GdataAtom.render_date_attribute "" "startTime" cwhen.w_startTime;
-       GdataAtom.render_date_attribute "" "endTime" cwhen.w_endTime;
-       GdataAtom.render_attribute "" "valueString" cwhen.w_value;
-       GdataAtom.render_element_list Reminder.to_xml_data_model cwhen.w_reminders]
+      [GdataAtom.render_date_attribute "" "startTime" cwhen.startTime;
+       GdataAtom.render_date_attribute "" "endTime" cwhen.endTime;
+       GdataAtom.render_attribute "" "valueString" cwhen.value;
+       GdataAtom.render_element_list Reminder.to_xml_data_model cwhen.reminders]
 
   let of_xml_data_model cwhen tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "startTime"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { cwhen with w_startTime = GdataDate.of_string v }
+          { cwhen with startTime = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "endTime"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { cwhen with w_endTime = GdataDate.of_string v }
+          { cwhen with endTime = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "valueString"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { cwhen with w_value = v }
+          { cwhen with value = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "reminder"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
@@ -320,7 +320,7 @@ struct
             Reminder.of_xml_data_model
             Reminder.empty
             (fun reminder ->
-               { cwhen with w_reminders = reminder :: cwhen.w_reminders })
+               { cwhen with reminders = reminder :: cwhen.reminders })
             cs
       | e ->
           GdataUtils.unexpected e

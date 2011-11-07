@@ -115,10 +115,10 @@ end
 module When :
 sig
   type t = {
-    w_endTime : GdataDate.t;
-    w_startTime : GdataDate.t;
-    w_value : string;
-    w_reminders : Reminder.t list
+    endTime : GdataDate.t;
+    startTime : GdataDate.t;
+    value : string;
+    reminders : Reminder.t list
   }
 
   val empty : t
