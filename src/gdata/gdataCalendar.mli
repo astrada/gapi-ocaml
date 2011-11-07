@@ -2,18 +2,26 @@ val ns_gCal : string
 
 type calendar_accessLevelProperty = string
 
-type calendar_webContentGadgetPref = {
-  wcgp_name : string;
-  wcgp_value : string
-}
+module WebContentGadgetPref :
+sig
+  type t = {
+    wcgp_name : string;
+    wcgp_value : string
+  }
 
-val empty_webContentGadgetPref : calendar_webContentGadgetPref
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type calendar_webContent = {
   wc_height : int;
   wc_url : string;
   wc_width : int;
-  wc_webContentGadgetPrefs : calendar_webContentGadgetPref list
+  wc_webContentGadgetPrefs : WebContentGadgetPref.t list
 }
 
 val empty_webContent : calendar_webContent

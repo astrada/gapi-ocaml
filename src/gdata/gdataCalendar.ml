@@ -5,21 +5,43 @@ let ns_gCal = "http://schemas.google.com/gCal/2005"
 
 type calendar_accessLevelProperty = string
 
-type calendar_webContentGadgetPref = {
-  wcgp_name : string;
-  wcgp_value : string;
-}
+module WebContentGadgetPref =
+struct
+  type t = {
+    wcgp_name : string;
+    wcgp_value : string;
+  }
 
-let empty_webContentGadgetPref = {
-  wcgp_name = "";
-  wcgp_value = ""
-}
+  let empty = {
+    wcgp_name = "";
+    wcgp_value = ""
+  }
+
+  let to_xml_data_model webContentGadgetPref =
+    GdataAtom.render_element ns_gCal "webContentGadgetPref"
+      [GdataAtom.render_attribute "" "name" webContentGadgetPref.wcgp_name;
+       GdataAtom.render_attribute "" "value" webContentGadgetPref.wcgp_value]
+
+  let of_xml_data_model wcgp tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "name"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { wcgp with wcgp_name = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "value"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          { wcgp with wcgp_value = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type calendar_webContent = {
   wc_height : int;
   wc_url : string;
   wc_width : int;
-  wc_webContentGadgetPrefs : calendar_webContentGadgetPref list
+  wc_webContentGadgetPrefs : WebContentGadgetPref.t list
 }
 
 let empty_webContent = {
@@ -386,17 +408,11 @@ struct
 
   let to_xml_data_model link =
     let render_webContent webContent =
-      let render_webContentGadgetPref webContentGadgetPref =
-        GdataAtom.render_element ns_gCal "webContentGadgetPref"
-          [GdataAtom.render_attribute "" "name" webContentGadgetPref.wcgp_name;
-           GdataAtom.render_attribute "" "value" webContentGadgetPref.wcgp_value]
-      in
-
       GdataAtom.render_element ns_gCal "webContent"
         [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
          GdataAtom.render_attribute "" "url" webContent.wc_url;
          GdataAtom.render_int_attribute "" "width" webContent.wc_width;
-         GdataAtom.render_element_list render_webContentGadgetPref webContent.wc_webContentGadgetPrefs]
+         GdataAtom.render_element_list WebContentGadgetPref.to_xml_data_model webContent.wc_webContentGadgetPrefs]
     in
 
     GdataAtom.render_element GdataAtom.ns_atom "link"
@@ -408,20 +424,6 @@ struct
        render_webContent link.webContent]
 
   let of_xml_data_model link tree =
-    let parse_webContentGadgetPref wcgp tree =
-      match tree with
-          GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "name"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { wcgp with wcgp_name = v }
-        | GdataCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v) ->
-            { wcgp with wcgp_value = v }
-        | e ->
-            GdataUtils.unexpected e
-    in
-
     let parse_webContent webContent tree =
       match tree with
           GdataCore.AnnotatedTree.Leaf
@@ -440,8 +442,8 @@ struct
             ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
              cs) when ns = ns_gCal ->
             GdataAtom.parse_children
-              parse_webContentGadgetPref
-              empty_webContentGadgetPref
+              WebContentGadgetPref.of_xml_data_model
+              WebContentGadgetPref.empty
               (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
                                wcgp :: webContent.wc_webContentGadgetPrefs })
               cs
