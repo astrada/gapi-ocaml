@@ -20,10 +20,10 @@ end
 module WebContent :
 sig
   type t = {
-    wc_height : int;
-    wc_url : string;
-    wc_width : int;
-    wc_webContentGadgetPrefs : WebContentGadgetPref.t list
+    height : int;
+    url : string;
+    width : int;
+    webContentGadgetPrefs : WebContentGadgetPref.t list
   }
 
   val empty : t

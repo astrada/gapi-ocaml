@@ -40,48 +40,48 @@ end
 module WebContent =
 struct
   type t = {
-    wc_height : int;
-    wc_url : string;
-    wc_width : int;
-    wc_webContentGadgetPrefs : WebContentGadgetPref.t list
+    height : int;
+    url : string;
+    width : int;
+    webContentGadgetPrefs : WebContentGadgetPref.t list
   }
 
   let empty = {
-    wc_height = 0;
-    wc_url = "";
-    wc_width = 0;
-    wc_webContentGadgetPrefs = []
+    height = 0;
+    url = "";
+    width = 0;
+    webContentGadgetPrefs = []
   }
 
   let to_xml_data_model webContent =
     GdataAtom.render_element ns_gCal "webContent"
-      [GdataAtom.render_int_attribute "" "height" webContent.wc_height;
-       GdataAtom.render_attribute "" "url" webContent.wc_url;
-       GdataAtom.render_int_attribute "" "width" webContent.wc_width;
-       GdataAtom.render_element_list WebContentGadgetPref.to_xml_data_model webContent.wc_webContentGadgetPrefs]
+      [GdataAtom.render_int_attribute "" "height" webContent.height;
+       GdataAtom.render_attribute "" "url" webContent.url;
+       GdataAtom.render_int_attribute "" "width" webContent.width;
+       GdataAtom.render_element_list WebContentGadgetPref.to_xml_data_model webContent.webContentGadgetPrefs]
 
   let of_xml_data_model webContent tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "height"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { webContent with wc_height = int_of_string v }
+          { webContent with height = int_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "url"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { webContent with wc_url = v }
+          { webContent with url = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "width"; `Namespace ""],
            GdataCore.Value.String v) ->
-          { webContent with wc_width = int_of_string v }
+          { webContent with width = int_of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "webContentGadgetPref"; `Namespace ns],
            cs) when ns = ns_gCal ->
           GdataAtom.parse_children
             WebContentGadgetPref.of_xml_data_model
             WebContentGadgetPref.empty
-            (fun wcgp -> { webContent with wc_webContentGadgetPrefs =
-                             wcgp :: webContent.wc_webContentGadgetPrefs })
+            (fun wcgp -> { webContent with webContentGadgetPrefs =
+                             wcgp :: webContent.webContentGadgetPrefs })
             cs
       | e ->
           GdataUtils.unexpected e

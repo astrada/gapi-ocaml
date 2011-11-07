@@ -124,10 +124,10 @@ let test_calendar_entry_to_data_model () =
               GdataCalendar.Link.title = "title";
               GdataCalendar.Link.ltype = "application/atom+xml";
               GdataCalendar.Link.webContent =
-                { GdataCalendar.WebContent.wc_height = 100;
-                  GdataCalendar.WebContent.wc_url = "http://webcontent";
-                  GdataCalendar.WebContent.wc_width = 200;
-                  GdataCalendar.WebContent.wc_webContentGadgetPrefs = [
+                { GdataCalendar.WebContent.height = 100;
+                  GdataCalendar.WebContent.url = "http://webcontent";
+                  GdataCalendar.WebContent.width = 200;
+                  GdataCalendar.WebContent.webContentGadgetPrefs = [
                     { GdataCalendar.WebContentGadgetPref.name = "name";
                       GdataCalendar.WebContentGadgetPref.value = "value";
                     };
