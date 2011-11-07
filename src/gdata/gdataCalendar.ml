@@ -136,21 +136,78 @@ struct
 
 end
 
-type calendar_calendarWho = {
-  cw_email : string;
-  cw_rel : string;
-  cw_value : string;
-  cw_resource : ResourceProperty.t;
-  cw_attendeeStatus : gdata_attendeeStatus
-}
+let render_attendeeStatus status =
+  GdataAtom.render_value ~attribute:"value" GdataAtom.ns_gd "who" status
 
-let empty_who = {
-  cw_email = "";
-  cw_rel = "";
-  cw_value = "";
-  cw_resource = ResourceProperty.empty;
-  cw_attendeeStatus = ""
-}
+let parse_attendeeStatus where tree =
+  match tree with
+      GdataCore.AnnotatedTree.Leaf
+        ([`Attribute; `Name "value"; `Namespace ""],
+         GdataCore.Value.String v) ->
+        v
+    | e ->
+        GdataUtils.unexpected e
+
+module Who =
+struct
+  type t = {
+    cw_email : string;
+    cw_rel : string;
+    cw_value : string;
+    cw_resource : ResourceProperty.t;
+    cw_attendeeStatus : gdata_attendeeStatus
+  }
+
+  let empty = {
+    cw_email = "";
+    cw_rel = "";
+    cw_value = "";
+    cw_resource = ResourceProperty.empty;
+    cw_attendeeStatus = ""
+  }
+
+  let to_xml_data_model who =
+    GdataAtom.render_element GdataAtom.ns_gd "resource"
+      [GdataAtom.render_attribute "" "email" who.cw_email;
+       GdataAtom.render_attribute "" "rel" who.cw_rel;
+       GdataAtom.render_attribute "" "valueString" who.cw_value;
+       ResourceProperty.to_xml_data_model who.cw_resource;
+       render_attendeeStatus who.cw_attendeeStatus]
+
+  let of_xml_data_model who tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "email"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { who with cw_email = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "rel"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { who with cw_rel = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "valueString"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { who with cw_value = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "resource"; `Namespace ns],
+           cs) when ns = ns_gCal ->
+          GdataAtom.parse_children
+            ResourceProperty.of_xml_data_model
+            ResourceProperty.empty
+            (fun property -> { who with cw_resource = property })
+            cs
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "attendeeStatus"; `Namespace ns],
+           cs) when ns = GdataAtom.ns_gd ->
+          GdataAtom.parse_children
+            parse_attendeeStatus
+            ""
+            (fun status -> { who with cw_attendeeStatus = status })
+            cs
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type gdata_kind = {
   k_scheme : string;
@@ -264,48 +321,6 @@ let parse_extendedProperty property tree =
     | e ->
         GdataUtils.unexpected e
 
-let parse_attendeeStatus where tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "value"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        v
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_who who tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "email"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { who with cw_email = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "rel"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { who with cw_rel = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "valueString"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { who with cw_value = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "resource"; `Namespace ns],
-         cs) when ns = ns_gCal ->
-        GdataAtom.parse_children
-          ResourceProperty.of_xml_data_model
-          ResourceProperty.empty
-          (fun property -> { who with cw_resource = property })
-          cs
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "attendeeStatus"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_gd ->
-        GdataAtom.parse_children
-          parse_attendeeStatus
-          ""
-          (fun status -> { who with cw_attendeeStatus = status })
-          cs
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_reminder reminder tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -393,17 +408,6 @@ let render_extendedProperty property =
     [GdataAtom.render_attribute "" "name" property.cep_name;
      GdataAtom.render_attribute "" "realm" property.cep_realm;
      GdataAtom.render_attribute "" "value" property.cep_value]
-
-let render_attendeeStatus status =
-  GdataAtom.render_value ~attribute:"value" GdataAtom.ns_gd "who" status
-
-let render_who who =
-  GdataAtom.render_element GdataAtom.ns_gd "resource"
-    [GdataAtom.render_attribute "" "email" who.cw_email;
-     GdataAtom.render_attribute "" "rel" who.cw_rel;
-     GdataAtom.render_attribute "" "valueString" who.cw_value;
-     ResourceProperty.to_xml_data_model who.cw_resource;
-     render_attendeeStatus who.cw_attendeeStatus]
 
 let render_reminder reminder =
   GdataAtom.render_element GdataAtom.ns_gd "reminder"

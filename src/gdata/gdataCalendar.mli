@@ -65,15 +65,23 @@ sig
 
 end
 
-type calendar_calendarWho = {
-  cw_email : string;
-  cw_rel : string;
-  cw_value : string;
-  cw_resource : ResourceProperty.t;
-  cw_attendeeStatus : gdata_attendeeStatus
-}
+module Who :
+sig
+  type t = {
+    cw_email : string;
+    cw_rel : string;
+    cw_value : string;
+    cw_resource : ResourceProperty.t;
+    cw_attendeeStatus : gdata_attendeeStatus
+  }
 
-val empty_who : calendar_calendarWho
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type gdata_kind = {
   k_scheme : string;
@@ -152,11 +160,6 @@ val parse_attendeeStatus :
   GdataCore.xml_data_model ->
   gdata_attendeeStatus
 
-val parse_who :
-  calendar_calendarWho ->
-  GdataCore.xml_data_model ->
-  calendar_calendarWho
-
 val parse_reminder :
   gdata_reminder ->
   GdataCore.xml_data_model ->
@@ -184,10 +187,6 @@ val render_extendedProperty :
 
 val render_attendeeStatus :
   gdata_attendeeStatus ->
-  GdataCore.xml_data_model list
-
-val render_who :
-  calendar_calendarWho ->
   GdataCore.xml_data_model list
 
 val render_reminder :
