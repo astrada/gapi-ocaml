@@ -88,8 +88,6 @@ struct
 
 end
 
-type calendar_calendarWhere = string
-
 type calendar_colorProperty = string
 
 type calendar_hiddenProperty = bool
@@ -166,7 +164,7 @@ struct
          render_attendeeStatus who.attendeeStatus]
 
   let of_xml_data_model who tree =
-    let parse_attendeeStatus where tree =
+    let parse_attendeeStatus _ tree =
       match tree with
           GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
@@ -424,17 +422,30 @@ struct
           GdataUtils.unexpected e
 
 end
+
+module Where =
+struct
+  type t = string
+
+  let empty = ""
+
+  let to_xml_data_model where =
+    GdataAtom.render_value ~attribute:"valueString" GdataAtom.ns_gd "where" where
+
+  let of_xml_data_model where tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "valueString"; `Namespace ""],
+           GdataCore.Value.String v) ->
+          v
+      | e ->
+          GdataUtils.unexpected e
+
+end
+
 (* END Calendar data types *)
 
 (* Calendar feed: parsing *)
-let parse_where where tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "valueString"; `Namespace ""],
-         GdataCore.Value.String v) ->
-        v
-    | e ->
-        GdataUtils.unexpected e
 
 (* END Calendar feed: parsing *)
 
@@ -443,9 +454,6 @@ let parse_where where tree =
 let get_calendar_prefix namespace =
   if namespace = ns_gCal then "gCal"
   else GdataACL.get_acl_prefix namespace
-
-let render_where where =
-  GdataAtom.render_value ~attribute:"valueString" GdataAtom.ns_gd "where" where
 
 (* END Calendar feed: rendering *)
 
@@ -528,7 +536,7 @@ struct
     edited : GdataAtom.app_edited;
     accesslevel : calendar_accessLevelProperty;
     links : Link.t list;
-    where : calendar_calendarWhere list;
+    where : Where.t list;
     color : calendar_colorProperty;
     hidden : calendar_hiddenProperty;
     overridename : calendar_overrideNameProperty;
@@ -579,7 +587,7 @@ struct
        GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.edited;
        GdataAtom.render_value ns_gCal "accesslevel" entry.accesslevel;
        GdataAtom.render_element_list Link.to_xml_data_model entry.links;
-       GdataAtom.render_element_list render_where entry.where;
+       GdataAtom.render_element_list Where.to_xml_data_model entry.where;
        GdataAtom.render_value ns_gCal "color" entry.color;
        GdataAtom.render_bool_value ns_gCal "hidden" entry.hidden;
        GdataAtom.render_bool_value ns_gCal "selected" entry.selected;
@@ -670,8 +678,8 @@ struct
           ([`Element; `Name "where"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
-            parse_where
-            ""
+            Where.of_xml_data_model
+            Where.empty 
             (fun where -> { entry with where = where :: entry.where })
             cs
       | GdataCore.AnnotatedTree.Node

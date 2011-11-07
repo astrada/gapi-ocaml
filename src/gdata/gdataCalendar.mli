@@ -34,8 +34,6 @@ sig
 
 end
 
-type calendar_calendarWhere = string
-
 type calendar_colorProperty = string
 
 type calendar_hiddenProperty = bool
@@ -177,16 +175,10 @@ sig
 
 end
 
-val parse_where :
-  calendar_calendarWhere ->
-  GdataCore.xml_data_model ->
-  calendar_calendarWhere
+module Where :
+  GdataCore.DATA with type t = string
 
 val get_calendar_prefix : string -> string
-
-val render_where :
-  calendar_calendarWhere ->
-  GdataCore.xml_data_model list
 
 module Link :
 sig
@@ -222,7 +214,7 @@ sig
     edited : GdataAtom.app_edited;
     accesslevel : calendar_accessLevelProperty;
     links : Link.t list;
-    where : calendar_calendarWhere list;
+    where : Where.t list;
     color : calendar_colorProperty;
     hidden : calendar_hiddenProperty;
     overridename : calendar_overrideNameProperty;
