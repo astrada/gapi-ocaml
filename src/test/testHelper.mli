@@ -42,13 +42,11 @@ val print_exception : exn -> unit
 
 val print_xml_data_model :
   ?print_string:(string -> unit) ->
-  (GdataCore.Metadata.xml, GdataCore.Value.t)
-    GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   int
 
 val string_of_xml_data_model :
-  (GdataCore.Metadata.xml, GdataCore.Value.t)
-    GdataCore.AnnotatedTree.t ->
+  GdataCore.xml_data_model ->
   string
 
 val assert_false : string -> bool -> unit

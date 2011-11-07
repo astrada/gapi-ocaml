@@ -247,7 +247,7 @@ struct
 
 end
 
-type xml_data_model = (Metadata.xml, Value.t) AnnotatedTree.t
+type xml_data_model = (Metadata.xml, string) AnnotatedTree.t
 
 module type DATA =
 sig

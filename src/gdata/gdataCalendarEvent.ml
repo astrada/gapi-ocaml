@@ -146,11 +146,11 @@ let parse_recurrenceExceptionEntry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+         v) when ns = GdataAtom.ns_gd ->
         { entry with cree_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+         v) when ns = GdataAtom.ns_gd ->
         { entry with cree_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -190,17 +190,17 @@ let parse_recurrenceExceptionEntry entry tree =
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "id"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+            ([`Text], v)]) when ns = GdataAtom.ns_atom ->
         { entry with cree_id = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "published"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+            ([`Text], v)]) when ns = GdataAtom.ns_atom ->
         { entry with cree_published = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "updated"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+            ([`Text], v)]) when ns = GdataAtom.ns_atom ->
         { entry with cree_updated = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "comments"; `Namespace ns],
@@ -238,13 +238,13 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "uid"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cree_icalUID = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "sequence"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cree_sequenceNumber = int_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "title"; `Namespace ns],
@@ -258,7 +258,7 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "eventStatus"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cree_eventStatus = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "originalEvent"; `Namespace ns],
@@ -272,13 +272,13 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "transparency"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cree_transparency = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "visibility"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cree_visibility = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "when"; `Namespace ns],
@@ -309,7 +309,7 @@ let parse_recurrenceException ex tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "specialized"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
+         v) when ns = "" ->
         { ex with cre_specialized = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "entryLink"; `Namespace ns],
@@ -326,11 +326,11 @@ let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "etag"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+         v) when ns = GdataAtom.ns_gd ->
         { entry with cee_etag = v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name "kind"; `Namespace ns],
-         GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+         v) when ns = GdataAtom.ns_gd ->
         { entry with cee_kind = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "author"; `Namespace ns],
@@ -361,22 +361,22 @@ let parse_entry entry tree =
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "id"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+            ([`Text], v)]) when ns = GdataAtom.ns_atom ->
         { entry with cee_id = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "published"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+            ([`Text], v)]) when ns = GdataAtom.ns_atom ->
         { entry with cee_published = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "updated"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+            ([`Text], v)]) when ns = GdataAtom.ns_atom ->
         { entry with cee_updated = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "edited"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
-            ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_app ->
+            ([`Text], v)]) when ns = GdataAtom.ns_app ->
         { entry with cee_edited = GdataDate.of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "comments"; `Namespace ns],
@@ -434,25 +434,25 @@ let parse_entry entry tree =
         ([`Element; `Name "uid"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_icalUID = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "privateCopy"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_privateCopy = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "quickadd"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_quickAdd = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "sequence"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_sequenceNumber = int_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "summary"; `Namespace ns],
@@ -482,7 +482,7 @@ let parse_entry entry tree =
         ([`Element; `Name "eventStatus"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_eventStatus = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "originalEvent"; `Namespace ns],
@@ -496,7 +496,7 @@ let parse_entry entry tree =
         ([`Element; `Name "recurrence"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_recurrence = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "reminder"; `Namespace ns],
@@ -510,13 +510,13 @@ let parse_entry entry tree =
         ([`Element; `Name "transparency"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_transparency = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "visibility"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataAtom.ns_gd ->
+             v)]) when ns = GdataAtom.ns_gd ->
         { entry with cee_visibility = v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "when"; `Namespace ns],
@@ -530,25 +530,25 @@ let parse_entry entry tree =
         ([`Element; `Name "anyoneCanAddSelf"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_anyoneCanAddSelf = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "guestsCanInviteOthers"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_guestsCanInviteOthers = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "guestsCanModify"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_guestsCanModify = bool_of_string v }
     | GdataCore.AnnotatedTree.Node
         ([`Element; `Name "guestsCanSeeGuests"; `Namespace ns],
          [GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "value"; `Namespace ""],
-             GdataCore.Value.String v)]) when ns = GdataCalendar.ns_gCal ->
+             v)]) when ns = GdataCalendar.ns_gCal ->
         { entry with cee_guestsCanSeeGuests = bool_of_string v }
     | GdataCore.AnnotatedTree.Leaf
         ([`Attribute; `Name _; `Namespace ns],

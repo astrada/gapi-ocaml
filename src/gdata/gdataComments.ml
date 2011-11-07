@@ -122,11 +122,11 @@ struct
       match tree with
           GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "etag"; `Namespace ns],
-             GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+             v) when ns = GdataAtom.ns_gd ->
             { entry with ce_etag = v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "kind"; `Namespace ns],
-             GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+             v) when ns = GdataAtom.ns_gd ->
             { entry with ce_kind = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "author"; `Namespace ns],
@@ -157,17 +157,17 @@ struct
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "id"; `Namespace ns],
              [GdataCore.AnnotatedTree.Leaf
-                ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
             { entry with ce_id = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "published"; `Namespace ns],
              [GdataCore.AnnotatedTree.Leaf
-                ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
             { entry with ce_published = GdataDate.of_string v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "updated"; `Namespace ns],
              [GdataCore.AnnotatedTree.Leaf
-                ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
             { entry with ce_updated = GdataDate.of_string v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "link"; `Namespace ns],
@@ -228,19 +228,19 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "countHint"; `Namespace ns],
-           GdataCore.Value.String v) when ns = "" ->
+           v) when ns = "" ->
           { link with c_countHint = int_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "href"; `Namespace ns],
-           GdataCore.Value.String v) when ns = "" ->
+           v) when ns = "" ->
           { link with c_href = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "readOnly"; `Namespace ns],
-           GdataCore.Value.String v) when ns = "" ->
+           v) when ns = "" ->
           { link with c_readOnly = bool_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "rel"; `Namespace ns],
-           GdataCore.Value.String v) when ns = "" ->
+           v) when ns = "" ->
           { link with c_rel = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "feed"; `Namespace ns],

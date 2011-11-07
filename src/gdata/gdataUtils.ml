@@ -70,7 +70,7 @@ let append_namespaces ns_table tree =
             (fun (ns, p) ->
                GdataCore.AnnotatedTree.Leaf (
                  [`Attribute; `Name p; `Namespace Xmlm.ns_xmlns],
-                 GdataCore.Value.String ns))
+                 ns))
             ns_table
         in
           GdataCore.AnnotatedTree.Node (m, cs @ attributes )

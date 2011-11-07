@@ -54,14 +54,14 @@ let test_parse_calendar_entry_with_extensions () =
              ([`Attribute;
                `Name "value";
                `Namespace ""],
-              GdataCore.Value.String "value");
+              "value");
            GdataCore.AnnotatedTree.Node
              ([`Element;
                `Name "new-child";
                `Namespace "http://schemas.google.com/g/2005"],
               [GdataCore.AnnotatedTree.Leaf
                  ([`Text],
-                  GdataCore.Value.String "text")
+                  "text")
               ])
           ])
       ]

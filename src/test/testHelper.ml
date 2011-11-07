@@ -142,10 +142,7 @@ let print_xml_data_model ?(print_string = print_string) tree =
       end;
       print_string name
   in
-  let print_value = function
-      GdataCore.Value.String s -> print_string s
-    | _ -> failwith "cannot print non-string values"
-  in
+  let print_value = print_string in
   let print_node meta children tabs =
     begin match GdataCore.Metadata.node_type meta with
         `Element ->

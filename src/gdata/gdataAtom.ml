@@ -46,7 +46,7 @@ let render_attribute ?(default = "") namespace name value =
   if value <> default then
     [GdataCore.AnnotatedTree.Leaf (
       [`Attribute; `Name name; `Namespace namespace],
-      GdataCore.Value.String value)]
+      value)]
   else
     []
 
@@ -87,7 +87,7 @@ let render_text ?(default = "") value =
   if value <> default then
     [GdataCore.AnnotatedTree.Leaf (
       [`Text],
-      GdataCore.Value.String value)]
+      value)]
   else
     []
 
@@ -236,22 +236,22 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
-           GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+           v) when ns = Xmlm.ns_xml ->
           { person with lang = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "name"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { person with name = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "email"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { person with email = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "uri"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { person with uri = v }
       | e ->
           GdataUtils.unexpected e
@@ -291,19 +291,19 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "label"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { category with label = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "scheme"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { category with scheme = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "term"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { category with term = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
-           GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+           v) when ns = Xmlm.ns_xml ->
           { category with lang = v }
       | e ->
           GdataUtils.unexpected e
@@ -334,15 +334,15 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "version"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { generator with version = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "uri"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { generator with uri = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Text],
-           GdataCore.Value.String v) ->
+           v) ->
           { generator with value = v }
       | e ->
           GdataUtils.unexpected e
@@ -394,19 +394,19 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "src"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { text with src = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { text with ctype = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
-           GdataCore.Value.String v) when ns = Xmlm.ns_xml ->
+           v) when ns = Xmlm.ns_xml ->
           { text with lang = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Text],
-           GdataCore.Value.String v) ->
+           v) ->
           { text with value = v }
       | e ->
           GdataUtils.unexpected e
@@ -458,23 +458,23 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "href"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { link with href = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "length"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { link with length = Int64.of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "rel"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { link with rel = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "title"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { link with title = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
-           GdataCore.Value.String v) ->
+           v) ->
           { link with ltype = v }
       | e ->
           GdataUtils.unexpected e
@@ -575,11 +575,11 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
-           GdataCore.Value.String v) when ns = ns_gd ->
+           v) when ns = ns_gd ->
           { feed with etag = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
-           GdataCore.Value.String v) when ns = ns_gd ->
+           v) when ns = ns_gd ->
           { feed with kind = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
@@ -617,17 +617,17 @@ struct
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "icon"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { feed with icon = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { feed with id = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { feed with updated = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "entry"; `Namespace ns],
@@ -648,7 +648,7 @@ struct
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "logo"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_atom ->
+              ([`Text], v)]) when ns = ns_atom ->
           { feed with logo = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "rights"; `Namespace ns],
@@ -677,17 +677,17 @@ struct
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "totalResults"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
+              ([`Text], v)]) when ns = ns_openSearch ->
           { feed with totalResults = int_of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "itemsPerPage"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
+              ([`Text], v)]) when ns = ns_openSearch ->
           { feed with itemsPerPage = int_of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "startIndex"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = ns_openSearch ->
+              ([`Text], v)]) when ns = ns_openSearch ->
           { feed with startIndex = int_of_string v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],

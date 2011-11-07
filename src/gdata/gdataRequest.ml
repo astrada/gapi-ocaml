@@ -14,8 +14,8 @@ let render_xml buffer tree =
   let output = Xmlm.make_output (`Buffer buffer) in
   let rec frag_of_node node =
     match node with
-        GdataCore.AnnotatedTree.Leaf ([`Text], GdataCore.Value.String d)
-      | GdataCore.AnnotatedTree.Leaf ([`Cdata], GdataCore.Value.String d) ->
+        GdataCore.AnnotatedTree.Leaf ([`Text], d)
+      | GdataCore.AnnotatedTree.Leaf ([`Cdata], d) ->
           `Data d
       | GdataCore.AnnotatedTree.Node ([`Element;
                                        `Name name;
@@ -27,7 +27,7 @@ let render_xml buffer tree =
                                     GdataCore.AnnotatedTree.Leaf ([`Attribute;
                                                                    `Name n;
                                                                    `Namespace ns],
-                                                                  GdataCore.Value.String d) ->
+                                                                  d) ->
                                       ((ns, n), d) :: attrs
                                   | _ -> attrs)
                              []
@@ -66,7 +66,7 @@ let parse_xml next_byte parse_tree =
                        [`Attribute;
                         `Name n;
                         `Namespace ns],
-                       GdataCore.Value.String d)
+                       d)
                   )
                   attribute_list in
       GdataCore.AnnotatedTree.Node (
@@ -77,7 +77,7 @@ let parse_xml next_byte parse_tree =
   let data d =
     GdataCore.AnnotatedTree.Leaf (
       [`Text],
-      GdataCore.Value.String d) in
+      d) in
   let (_, tree) = Xmlm.input_doc_tree ~el ~data input in
     parse_tree tree
 

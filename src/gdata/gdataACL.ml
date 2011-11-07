@@ -23,11 +23,11 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ns],
-           GdataCore.Value.String v) when ns = "" ->
+           v) when ns = "" ->
           { scope with stype = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "value"; `Namespace ns],
-           GdataCore.Value.String v) when ns = "" ->
+           v) when ns = "" ->
           { scope with value = v }
       | e ->
           GdataUtils.unexpected e
@@ -91,11 +91,11 @@ struct
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
-           GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+           v) when ns = GdataAtom.ns_gd ->
           { entry with etag = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
-           GdataCore.Value.String v) when ns = GdataAtom.ns_gd ->
+           v) when ns = GdataAtom.ns_gd ->
           { entry with kind = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
@@ -125,7 +125,7 @@ struct
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+              ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with id = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "content"; `Namespace ns],
@@ -138,17 +138,17 @@ struct
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "published"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+              ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with published = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_atom ->
+              ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with updated = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "edited"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
-              ([`Text], GdataCore.Value.String v)]) when ns = GdataAtom.ns_app ->
+              ([`Text], v)]) when ns = GdataAtom.ns_app ->
           { entry with edited = GdataDate.of_string v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
@@ -178,7 +178,7 @@ struct
           ([`Element; `Name "role"; `Namespace ns],
            [GdataCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
-               GdataCore.Value.String v)]) when ns = ns_gAcl ->
+               v)]) when ns = ns_gAcl ->
           { entry with role = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
