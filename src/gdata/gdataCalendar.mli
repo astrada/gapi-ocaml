@@ -132,9 +132,9 @@ end
 module OriginalEvent :
 sig
   type t = {
-    oe_href : string;
-    oe_id : string;
-    oe_when : When.t
+    href : string;
+    id : string;
+    _when : When.t
   }
 
   val empty : t

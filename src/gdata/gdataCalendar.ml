@@ -330,40 +330,40 @@ end
 module OriginalEvent =
 struct
   type t = {
-    oe_href : string;
-    oe_id : string;
-    oe_when : When.t
+    href : string;
+    id : string;
+    _when : When.t
   }
 
   let empty = {
-    oe_href = "";
-    oe_id = "";
-    oe_when = When.empty
+    href = "";
+    id = "";
+    _when = When.empty
   }
 
   let to_xml_data_model event =
     GdataAtom.render_element GdataAtom.ns_gd "originalEvent"
-      [GdataAtom.render_attribute "" "href" event.oe_href;
-       GdataAtom.render_attribute "" "id" event.oe_id;
-       When.to_xml_data_model event.oe_when]
+      [GdataAtom.render_attribute "" "href" event.href;
+       GdataAtom.render_attribute "" "id" event.id;
+       When.to_xml_data_model event._when]
 
   let of_xml_data_model event tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "href"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { event with oe_href = v }
+          { event with href = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "id"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { event with oe_id = v }
+          { event with id = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "when"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
             When.of_xml_data_model
             When.empty
-            (fun cwhen -> { event with oe_when = cwhen })
+            (fun cwhen -> { event with _when = cwhen })
             cs
       | e ->
           GdataUtils.unexpected e
