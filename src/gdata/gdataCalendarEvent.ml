@@ -19,7 +19,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
   cree_title : GdataAtom.Title.t;
   cree_eventStatus : GdataCalendar.gdata_eventStatus;
-  cree_originalEvent : GdataCalendar.gdata_originalEvent;
+  cree_originalEvent : GdataCalendar.OriginalEvent.t;
   cree_transparency : GdataCalendar.gdata_transparency;
   cree_visibility : GdataCalendar.gdata_visibility;
   cree_when : GdataCalendar.When.t list;
@@ -44,7 +44,7 @@ let empty_recurrenceExceptionEntry = {
   cree_sequenceNumber = 0;
   cree_title = GdataAtom.Title.empty;
   cree_eventStatus = "";
-  cree_originalEvent = GdataCalendar.empty_originalEvent;
+  cree_originalEvent = GdataCalendar.OriginalEvent.empty;
   cree_transparency = "";
   cree_visibility = "";
   cree_when = [];
@@ -87,7 +87,7 @@ type calendar_calendarEventEntry = {
   cee_title : GdataAtom.Title.t;
   cee_eventKind : GdataCalendar.gdata_kind;
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
-  cee_originalEvent : GdataCalendar.gdata_originalEvent;
+  cee_originalEvent : GdataCalendar.OriginalEvent.t;
   cee_recurrence : GdataCalendar.gdata_recurrence;
   cee_reminders : GdataCalendar.Reminder.t list;
   cee_transparency : GdataCalendar.gdata_transparency;
@@ -126,7 +126,7 @@ let empty_eventEntry = {
   cee_title = GdataAtom.Title.empty;
   cee_eventKind = GdataCalendar.eventKind;
   cee_eventStatus = "";
-  cee_originalEvent = GdataCalendar.empty_originalEvent;
+  cee_originalEvent = GdataCalendar.OriginalEvent.empty;
   cee_recurrence = "";
   cee_reminders = [];
   cee_transparency = "";
@@ -264,8 +264,8 @@ let parse_recurrenceExceptionEntry entry tree =
         ([`Element; `Name "originalEvent"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendar.parse_originalEvent
-          GdataCalendar.empty_originalEvent
+          GdataCalendar.OriginalEvent.of_xml_data_model
+          GdataCalendar.OriginalEvent.empty
           (fun event -> { entry with cree_originalEvent = event })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -484,8 +484,8 @@ let parse_entry entry tree =
         ([`Element; `Name "originalEvent"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          GdataCalendar.parse_originalEvent
-          GdataCalendar.empty_originalEvent
+          GdataCalendar.OriginalEvent.of_xml_data_model
+          GdataCalendar.OriginalEvent.empty
           (fun event -> { entry with cee_originalEvent = event })
           cs
     | GdataCore.AnnotatedTree.Node
@@ -592,7 +592,7 @@ let render_recurrenceExceptionEntry entry =
      GdataAtom.render_int_value GdataAtom.ns_gd "sequence" entry.cree_sequenceNumber;
      GdataAtom.Title.to_xml_data_model entry.cree_title;
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cree_eventStatus;
-     GdataCalendar.render_originalEvent entry.cree_originalEvent;
+     GdataCalendar.OriginalEvent.to_xml_data_model entry.cree_originalEvent;
      GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cree_transparency;
      GdataAtom.render_value GdataAtom.ns_gd "visibility" entry.cree_visibility;
      GdataAtom.render_element_list GdataCalendar.When.to_xml_data_model entry.cree_when;
@@ -636,7 +636,7 @@ let render_entry entry =
              GdataAtom.Category.scheme = entry.cee_eventKind.GdataCalendar.k_scheme;
              GdataAtom.Category.term = entry.cee_eventKind.GdataCalendar.k_term };
      GdataAtom.render_value GdataAtom.ns_gd "eventStatus" entry.cee_eventStatus;
-     GdataCalendar.render_originalEvent entry.cee_originalEvent;
+     GdataCalendar.OriginalEvent.to_xml_data_model entry.cee_originalEvent;
      GdataAtom.render_text_element GdataAtom.ns_gd "recurrence" entry.cee_recurrence;
      GdataAtom.render_element_list GdataCalendar.Reminder.to_xml_data_model entry.cee_reminders;
      GdataAtom.render_value GdataAtom.ns_gd "transparency" entry.cee_transparency;

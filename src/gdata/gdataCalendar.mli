@@ -129,13 +129,21 @@ sig
 
 end
 
-type gdata_originalEvent = {
-  oe_href : string;
-  oe_id : string;
-  oe_when : When.t
-}
+module OriginalEvent :
+sig
+  type t = {
+    oe_href : string;
+    oe_id : string;
+    oe_when : When.t
+  }
 
-val empty_originalEvent : gdata_originalEvent
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type calendar_privateCopyProperty = bool
 
@@ -171,11 +179,6 @@ val parse_extendedProperty :
   GdataCore.xml_data_model ->
   calendar_calendarExtendedProperty
 
-val parse_originalEvent :
-  gdata_originalEvent ->
-  GdataCore.xml_data_model ->
-  gdata_originalEvent
-
 val get_calendar_prefix : string -> string
 
 val render_where :
@@ -184,10 +187,6 @@ val render_where :
 
 val render_extendedProperty :
   calendar_calendarExtendedProperty ->
-  GdataCore.xml_data_model list
-
-val render_originalEvent :
-  gdata_originalEvent ->
   GdataCore.xml_data_model list
 
 module Link :

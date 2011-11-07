@@ -16,7 +16,7 @@ type calendar_calendarRecurrenceExceptionEntry = {
   cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
   cree_title : GdataAtom.Title.t;
   cree_eventStatus : GdataCalendar.gdata_eventStatus;
-  cree_originalEvent : GdataCalendar.gdata_originalEvent;
+  cree_originalEvent : GdataCalendar.OriginalEvent.t;
   cree_transparency : GdataCalendar.gdata_transparency;
   cree_visibility : GdataCalendar.gdata_visibility;
   cree_when : GdataCalendar.When.t list;
@@ -58,7 +58,7 @@ type calendar_calendarEventEntry = {
   cee_title : GdataAtom.Title.t;
   cee_eventKind : GdataCalendar.gdata_kind;
   cee_eventStatus : GdataCalendar.gdata_eventStatus;
-  cee_originalEvent : GdataCalendar.gdata_originalEvent;
+  cee_originalEvent : GdataCalendar.OriginalEvent.t;
   cee_recurrence : GdataCalendar.gdata_recurrence;
   cee_reminders : GdataCalendar.Reminder.t list;
   cee_transparency : GdataCalendar.gdata_transparency;

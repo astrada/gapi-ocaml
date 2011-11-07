@@ -327,17 +327,48 @@ struct
 
 end
 
-type gdata_originalEvent = {
-  oe_href : string;
-  oe_id : string;
-  oe_when : When.t
-}
+module OriginalEvent =
+struct
+  type t = {
+    oe_href : string;
+    oe_id : string;
+    oe_when : When.t
+  }
 
-let empty_originalEvent = {
-  oe_href = "";
-  oe_id = "";
-  oe_when = When.empty
-}
+  let empty = {
+    oe_href = "";
+    oe_id = "";
+    oe_when = When.empty
+  }
+
+  let to_xml_data_model event =
+    GdataAtom.render_element GdataAtom.ns_gd "originalEvent"
+      [GdataAtom.render_attribute "" "href" event.oe_href;
+       GdataAtom.render_attribute "" "id" event.oe_id;
+       When.to_xml_data_model event.oe_when]
+
+  let of_xml_data_model event tree =
+    match tree with
+        GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "href"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { event with oe_href = v }
+      | GdataCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "id"; `Namespace ns],
+           GdataCore.Value.String v) when ns = "" ->
+          { event with oe_id = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "when"; `Namespace ns],
+           cs) when ns = GdataAtom.ns_gd ->
+          GdataAtom.parse_children
+            When.of_xml_data_model
+            When.empty
+            (fun cwhen -> { event with oe_when = cwhen })
+            cs
+      | e ->
+          GdataUtils.unexpected e
+
+end
 
 type calendar_privateCopyProperty = bool
 
@@ -395,26 +426,6 @@ let parse_extendedProperty property tree =
     | e ->
         GdataUtils.unexpected e
 
-let parse_originalEvent event tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "href"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { event with oe_href = v }
-    | GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "id"; `Namespace ns],
-         GdataCore.Value.String v) when ns = "" ->
-        { event with oe_id = v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "when"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_gd ->
-        GdataAtom.parse_children
-          When.of_xml_data_model
-          When.empty
-          (fun cwhen -> { event with oe_when = cwhen })
-          cs
-    | e ->
-        GdataUtils.unexpected e
 (* END Calendar feed: parsing *)
 
 
@@ -432,11 +443,6 @@ let render_extendedProperty property =
      GdataAtom.render_attribute "" "realm" property.cep_realm;
      GdataAtom.render_attribute "" "value" property.cep_value]
 
-let render_originalEvent event =
-  GdataAtom.render_element GdataAtom.ns_gd "originalEvent"
-    [GdataAtom.render_attribute "" "href" event.oe_href;
-     GdataAtom.render_attribute "" "id" event.oe_id;
-     When.to_xml_data_model event.oe_when]
 (* END Calendar feed: rendering *)
 
 module Link =
