@@ -68,11 +68,11 @@ end
 module Who :
 sig
   type t = {
-    cw_email : string;
-    cw_rel : string;
-    cw_value : string;
-    cw_resource : ResourceProperty.t;
-    cw_attendeeStatus : gdata_attendeeStatus
+    email : string;
+    rel : string;
+    value : string;
+    resource : ResourceProperty.t;
+    attendeeStatus : gdata_attendeeStatus
   }
 
   val empty : t

@@ -151,50 +151,50 @@ let parse_attendeeStatus where tree =
 module Who =
 struct
   type t = {
-    cw_email : string;
-    cw_rel : string;
-    cw_value : string;
-    cw_resource : ResourceProperty.t;
-    cw_attendeeStatus : gdata_attendeeStatus
+    email : string;
+    rel : string;
+    value : string;
+    resource : ResourceProperty.t;
+    attendeeStatus : gdata_attendeeStatus
   }
 
   let empty = {
-    cw_email = "";
-    cw_rel = "";
-    cw_value = "";
-    cw_resource = ResourceProperty.empty;
-    cw_attendeeStatus = ""
+    email = "";
+    rel = "";
+    value = "";
+    resource = ResourceProperty.empty;
+    attendeeStatus = ""
   }
 
   let to_xml_data_model who =
     GdataAtom.render_element GdataAtom.ns_gd "resource"
-      [GdataAtom.render_attribute "" "email" who.cw_email;
-       GdataAtom.render_attribute "" "rel" who.cw_rel;
-       GdataAtom.render_attribute "" "valueString" who.cw_value;
-       ResourceProperty.to_xml_data_model who.cw_resource;
-       render_attendeeStatus who.cw_attendeeStatus]
+      [GdataAtom.render_attribute "" "email" who.email;
+       GdataAtom.render_attribute "" "rel" who.rel;
+       GdataAtom.render_attribute "" "valueString" who.value;
+       ResourceProperty.to_xml_data_model who.resource;
+       render_attendeeStatus who.attendeeStatus]
 
   let of_xml_data_model who tree =
     match tree with
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "email"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { who with cw_email = v }
+          { who with email = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "rel"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { who with cw_rel = v }
+          { who with rel = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "valueString"; `Namespace ns],
            GdataCore.Value.String v) when ns = "" ->
-          { who with cw_value = v }
+          { who with value = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "resource"; `Namespace ns],
            cs) when ns = ns_gCal ->
           GdataAtom.parse_children
             ResourceProperty.of_xml_data_model
             ResourceProperty.empty
-            (fun property -> { who with cw_resource = property })
+            (fun property -> { who with resource = property })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "attendeeStatus"; `Namespace ns],
@@ -202,7 +202,7 @@ struct
           GdataAtom.parse_children
             parse_attendeeStatus
             ""
-            (fun status -> { who with cw_attendeeStatus = status })
+            (fun status -> { who with attendeeStatus = status })
             cs
       | e ->
           GdataUtils.unexpected e
