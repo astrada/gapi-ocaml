@@ -1,33 +1,41 @@
-type calendar_calendarRecurrenceExceptionEntry = {
-  cree_etag : string;
-  cree_kind : string;
-  cree_authors : GdataAtom.Author.t list;
-  cree_categories : GdataAtom.Category.t list;
-  cree_content : GdataAtom.Content.t;
-  cree_contributors : GdataAtom.Contributor.t list;
-  cree_id : GdataAtom.atom_id;
-  cree_published : GdataAtom.atom_published;
-  cree_updated : GdataAtom.atom_updated;
-  cree_comments : GdataCalendar.Comments.comments;
-  cree_links : GdataCalendar.Link.t list;
-  cree_where : GdataCalendar.Where.t list;
-  cree_who : GdataCalendar.Who.t list;
-  cree_icalUID : GdataCalendar.calendar_icalUIDProperty;
-  cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
-  cree_title : GdataAtom.Title.t;
-  cree_eventStatus : GdataCalendar.gdata_eventStatus;
-  cree_originalEvent : GdataCalendar.OriginalEvent.t;
-  cree_transparency : GdataCalendar.gdata_transparency;
-  cree_visibility : GdataCalendar.gdata_visibility;
-  cree_when : GdataCalendar.When.t list;
-  cree_extensions : GdataCore.xml_data_model list
-}
+module RecurrenceExceptionEntry :
+sig
+  type t = {
+    cree_etag : string;
+    cree_kind : string;
+    cree_authors : GdataAtom.Author.t list;
+    cree_categories : GdataAtom.Category.t list;
+    cree_content : GdataAtom.Content.t;
+    cree_contributors : GdataAtom.Contributor.t list;
+    cree_id : GdataAtom.atom_id;
+    cree_published : GdataAtom.atom_published;
+    cree_updated : GdataAtom.atom_updated;
+    cree_comments : GdataCalendar.Comments.comments;
+    cree_links : GdataCalendar.Link.t list;
+    cree_where : GdataCalendar.Where.t list;
+    cree_who : GdataCalendar.Who.t list;
+    cree_icalUID : GdataCalendar.calendar_icalUIDProperty;
+    cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
+    cree_title : GdataAtom.Title.t;
+    cree_eventStatus : GdataCalendar.gdata_eventStatus;
+    cree_originalEvent : GdataCalendar.OriginalEvent.t;
+    cree_transparency : GdataCalendar.gdata_transparency;
+    cree_visibility : GdataCalendar.gdata_visibility;
+    cree_when : GdataCalendar.When.t list;
+    cree_extensions : GdataCore.xml_data_model list
+  }
 
-val empty_recurrenceExceptionEntry : calendar_calendarRecurrenceExceptionEntry
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type calendar_calendarRecurrenceException = {
   cre_specialized : bool;
-  cre_entry : calendar_calendarRecurrenceExceptionEntry
+  cre_entry : RecurrenceExceptionEntry.t
 }
 
 val empty_recurrenceException : calendar_calendarRecurrenceException
@@ -73,11 +81,6 @@ type calendar_calendarEventEntry = {
 
 val empty_eventEntry : calendar_calendarEventEntry
 
-val parse_recurrenceExceptionEntry :
-  calendar_calendarRecurrenceExceptionEntry ->
-  GdataCore.xml_data_model ->
-  calendar_calendarRecurrenceExceptionEntry
-
 val parse_recurrenceException :
   calendar_calendarRecurrenceException ->
   GdataCore.xml_data_model ->
@@ -86,10 +89,6 @@ val parse_recurrenceException :
 val parse_calendar_event_entry :
   GdataCore.xml_data_model ->
   calendar_calendarEventEntry
-
-val render_recurrenceExceptionEntry :
-  calendar_calendarRecurrenceExceptionEntry ->
-  GdataCore.xml_data_model list
 
 val render_recurrenceException :
   calendar_calendarRecurrenceException ->
