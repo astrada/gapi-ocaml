@@ -172,7 +172,7 @@ let test_create_new_event () =
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
-         let id = new_entry.GdataCalendarEvent.cee_id in
+         let id = new_entry.GdataCalendarEvent.Entry.cee_id in
          let (feed, session) = GdataCalendarService.retrieve_events session in
            ignore (GdataCalendarService.delete_event
                      new_entry
@@ -180,7 +180,7 @@ let test_create_new_event () =
            assert_bool
              "Created entry id not found in event feed"
              (List.exists
-                (fun e -> e.GdataCalendarEvent.cee_id = id)
+                (fun e -> e.GdataCalendarEvent.Entry.cee_id = id)
                 feed.GdataCalendarEvent.Feed.entries)) 
 
 let test_update_event () =
@@ -195,7 +195,7 @@ let test_update_event () =
            GdataCalendarService.create_new_event entry session in
          let updated_entry =
            { new_entry with
-                 GdataCalendarEvent.cee_where = ["Tennis club"] } in
+                 GdataCalendarEvent.Entry.cee_where = ["Tennis club"] } in
          let (server_updated_entry, session) =
            GdataCalendarService.update_event updated_entry session in
          let (_, session) =
@@ -205,8 +205,8 @@ let test_update_event () =
                      server_updated_entry
                      session);
            assert_equal
-             updated_entry.GdataCalendarEvent.cee_where
-             server_updated_entry.GdataCalendarEvent.cee_where)
+             updated_entry.GdataCalendarEvent.Entry.cee_where
+             server_updated_entry.GdataCalendarEvent.Entry.cee_where)
 
 let test_retrieve_events_with_parameters () =
   TestHelper.test_request
@@ -229,9 +229,9 @@ let test_retrieve_events_with_parameters () =
 
 let test_create_quick_add_event () =
   let entry =
-    { GdataCalendarEvent.empty_eventEntry with
-          GdataCalendarEvent.cee_quickAdd = true;
-          GdataCalendarEvent.cee_content =
+    { GdataCalendarEvent.Entry.empty with
+          GdataCalendarEvent.Entry.cee_quickAdd = true;
+          GdataCalendarEvent.Entry.cee_content =
             { GdataAtom.Content.empty with
                   GdataAtom.Content.ctype = "text";
                   GdataAtom.Content.value = "Tennis with John November 11 3pm-3:30pm"
@@ -243,7 +243,7 @@ let test_create_quick_add_event () =
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
-         let w = List.hd (new_entry.GdataCalendarEvent.cee_when) in
+         let w = List.hd (new_entry.GdataCalendarEvent.Entry.cee_when) in
            ignore (GdataCalendarService.delete_event
                      new_entry
                      session);
@@ -262,14 +262,14 @@ let test_create_recurring_event () =
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
   let entry = { entry with
-                    GdataCalendarEvent.cee_recurrence = "DTSTART;VALUE=DATE:20100505\r\nDTEND;VALUE=DATE:20100506\r\nRRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20100904\r\n"
+                    GdataCalendarEvent.Entry.cee_recurrence = "DTSTART;VALUE=DATE:20100505\r\nDTEND;VALUE=DATE:20100506\r\nRRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20100904\r\n"
   } in
     TestHelper.test_request
       TestHelper.build_oauth2_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
-         let id = new_entry.GdataCalendarEvent.cee_id in
+         let id = new_entry.GdataCalendarEvent.Entry.cee_id in
          let (feed, session) = GdataCalendarService.retrieve_events session in
            ignore (GdataCalendarService.delete_event
                      new_entry
@@ -277,7 +277,7 @@ let test_create_recurring_event () =
            assert_bool
              "Created entry id not found in event feed"
              (List.exists
-                (fun e -> e.GdataCalendarEvent.cee_id = id)
+                (fun e -> e.GdataCalendarEvent.Entry.cee_id = id)
                 feed.GdataCalendarEvent.Feed.entries))
 
 let test_retrieve_acl () =

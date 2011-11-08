@@ -84,23 +84,23 @@ val retrieve_events :
   GdataCalendarEvent.Feed.t * GdataConversation.Session.t
 
 val refresh_event :
-  GdataCalendarEvent.calendar_calendarEventEntry ->
+  GdataCalendarEvent.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendarEvent.calendar_calendarEventEntry * GdataConversation.Session.t
+  GdataCalendarEvent.Entry.t * GdataConversation.Session.t
 
 val create_new_event :
   ?url:string ->
-  GdataCalendarEvent.calendar_calendarEventEntry ->
+  GdataCalendarEvent.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendarEvent.calendar_calendarEventEntry * GdataConversation.Session.t
+  GdataCalendarEvent.Entry.t * GdataConversation.Session.t
 
 val update_event :
-  GdataCalendarEvent.calendar_calendarEventEntry ->
+  GdataCalendarEvent.Entry.t ->
   GdataConversation.Session.t ->
-  GdataCalendarEvent.calendar_calendarEventEntry * GdataConversation.Session.t
+  GdataCalendarEvent.Entry.t * GdataConversation.Session.t
 
 val delete_event :
-  GdataCalendarEvent.calendar_calendarEventEntry ->
+  GdataCalendarEvent.Entry.t ->
   GdataConversation.Session.t ->
   unit * GdataConversation.Session.t
 

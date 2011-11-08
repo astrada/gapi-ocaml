@@ -123,8 +123,8 @@ let get_url_etag_calendar entry =
 
 let get_url_etag_event entry =
   get_url_etag
-    entry.GdataCalendarEvent.cee_links
-    entry.GdataCalendarEvent.cee_etag
+    entry.GdataCalendarEvent.Entry.cee_links
+    entry.GdataCalendarEvent.Entry.cee_etag
 
 let get_url_etag_acl entry =
   let url = GdataAtom.find_url `Edit entry.GdataACL.Entry.links in
