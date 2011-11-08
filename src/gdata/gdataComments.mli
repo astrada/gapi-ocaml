@@ -32,7 +32,7 @@ sig
       with type entry_t = Entry.t
         and type link_t = link_t
 
-  type comments = {
+  type t = {
     c_countHint : int;
     c_href : string;
     c_readOnly : bool;
@@ -40,12 +40,16 @@ sig
     c_commentFeed : Feed.t;
   }
 
-  val empty_comments : comments
+  val empty : t
 
-  val parse_comments :
-    comments ->
+  val of_xml_data_model :
+    t ->
     GdataCore.xml_data_model ->
-    comments
+    t
+
+  val to_xml_data_model :
+    t ->
+    GdataCore.xml_data_model list
 
   val parse_comment_entry :
     GdataCore.xml_data_model ->
@@ -54,10 +58,6 @@ sig
   val comment_entry_to_data_model :
     Entry.t ->
     GdataCore.xml_data_model
-
-  val render_comments :
-    comments ->
-    GdataCore.xml_data_model list
 
 end
 

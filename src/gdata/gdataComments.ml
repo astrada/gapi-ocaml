@@ -37,7 +37,7 @@ sig
 
   end
 
-  type comments = {
+  type t = {
     c_countHint : int;
     c_href : string;
     c_readOnly : bool;
@@ -45,12 +45,16 @@ sig
     c_commentFeed : Feed.t;
   }
 
-  val empty_comments : comments
+  val empty : t
 
-  val parse_comments :
-    comments ->
+  val of_xml_data_model :
+    t ->
     GdataCore.xml_data_model ->
-    comments
+    t
+
+  val to_xml_data_model :
+    t ->
+    GdataCore.xml_data_model list
 
   val parse_comment_entry :
     GdataCore.xml_data_model ->
@@ -59,10 +63,6 @@ sig
   val comment_entry_to_data_model :
     Entry.t ->
     GdataCore.xml_data_model
-
-  val render_comments :
-    comments ->
-    GdataCore.xml_data_model list
 
 end
 
@@ -205,7 +205,7 @@ struct
 
   module Feed = GdataAtom.MakeFeed(Entry)(Link)
 
-  type comments = {
+  type t = {
     c_countHint : int;
     c_href : string;
     c_readOnly : bool;
@@ -213,95 +213,79 @@ struct
     c_commentFeed : Feed.t
   }
 
-  let empty_comments = {
+  let empty = {
     c_countHint = 0;
     c_href = "";
     c_readOnly = false;
     c_rel = "";
     c_commentFeed = Feed.empty
   }
-  (* END Comment data types *)
 
+  let to_xml_data_model comments =
+    let render_commentsFeedLink link =
+      GdataAtom.render_element GdataAtom.ns_gd "feedLink"
+        [GdataAtom.render_int_attribute "" "countHint" link.c_countHint;
+         GdataAtom.render_attribute "" "href" link.c_href;
+         GdataAtom.render_bool_attribute "" "readOnly" link.c_readOnly;
+         GdataAtom.render_attribute "" "rel" link.c_rel;
+         Feed.to_xml_data_model link.c_commentFeed]
+    in
+      GdataAtom.render_element GdataAtom.ns_gd "comments"
+        [render_commentsFeedLink comments]
 
-  (* Comment feed: parsing *)
-  let parse_commentsFeedLink link tree =
-    match tree with
-        GdataCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "countHint"; `Namespace ns],
-           v) when ns = "" ->
-          { link with c_countHint = int_of_string v }
-      | GdataCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "href"; `Namespace ns],
-           v) when ns = "" ->
-          { link with c_href = v }
-      | GdataCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "readOnly"; `Namespace ns],
-           v) when ns = "" ->
-          { link with c_readOnly = bool_of_string v }
-      | GdataCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "rel"; `Namespace ns],
-           v) when ns = "" ->
-          { link with c_rel = v }
-      | GdataCore.AnnotatedTree.Node
-          ([`Element; `Name "feed"; `Namespace ns],
-           cs) when ns = GdataAtom.ns_atom ->
-          GdataAtom.parse_children
-            Feed.of_xml_data_model
-            Feed.empty
-            (fun feed -> { link with c_commentFeed = feed })
-            cs
-      | e ->
-          GdataUtils.unexpected e
-
-  let parse_comments comments tree =
-    match tree with
-      | GdataCore.AnnotatedTree.Node
-          ([`Element; `Name "feedLink"; `Namespace ns],
-           cs) when ns = GdataAtom.ns_gd ->
-          GdataAtom.parse_children
-            parse_commentsFeedLink
-            empty_comments
-            Std.identity
-            cs
-      | e ->
-          GdataUtils.unexpected e
-
-  let parse_comment_entry tree =
-    let parse_root tree =
+  let of_xml_data_model comments tree =
+    let parse_commentsFeedLink link tree =
       match tree with
-          GdataCore.AnnotatedTree.Node
-            ([`Element; `Name "entry"; `Namespace ns],
+          GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "countHint"; `Namespace ns],
+             v) when ns = "" ->
+            { link with c_countHint = int_of_string v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "href"; `Namespace ns],
+             v) when ns = "" ->
+            { link with c_href = v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "readOnly"; `Namespace ns],
+             v) when ns = "" ->
+            { link with c_readOnly = bool_of_string v }
+        | GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "rel"; `Namespace ns],
+             v) when ns = "" ->
+            { link with c_rel = v }
+        | GdataCore.AnnotatedTree.Node
+            ([`Element; `Name "feed"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
-              Entry.of_xml_data_model
-              Entry.empty
-              Std.identity
+              Feed.of_xml_data_model
+              Feed.empty
+              (fun feed -> { link with c_commentFeed = feed })
               cs
         | e ->
             GdataUtils.unexpected e
     in
-      parse_root tree
+      match tree with
+        | GdataCore.AnnotatedTree.Node
+            ([`Element; `Name "feedLink"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_gd ->
+            GdataAtom.parse_children
+              parse_commentsFeedLink
+              empty
+              Std.identity
+              cs
+        | e ->
+            GdataUtils.unexpected e
+  (* END Comment data types *)
+
+  (* Comment feed: parsing *)
+  let parse_comment_entry =
+    GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
   (* END Comment feed: parsing *)
 
-
   (* Comment: rendering *)
-  let render_commentsFeedLink link =
-    GdataAtom.render_element GdataAtom.ns_gd "feedLink"
-      [GdataAtom.render_int_attribute "" "countHint" link.c_countHint;
-       GdataAtom.render_attribute "" "href" link.c_href;
-       GdataAtom.render_bool_attribute "" "readOnly" link.c_readOnly;
-       GdataAtom.render_attribute "" "rel" link.c_rel;
-       Feed.to_xml_data_model link.c_commentFeed]
-
-  let render_comments comments =
-    GdataAtom.render_element GdataAtom.ns_gd "comments"
-      [render_commentsFeedLink comments]
-
-  let comment_entry_to_data_model entry =
+  let comment_entry_to_data_model =
     GdataAtom.element_to_data_model
       GdataAtom.get_standard_prefix
-      Entry.to_xml_data_model 
-      entry
+      Entry.to_xml_data_model
   (* END Calendar comment: rendering *)
 end
 

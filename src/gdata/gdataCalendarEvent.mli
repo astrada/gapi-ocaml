@@ -10,7 +10,7 @@ sig
     id : GdataAtom.atom_id;
     published : GdataAtom.atom_published;
     updated : GdataAtom.atom_updated;
-    comments : GdataCalendar.Comments.comments;
+    comments : GdataCalendar.Comments.t;
     links : GdataCalendar.Link.t list;
     where : GdataCalendar.Where.t list;
     who : GdataCalendar.Who.t list;
@@ -60,7 +60,7 @@ sig
     published : GdataAtom.atom_published;
     updated : GdataAtom.atom_updated;
     edited : GdataAtom.app_edited;
-    comments : GdataCalendar.Comments.comments;
+    comments : GdataCalendar.Comments.t;
     extendedProperties : GdataCalendar.ExtendedProperty.t list;
     links : GdataCalendar.Link.t list;
     recurrenceExceptions : RecurrenceException.t list;

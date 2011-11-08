@@ -13,7 +13,7 @@ struct
     id : GdataAtom.atom_id;
     published : GdataAtom.atom_published;
     updated : GdataAtom.atom_updated;
-    comments : GdataCalendar.Comments.comments;
+    comments : GdataCalendar.Comments.t;
     links : GdataCalendar.Link.t list;
     where : GdataCalendar.Where.t list;
     who : GdataCalendar.Who.t list;
@@ -38,7 +38,7 @@ struct
     id = "";
     published = GdataDate.epoch;
     updated = GdataDate.epoch;
-    comments = GdataCalendar.Comments.empty_comments;
+    comments = GdataCalendar.Comments.empty;
     links = [];
     where = [];
     who = [];
@@ -64,7 +64,7 @@ struct
        GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
        GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.published;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
-       GdataCalendar.Comments.render_comments entry.comments;
+       GdataCalendar.Comments.to_xml_data_model entry.comments;
        GdataAtom.render_element_list GdataCalendar.Link.to_xml_data_model entry.links;
        GdataAtom.render_element_list GdataCalendar.Where.to_xml_data_model entry.where;
        GdataAtom.render_element_list GdataCalendar.Who.to_xml_data_model entry.who;
@@ -142,8 +142,8 @@ struct
           ([`Element; `Name "comments"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
-            GdataCalendar.Comments.parse_comments
-            GdataCalendar.Comments.empty_comments
+            GdataCalendar.Comments.of_xml_data_model
+            GdataCalendar.Comments.empty
             (fun comments -> { entry with comments = comments })
             cs
       | GdataCore.AnnotatedTree.Node
@@ -295,7 +295,7 @@ struct
     published : GdataAtom.atom_published;
     updated : GdataAtom.atom_updated;
     edited : GdataAtom.app_edited;
-    comments : GdataCalendar.Comments.comments;
+    comments : GdataCalendar.Comments.t;
     extendedProperties : GdataCalendar.ExtendedProperty.t list;
     links : GdataCalendar.Link.t list;
     recurrenceExceptions : RecurrenceException.t list;
@@ -334,7 +334,7 @@ struct
     published = GdataDate.epoch;
     updated = GdataDate.epoch;
     edited = GdataDate.epoch;
-    comments = GdataCalendar.Comments.empty_comments;
+    comments = GdataCalendar.Comments.empty;
     extendedProperties = [];
     links = [];
     recurrenceExceptions = [];
@@ -374,7 +374,7 @@ struct
        GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.published;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
        GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.edited;
-       GdataCalendar.Comments.render_comments entry.comments;
+       GdataCalendar.Comments.to_xml_data_model entry.comments;
        GdataAtom.render_element_list GdataCalendar.ExtendedProperty.to_xml_data_model entry.extendedProperties;
        GdataAtom.render_element_list GdataCalendar.Link.to_xml_data_model entry.links;
        GdataAtom.render_element_list RecurrenceException.to_xml_data_model entry.recurrenceExceptions;
@@ -460,8 +460,8 @@ struct
           ([`Element; `Name "comments"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
-            GdataCalendar.Comments.parse_comments
-            GdataCalendar.Comments.empty_comments
+            GdataCalendar.Comments.of_xml_data_model
+            GdataCalendar.Comments.empty
             (fun comments -> { entry with comments = comments })
             cs
       | GdataCore.AnnotatedTree.Node
