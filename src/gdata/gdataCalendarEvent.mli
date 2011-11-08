@@ -36,8 +36,8 @@ end
 module RecurrenceException :
 sig
   type t = {
-    cre_specialized : bool;
-    cre_entry : RecurrenceExceptionEntry.t
+    specialized : bool;
+    entry : RecurrenceExceptionEntry.t
   }
 
   val empty : t

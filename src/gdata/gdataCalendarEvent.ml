@@ -233,13 +233,13 @@ end
 module RecurrenceException =
 struct
   type t = {
-    cre_specialized : bool;
-    cre_entry : RecurrenceExceptionEntry.t
+    specialized : bool;
+    entry : RecurrenceExceptionEntry.t
   }
 
   let empty = {
-    cre_specialized = false;
-    cre_entry = RecurrenceExceptionEntry.empty
+    specialized = false;
+    entry = RecurrenceExceptionEntry.empty
   }
 
   let to_xml_data_model ex =
@@ -248,8 +248,8 @@ struct
         [RecurrenceExceptionEntry.to_xml_data_model entry]
     in
       GdataAtom.render_element GdataAtom.ns_gd "recurrenceException"
-        [GdataAtom.render_bool_attribute "" "specialized" ex.cre_specialized;
-         render_recurrenceExceptionEntryLink ex.cre_entry]
+        [GdataAtom.render_bool_attribute "" "specialized" ex.specialized;
+         render_recurrenceExceptionEntryLink ex.entry]
 
   let of_xml_data_model ex tree =
     let parse_recurrenceExceptionEntryLink entry tree =
@@ -269,14 +269,14 @@ struct
           GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "specialized"; `Namespace ns],
              v) when ns = "" ->
-            { ex with cre_specialized = bool_of_string v }
+            { ex with specialized = bool_of_string v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "entryLink"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
             GdataAtom.parse_children
               parse_recurrenceExceptionEntryLink
               RecurrenceExceptionEntry.empty
-              (fun entry -> { ex with cre_entry = entry })
+              (fun entry -> { ex with entry = entry })
               cs
         | e ->
             GdataUtils.unexpected e
