@@ -7,18 +7,18 @@ sig
   module Entry :
   sig
     type t = {
-      ce_etag : string;
-      ce_kind : string;
-      ce_authors : GdataAtom.Author.t list;
-      ce_content : GdataAtom.Content.t;
-      ce_contributors : GdataAtom.Contributor.t list;
-      ce_id : GdataAtom.atom_id;
-      ce_published : GdataAtom.atom_published;
-      ce_updated : GdataAtom.atom_updated;
-      ce_links : link_t list;
-      ce_title : GdataAtom.Title.t;
-      ce_category : GdataAtom.Category.t;
-      ce_extensions : GdataCore.xml_data_model list
+      etag : string;
+      kind : string;
+      authors : GdataAtom.Author.t list;
+      content : GdataAtom.Content.t;
+      contributors : GdataAtom.Contributor.t list;
+      id : GdataAtom.atom_id;
+      published : GdataAtom.atom_published;
+      updated : GdataAtom.atom_updated;
+      links : link_t list;
+      title : GdataAtom.Title.t;
+      category : GdataAtom.Category.t;
+      extensions : GdataCore.xml_data_model list
     }
 
     val empty : t
@@ -74,68 +74,68 @@ struct
   module Entry =
   struct
     type t = {
-      ce_etag : string;
-      ce_kind : string;
-      ce_authors : GdataAtom.Author.t list;
-      ce_content : GdataAtom.Content.t;
-      ce_contributors : GdataAtom.Contributor.t list;
-      ce_id : GdataAtom.atom_id;
-      ce_published : GdataAtom.atom_published;
-      ce_updated : GdataAtom.atom_updated;
-      ce_links : Link.t list;
-      ce_title : GdataAtom.Title.t;
-      ce_category : GdataAtom.Category.t;
-      ce_extensions : GdataCore.xml_data_model list
+      etag : string;
+      kind : string;
+      authors : GdataAtom.Author.t list;
+      content : GdataAtom.Content.t;
+      contributors : GdataAtom.Contributor.t list;
+      id : GdataAtom.atom_id;
+      published : GdataAtom.atom_published;
+      updated : GdataAtom.atom_updated;
+      links : Link.t list;
+      title : GdataAtom.Title.t;
+      category : GdataAtom.Category.t;
+      extensions : GdataCore.xml_data_model list
     }
 
     let empty = {
-      ce_etag = "";
-      ce_kind = "";
-      ce_authors = [];
-      ce_content = GdataAtom.Content.empty;
-      ce_contributors = [];
-      ce_id = "";
-      ce_published = GdataDate.epoch;
-      ce_updated = GdataDate.epoch;
-      ce_links = [];
-      ce_title = GdataAtom.Title.empty;
-      ce_category = GdataAtom.Category.empty;
-      ce_extensions = []
+      etag = "";
+      kind = "";
+      authors = [];
+      content = GdataAtom.Content.empty;
+      contributors = [];
+      id = "";
+      published = GdataDate.epoch;
+      updated = GdataDate.epoch;
+      links = [];
+      title = GdataAtom.Title.empty;
+      category = GdataAtom.Category.empty;
+      extensions = []
     }
 
     let to_xml_data_model entry =
       GdataAtom.render_element GdataAtom.ns_atom "entry"
-        [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.ce_etag;
-         GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.ce_kind;
-         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.ce_authors;
-         GdataAtom.Content.to_xml_data_model entry.ce_content;
-         GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.ce_contributors;
-         GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.ce_id;
-         GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.ce_published;
-         GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.ce_updated;
-         GdataAtom.render_element_list Link.to_xml_data_model entry.ce_links;
-         GdataAtom.Title.to_xml_data_model entry.ce_title;
-         GdataAtom.Category.to_xml_data_model entry.ce_category;
-         entry.ce_extensions]
+        [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.etag;
+         GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.kind;
+         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
+         GdataAtom.Content.to_xml_data_model entry.content;
+         GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.contributors;
+         GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
+         GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.published;
+         GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
+         GdataAtom.render_element_list Link.to_xml_data_model entry.links;
+         GdataAtom.Title.to_xml_data_model entry.title;
+         GdataAtom.Category.to_xml_data_model entry.category;
+         entry.extensions]
 
     let of_xml_data_model entry tree =
       match tree with
           GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "etag"; `Namespace ns],
              v) when ns = GdataAtom.ns_gd ->
-            { entry with ce_etag = v }
+            { entry with etag = v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "kind"; `Namespace ns],
              v) when ns = GdataAtom.ns_gd ->
-            { entry with ce_kind = v }
+            { entry with kind = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "author"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
               GdataAtom.Author.of_xml_data_model
               GdataAtom.Author.empty
-              (fun author -> { entry with ce_authors =
-                                 author :: entry.ce_authors })
+              (fun author -> { entry with authors =
+                                 author :: entry.authors })
               cs
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "content"; `Namespace ns],
@@ -143,7 +143,7 @@ struct
             GdataAtom.parse_children
               GdataAtom.Content.of_xml_data_model
               GdataAtom.Content.empty
-              (fun content -> { entry with ce_content = content })
+              (fun content -> { entry with content = content })
               cs
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "contributor"; `Namespace ns],
@@ -151,31 +151,31 @@ struct
             GdataAtom.parse_children
               GdataAtom.Contributor.of_xml_data_model
               GdataAtom.Contributor.empty
-              (fun contributor -> { entry with ce_contributors =
-                                      contributor :: entry.ce_contributors })
+              (fun contributor -> { entry with contributors =
+                                      contributor :: entry.contributors })
               cs
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "id"; `Namespace ns],
              [GdataCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with ce_id = v }
+            { entry with id = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "published"; `Namespace ns],
              [GdataCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with ce_published = GdataDate.of_string v }
+            { entry with published = GdataDate.of_string v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "updated"; `Namespace ns],
              [GdataCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with ce_updated = GdataDate.of_string v }
+            { entry with updated = GdataDate.of_string v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "link"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
             Link.of_xml_data_model
             Link.empty
-            (fun link -> { entry with ce_links = link :: entry.ce_links })
+            (fun link -> { entry with links = link :: entry.links })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
@@ -183,7 +183,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Title.of_xml_data_model
             GdataAtom.Title.empty
-            (fun title -> { entry with ce_title = title })
+            (fun title -> { entry with title = title })
             cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
@@ -191,15 +191,15 @@ struct
           GdataAtom.parse_children
             GdataAtom.Category.of_xml_data_model
             GdataAtom.Category.empty
-            (fun category -> { entry with ce_category = category })
+            (fun category -> { entry with category = category })
             cs
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
           entry
       | extension ->
-          let extensions = extension :: entry.ce_extensions in
-            { entry with ce_extensions = extensions }
+          let extensions = extension :: entry.extensions in
+            { entry with extensions = extensions }
 
   end
 
