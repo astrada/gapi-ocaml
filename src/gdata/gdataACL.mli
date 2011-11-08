@@ -3,7 +3,7 @@ val ns_gAcl : string
 module Scope :
 sig
   type t = {
-    stype : string;
+    _type : string;
     value : string
   }
 

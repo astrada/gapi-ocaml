@@ -8,12 +8,12 @@ let new_calendar_entry title =
         GdataCalendar.Entry.timezone = "America/Los_Angeles";
         GdataCalendar.Entry.summary =
           { GdataAtom.Summary.empty with
-                GdataAtom.Summary.ctype = "text";
+                GdataAtom.Summary._type = "text";
                 GdataAtom.Summary.value = "This calendar contains the practice schedule and game times.";
           };
         GdataCalendar.Entry.title =
                   { GdataAtom.Title.empty with
-                        GdataAtom.Title.ctype = "text";
+                        GdataAtom.Title._type = "text";
                         GdataAtom.Title.value = title;
                   };
   }
@@ -27,7 +27,7 @@ let acl_entry =
                 GdataAtom.Category.term =
                   "http://schemas.google.com/acl/2007#accessRule" } ];
         GdataACL.Entry.scope =
-          { GdataACL.Scope.stype = "user";
+          { GdataACL.Scope._type = "user";
             GdataACL.Scope.value = "darcy@gmail.com" };
         GdataACL.Entry.role =
           "http://schemas.google.com/gCal/2005#editor" }
@@ -233,7 +233,7 @@ let test_create_quick_add_event () =
           GdataCalendarEvent.Entry.quickAdd = true;
           GdataCalendarEvent.Entry.content =
             { GdataAtom.Content.empty with
-                  GdataAtom.Content.ctype = "text";
+                  GdataAtom.Content._type = "text";
                   GdataAtom.Content.value = "Tennis with John November 11 3pm-3:30pm"
             }
     }

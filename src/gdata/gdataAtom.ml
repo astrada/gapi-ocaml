@@ -327,7 +327,7 @@ module type TEXTCONSTRUCT =
 sig
   type t = {
     src : string;
-    ctype : string;
+    _type : string;
     lang : string;
     value : string
   }
@@ -345,14 +345,14 @@ module MakeTextConstruct
 struct
   type t = {
     src : string;
-    ctype : string;
+    _type : string;
     lang : string;
     value : string
   }
 
   let empty = {
     src = "";
-    ctype = "";
+    _type = "";
     lang = "";
     value = ""
   }
@@ -360,7 +360,7 @@ struct
   let to_xml_data_model text_construct =
     render_element ns_atom M.element_name
       [render_attribute "" "src" text_construct.src;
-       render_attribute "" "type" text_construct.ctype;
+       render_attribute "" "type" text_construct._type;
        render_attribute Xmlm.ns_xml "lang" text_construct.lang;
        render_text text_construct.value]
 
@@ -373,7 +373,7 @@ struct
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            v) ->
-          { text with ctype = v }
+          { text with _type = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            v) when ns = Xmlm.ns_xml ->
@@ -409,7 +409,7 @@ struct
     length : Int64.t;
     rel : string;
     title : string;
-    ltype : string
+    _type : string
   }
 
   let empty = {
@@ -417,7 +417,7 @@ struct
     length = 0L;
     rel = "";
     title = "";
-    ltype = ""
+    _type = ""
   }
 
   let to_xml_data_model link =
@@ -426,7 +426,7 @@ struct
        render_generic_attribute Int64.to_string Int64.zero "" "length" link.length;
        render_attribute "" "rel" link.rel;
        render_attribute "" "title" link.title;
-       render_attribute "" "type" link.ltype]
+       render_attribute "" "type" link._type]
 
   let of_xml_data_model link tree =
     match tree with
@@ -449,7 +449,7 @@ struct
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            v) ->
-          { link with ltype = v }
+          { link with _type = v }
       | e ->
           GdataUtils.unexpected e
 

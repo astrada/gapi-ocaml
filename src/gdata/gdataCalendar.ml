@@ -440,7 +440,7 @@ struct
     length : Int64.t;
     rel : string;
     title : string;
-    ltype : string;
+    _type : string;
     webContent : WebContent.t
   }
 
@@ -449,7 +449,7 @@ struct
     length = 0L;
     rel = "";
     title = "";
-    ltype = "";
+    _type = "";
     webContent = WebContent.empty
   }
 
@@ -459,7 +459,7 @@ struct
        GdataAtom.render_generic_attribute Int64.to_string Int64.zero "" "length" link.length;
        GdataAtom.render_attribute "" "rel" link.rel;
        GdataAtom.render_attribute "" "title" link.title;
-       GdataAtom.render_attribute "" "type" link.ltype;
+       GdataAtom.render_attribute "" "type" link._type;
        WebContent.to_xml_data_model link.webContent]
 
   let of_xml_data_model link tree =
@@ -483,7 +483,7 @@ struct
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            v) ->
-          { link with ltype = v }
+          { link with _type = v }
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "webContent"; `Namespace ns],
            cs) when ns = ns_gCal ->

@@ -178,7 +178,7 @@ sig
     length : Int64.t;
     rel : string;
     title : string;
-    ltype : string;
+    _type : string;
     webContent : WebContent.t
   }
 

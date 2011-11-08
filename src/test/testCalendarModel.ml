@@ -116,13 +116,13 @@ let test_calendar_entry_to_data_model () =
             { GdataCalendar.Link.empty with
                   GdataCalendar.Link.href = "http://href";
                   GdataCalendar.Link.rel = "self";
-                  GdataCalendar.Link.ltype = "application/atom+xml";
+                  GdataCalendar.Link._type = "application/atom+xml";
             };
             { GdataCalendar.Link.href = "http://href2";
               GdataCalendar.Link.length = Int64.of_int 10;
               GdataCalendar.Link.rel = "alternate";
               GdataCalendar.Link.title = "title";
-              GdataCalendar.Link.ltype = "application/atom+xml";
+              GdataCalendar.Link._type = "application/atom+xml";
               GdataCalendar.Link.webContent =
                 { GdataCalendar.WebContent.height = 100;
                   GdataCalendar.WebContent.url = "http://webcontent";
@@ -149,7 +149,7 @@ let test_calendar_entry_to_data_model () =
           GdataCalendar.Entry.timesCleaned = 1;
           GdataCalendar.Entry.summary =
             { GdataAtom.Summary.src = "src";
-              GdataAtom.Summary.ctype = "type";
+              GdataAtom.Summary._type = "type";
               GdataAtom.Summary.lang = "en-US";
               GdataAtom.Summary.value = "summary";
             };
@@ -202,7 +202,7 @@ let test_parse_acl_feed () =
       (List.length feed.GdataACL.Feed.entries);
     assert_equal ~msg:"entry scope type"
       "user"
-      (entry.GdataACL.Entry.scope.GdataACL.Scope.stype);
+      (entry.GdataACL.Entry.scope.GdataACL.Scope._type);
     assert_equal ~msg:"entry scope value"
       "liz@gmail.com"
       (entry.GdataACL.Entry.scope.GdataACL.Scope.value)

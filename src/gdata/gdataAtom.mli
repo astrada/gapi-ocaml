@@ -195,7 +195,7 @@ module type TEXTCONSTRUCT =
 sig
   type t = {
     src : string;
-    ctype : string;
+    _type : string;
     lang : string;
     value : string
   }
@@ -228,7 +228,7 @@ sig
     length : Int64.t;
     rel : string;
     title : string;
-    ltype : string
+    _type : string
   }
 
   val empty : t

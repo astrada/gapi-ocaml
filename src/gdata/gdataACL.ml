@@ -5,18 +5,18 @@ let ns_gAcl = "http://schemas.google.com/acl/2007"
 module Scope =
 struct
   type t = {
-    stype : string;
+    _type : string;
     value : string
   }
 
   let empty = {
-    stype = "";
+    _type = "";
     value = ""
   }
 
   let to_xml_data_model scope =
     GdataAtom.render_element ns_gAcl "scope"
-      [GdataAtom.render_attribute "" "type" scope.stype;
+      [GdataAtom.render_attribute "" "type" scope._type;
        GdataAtom.render_attribute "" "value" scope.value]
 
   let of_xml_data_model scope tree =
@@ -24,7 +24,7 @@ struct
         GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ns],
            v) when ns = "" ->
-          { scope with stype = v }
+          { scope with _type = v }
       | GdataCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "value"; `Namespace ns],
            v) when ns = "" ->
