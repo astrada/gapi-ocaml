@@ -51,42 +51,42 @@ end
 module Entry :
 sig
   type t = {
-    cee_etag : string;
-    cee_kind : string;
-    cee_authors : GdataAtom.Author.t list;
-    cee_content : GdataAtom.Content.t;
-    cee_contributors : GdataAtom.Contributor.t list;
-    cee_id : GdataAtom.atom_id;
-    cee_published : GdataAtom.atom_published;
-    cee_updated : GdataAtom.atom_updated;
-    cee_edited : GdataAtom.app_edited;
-    cee_comments : GdataCalendar.Comments.comments;
-    cee_extendedProperties : GdataCalendar.ExtendedProperty.t list;
-    cee_links : GdataCalendar.Link.t list;
-    cee_recurrenceExceptions : RecurrenceException.t list;
-    cee_where : GdataCalendar.Where.t list;
-    cee_who : GdataCalendar.Who.t list;
-    cee_icalUID : GdataCalendar.calendar_icalUIDProperty;
-    cee_privateCopy : GdataCalendar.calendar_privateCopyProperty;
-    cee_quickAdd : GdataCalendar.calendar_quickAddProperty;
-    cee_sendEventNotifications : GdataCalendar.calendar_sendEventNotificationsProperty;
-    cee_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
-    cee_syncEvent : GdataCalendar.calendar_syncEventProperty;
-    cee_summary : GdataAtom.Summary.t;
-    cee_title : GdataAtom.Title.t;
-    cee_categories : GdataAtom.Category.t list;
-    cee_eventStatus : GdataCalendar.gdata_eventStatus;
-    cee_originalEvent : GdataCalendar.OriginalEvent.t;
-    cee_recurrence : GdataCalendar.gdata_recurrence;
-    cee_reminders : GdataCalendar.Reminder.t list;
-    cee_transparency : GdataCalendar.gdata_transparency;
-    cee_visibility : GdataCalendar.gdata_visibility;
-    cee_when : GdataCalendar.When.t list;
-    cee_anyoneCanAddSelf : bool;
-    cee_guestsCanInviteOthers : bool;
-    cee_guestsCanModify : bool;
-    cee_guestsCanSeeGuests : bool;
-    cee_extensions : GdataCore.xml_data_model list
+    etag : string;
+    kind : string;
+    authors : GdataAtom.Author.t list;
+    content : GdataAtom.Content.t;
+    contributors : GdataAtom.Contributor.t list;
+    id : GdataAtom.atom_id;
+    published : GdataAtom.atom_published;
+    updated : GdataAtom.atom_updated;
+    edited : GdataAtom.app_edited;
+    comments : GdataCalendar.Comments.comments;
+    extendedProperties : GdataCalendar.ExtendedProperty.t list;
+    links : GdataCalendar.Link.t list;
+    recurrenceExceptions : RecurrenceException.t list;
+    where : GdataCalendar.Where.t list;
+    who : GdataCalendar.Who.t list;
+    icalUID : GdataCalendar.calendar_icalUIDProperty;
+    privateCopy : GdataCalendar.calendar_privateCopyProperty;
+    quickAdd : GdataCalendar.calendar_quickAddProperty;
+    sendEventNotifications : GdataCalendar.calendar_sendEventNotificationsProperty;
+    sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
+    syncEvent : GdataCalendar.calendar_syncEventProperty;
+    summary : GdataAtom.Summary.t;
+    title : GdataAtom.Title.t;
+    categories : GdataAtom.Category.t list;
+    eventStatus : GdataCalendar.gdata_eventStatus;
+    originalEvent : GdataCalendar.OriginalEvent.t;
+    recurrence : GdataCalendar.gdata_recurrence;
+    reminders : GdataCalendar.Reminder.t list;
+    transparency : GdataCalendar.gdata_transparency;
+    visibility : GdataCalendar.gdata_visibility;
+    _when : GdataCalendar.When.t list;
+    anyoneCanAddSelf : bool;
+    guestsCanInviteOthers : bool;
+    guestsCanModify : bool;
+    guestsCanSeeGuests : bool;
+    extensions : GdataCore.xml_data_model list
   }
 
   val empty : t
