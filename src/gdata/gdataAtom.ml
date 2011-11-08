@@ -1,6 +1,6 @@
 open GdataUtils.Op
 
-(* Atom data types *)
+(* Atom simple types *)
 let ns_atom = "http://www.w3.org/2005/Atom"
 let ns_app = "http://www.w3.org/2007/app"
 let ns_openSearch = "http://a9.com/-/spec/opensearch/1.1/"
@@ -29,7 +29,7 @@ type opensearch_startIndex = int
 type opensearch_totalResults = int
 
 type app_edited = GdataDate.t
-(* END Atom data types *)
+(* END Atom simple types *)
 
 (* Parsing *)
 let parse_children parse_child empty_element update cs =
@@ -39,6 +39,27 @@ let parse_children parse_child empty_element update cs =
                   cs
   in
     update element
+
+let data_model_to_entry
+      ?(element_name = "entry")
+      ?(element_namespace = ns_atom)
+      entry_of_xml_data_model
+      empty_entry
+      tree =
+  let parse_root tree =
+    match tree with
+        GdataCore.AnnotatedTree.Node
+          ([`Element; `Name element_name; `Namespace ns],
+           cs) when ns = element_namespace ->
+          parse_children
+            entry_of_xml_data_model
+            empty_entry
+            Std.identity
+            cs
+      | e ->
+          GdataUtils.unexpected e
+  in
+    parse_root tree
 (* END Parsing *)
 
 (* Rendering *)
@@ -143,54 +164,7 @@ let element_to_data_model get_prefix render_element element =
     GdataUtils.append_namespaces ns_table xml_element
 (* END Rendering *)
 
-(* Complex types *)
-module type ELEMENT =
-sig
-  type t
-
-  val parse_xml_tree : GdataCore.xml_data_model -> t
-
-  val build_xml_tree : t -> GdataCore.xml_data_model
-
-end
-
-module MakeElement
-  (M : sig
-     include GdataCore.DATA
-
-     val element_name : string
-
-     val element_namespace : string
-
-     val get_prefix : string -> string
-   end) =
-struct
-  type t = M.t
-
-  let parse_xml_tree tree =
-    let parse_root tree =
-      match tree with
-          GdataCore.AnnotatedTree.Node
-            ([`Element; `Name element_name; `Namespace ns],
-             cs) when ns = M.element_namespace ->
-            parse_children
-              M.of_xml_data_model
-              M.empty
-              Std.identity
-              cs
-        | e ->
-            GdataUtils.unexpected e
-    in
-      parse_root tree
-
-  let build_xml_tree element =
-    element_to_data_model
-      M.get_prefix
-      M.to_xml_data_model 
-      element
-
-end
-
+(* Atom complex types *)
 module type PERSONCONSTRUCT =
 sig
   type t = {
@@ -736,7 +710,7 @@ struct
       parse_root tree
 
 end
-(* END: Complex types *)
+(* END Atom complex types *)
 
 (* Utilities *)
 module Rel =

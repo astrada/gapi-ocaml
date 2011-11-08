@@ -772,20 +772,11 @@ let get_calendar_prefix namespace =
   if namespace = ns_gCal then "gCal"
   else GdataACL.get_acl_prefix namespace
 
-module EntryElement = GdataAtom.MakeElement
-                        (struct
-                           include Entry
+let parse_calendar_entry =
+  GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
-                           let element_name = "entry"
-
-                           let element_namespace = GdataAtom.ns_atom
-
-                           let get_prefix = get_calendar_prefix
-                         end)
-
-let parse_calendar_entry = EntryElement.parse_xml_tree
-
-let calendar_entry_to_data_model = EntryElement.build_xml_tree
+let calendar_entry_to_data_model =
+  GdataAtom.element_to_data_model get_calendar_prefix Entry.to_xml_data_model
 
 module Rel =
 struct

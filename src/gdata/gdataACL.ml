@@ -193,20 +193,11 @@ let get_acl_prefix namespace =
   if namespace = ns_gAcl then "gAcl"
   else GdataAtom.get_standard_prefix namespace
 
-module EntryElement = GdataAtom.MakeElement
-                        (struct
-                           include Entry
+let parse_acl_entry =
+  GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
-                           let element_name = "entry"
-
-                           let element_namespace = GdataAtom.ns_atom
-
-                           let get_prefix = get_acl_prefix
-                         end)
-
-let parse_acl_entry = EntryElement.parse_xml_tree
-
-let acl_entry_to_data_model = EntryElement.build_xml_tree
+let acl_entry_to_data_model =
+  GdataAtom.element_to_data_model get_acl_prefix Entry.to_xml_data_model
 
 module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
 

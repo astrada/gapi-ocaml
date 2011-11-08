@@ -29,6 +29,14 @@ type app_edited = GdataDate.t
 
 val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
 
+val data_model_to_entry :
+  ?element_name:string ->
+  ?element_namespace:string ->
+  ('a -> GdataCore.xml_data_model -> 'a) ->
+  'a ->
+  GdataCore.xml_data_model ->
+  'a
+
 val render_attribute :
   ?default:string ->
   string ->
@@ -124,29 +132,6 @@ val element_to_data_model :
   ('a -> GdataCore.xml_data_model list) ->
   'a ->
   GdataCore.xml_data_model
-
-module type ELEMENT =
-sig
-  type t
-
-  val parse_xml_tree : GdataCore.xml_data_model -> t
-
-  val build_xml_tree : t -> GdataCore.xml_data_model
-
-end
-
-module MakeElement :
-  functor (M : sig
-             include GdataCore.DATA
-
-             val element_name : string
-
-             val element_namespace : string
-             
-             val get_prefix : string -> string
-           end) ->
-  ELEMENT
-    with type t = M.t
 
 module type PERSONCONSTRUCT =
 sig
