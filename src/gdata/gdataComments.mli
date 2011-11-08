@@ -33,11 +33,11 @@ sig
         and type link_t = link_t
 
   type t = {
-    c_countHint : int;
-    c_href : string;
-    c_readOnly : bool;
-    c_rel : string;
-    c_commentFeed : Feed.t;
+    countHint : int;
+    href : string;
+    readOnly : bool;
+    rel : string;
+    commentFeed : Feed.t;
   }
 
   val empty : t

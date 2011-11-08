@@ -38,11 +38,11 @@ sig
   end
 
   type t = {
-    c_countHint : int;
-    c_href : string;
-    c_readOnly : bool;
-    c_rel : string;
-    c_commentFeed : Feed.t;
+    countHint : int;
+    href : string;
+    readOnly : bool;
+    rel : string;
+    commentFeed : Feed.t;
   }
 
   val empty : t
@@ -206,29 +206,29 @@ struct
   module Feed = GdataAtom.MakeFeed(Entry)(Link)
 
   type t = {
-    c_countHint : int;
-    c_href : string;
-    c_readOnly : bool;
-    c_rel : string;
-    c_commentFeed : Feed.t
+    countHint : int;
+    href : string;
+    readOnly : bool;
+    rel : string;
+    commentFeed : Feed.t
   }
 
   let empty = {
-    c_countHint = 0;
-    c_href = "";
-    c_readOnly = false;
-    c_rel = "";
-    c_commentFeed = Feed.empty
+    countHint = 0;
+    href = "";
+    readOnly = false;
+    rel = "";
+    commentFeed = Feed.empty
   }
 
   let to_xml_data_model comments =
     let render_commentsFeedLink link =
       GdataAtom.render_element GdataAtom.ns_gd "feedLink"
-        [GdataAtom.render_int_attribute "" "countHint" link.c_countHint;
-         GdataAtom.render_attribute "" "href" link.c_href;
-         GdataAtom.render_bool_attribute "" "readOnly" link.c_readOnly;
-         GdataAtom.render_attribute "" "rel" link.c_rel;
-         Feed.to_xml_data_model link.c_commentFeed]
+        [GdataAtom.render_int_attribute "" "countHint" link.countHint;
+         GdataAtom.render_attribute "" "href" link.href;
+         GdataAtom.render_bool_attribute "" "readOnly" link.readOnly;
+         GdataAtom.render_attribute "" "rel" link.rel;
+         Feed.to_xml_data_model link.commentFeed]
     in
       GdataAtom.render_element GdataAtom.ns_gd "comments"
         [render_commentsFeedLink comments]
@@ -239,26 +239,26 @@ struct
           GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "countHint"; `Namespace ns],
              v) when ns = "" ->
-            { link with c_countHint = int_of_string v }
+            { link with countHint = int_of_string v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "href"; `Namespace ns],
              v) when ns = "" ->
-            { link with c_href = v }
+            { link with href = v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "readOnly"; `Namespace ns],
              v) when ns = "" ->
-            { link with c_readOnly = bool_of_string v }
+            { link with readOnly = bool_of_string v }
         | GdataCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "rel"; `Namespace ns],
              v) when ns = "" ->
-            { link with c_rel = v }
+            { link with rel = v }
         | GdataCore.AnnotatedTree.Node
             ([`Element; `Name "feed"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
               Feed.of_xml_data_model
               Feed.empty
-              (fun feed -> { link with c_commentFeed = feed })
+              (fun feed -> { link with commentFeed = feed })
               cs
         | e ->
             GdataUtils.unexpected e
