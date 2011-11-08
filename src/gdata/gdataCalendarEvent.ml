@@ -230,15 +230,58 @@ struct
 
 end
 
-type calendar_calendarRecurrenceException = {
-  cre_specialized : bool;
-  cre_entry : RecurrenceExceptionEntry.t
-}
+module RecurrenceException =
+struct
+  type t = {
+    cre_specialized : bool;
+    cre_entry : RecurrenceExceptionEntry.t
+  }
 
-let empty_recurrenceException = {
-  cre_specialized = false;
-  cre_entry = RecurrenceExceptionEntry.empty
-}
+  let empty = {
+    cre_specialized = false;
+    cre_entry = RecurrenceExceptionEntry.empty
+  }
+
+  let to_xml_data_model ex =
+    let render_recurrenceExceptionEntryLink entry =
+      GdataAtom.render_element GdataAtom.ns_gd "entryLink"
+        [RecurrenceExceptionEntry.to_xml_data_model entry]
+    in
+      GdataAtom.render_element GdataAtom.ns_gd "recurrenceException"
+        [GdataAtom.render_bool_attribute "" "specialized" ex.cre_specialized;
+         render_recurrenceExceptionEntryLink ex.cre_entry]
+
+  let of_xml_data_model ex tree =
+    let parse_recurrenceExceptionEntryLink entry tree =
+      match tree with
+          GdataCore.AnnotatedTree.Node
+            ([`Element; `Name "entry"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_atom ->
+            GdataAtom.parse_children
+              RecurrenceExceptionEntry.of_xml_data_model
+              RecurrenceExceptionEntry.empty
+              Std.identity
+              cs
+        | e ->
+            GdataUtils.unexpected e
+    in
+      match tree with
+          GdataCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name "specialized"; `Namespace ns],
+             v) when ns = "" ->
+            { ex with cre_specialized = bool_of_string v }
+        | GdataCore.AnnotatedTree.Node
+            ([`Element; `Name "entryLink"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_gd ->
+            GdataAtom.parse_children
+              parse_recurrenceExceptionEntryLink
+              RecurrenceExceptionEntry.empty
+              (fun entry -> { ex with cre_entry = entry })
+              cs
+        | e ->
+            GdataUtils.unexpected e
+
+end
 
 type calendar_calendarEventEntry = {
   cee_etag : string;
@@ -253,7 +296,7 @@ type calendar_calendarEventEntry = {
   cee_comments : GdataCalendar.Comments.comments;
   cee_extendedProperties : GdataCalendar.ExtendedProperty.t list;
   cee_links : GdataCalendar.Link.t list;
-  cee_recurrenceExceptions : calendar_calendarRecurrenceException list;
+  cee_recurrenceExceptions : RecurrenceException.t list;
   cee_where : GdataCalendar.Where.t list;
   cee_who : GdataCalendar.Who.t list;
   cee_icalUID : GdataCalendar.calendar_icalUIDProperty;
@@ -321,36 +364,6 @@ let empty_eventEntry = {
 
 
 (* Calendar event feed: parsing *)
-let parse_recurrenceExceptionEntryLink entry tree =
-  match tree with
-      GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "entry"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_atom ->
-        GdataAtom.parse_children
-          RecurrenceExceptionEntry.of_xml_data_model
-          RecurrenceExceptionEntry.empty
-          Std.identity
-          cs
-    | e ->
-        GdataUtils.unexpected e
-
-let parse_recurrenceException ex tree =
-  match tree with
-      GdataCore.AnnotatedTree.Leaf
-        ([`Attribute; `Name "specialized"; `Namespace ns],
-         v) when ns = "" ->
-        { ex with cre_specialized = bool_of_string v }
-    | GdataCore.AnnotatedTree.Node
-        ([`Element; `Name "entryLink"; `Namespace ns],
-         cs) when ns = GdataAtom.ns_gd ->
-        GdataAtom.parse_children
-          parse_recurrenceExceptionEntryLink
-          RecurrenceExceptionEntry.empty
-          (fun entry -> { ex with cre_entry = entry })
-          cs
-    | e ->
-        GdataUtils.unexpected e
-
 let parse_entry entry tree =
   match tree with
       GdataCore.AnnotatedTree.Leaf
@@ -437,8 +450,8 @@ let parse_entry entry tree =
         ([`Element; `Name "recurrenceException"; `Namespace ns],
          cs) when ns = GdataAtom.ns_gd ->
         GdataAtom.parse_children
-          parse_recurrenceException
-          empty_recurrenceException
+          RecurrenceException.of_xml_data_model
+          RecurrenceException.empty
           (fun ex ->
              { entry with cee_recurrenceExceptions =
                  ex :: entry.cee_recurrenceExceptions })
@@ -606,15 +619,6 @@ let parse_calendar_event_entry tree =
 
 
 (* Calendar event feed: rendering *)
-let render_recurrenceExceptionEntryLink entry =
-  GdataAtom.render_element GdataAtom.ns_gd "entryLink"
-    [RecurrenceExceptionEntry.to_xml_data_model entry]
-
-let render_recurrenceException ex =
-  GdataAtom.render_element GdataAtom.ns_gd "recurrenceException"
-    [GdataAtom.render_bool_attribute "" "specialized" ex.cre_specialized;
-     render_recurrenceExceptionEntryLink ex.cre_entry]
-
 let render_entry entry =
   (* TODO: better namespace handling *)
   GdataAtom.render_element GdataAtom.ns_atom "entry"
@@ -630,7 +634,7 @@ let render_entry entry =
      GdataCalendar.Comments.render_comments entry.cee_comments;
      GdataAtom.render_element_list GdataCalendar.ExtendedProperty.to_xml_data_model entry.cee_extendedProperties;
      GdataAtom.render_element_list GdataCalendar.Link.to_xml_data_model entry.cee_links;
-     GdataAtom.render_element_list render_recurrenceException entry.cee_recurrenceExceptions;
+     GdataAtom.render_element_list RecurrenceException.to_xml_data_model entry.cee_recurrenceExceptions;
      GdataAtom.render_element_list GdataCalendar.Where.to_xml_data_model entry.cee_where;
      GdataAtom.render_element_list GdataCalendar.Who.to_xml_data_model entry.cee_who;
      GdataAtom.render_value GdataAtom.ns_gd "uid" entry.cee_icalUID;

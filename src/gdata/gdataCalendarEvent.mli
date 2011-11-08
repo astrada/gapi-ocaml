@@ -33,12 +33,20 @@ sig
 
 end
 
-type calendar_calendarRecurrenceException = {
-  cre_specialized : bool;
-  cre_entry : RecurrenceExceptionEntry.t
-}
+module RecurrenceException :
+sig
+  type t = {
+    cre_specialized : bool;
+    cre_entry : RecurrenceExceptionEntry.t
+  }
 
-val empty_recurrenceException : calendar_calendarRecurrenceException
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
 
 type calendar_calendarEventEntry = {
   cee_etag : string;
@@ -53,7 +61,7 @@ type calendar_calendarEventEntry = {
   cee_comments : GdataCalendar.Comments.comments;
   cee_extendedProperties : GdataCalendar.ExtendedProperty.t list;
   cee_links : GdataCalendar.Link.t list;
-  cee_recurrenceExceptions : calendar_calendarRecurrenceException list;
+  cee_recurrenceExceptions : RecurrenceException.t list;
   cee_where : GdataCalendar.Where.t list;
   cee_who : GdataCalendar.Who.t list;
   cee_icalUID : GdataCalendar.calendar_icalUIDProperty;
@@ -81,18 +89,9 @@ type calendar_calendarEventEntry = {
 
 val empty_eventEntry : calendar_calendarEventEntry
 
-val parse_recurrenceException :
-  calendar_calendarRecurrenceException ->
-  GdataCore.xml_data_model ->
-  calendar_calendarRecurrenceException
-
 val parse_calendar_event_entry :
   GdataCore.xml_data_model ->
   calendar_calendarEventEntry
-
-val render_recurrenceException :
-  calendar_calendarRecurrenceException ->
-  GdataCore.xml_data_model list
 
 val calendar_event_entry_to_data_model :
   calendar_calendarEventEntry ->
