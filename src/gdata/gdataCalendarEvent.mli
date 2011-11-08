@@ -1,28 +1,28 @@
 module RecurrenceExceptionEntry :
 sig
   type t = {
-    cree_etag : string;
-    cree_kind : string;
-    cree_authors : GdataAtom.Author.t list;
-    cree_categories : GdataAtom.Category.t list;
-    cree_content : GdataAtom.Content.t;
-    cree_contributors : GdataAtom.Contributor.t list;
-    cree_id : GdataAtom.atom_id;
-    cree_published : GdataAtom.atom_published;
-    cree_updated : GdataAtom.atom_updated;
-    cree_comments : GdataCalendar.Comments.comments;
-    cree_links : GdataCalendar.Link.t list;
-    cree_where : GdataCalendar.Where.t list;
-    cree_who : GdataCalendar.Who.t list;
-    cree_icalUID : GdataCalendar.calendar_icalUIDProperty;
-    cree_sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
-    cree_title : GdataAtom.Title.t;
-    cree_eventStatus : GdataCalendar.gdata_eventStatus;
-    cree_originalEvent : GdataCalendar.OriginalEvent.t;
-    cree_transparency : GdataCalendar.gdata_transparency;
-    cree_visibility : GdataCalendar.gdata_visibility;
-    cree_when : GdataCalendar.When.t list;
-    cree_extensions : GdataCore.xml_data_model list
+    etag : string;
+    kind : string;
+    authors : GdataAtom.Author.t list;
+    categories : GdataAtom.Category.t list;
+    content : GdataAtom.Content.t;
+    contributors : GdataAtom.Contributor.t list;
+    id : GdataAtom.atom_id;
+    published : GdataAtom.atom_published;
+    updated : GdataAtom.atom_updated;
+    comments : GdataCalendar.Comments.comments;
+    links : GdataCalendar.Link.t list;
+    where : GdataCalendar.Where.t list;
+    who : GdataCalendar.Who.t list;
+    icalUID : GdataCalendar.calendar_icalUIDProperty;
+    sequenceNumber : GdataCalendar.calendar_sequenceNumberProperty;
+    title : GdataAtom.Title.t;
+    eventStatus : GdataCalendar.gdata_eventStatus;
+    originalEvent : GdataCalendar.OriginalEvent.t;
+    transparency : GdataCalendar.gdata_transparency;
+    visibility : GdataCalendar.gdata_visibility;
+    _when : GdataCalendar.When.t list;
+    extensions : GdataCore.xml_data_model list
   }
 
   val empty : t
