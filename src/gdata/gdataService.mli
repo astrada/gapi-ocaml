@@ -1,15 +1,22 @@
-val service_request :
-  ?query_parameters:(string * string) list ->
-  ?data_to_upload:GdataCore.xml_data_model ->
+val query :
   ?version:string ->
   ?etag:string ->
-  ?request_type:GdataRequest.request_type ->
+  ?query_parameters:(string * string) list ->
   string ->
   (GdataPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 
-val service_query_with_default :
+val create :
+  ?version:string ->
+  'a ->
+  ('a -> GdataCore.xml_data_model) ->
+  string ->
+  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  GdataConversation.Session.t ->
+  'a * GdataConversation.Session.t
+
+val read :
   ?version:string ->
   ?etag:string ->
   'a ->
@@ -18,14 +25,20 @@ val service_query_with_default :
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 
-val service_request_with_data :
+val update :
   ?version:string ->
   ?etag:string ->
   'a ->
   ('a -> GdataCore.xml_data_model) ->
-  GdataRequest.request_type ->
   string ->
   (GdataPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
+
+val delete :
+  ?version:string ->
+  ?etag:string ->
+  string ->
+  GdataConversation.Session.t ->
+  unit * GdataConversation.Session.t
 

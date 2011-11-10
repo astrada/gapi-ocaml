@@ -1,7 +1,7 @@
 let service_request
-      ?query_parameters
       ?data_to_upload
       ?version
+      ?query_parameters
       ?etag
       ?(request_type = GdataRequest.Query)
       url
@@ -27,23 +27,6 @@ let service_request
       parse_response
       session
 
-let service_query_with_default
-      ?version
-      ?etag
-      data
-      url
-      parse_response
-      session =
-  try
-    service_request
-      ?version
-      ?etag
-      url
-      parse_response
-      session
-  with GdataRequest.NotModified new_session ->
-    (data, new_session)
-
 let service_request_with_data
       ?version
       ?etag
@@ -65,4 +48,84 @@ let service_request_with_data
         session
     with GdataRequest.NotModified new_session ->
       (data, new_session)
+
+let query
+      ?version
+      ?etag
+      ?query_parameters
+      url
+      parse_response
+      session =
+  service_request
+    ?version
+    ?etag
+    ?query_parameters
+    ~request_type:GdataRequest.Query
+    url
+    parse_response
+    session
+
+let create
+      ?version
+      data
+      data_to_tree
+      url
+      parse_response
+      session =
+  service_request_with_data
+    ?version
+    data
+    data_to_tree
+    GdataRequest.Create
+    url
+    parse_response
+    session
+
+let read
+      ?version
+      ?etag
+      data
+      url
+      parse_response
+      session =
+  try
+    service_request
+      ?version
+      ?etag
+      url
+      parse_response
+      session
+  with GdataRequest.NotModified new_session ->
+    (data, new_session)
+
+let update
+      ?version
+      ?etag
+      data
+      data_to_tree
+      url
+      parse_response
+      session =
+  service_request_with_data
+    ?version
+    ?etag
+    data
+    data_to_tree
+    GdataRequest.Update
+    url
+    parse_response
+    session
+
+let delete
+      ?version
+      ?etag
+      url
+      session =
+  service_request
+    ?version
+    ?etag
+    ~request_type:GdataRequest.Delete
+    url
+    GdataRequest.parse_empty_response
+    session
 

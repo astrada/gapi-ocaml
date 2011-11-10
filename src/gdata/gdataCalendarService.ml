@@ -140,7 +140,7 @@ let personal_settings
       ?(url = "https://www.google.com/calendar/feeds/default/settings")
       ?etag
       session =
-  GdataService.service_request
+  GdataService.query
     ~version
     ?etag
     url
@@ -151,7 +151,7 @@ let all_calendars
       ?(url = "https://www.google.com/calendar/feeds/default/allcalendars/full")
       ?etag
       session =
-  GdataService.service_request
+  GdataService.query
     ~version
     ?etag
     url
@@ -162,7 +162,7 @@ let own_calendars
       ?(url = "https://www.google.com/calendar/feeds/default/owncalendars/full")
       ?etag
       session =
-  GdataService.service_request
+  GdataService.query
     ~version
     ?etag
     url
@@ -173,7 +173,7 @@ let refresh_calendar
       entry
       session =
   let (url, etag) = get_url_etag_calendar entry in
-    GdataService.service_query_with_default
+    GdataService.read
       ~version
       ?etag
       entry
@@ -185,11 +185,10 @@ let create_new_calendar
       ?(url = "https://www.google.com/calendar/feeds/default/owncalendars/full")
       entry
       session =
-  GdataService.service_request_with_data
+  GdataService.create
     ~version
     entry
     GdataCalendar.calendar_entry_to_data_model 
-    GdataRequest.Create
     url
     parse_calendar_entry
     session
@@ -198,12 +197,11 @@ let update_calendar
       entry
       session =
   let (url, etag) = get_url_etag_calendar entry in
-    GdataService.service_request_with_data
+    GdataService.update
       ~version
       ?etag
       entry
       GdataCalendar.calendar_entry_to_data_model 
-      GdataRequest.Update
       url
       parse_calendar_entry
       session
@@ -212,23 +210,20 @@ let delete_calendar
       entry
       session =
   let (url, etag) = get_url_etag_calendar entry in
-    GdataService.service_request
+    GdataService.delete
       ~version
       ?etag
-      ~request_type:GdataRequest.Delete
       url
-      GdataRequest.parse_empty_response
       session
 
 let add_new_subscription
       ?(url = "https://www.google.com/calendar/feeds/default/allcalendars/full")
       entry
       session =
-  GdataService.service_request_with_data
+  GdataService.create
     ~version
     entry
     GdataCalendar.calendar_entry_to_data_model
-    GdataRequest.Create
     url
     parse_calendar_entry
     session
@@ -241,10 +236,10 @@ let retrieve_events
   let query_parameters = Option.map
                            QueryParameters.to_key_value_list
                            parameters in
-    GdataService.service_request
-      ?query_parameters
+    GdataService.query
       ~version
       ?etag
+      ?query_parameters
       url
       parse_event_feed
       session
@@ -253,7 +248,7 @@ let refresh_event
       entry
       session =
   let (url, etag) = get_url_etag_event entry in
-    GdataService.service_query_with_default
+    GdataService.read
       ~version
       ?etag
       entry
@@ -265,11 +260,10 @@ let create_new_event
       ?(url = "https://www.google.com/calendar/feeds/default/private/full")
       entry
       session =
-  GdataService.service_request_with_data
+  GdataService.create
     ~version
     entry
     GdataCalendarEvent.calendar_event_entry_to_data_model 
-    GdataRequest.Create
     url
     parse_event_entry
     session
@@ -278,12 +272,11 @@ let update_event
       entry
       session =
   let (url, etag) = get_url_etag_event entry in
-    GdataService.service_request_with_data
+    GdataService.update
       ~version
       ?etag
       entry
       GdataCalendarEvent.calendar_event_entry_to_data_model 
-      GdataRequest.Update
       url
       parse_event_entry
       session
@@ -292,12 +285,10 @@ let delete_event
       entry
       session =
   let (url, etag) = get_url_etag_event entry in
-    GdataService.service_request
+    GdataService.delete
       ~version
       ?etag
-      ~request_type:GdataRequest.Delete
       url
-      GdataRequest.parse_empty_response
       session
 
 let retrieve_acl
@@ -305,7 +296,7 @@ let retrieve_acl
       entry
       session =
   let url = GdataCalendar.find_url `Acl entry.GdataCalendar.Entry.links in
-    GdataService.service_request
+    GdataService.query
       ~version
       ?etag
       url
@@ -316,7 +307,7 @@ let refresh_acl
       entry
       session =
   let (url, etag) = get_url_etag_acl entry in
-    GdataService.service_query_with_default
+    GdataService.read
       ~version
       ?etag
       entry
@@ -329,11 +320,10 @@ let create_acl
       calendar_entry
       session =
   let url = GdataCalendar.find_url `Acl calendar_entry.GdataCalendar.Entry.links in
-    GdataService.service_request_with_data
+    GdataService.create
       ~version
       acl_entry
       GdataACL.acl_entry_to_data_model 
-      GdataRequest.Create
       url
       parse_acl_entry
       session
@@ -342,12 +332,11 @@ let update_acl
       entry
       session =
   let (url, etag) = get_url_etag_acl entry in
-    GdataService.service_request_with_data
+    GdataService.update
       ~version
       ?etag
       entry
       GdataACL.acl_entry_to_data_model 
-      GdataRequest.Update
       url
       parse_acl_entry
       session
@@ -356,11 +345,9 @@ let delete_acl
       entry
       session =
   let (url, etag) = get_url_etag_acl entry in
-    GdataService.service_request
+    GdataService.delete
       ~version
       ?etag
-      ~request_type:GdataRequest.Delete
       url
-      GdataRequest.parse_empty_response
       session
 
