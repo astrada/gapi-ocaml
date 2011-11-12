@@ -130,7 +130,7 @@ end
 
 type xml_data_model = (Metadata.xml, string) AnnotatedTree.t
 
-module type DATA =
+module type ATOMDATA =
 sig
   type t
 

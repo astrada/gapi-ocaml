@@ -278,8 +278,8 @@ sig
 end
 
 module MakeFeed :
-  functor (Entry : GdataCore.DATA) ->
-  functor (Link : GdataCore.DATA) ->
+  functor (Entry : GdataCore.ATOMDATA) ->
+  functor (Link : GdataCore.ATOMDATA) ->
   FEED
     with type entry_t = Entry.t
       and type link_t = Link.t

@@ -62,7 +62,7 @@ sig
 end
 
 module Make :
-  functor (Link : GdataCore.DATA) ->
+  functor (Link : GdataCore.ATOMDATA) ->
   COMMENTS
     with type link_t = Link.t
 

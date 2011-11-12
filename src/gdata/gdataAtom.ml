@@ -494,8 +494,8 @@ sig
 end
 
 module MakeFeed
-  (Entry : GdataCore.DATA)
-  (Link : GdataCore.DATA) =
+  (Entry : GdataCore.ATOMDATA)
+  (Link : GdataCore.ATOMDATA) =
 struct
   type entry_t = Entry.t
 
