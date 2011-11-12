@@ -1,3 +1,15 @@
+module type ATOMDATA =
+sig
+  type t
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
 val ns_atom : string
 val ns_app : string
 val ns_openSearch : string
@@ -278,8 +290,8 @@ sig
 end
 
 module MakeFeed :
-  functor (Entry : GdataCore.ATOMDATA) ->
-  functor (Link : GdataCore.ATOMDATA) ->
+  functor (Entry : ATOMDATA) ->
+  functor (Link : ATOMDATA) ->
   FEED
     with type entry_t = Entry.t
       and type link_t = Link.t

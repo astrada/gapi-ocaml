@@ -169,7 +169,7 @@ sig
 end
 
 module Where :
-  GdataCore.ATOMDATA with type t = string
+  GdataAtom.ATOMDATA with type t = string
 
 module Link :
 sig

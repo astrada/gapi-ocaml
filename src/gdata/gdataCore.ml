@@ -249,15 +249,3 @@ end
 
 type xml_data_model = (Metadata.xml, string) AnnotatedTree.t
 
-module type ATOMDATA =
-sig
-  type t
-
-  val empty : t
-
-  val to_xml_data_model : t -> xml_data_model list
-
-  val of_xml_data_model : t -> xml_data_model -> t
-
-end
-

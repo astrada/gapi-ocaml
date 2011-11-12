@@ -66,7 +66,7 @@ sig
 
 end
 
-module Make(Link : GdataCore.ATOMDATA) =
+module Make(Link : GdataAtom.ATOMDATA) =
 struct
   type link_t = Link.t
 

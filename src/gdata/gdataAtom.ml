@@ -1,5 +1,17 @@
 open GdataUtils.Op
 
+module type ATOMDATA =
+sig
+  type t
+
+  val empty : t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+end
+
 (* Atom simple types *)
 let ns_atom = "http://www.w3.org/2005/Atom"
 let ns_app = "http://www.w3.org/2007/app"
@@ -494,8 +506,8 @@ sig
 end
 
 module MakeFeed
-  (Entry : GdataCore.ATOMDATA)
-  (Link : GdataCore.ATOMDATA) =
+  (Entry : ATOMDATA)
+  (Link : ATOMDATA) =
 struct
   type entry_t = Entry.t
 
