@@ -131,3 +131,9 @@ val delete_acl :
   GdataConversation.Session.t ->
   unit * GdataConversation.Session.t
 
+val event_batch_request :
+  GdataCalendarEvent.Feed.t ->
+  GdataCalendarEvent.Feed.t ->
+  GdataConversation.Session.t ->
+  GdataCalendarEvent.Feed.t * GdataConversation.Session.t
+

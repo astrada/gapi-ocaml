@@ -14,6 +14,7 @@ val ns_atom : string
 val ns_app : string
 val ns_openSearch : string
 val ns_gd : string
+val ns_batch : string
 
 type atom_email = string
 

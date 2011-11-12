@@ -53,6 +53,9 @@ sig
   type t = {
     etag : string;
     kind : string;
+    batch_id : string;
+    batch_operation : GdataBatch.Operation.t;
+    batch_status : GdataBatch.Status.t;
     authors : GdataAtom.Author.t list;
     content : GdataAtom.Content.t;
     contributors : GdataAtom.Contributor.t list;
@@ -108,5 +111,9 @@ val parse_calendar_event_entry :
 
 val calendar_event_entry_to_data_model :
   Entry.t ->
+  GdataCore.xml_data_model
+
+val calendar_event_feed_to_data_model :
+  Feed.t ->
   GdataCore.xml_data_model
 

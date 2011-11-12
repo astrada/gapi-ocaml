@@ -288,6 +288,9 @@ struct
   type t = {
     etag : string;
     kind : string;
+    batch_id : string;
+    batch_operation : GdataBatch.Operation.t;
+    batch_status : GdataBatch.Status.t;
     authors : GdataAtom.Author.t list;
     content : GdataAtom.Content.t;
     contributors : GdataAtom.Contributor.t list;
@@ -327,6 +330,9 @@ struct
   let empty = {
     etag = "";
     kind = "";
+    batch_id = "";
+    batch_operation = GdataBatch.Operation.None;
+    batch_status = GdataBatch.Status.empty;
     authors = [];
     content = GdataAtom.Content.empty;
     contributors = [];
@@ -367,6 +373,9 @@ struct
     GdataAtom.render_element GdataAtom.ns_atom "entry"
       [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.etag;
        GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.kind;
+       GdataAtom.render_text_element GdataAtom.ns_batch "id" entry.batch_id;
+       GdataAtom.render_text_element GdataAtom.ns_batch "operation" (GdataBatch.Operation.to_string entry.batch_operation);
+       GdataBatch.Status.to_xml_data_model entry.batch_status;
        GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
        GdataAtom.Content.to_xml_data_model entry.content;
        GdataAtom.render_element_list GdataAtom.Contributor.to_xml_data_model entry.contributors;
@@ -410,6 +419,24 @@ struct
           ([`Attribute; `Name "kind"; `Namespace ns],
            v) when ns = GdataAtom.ns_gd ->
           { entry with kind = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "id"; `Namespace ns],
+           [GdataCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = GdataAtom.ns_batch ->
+          { entry with batch_id = v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "operation"; `Namespace ns],
+           [GdataCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = GdataAtom.ns_batch ->
+          { entry with batch_operation = GdataBatch.Operation.of_string v }
+      | GdataCore.AnnotatedTree.Node
+          ([`Element; `Name "status"; `Namespace ns],
+           cs) when ns = GdataAtom.ns_batch ->
+          GdataAtom.parse_children
+            GdataBatch.Status.of_xml_data_model
+            GdataBatch.Status.empty
+            (fun status -> { entry with batch_status = status })
+            cs
       | GdataCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
@@ -655,5 +682,10 @@ let calendar_event_entry_to_data_model =
   GdataAtom.element_to_data_model
     GdataCalendar.get_calendar_prefix
     Entry.to_xml_data_model 
+
+let calendar_event_feed_to_data_model =
+  GdataAtom.element_to_data_model
+    GdataCalendar.get_calendar_prefix
+    Feed.to_xml_data_model 
 (* END Calendar event feed: rendering *)
 

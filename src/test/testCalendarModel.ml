@@ -218,6 +218,34 @@ let test_acl_entry_to_data_model () =
       "test/data/test_acl_entry_to_data_model.xml"
       (GdataRequest.data_to_xml_string tree)
 
+let test_calendar_event_batch_feed () =
+  let ch = open_in "test/data/event_batch_request.xml" in
+  let feed = GdataRequest.parse_xml
+               (fun () -> input_byte ch)
+               GdataCalendarEvent.Feed.parse_feed in
+  let test_batch_id id entry =
+    entry.GdataCalendarEvent.Entry.batch_id = id
+  in
+    TestHelper.assert_exists
+      "Batch entry \"Insert itemA\" not found"
+      (test_batch_id "Insert itemA")
+      feed.GdataCalendarEvent.Feed.entries;
+    TestHelper.assert_exists
+      "Batch entry \"Query itemB\" not found"
+      (test_batch_id "Query itemB")
+      feed.GdataCalendarEvent.Feed.entries;
+    TestHelper.assert_exists
+      "Batch entry \"Update itemC\" not found"
+      (test_batch_id "Update itemC")
+      feed.GdataCalendarEvent.Feed.entries;
+    TestHelper.assert_exists
+      "Batch entry \"Delete itemD\" not found"
+      (test_batch_id "Delete itemD")
+      feed.GdataCalendarEvent.Feed.entries;
+    assert_equal ~msg:"entry count"
+      4
+      (List.length feed.GdataCalendarEvent.Feed.entries)
+
 let suite = "Calendar Model test" >:::
   ["test_parse_personal_settings" >:: test_parse_personal_settings;
    "test_parse_calendar_feed" >:: test_parse_calendar_feed;
@@ -228,5 +256,6 @@ let suite = "Calendar Model test" >:::
    "test_parse_calendar_event_entry" >:: test_parse_calendar_event_entry;
    "test_parse_calendar_event_feed" >:: test_parse_calendar_event_feed;
    "test_parse_acl_feed" >:: test_parse_acl_feed;
-   "test_acl_entry_to_data_model" >:: test_acl_entry_to_data_model]
+   "test_acl_entry_to_data_model" >:: test_acl_entry_to_data_model;
+   "test_calendar_event_batch_feed" >:: test_calendar_event_batch_feed]
 

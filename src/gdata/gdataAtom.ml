@@ -17,6 +17,7 @@ let ns_atom = "http://www.w3.org/2005/Atom"
 let ns_app = "http://www.w3.org/2007/app"
 let ns_openSearch = "http://a9.com/-/spec/opensearch/1.1/"
 let ns_gd = "http://schemas.google.com/g/2005"
+let ns_batch = "http://schemas.google.com/gdata/batch"
 
 type atom_email = string
 
@@ -748,10 +749,15 @@ struct
 end
 
 let find_url rel links =
-  let link = List.find
-               (fun link ->
-                  link.Link.rel = Rel.to_string rel)
-               links
+  let rel_string = Rel.to_string rel in
+  let link =
+    try
+      List.find
+        (fun link ->
+           link.Link.rel = rel_string)
+        links
+    with Not_found ->
+      failwith ("Link relation " ^ rel_string ^ " not found")
   in
     link.Link.href
 
@@ -760,6 +766,7 @@ let get_standard_prefix namespace =
   else if namespace = ns_app then "app"
   else if namespace = ns_openSearch then "openSearch"
   else if namespace = ns_gd then "gd"
+  else if namespace = ns_batch then "batch"
   else ""
 (* END Utilities *)
 

@@ -1,0 +1,43 @@
+<feed xmlns='http://www.w3.org/2005/Atom'
+      xmlns:app='http://www.w3.org/2007/app'
+      xmlns:batch='http://schemas.google.com/gdata/batch'
+      xmlns:gCal='http://schemas.google.com/gCal/2005'
+      xmlns:gd='http://schemas.google.com/g/2005'>
+  <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event' />
+  <entry>
+    <batch:id>Insert itemA</batch:id>
+    <batch:operation type='insert' />
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event' />
+    <title type='text'>Event inserted via batch</title>
+    <category scheme='http://schemas.google.com/g/2005#kind'
+      term='http://schemas.google.com/g/2005#event'></category>
+    <title type='text'>Lunch with Darcy</title>
+    <content type='text'>Lunch to discuss future plans.</content>
+    <gd:when startTime='2006-03-30T22:00:00.000Z'
+      endTime='2006-03-30T23:00:00.000Z'></gd:when>
+  </entry>
+  <entry>
+    <batch:id>Query itemB</batch:id>
+    <batch:operation type='query' />
+    <id>http://www.google.com/calendar/feeds/default/events/glcs0kv2qqa0gf52qi1jo018gc</id>
+  </entry>
+  <entry gd:etag='"FkkOQgZGeip7ImA6WhVR"'>
+    <batch:id>Update itemC</batch:id>
+    <batch:operation type='update' />
+    <id>http://www.google.com/calendar/feeds/default/events/ujm0go5dtngdkr6u91dcqvj0qs</id>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event' />
+    <title type='text'>Event updated via batch</title>
+    <link rel='alternate' type='text/html'
+        href='https://www.google.com/calendar/event?eid=dWptMGdvNWR0bmdka3I2dTkxZGNxdmowcXMgaGFyaXNodi50ZXN0QG0' title='alternate' />
+    <link rel='self' type='application/atom+xml'
+        href='https://www.google.com/calendar/feeds/default/private/full/ujm0go5dtngdkr6u91dcqvj0qs' />
+    <link rel='edit' type='application/atom+xml'
+        href='https://www.google.com/calendar/feeds/default/private/full/ujm0go5dtngdkr6u91dcqvj0qs/63326098791' />
+  </entry>
+  <entry gd:etag='"GUoNTgZCfCp7ImA6WhVW"'>
+    <batch:id>Delete itemD</batch:id>
+    <batch:operation type='delete' />
+    <id>http://www.google.com/calendar/feeds/default/events/d8qbg9egk1n6lhsgq1sjbqffqc</id>
+  </entry>
+</feed>
+

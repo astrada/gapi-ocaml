@@ -42,3 +42,12 @@ val delete :
   GdataConversation.Session.t ->
   unit * GdataConversation.Session.t
 
+val batch_request :
+  ?version:string ->
+  'a ->
+  ('a -> GdataCore.xml_data_model) ->
+  string ->
+  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  GdataConversation.Session.t ->
+  'a * GdataConversation.Session.t
+

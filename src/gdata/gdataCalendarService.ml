@@ -351,3 +351,18 @@ let delete_acl
       url
       session
 
+let event_batch_request
+      target_feed
+      batch_feed
+      session =
+  let url = GdataCalendar.find_url
+              `Batch
+              target_feed.GdataCalendarEvent.Feed.links in
+    GdataService.batch_request
+      ~version
+      batch_feed
+      GdataCalendarEvent.calendar_event_feed_to_data_model
+      url
+      parse_event_feed
+      session
+

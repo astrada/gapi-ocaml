@@ -129,3 +129,19 @@ let delete
     GdataRequest.parse_empty_response
     session
 
+let batch_request
+      ?version
+      data
+      data_to_tree
+      url
+      parse_response
+      session =
+  service_request_with_data
+    ?version
+    data
+    data_to_tree
+    GdataRequest.Create
+    url
+    parse_response
+    session
+

@@ -213,3 +213,6 @@ let assert_equal_file file_name s =
   in
     OUnit.assert_equal ~printer:Std.identity file_content s
 
+let assert_exists msg pred xs =
+  OUnit.assert_bool msg (List.exists pred xs)
+

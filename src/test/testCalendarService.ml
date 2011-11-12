@@ -341,6 +341,47 @@ let test_update_acl () =
            updated_entry.GdataACL.Entry.role
            server_updated_entry.GdataACL.Entry.role)
 
+let test_event_batch_request () =
+  let ch = open_in "test/data/event_batch_request.xml" in
+  let batch_request = GdataRequest.parse_xml
+                        (fun () -> input_byte ch)
+                        GdataCalendarEvent.Feed.parse_feed in
+  let find_entry id feed =
+    List.find
+      (fun e -> e.GdataCalendarEvent.Entry.batch_id = id)
+      feed.GdataCalendarEvent.Feed.entries
+  in
+    TestHelper.test_request
+      TestHelper.build_oauth2_auth
+      (fun session ->
+         let (target_feed, session) =
+           GdataCalendarService.retrieve_events
+             session in
+         let (batch_response, session) =
+           GdataCalendarService.event_batch_request
+             target_feed
+             batch_request
+             session in
+         let e1 = find_entry "Insert itemA" batch_response in
+         let e2 = find_entry "Query itemB" batch_response in
+         let e3 = find_entry "Update itemC" batch_response in
+         let e4 = find_entry "Delete itemD" batch_response in
+           ignore (GdataCalendarService.delete_event
+                     e1
+                     session);
+           assert_equal ~msg:"Insert itemA"
+             201
+             e1.GdataCalendarEvent.Entry.batch_status.GdataBatch.Status.code;
+           TestHelper.assert_not_empty
+             "Query itemB"
+             e2.GdataCalendarEvent.Entry.batch_status.GdataBatch.Status.content;
+           assert_equal ~msg:"Update itemC"
+             404
+             e3.GdataCalendarEvent.Entry.batch_status.GdataBatch.Status.code;
+           assert_equal ~msg:"Delete itemD"
+             404
+             e4.GdataCalendarEvent.Entry.batch_status.GdataBatch.Status.code)
+
 let suite = "Calendar Service test" >:::
   ["test_personal_settings" >:: test_personal_settings;
    "test_all_calendars" >:: test_all_calendars;
@@ -358,6 +399,6 @@ let suite = "Calendar Service test" >:::
    "test_create_recurring_event" >:: test_create_recurring_event;
    "test_retrieve_acl" >:: test_retrieve_acl;
    "test_create_acl" >:: test_create_acl;
-   "test_update_acl" >:: test_update_acl
-  ]
+   "test_update_acl" >:: test_update_acl;
+   "test_event_batch_request" >:: test_event_batch_request]
 
