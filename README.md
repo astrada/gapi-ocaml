@@ -56,9 +56,9 @@ To run the tests, see [tests README](src/test/README.md).
 
 ### Usage
 
-See [auth examples](src/examples/auth) to see how to use Google's OAuth 1.0
-and OAuth 2.0 endpoints.
+See [auth examples](src/examples/auth) for some examples of how to use
+Google's authorization endpoints.
 
-See [monadic test](src/test/testMonadic.ml) to see an example of how to use
-the monadic interface.
+See [monadic test](src/test/testMonadic.ml) for an example of how to use the
+monadic interface.
 
