@@ -1,7 +1,7 @@
 gapi-ocaml tests
 ================
 
-***WARNING***: these tests will use write access to some Google services, so
+**WARNING**: these tests will use write access to some Google services, so
 if you want to run them, it is better to create a test account, and use it
 instead of your real Google account (to avoid unpleasant side effects).
 

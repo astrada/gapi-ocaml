@@ -1,7 +1,9 @@
+Note: **Click on `README.md` in the directory to have working relative links.**
+
 Google APIs Client library for OCaml
 ====================================
 
-***gapi-ocaml*** is a simple, unofficial, OCaml client for Google Services.
+**gapi-ocaml** is a simple, unofficial, OCaml client for Google Services.
 The library supports ClientLogin, OAuth1.0a, and OAuth2.0 authentication.
 Supported APIs:
 

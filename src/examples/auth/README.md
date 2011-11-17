@@ -30,7 +30,7 @@ This program will print the obtained authorization token that you can put in
 `cl_token` of file `test.config` (in [test directory](/src/test)) to run tests
 based on Client Login.
 
-***WARNING***: There is no easy way to revoke an authorization token obtained
+**WARNING**: There is no easy way to revoke an authorization token obtained
 in this way. So, be careful to not disclose these values online.
 
 ### OAuth 1.0
