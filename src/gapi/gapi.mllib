@@ -4,3 +4,5 @@ GapiCurl
 GapiPipe
 GapiConfig
 GapiConversation
+GapiAuthResponse
+

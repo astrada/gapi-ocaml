@@ -232,8 +232,8 @@ let refresh_oauth2_token session =
               session in
           let access_token =
             match response with
-                GdataAuthResponse.OAuth2AccessToken token ->
-                  token.GdataAuthResponse.OAuth2.access_token
+                GapiAuthResponse.OAuth2AccessToken token ->
+                  token.GapiAuthResponse.OAuth2.access_token
               | _ -> failwith "Not supported OAuth2 response" in
           let new_auth_context =
             match new_session.GapiConversation.Session.auth with

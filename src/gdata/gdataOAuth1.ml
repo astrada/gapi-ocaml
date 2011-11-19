@@ -170,39 +170,39 @@ let parse_token_response
     failwith "Invalid response: cannot parse response"
 
 let parse_request_token pipe =
-  GdataAuthResponse.OAuth1RequestToken
+  GapiAuthResponse.OAuth1RequestToken
     (parse_token_response
        [("oauth_token",
          fun value response ->
            { response with
-                 GdataAuthResponse.OAuth1.request_token = value });
+                 GapiAuthResponse.OAuth1.request_token = value });
         ("oauth_token_secret",
          fun value response ->
            { response with
-                 GdataAuthResponse.OAuth1.request_token_secret = value });
+                 GapiAuthResponse.OAuth1.request_token_secret = value });
         ("oauth_callback_confirmed",
          fun value response ->
            { response with
-                 GdataAuthResponse.OAuth1.callback_confirmed =
+                 GapiAuthResponse.OAuth1.callback_confirmed =
                    bool_of_string value })]
-       { GdataAuthResponse.OAuth1.request_token = "";
-         GdataAuthResponse.OAuth1.request_token_secret = "";
-         GdataAuthResponse.OAuth1.callback_confirmed = false }
+       { GapiAuthResponse.OAuth1.request_token = "";
+         GapiAuthResponse.OAuth1.request_token_secret = "";
+         GapiAuthResponse.OAuth1.callback_confirmed = false }
        pipe)
 
 let parse_access_token pipe =
-  GdataAuthResponse.OAuth1GetAccessToken
+  GapiAuthResponse.OAuth1GetAccessToken
     (parse_token_response
        [("oauth_token",
          fun value response ->
            { response with
-                 GdataAuthResponse.OAuth1.access_token = value });
+                 GapiAuthResponse.OAuth1.access_token = value });
         ("oauth_token_secret",
          fun value response ->
            { response with
-                 GdataAuthResponse.OAuth1.access_token_secret = value })]
-       { GdataAuthResponse.OAuth1.access_token = "";
-         GdataAuthResponse.OAuth1.access_token_secret = "" }
+                 GapiAuthResponse.OAuth1.access_token_secret = value })]
+       { GapiAuthResponse.OAuth1.access_token = "";
+         GapiAuthResponse.OAuth1.access_token_secret = "" }
        pipe)
 
 let parse_token_info pipe =
@@ -214,26 +214,26 @@ let parse_token_info pipe =
             "Target" ->
               GapiConversation.Continue
                 (parse_next_line
-                   { response with GdataAuthResponse.AuthSub.target = value })
+                   { response with GapiAuthResponse.AuthSub.target = value })
           | "Scope" -> 
               GapiConversation.Continue
                 (parse_next_line
-                   { response with GdataAuthResponse.AuthSub.scope = value })
+                   { response with GapiAuthResponse.AuthSub.scope = value })
           | "Secure" ->
               GapiConversation.Continue
                 (parse_next_line
-                   { response with GdataAuthResponse.AuthSub.secure =
+                   { response with GapiAuthResponse.AuthSub.secure =
                        (bool_of_string value) })
           | _ ->
               GapiConversation.Error ("Unexpected token info: " ^ key)
     with End_of_file ->
       GapiConversation.Done response
   in 
-    GdataAuthResponse.AuthSubTokenInfo
+    GapiAuthResponse.AuthSubTokenInfo
       (GapiConversation.loop
-         (parse_next_line { GdataAuthResponse.AuthSub.target = "";
-                            GdataAuthResponse.AuthSub.scope = "";
-                            GdataAuthResponse.AuthSub.secure = false })
+         (parse_next_line { GapiAuthResponse.AuthSub.target = "";
+                            GapiAuthResponse.AuthSub.scope = "";
+                            GapiAuthResponse.AuthSub.secure = false })
          pipe)
 
 let parse_response parse_ok pipe response_code _ _ =

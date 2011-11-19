@@ -107,7 +107,7 @@ let get_auth_token
       let (key, value) = ExtString.String.split line "=" in
         match key with
             "Auth" ->
-              GapiConversation.Done (GdataAuthResponse.ClientLoginAuthToken
+              GapiConversation.Done (GapiAuthResponse.ClientLoginAuthToken
                                         value)
           | "Error" ->
               GapiConversation.Error value

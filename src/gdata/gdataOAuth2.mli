@@ -14,7 +14,7 @@ val get_access_token :
   code:string ->
   redirect_uri:string ->
   GapiConversation.Session.t ->
-  GdataAuthResponse.t * GapiConversation.Session.t
+  GapiAuthResponse.t * GapiConversation.Session.t
 
 val refresh_access_token :
   ?url:string ->
@@ -23,5 +23,5 @@ val refresh_access_token :
   client_secret:string ->
   refresh_token:string ->
   GapiConversation.Session.t ->
-  GdataAuthResponse.t * GapiConversation.Session.t
+  GapiAuthResponse.t * GapiConversation.Session.t
 

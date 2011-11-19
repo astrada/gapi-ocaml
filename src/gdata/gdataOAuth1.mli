@@ -30,7 +30,7 @@ val get_request_token :
   scope:string ->
   oauth_callback:string ->
   GapiConversation.Session.t ->
-  GdataAuthResponse.t * GapiConversation.Session.t
+  GapiAuthResponse.t * GapiConversation.Session.t
 
 val authorize_token_url :
   ?base_url:string ->
@@ -47,7 +47,7 @@ val get_access_token :
   oauth_verifier:string ->
   oauth_secret:string ->
   GapiConversation.Session.t ->
-  GdataAuthResponse.t * GapiConversation.Session.t
+  GapiAuthResponse.t * GapiConversation.Session.t
 
 val get_token_info :
   ?url:string ->
@@ -59,7 +59,7 @@ val get_token_info :
   oauth_token:string ->
   oauth_secret:string ->
   GapiConversation.Session.t ->
-  GdataAuthResponse.t * GapiConversation.Session.t
+  GapiAuthResponse.t * GapiConversation.Session.t
 
 val revoke_token :
   ?url:string ->

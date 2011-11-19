@@ -15,7 +15,7 @@ let test_client_login () =
            session
        in
          match auth_token with
-             GdataAuthResponse.ClientLoginAuthToken token ->
+             GapiAuthResponse.ClientLoginAuthToken token ->
                TestHelper.assert_not_empty
                  "Client login auth token should not be empty"
                  token
@@ -39,16 +39,16 @@ let test_oauth1_request_token () =
            session
        in
          match response with
-             GdataAuthResponse.OAuth1RequestToken token ->
+             GapiAuthResponse.OAuth1RequestToken token ->
                TestHelper.assert_not_empty
                  "OAuth1 request token should not be empty"
-                 token.GdataAuthResponse.OAuth1.request_token;
+                 token.GapiAuthResponse.OAuth1.request_token;
                TestHelper.assert_not_empty
                  "OAuth1 request token secret should not be empty"
-                 token.GdataAuthResponse.OAuth1.request_token_secret;
+                 token.GapiAuthResponse.OAuth1.request_token_secret;
                assert_bool
                  "OAuth1 callback should be confirmed"
-                 token.GdataAuthResponse.OAuth1.callback_confirmed;
+                 token.GapiAuthResponse.OAuth1.callback_confirmed;
            | _ -> failwith "Not supported OAuth1 response")
 
 let test_oauth1_authorize_url () =
@@ -94,16 +94,16 @@ let test_oauth1_token_info () =
            session
        in
          match response with
-             GdataAuthResponse.AuthSubTokenInfo info ->
+             GapiAuthResponse.AuthSubTokenInfo info ->
                TestHelper.assert_not_empty
                  "OAuth1 target info should not be empty"
-                 info.GdataAuthResponse.AuthSub.target;
+                 info.GapiAuthResponse.AuthSub.target;
                TestHelper.assert_not_empty
                  "OAuth1 scope info should not be empty"
-                 info.GdataAuthResponse.AuthSub.scope;
+                 info.GapiAuthResponse.AuthSub.scope;
                assert_bool
                  "OAuth1 token should be secure"
-                 info.GdataAuthResponse.AuthSub.secure;
+                 info.GapiAuthResponse.AuthSub.secure;
            | _ -> failwith "Not supported AuthSub response")
 
 let test_oauth1_revoke_invalid_token () =
@@ -164,19 +164,19 @@ let test_oauth2_refresh_token () =
            session
        in
          match response with
-             GdataAuthResponse.OAuth2AccessToken token ->
+             GapiAuthResponse.OAuth2AccessToken token ->
                TestHelper.assert_not_empty
                  "OAuth2 access token should not be empty"
-                 token.GdataAuthResponse.OAuth2.access_token;
+                 token.GapiAuthResponse.OAuth2.access_token;
                TestHelper.assert_not_empty
                  "OAuth2 token type should not be empty"
-                 token.GdataAuthResponse.OAuth2.token_type;
+                 token.GapiAuthResponse.OAuth2.token_type;
                assert_bool
                  "OAuth2 token expiration should be greater than 0"
-                 (token.GdataAuthResponse.OAuth2.expires_in > 0);
+                 (token.GapiAuthResponse.OAuth2.expires_in > 0);
                assert_bool
                  "OAuth2 refresh token should be empty"
-                 (token.GdataAuthResponse.OAuth2.refresh_token = "");
+                 (token.GapiAuthResponse.OAuth2.refresh_token = "");
            | _ -> failwith "Not supported OAuth2 response")
 
 let suite = "Auth Service test" >:::

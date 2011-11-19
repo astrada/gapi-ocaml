@@ -16,14 +16,14 @@ let parse_token_info pipe =
   let response = GapiConversation.read_all pipe in
   let json = Json_io.json_of_string response in
   let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
-    GdataAuthResponse.OAuth2AccessToken
-      { GdataAuthResponse.OAuth2.access_token =
+    GapiAuthResponse.OAuth2AccessToken
+      { GapiAuthResponse.OAuth2.access_token =
           Json_type.Browse.string (Json_type.Browse.field table "access_token");
-        GdataAuthResponse.OAuth2.token_type =
+        GapiAuthResponse.OAuth2.token_type =
           Json_type.Browse.string (Json_type.Browse.field table "token_type");
-        GdataAuthResponse.OAuth2.expires_in =
+        GapiAuthResponse.OAuth2.expires_in =
           Json_type.Browse.int (Json_type.Browse.field table "expires_in");
-        GdataAuthResponse.OAuth2.refresh_token =
+        GapiAuthResponse.OAuth2.refresh_token =
           Json_type.Browse.string (
             Option.default
               (Json_type.Build.string "")
