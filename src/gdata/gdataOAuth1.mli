@@ -2,7 +2,7 @@ val generate_signature :
   GapiCore.HttpMethod.t ->
   string ->
   (string * string) list ->
-  GdataCore.SignatureMethod.t ->
+  GapiCore.SignatureMethod.t ->
   string ->
   string ->
   string
@@ -16,12 +16,12 @@ val build_oauth_fields_to_sign :
   ?oauth_token:string ->
   ?oauth_verifier:string ->
   string ->
-  GdataCore.SignatureMethod.t ->
+  GapiCore.SignatureMethod.t ->
   (string * string) list
 
 val get_request_token :
   ?url:string ->
-  ?oauth_signature_method:GdataCore.SignatureMethod.t ->
+  ?oauth_signature_method:GapiCore.SignatureMethod.t ->
   ?oauth_nonce:string ->
   ?oauth_timestamp:'a ->
   ?xoauth_displayname:string ->
@@ -38,7 +38,7 @@ val authorize_token_url :
 
 val get_access_token :
   ?url:string ->
-  ?oauth_signature_method:GdataCore.SignatureMethod.t ->
+  ?oauth_signature_method:GapiCore.SignatureMethod.t ->
   ?oauth_nonce:string ->
   ?oauth_timestamp:'a ->
   consumer_secret:string ->
@@ -51,7 +51,7 @@ val get_access_token :
 
 val get_token_info :
   ?url:string ->
-  ?oauth_signature_method:GdataCore.SignatureMethod.t ->
+  ?oauth_signature_method:GapiCore.SignatureMethod.t ->
   ?oauth_nonce:string ->
   ?oauth_timestamp:'a ->
   consumer_secret:string ->
@@ -63,7 +63,7 @@ val get_token_info :
 
 val revoke_token :
   ?url:string ->
-  ?oauth_signature_method:GdataCore.SignatureMethod.t ->
+  ?oauth_signature_method:GapiCore.SignatureMethod.t ->
   ?oauth_nonce:string ->
   ?oauth_timestamp:'a ->
   consumer_secret:string ->

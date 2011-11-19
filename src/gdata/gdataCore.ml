@@ -82,20 +82,5 @@ end
 
 let default_content_type = "application/atom+xml; charset=UTF-8"
 
-module SignatureMethod =
-struct
-  type t =
-      RSA_SHA1
-    | HMAC_SHA1
-    (*| PLAINTEXT not supported by Google *)
-
-  let to_string signature =
-    match signature with
-        RSA_SHA1 -> "RSA-SHA1"
-      | HMAC_SHA1 -> "HMAC-SHA1"
-    (*| PLAINTEXT -> "PLAINTEXT" *)
-
-end
-
 type xml_data_model = (Metadata.xml, string) GapiCore.AnnotatedTree.t
 

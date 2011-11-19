@@ -1,5 +1,3 @@
-open GdataUtils
-
 let random_generator =
   Cryptokit.Random.pseudo_rng
     (Cryptokit.Random.string Cryptokit.Random.secure_rng 20)
@@ -49,7 +47,7 @@ let generate_signature
   let signature_base_string = generate_signature_base_string fields in
     (* TODO: RSA-SHA1 *)
     match signature_method with
-        GdataCore.SignatureMethod.HMAC_SHA1 ->
+        GapiCore.SignatureMethod.HMAC_SHA1 ->
           let hash = Cryptokit.MAC.hmac_sha1 key in
           let _ = hash#add_string signature_base_string in
           let result = hash#result in
@@ -136,7 +134,7 @@ let build_oauth_fields_to_sign
   let common_oauth_fields = 
     [("oauth_consumer_key", oauth_consumer_key);
      ("oauth_nonce", nonce);
-     ("oauth_signature_method", GdataCore.SignatureMethod.to_string
+     ("oauth_signature_method", GapiCore.SignatureMethod.to_string
                                   oauth_signature_method);
      ("oauth_timestamp", timestamp);
      ("oauth_version", "1.0")] in
@@ -249,7 +247,7 @@ let parse_response parse_ok pipe response_code _ _ =
 (* TODO: scope composition *)
 let get_request_token
       ?(url = "https://www.google.com/accounts/OAuthGetRequestToken")
-      ?(oauth_signature_method = GdataCore.SignatureMethod.HMAC_SHA1)
+      ?(oauth_signature_method = GapiCore.SignatureMethod.HMAC_SHA1)
       ?oauth_nonce
       ?oauth_timestamp
       ?xoauth_displayname
@@ -305,7 +303,7 @@ let authorize_token_url
 
 let get_access_token
       ?(url = "https://www.google.com/accounts/OAuthGetAccessToken")
-      ?(oauth_signature_method = GdataCore.SignatureMethod.HMAC_SHA1)
+      ?(oauth_signature_method = GapiCore.SignatureMethod.HMAC_SHA1)
       ?oauth_nonce
       ?oauth_timestamp
       ~consumer_secret
@@ -335,7 +333,7 @@ let get_access_token
 
 let get_token_info
       ?(url = "https://www.google.com/accounts/AuthSubTokenInfo")
-      ?(oauth_signature_method = GdataCore.SignatureMethod.HMAC_SHA1)
+      ?(oauth_signature_method = GapiCore.SignatureMethod.HMAC_SHA1)
       ?oauth_nonce
       ?oauth_timestamp
       ~consumer_secret
@@ -363,7 +361,7 @@ let get_token_info
 
 let revoke_token
       ?(url = "https://www.google.com/accounts/AuthSubRevokeToken")
-      ?(oauth_signature_method = GdataCore.SignatureMethod.HMAC_SHA1)
+      ?(oauth_signature_method = GapiCore.SignatureMethod.HMAC_SHA1)
       ?oauth_nonce
       ?oauth_timestamp
       ~consumer_secret

@@ -37,7 +37,7 @@ let build_client_login_auth test_config =
 let build_oauth1_auth test_config =
   let get = Config.get test_config in
     (GdataConfig.OAuth1
-      { GdataConfig.signature_method = GdataCore.SignatureMethod.HMAC_SHA1;
+      { GdataConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
         GdataConfig.consumer_key = get "oa1_cons_key";
         GdataConfig.consumer_secret = get "oa1_cons_secret" },
      GdataConversation.Session.OAuth1

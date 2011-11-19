@@ -90,3 +90,13 @@ sig
 
 end
 
+module SignatureMethod :
+sig
+  type t =
+      RSA_SHA1
+    | HMAC_SHA1
+  
+  val to_string : t -> string
+
+end
+

@@ -4,7 +4,7 @@ type debug_function =
 
 type client_login_config = { username : string;
                              password : string }
-type oauth1_config = { signature_method : GdataCore.SignatureMethod.t;
+type oauth1_config = { signature_method : GapiCore.SignatureMethod.t;
                        consumer_key : string;
                        consumer_secret : string }
 type oauth2_config = { client_id : string;

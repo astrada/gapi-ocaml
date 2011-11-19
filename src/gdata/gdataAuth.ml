@@ -1,5 +1,5 @@
 type oauth1_data =
-    { signature_method : GdataCore.SignatureMethod.t;
+    { signature_method : GapiCore.SignatureMethod.t;
       consumer_key : string;
       consumer_secret : string;
       token : string;

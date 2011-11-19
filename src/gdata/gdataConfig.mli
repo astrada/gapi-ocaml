@@ -7,7 +7,7 @@ type client_login_config =
       password : string }
 
 type oauth1_config =
-    { signature_method : GdataCore.SignatureMethod.t;
+    { signature_method : GapiCore.SignatureMethod.t;
       consumer_key : string;
       consumer_secret : string }
 

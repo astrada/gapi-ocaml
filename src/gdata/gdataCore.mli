@@ -26,15 +26,5 @@ end
 
 val default_content_type : string
 
-module SignatureMethod :
-sig
-  type t =
-      RSA_SHA1
-    | HMAC_SHA1
-  
-  val to_string : t -> string
-
-end
-
 type xml_data_model = (Metadata.xml, string) GapiCore.AnnotatedTree.t
 
