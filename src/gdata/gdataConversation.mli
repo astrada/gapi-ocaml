@@ -16,7 +16,7 @@ sig
 
   type t =
       { curl : [ `Created ] GapiCurl.t;
-        config : GdataConfig.t;
+        config : GapiConfig.t;
         auth : auth_context;
         cookies : string list;
         etag : string }
@@ -38,7 +38,7 @@ val request :
 
 val with_session :
   ?auth_context:Session.auth_context ->
-  GdataConfig.t -> [ `Initialized ] GapiCurl.t -> (Session.t -> 'a) -> 'a
+  GapiConfig.t -> [ `Initialized ] GapiCurl.t -> (Session.t -> 'a) -> 'a
 
 val read_all : GapiPipe.OcamlnetPipe.t -> string
 

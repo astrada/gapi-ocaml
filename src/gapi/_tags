@@ -5,4 +5,5 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <gapiUtils.*> : pkg_netstring, pkg_extlib
 <gapiCurl.*> : pkg_netstring, pkg_curl
 <gapiPipe.*> : pkg_netstring
+<gapiConfig.*> : pkg_curl
 

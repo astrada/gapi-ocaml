@@ -14,21 +14,21 @@ end
 
 val build_client_login_auth :
   Config.t ->
-  GdataConfig.auth_config * GdataConversation.Session.auth_context
+  GapiConfig.auth_config * GdataConversation.Session.auth_context
 
 val build_oauth1_auth :
   Config.t ->
-  GdataConfig.auth_config * GdataConversation.Session.auth_context
+  GapiConfig.auth_config * GdataConversation.Session.auth_context
 
 val build_oauth2_auth :
   Config.t ->
-  GdataConfig.auth_config * GdataConversation.Session.auth_context
+  GapiConfig.auth_config * GdataConversation.Session.auth_context
 
 val test_request :
   ?configfile:string ->
   ?handle_exception:(exn -> unit) ->
   (Config.t ->
-     GdataConfig.auth_config * GdataConversation.Session.auth_context) ->
+     GapiConfig.auth_config * GdataConversation.Session.auth_context) ->
   (GdataConversation.Session.t -> unit) ->
   unit
 

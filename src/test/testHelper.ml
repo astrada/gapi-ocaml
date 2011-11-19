@@ -29,34 +29,34 @@ end
 
 let build_client_login_auth test_config =
   let get = Config.get test_config in
-    (GdataConfig.ClientLogin
-       { GdataConfig.username = get "cl_user";
-         GdataConfig.password = get "cl_pass" },
+    (GapiConfig.ClientLogin
+       { GapiConfig.username = get "cl_user";
+         GapiConfig.password = get "cl_pass" },
      GdataConversation.Session.ClientLogin (get "cl_token"))
 
 let build_oauth1_auth test_config =
   let get = Config.get test_config in
-    (GdataConfig.OAuth1
-      { GdataConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
-        GdataConfig.consumer_key = get "oa1_cons_key";
-        GdataConfig.consumer_secret = get "oa1_cons_secret" },
+    (GapiConfig.OAuth1
+      { GapiConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
+        GapiConfig.consumer_key = get "oa1_cons_key";
+        GapiConfig.consumer_secret = get "oa1_cons_secret" },
      GdataConversation.Session.OAuth1
        { GdataConversation.Session.token = get "oa1_token";
          GdataConversation.Session.secret = get "oa1_secret" })
 
 let build_oauth2_auth test_config =
   let get = Config.get test_config in
-    (GdataConfig.OAuth2
-       { GdataConfig.client_id = get "oa2_id";
-         GdataConfig.client_secret = get "oa2_secret" },
+    (GapiConfig.OAuth2
+       { GapiConfig.client_id = get "oa2_id";
+         GapiConfig.client_secret = get "oa2_secret" },
      GdataConversation.Session.OAuth2
        { GdataConversation.Session.oauth2_token = get "oa2_token";
          GdataConversation.Session.refresh_token = get "oa2_refresh" })
 
-(* val build_config : GdataConfig.auth_config -> GdataConfig.t *)
+(* val build_config : GapiConfig.auth_config -> GapiConfig.t *)
 let build_config auth_config =
-  { GdataConfig.default with
-        GdataConfig.auth = auth_config }
+  { GapiConfig.default with
+        GapiConfig.auth = auth_config }
 
 (* val update_session :
   GdataConversation.Session.auth_context ->
@@ -114,7 +114,7 @@ let test_request_noauth
       interact =
   let test_config = Config.parse configfile in
     do_request
-      GdataConfig.default
+      GapiConfig.default
       GdataConversation.Session.NoAuth
       (interact test_config)
       handle_exception

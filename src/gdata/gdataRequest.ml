@@ -113,19 +113,19 @@ let parse_response parse_output pipe response_code headers session =
         GdataConversation.parse_error pipe response_code
 
 let build_auth_data session =
-  match session.GdataConversation.Session.config.GdataConfig.auth with
-      GdataConfig.NoAuth ->
+  match session.GdataConversation.Session.config.GapiConfig.auth with
+      GapiConfig.NoAuth ->
         GdataAuth.NoAuth
-    | GdataConfig.ClientLogin _ ->
+    | GapiConfig.ClientLogin _ ->
         begin match session.GdataConversation.Session.auth with
             GdataConversation.Session.ClientLogin token ->
               GdataAuth.ClientLogin token
           | _ ->
               failwith "Unexpected auth context for Client Login"
         end
-    | GdataConfig.OAuth1 { GdataConfig.signature_method = signature_method;
-                           GdataConfig.consumer_key = consumer_key;
-                           GdataConfig.consumer_secret = consumer_secret } ->
+    | GapiConfig.OAuth1 { GapiConfig.signature_method = signature_method;
+                           GapiConfig.consumer_key = consumer_key;
+                           GapiConfig.consumer_secret = consumer_secret } ->
         begin match session.GdataConversation.Session.auth with
             GdataConversation.Session.OAuth1
               { GdataConversation.Session.token = token;
@@ -138,8 +138,8 @@ let build_auth_data session =
           | _ ->
               failwith "Unexpected auth context for OAuth1"
         end
-    | GdataConfig.OAuth2 { GdataConfig.client_id = client_id;
-                           GdataConfig.client_secret = client_secret } ->
+    | GapiConfig.OAuth2 { GapiConfig.client_id = client_id;
+                           GapiConfig.client_secret = client_secret } ->
         begin match session.GdataConversation.Session.auth with
             GdataConversation.Session.OAuth2
               { GdataConversation.Session.oauth2_token = oauth2_token;

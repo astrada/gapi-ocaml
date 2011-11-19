@@ -26,7 +26,7 @@ struct
 
   type t =
       { curl : [`Created] GapiCurl.t;
-        config : GdataConfig.t;
+        config : GapiConfig.t;
         auth : auth_context;
         cookies : string list;
         etag : string
@@ -140,12 +140,12 @@ let with_session
     Option.map
       (fun df ->
          match df with
-             GdataConfig.Standard -> debug_print (Unix.gettimeofday ())
-           | GdataConfig.Custom f -> f)
-      config.GdataConfig.debug in
-  let timeout = config.GdataConfig.timeout in
-  let connect_timeout = config.GdataConfig.connect_timeout in
-  let compress = config.GdataConfig.compress in
+             GapiConfig.Standard -> debug_print (Unix.gettimeofday ())
+           | GapiConfig.Custom f -> f)
+      config.GapiConfig.debug in
+  let timeout = config.GapiConfig.timeout in
+  let connect_timeout = config.GapiConfig.connect_timeout in
+  let compress = config.GapiConfig.compress in
   let curl_session = GapiCurl.init
                        ?debug_function
                        ?timeout

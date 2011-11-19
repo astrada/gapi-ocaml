@@ -8,7 +8,6 @@ GdataCalendarEvent
 GdataCalendarService
 GdataClientLogin
 GdataComments
-GdataConfig
 GdataConversation
 GdataCore
 GdataMonad
