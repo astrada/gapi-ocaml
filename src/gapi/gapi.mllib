@@ -6,4 +6,5 @@ GapiConfig
 GapiConversation
 GapiAuthResponse
 GapiClientLogin
+GapiOAuth1
 

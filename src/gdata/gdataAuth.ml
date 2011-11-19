@@ -37,7 +37,7 @@ let generate_authorization_header
                token = token;
                secret = secret } ->
         let params = Option.get oauth1_params in
-        let oauth_fields_to_sign = GdataOAuth1.build_oauth_fields_to_sign
+        let oauth_fields_to_sign = GapiOAuth1.build_oauth_fields_to_sign
                                      ~oauth_token:token
                                      consumer_key
                                      signature_method in
@@ -49,7 +49,7 @@ let generate_authorization_header
           with Not_found -> [] in
         let base_neturl = Neturl.remove_from_url ~query:true neturl in
         let base_url = Neturl.string_of_url base_neturl in
-        let signature = GdataOAuth1.generate_signature
+        let signature = GapiOAuth1.generate_signature
                           params.http_method
                           base_url
                           (oauth_fields_to_sign
@@ -59,7 +59,7 @@ let generate_authorization_header
                           consumer_secret
                           secret
         in
-          Some (GdataOAuth1.generate_oauth_header
+          Some (GapiOAuth1.generate_oauth_header
                   oauth_fields_to_sign
                   signature)
     | OAuth2 { oauth2_token = token } ->

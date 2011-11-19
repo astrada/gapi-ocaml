@@ -30,7 +30,7 @@ let test_oauth1_request_token () =
        let oauth_consumer_key = get "oa1_cons_key" in
        let oauth_callback = get "oa1_callback" in
        let (response, _) =
-         GdataOAuth1.get_request_token
+         GapiOAuth1.get_request_token
            ~xoauth_displayname
            ~consumer_secret
            ~oauth_consumer_key
@@ -52,7 +52,7 @@ let test_oauth1_request_token () =
            | _ -> failwith "Not supported OAuth1 response")
 
 let test_oauth1_authorize_url () =
-  let url = GdataOAuth1.authorize_token_url
+  let url = GapiOAuth1.authorize_token_url
               ~hd:"default"
               ~hl:"en"
               "dummy_request_token" in
@@ -69,7 +69,7 @@ let test_invalid_oauth1_access_token () =
        assert_raises
          (Failure "Error: The token is invalid. (HTTP response code: 400)")
          (fun () ->
-            GdataOAuth1.get_access_token
+            GapiOAuth1.get_access_token
               ~consumer_secret
               ~oauth_consumer_key
               ~oauth_token:"dummy access token"
@@ -86,7 +86,7 @@ let test_oauth1_token_info () =
        let oauth_token = get "oa1_token" in
        let oauth_secret = get "oa1_secret" in
        let (response, _) =
-         GdataOAuth1.get_token_info
+         GapiOAuth1.get_token_info
            ~consumer_secret
            ~oauth_consumer_key
            ~oauth_token
@@ -115,7 +115,7 @@ let test_oauth1_revoke_invalid_token () =
          assert_raises
            (Failure "Error: <HTML><HEAD><TITLE>Invalid AuthSub token.</TITLE></HEAD><BODY BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\"><H1>Invalid AuthSub token.</H1><H2>Error 403</H2></BODY></HTML> (HTTP response code: 403)")
            (fun () ->
-              GdataOAuth1.revoke_token
+              GapiOAuth1.revoke_token
                 ~consumer_secret
                 ~oauth_consumer_key
                 ~oauth_token:"dummy token"
