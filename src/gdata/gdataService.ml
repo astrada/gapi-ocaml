@@ -8,7 +8,7 @@ let service_request
       parse_response
       session =
   let query_url = Option.map_default
-                    (fun params -> GdataUtils.merge_query_string params url)
+                    (fun params -> GapiUtils.merge_query_string params url)
                     url
                     query_parameters in
   let post_data =

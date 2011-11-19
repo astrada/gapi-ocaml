@@ -1,4 +1,4 @@
-open GdataUtils.Op
+open GapiUtils.Op
 
 type curl_context =
     { curl : Curl.t;

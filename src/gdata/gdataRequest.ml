@@ -1,4 +1,4 @@
-open GdataUtils.Op
+open GapiUtils.Op
 
 exception Redirect of string * GdataConversation.Session.t
 exception Unauthorized of GdataConversation.Session.t
@@ -198,7 +198,7 @@ let single_request
                         Some (GapiCore.Header.IfNoneMatch e)
                     | Update
                     | Delete ->
-                        if GdataUtils.is_weak_etag e then
+                        if GapiUtils.is_weak_etag e then
                           None
                         else
                           Some (GapiCore.Header.IfMatch e)

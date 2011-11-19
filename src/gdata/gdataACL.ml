@@ -1,4 +1,4 @@
-open GdataUtils.Op
+open GapiUtils.Op
 
 let ns_gAcl = "http://schemas.google.com/acl/2007"
 

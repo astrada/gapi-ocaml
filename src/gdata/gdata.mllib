@@ -11,7 +11,6 @@ GdataComments
 GdataConfig
 GdataConversation
 GdataCore
-GdataCurl
 GdataMonad
 GdataOAuth1
 GdataOAuth2

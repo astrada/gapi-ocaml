@@ -1,4 +1,4 @@
-open GdataUtils.Op
+open GapiUtils.Op
 
 (* Calendar data types *)
 let ns_gCal = "http://schemas.google.com/gCal/2005"

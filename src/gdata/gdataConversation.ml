@@ -1,4 +1,4 @@
-open GdataUtils.Op
+open GapiUtils.Op
 
 let debug_print start_time curl info_type info =
   let time = Unix.gettimeofday () in
@@ -6,7 +6,7 @@ let debug_print start_time curl info_type info =
   let nl = if info.[String.length info - 1] = '\n' then "" else "\n" in
     Printf.printf "[%f] curl: %s: %s%s"
       timestamp
-      (GdataCurl.string_of_curl_info_type info_type)
+      (GapiCurl.string_of_curl_info_type info_type)
       info
       nl
 
@@ -25,7 +25,7 @@ struct
     | OAuth2 of oauth2_context
 
   type t =
-      { curl : [`Created] GdataCurl.t;
+      { curl : [`Created] GapiCurl.t;
         config : GdataConfig.t;
         auth : auth_context;
         cookies : string list;
@@ -78,40 +78,40 @@ let request
             GapiCore.Header.ContentType content_type :: hl
         | _ -> hl
   in
-    GdataCurl.set_headerfunction parse_header session.Session.curl;
-    GdataCurl.set_writefunction writer session.Session.curl;
+    GapiCurl.set_headerfunction parse_header session.Session.curl;
+    GapiCurl.set_writefunction writer session.Session.curl;
     begin match http_method with
         GapiCore.HttpMethod.GET ->
-          GdataCurl.set_httpget true session.Session.curl
+          GapiCurl.set_httpget true session.Session.curl
       | GapiCore.HttpMethod.POST ->
-          GdataCurl.set_post true session.Session.curl
+          GapiCurl.set_post true session.Session.curl
       | GapiCore.HttpMethod.PUT ->
-          GdataCurl.set_upload true session.Session.curl
+          GapiCurl.set_upload true session.Session.curl
       | GapiCore.HttpMethod.DELETE ->
-          GdataCurl.set_nobody true session.Session.curl
+          GapiCurl.set_nobody true session.Session.curl
       | _ -> ()
     end;
     begin match http_method with
         GapiCore.HttpMethod.PATCH
       | GapiCore.HttpMethod.DELETE ->
-          GdataCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+          GapiCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
       | _ ->
           (* FIXME: reset curl custom request *)
-          GdataCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+          GapiCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
     end;
     begin match post_data with
         Some (GapiCore.PostData.Fields key_value_list) ->
-          GdataCurl.set_postfields key_value_list session.Session.curl
+          GapiCurl.set_postfields key_value_list session.Session.curl
       | Some (GapiCore.PostData.Body (body, _)) ->
-          GdataCurl.set_httpbody body session.Session.curl
+          GapiCurl.set_httpbody body session.Session.curl
       | _ -> ()
     end;
-    GdataCurl.set_httpheader request_headers session.Session.curl;
-    GdataCurl.set_cookies session.Session.cookies session.Session.curl;
+    GapiCurl.set_httpheader request_headers session.Session.curl;
+    GapiCurl.set_cookies session.Session.cookies session.Session.curl;
     try
-      GdataCurl.perform url session.Session.curl;
+      GapiCurl.perform url session.Session.curl;
       GdataPipe.OcamlnetPipe.end_writing pipe;
-      let response_code = GdataCurl.get_responsecode session.Session.curl in
+      let response_code = GapiCurl.get_responsecode session.Session.curl in
       let response_headers = List.rev
                                (Queue.fold
                                   (fun l h -> GapiCore.Header.parse h :: l)
@@ -126,7 +126,7 @@ let request
           GdataPipe.OcamlnetPipe.end_reading pipe;
           failwith (Printf.sprintf
                       "Code: %d, Description: %s, ErrorBuffer: %s\n"
-                      code desc (GdataCurl.get_error_buffer session.Session.curl))
+                      code desc (GapiCurl.get_error_buffer session.Session.curl))
       | e ->
           GdataPipe.OcamlnetPipe.end_reading pipe;
           raise e
@@ -146,7 +146,7 @@ let with_session
   let timeout = config.GdataConfig.timeout in
   let connect_timeout = config.GdataConfig.connect_timeout in
   let compress = config.GdataConfig.compress in
-  let curl_session = GdataCurl.init
+  let curl_session = GapiCurl.init
                        ?debug_function
                        ?timeout
                        ?connect_timeout
@@ -161,10 +161,10 @@ let with_session
   in
     try
       let result = interact session in
-        ignore (GdataCurl.cleanup curl_session);
+        ignore (GapiCurl.cleanup curl_session);
         result
     with e ->
-      ignore (GdataCurl.cleanup curl_session);
+      ignore (GapiCurl.cleanup curl_session);
       raise e
 
 let read_all pipe =

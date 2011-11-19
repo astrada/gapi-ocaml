@@ -71,7 +71,7 @@ let do_request
       interact
       handle_exception =
   let rec try_request () =
-    let state = GdataCurl.global_init () in
+    let state = GapiCurl.global_init () in
       begin
         try
           GdataConversation.with_session
@@ -88,7 +88,7 @@ let do_request
                 handle_exception e
           | e -> handle_exception e
       end;
-      ignore (GdataCurl.global_cleanup state)
+      ignore (GapiCurl.global_cleanup state)
   in
     try_request ()
 

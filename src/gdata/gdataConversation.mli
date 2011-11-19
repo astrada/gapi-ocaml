@@ -15,7 +15,7 @@ sig
     | OAuth2 of oauth2_context
 
   type t =
-      { curl : [ `Created ] GdataCurl.t;
+      { curl : [ `Created ] GapiCurl.t;
         config : GdataConfig.t;
         auth : auth_context;
         cookies : string list;
@@ -38,7 +38,7 @@ val request :
 
 val with_session :
   ?auth_context:Session.auth_context ->
-  GdataConfig.t -> [ `Initialized ] GdataCurl.t -> (Session.t -> 'a) -> 'a
+  GdataConfig.t -> [ `Initialized ] GapiCurl.t -> (Session.t -> 'a) -> 'a
 
 val read_all : GdataPipe.OcamlnetPipe.t -> string
 
