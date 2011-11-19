@@ -83,7 +83,9 @@ https://code.google.com/apis/console/ to register your application:
  - Select "Web Application" as the "Application type"
  - Under "Your Site or Hostname" select http:// as the protocol and enter
    "localhost:8091" for the domain name
- - click "Create client ID"
+ - Click "Create client ID"
+ - Click on "Services" in the left column
+ - Turn on "Calendar API"
 
 Then
 
