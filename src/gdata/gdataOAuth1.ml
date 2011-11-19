@@ -159,7 +159,7 @@ let parse_token_response
       empty_response
       pipe =
   try
-    let line = GdataPipe.OcamlnetPipe.read_line pipe in
+    let line = GapiPipe.OcamlnetPipe.read_line pipe in
     let fields = Netencoding.Url.dest_url_encoded_parameters line in
       List.fold_left
         (fun response (key, value) ->
@@ -210,7 +210,7 @@ let parse_access_token pipe =
 let parse_token_info pipe =
   let rec parse_next_line response pipe =
     try
-      let line = GdataPipe.OcamlnetPipe.read_line pipe in
+      let line = GapiPipe.OcamlnetPipe.read_line pipe in
       let (key, value) = ExtString.String.split line "=" in
         match key with
             "Target" ->

@@ -14,7 +14,6 @@ GdataCore
 GdataMonad
 GdataOAuth1
 GdataOAuth2
-GdataPipe
 GdataRequest
 GdataService
 GdataUtils

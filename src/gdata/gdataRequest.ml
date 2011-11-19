@@ -83,7 +83,7 @@ let parse_xml next_byte parse_tree =
 
 let parse_xml_response parse_xml_tree pipe =
   parse_xml
-    (fun () -> GdataPipe.OcamlnetPipe.read_byte pipe)
+    (fun () -> GapiPipe.OcamlnetPipe.read_byte pipe)
     parse_xml_tree
 
 let parse_empty_response _ =

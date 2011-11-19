@@ -29,7 +29,7 @@ val request :
   GapiCore.HttpMethod.t ->
   Session.t ->
   string ->
-  (GdataPipe.OcamlnetPipe.t ->
+  (GapiPipe.OcamlnetPipe.t ->
      int ->
      GapiCore.Header.t list ->
      Session.t ->
@@ -40,9 +40,9 @@ val with_session :
   ?auth_context:Session.auth_context ->
   GdataConfig.t -> [ `Initialized ] GapiCurl.t -> (Session.t -> 'a) -> 'a
 
-val read_all : GdataPipe.OcamlnetPipe.t -> string
+val read_all : GapiPipe.OcamlnetPipe.t -> string
 
-val parse_error : GdataPipe.OcamlnetPipe.t -> int -> 'a
+val parse_error : GapiPipe.OcamlnetPipe.t -> int -> 'a
 
 exception ConversationException of string
 

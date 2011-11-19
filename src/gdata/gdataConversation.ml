@@ -67,9 +67,9 @@ let request
   let parse_header data =
     Queue.add data header_queue;
     String.length data in
-  let pipe = GdataPipe.OcamlnetPipe.create () in
+  let pipe = GapiPipe.OcamlnetPipe.create () in
   let writer data =
-    GdataPipe.OcamlnetPipe.write_string pipe data;
+    GapiPipe.OcamlnetPipe.write_string pipe data;
     String.length data in
   let request_headers =
     let hl = Option.default [] header_list in
@@ -110,7 +110,7 @@ let request
     GapiCurl.set_cookies session.Session.cookies session.Session.curl;
     try
       GapiCurl.perform url session.Session.curl;
-      GdataPipe.OcamlnetPipe.end_writing pipe;
+      GapiPipe.OcamlnetPipe.end_writing pipe;
       let response_code = GapiCurl.get_responsecode session.Session.curl in
       let response_headers = List.rev
                                (Queue.fold
@@ -119,16 +119,16 @@ let request
                                   header_queue) in
       let new_session = update_session response_headers session in
       let result = parse_response pipe response_code response_headers new_session in
-        GdataPipe.OcamlnetPipe.end_reading pipe;
+        GapiPipe.OcamlnetPipe.end_reading pipe;
         (result, new_session)
     with
         Curl.CurlException (_, code, desc) ->
-          GdataPipe.OcamlnetPipe.end_reading pipe;
+          GapiPipe.OcamlnetPipe.end_reading pipe;
           failwith (Printf.sprintf
                       "Code: %d, Description: %s, ErrorBuffer: %s\n"
                       code desc (GapiCurl.get_error_buffer session.Session.curl))
       | e ->
-          GdataPipe.OcamlnetPipe.end_reading pipe;
+          GapiPipe.OcamlnetPipe.end_reading pipe;
           raise e
 
 let with_session
@@ -171,7 +171,7 @@ let read_all pipe =
   let buffer = Buffer.create 16 in
     try
       while true do
-        Buffer.add_string buffer (GdataPipe.OcamlnetPipe.read_line pipe)
+        Buffer.add_string buffer (GapiPipe.OcamlnetPipe.read_line pipe)
       done;
       assert false
     with End_of_file ->

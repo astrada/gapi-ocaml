@@ -23,7 +23,7 @@ val parse_xml :
 
 val parse_xml_response :
   (GdataCore.xml_data_model -> 'a) ->
-  GdataPipe.OcamlnetPipe.t ->
+  GapiPipe.OcamlnetPipe.t ->
   'a
 
 val parse_empty_response : 'a -> unit
@@ -34,7 +34,7 @@ val gdata_request :
   ?etag:string ->
   request_type ->
   string ->
-  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 

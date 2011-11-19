@@ -3,7 +3,7 @@ val query :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   string ->
-  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 
@@ -12,7 +12,7 @@ val create :
   'a ->
   ('a -> GdataCore.xml_data_model) ->
   string ->
-  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 
@@ -21,7 +21,7 @@ val read :
   ?etag:string ->
   'a ->
   string ->
-  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 
@@ -31,7 +31,7 @@ val update :
   'a ->
   ('a -> GdataCore.xml_data_model) ->
   string ->
-  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 
@@ -47,7 +47,7 @@ val batch_request :
   'a ->
   ('a -> GdataCore.xml_data_model) ->
   string ->
-  (GdataPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GdataConversation.Session.t ->
   'a * GdataConversation.Session.t
 

@@ -3,7 +3,6 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 # Packages deps
 <gdataCore.*> : pkg_extlib
 <gdataUtils.*> : pkg_xmlm
-<gdataPipe.*> : pkg_netstring
 <gdataConfig.*> : pkg_curl
 <gdataConversation.*> : pkg_netstring, pkg_curl, pkg_extlib
 <gdataClientLogin.*> : pkg_netstring, pkg_curl, pkg_extlib, pkg_str

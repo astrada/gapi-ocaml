@@ -103,7 +103,7 @@ let get_auth_token
       session =
   let rec parse_next_line pipe =
     try
-      let line = GdataPipe.OcamlnetPipe.read_line pipe in
+      let line = GapiPipe.OcamlnetPipe.read_line pipe in
       let (key, value) = ExtString.String.split line "=" in
         match key with
             "Auth" ->
