@@ -45,7 +45,7 @@ module MakeStateMonad :
 module SessionM :
 sig
   include MONAD_COMBINATORS
-    with type 'a t = GdataConversation.Session.t -> 'a * GdataConversation.Session.t
+    with type 'a t = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
 
   val get : 'a -> 'a * 'a
 

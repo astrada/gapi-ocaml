@@ -95,7 +95,7 @@ let oauth_request
       | GapiCore.HttpMethod.DELETE -> None
       | GapiCore.HttpMethod.POST -> Some (GapiCore.PostData.Fields post_fields_to_sign)
   in
-    GdataConversation.request
+    GapiConversation.request
       ~header_list:[oauth_header]
       ?post_data
       http_method
@@ -212,25 +212,25 @@ let parse_token_info pipe =
       let (key, value) = ExtString.String.split line "=" in
         match key with
             "Target" ->
-              GdataConversation.Continue
+              GapiConversation.Continue
                 (parse_next_line
                    { response with GdataAuthResponse.AuthSub.target = value })
           | "Scope" -> 
-              GdataConversation.Continue
+              GapiConversation.Continue
                 (parse_next_line
                    { response with GdataAuthResponse.AuthSub.scope = value })
           | "Secure" ->
-              GdataConversation.Continue
+              GapiConversation.Continue
                 (parse_next_line
                    { response with GdataAuthResponse.AuthSub.secure =
                        (bool_of_string value) })
           | _ ->
-              GdataConversation.Error ("Unexpected token info: " ^ key)
+              GapiConversation.Error ("Unexpected token info: " ^ key)
     with End_of_file ->
-      GdataConversation.Done response
+      GapiConversation.Done response
   in 
     GdataAuthResponse.AuthSubTokenInfo
-      (GdataConversation.loop
+      (GapiConversation.loop
          (parse_next_line { GdataAuthResponse.AuthSub.target = "";
                             GdataAuthResponse.AuthSub.scope = "";
                             GdataAuthResponse.AuthSub.secure = false })
@@ -241,7 +241,7 @@ let parse_response parse_ok pipe response_code _ _ =
       200 ->
         parse_ok pipe
     | _ ->
-        GdataConversation.parse_error pipe response_code
+        GapiConversation.parse_error pipe response_code
 
 (* TODO: oauth_callback "oob" value management *)
 (* TODO: scope composition *)

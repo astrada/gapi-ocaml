@@ -4,8 +4,8 @@ val query :
   ?query_parameters:(string * string) list ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
-  GdataConversation.Session.t ->
-  'a * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 
 val create :
   ?version:string ->
@@ -13,8 +13,8 @@ val create :
   ('a -> GdataCore.xml_data_model) ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
-  GdataConversation.Session.t ->
-  'a * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 
 val read :
   ?version:string ->
@@ -22,8 +22,8 @@ val read :
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
-  GdataConversation.Session.t ->
-  'a * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 
 val update :
   ?version:string ->
@@ -32,15 +32,15 @@ val update :
   ('a -> GdataCore.xml_data_model) ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
-  GdataConversation.Session.t ->
-  'a * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 
 val delete :
   ?version:string ->
   ?etag:string ->
   string ->
-  GdataConversation.Session.t ->
-  unit * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
 val batch_request :
   ?version:string ->
@@ -48,6 +48,6 @@ val batch_request :
   ('a -> GdataCore.xml_data_model) ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
-  GdataConversation.Session.t ->
-  'a * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 

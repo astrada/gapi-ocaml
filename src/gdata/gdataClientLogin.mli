@@ -56,6 +56,6 @@ val get_auth_token :
   password:string ->
   source:string ->
   service:Service.t ->
-  GdataConversation.Session.t ->
-  GdataAuthResponse.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataAuthResponse.t * GapiConversation.Session.t
 

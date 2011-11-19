@@ -13,7 +13,7 @@ let authorization_code_url
     base_url ^ "?" ^ query_string
 
 let parse_token_info pipe =
-  let response = GdataConversation.read_all pipe in
+  let response = GapiConversation.read_all pipe in
   let json = Json_io.json_of_string response in
   let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
     GdataAuthResponse.OAuth2AccessToken
@@ -31,7 +31,7 @@ let parse_token_info pipe =
       }
 
 let parse_error pipe response_code =
-  let response = GdataConversation.read_all pipe in
+  let response = GapiConversation.read_all pipe in
   let json = Json_io.json_of_string response in
   let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
   let error_message = Json_type.Browse.string
@@ -80,7 +80,7 @@ let oauth_request
        ("redirect_uri", redirect_uri);
        ("refresh_token", refresh_token)] in
   let post_data = GapiCore.PostData.Fields (required_field @ optional_fields) in
-    GdataConversation.request
+    GapiConversation.request
       ~post_data
       GapiCore.HttpMethod.POST
       session

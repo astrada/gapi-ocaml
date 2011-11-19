@@ -53,7 +53,7 @@ let test_all_calendars () =
            feed.GdataCalendar.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session.GdataConversation.Session.etag)
+           session.GapiConversation.Session.etag)
 
 let test_own_calendars () =
   TestHelper.test_request
@@ -65,7 +65,7 @@ let test_own_calendars () =
            feed.GdataCalendar.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session.GdataConversation.Session.etag)
+           session.GapiConversation.Session.etag)
 
 let test_create_new_calendar () =
   let entry = new_calendar_entry "test_create_new_calendar" in
@@ -160,7 +160,7 @@ let test_retrieve_events () =
            feed.GdataCalendarEvent.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session.GdataConversation.Session.etag)
+           session.GapiConversation.Session.etag)
 
 let test_create_new_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
@@ -294,7 +294,7 @@ let test_retrieve_acl () =
            feed.GdataACL.Feed.id;
          TestHelper.assert_not_empty
            "ETag should not be empty"
-           session.GdataConversation.Session.etag)
+           session.GapiConversation.Session.etag)
 
 let test_create_acl () =
   TestHelper.test_request

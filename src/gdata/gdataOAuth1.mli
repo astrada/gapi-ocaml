@@ -29,8 +29,8 @@ val get_request_token :
   oauth_consumer_key:string ->
   scope:string ->
   oauth_callback:string ->
-  GdataConversation.Session.t ->
-  GdataAuthResponse.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataAuthResponse.t * GapiConversation.Session.t
 
 val authorize_token_url :
   ?base_url:string ->
@@ -46,8 +46,8 @@ val get_access_token :
   oauth_token:string ->
   oauth_verifier:string ->
   oauth_secret:string ->
-  GdataConversation.Session.t ->
-  GdataAuthResponse.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataAuthResponse.t * GapiConversation.Session.t
 
 val get_token_info :
   ?url:string ->
@@ -58,8 +58,8 @@ val get_token_info :
   oauth_consumer_key:string ->
   oauth_token:string ->
   oauth_secret:string ->
-  GdataConversation.Session.t ->
-  GdataAuthResponse.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataAuthResponse.t * GapiConversation.Session.t
 
 val revoke_token :
   ?url:string ->
@@ -70,6 +70,6 @@ val revoke_token :
   oauth_consumer_key:string ->
   oauth_token:string ->
   oauth_secret:string ->
-  GdataConversation.Session.t ->
-  unit * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 

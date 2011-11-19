@@ -1,4 +1,4 @@
-exception NotModified of GdataConversation.Session.t
+exception NotModified of GapiConversation.Session.t
 
 type request_type =
     Query
@@ -35,6 +35,6 @@ val gdata_request :
   request_type ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
-  GdataConversation.Session.t ->
-  'a * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 

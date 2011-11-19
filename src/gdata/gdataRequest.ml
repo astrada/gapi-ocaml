@@ -1,8 +1,8 @@
 open GapiUtils.Op
 
-exception Redirect of string * GdataConversation.Session.t
-exception Unauthorized of GdataConversation.Session.t
-exception NotModified of GdataConversation.Session.t
+exception Redirect of string * GapiConversation.Session.t
+exception Unauthorized of GapiConversation.Session.t
+exception NotModified of GapiConversation.Session.t
 
 type request_type =
     Query
@@ -110,15 +110,15 @@ let parse_response parse_output pipe response_code headers session =
     | 412 (* Precondition failed *) ->
         raise (NotModified session)
     | _ ->
-        GdataConversation.parse_error pipe response_code
+        GapiConversation.parse_error pipe response_code
 
 let build_auth_data session =
-  match session.GdataConversation.Session.config.GapiConfig.auth with
+  match session.GapiConversation.Session.config.GapiConfig.auth with
       GapiConfig.NoAuth ->
         GdataAuth.NoAuth
     | GapiConfig.ClientLogin _ ->
-        begin match session.GdataConversation.Session.auth with
-            GdataConversation.Session.ClientLogin token ->
+        begin match session.GapiConversation.Session.auth with
+            GapiConversation.Session.ClientLogin token ->
               GdataAuth.ClientLogin token
           | _ ->
               failwith "Unexpected auth context for Client Login"
@@ -126,10 +126,10 @@ let build_auth_data session =
     | GapiConfig.OAuth1 { GapiConfig.signature_method = signature_method;
                            GapiConfig.consumer_key = consumer_key;
                            GapiConfig.consumer_secret = consumer_secret } ->
-        begin match session.GdataConversation.Session.auth with
-            GdataConversation.Session.OAuth1
-              { GdataConversation.Session.token = token;
-                GdataConversation.Session.secret = secret } ->
+        begin match session.GapiConversation.Session.auth with
+            GapiConversation.Session.OAuth1
+              { GapiConversation.Session.token = token;
+                GapiConversation.Session.secret = secret } ->
               GdataAuth.OAuth1 { GdataAuth.signature_method = signature_method;
                                  GdataAuth.consumer_key = consumer_key;
                                  GdataAuth.consumer_secret = consumer_secret;
@@ -140,10 +140,10 @@ let build_auth_data session =
         end
     | GapiConfig.OAuth2 { GapiConfig.client_id = client_id;
                            GapiConfig.client_secret = client_secret } ->
-        begin match session.GdataConversation.Session.auth with
-            GdataConversation.Session.OAuth2
-              { GdataConversation.Session.oauth2_token = oauth2_token;
-                GdataConversation.Session.refresh_token = refresh_token } ->
+        begin match session.GapiConversation.Session.auth with
+            GapiConversation.Session.OAuth2
+              { GapiConversation.Session.oauth2_token = oauth2_token;
+                GapiConversation.Session.refresh_token = refresh_token } ->
               GdataAuth.OAuth2 { GdataAuth.client_id = client_id;
                                  GdataAuth.client_secret = client_secret;
                                  GdataAuth.oauth2_token = oauth2_token;
@@ -210,7 +210,7 @@ let single_request
     |> List.filter Option.is_some
     |> List.map Option.get
   in
-    GdataConversation.request
+    GapiConversation.request
       ~header_list
       ?post_data
       http_method
@@ -236,15 +236,15 @@ let refresh_oauth2_token session =
                   token.GdataAuthResponse.OAuth2.access_token
               | _ -> failwith "Not supported OAuth2 response" in
           let new_auth_context =
-            match new_session.GdataConversation.Session.auth with
-                GdataConversation.Session.OAuth2 data ->
+            match new_session.GapiConversation.Session.auth with
+                GapiConversation.Session.OAuth2 data ->
                   { data with
-                        GdataConversation.Session.oauth2_token = access_token }
+                        GapiConversation.Session.oauth2_token = access_token }
               | _ ->
                   failwith "Unexptected OAuth2 auth context"
           in
             { new_session with
-                  GdataConversation.Session.auth = GdataConversation.Session.OAuth2
+                  GapiConversation.Session.auth = GapiConversation.Session.OAuth2
                                                      new_auth_context }
       | _ ->
           failwith "Unauthorized" (* TODO: better error handling *)
@@ -259,8 +259,8 @@ let rec gdata_request
       session =
   try
     let verified_session =
-      match session.GdataConversation.Session.auth with
-          GdataConversation.Session.OAuth2 { GdataConversation.Session.oauth2_token = "" } ->
+      match session.GapiConversation.Session.auth with
+          GapiConversation.Session.OAuth2 { GapiConversation.Session.oauth2_token = "" } ->
             refresh_oauth2_token session
         | _ ->
             session

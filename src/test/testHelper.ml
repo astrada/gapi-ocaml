@@ -32,7 +32,7 @@ let build_client_login_auth test_config =
     (GapiConfig.ClientLogin
        { GapiConfig.username = get "cl_user";
          GapiConfig.password = get "cl_pass" },
-     GdataConversation.Session.ClientLogin (get "cl_token"))
+     GapiConversation.Session.ClientLogin (get "cl_token"))
 
 let build_oauth1_auth test_config =
   let get = Config.get test_config in
@@ -40,18 +40,18 @@ let build_oauth1_auth test_config =
       { GapiConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
         GapiConfig.consumer_key = get "oa1_cons_key";
         GapiConfig.consumer_secret = get "oa1_cons_secret" },
-     GdataConversation.Session.OAuth1
-       { GdataConversation.Session.token = get "oa1_token";
-         GdataConversation.Session.secret = get "oa1_secret" })
+     GapiConversation.Session.OAuth1
+       { GapiConversation.Session.token = get "oa1_token";
+         GapiConversation.Session.secret = get "oa1_secret" })
 
 let build_oauth2_auth test_config =
   let get = Config.get test_config in
     (GapiConfig.OAuth2
        { GapiConfig.client_id = get "oa2_id";
          GapiConfig.client_secret = get "oa2_secret" },
-     GdataConversation.Session.OAuth2
-       { GdataConversation.Session.oauth2_token = get "oa2_token";
-         GdataConversation.Session.refresh_token = get "oa2_refresh" })
+     GapiConversation.Session.OAuth2
+       { GapiConversation.Session.oauth2_token = get "oa2_token";
+         GapiConversation.Session.refresh_token = get "oa2_refresh" })
 
 (* val build_config : GapiConfig.auth_config -> GapiConfig.t *)
 let build_config auth_config =
@@ -59,11 +59,11 @@ let build_config auth_config =
         GapiConfig.auth = auth_config }
 
 (* val update_session :
-  GdataConversation.Session.auth_context ->
-  GdataConversation.Session.t -> GdataConversation.Session.t *)
+  GapiConversation.Session.auth_context ->
+  GapiConversation.Session.t -> GapiConversation.Session.t *)
 let update_session auth_session session =
   { session with
-        GdataConversation.Session.auth = auth_session }
+        GapiConversation.Session.auth = auth_session }
 
 let do_request
       config
@@ -74,7 +74,7 @@ let do_request
     let state = GapiCurl.global_init () in
       begin
         try
-          GdataConversation.with_session
+          GapiConversation.with_session
             config
             state
             (fun session ->
@@ -115,7 +115,7 @@ let test_request_noauth
   let test_config = Config.parse configfile in
     do_request
       GapiConfig.default
-      GdataConversation.Session.NoAuth
+      GapiConversation.Session.NoAuth
       (interact test_config)
       handle_exception
 

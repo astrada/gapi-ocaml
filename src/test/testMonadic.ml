@@ -8,7 +8,7 @@ let test_monadic_session () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let s = { session with
-                     GdataConversation.Session.etag =
+                     GapiConversation.Session.etag =
                        "W/\"D04ASX47eCp7JGA9WhdbEEo." } in
        let go =
          SessionM.put s >>
@@ -28,15 +28,15 @@ let test_monadic_session () =
            all.GdataCalendar.Feed.id;
          TestHelper.assert_false
            "Etag should be different"
-           (new_session.GdataConversation.Session.etag =
-              s.GdataConversation.Session.etag))
+           (new_session.GapiConversation.Session.etag =
+              s.GapiConversation.Session.etag))
 
 let test_monadic_session_perform () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let s = { session with
-                     GdataConversation.Session.etag =
+                     GapiConversation.Session.etag =
                        "W/\"D04ASX47eCp7JGA9WhdbEEo." } in
        let go =
          perform
@@ -57,7 +57,7 @@ let test_monadic_session_perform () =
            all.GdataCalendar.Feed.id;
          TestHelper.assert_false
            "Etag"
-           (new_session.GdataConversation.Session.etag =
+           (new_session.GapiConversation.Session.etag =
               "W/\"D04ASX47eCp7JGA9WhdbEEo."))
 
 let suite = "Monadic interface test" >:::

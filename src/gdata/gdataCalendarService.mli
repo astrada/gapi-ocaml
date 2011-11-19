@@ -34,106 +34,106 @@ end
 val personal_settings :
   ?url:string ->
   ?etag:string ->
-  GdataConversation.Session.t ->
-  (string, string) Hashtbl.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  (string, string) Hashtbl.t * GapiConversation.Session.t
 
 val all_calendars :
   ?url:string ->
   ?etag:string ->
-  GdataConversation.Session.t ->
-  GdataCalendar.Feed.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendar.Feed.t * GapiConversation.Session.t
 
 val own_calendars :
   ?url:string ->
   ?etag:string ->
-  GdataConversation.Session.t ->
-  GdataCalendar.Feed.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendar.Feed.t * GapiConversation.Session.t
 
 val refresh_calendar :
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendar.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendar.Entry.t * GapiConversation.Session.t
 
 val create_new_calendar :
   ?url:string ->
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendar.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendar.Entry.t * GapiConversation.Session.t
 
 val update_calendar :
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendar.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendar.Entry.t * GapiConversation.Session.t
 
 val delete_calendar :
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  unit * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
 val add_new_subscription :
   ?url:string ->
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendar.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendar.Entry.t * GapiConversation.Session.t
 
 val retrieve_events :
   ?url:string ->
   ?etag:string ->
   ?parameters:QueryParameters.t ->
-  GdataConversation.Session.t ->
-  GdataCalendarEvent.Feed.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendarEvent.Feed.t * GapiConversation.Session.t
 
 val refresh_event :
   GdataCalendarEvent.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendarEvent.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendarEvent.Entry.t * GapiConversation.Session.t
 
 val create_new_event :
   ?url:string ->
   GdataCalendarEvent.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendarEvent.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendarEvent.Entry.t * GapiConversation.Session.t
 
 val update_event :
   GdataCalendarEvent.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataCalendarEvent.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendarEvent.Entry.t * GapiConversation.Session.t
 
 val delete_event :
   GdataCalendarEvent.Entry.t ->
-  GdataConversation.Session.t ->
-  unit * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
 val retrieve_acl :
   ?etag:string ->
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataACL.Feed.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataACL.Feed.t * GapiConversation.Session.t
 
 val refresh_acl :
   GdataACL.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataACL.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataACL.Entry.t * GapiConversation.Session.t
 
 val create_acl :
   GdataACL.Entry.t ->
   GdataCalendar.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataACL.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataACL.Entry.t * GapiConversation.Session.t
 
 val update_acl :
   GdataACL.Entry.t ->
-  GdataConversation.Session.t ->
-  GdataACL.Entry.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataACL.Entry.t * GapiConversation.Session.t
 
 val delete_acl :
   GdataACL.Entry.t ->
-  GdataConversation.Session.t ->
-  unit * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
 val event_batch_request :
   GdataCalendarEvent.Feed.t ->
   GdataCalendarEvent.Feed.t ->
-  GdataConversation.Session.t ->
-  GdataCalendarEvent.Feed.t * GdataConversation.Session.t
+  GapiConversation.Session.t ->
+  GdataCalendarEvent.Feed.t * GapiConversation.Session.t
 

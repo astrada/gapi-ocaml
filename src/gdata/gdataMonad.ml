@@ -97,7 +97,7 @@ struct
 end
 
 module SessionStateMonad =
-  MakeStateMonad(struct type s = GdataConversation.Session.t end)
+  MakeStateMonad(struct type s = GapiConversation.Session.t end)
 
 module SessionM =
 struct

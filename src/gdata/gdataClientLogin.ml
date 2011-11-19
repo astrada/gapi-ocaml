@@ -107,17 +107,17 @@ let get_auth_token
       let (key, value) = ExtString.String.split line "=" in
         match key with
             "Auth" ->
-              GdataConversation.Done (GdataAuthResponse.ClientLoginAuthToken
+              GapiConversation.Done (GdataAuthResponse.ClientLoginAuthToken
                                         value)
           | "Error" ->
-              GdataConversation.Error value
+              GapiConversation.Error value
           | _ ->
-              GdataConversation.Continue parse_next_line
+              GapiConversation.Continue parse_next_line
     with End_of_file ->
-      GdataConversation.Error
+      GapiConversation.Error
         "Invalid response: authentication token not found" in 
   let parse_login_response pipe _ _ _ =
-    GdataConversation.loop parse_next_line pipe in
+    GapiConversation.loop parse_next_line pipe in
   let post_data = GapiCore.PostData.Fields
                     [("Email", email);
                      ("Passwd", password);
@@ -126,12 +126,12 @@ let get_auth_token
                      ("service", (Service.string_of service))]
   in
     try
-      GdataConversation.request
+      GapiConversation.request
         ~post_data
         GapiCore.HttpMethod.POST
         session
         url
         parse_login_response
-    with GdataConversation.ConversationException message ->
+    with GapiConversation.ConversationException message ->
       raise (LoginException (Error.of_string message))
 
