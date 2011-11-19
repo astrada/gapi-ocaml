@@ -1,10 +1,10 @@
 let do_request interact =
-  let state = GdataCurl.global_init () in
-    GdataConversation.with_session
-      GdataConfig.default
+  let state = GapiCurl.global_init () in
+    GapiConversation.with_session
+      GapiConfig.default
       state
       interact;
-    ignore (GdataCurl.global_cleanup state)
+    ignore (GapiCurl.global_cleanup state)
 
 let start_netplex callback =
   let process_compat

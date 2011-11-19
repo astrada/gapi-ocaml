@@ -225,7 +225,7 @@ let refresh_oauth2_token session =
                            GdataAuth.client_secret = client_secret;
                            GdataAuth.refresh_token = refresh_token } ->
           let (response, new_session) =
-            GdataOAuth2.refresh_access_token
+            GapiOAuth2.refresh_access_token
               ~client_id
               ~client_secret
               ~refresh_token

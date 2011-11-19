@@ -7,15 +7,15 @@ let _ =
   Common.do_request
     (fun session ->
        let (auth_token, _) =
-         GdataClientLogin.get_auth_token
+         GapiClientLogin.get_auth_token
            ~email
            ~password
            ~source:"GdataOcamlSample-ClientLogin"
-           ~service:GdataClientLogin.Service.Calendar
+           ~service:GapiClientLogin.Service.Calendar
            session
        in
          match auth_token with
-             GdataAuthResponse.ClientLoginAuthToken token ->
+             GapiAuthResponse.ClientLoginAuthToken token ->
                Printf.printf "token=%s\n" token
            | _ -> failwith "Not supported auth response")
 

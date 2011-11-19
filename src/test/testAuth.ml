@@ -123,7 +123,7 @@ let test_oauth1_revoke_invalid_token () =
                session))
 
 let test_oauth2_authorization_url () =
-  let url = GdataOAuth2.authorization_code_url
+  let url = GapiOAuth2.authorization_code_url
               ~redirect_uri:"urn:ietf:wg:oauth:2.0:oob"
               ~scope:"http://www.google.com/calendar/feeds"
               ~response_type:"code"
@@ -142,7 +142,7 @@ let test_invalid_oauth2_access_token () =
          assert_raises
            (Failure "Error: invalid_grant (HTTP response code: 400)")
            (fun () ->
-              GdataOAuth2.get_access_token
+              GapiOAuth2.get_access_token
                 ~client_id
                 ~client_secret
                 ~code:"dummy code"
@@ -157,7 +157,7 @@ let test_oauth2_refresh_token () =
        let client_secret = get "oa2_secret" in
        let refresh_token = get "oa2_refresh" in
        let (response, _) =
-         GdataOAuth2.refresh_access_token
+         GapiOAuth2.refresh_access_token
            ~client_id
            ~client_secret
            ~refresh_token

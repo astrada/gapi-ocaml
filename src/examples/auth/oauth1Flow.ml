@@ -14,7 +14,7 @@ let get_access_token
     (fun session ->
        try
          let (response, _) =
-           GdataOAuth1.get_access_token
+           GapiOAuth1.get_access_token
              ~consumer_secret
              ~oauth_consumer_key
              ~oauth_token
@@ -23,10 +23,10 @@ let get_access_token
              session in
          let output =
            match response with
-               GdataAuthResponse.OAuth1GetAccessToken token ->
+               GapiAuthResponse.OAuth1GetAccessToken token ->
                  Printf.sprintf "oauth_token=%s; oauth_token_secret=%s\n"
-                   token.GdataAuthResponse.OAuth1.access_token
-                   token.GdataAuthResponse.OAuth1.access_token_secret
+                   token.GapiAuthResponse.OAuth1.access_token
+                   token.GapiAuthResponse.OAuth1.access_token_secret
              | _ -> failwith "Not supported OAuth1 response"
          in
            Common.output_page "OAuth1 Flow" "Success" output cgi
@@ -44,7 +44,7 @@ let get_request_token () =
   Common.do_request
     (fun session ->
        let (response, _) =
-         GdataOAuth1.get_request_token
+         GapiOAuth1.get_request_token
            ~xoauth_displayname
            ~consumer_secret
            ~oauth_consumer_key
@@ -53,11 +53,11 @@ let get_request_token () =
            session in
        let (token, secret) =
          match response with
-             GdataAuthResponse.OAuth1RequestToken token ->
-               (token.GdataAuthResponse.OAuth1.request_token,
-                token.GdataAuthResponse.OAuth1.request_token_secret)
+             GapiAuthResponse.OAuth1RequestToken token ->
+               (token.GapiAuthResponse.OAuth1.request_token,
+                token.GapiAuthResponse.OAuth1.request_token_secret)
            | _ -> failwith "Not supported OAuth1 response" in
-       let url = GdataOAuth1.authorize_token_url
+       let url = GapiOAuth1.authorize_token_url
                    ~hd:"default"
                    ~hl:"en"
                    token in

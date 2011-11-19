@@ -8,7 +8,7 @@ let get_access_token code (cgi : Netcgi.cgi_activation) =
   Common.do_request
     (fun session ->
        let (response, _) =
-         GdataOAuth2.get_access_token
+         GapiOAuth2.get_access_token
            ~client_id
            ~client_secret
            ~code
@@ -16,12 +16,12 @@ let get_access_token code (cgi : Netcgi.cgi_activation) =
            session in
        let output =
          match response with
-             GdataAuthResponse.OAuth2AccessToken token ->
+             GapiAuthResponse.OAuth2AccessToken token ->
                Printf.sprintf "access_token=%s; token_type=%s; expires_in=%d; refresh_token=%s\n"
-                 token.GdataAuthResponse.OAuth2.access_token
-                 token.GdataAuthResponse.OAuth2.token_type
-                 token.GdataAuthResponse.OAuth2.expires_in
-                 token.GdataAuthResponse.OAuth2.refresh_token
+                 token.GapiAuthResponse.OAuth2.access_token
+                 token.GapiAuthResponse.OAuth2.token_type
+                 token.GapiAuthResponse.OAuth2.expires_in
+                 token.GapiAuthResponse.OAuth2.refresh_token
            | _ -> failwith "Not supported OAuth2 response"
        in
          Common.output_page "OAuth2 Flow" "Success" output cgi)
@@ -35,7 +35,7 @@ let oauth2_callback (cgi : Netcgi.cgi_activation) =
       get_access_token code cgi
 
 let main () =
-  let url = GdataOAuth2.authorization_code_url
+  let url = GapiOAuth2.authorization_code_url
               ~redirect_uri
               ~scope:"http://www.google.com/calendar/feeds"
               ~response_type:"code"

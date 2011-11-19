@@ -6,7 +6,7 @@ let _ =
        let client_secret = get "oa2_secret" in
        let refresh_token = get "oa2_refresh" in
        let (response, _) =
-         GdataOAuth2.refresh_access_token
+         GapiOAuth2.refresh_access_token
            ~client_id
            ~client_secret
            ~refresh_token

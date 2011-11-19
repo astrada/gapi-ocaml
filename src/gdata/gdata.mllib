@@ -8,7 +8,6 @@ GdataCalendarService
 GdataComments
 GdataCore
 GdataMonad
-GdataOAuth2
 GdataRequest
 GdataService
 GdataUtils
