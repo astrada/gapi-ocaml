@@ -32,12 +32,20 @@ obtain an access token.
 
 See [OAuth 1.0 for Web Applications](http://code.google.com/apis/accounts/docs/OAuth.html) for all the details.
 
+See [OAuth Playground](http://googlecodesamples.com/oauth_playground/) for an
+alternative way to obtain access tokens and to further experiment with the
+Google OAuth 1.0 endpoint.
+
 ### OAuth 2.0
 
 See [Auth examples](../examples/auth/README.md) for instructions on how to
 obtain a refresh token.
 
 See [Using OAuth 2.0 for Web Server Applications](http://code.google.com/apis/accounts/docs/OAuth2WebServer.html) for all the details.
+
+See [OAuth 2.0 Playground](https://code.google.com/oauthplayground/) for an
+alternative way to obtain access tokens and to further experiment with the
+Google OAuth 2.0 endpoint.
 
 ### Configuring tests
 

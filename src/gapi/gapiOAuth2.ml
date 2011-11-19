@@ -1,5 +1,7 @@
 let authorization_code_url
       ?(base_url = "https://accounts.google.com/o/oauth2/auth")
+      ?(access_type = "offline")
+      ?(approval_prompt = "force")
       ~redirect_uri
       ~scope
       ~response_type
@@ -8,7 +10,9 @@ let authorization_code_url
     [("client_id", client_id);
      ("redirect_uri", redirect_uri);
      ("scope", scope);
-     ("response_type", response_type)] in
+     ("response_type", response_type);
+     ("access_type", access_type);
+     ("approval_prompt", approval_prompt)] in
   let query_string = Netencoding.Url.mk_url_encoded_parameters fields in
     base_url ^ "?" ^ query_string
 
