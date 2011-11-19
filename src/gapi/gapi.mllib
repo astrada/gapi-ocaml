@@ -5,4 +5,5 @@ GapiPipe
 GapiConfig
 GapiConversation
 GapiAuthResponse
+GapiClientLogin
 

@@ -7,11 +7,11 @@ let test_client_login () =
        let email = get "cl_user" in
        let password = get "cl_pass" in
        let (auth_token, _) =
-         GdataClientLogin.get_auth_token
+         GapiClientLogin.get_auth_token
            ~email
            ~password
            ~source:"GdataOcamlSample-ClientLogin"
-           ~service:GdataClientLogin.Service.Calendar
+           ~service:GapiClientLogin.Service.Calendar
            session
        in
          match auth_token with

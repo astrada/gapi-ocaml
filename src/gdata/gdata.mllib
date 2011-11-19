@@ -5,7 +5,6 @@ GdataBatch
 GdataCalendar
 GdataCalendarEvent
 GdataCalendarService
-GdataClientLogin
 GdataComments
 GdataCore
 GdataMonad

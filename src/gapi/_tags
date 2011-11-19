@@ -7,4 +7,5 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <gapiPipe.*> : pkg_netstring
 <gapiConfig.*> : pkg_curl
 <gapiConversation.*> : pkg_netstring, pkg_curl, pkg_extlib
+<gapiClientLogin.*> : pkg_netstring, pkg_curl, pkg_extlib, pkg_str
 

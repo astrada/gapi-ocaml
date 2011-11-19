@@ -2,7 +2,6 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 
 # Packages deps
 <gdataUtils.*> : pkg_xmlm
-<gdataClientLogin.*> : pkg_netstring, pkg_curl, pkg_extlib, pkg_str
 <gdataOAuth1.*> : pkg_netstring, pkg_curl, pkg_extlib, pkg_str, pkg_cryptokit
 <gdataOAuth2.*> : pkg_netstring, pkg_curl, pkg_cryptokit, \
                   pkg_extlib, pkg_json-wheel
