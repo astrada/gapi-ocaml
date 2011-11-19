@@ -1,6 +1,5 @@
 GdataACL
 GdataAtom
-GdataAuth
 GdataBatch
 GdataCalendar
 GdataCalendarEvent
@@ -8,6 +7,5 @@ GdataCalendarService
 GdataComments
 GdataCore
 GdataMonad
-GdataRequest
 GdataService
 GdataUtils

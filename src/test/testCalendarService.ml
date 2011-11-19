@@ -164,7 +164,7 @@ let test_retrieve_events () =
 
 let test_create_new_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
-  let entry = GdataRequest.parse_xml
+  let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
     TestHelper.test_request
@@ -185,7 +185,7 @@ let test_create_new_event () =
 
 let test_update_event () =
   let ch = open_in "test/data/new_event_entry.xml" in
-  let entry = GdataRequest.parse_xml
+  let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
     TestHelper.test_request
@@ -258,7 +258,7 @@ let test_create_quick_add_event () =
 
 let test_create_recurring_event () =
   let ch = open_in "test/data/recurrence.xml" in
-  let entry = GdataRequest.parse_xml
+  let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
   let entry = { entry with
@@ -343,7 +343,7 @@ let test_update_acl () =
 
 let test_event_batch_request () =
   let ch = open_in "test/data/event_batch_request.xml" in
-  let batch_request = GdataRequest.parse_xml
+  let batch_request = GdataUtils.parse_xml
                         (fun () -> input_byte ch)
                         GdataCalendarEvent.Feed.parse_feed in
   let find_entry id feed =

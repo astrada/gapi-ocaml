@@ -13,11 +13,11 @@ let _ =
            session
        in
          match response with
-             GdataAuthResponse.OAuth2AccessToken token ->
+             GapiAuthResponse.OAuth2AccessToken token ->
                TestHelper.Config.set
                  test_config
                  "oa2_token"
-                 token.GdataAuthResponse.OAuth2.access_token;
+                 token.GapiAuthResponse.OAuth2.access_token;
                TestHelper.Config.save test_config "test/test.config"
            | _ -> failwith "Not supported OAuth2 response")
 

@@ -10,82 +10,6 @@ type request_type =
   | Update
   | Delete
 
-let render_xml buffer tree =
-  let output = Xmlm.make_output (`Buffer buffer) in
-  let rec frag_of_node node =
-    match node with
-        GapiCore.AnnotatedTree.Leaf ([`Text], d)
-      | GapiCore.AnnotatedTree.Leaf ([`Cdata], d) ->
-          `Data d
-      | GapiCore.AnnotatedTree.Node ([`Element;
-                                       `Name name;
-                                       `Namespace namespace],
-                                      children) ->
-          let attributes = List.fold_left
-                             (fun attrs e ->
-                                match e with
-                                    GapiCore.AnnotatedTree.Leaf ([`Attribute;
-                                                                   `Name n;
-                                                                   `Namespace ns],
-                                                                  d) ->
-                                      ((ns, n), d) :: attrs
-                                  | _ -> attrs)
-                             []
-                             children in
-          let elements =
-            List.filter
-              (fun e ->
-                 match e with
-                     GapiCore.AnnotatedTree.Leaf (m, _)
-                   | GapiCore.AnnotatedTree.Node (m, _) ->
-                       match GdataCore.Metadata.node_type m with
-                           `Attribute -> false
-                         | _ -> true) children
-          in
-            `El (((namespace, name), attributes), elements)
-      | _ -> assert false
-  in
-    Xmlm.output_doc_tree frag_of_node output (None, tree)
-
-let data_to_xml_string ?(buffer_size = 512) tree =
-  let buffer = Buffer.create buffer_size in
-  let () = render_xml buffer tree in
-  let result = Buffer.contents buffer in
-    (* Replace new-line character after xml declaration, because it causes a
-     * server-side error *)
-    String.fill result 38 1 ' ';
-    result
-
-let parse_xml next_byte parse_tree =
-  let input = Xmlm.make_input ~strip:true (`Fun next_byte) in 
-  let el tag children =
-    let ((namespace, name), attribute_list) = tag in
-    let attrs = List.map
-                  (fun ((ns, n), d) ->
-                     GapiCore.AnnotatedTree.Leaf (
-                       [`Attribute;
-                        `Name n;
-                        `Namespace ns],
-                       d)
-                  )
-                  attribute_list in
-      GapiCore.AnnotatedTree.Node (
-        [`Element;
-         `Name name;
-         `Namespace namespace],
-        attrs @ children) in
-  let data d =
-    GapiCore.AnnotatedTree.Leaf (
-      [`Text],
-      d) in
-  let (_, tree) = Xmlm.input_doc_tree ~el ~data input in
-    parse_tree tree
-
-let parse_xml_response parse_xml_tree pipe =
-  parse_xml
-    (fun () -> GapiPipe.OcamlnetPipe.read_byte pipe)
-    parse_xml_tree
-
 let parse_empty_response _ =
   ()
 
@@ -115,11 +39,11 @@ let parse_response parse_output pipe response_code headers session =
 let build_auth_data session =
   match session.GapiConversation.Session.config.GapiConfig.auth with
       GapiConfig.NoAuth ->
-        GdataAuth.NoAuth
+        GapiAuth.NoAuth
     | GapiConfig.ClientLogin _ ->
         begin match session.GapiConversation.Session.auth with
             GapiConversation.Session.ClientLogin token ->
-              GdataAuth.ClientLogin token
+              GapiAuth.ClientLogin token
           | _ ->
               failwith "Unexpected auth context for Client Login"
         end
@@ -130,11 +54,11 @@ let build_auth_data session =
             GapiConversation.Session.OAuth1
               { GapiConversation.Session.token = token;
                 GapiConversation.Session.secret = secret } ->
-              GdataAuth.OAuth1 { GdataAuth.signature_method = signature_method;
-                                 GdataAuth.consumer_key = consumer_key;
-                                 GdataAuth.consumer_secret = consumer_secret;
-                                 GdataAuth.token = token;
-                                 GdataAuth.secret = secret }
+              GapiAuth.OAuth1 { GapiAuth.signature_method = signature_method;
+                                 GapiAuth.consumer_key = consumer_key;
+                                 GapiAuth.consumer_secret = consumer_secret;
+                                 GapiAuth.token = token;
+                                 GapiAuth.secret = secret }
           | _ ->
               failwith "Unexpected auth context for OAuth1"
         end
@@ -144,10 +68,10 @@ let build_auth_data session =
             GapiConversation.Session.OAuth2
               { GapiConversation.Session.oauth2_token = oauth2_token;
                 GapiConversation.Session.refresh_token = refresh_token } ->
-              GdataAuth.OAuth2 { GdataAuth.client_id = client_id;
-                                 GdataAuth.client_secret = client_secret;
-                                 GdataAuth.oauth2_token = oauth2_token;
-                                 GdataAuth.refresh_token = refresh_token }
+              GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
+                                 GapiAuth.client_secret = client_secret;
+                                 GapiAuth.oauth2_token = oauth2_token;
+                                 GapiAuth.refresh_token = refresh_token }
           | _ ->
               failwith "Unexpected auth context for OAuth2"
         end
@@ -173,22 +97,22 @@ let single_request
       | Delete -> GapiCore.HttpMethod.DELETE in
   let oauth1_params =
     match auth_data with
-        GdataAuth.NoAuth
-      | GdataAuth.ClientLogin _
-      | GdataAuth.OAuth2 _ ->
+        GapiAuth.NoAuth
+      | GapiAuth.ClientLogin _
+      | GapiAuth.OAuth2 _ ->
           None
-      | GdataAuth.OAuth1 _ ->
+      | GapiAuth.OAuth1 _ ->
           let post_fields =
             match post_data with
                 Some (GapiCore.PostData.Fields fields) -> fields
               | _ -> []
           in
-            Some { GdataAuth.http_method = http_method;
-                   GdataAuth.url = url;
-                   GdataAuth.post_fields_to_sign = post_fields } in
+            Some { GapiAuth.http_method = http_method;
+                   GapiAuth.url = url;
+                   GapiAuth.post_fields_to_sign = post_fields } in
   let authorization_header =
     Option.map (fun a -> GapiCore.Header.Authorization a)
-      (GdataAuth.generate_authorization_header ?oauth1_params auth_data) in
+      (GapiAuth.generate_authorization_header ?oauth1_params auth_data) in
   let version_header =
     Option.map (fun v -> GapiCore.Header.GdataVersion v) version in
   let etag_header =
@@ -221,9 +145,9 @@ let single_request
 let refresh_oauth2_token session =
   let auth_data = build_auth_data session in
     match auth_data with
-        GdataAuth.OAuth2 { GdataAuth.client_id = client_id;
-                           GdataAuth.client_secret = client_secret;
-                           GdataAuth.refresh_token = refresh_token } ->
+        GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
+                           GapiAuth.client_secret = client_secret;
+                           GapiAuth.refresh_token = refresh_token } ->
           let (response, new_session) =
             GapiOAuth2.refresh_access_token
               ~client_id

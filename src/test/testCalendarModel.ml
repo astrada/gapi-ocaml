@@ -2,7 +2,7 @@ open OUnit
 
 let test_parse_personal_settings () =
   let ch = open_in "test/data/settings.xml" in
-  let settings = GdataRequest.parse_xml
+  let settings = GdataUtils.parse_xml
                    (fun () -> input_byte ch)
                    GdataCalendar.parse_personal_settings in
   let country = Hashtbl.find settings "country" in
@@ -12,7 +12,7 @@ let test_parse_personal_settings () =
 
 let test_parse_calendar_feed () =
   let ch = open_in "test/data/all_calendars.xml" in
-  let feed = GdataRequest.parse_xml
+  let feed = GdataUtils.parse_xml
                (fun () -> input_byte ch)
                GdataCalendar.Feed.parse_feed in
     assert_equal ~msg:"feed author"
@@ -24,7 +24,7 @@ let test_parse_calendar_feed () =
 
 let test_parse_calendar_entry () =
   let ch = open_in "test/data/calendar_entry.xml" in
-  let entry = GdataRequest.parse_xml
+  let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 GdataCalendar.parse_calendar_entry in
     assert_equal ~msg:"entry title"
@@ -36,7 +36,7 @@ let test_parse_calendar_entry () =
 
 let test_parse_calendar_entry_with_extensions () =
   let ch = open_in "test/data/calendar_entry_with_extensions.xml" in
-  let entry = GdataRequest.parse_xml
+  let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 GdataCalendar.parse_calendar_entry in
     assert_equal
@@ -161,21 +161,21 @@ let test_calendar_entry_to_data_model () =
   let tree = GdataCalendar.calendar_entry_to_data_model entry in
     TestHelper.assert_equal_file
       "test/data/test_calendar_entry_to_data_model.xml"
-      (GdataRequest.data_to_xml_string tree)
+      (GdataUtils.data_to_xml_string tree)
 
 let test_parse_calendar_event_entry () =
   let ch = open_in "test/data/event_entry.xml" in
-  let entry = GdataRequest.parse_xml
+  let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
   let tree = GdataCalendarEvent.calendar_event_entry_to_data_model entry in
     TestHelper.assert_equal_file
       "test/data/test_parse_calendar_event_entry.xml"
-      (GdataRequest.data_to_xml_string tree)
+      (GdataUtils.data_to_xml_string tree)
 
 let test_parse_calendar_event_feed () =
   let ch = open_in "test/data/event_feed.xml" in
-  let feed = GdataRequest.parse_xml
+  let feed = GdataUtils.parse_xml
                (fun () -> input_byte ch)
                GdataCalendarEvent.Feed.parse_feed in
     assert_equal ~msg:"feed author"
@@ -190,7 +190,7 @@ let test_parse_calendar_event_feed () =
 
 let test_parse_acl_feed () =
   let ch = open_in "test/data/acl_feed.xml" in
-  let feed = GdataRequest.parse_xml
+  let feed = GdataUtils.parse_xml
                (fun () -> input_byte ch)
                GdataACL.Feed.parse_feed in
   let entry = List.nth feed.GdataACL.Feed.entries 1 in
@@ -209,18 +209,18 @@ let test_parse_acl_feed () =
 
 let test_acl_entry_to_data_model () =
   let ch = open_in "test/data/acl_feed.xml" in
-  let feed = GdataRequest.parse_xml
+  let feed = GdataUtils.parse_xml
                (fun () -> input_byte ch)
                GdataACL.Feed.parse_feed in
   let entry = List.nth feed.GdataACL.Feed.entries 1 in
   let tree = GdataACL.acl_entry_to_data_model entry in
     TestHelper.assert_equal_file
       "test/data/test_acl_entry_to_data_model.xml"
-      (GdataRequest.data_to_xml_string tree)
+      (GdataUtils.data_to_xml_string tree)
 
 let test_calendar_event_batch_feed () =
   let ch = open_in "test/data/event_batch_request.xml" in
-  let feed = GdataRequest.parse_xml
+  let feed = GdataUtils.parse_xml
                (fun () -> input_byte ch)
                GdataCalendarEvent.Feed.parse_feed in
   let test_batch_id id entry =

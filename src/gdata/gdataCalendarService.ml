@@ -89,22 +89,22 @@ end
 let version = "2"
 
 let parse_calendar_feed =
-  GdataRequest.parse_xml_response GdataCalendar.Feed.parse_feed
+  GdataUtils.parse_xml_response GdataCalendar.Feed.parse_feed
 
 let parse_calendar_entry =
-  GdataRequest.parse_xml_response GdataCalendar.parse_calendar_entry
+  GdataUtils.parse_xml_response GdataCalendar.parse_calendar_entry
 
 let parse_event_feed =
-  GdataRequest.parse_xml_response GdataCalendarEvent.Feed.parse_feed
+  GdataUtils.parse_xml_response GdataCalendarEvent.Feed.parse_feed
 
 let parse_event_entry =
-  GdataRequest.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry
+  GdataUtils.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry
 
 let parse_acl_feed =
-  GdataRequest.parse_xml_response GdataACL.Feed.parse_feed
+  GdataUtils.parse_xml_response GdataACL.Feed.parse_feed
 
 let parse_acl_entry =
-  GdataRequest.parse_xml_response GdataACL.parse_acl_entry
+  GdataUtils.parse_xml_response GdataACL.parse_acl_entry
 
 let get_url_etag links etag =
   let url = GdataCalendar.find_url `Edit links in
@@ -144,7 +144,7 @@ let personal_settings
     ~version
     ?etag
     url
-    (GdataRequest.parse_xml_response GdataCalendar.parse_personal_settings)
+    (GdataUtils.parse_xml_response GdataCalendar.parse_personal_settings)
     session
 
 let all_calendars

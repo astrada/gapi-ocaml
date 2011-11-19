@@ -11,4 +11,6 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <gapiOAuth1.*> : pkg_netstring, pkg_curl, pkg_extlib, pkg_str, pkg_cryptokit
 <gapiOAuth2.*> : pkg_netstring, pkg_curl, pkg_cryptokit, \
                  pkg_extlib, pkg_json-wheel
+<gapiAuth.*> : pkg_netstring, pkg_extlib
+<gapiRequest.*> : pkg_netstring, pkg_extlib, pkg_xmlm
 

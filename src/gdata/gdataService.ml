@@ -3,7 +3,7 @@ let service_request
       ?version
       ?query_parameters
       ?etag
-      ?(request_type = GdataRequest.Query)
+      ?(request_type = GapiRequest.Query)
       url
       parse_response
       session =
@@ -14,11 +14,11 @@ let service_request
   let post_data =
     Option.map
       (fun data ->
-         let body = GdataRequest.data_to_xml_string data in
+         let body = GdataUtils.data_to_xml_string data in
            GapiCore.PostData.Body (body, GdataCore.default_content_type))
       data_to_upload
   in
-    GdataRequest.gdata_request
+    GapiRequest.gdata_request
       ?post_data
       ?version
       ?etag
@@ -46,7 +46,7 @@ let service_request_with_data
         url
         parse_response
         session
-    with GdataRequest.NotModified new_session ->
+    with GapiRequest.NotModified new_session ->
       (data, new_session)
 
 let query
@@ -60,7 +60,7 @@ let query
     ?version
     ?etag
     ?query_parameters
-    ~request_type:GdataRequest.Query
+    ~request_type:GapiRequest.Query
     url
     parse_response
     session
@@ -76,7 +76,7 @@ let create
     ?version
     data
     data_to_tree
-    GdataRequest.Create
+    GapiRequest.Create
     url
     parse_response
     session
@@ -95,7 +95,7 @@ let read
       url
       parse_response
       session
-  with GdataRequest.NotModified new_session ->
+  with GapiRequest.NotModified new_session ->
     (data, new_session)
 
 let update
@@ -111,7 +111,7 @@ let update
     ?etag
     data
     data_to_tree
-    GdataRequest.Update
+    GapiRequest.Update
     url
     parse_response
     session
@@ -124,9 +124,9 @@ let delete
   service_request
     ?version
     ?etag
-    ~request_type:GdataRequest.Delete
+    ~request_type:GapiRequest.Delete
     url
-    GdataRequest.parse_empty_response
+    GapiRequest.parse_empty_response
     session
 
 let batch_request
@@ -140,7 +140,7 @@ let batch_request
     ?version
     data
     data_to_tree
-    GdataRequest.Create
+    GapiRequest.Create
     url
     parse_response
     session
