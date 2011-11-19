@@ -8,7 +8,7 @@ val query :
   'a * GapiConversation.Session.t
 
 val create :
-  ('a -> GdataCore.xml_data_model) ->
+  ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   'a ->
   string ->
@@ -26,7 +26,7 @@ val read :
   'a * GapiConversation.Session.t
 
 val update :
-  ('a -> GdataCore.xml_data_model) ->
+  ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   ?etag:string ->
   'a ->
@@ -43,7 +43,7 @@ val delete :
   unit * GapiConversation.Session.t
 
 val batch_request :
-  ('a -> GdataCore.xml_data_model) ->
+  ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   'a ->
   string ->

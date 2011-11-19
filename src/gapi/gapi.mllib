@@ -11,4 +11,5 @@ GapiOAuth2
 GapiAuth
 GapiRequest
 GapiMonad
+GapiService
 

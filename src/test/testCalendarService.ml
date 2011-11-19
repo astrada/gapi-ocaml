@@ -74,18 +74,19 @@ let test_create_new_calendar () =
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_calendar entry session in
-         let (_, session) =
-           GdataCalendarService.refresh_calendar new_entry session in
          let id = new_entry.GdataCalendar.Entry.id in
          let (feed, session) = GdataCalendarService.own_calendars session in
+         let (_, session) =
+           GdataCalendarService.refresh_calendar new_entry session
+         in
+           ignore (GdataCalendarService.delete_calendar
+                     new_entry
+                     session);
            assert_bool
              "Created entry id not found in own calendars feed"
              (List.exists
                 (fun e -> e.GdataCalendar.Entry.id = id)
-                feed.GdataCalendar.Feed.entries);
-           ignore (GdataCalendarService.delete_calendar
-                     new_entry
-                     session))
+                feed.GdataCalendar.Feed.entries))
 
 let test_delete_calendar () =
   let entry = new_calendar_entry "test_delete_calendar" in

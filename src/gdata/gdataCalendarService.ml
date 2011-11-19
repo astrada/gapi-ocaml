@@ -186,9 +186,9 @@ let create_new_calendar
       entry
       session =
   GdataService.create
+    GdataCalendar.calendar_entry_to_data_model 
     ~version
     entry
-    GdataCalendar.calendar_entry_to_data_model 
     url
     parse_calendar_entry
     session
@@ -198,10 +198,10 @@ let update_calendar
       session =
   let (url, etag) = get_url_etag_calendar entry in
     GdataService.update
+      GdataCalendar.calendar_entry_to_data_model 
       ~version
       ?etag
       entry
-      GdataCalendar.calendar_entry_to_data_model 
       url
       parse_calendar_entry
       session
@@ -221,9 +221,9 @@ let add_new_subscription
       entry
       session =
   GdataService.create
+    GdataCalendar.calendar_entry_to_data_model
     ~version
     entry
-    GdataCalendar.calendar_entry_to_data_model
     url
     parse_calendar_entry
     session
@@ -261,9 +261,9 @@ let create_new_event
       entry
       session =
   GdataService.create
+    GdataCalendarEvent.calendar_event_entry_to_data_model 
     ~version
     entry
-    GdataCalendarEvent.calendar_event_entry_to_data_model 
     url
     parse_event_entry
     session
@@ -273,10 +273,10 @@ let update_event
       session =
   let (url, etag) = get_url_etag_event entry in
     GdataService.update
+      GdataCalendarEvent.calendar_event_entry_to_data_model 
       ~version
       ?etag
       entry
-      GdataCalendarEvent.calendar_event_entry_to_data_model 
       url
       parse_event_entry
       session
@@ -321,9 +321,9 @@ let create_acl
       session =
   let url = GdataCalendar.find_url `Acl calendar_entry.GdataCalendar.Entry.links in
     GdataService.create
+      GdataACL.acl_entry_to_data_model 
       ~version
       acl_entry
-      GdataACL.acl_entry_to_data_model 
       url
       parse_acl_entry
       session
@@ -333,10 +333,10 @@ let update_acl
       session =
   let (url, etag) = get_url_etag_acl entry in
     GdataService.update
+      GdataACL.acl_entry_to_data_model 
       ~version
       ?etag
       entry
-      GdataACL.acl_entry_to_data_model 
       url
       parse_acl_entry
       session
@@ -359,9 +359,9 @@ let event_batch_request
               `Batch
               target_feed.GdataCalendarEvent.Feed.links in
     GdataService.batch_request
+      GdataCalendarEvent.calendar_event_feed_to_data_model
       ~version
       batch_feed
-      GdataCalendarEvent.calendar_event_feed_to_data_model
       url
       parse_event_feed
       session
