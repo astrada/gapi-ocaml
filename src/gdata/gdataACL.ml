@@ -63,9 +63,9 @@ struct
     contributors = [];
     id = "";
     content = GdataAtom.Content.empty;
-    published = GdataDate.epoch;
-    updated = GdataDate.epoch;
-    edited = GdataDate.epoch;
+    published = GapiDate.epoch;
+    updated = GapiDate.epoch;
+    edited = GapiDate.epoch;
     links = [];
     title = GdataAtom.Title.empty;
     scope = Scope.empty;
@@ -139,17 +139,17 @@ struct
           ([`Element; `Name "published"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-          { entry with published = GdataDate.of_string v }
+          { entry with published = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-          { entry with updated = GdataDate.of_string v }
+          { entry with updated = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "edited"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_app ->
-          { entry with edited = GdataDate.of_string v }
+          { entry with edited = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->

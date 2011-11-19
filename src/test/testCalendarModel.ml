@@ -108,9 +108,9 @@ let test_calendar_entry_to_data_model () =
             { GdataAtom.Content.empty with
                   GdataAtom.Content.src = "src";
             };
-          GdataCalendar.Entry.published = GdataDate.of_string "2010-05-15T20:00:00.000Z";
-          GdataCalendar.Entry.updated = GdataDate.of_string "2011-08-16T12:00:00.000Z";
-          GdataCalendar.Entry.edited = GdataDate.of_string "2011-06-06T15:00:00.000Z";
+          GdataCalendar.Entry.published = GapiDate.of_string "2010-05-15T20:00:00.000Z";
+          GdataCalendar.Entry.updated = GapiDate.of_string "2011-08-16T12:00:00.000Z";
+          GdataCalendar.Entry.edited = GapiDate.of_string "2011-06-06T15:00:00.000Z";
           GdataCalendar.Entry.accesslevel = "accesslevel";
           GdataCalendar.Entry.links = [
             { GdataCalendar.Link.empty with

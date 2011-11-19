@@ -6,50 +6,50 @@ struct
     author : string;
     fields : string;
     max_results : int;
-    published_min : GdataDate.t;
-    published_max : GdataDate.t;
+    published_min : GapiDate.t;
+    published_max : GapiDate.t;
     q : string;
     start_index : int;
     strict : bool;
-    updated_min : GdataDate.t;
-    updated_max : GdataDate.t;
+    updated_min : GapiDate.t;
+    updated_max : GapiDate.t;
     ctz : string;
     future_events : bool;
     max_attendees : int;
     orderby : string;
-    recurrence_expansion_start : GdataDate.t;
-    recurrence_expansion_end : GdataDate.t;
+    recurrence_expansion_start : GapiDate.t;
+    recurrence_expansion_end : GapiDate.t;
     singleevents : bool;
     showdeleted : bool;
     showhidden : bool;
     sortorder : string;
-    start_min : GdataDate.t;
-    start_max : GdataDate.t
+    start_min : GapiDate.t;
+    start_max : GapiDate.t
   }
 
   let default = {
     author = "";
     fields = "";
     max_results = 0;
-    published_min = GdataDate.epoch;
-    published_max = GdataDate.epoch;
+    published_min = GapiDate.epoch;
+    published_max = GapiDate.epoch;
     q = "";
     start_index = 0;
     strict = false;
-    updated_min = GdataDate.epoch;
-    updated_max = GdataDate.epoch;
+    updated_min = GapiDate.epoch;
+    updated_max = GapiDate.epoch;
     ctz = "";
     future_events = false;
     max_attendees = 0;
     orderby = "";
-    recurrence_expansion_start = GdataDate.epoch;
-    recurrence_expansion_end = GdataDate.epoch;
+    recurrence_expansion_start = GapiDate.epoch;
+    recurrence_expansion_end = GapiDate.epoch;
     singleevents = false;
     showdeleted = false;
     showhidden = false;
     sortorder = "";
-    start_min = GdataDate.epoch;
-    start_max = GdataDate.epoch
+    start_min = GapiDate.epoch;
+    start_max = GapiDate.epoch
   }
 
   let to_key_value_list qp =
@@ -63,25 +63,25 @@ struct
       [param (fun p -> p.author) Std.identity "author";
        param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.max_results) string_of_int "max-results";
-       param (fun p -> p.published_min) GdataDate.to_string "published-min";
-       param (fun p -> p.published_max) GdataDate.to_string "published-max";
+       param (fun p -> p.published_min) GapiDate.to_string "published-min";
+       param (fun p -> p.published_max) GapiDate.to_string "published-max";
        param (fun p -> p.q) Std.identity "q";
        param (fun p -> p.start_index) string_of_int "start-index";
        param (fun p -> p.strict) string_of_bool "strict";
-       param (fun p -> p.updated_min) GdataDate.to_string "updated-min";
-       param (fun p -> p.updated_max) GdataDate.to_string "updated-max";
+       param (fun p -> p.updated_min) GapiDate.to_string "updated-min";
+       param (fun p -> p.updated_max) GapiDate.to_string "updated-max";
        param (fun p -> p.ctz) Std.identity "ctz";
        param (fun p -> p.future_events) string_of_bool "future-events";
        param (fun p -> p.max_attendees) string_of_int "max-attendees";
        param (fun p -> p.orderby) Std.identity "orderby";
-       param (fun p -> p.recurrence_expansion_start) GdataDate.to_string "recurrence-expansion-start";
-       param (fun p -> p.recurrence_expansion_end) GdataDate.to_string "recurrence-expansion-end";
+       param (fun p -> p.recurrence_expansion_start) GapiDate.to_string "recurrence-expansion-start";
+       param (fun p -> p.recurrence_expansion_end) GapiDate.to_string "recurrence-expansion-end";
        param (fun p -> p.singleevents) string_of_bool "singleevents";
        param (fun p -> p.showdeleted) string_of_bool "showdeleted";
        param (fun p -> p.showhidden) string_of_bool "showhidden";
        param (fun p -> p.sortorder) Std.identity "sortorder";
-       param (fun p -> p.start_min) GdataDate.to_string "start-min";
-       param (fun p -> p.start_max) GdataDate.to_string "start-max"]
+       param (fun p -> p.start_min) GapiDate.to_string "start-min";
+       param (fun p -> p.start_max) GapiDate.to_string "start-max"]
       |> List.concat
 
 end

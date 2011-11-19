@@ -10,11 +10,11 @@ let test_to_string () =
     Netdate.second = 0;
     Netdate.zone = 120;
     Netdate.week_day = -1 } in
-  let s = GdataDate.to_string t in
+  let s = GapiDate.to_string t in
     assert_equal "2011-10-14T10:30:00.000+02:00" s
 
 let test_of_string () =
-  let t = GdataDate.of_string "2011-10-14T10:30:00.000+02:00" in
+  let t = GapiDate.of_string "2011-10-14T10:30:00.000+02:00" in
     assert_equal
       { Netdate.year = 2011;
         Netdate.month = 10;
@@ -27,7 +27,7 @@ let test_of_string () =
       t
 
 let test_of_string_negative_offset () =
-  let t = GdataDate.of_string "2011-10-14T10:30:00.000-02:00" in
+  let t = GapiDate.of_string "2011-10-14T10:30:00.000-02:00" in
     assert_equal
       { Netdate.year = 2011;
         Netdate.month = 10;
@@ -40,9 +40,9 @@ let test_of_string_negative_offset () =
       t
 
 let test_of_string_utc () =
-  let t = GdataDate.of_string "2011-10-14T10:30:00.000Z" in
+  let t = GapiDate.of_string "2011-10-14T10:30:00.000Z" in
     assert_equal
-      ~printer:GdataDate.to_string
+      ~printer:GapiDate.to_string
       { Netdate.year = 2011;
         Netdate.month = 10;
         Netdate.day = 14;
@@ -54,9 +54,9 @@ let test_of_string_utc () =
       t
 
 let test_of_string_full_date () =
-  let t = GdataDate.of_string "2011-10-14" in
+  let t = GapiDate.of_string "2011-10-14" in
     assert_equal
-      ~printer:GdataDate.to_string
+      ~printer:GapiDate.to_string
       { Netdate.year = 2011;
         Netdate.month = 10;
         Netdate.day = 14;

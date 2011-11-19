@@ -5,25 +5,25 @@ sig
 (*    category : string; Calendar doesn't support category queries *)
     fields : string;
     max_results : int;
-    published_min : GdataDate.t;
-    published_max : GdataDate.t;
+    published_min : GapiDate.t;
+    published_max : GapiDate.t;
     q : string;
     start_index : int;
     strict : bool;
-    updated_min : GdataDate.t;
-    updated_max : GdataDate.t;
+    updated_min : GapiDate.t;
+    updated_max : GapiDate.t;
     ctz : string;
     future_events : bool;
     max_attendees : int;
     orderby : string;
-    recurrence_expansion_start : GdataDate.t;
-    recurrence_expansion_end : GdataDate.t;
+    recurrence_expansion_start : GapiDate.t;
+    recurrence_expansion_end : GapiDate.t;
     singleevents : bool;
     showdeleted : bool;
     showhidden : bool;
     sortorder : string;
-    start_min : GdataDate.t;
-    start_max : GdataDate.t
+    start_min : GapiDate.t;
+    start_max : GapiDate.t
   }
 
   val default : t

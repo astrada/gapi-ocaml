@@ -216,9 +216,9 @@ let test_retrieve_events_with_parameters () =
        let parameters =
          { GdataCalendarService.QueryParameters.default with
                GdataCalendarService.QueryParameters.start_min =
-                 GdataDate.of_string "2021-10-10T00:00:00.000Z";
+                 GapiDate.of_string "2021-10-10T00:00:00.000Z";
                GdataCalendarService.QueryParameters.start_max =
-                 GdataDate.of_string "2021-10-10T00:00:00.000Z" } in
+                 GapiDate.of_string "2021-10-10T00:00:00.000Z" } in
        let (feed, session) =
          GdataCalendarService.retrieve_events
            ~parameters
@@ -251,11 +251,11 @@ let test_create_quick_add_event () =
            assert_bool
              "startTime"
              (ExtString.String.exists
-                (GdataDate.to_string w.GdataCalendar.When.startTime) "15:00:00");
+                (GapiDate.to_string w.GdataCalendar.When.startTime) "15:00:00");
            assert_bool
              "endTime"
              (ExtString.String.exists
-                (GdataDate.to_string w.GdataCalendar.When.endTime) "15:30:00"))
+                (GapiDate.to_string w.GdataCalendar.When.endTime) "15:30:00"))
 
 let test_create_recurring_event () =
   let ch = open_in "test/data/recurrence.xml" in

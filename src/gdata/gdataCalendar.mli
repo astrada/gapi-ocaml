@@ -104,7 +104,7 @@ end
 module Reminder :
 sig
   type t = {
-    absoluteTime : GdataDate.t;
+    absoluteTime : GapiDate.t;
     days : int;
     hours : int;
     rmethod : string;
@@ -122,8 +122,8 @@ end
 module When :
 sig
   type t = {
-    endTime : GdataDate.t;
-    startTime : GdataDate.t;
+    endTime : GapiDate.t;
+    startTime : GapiDate.t;
     value : string;
     reminders : Reminder.t list
   }

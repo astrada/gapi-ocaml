@@ -230,7 +230,7 @@ end
 module Reminder =
 struct
   type t = {
-    absoluteTime : GdataDate.t;
+    absoluteTime : GapiDate.t;
     days : int;
     hours : int;
     rmethod : string;
@@ -238,7 +238,7 @@ struct
   }
 
   let empty = {
-    absoluteTime = GdataDate.epoch;
+    absoluteTime = GapiDate.epoch;
     days = 0;
     hours = 0;
     rmethod = "";
@@ -258,7 +258,7 @@ struct
         GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "absoluteTime"; `Namespace ns],
            v) when ns = "" ->
-          { reminder with absoluteTime = GdataDate.of_string v }
+          { reminder with absoluteTime = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "days"; `Namespace ns],
            v) when ns = "" ->
@@ -283,15 +283,15 @@ end
 module When =
 struct
   type t = {
-    endTime : GdataDate.t;
-    startTime : GdataDate.t;
+    endTime : GapiDate.t;
+    startTime : GapiDate.t;
     value : string;
     reminders : Reminder.t list
   }
 
   let empty = {
-    endTime = GdataDate.epoch;
-    startTime = GdataDate.epoch;
+    endTime = GapiDate.epoch;
+    startTime = GapiDate.epoch;
     value = "";
     reminders = []
   }
@@ -308,11 +308,11 @@ struct
         GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "startTime"; `Namespace ns],
            v) when ns = "" ->
-          { cwhen with startTime = GdataDate.of_string v }
+          { cwhen with startTime = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "endTime"; `Namespace ns],
            v) when ns = "" ->
-          { cwhen with endTime = GdataDate.of_string v }
+          { cwhen with endTime = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "valueString"; `Namespace ns],
            v) when ns = "" ->
@@ -532,9 +532,9 @@ struct
     contributors = [];
     id = "";
     content = GdataAtom.Content.empty;
-    published = GdataDate.epoch;
-    updated = GdataDate.epoch;
-    edited = GdataDate.epoch;
+    published = GapiDate.epoch;
+    updated = GapiDate.epoch;
+    edited = GapiDate.epoch;
     accesslevel = "";
     links = [];
     where = [];
@@ -625,17 +625,17 @@ struct
           ([`Element; `Name "published"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-          { entry with published = GdataDate.of_string v }
+          { entry with published = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-          { entry with updated = GdataDate.of_string v }
+          { entry with updated = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "edited"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_app ->
-          { entry with edited = GdataDate.of_string v }
+          { entry with edited = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "accesslevel"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf

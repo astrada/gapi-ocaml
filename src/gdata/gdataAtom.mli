@@ -28,9 +28,9 @@ type atom_icon = string
 
 type atom_logo = string
 
-type atom_published = GdataDate.t
+type atom_published = GapiDate.t
 
-type atom_updated = GdataDate.t
+type atom_updated = GapiDate.t
 
 type opensearch_itemsPerPage = int
 
@@ -38,7 +38,7 @@ type opensearch_startIndex = int
 
 type opensearch_totalResults = int
 
-type app_edited = GdataDate.t
+type app_edited = GapiDate.t
 
 val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
 
@@ -80,10 +80,10 @@ val render_bool_attribute :
   GdataCore.xml_data_model list
 
 val render_date_attribute :
-  ?default:GdataDate.t ->
+  ?default:GapiDate.t ->
   string ->
   string ->
-  GdataDate.t ->
+  GapiDate.t ->
   GdataCore.xml_data_model list
 
 val render_text :
@@ -107,7 +107,7 @@ val render_int_element :
 val render_date_element :
   string ->
   string ->
-  GdataDate.t ->
+  GapiDate.t ->
   GdataCore.xml_data_model list
 
 val render_element :

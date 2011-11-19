@@ -31,9 +31,9 @@ type atom_icon = string
 
 type atom_logo = string
 
-type atom_published = GdataDate.t
+type atom_published = GapiDate.t
 
-type atom_updated = GdataDate.t
+type atom_updated = GapiDate.t
 
 type opensearch_itemsPerPage = int
 
@@ -41,7 +41,7 @@ type opensearch_startIndex = int
 
 type opensearch_totalResults = int
 
-type app_edited = GdataDate.t
+type app_edited = GapiDate.t
 (* END Atom simple types *)
 
 (* Parsing *)
@@ -109,9 +109,9 @@ let render_bool_attribute ?(default = false) namespace name value =
     name
     value
 
-let render_date_attribute ?(default = GdataDate.epoch) namespace name value =
+let render_date_attribute ?(default = GapiDate.epoch) namespace name value =
   render_generic_attribute
-    GdataDate.to_string
+    GapiDate.to_string
     default
     namespace
     name
@@ -142,10 +142,10 @@ let render_int_element namespace name value =
 
 let render_date_element namespace name value =
   render_text_element
-    ~default:(GdataDate.to_string GdataDate.epoch)
+    ~default:(GapiDate.to_string GapiDate.epoch)
     namespace
     name
-    (GdataDate.to_string value)
+    (GapiDate.to_string value)
 
 let render_element namespace name children_list =
   let children = List.concat children_list in
@@ -545,7 +545,7 @@ struct
     generator = Generator.empty;
     icon = "";
     id = "";
-    updated = GdataDate.epoch;
+    updated = GapiDate.epoch;
     entries = [];
     links = [];
     logo = "";
@@ -615,7 +615,7 @@ struct
           ([`Element; `Name "updated"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
-          { feed with updated = GdataDate.of_string v }
+          { feed with updated = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "entry"; `Namespace ns],
            cs) when ns = ns_atom ->
