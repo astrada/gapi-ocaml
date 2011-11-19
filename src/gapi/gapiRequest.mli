@@ -8,7 +8,7 @@ type request_type =
 
 val parse_empty_response : 'a -> unit
 
-val gdata_request :
+val gapi_request :
   ?post_data:GapiCore.PostData.t ->
   ?version:string ->
   ?etag:string ->

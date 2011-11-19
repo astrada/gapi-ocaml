@@ -173,7 +173,7 @@ let refresh_oauth2_token session =
       | _ ->
           failwith "Unauthorized" (* TODO: better error handling *)
 
-let rec gdata_request
+let rec gapi_request
       ?post_data
       ?version
       ?etag
@@ -200,7 +200,7 @@ let rec gdata_request
   with
       Redirect (target, new_session) ->
         if url <> target then
-          gdata_request
+          gapi_request
             ?post_data
             ?version
             ?etag
@@ -212,7 +212,7 @@ let rec gdata_request
           failwith ("Redirection loop detected: url=" ^ url)
     | Unauthorized new_session ->
         let refreshed_session = refresh_oauth2_token new_session in
-          gdata_request
+          gapi_request
             ?post_data
             ?version
             ?etag

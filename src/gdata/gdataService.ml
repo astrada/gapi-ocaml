@@ -18,7 +18,7 @@ let service_request
            GapiCore.PostData.Body (body, GdataCore.default_content_type))
       data_to_upload
   in
-    GapiRequest.gdata_request
+    GapiRequest.gapi_request
       ?post_data
       ?version
       ?etag
