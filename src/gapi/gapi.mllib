@@ -10,4 +10,5 @@ GapiOAuth1
 GapiOAuth2
 GapiAuth
 GapiRequest
+GapiMonad
 

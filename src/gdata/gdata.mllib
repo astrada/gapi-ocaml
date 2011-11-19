@@ -6,6 +6,5 @@ GdataCalendarEvent
 GdataCalendarService
 GdataComments
 GdataCore
-GdataMonad
 GdataService
 GdataUtils
