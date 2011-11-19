@@ -79,10 +79,10 @@ let oauth_request
       [("code", code);
        ("redirect_uri", redirect_uri);
        ("refresh_token", refresh_token)] in
-  let post_data = GdataCore.PostData.Fields (required_field @ optional_fields) in
+  let post_data = GapiCore.PostData.Fields (required_field @ optional_fields) in
     GdataConversation.request
       ~post_data
-      GdataCore.HttpMethod.POST
+      GapiCore.HttpMethod.POST
       session
       url
       parse_response

@@ -315,6 +315,7 @@ let _ = dispatch begin function
        Batteries.before_options ();
        Dynamic.before_options ()
    | After_rules ->
+       ocaml_lib "gapi/gapi";
        ocaml_lib "gdata/gdata";
        OCamlFind.after_rules ();
        Batteries.after_rules ();

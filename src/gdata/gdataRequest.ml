@@ -14,17 +14,17 @@ let render_xml buffer tree =
   let output = Xmlm.make_output (`Buffer buffer) in
   let rec frag_of_node node =
     match node with
-        GdataCore.AnnotatedTree.Leaf ([`Text], d)
-      | GdataCore.AnnotatedTree.Leaf ([`Cdata], d) ->
+        GapiCore.AnnotatedTree.Leaf ([`Text], d)
+      | GapiCore.AnnotatedTree.Leaf ([`Cdata], d) ->
           `Data d
-      | GdataCore.AnnotatedTree.Node ([`Element;
+      | GapiCore.AnnotatedTree.Node ([`Element;
                                        `Name name;
                                        `Namespace namespace],
                                       children) ->
           let attributes = List.fold_left
                              (fun attrs e ->
                                 match e with
-                                    GdataCore.AnnotatedTree.Leaf ([`Attribute;
+                                    GapiCore.AnnotatedTree.Leaf ([`Attribute;
                                                                    `Name n;
                                                                    `Namespace ns],
                                                                   d) ->
@@ -36,8 +36,8 @@ let render_xml buffer tree =
             List.filter
               (fun e ->
                  match e with
-                     GdataCore.AnnotatedTree.Leaf (m, _)
-                   | GdataCore.AnnotatedTree.Node (m, _) ->
+                     GapiCore.AnnotatedTree.Leaf (m, _)
+                   | GapiCore.AnnotatedTree.Node (m, _) ->
                        match GdataCore.Metadata.node_type m with
                            `Attribute -> false
                          | _ -> true) children
@@ -62,20 +62,20 @@ let parse_xml next_byte parse_tree =
     let ((namespace, name), attribute_list) = tag in
     let attrs = List.map
                   (fun ((ns, n), d) ->
-                     GdataCore.AnnotatedTree.Leaf (
+                     GapiCore.AnnotatedTree.Leaf (
                        [`Attribute;
                         `Name n;
                         `Namespace ns],
                        d)
                   )
                   attribute_list in
-      GdataCore.AnnotatedTree.Node (
+      GapiCore.AnnotatedTree.Node (
         [`Element;
          `Name name;
          `Namespace namespace],
         attrs @ children) in
   let data d =
-    GdataCore.AnnotatedTree.Leaf (
+    GapiCore.AnnotatedTree.Leaf (
       [`Text],
       d) in
   let (_, tree) = Xmlm.input_doc_tree ~el ~data input in
@@ -98,7 +98,7 @@ let parse_response parse_output pipe response_code headers session =
         let url = List.fold_left
                     (fun u h ->
                        match h with
-                           GdataCore.Header.Location value -> value
+                           GapiCore.Header.Location value -> value
                          | _ -> u)
                     ""
                     headers
@@ -165,12 +165,12 @@ let single_request
     match request_type with
         Query ->
           begin match post_data with
-              None -> GdataCore.HttpMethod.GET
-            | Some _ -> GdataCore.HttpMethod.POST
+              None -> GapiCore.HttpMethod.GET
+            | Some _ -> GapiCore.HttpMethod.POST
           end
-      | Create -> GdataCore.HttpMethod.POST
-      | Update -> GdataCore.HttpMethod.PUT
-      | Delete -> GdataCore.HttpMethod.DELETE in
+      | Create -> GapiCore.HttpMethod.POST
+      | Update -> GapiCore.HttpMethod.PUT
+      | Delete -> GapiCore.HttpMethod.DELETE in
   let oauth1_params =
     match auth_data with
         GdataAuth.NoAuth
@@ -180,28 +180,28 @@ let single_request
       | GdataAuth.OAuth1 _ ->
           let post_fields =
             match post_data with
-                Some (GdataCore.PostData.Fields fields) -> fields
+                Some (GapiCore.PostData.Fields fields) -> fields
               | _ -> []
           in
             Some { GdataAuth.http_method = http_method;
                    GdataAuth.url = url;
                    GdataAuth.post_fields_to_sign = post_fields } in
   let authorization_header =
-    Option.map (fun a -> GdataCore.Header.Authorization a)
+    Option.map (fun a -> GapiCore.Header.Authorization a)
       (GdataAuth.generate_authorization_header ?oauth1_params auth_data) in
   let version_header =
-    Option.map (fun v -> GdataCore.Header.GdataVersion v) version in
+    Option.map (fun v -> GapiCore.Header.GdataVersion v) version in
   let etag_header =
     Option.map (fun e ->
                   match request_type with
                       Query ->
-                        Some (GdataCore.Header.IfNoneMatch e)
+                        Some (GapiCore.Header.IfNoneMatch e)
                     | Update
                     | Delete ->
                         if GdataUtils.is_weak_etag e then
                           None
                         else
-                          Some (GdataCore.Header.IfMatch e)
+                          Some (GapiCore.Header.IfMatch e)
                     | Create ->
                         None
     ) etag

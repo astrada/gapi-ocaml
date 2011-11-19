@@ -29,7 +29,7 @@ val parse_xml_response :
 val parse_empty_response : 'a -> unit
 
 val gdata_request :
-  ?post_data:GdataCore.PostData.t ->
+  ?post_data:GapiCore.PostData.t ->
   ?version:string ->
   ?etag:string ->
   request_type ->

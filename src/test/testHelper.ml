@@ -183,7 +183,7 @@ let print_xml_data_model ?(print_string = print_string) tree =
     end;
     tabs
   in
-    GdataCore.AnnotatedTree.fold print_node print_leaf tree 0
+    GapiCore.AnnotatedTree.fold print_node print_leaf tree 0
 
 let string_of_xml_data_model tree =
   let buffer = Buffer.create 256 in

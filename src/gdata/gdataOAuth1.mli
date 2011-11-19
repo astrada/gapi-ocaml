@@ -1,5 +1,5 @@
 val generate_signature :
-  GdataCore.HttpMethod.t ->
+  GapiCore.HttpMethod.t ->
   string ->
   (string * string) list ->
   GdataCore.SignatureMethod.t ->

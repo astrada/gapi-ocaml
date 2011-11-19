@@ -110,7 +110,7 @@ let set_headerfunction writer (state : [`Created] t) =
 let set_httpheader headers (state : [`Created] t) =
   with_curl
     (fun curl -> headers
-       |> List.map GdataCore.Header.to_string
+       |> List.map GapiCore.Header.to_string
        |> Curl.set_httpheader curl )
     state
 

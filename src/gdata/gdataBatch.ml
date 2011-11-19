@@ -51,19 +51,19 @@ struct
 
   let of_xml_data_model status tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "code"; `Namespace ""],
            v) ->
           { status with code = int_of_string v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "reason"; `Namespace ""],
            v) ->
           { status with reason = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "content-type"; `Namespace ""],
            v) ->
           { status with content_type = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Text],
            v) ->
           { status with content = v }

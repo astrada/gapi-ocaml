@@ -46,20 +46,20 @@ let test_parse_calendar_entry_with_extensions () =
                        s ^ (TestHelper.string_of_xml_data_model x))
                     ""
                     xs)
-      [GdataCore.AnnotatedTree.Node
+      [GapiCore.AnnotatedTree.Node
          ([`Element;
            `Name "new-element";
            `Namespace "http://schemas.google.com/g/2005"],
-          [GdataCore.AnnotatedTree.Leaf
+          [GapiCore.AnnotatedTree.Leaf
              ([`Attribute;
                `Name "value";
                `Namespace ""],
               "value");
-           GdataCore.AnnotatedTree.Node
+           GapiCore.AnnotatedTree.Node
              ([`Element;
                `Name "new-child";
                `Namespace "http://schemas.google.com/g/2005"],
-              [GdataCore.AnnotatedTree.Leaf
+              [GapiCore.AnnotatedTree.Leaf
                  ([`Text],
                   "text")
               ])

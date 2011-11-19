@@ -80,15 +80,15 @@ struct
 
   let of_xml_data_model entry tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
            v) when ns = GdataAtom.ns_gd ->
           { entry with etag = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
            v) when ns = GdataAtom.ns_gd ->
           { entry with kind = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -97,7 +97,7 @@ struct
             (fun author -> { entry with authors =
                                author :: entry.authors })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -106,7 +106,7 @@ struct
             (fun category ->
                { entry with categories = category :: entry.categories })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "content"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -114,7 +114,7 @@ struct
             GdataAtom.Content.empty
             (fun content -> { entry with content = content })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -123,22 +123,22 @@ struct
             (fun contributor -> { entry with contributors =
                                     contributor :: entry.contributors })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with id = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "published"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with published = GdataDate.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with updated = GdataDate.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "comments"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -146,7 +146,7 @@ struct
             GdataCalendar.Comments.empty
             (fun comments -> { entry with comments = comments })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -154,7 +154,7 @@ struct
             GdataCalendar.Link.empty
             (fun link -> { entry with links = link :: entry.links })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "where"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -162,7 +162,7 @@ struct
             GdataCalendar.Where.empty
             (fun where -> { entry with where = where :: entry.where })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "who"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -170,19 +170,19 @@ struct
             GdataCalendar.Who.empty
             (fun who -> { entry with who = who :: entry.who })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "uid"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with icalUID = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "sequence"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with sequenceNumber = int_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -190,13 +190,13 @@ struct
             GdataAtom.Title.empty
             (fun title -> { entry with title = title })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "eventStatus"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with eventStatus = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "originalEvent"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -204,19 +204,19 @@ struct
             GdataCalendar.OriginalEvent.empty
             (fun event -> { entry with originalEvent = event })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "transparency"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with transparency = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "visibility"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with visibility = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "when"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -254,7 +254,7 @@ struct
   let of_xml_data_model ex tree =
     let parse_recurrenceExceptionEntryLink entry tree =
       match tree with
-          GdataCore.AnnotatedTree.Node
+          GapiCore.AnnotatedTree.Node
             ([`Element; `Name "entry"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
@@ -266,11 +266,11 @@ struct
             GdataUtils.unexpected e
     in
       match tree with
-          GdataCore.AnnotatedTree.Leaf
+          GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "specialized"; `Namespace ns],
              v) when ns = "" ->
             { ex with specialized = bool_of_string v }
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "entryLink"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
             GdataAtom.parse_children
@@ -411,25 +411,25 @@ struct
 
   let of_xml_data_model entry tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
            v) when ns = GdataAtom.ns_gd ->
           { entry with etag = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
            v) when ns = GdataAtom.ns_gd ->
           { entry with kind = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_batch ->
           { entry with batch_id = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "operation"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_batch ->
           { entry with batch_operation = GdataBatch.Operation.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "status"; `Namespace ns],
            cs) when ns = GdataAtom.ns_batch ->
           GdataAtom.parse_children
@@ -437,7 +437,7 @@ struct
             GdataBatch.Status.empty
             (fun status -> { entry with batch_status = status })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -446,7 +446,7 @@ struct
             (fun author -> { entry with authors =
                                author :: entry.authors })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "content"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -454,7 +454,7 @@ struct
             GdataAtom.Content.empty
             (fun content -> { entry with content = content })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -463,27 +463,27 @@ struct
             (fun contributor -> { entry with contributors =
                                     contributor :: entry.contributors })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with id = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "published"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with published = GdataDate.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_atom ->
           { entry with updated = GdataDate.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "edited"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = GdataAtom.ns_app ->
           { entry with edited = GdataDate.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "comments"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -491,7 +491,7 @@ struct
             GdataCalendar.Comments.empty
             (fun comments -> { entry with comments = comments })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "extendedProperty"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -501,7 +501,7 @@ struct
                { entry with extendedProperties =
                    property :: entry.extendedProperties })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -509,7 +509,7 @@ struct
             GdataCalendar.Link.empty
             (fun link -> { entry with links = link :: entry.links })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "recurrenceException"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -519,7 +519,7 @@ struct
                { entry with recurrenceExceptions =
                    ex :: entry.recurrenceExceptions })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "where"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -527,7 +527,7 @@ struct
             GdataCalendar.Where.empty
             (fun where -> { entry with where = where :: entry.where })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "who"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -535,31 +535,31 @@ struct
             GdataCalendar.Who.empty
             (fun who -> { entry with who = who :: entry.who })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "uid"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with icalUID = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "privateCopy"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with privateCopy = bool_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "quickadd"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with quickAdd = bool_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "sequence"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with sequenceNumber = int_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "summary"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -567,7 +567,7 @@ struct
             GdataAtom.Summary.empty
             (fun summary -> { entry with summary = summary })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -575,7 +575,7 @@ struct
             GdataAtom.Title.empty
             (fun title -> { entry with title = title })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -583,13 +583,13 @@ struct
             GdataAtom.Category.empty
             (fun category -> { entry with categories = category :: entry.categories })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "eventStatus"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with eventStatus = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "originalEvent"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -597,13 +597,13 @@ struct
             GdataCalendar.OriginalEvent.empty
             (fun event -> { entry with originalEvent = event })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "recurrence"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with recurrence = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "reminder"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -611,19 +611,19 @@ struct
             GdataCalendar.Reminder.empty
             (fun reminder -> { entry with reminders = reminder :: entry.reminders })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "transparency"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with transparency = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "visibility"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataAtom.ns_gd ->
           { entry with visibility = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "when"; `Namespace ns],
            cs) when ns = GdataAtom.ns_gd ->
           GdataAtom.parse_children
@@ -631,31 +631,31 @@ struct
             GdataCalendar.When.empty
             (fun cwhen -> { entry with _when = cwhen :: entry._when })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "anyoneCanAddSelf"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with anyoneCanAddSelf = bool_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "guestsCanInviteOthers"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with guestsCanInviteOthers = bool_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "guestsCanModify"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with guestsCanModify = bool_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "guestsCanSeeGuests"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = GdataCalendar.ns_gCal ->
           { entry with guestsCanSeeGuests = bool_of_string v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
           entry

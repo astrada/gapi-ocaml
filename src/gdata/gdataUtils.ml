@@ -30,10 +30,10 @@ let merge_query_string parameters url =
 
 let unexpected e =
   match e with
-      GdataCore.AnnotatedTree.Leaf (metadata, _) ->
+      GapiCore.AnnotatedTree.Leaf (metadata, _) ->
         failwith ("Unexpected leaf: "
                   ^ (GdataCore.Metadata.description metadata))
-    | GdataCore.AnnotatedTree.Node (metadata, _) ->
+    | GapiCore.AnnotatedTree.Node (metadata, _) ->
         failwith ("Unexpected node: "
                   ^ (GdataCore.Metadata.description metadata))
 
@@ -53,7 +53,7 @@ let build_namespace_table get_prefix tree =
       else
         ()
   in
-    GdataCore.AnnotatedTree.fold
+    GapiCore.AnnotatedTree.fold
       add_namespace
       add_namespace
       tree;
@@ -64,16 +64,16 @@ let build_namespace_table get_prefix tree =
 
 let append_namespaces ns_table tree =
   match tree with
-      GdataCore.AnnotatedTree.Node (m, cs) ->
+      GapiCore.AnnotatedTree.Node (m, cs) ->
         let attributes =
           List.map
             (fun (ns, p) ->
-               GdataCore.AnnotatedTree.Leaf (
+               GapiCore.AnnotatedTree.Leaf (
                  [`Attribute; `Name p; `Namespace Xmlm.ns_xmlns],
                  ns))
             ns_table
         in
-          GdataCore.AnnotatedTree.Node (m, cs @ attributes )
-    | GdataCore.AnnotatedTree.Leaf _ ->
+          GapiCore.AnnotatedTree.Node (m, cs @ attributes )
+    | GapiCore.AnnotatedTree.Leaf _ ->
         tree
 

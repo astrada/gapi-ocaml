@@ -24,7 +24,7 @@ val set_writefunction : (string -> int) -> [ `Created ] t -> unit
 
 val set_headerfunction : (string -> int) -> [ `Created ] t -> unit
 
-val set_httpheader : GdataCore.Header.t list -> [ `Created ] t -> unit
+val set_httpheader : GapiCore.Header.t list -> [ `Created ] t -> unit
 
 val set_httpget : bool -> [ `Created ] t -> unit
 

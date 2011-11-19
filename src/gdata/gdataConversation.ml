@@ -39,15 +39,15 @@ let update_session headers session =
     List.fold_left
       (fun cs header ->
          match header with
-             GdataCore.Header.KeyValueHeader (k, v) when k = "Set-Cookie" ->
-               GdataCore.Header.to_string header :: cs
+             GapiCore.Header.KeyValueHeader (k, v) when k = "Set-Cookie" ->
+               GapiCore.Header.to_string header :: cs
            | _ -> cs)
       []
       headers in
   let etag = List.fold_left
                (fun e h ->
                   match h with
-                      GdataCore.Header.ETag v -> v
+                      GapiCore.Header.ETag v -> v
                     | _ -> e)
                ""
                headers
@@ -74,35 +74,35 @@ let request
   let request_headers =
     let hl = Option.default [] header_list in
       match post_data with
-          Some (GdataCore.PostData.Body (_, content_type)) ->
-            GdataCore.Header.ContentType content_type :: hl
+          Some (GapiCore.PostData.Body (_, content_type)) ->
+            GapiCore.Header.ContentType content_type :: hl
         | _ -> hl
   in
     GdataCurl.set_headerfunction parse_header session.Session.curl;
     GdataCurl.set_writefunction writer session.Session.curl;
     begin match http_method with
-        GdataCore.HttpMethod.GET ->
+        GapiCore.HttpMethod.GET ->
           GdataCurl.set_httpget true session.Session.curl
-      | GdataCore.HttpMethod.POST ->
+      | GapiCore.HttpMethod.POST ->
           GdataCurl.set_post true session.Session.curl
-      | GdataCore.HttpMethod.PUT ->
+      | GapiCore.HttpMethod.PUT ->
           GdataCurl.set_upload true session.Session.curl
-      | GdataCore.HttpMethod.DELETE ->
+      | GapiCore.HttpMethod.DELETE ->
           GdataCurl.set_nobody true session.Session.curl
       | _ -> ()
     end;
     begin match http_method with
-        GdataCore.HttpMethod.PATCH
-      | GdataCore.HttpMethod.DELETE ->
-          GdataCurl.set_customrequest (GdataCore.HttpMethod.to_string http_method) session.Session.curl
+        GapiCore.HttpMethod.PATCH
+      | GapiCore.HttpMethod.DELETE ->
+          GdataCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
       | _ ->
           (* FIXME: reset curl custom request *)
-          GdataCurl.set_customrequest (GdataCore.HttpMethod.to_string http_method) session.Session.curl
+          GdataCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
     end;
     begin match post_data with
-        Some (GdataCore.PostData.Fields key_value_list) ->
+        Some (GapiCore.PostData.Fields key_value_list) ->
           GdataCurl.set_postfields key_value_list session.Session.curl
-      | Some (GdataCore.PostData.Body (body, _)) ->
+      | Some (GapiCore.PostData.Body (body, _)) ->
           GdataCurl.set_httpbody body session.Session.curl
       | _ -> ()
     end;
@@ -114,7 +114,7 @@ let request
       let response_code = GdataCurl.get_responsecode session.Session.curl in
       let response_headers = List.rev
                                (Queue.fold
-                                  (fun l h -> GdataCore.Header.parse h :: l)
+                                  (fun l h -> GapiCore.Header.parse h :: l)
                                   []
                                   header_queue) in
       let new_session = update_session response_headers session in

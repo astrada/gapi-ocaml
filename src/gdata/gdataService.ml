@@ -15,7 +15,7 @@ let service_request
     Option.map
       (fun data ->
          let body = GdataRequest.data_to_xml_string data in
-           GdataCore.PostData.Body (body, GdataCore.default_content_type))
+           GapiCore.PostData.Body (body, GdataCore.default_content_type))
       data_to_upload
   in
     GdataRequest.gdata_request

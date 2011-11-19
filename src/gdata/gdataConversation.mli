@@ -24,14 +24,14 @@ sig
 end
 
 val request :
-  ?header_list:GdataCore.Header.t list ->
-  ?post_data:GdataCore.PostData.t ->
-  GdataCore.HttpMethod.t ->
+  ?header_list:GapiCore.Header.t list ->
+  ?post_data:GapiCore.PostData.t ->
+  GapiCore.HttpMethod.t ->
   Session.t ->
   string ->
   (GdataPipe.OcamlnetPipe.t ->
      int ->
-     GdataCore.Header.t list ->
+     GapiCore.Header.t list ->
      Session.t ->
      'a) ->
   'a * Session.t

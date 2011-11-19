@@ -120,15 +120,15 @@ struct
 
     let of_xml_data_model entry tree =
       match tree with
-          GdataCore.AnnotatedTree.Leaf
+          GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "etag"; `Namespace ns],
              v) when ns = GdataAtom.ns_gd ->
             { entry with etag = v }
-        | GdataCore.AnnotatedTree.Leaf
+        | GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "kind"; `Namespace ns],
              v) when ns = GdataAtom.ns_gd ->
             { entry with kind = v }
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "author"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
@@ -137,7 +137,7 @@ struct
               (fun author -> { entry with authors =
                                  author :: entry.authors })
               cs
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "content"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
@@ -145,7 +145,7 @@ struct
               GdataAtom.Content.empty
               (fun content -> { entry with content = content })
               cs
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "contributor"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
@@ -154,22 +154,22 @@ struct
               (fun contributor -> { entry with contributors =
                                       contributor :: entry.contributors })
               cs
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "id"; `Namespace ns],
-             [GdataCore.AnnotatedTree.Leaf
+             [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_atom ->
             { entry with id = v }
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "published"; `Namespace ns],
-             [GdataCore.AnnotatedTree.Leaf
+             [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_atom ->
             { entry with published = GdataDate.of_string v }
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "updated"; `Namespace ns],
-             [GdataCore.AnnotatedTree.Leaf
+             [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_atom ->
             { entry with updated = GdataDate.of_string v }
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "link"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
@@ -177,7 +177,7 @@ struct
             Link.empty
             (fun link -> { entry with links = link :: entry.links })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -185,7 +185,7 @@ struct
             GdataAtom.Title.empty
             (fun title -> { entry with title = title })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -193,7 +193,7 @@ struct
             GdataAtom.Category.empty
             (fun category -> { entry with category = category })
             cs
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
           entry
@@ -236,23 +236,23 @@ struct
   let of_xml_data_model comments tree =
     let parse_commentsFeedLink link tree =
       match tree with
-          GdataCore.AnnotatedTree.Leaf
+          GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "countHint"; `Namespace ns],
              v) when ns = "" ->
             { link with countHint = int_of_string v }
-        | GdataCore.AnnotatedTree.Leaf
+        | GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "href"; `Namespace ns],
              v) when ns = "" ->
             { link with href = v }
-        | GdataCore.AnnotatedTree.Leaf
+        | GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "readOnly"; `Namespace ns],
              v) when ns = "" ->
             { link with readOnly = bool_of_string v }
-        | GdataCore.AnnotatedTree.Leaf
+        | GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name "rel"; `Namespace ns],
              v) when ns = "" ->
             { link with rel = v }
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "feed"; `Namespace ns],
              cs) when ns = GdataAtom.ns_atom ->
             GdataAtom.parse_children
@@ -264,7 +264,7 @@ struct
             GdataUtils.unexpected e
     in
       match tree with
-        | GdataCore.AnnotatedTree.Node
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "feedLink"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
             GdataAtom.parse_children

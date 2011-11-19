@@ -6,7 +6,7 @@ type oauth1_data =
       secret : string }
 
 type oauth1_params =
-    { http_method : GdataCore.HttpMethod.t;
+    { http_method : GapiCore.HttpMethod.t;
       url : string;
       post_fields_to_sign : (string * string) list }
 

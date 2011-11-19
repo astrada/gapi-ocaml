@@ -118,7 +118,7 @@ let get_auth_token
         "Invalid response: authentication token not found" in 
   let parse_login_response pipe _ _ _ =
     GdataConversation.loop parse_next_line pipe in
-  let post_data = GdataCore.PostData.Fields
+  let post_data = GapiCore.PostData.Fields
                     [("Email", email);
                      ("Passwd", password);
                      ("accountType", account_type);
@@ -128,7 +128,7 @@ let get_auth_token
     try
       GdataConversation.request
         ~post_data
-        GdataCore.HttpMethod.POST
+        GapiCore.HttpMethod.POST
         session
         url
         parse_login_response

@@ -61,7 +61,7 @@ let data_model_to_entry
       tree =
   let parse_root tree =
     match tree with
-        GdataCore.AnnotatedTree.Node
+        GapiCore.AnnotatedTree.Node
           ([`Element; `Name element_name; `Namespace ns],
            cs) when ns = element_namespace ->
           parse_children
@@ -78,7 +78,7 @@ let data_model_to_entry
 (* Rendering *)
 let render_attribute ?(default = "") namespace name value =
   if value <> default then
-    [GdataCore.AnnotatedTree.Leaf (
+    [GapiCore.AnnotatedTree.Leaf (
       [`Attribute; `Name name; `Namespace namespace],
       value)]
   else
@@ -119,7 +119,7 @@ let render_date_attribute ?(default = GdataDate.epoch) namespace name value =
 
 let render_text ?(default = "") value =
   if value <> default then
-    [GdataCore.AnnotatedTree.Leaf (
+    [GapiCore.AnnotatedTree.Leaf (
       [`Text],
       value)]
   else
@@ -127,7 +127,7 @@ let render_text ?(default = "") value =
 
 let render_text_element ?(default = "") namespace name value =
   if value <> default then
-    [GdataCore.AnnotatedTree.Node (
+    [GapiCore.AnnotatedTree.Node (
       [`Element; `Name name; `Namespace namespace],
       render_text ~default value)]
   else
@@ -150,7 +150,7 @@ let render_date_element namespace name value =
 let render_element namespace name children_list =
   let children = List.concat children_list in
     if children <> [] then
-      [GdataCore.AnnotatedTree.Node (
+      [GapiCore.AnnotatedTree.Node (
         [`Element; `Name name; `Namespace namespace],
         children)]
     else
@@ -221,23 +221,23 @@ struct
 
   let of_xml_data_model person tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            v) when ns = Xmlm.ns_xml ->
           { person with lang = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "name"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { person with name = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "email"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { person with email = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "uri"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { person with uri = v }
       | e ->
@@ -276,19 +276,19 @@ struct
 
   let of_xml_data_model category tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "label"; `Namespace ""],
            v) ->
           { category with label = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "scheme"; `Namespace ""],
            v) ->
           { category with scheme = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "term"; `Namespace ""],
            v) ->
           { category with term = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            v) when ns = Xmlm.ns_xml ->
           { category with lang = v }
@@ -319,15 +319,15 @@ struct
 
   let of_xml_data_model generator tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "version"; `Namespace ""],
            v) ->
           { generator with version = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "uri"; `Namespace ""],
            v) ->
           { generator with uri = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Text],
            v) ->
           { generator with value = v }
@@ -379,19 +379,19 @@ struct
 
   let of_xml_data_model text tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "src"; `Namespace ""],
            v) ->
           { text with src = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            v) ->
           { text with _type = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "lang"; `Namespace ns],
            v) when ns = Xmlm.ns_xml ->
           { text with lang = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Text],
            v) ->
           { text with value = v }
@@ -443,23 +443,23 @@ struct
 
   let of_xml_data_model link tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "href"; `Namespace ""],
            v) ->
           { link with href = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "length"; `Namespace ""],
            v) ->
           { link with length = Int64.of_string v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "rel"; `Namespace ""],
            v) ->
           { link with rel = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "title"; `Namespace ""],
            v) ->
           { link with title = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "type"; `Namespace ""],
            v) ->
           { link with _type = v }
@@ -560,15 +560,15 @@ struct
 
   let of_xml_data_model feed tree =
     match tree with
-        GdataCore.AnnotatedTree.Leaf
+        GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "etag"; `Namespace ns],
            v) when ns = ns_gd ->
           { feed with etag = v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name "kind"; `Namespace ns],
            v) when ns = ns_gd ->
           { feed with kind = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "author"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -576,7 +576,7 @@ struct
             Author.empty
             (fun author -> { feed with authors = author :: feed.authors })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -584,7 +584,7 @@ struct
             Category.empty
             (fun category -> { feed with categories = category :: feed.categories })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -593,7 +593,7 @@ struct
             (fun contributor -> { feed with contributors =
                                     contributor :: feed.contributors })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "generator"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -601,22 +601,22 @@ struct
             Generator.empty
             (fun generator -> { feed with generator = generator })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "icon"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { feed with icon = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { feed with id = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "updated"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { feed with updated = GdataDate.of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "entry"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -624,7 +624,7 @@ struct
             Entry.empty
             (fun entry -> { feed with entries = entry :: feed.entries })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -632,12 +632,12 @@ struct
             Link.empty
             (fun link -> { feed with links = link :: feed.links })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "logo"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_atom ->
           { feed with logo = v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "rights"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -645,7 +645,7 @@ struct
             Rights.empty
             (fun rights -> { feed with rights = rights })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "subtitle"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -653,7 +653,7 @@ struct
             Subtitle.empty
             (fun subtitle -> { feed with subtitle = subtitle })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
            cs) when ns = ns_atom ->
           parse_children
@@ -661,22 +661,22 @@ struct
             Title.empty
             (fun title -> { feed with title = title })
             cs
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "totalResults"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_openSearch ->
           { feed with totalResults = int_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "itemsPerPage"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_openSearch ->
           { feed with itemsPerPage = int_of_string v }
-      | GdataCore.AnnotatedTree.Node
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "startIndex"; `Namespace ns],
-           [GdataCore.AnnotatedTree.Leaf
+           [GapiCore.AnnotatedTree.Leaf
               ([`Text], v)]) when ns = ns_openSearch ->
           { feed with startIndex = int_of_string v }
-      | GdataCore.AnnotatedTree.Leaf
+      | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
           feed
@@ -709,7 +709,7 @@ struct
   let parse_feed tree =
     let parse_root tree =
       match tree with
-          GdataCore.AnnotatedTree.Node
+          GapiCore.AnnotatedTree.Node
             ([`Element; `Name "feed"; `Namespace ns],
              cs) when ns = ns_atom ->
             parse_children

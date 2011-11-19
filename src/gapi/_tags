@@ -1,0 +1,5 @@
+true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
+
+# Packages deps
+<gapiCore.*> : pkg_extlib
+

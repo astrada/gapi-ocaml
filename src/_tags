@@ -1,11 +1,12 @@
 true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 
+"gapi": include
 "gdata": include
 
 # Packages deps
-<test/*.byte> : use_gdata, pkg_netstring, pkg_curl, pkg_extlib, pkg_str, \
-                pkg_cryptokit, pkg_json-wheel, pkg_xmlm, pkg_oUnit
-<examples/auth/*.byte> : use_gdata, pkg_netstring, pkg_curl, pkg_extlib, \
-                         pkg_str, pkg_cryptokit, pkg_json-wheel, pkg_xmlm, \
-                         pkg_nethttpd
+<test/*.byte> : use_gapi, use_gdata, pkg_netstring, pkg_curl, pkg_extlib, \
+                pkg_str, pkg_cryptokit, pkg_json-wheel, pkg_xmlm, pkg_oUnit
+<examples/auth/*.byte> : use_gapi, use_gdata, pkg_netstring, pkg_curl, \
+                         pkg_extlib, pkg_str, pkg_cryptokit, pkg_json-wheel, \
+                         pkg_xmlm, pkg_nethttpd
 

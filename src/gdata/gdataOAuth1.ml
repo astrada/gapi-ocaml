@@ -38,7 +38,7 @@ let generate_signature
     let buffer = Buffer.create 64 in
     let add_separator () = Buffer.add_char buffer '&' in
     let add_string s = Buffer.add_string buffer (encode s) in
-      Buffer.add_string buffer (GdataCore.HttpMethod.to_string http_method);
+      Buffer.add_string buffer (GapiCore.HttpMethod.to_string http_method);
       add_separator ();
       add_string base_string_uri;
       add_separator ();
@@ -87,15 +87,15 @@ let oauth_request
                     oauth_signature_method
                     consumer_secret
                     token_secret in
-  let oauth_header = GdataCore.Header.Authorization
+  let oauth_header = GapiCore.Header.Authorization
                        (generate_oauth_header oauth_fields_to_sign signature) in
   let post_data =
     match http_method with
-        GdataCore.HttpMethod.GET
-      | GdataCore.HttpMethod.PUT (* TODO: verify *)
-      | GdataCore.HttpMethod.PATCH (* TODO: verify *)
-      | GdataCore.HttpMethod.DELETE -> None
-      | GdataCore.HttpMethod.POST -> Some (GdataCore.PostData.Fields post_fields_to_sign)
+        GapiCore.HttpMethod.GET
+      | GapiCore.HttpMethod.PUT (* TODO: verify *)
+      | GapiCore.HttpMethod.PATCH (* TODO: verify *)
+      | GapiCore.HttpMethod.DELETE -> None
+      | GapiCore.HttpMethod.POST -> Some (GapiCore.PostData.Fields post_fields_to_sign)
   in
     GdataConversation.request
       ~header_list:[oauth_header]
@@ -272,7 +272,7 @@ let get_request_token
        xoauth_displayname)
   in
     oauth_request
-      GdataCore.HttpMethod.POST
+      GapiCore.HttpMethod.POST
       url
       consumer_secret
       oauth_fields_to_sign
@@ -324,7 +324,7 @@ let get_access_token
   in
     oauth_request
       ~token_secret:oauth_secret
-      GdataCore.HttpMethod.POST
+      GapiCore.HttpMethod.POST
       url
       consumer_secret
       oauth_fields_to_sign
@@ -352,7 +352,7 @@ let get_token_info
   in
     oauth_request
       ~token_secret:oauth_secret
-      GdataCore.HttpMethod.POST
+      GapiCore.HttpMethod.POST
       url
       consumer_secret
       oauth_fields_to_sign
@@ -380,7 +380,7 @@ let revoke_token
   in
     oauth_request
       ~token_secret:oauth_secret
-      GdataCore.HttpMethod.GET
+      GapiCore.HttpMethod.GET
       url
       consumer_secret
       oauth_fields_to_sign
