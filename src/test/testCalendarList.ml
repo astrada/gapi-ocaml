@@ -303,6 +303,10 @@ struct
       | e ->
           unexpected "CalendarListList.parse" e
 
+  let render x =
+    List.hd
+      (to_data_model x)
+
 end
 
 let json_tree_to_string tree =
@@ -367,7 +371,7 @@ let test_parse_list () =
     Json_io.load_json "test/data/test_calendar_list.json" in
   let tree = json_to_data_model calendar_list_json in
   let calendarListList = CalendarListList.parse tree in
-  let tree' = List.hd (CalendarListList.to_data_model calendarListList) in
+  let tree' = CalendarListList.render calendarListList in
     assert_equal
       ~printer:json_tree_to_string
       tree
