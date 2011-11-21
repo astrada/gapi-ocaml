@@ -1,4 +1,5 @@
-Note: **Click on `README.md` in the directory to have working relative links.**
+Note: **Click on `README.md` in the directory view to have working relative
+links.**
 
 Google APIs Client library for OCaml
 ====================================

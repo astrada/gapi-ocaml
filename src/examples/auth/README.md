@@ -1,3 +1,6 @@
+Note: **Click on `README.md` in the directory view to have working relative
+links.**
+
 gapi-ocaml examples
 ===================
 
