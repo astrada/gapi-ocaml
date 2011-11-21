@@ -114,7 +114,7 @@ struct
           parse_children
             of_data_model
             empty
-            (fun x -> x)
+            Std.identity
             cs
       | e ->
           unexpected "Reminder.of_data_model" e
@@ -235,7 +235,7 @@ struct
           parse_children
             of_data_model
             empty
-            (fun x -> x)
+            Std.identity
             cs
       | e ->
           unexpected "CalendarListResource.of_data_model" e
@@ -298,7 +298,7 @@ struct
           parse_children
             of_data_model
             empty
-            (fun x -> x)
+            Std.identity
             cs
       | e ->
           unexpected "CalendarListList.parse" e
