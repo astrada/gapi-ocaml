@@ -3,53 +3,49 @@ open GapiUtils.Op
 module QueryParameters =
 struct
   type t = {
-    author : string;
+    (* Standard query parameters *)
     fields : string;
-    max_results : int;
-    published_min : GapiDate.t;
-    published_max : GapiDate.t;
+    quotaUser : string;
+    userIp : string;
+    (* Calendar-specific query parameters *)
+    maxAttendees : int;
+    maxResults : int;
+    minAccessRole : string;
+    orderBy : string;
+    originalStart : GapiDate.t;
+    pageToken : string;
     q : string;
-    start_index : int;
-    strict : bool;
-    updated_min : GapiDate.t;
-    updated_max : GapiDate.t;
-    ctz : string;
-    future_events : bool;
-    max_attendees : int;
-    orderby : string;
-    recurrence_expansion_start : GapiDate.t;
-    recurrence_expansion_end : GapiDate.t;
-    singleevents : bool;
-    showdeleted : bool;
-    showhidden : bool;
-    sortorder : string;
-    start_min : GapiDate.t;
-    start_max : GapiDate.t
+    sendNotifications : bool;
+    singleEvents : bool;
+    showDeleted : bool;
+    showHidden : bool;
+    showHiddenInvitations : bool;
+    timeMax : GapiDate.t;
+    timeMin : GapiDate.t;
+    timeZone : string;
+    updatedMin : GapiDate.t
   }
 
   let default = {
-    author = "";
     fields = "";
-    max_results = 0;
-    published_min = GapiDate.epoch;
-    published_max = GapiDate.epoch;
+    quotaUser = "";
+    userIp = "";
+    maxAttendees = 0;
+    maxResults = 0;
+    minAccessRole = "";
+    orderBy = "";
+    originalStart = GapiDate.epoch;
+    pageToken = "";
     q = "";
-    start_index = 0;
-    strict = false;
-    updated_min = GapiDate.epoch;
-    updated_max = GapiDate.epoch;
-    ctz = "";
-    future_events = false;
-    max_attendees = 0;
-    orderby = "";
-    recurrence_expansion_start = GapiDate.epoch;
-    recurrence_expansion_end = GapiDate.epoch;
-    singleevents = false;
-    showdeleted = false;
-    showhidden = false;
-    sortorder = "";
-    start_min = GapiDate.epoch;
-    start_max = GapiDate.epoch
+    sendNotifications = false;
+    singleEvents = false;
+    showDeleted = false;
+    showHidden = false;
+    showHiddenInvitations = false;
+    timeMax = GapiDate.epoch;
+    timeMin = GapiDate.epoch;
+    timeZone = "";
+    updatedMin = GapiDate.epoch
   }
 
   let to_key_value_list qp =
@@ -60,28 +56,25 @@ struct
         else
           []
     in
-      [param (fun p -> p.author) Std.identity "author";
-       param (fun p -> p.fields) Std.identity "fields";
-       param (fun p -> p.max_results) string_of_int "max-results";
-       param (fun p -> p.published_min) GapiDate.to_string "published-min";
-       param (fun p -> p.published_max) GapiDate.to_string "published-max";
+      [param (fun p -> p.fields) Std.identity "fields";
+       param (fun p -> p.quotaUser) Std.identity "quotaUser";
+       param (fun p -> p.userIp) Std.identity "userIp";
+       param (fun p -> p.maxAttendees) string_of_int "maxAttendees";
+       param (fun p -> p.maxResults) string_of_int "maxResults";
+       param (fun p -> p.minAccessRole) Std.identity "minAccessRole";
+       param (fun p -> p.orderBy) Std.identity "orderBy";
+       param (fun p -> p.originalStart) GapiDate.to_string "originalStart";
+       param (fun p -> p.pageToken) Std.identity "pageToken";
        param (fun p -> p.q) Std.identity "q";
-       param (fun p -> p.start_index) string_of_int "start-index";
-       param (fun p -> p.strict) string_of_bool "strict";
-       param (fun p -> p.updated_min) GapiDate.to_string "updated-min";
-       param (fun p -> p.updated_max) GapiDate.to_string "updated-max";
-       param (fun p -> p.ctz) Std.identity "ctz";
-       param (fun p -> p.future_events) string_of_bool "future-events";
-       param (fun p -> p.max_attendees) string_of_int "max-attendees";
-       param (fun p -> p.orderby) Std.identity "orderby";
-       param (fun p -> p.recurrence_expansion_start) GapiDate.to_string "recurrence-expansion-start";
-       param (fun p -> p.recurrence_expansion_end) GapiDate.to_string "recurrence-expansion-end";
-       param (fun p -> p.singleevents) string_of_bool "singleevents";
-       param (fun p -> p.showdeleted) string_of_bool "showdeleted";
-       param (fun p -> p.showhidden) string_of_bool "showhidden";
-       param (fun p -> p.sortorder) Std.identity "sortorder";
-       param (fun p -> p.start_min) GapiDate.to_string "start-min";
-       param (fun p -> p.start_max) GapiDate.to_string "start-max"]
+       param (fun p -> p.sendNotifications) string_of_bool "sendNotifications";
+       param (fun p -> p.singleEvents) string_of_bool "singleEvents";
+       param (fun p -> p.showDeleted) string_of_bool "showDeleted";
+       param (fun p -> p.showHidden) string_of_bool "showHidden";
+       param (fun p -> p.showHiddenInvitations) string_of_bool "showHiddenInvitations";
+       param (fun p -> p.timeMax) GapiDate.to_string "timeMax";
+       param (fun p -> p.timeMin) GapiDate.to_string "timeMin";
+       param (fun p -> p.timeZone) Std.identity "timeZone";
+       param (fun p -> p.updatedMin) GapiDate.to_string "updatedMin"]
       |> List.concat
 
 end
