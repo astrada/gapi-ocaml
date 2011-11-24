@@ -15,4 +15,7 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <gapiRequest.*> : pkg_netstring, pkg_extlib, pkg_xmlm
 <gapiService.*> : pkg_extlib
 <gapiDate.*> : pkg_netstring
+<gapiJson.*> : pkg_json-wheel, pkg_extlib
+<gapiCalendar.*> : pkg_json-wheel, pkg_extlib
+<gapiCalendarService.*> : pkg_json-wheel, pkg_extlib
 

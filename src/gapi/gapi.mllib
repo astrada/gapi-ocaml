@@ -13,4 +13,7 @@ GapiRequest
 GapiMonad
 GapiService
 GapiDate
+GapiJson
+GapiCalendar
+GapiCalendarService
 
