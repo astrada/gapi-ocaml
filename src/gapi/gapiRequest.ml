@@ -16,7 +16,8 @@ let parse_empty_response _ =
 let parse_response parse_output pipe response_code headers session =
   match response_code with
       200 (* OK *)
-    | 201 (* Created *) ->
+    | 201 (* Created *)
+    | 204 (* No Content *) ->
         parse_output pipe
     | 302 (* Found *) ->
         let url = List.fold_left
