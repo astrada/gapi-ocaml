@@ -35,20 +35,8 @@ let test_list_with_max_results () =
            1
            (List.length calendar_list.GapiCalendar.CalendarListList.items))
 
-let test_parse_list () =
-  let calendar_list_json =
-    Json_io.load_json "test/data/test_calendar_list.json" in
-  let tree = GapiJson.json_to_data_model calendar_list_json in
-  let calendarListList = GapiCalendar.CalendarListList.parse tree in
-  let tree' = GapiCalendar.CalendarListList.render calendarListList in
-    assert_equal
-      ~printer:TestHelper.string_of_json_data_model
-      tree
-      tree'
-
 let suite = "Calendar List (v3) test" >:::
-  [(*"test_list" >:: test_list;
-   "test_list_with_max_results" >:: test_list_with_max_results;*)
-   "test_parse_list" >:: test_parse_list
+  ["test_list" >:: test_list;
+   "test_list_with_max_results" >:: test_list_with_max_results;
   ]
 

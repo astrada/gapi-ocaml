@@ -1,3 +1,4 @@
+open GapiUtils.Op
 open GapiCore
 open GapiJson
 
@@ -13,12 +14,12 @@ struct
     minutes = 0
   }
 
-  let to_data_model x =
+  let render x =
     render_object ""
       [render_string_value "method" x._method;
        render_int_value "minutes" x.minutes]
 
-  let rec of_data_model x tree =
+  let rec parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ name = "method"; data_type = Scalar },
@@ -32,7 +33,7 @@ struct
           ({ name = ""; data_type = Object },
            cs) ->
           parse_children
-            of_data_model
+            parse
             empty
             Std.identity
             cs
@@ -75,7 +76,7 @@ struct
     defaultReminders = []
   }
 
-  let to_data_model x =
+  let render x =
     render_object ""
       [render_string_value "kind" x.kind;
        render_string_value "etag" x.etag;
@@ -89,9 +90,9 @@ struct
        render_bool_value "hidden" x.hidden;
        render_bool_value "selected" x.selected;
        render_string_value "accessRole" x.accessRole;
-       render_array "defaultReminders" Reminder.to_data_model x.defaultReminders]
+       render_array "defaultReminders" Reminder.render x.defaultReminders]
 
-  let rec of_data_model x tree =
+  let rec parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ name = "kind"; data_type = Scalar },
@@ -145,7 +146,7 @@ struct
           ({ name = "defaultReminders"; data_type = Array },
            cs) ->
           parse_array
-            Reminder.of_data_model
+            Reminder.parse
             Reminder.empty
             (fun xs -> { x with defaultReminders = xs })
             cs
@@ -153,7 +154,7 @@ struct
           ({ name = ""; data_type = Object },
            cs) ->
           parse_children
-            of_data_model
+            parse
             empty
             Std.identity
             cs
@@ -178,14 +179,14 @@ struct
     items = []
   }
 
-  let to_data_model x =
+  let render x =
     render_object ""
       [render_string_value "kind" x.kind;
        render_string_value "etag" x.etag;
        render_string_value "nextPageToken" x.nextPageToken;
-       render_array "items" CalendarListResource.to_data_model x.items]
+       render_array "items" CalendarListResource.render x.items]
 
-  let of_data_model x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ name = "kind"; data_type = Scalar },
@@ -203,29 +204,29 @@ struct
           ({ name = "items"; data_type = Array },
            cs) ->
           parse_array
-            CalendarListResource.of_data_model
+            CalendarListResource.parse
             CalendarListResource.empty
             (fun xs -> { x with items = xs })
             cs
       | e ->
           unexpected "CalendarListList.of_data_model" e
 
-  let parse tree =
+  let to_data_model x =
+    render x
+      |> List.hd
+
+  let of_data_model tree =
     match tree with
         AnnotatedTree.Node
           ({ name = ""; data_type = Object },
            cs) ->
           parse_children
-            of_data_model
+            parse
             empty
             Std.identity
             cs
       | e ->
           unexpected "CalendarListList.parse" e
-
-  let render x =
-    List.hd
-      (to_data_model x)
 
 end
 

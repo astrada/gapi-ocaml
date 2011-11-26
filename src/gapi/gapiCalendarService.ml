@@ -86,7 +86,7 @@ let parse_json_response parse pipe =
     parse tree
 
 let parse_calendar_list =
-  parse_json_response GapiCalendar.CalendarListList.parse
+  parse_json_response GapiCalendar.CalendarListList.of_data_model
 
 let calendar_list
       ?(url = "https://www.googleapis.com/calendar/v3/users/me/calendarList")
