@@ -4,6 +4,7 @@ type request_type =
     Query
   | Create
   | Update
+  | Patch
   | Delete
 
 val parse_empty_response : 'a -> unit

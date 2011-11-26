@@ -8,6 +8,7 @@ type request_type =
     Query
   | Create
   | Update
+  | Patch
   | Delete
 
 let parse_empty_response _ =
@@ -95,6 +96,7 @@ let single_request
           end
       | Create -> GapiCore.HttpMethod.POST
       | Update -> GapiCore.HttpMethod.PUT
+      | Patch -> GapiCore.HttpMethod.PATCH
       | Delete -> GapiCore.HttpMethod.DELETE in
   let oauth1_params =
     match auth_data with
@@ -122,6 +124,7 @@ let single_request
                       Query ->
                         Some (GapiCore.Header.IfNoneMatch e)
                     | Update
+                    | Patch
                     | Delete ->
                         if GapiUtils.is_weak_etag e then
                           None
