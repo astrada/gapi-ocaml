@@ -131,3 +131,11 @@ let parse_json_response parse pipe =
   let tree = json_to_data_model json in
     parse tree
 
+let default_content_type = "application/json"
+
+let render_json render_data_model data =
+  let tree = render_data_model data in
+  let json = data_model_to_json tree in
+  let json_string = Json_io.string_of_json ~compact:true json in
+    GapiCore.PostData.Body (json_string, default_content_type)
+

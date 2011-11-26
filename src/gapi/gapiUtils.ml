@@ -13,6 +13,11 @@ let is_weak_etag etag =
   else
     false
 
+let etag_option etag =
+  match etag with
+      "" -> None
+    | v -> Some v
+
 let merge_query_string parameters url =
   let neturl = Neturl.parse_url url in
   let fields =
@@ -25,6 +30,15 @@ let merge_query_string parameters url =
   let new_neturl = Neturl.modify_url
                      ~encoded:true
                      ~query:query_string
+                     neturl in
+    Neturl.string_of_url new_neturl
+
+let add_id_to_url id url =
+  let neturl = Neturl.parse_url url in
+  let path = Neturl.url_path neturl in
+  let new_path = path @ [id] in
+  let new_neturl = Neturl.modify_url
+                     ~path:new_path
                      neturl in
     Neturl.string_of_url new_neturl
 
