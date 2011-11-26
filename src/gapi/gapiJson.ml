@@ -119,3 +119,15 @@ let data_model_to_json tree =
     tree
     |> snd
 
+(*
+val parse_json_response :
+  (GapiJson.json_data_model -> 'a) ->
+  GapiPipe.OcamlnetPipe.t ->
+  'a
+*)
+let parse_json_response parse pipe =
+  let json_string = GapiConversation.read_all pipe in
+  let json = Json_io.json_of_string json_string in
+  let tree = json_to_data_model json in
+    parse tree
+

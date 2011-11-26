@@ -79,14 +79,8 @@ struct
 
 end
 
-let parse_json_response parse pipe =
-  let json_string = GapiConversation.read_all pipe in
-  let json = Json_io.json_of_string json_string in
-  let tree = GapiJson.json_to_data_model json in
-    parse tree
-
 let parse_calendar_list =
-  parse_json_response GapiCalendar.CalendarListList.of_data_model
+  GapiJson.parse_json_response GapiCalendar.CalendarListList.of_data_model
 
 let calendar_list
       ?(url = "https://www.googleapis.com/calendar/v3/users/me/calendarList")
