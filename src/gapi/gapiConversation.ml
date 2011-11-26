@@ -88,6 +88,7 @@ let request
       | GapiCore.HttpMethod.PUT ->
           GapiCurl.set_upload true session.Session.curl
       | GapiCore.HttpMethod.DELETE ->
+          GapiCurl.set_upload false session.Session.curl;
           GapiCurl.set_nobody true session.Session.curl
       | _ -> ()
     end;
