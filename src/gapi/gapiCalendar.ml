@@ -161,6 +161,23 @@ struct
       | e ->
           unexpected "CalendarListResource.of_data_model" e
 
+  let to_data_model x =
+    render x
+      |> List.hd
+
+  let of_data_model tree =
+    match tree with
+        AnnotatedTree.Node
+          ({ name = ""; data_type = Object },
+           cs) ->
+          parse_children
+            parse
+            empty
+            Std.identity
+            cs
+      | e ->
+          unexpected "CalendarListResource.of_data_model" e
+
 end
 
 module CalendarListList =
@@ -226,7 +243,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "CalendarListList.parse" e
+          unexpected "CalendarListList.of_data_model" e
 
 end
 

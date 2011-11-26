@@ -5,7 +5,7 @@ let test_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (calendar_list, session) =
-         GapiCalendarService.calendar_list
+         GapiCalendarService.CalendarList.list
            session
        in
          assert_equal
@@ -27,7 +27,7 @@ let test_list_with_max_results () =
              GapiCalendarService.QueryParameters.maxResults = 1
        } in
        let (calendar_list, session) =
-         GapiCalendarService.calendar_list
+         GapiCalendarService.CalendarList.list
            ~parameters
            session
        in

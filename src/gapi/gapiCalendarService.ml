@@ -1,4 +1,5 @@
 open GapiUtils.Op
+open GapiCalendar
 
 module QueryParameters =
 struct
@@ -79,21 +80,40 @@ struct
 
 end
 
-let parse_calendar_list =
-  GapiJson.parse_json_response GapiCalendar.CalendarListList.of_data_model
+module CalendarListConf =
+struct
+  type resource_list_t = CalendarListList.t
+  type resource_t = CalendarListResource.t
 
-let calendar_list
-      ?(url = "https://www.googleapis.com/calendar/v3/users/me/calendarList")
-      ?etag
-      ?parameters
-      session =
-  let query_parameters = Option.map
-                           QueryParameters.to_key_value_list
-                           parameters in
-    GapiService.query
-      ?etag
-      ?query_parameters
-      url
-      parse_calendar_list
-      session
+  let service_url =
+    "https://www.googleapis.com/calendar/v3/users/me/calendarList"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response CalendarListList.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response CalendarListResource.of_data_model
+
+  let render_resource =
+    GapiJson.render_json CalendarListResource.to_data_model
+
+  let create_resource_from_id id =
+    { CalendarListResource.empty with
+          CalendarListResource.id = id
+    }
+
+  let get_url resource base_url =
+    GapiUtils.add_id_to_url
+      resource.CalendarListResource.id
+      base_url
+
+  let get_etag resource =
+    GapiUtils.etag_option resource.CalendarListResource.etag
+
+end
+
+module CalendarList =
+  GapiService.Make
+    (CalendarListConf)
+    (QueryParameters)
 

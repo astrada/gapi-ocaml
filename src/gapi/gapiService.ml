@@ -111,6 +111,24 @@ let update
     parse_response
     session
 
+let patch
+      data_to_post
+      ?version
+      ?etag
+      data
+      url
+      parse_response
+      session =
+  service_request_with_data
+    GapiRequest.Patch
+    data_to_post
+    ?version
+    ?etag
+    data
+    url
+    parse_response
+    session
+
 let delete
       ?version
       ?etag
@@ -137,4 +155,184 @@ let batch_request
     url
     parse_response
     session
+
+module type QUERYPARAMETERS = 
+sig
+  type t
+
+  val default : t
+
+  val to_key_value_list : t -> (string * string) list
+
+end
+
+module type SERVICECONF =
+sig
+  type resource_list_t
+  type resource_t
+
+  val service_url : string
+
+  val parse_resource_list : GapiPipe.OcamlnetPipe.t -> resource_list_t
+
+  val parse_resource : GapiPipe.OcamlnetPipe.t -> resource_t
+
+  val render_resource : resource_t -> GapiCore.PostData.t
+
+  val create_resource_from_id : string -> resource_t
+
+  val get_url : resource_t -> string -> string
+
+  val get_etag : resource_t -> string option
+
+end
+
+module type SERVICE =
+sig
+  type resource_list_t
+  type resource_t
+  type query_parameters_t
+
+  val list :
+    ?url:string ->
+    ?etag:string ->
+    ?parameters:query_parameters_t ->
+    GapiConversation.Session.t ->
+    (resource_list_t * GapiConversation.Session.t)
+
+  val get :
+    ?url:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (resource_t * GapiConversation.Session.t)
+
+  val refresh :
+    ?url:string ->
+    resource_t ->
+    GapiConversation.Session.t ->
+    (resource_t * GapiConversation.Session.t)
+
+  val insert :
+    ?url:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (resource_t * GapiConversation.Session.t)
+
+  val update :
+    ?url:string ->
+    resource_t ->
+    GapiConversation.Session.t ->
+    (resource_t * GapiConversation.Session.t)
+
+  val patch :
+    ?url:string ->
+    resource_t ->
+    GapiConversation.Session.t ->
+    (resource_t * GapiConversation.Session.t)
+
+  val delete :
+    ?url:string ->
+    resource_t ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+end
+
+module Make
+  (S : SERVICECONF)
+  (Q : QUERYPARAMETERS) =
+struct
+  type resource_list_t = S.resource_list_t
+  type resource_t = S.resource_t
+  type query_parameters_t = Q.t
+
+  let list
+        ?(url = S.service_url)
+        ?etag
+        ?parameters
+        session =
+    let query_parameters = Option.map
+                             Q.to_key_value_list
+                             parameters in
+      query
+        ?etag
+        ?query_parameters
+        url
+        S.parse_resource_list
+        session
+
+  let get
+        ?(url = S.service_url)
+        id
+        session =
+    let url' = GapiUtils.add_id_to_url id url in
+      query
+        url'
+        S.parse_resource
+        session
+
+  let refresh
+        ?(url = S.service_url)
+        resource
+        session =
+    let url' = S.get_url resource url in
+    let etag = S.get_etag resource in
+      read
+        ?etag
+        resource
+        url'
+        S.parse_resource
+        session
+
+  let insert
+        ?(url = S.service_url)
+        id
+        session =
+    let resource = S.create_resource_from_id id in
+      create
+        S.render_resource
+        resource
+        url
+        S.parse_resource
+        session
+
+  let update
+        ?(url = S.service_url)
+        resource
+        session =
+    let url' = S.get_url resource url in
+    let etag = S.get_etag resource in
+      update
+        S.render_resource
+        ?etag
+        resource
+        url'
+        S.parse_resource
+        session
+
+  let patch
+        ?(url = S.service_url)
+        resource
+        session =
+    let url' = S.get_url resource url in
+    let etag = S.get_etag resource in
+      patch
+        S.render_resource
+        ?etag
+        resource
+        url'
+        S.parse_resource
+        session
+
+  let delete
+        ?(url = S.service_url)
+        resource
+        session =
+    let url' = S.get_url resource url in
+    let etag = S.get_etag resource in
+      delete
+        ?etag
+        url'
+        session
+end
 
