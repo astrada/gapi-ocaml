@@ -63,5 +63,5 @@ let generate_authorization_header
                   oauth_fields_to_sign
                   signature)
     | OAuth2 { oauth2_token = token } ->
-        Some ("OAuth " ^ token)
+        Some ("Bearer " ^ token)
 
