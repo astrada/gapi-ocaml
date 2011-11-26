@@ -61,3 +61,5 @@ val assert_equal_file : string -> string -> unit
 
 val assert_exists : string -> ('a -> bool) -> 'a list -> unit
 
+val assert_not_exists : string -> ('a -> bool) -> 'a list -> unit
+

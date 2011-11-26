@@ -234,3 +234,6 @@ let assert_equal_file file_name s =
 let assert_exists msg pred xs =
   OUnit.assert_bool msg (List.exists pred xs)
 
+let assert_not_exists msg pred xs =
+  OUnit.assert_bool msg (not (List.exists pred xs))
+
