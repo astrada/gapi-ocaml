@@ -91,10 +91,15 @@ let parse_calendar_list =
 let calendar_list
       ?(url = "https://www.googleapis.com/calendar/v3/users/me/calendarList")
       ?etag
+      ?parameters
       session =
-  GapiService.query
-    ?etag
-    url
-    parse_calendar_list
-    session
+  let query_parameters = Option.map
+                           QueryParameters.to_key_value_list
+                           parameters in
+    GapiService.query
+      ?etag
+      ?query_parameters
+      url
+      parse_calendar_list
+      session
 

@@ -192,6 +192,24 @@ let string_of_xml_data_model tree =
             tree in
     Buffer.contents buffer
 
+let string_of_json_data_model tree =
+  let join _ = String.concat "," in
+    GapiCore.AnnotatedTree.fold
+      (fun m xs ->
+         match m.GapiJson.data_type with
+             GapiJson.Object ->
+               Printf.sprintf "%a{%a}"
+                 (fun _ n ->
+                    if n <> "" then "\"" ^ n ^ "\":" else "") m.GapiJson.name
+                 join xs
+           | GapiJson.Array ->
+               Printf.sprintf "\"%s\":[%a]" m.GapiJson.name join xs
+           | _ -> assert false)
+      (fun m value ->
+         let s = Json_type.Browse.describe value in
+           Printf.sprintf "\"%s\":%s" m.GapiJson.name s)
+      tree
+
 let assert_false msg b =
   OUnit.assert_bool msg (not b)
 
