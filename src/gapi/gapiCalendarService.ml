@@ -6,6 +6,7 @@ struct
   type t = {
     (* Standard query parameters *)
     fields : string;
+    prettyPrint : bool;
     quotaUser : string;
     userIp : string;
     (* Calendar-specific query parameters *)
@@ -29,6 +30,7 @@ struct
 
   let default = {
     fields = "";
+    prettyPrint = true;
     quotaUser = "";
     userIp = "";
     maxAttendees = 0;
@@ -58,6 +60,7 @@ struct
           []
     in
       [param (fun p -> p.fields) Std.identity "fields";
+       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
        param (fun p -> p.quotaUser) Std.identity "quotaUser";
        param (fun p -> p.userIp) Std.identity "userIp";
        param (fun p -> p.maxAttendees) string_of_int "maxAttendees";
