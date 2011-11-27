@@ -5,7 +5,7 @@ type ('a, 'b) t = {
   set : 'b -> 'a -> 'a
 }
 
-let update l f a =
+let modify l f a =
   let value = l.get a in
   let new_value = f value in
     l.set new_value a
@@ -14,11 +14,11 @@ let _get a l = l.get a
 
 let _set v a l = l.set v a
 
-let _update f l = update l f
+let _modify f l = modify l f
 
 let compose l1 l2 = {
   get = l2.get >> l1.get;
-  set = l1.set >> update l2
+  set = l1.set >> modify l2
 }
 
 let pair l1 l2 = {
@@ -34,6 +34,16 @@ let cond pred lt lf =
 
 (* TODO: State monad... *)
 
+let ignore = {
+  get = ignore;
+  set = (fun _ a -> a)
+}
+
+let id = {
+  get = (fun a -> a);
+  set = (fun b a -> b)
+}
+
 let first = {
   get = fst;
   set = (fun v a -> v, snd a)
@@ -42,11 +52,6 @@ let first = {
 let second = {
   get = snd;
   set = (fun v a -> fst a, v)
-}
-
-let id = {
-  get = (fun a -> a);
-  set = (fun b a -> b)
 }
 
 let for_hash key = {
@@ -86,24 +91,23 @@ let xmap f g l = {
   set = g >> l.set
 }
 
-let ign = {
-  get = ignore;
-  set = (fun _ a -> a)
-}
-
 module Op =
 struct
+  let (|.) = _get
+
+  let (^=) l v = fun a -> _set v a l
+
+  let (^%=) l f = _modify f l
+
   let (>>|) l1 l2 = compose l2 l1
 
-  let (|<<) l1 l2 = compose l1 l2
+  let (|<<) = compose
 
   let ( *** ) l1 l2 = pair l1 l2
 
-  let (+=) l v = _update ((+) v) l
+  let (+=) l v = _modify ((+) v) l
 
-  let (-=) l v = _update ((-) v) l
-
-  let (=!) l v = fun a -> _set v a l
+  let (-=) l v = _modify ((-) v) l
 
 end
 
