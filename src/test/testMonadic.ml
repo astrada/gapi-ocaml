@@ -1,7 +1,7 @@
 open OUnit
 open GapiMonad
 open GapiMonad.SessionM
-open GapiMonad.SessionM.Infix
+open GapiMonad.SessionM.Op
 
 let test_monadic_session () =
   TestHelper.test_request

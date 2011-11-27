@@ -12,7 +12,7 @@ module type MONAD_COMBINATORS =
 sig
   include MONAD
 
-  module Infix :
+  module Op :
   sig
     val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
 
@@ -44,14 +44,14 @@ struct
 
   let bind = M.bind
 
-  module Infix =
+  module Op =
   struct
     let (>>=) = bind
 
     let (>>) m n = m >>= (fun _ -> n)
   end
 
-  open Infix
+  open Op
 
   let join n = n >>= (fun x -> x)
 

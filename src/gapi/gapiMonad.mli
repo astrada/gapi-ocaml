@@ -12,7 +12,7 @@ module type MONAD_COMBINATORS =
 sig
   include MONAD
 
-  module Infix :
+  module Op :
   sig
     val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
 

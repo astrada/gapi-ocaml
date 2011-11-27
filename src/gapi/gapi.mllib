@@ -14,6 +14,7 @@ GapiMonad
 GapiService
 GapiDate
 GapiJson
+GapiLens
 GapiCalendar
 GapiCalendarService
 

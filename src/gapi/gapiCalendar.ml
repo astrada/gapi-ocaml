@@ -14,6 +14,15 @@ struct
     minutes = 0
   }
 
+  let _method = {
+    GapiLens.get = (fun x -> x._method);
+    GapiLens.set = (fun v x -> { x with _method = v })
+  }
+  let minutes = {
+    GapiLens.get = (fun x -> x.minutes);
+    GapiLens.set = (fun v x -> { x with minutes = v })
+  }
+
   let render x =
     render_object ""
       [render_string_value "method" x._method;
@@ -58,6 +67,59 @@ struct
     selected : bool;
     accessRole : string;
     defaultReminders : Reminder.t list
+  }
+
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v })
+  }
+  let summary = {
+    GapiLens.get = (fun x -> x.summary);
+    GapiLens.set = (fun v x -> { x with summary = v })
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v })
+  }
+  let location = {
+    GapiLens.get = (fun x -> x.location);
+    GapiLens.set = (fun v x -> { x with location = v })
+  }
+  let timeZone = {
+    GapiLens.get = (fun x -> x.timeZone);
+    GapiLens.set = (fun v x -> { x with timeZone = v })
+  }
+  let summaryOverride = {
+    GapiLens.get = (fun x -> x.summaryOverride);
+    GapiLens.set = (fun v x -> { x with summaryOverride = v })
+  }
+  let colorId = {
+    GapiLens.get = (fun x -> x.colorId);
+    GapiLens.set = (fun v x -> { x with colorId = v })
+  }
+  let hidden = {
+    GapiLens.get = (fun x -> x.hidden);
+    GapiLens.set = (fun v x -> { x with hidden = v })
+  }
+  let selected = {
+    GapiLens.get = (fun x -> x.selected);
+    GapiLens.set = (fun v x -> { x with selected = v })
+  }
+  let accessRole = {
+    GapiLens.get = (fun x -> x.accessRole);
+    GapiLens.set = (fun v x -> { x with accessRole = v })
+  }
+  let defaultReminders = {
+    GapiLens.get = (fun x -> x.defaultReminders);
+    GapiLens.set = (fun v x -> { x with defaultReminders = v })
   }
 
   let empty = {
@@ -187,6 +249,23 @@ struct
     etag : string;
     nextPageToken : string;
     items : CalendarListResource.t list
+  }
+
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v })
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v })
   }
 
   let empty = {
