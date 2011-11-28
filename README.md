@@ -8,8 +8,13 @@ Google APIs Client library for OCaml
 The library supports ClientLogin, OAuth1.0a, and OAuth2.0 authentication.
 Supported APIs:
 
-* Calendar Data API
+* Calendar Data API (Atom based)
+* Google Calendar APIs v3 (JSON based)
 
+### Features
+
+* Monadic interface
+* Functional lenses to access calendar data
 
 Building gapi-ocaml
 ------------------
@@ -62,4 +67,7 @@ Google's authorization endpoints.
 
 See [monadic test](src/test/testMonadic.ml) for an example of how to use the
 monadic interface.
+
+See [calendar v3 test](src/test/testCalendarModelV3.ml) for an example of how
+to use functional lenses to read and modify calendar data.
 
