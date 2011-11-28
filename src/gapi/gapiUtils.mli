@@ -1,10 +1,10 @@
-module Op :
+module Infix :
 sig
   val ( |> ) : 'a -> ('a -> 'b) -> 'b
 
-  val ( << ) : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b
+  val ( -| ) : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b
 
-  val ( >> ) : ('a -> 'b) -> ('b -> 'c) -> 'a -> 'c
+  val ( |- ) : ('a -> 'b) -> ('b -> 'c) -> 'a -> 'c
 
 end
 

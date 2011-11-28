@@ -1,7 +1,7 @@
 open OUnit
 open GapiCalendar
-open GapiLens.Op
-open GapiUtils.Op
+open GapiLens.Infix
+open GapiUtils.Infix
 
 let test_parse_calendar_list () =
   let calendar_list_json =

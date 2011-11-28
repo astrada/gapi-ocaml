@@ -1,4 +1,4 @@
-open GapiUtils.Op
+open GapiUtils.Infix
 
 (* Calendar event data types *)
 module RecurrenceExceptionEntry =

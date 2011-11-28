@@ -1,4 +1,4 @@
-open GapiUtils.Op
+open GapiUtils.Infix
 
 type ('a, 'b) t = {
   get : 'a -> 'b;
@@ -17,8 +17,8 @@ let _set v a l = l.set v a
 let _modify f l = modify l f
 
 let compose l1 l2 = {
-  get = l2.get >> l1.get;
-  set = l1.set >> modify l2
+  get = l2.get |- l1.get;
+  set = l1.set |- modify l2
 }
 
 let pair l1 l2 = {
@@ -87,11 +87,11 @@ let list_map l = {
 (* TODO: array_map *)
 
 let xmap f g l = {
-  get = l.get >> f;
-  set = g >> l.set
+  get = l.get |- f;
+  set = g |- l.set
 }
 
-module Op =
+module Infix =
 struct
   let (|.) = _get
 

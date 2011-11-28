@@ -1,4 +1,4 @@
-open GapiUtils.Op
+open GapiUtils.Infix
 
 exception Redirect of string * GapiConversation.Session.t
 exception Unauthorized of GapiConversation.Session.t

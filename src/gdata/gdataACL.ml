@@ -1,4 +1,4 @@
-open GapiUtils.Op
+open GapiUtils.Infix
 
 let ns_gAcl = "http://schemas.google.com/acl/2007"
 

@@ -1,5 +1,5 @@
 open GapiCore
-open GapiUtils.Op
+open GapiUtils.Infix
 
 type json_data_type =
     Object

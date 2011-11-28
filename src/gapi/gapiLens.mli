@@ -49,7 +49,7 @@ val list_map : ('a, 'b) t -> ('a list, 'b list) t
 
 val xmap : ('a -> 'b) -> ('b -> 'a) -> ('c, 'a) t -> ('c, 'b) t
 
-module Op :
+module Infix :
 sig
   val ( |. ) : 'a -> ('a, 'b) t -> 'b
 

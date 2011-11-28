@@ -1,4 +1,4 @@
-open GapiUtils.Op
+open GapiUtils.Infix
 
 (* Calendar data types *)
 let ns_gCal = "http://schemas.google.com/gCal/2005"
