@@ -99,9 +99,9 @@ struct
 
   let (^%=) l f = _modify f l
 
-  let (>>|) l1 l2 = compose l2 l1
+  let (|--) l1 l2 = compose l2 l1
 
-  let (|<<) = compose
+  let (--|) = compose
 
   let ( *** ) l1 l2 = pair l1 l2
 

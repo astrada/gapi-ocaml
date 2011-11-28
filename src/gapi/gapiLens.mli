@@ -59,9 +59,9 @@ sig
 
   (* Composition *)
 
-  val ( >>| ) : ('a, 'b) t -> ('b, 'c) t -> ('a, 'c) t
+  val ( |-- ) : ('a, 'b) t -> ('b, 'c) t -> ('a, 'c) t
 
-  val ( |<< ) : ('a, 'b) t -> ('c, 'a) t -> ('c, 'b) t
+  val ( --| ) : ('a, 'b) t -> ('c, 'a) t -> ('c, 'b) t
 
   val ( *** ) : ('a, 'b) t -> ('c, 'd) t -> ('a * 'c, 'b * 'd) t
 

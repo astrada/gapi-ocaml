@@ -16,18 +16,18 @@ let test_parse_calendar_list () =
 
 let items_0_timeZone =
   CalendarListList.items
-    >>| GapiLens.for_list 0
-    >>| CalendarListResource.timeZone
+    |-- GapiLens.for_list 0
+      |-- CalendarListResource.timeZone
 let items_1_summary =
   CalendarListList.items
-    >>| GapiLens.for_list 1
-    >>| CalendarListResource.summary
+    |-- GapiLens.for_list 1
+      |-- CalendarListResource.summary
 let items_1_defaultReminders_0_minutes =
   CalendarListList.items
-    >>| GapiLens.for_list 1
-    >>| CalendarListResource.defaultReminders
-    >>| GapiLens.for_list 0
-    >>| Reminder.minutes
+    |-- GapiLens.for_list 1
+      |-- CalendarListResource.defaultReminders
+        |-- GapiLens.for_list 0
+          |-- Reminder.minutes
 
 let load_calendar_list () =
   let calendar_list_json =
