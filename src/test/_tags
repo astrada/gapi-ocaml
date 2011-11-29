@@ -7,5 +7,6 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <testCalendarService.*> : pkg_extlib
 <testCalendarModelV3.*> : pkg_extlib, pkg_json-wheel
 <testCalendarList.*> : pkg_extlib
+<testCalendarACL.*> : pkg_extlib
 <test*.*> : pkg_oUnit
 

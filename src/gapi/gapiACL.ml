@@ -135,6 +135,10 @@ struct
       | e ->
           unexpected "GapiACL.ACLResource.parse" e
 
+  let to_data_model = render_root render
+
+  let of_data_model = parse_root parse empty
+
 end
 
 module ACLList =

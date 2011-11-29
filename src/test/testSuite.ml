@@ -7,9 +7,10 @@ let suite = "Google API Ocaml client test suite" >:::
    TestAuth.suite;
    TestCalendarService.suite;
    TestMonadic.suite;
-   TestCalendarList.suite;*)
+   TestCalendarList.suite;
+   TestCalendarACL.suite;*)
    TestCalendarModelV3.suite;
-   ]
+  ]
 
 let _ =
   OUnit.run_test_tt_main suite

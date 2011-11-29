@@ -86,7 +86,10 @@ sig
 
   val create_resource_from_id : string -> resource_t
 
-  val get_url : resource_t -> string -> string
+  val get_url :
+    ?container_id:string ->
+    ?resource:resource_t ->
+    string -> string
 
   val get_etag : resource_t -> string option
 
@@ -102,41 +105,48 @@ sig
     ?url:string ->
     ?etag:string ->
     ?parameters:query_parameters_t ->
+    ?container_id:string ->
     GapiConversation.Session.t ->
     (resource_list_t * GapiConversation.Session.t)
 
   val get :
     ?url:string ->
+    ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val refresh :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val insert :
     ?url:string ->
-    string ->
+    ?container_id:string ->
+    resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val update :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val patch :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val delete :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)

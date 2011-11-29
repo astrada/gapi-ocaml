@@ -181,7 +181,10 @@ sig
 
   val create_resource_from_id : string -> resource_t
 
-  val get_url : resource_t -> string -> string
+  val get_url :
+    ?container_id:string ->
+    ?resource:resource_t ->
+    string -> string
 
   val get_etag : resource_t -> string option
 
@@ -197,41 +200,48 @@ sig
     ?url:string ->
     ?etag:string ->
     ?parameters:query_parameters_t ->
+    ?container_id:string ->
     GapiConversation.Session.t ->
     (resource_list_t * GapiConversation.Session.t)
 
   val get :
     ?url:string ->
+    ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val refresh :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val insert :
     ?url:string ->
-    string ->
+    ?container_id:string ->
+    resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val update :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val patch :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (resource_t * GapiConversation.Session.t)
 
   val delete :
     ?url:string ->
+    ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
@@ -250,22 +260,26 @@ struct
         ?(url = S.service_url)
         ?etag
         ?parameters
+        ?container_id
         session =
+    let url' = S.get_url ?container_id url in
     let query_parameters = Option.map
                              Q.to_key_value_list
                              parameters in
       query
         ?etag
         ?query_parameters
-        url
+        url'
         S.parse_resource_list
         session
 
   let get
         ?(url = S.service_url)
+        ?container_id
         id
         session =
-    let url' = GapiUtils.add_id_to_url id url in
+    let resource = S.create_resource_from_id id in
+    let url' = S.get_url ?container_id ~resource url in
       query
         url'
         S.parse_resource
@@ -273,9 +287,10 @@ struct
 
   let refresh
         ?(url = S.service_url)
+        ?container_id
         resource
         session =
-    let url' = S.get_url resource url in
+    let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
       read
         ?etag
@@ -286,21 +301,23 @@ struct
 
   let insert
         ?(url = S.service_url)
-        id
+        ?container_id
+        resource
         session =
-    let resource = S.create_resource_from_id id in
+    let url' = S.get_url ?container_id url in
       create
         S.render_resource
         resource
-        url
+        url'
         S.parse_resource
         session
 
   let update
         ?(url = S.service_url)
+        ?container_id
         resource
         session =
-    let url' = S.get_url resource url in
+    let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
       update
         S.render_resource
@@ -312,9 +329,10 @@ struct
 
   let patch
         ?(url = S.service_url)
+        ?container_id
         resource
         session =
-    let url' = S.get_url resource url in
+    let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
       patch
         S.render_resource
@@ -326,13 +344,15 @@ struct
 
   let delete
         ?(url = S.service_url)
+        ?container_id
         resource
         session =
-    let url' = S.get_url resource url in
+    let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
       delete
         ?etag
         url'
         session
+
 end
 
