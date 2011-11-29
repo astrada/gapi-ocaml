@@ -9,11 +9,6 @@ struct
     minutes : int
   }
 
-  let empty = {
-    _method = "";
-    minutes = 0
-  }
-
   let _method = {
     GapiLens.get = (fun x -> x._method);
     GapiLens.set = (fun v x -> { x with _method = v })
@@ -21,6 +16,11 @@ struct
   let minutes = {
     GapiLens.get = (fun x -> x.minutes);
     GapiLens.set = (fun v x -> { x with minutes = v })
+  }
+
+  let empty = {
+    _method = "";
+    minutes = 0
   }
 
   let render x =
@@ -47,7 +47,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "Reminder.of_data_model" e
+          unexpected "GapiCalendar.Reminder.parse" e
 
 end
 
@@ -221,24 +221,11 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "CalendarListResource.of_data_model" e
+          unexpected "GapiCalendar.CalendarListResource.parse" e
 
-  let to_data_model x =
-    render x
-      |> List.hd
+  let to_data_model = render_root render
 
-  let of_data_model tree =
-    match tree with
-        AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "CalendarListResource.of_data_model" e
+  let of_data_model = parse_root parse empty
 
 end
 
@@ -305,24 +292,11 @@ struct
             (fun xs -> { x with items = xs })
             cs
       | e ->
-          unexpected "CalendarListList.of_data_model" e
+          unexpected "GapiCalendar.CalendarListList.parse" e
 
-  let to_data_model x =
-    render x
-      |> List.hd
+  let to_data_model = render_root render
 
-  let of_data_model tree =
-    match tree with
-        AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "CalendarListList.of_data_model" e
+  let of_data_model = parse_root parse empty
 
 end
 

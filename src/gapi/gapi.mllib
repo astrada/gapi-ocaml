@@ -16,5 +16,6 @@ GapiDate
 GapiJson
 GapiLens
 GapiCalendar
+GapiACL
 GapiCalendarService
 

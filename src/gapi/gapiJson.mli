@@ -57,6 +57,11 @@ val render_array :
   'a list ->
   json_data_model list
 
+val render_root :
+  ('a -> json_data_model list) ->
+  'a ->
+  json_data_model
+
 val parse_children :
   ('a -> json_data_model -> 'a) ->
   'a ->
@@ -70,6 +75,12 @@ val parse_array :
   ('a list -> 'b) ->
   json_data_model list ->
   'b
+
+val parse_root :
+  ('a -> json_data_model -> 'a) ->
+  'a ->
+  json_data_model ->
+  'a
 
 val json_to_data_model :
   Json_type.json_type ->

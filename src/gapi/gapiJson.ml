@@ -65,6 +65,10 @@ let render_array name render xs =
   let xs' = List.map render xs in
     render_struct name Array xs'
 
+let render_root render x =
+  render x
+    |> List.hd
+
 let parse_children parse_child empty_element update cs =
   let element = List.fold_left
                   parse_child
@@ -80,6 +84,19 @@ let parse_array parse_child empty_element update cs =
                   []
   in
     update xs
+
+let parse_root parse_object empty_object tree =
+  match tree with
+      AnnotatedTree.Node
+        ({ name = ""; data_type = Object },
+         cs) ->
+        parse_children
+          parse_object
+          empty_object
+          Std.identity
+          cs
+    | e ->
+        unexpected "GapiJson.parse_root" e
 
 let json_to_data_model json_value =
   let rec map (name, value) =
