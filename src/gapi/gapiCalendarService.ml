@@ -2,6 +2,41 @@ open GapiUtils.Infix
 open GapiCalendar
 open GapiACL
 
+let build_param default_params params get_value to_string name = 
+  let value = get_value params in
+    if value <> get_value default_params then
+      [(name, to_string value)]
+    else
+      []
+
+module StandardParameters =
+struct
+  type t = {
+    fields : string;
+    prettyPrint : bool;
+    quotaUser : string;
+    userIp : string
+  }
+
+  let default = {
+    fields = "";
+    prettyPrint = true;
+    quotaUser = "";
+    userIp = ""
+  }
+
+  let to_key_value_list qp =
+    let param get_value to_string name =
+      build_param default qp get_value to_string name
+    in
+      [param (fun p -> p.fields) Std.identity "fields";
+       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+       param (fun p -> p.quotaUser) Std.identity "quotaUser";
+       param (fun p -> p.userIp) Std.identity "userIp"]
+      |> List.concat
+
+end
+
 module QueryParameters =
 struct
   type t = {
@@ -53,12 +88,8 @@ struct
   }
 
   let to_key_value_list qp =
-    let param get to_string name = 
-      let value = get qp in
-        if value <> get default then
-          [(name, to_string value)]
-        else
-          []
+    let param get_value to_string name =
+      build_param default qp get_value to_string name
     in
       [param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
@@ -170,4 +201,56 @@ module ACL =
   GapiService.Make
     (ACLConf)
     (QueryParameters)
+
+module CalendarsConf =
+struct
+  type resource_list_t = unit
+  type resource_t = CalendarsResource.t
+
+  let service_url =
+    "https://www.googleapis.com/calendar/v3/calendars"
+
+  let parse_resource_list _ =
+    ()
+
+  let parse_resource =
+    GapiJson.parse_json_response CalendarsResource.of_data_model
+
+  let render_resource =
+    GapiJson.render_json CalendarsResource.to_data_model
+
+  let create_resource_from_id id =
+    { CalendarsResource.empty with
+          CalendarsResource.id = id
+    }
+
+  let get_url ?container_id ?resource base_url =
+    match resource with
+        None ->
+          base_url
+      | Some r ->
+          GapiUtils.add_path_to_url
+            [r.CalendarsResource.id]
+            base_url
+
+  let get_etag resource =
+    GapiUtils.etag_option resource.CalendarsResource.etag
+
+end
+
+module Calendars =
+struct
+  include GapiService.Make(CalendarsConf)(StandardParameters)
+
+  let clear
+        ?(url = CalendarsConf.service_url)
+        session =
+    let url' = GapiUtils.add_path_to_url ["primary"; "clear"] url in
+      GapiRequest.gapi_request
+        GapiRequest.PostNoBody
+        url'
+        GapiRequest.parse_empty_response
+        session
+
+end
 

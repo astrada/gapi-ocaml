@@ -105,7 +105,11 @@ let request
           GapiCurl.set_postfields key_value_list session.Session.curl
       | Some (GapiCore.PostData.Body (body, _)) ->
           GapiCurl.set_httpbody body session.Session.curl
-      | _ -> ()
+      | None ->
+          match http_method with
+              GapiCore.HttpMethod.POST ->
+                GapiCurl.set_postfields [] session.Session.curl
+            | _ -> ()
     end;
     GapiCurl.set_httpheader request_headers session.Session.curl;
     GapiCurl.set_cookies session.Session.cookies session.Session.curl;

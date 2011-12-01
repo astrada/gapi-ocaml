@@ -86,3 +86,35 @@ sig
 
 end
 
+module CalendarsResource :
+sig
+  type t = {
+    kind : string;
+    etag : string;
+    id : string;
+    summary : string;
+    description : string;
+    location : string;
+    timeZone : string
+  }
+
+  val kind : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val summary : (t, string) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val location : (t, string) GapiLens.t
+  val timeZone : (t, string) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+  val to_data_model : t -> GapiJson.json_data_model
+
+  val of_data_model : GapiJson.json_data_model -> t
+
+end
+

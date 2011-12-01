@@ -1,3 +1,18 @@
+module StandardParameters :
+sig
+  type t = {
+    fields : string;
+    prettyPrint : bool;
+    quotaUser : string;
+    userIp : string
+  }
+
+  val default : t
+
+  val to_key_value_list : t -> (string * string) list
+
+end
+
 module QueryParameters :
 sig
   type t = {
@@ -40,4 +55,55 @@ module ACL :
     type resource_list_t = GapiACL.ACLList.t
       and type resource_t = GapiACL.ACLResource.t
       and type query_parameters_t = QueryParameters.t
+
+module Calendars :
+sig
+  val get :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+
+  val refresh :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.CalendarsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+
+  val insert :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.CalendarsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+
+  val update :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.CalendarsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+
+  val patch :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.CalendarsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+
+  val delete :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.CalendarsResource.t ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+  val clear :
+    ?url:string ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+end
 

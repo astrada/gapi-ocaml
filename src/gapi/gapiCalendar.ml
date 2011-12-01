@@ -300,3 +300,111 @@ struct
 
 end
 
+module CalendarsResource =
+struct
+  type t = {
+    kind : string;
+    etag : string;
+    id : string;
+    summary : string;
+    description : string;
+    location : string;
+    timeZone : string
+  }
+
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v })
+  }
+  let summary = {
+    GapiLens.get = (fun x -> x.summary);
+    GapiLens.set = (fun v x -> { x with summary = v })
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v })
+  }
+  let location = {
+    GapiLens.get = (fun x -> x.location);
+    GapiLens.set = (fun v x -> { x with location = v })
+  }
+  let timeZone = {
+    GapiLens.get = (fun x -> x.timeZone);
+    GapiLens.set = (fun v x -> { x with timeZone = v })
+  }
+
+  let empty = {
+    kind = "";
+    etag = "";
+    id = "";
+    summary = "";
+    description = "";
+    location = "";
+    timeZone = ""
+  }
+
+  let render x =
+    render_object ""
+      [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
+       render_string_value "id" x.id;
+       render_string_value "summary" x.summary;
+       render_string_value "description" x.description;
+       render_string_value "location" x.location;
+       render_string_value "timeZone" x.timeZone]
+
+  let rec parse x tree =
+    match tree with
+        AnnotatedTree.Leaf
+          ({ name = "kind"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
+      | AnnotatedTree.Leaf
+          ({ name = "id"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with id = v }
+      | AnnotatedTree.Leaf
+          ({ name = "summary"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with summary = v }
+      | AnnotatedTree.Leaf
+          ({ name = "description"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with description = v }
+      | AnnotatedTree.Leaf
+          ({ name = "location"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with location = v }
+      | AnnotatedTree.Leaf
+          ({ name = "timeZone"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with timeZone = v }
+      | AnnotatedTree.Node
+          ({ name = ""; data_type = Object },
+           cs) ->
+          parse_children
+            parse
+            empty
+            Std.identity
+            cs
+      | e ->
+          unexpected "GapiCalendar.CalendarsResource.parse" e
+
+  let to_data_model = render_root render
+
+  let of_data_model = parse_root parse empty
+
+end
+

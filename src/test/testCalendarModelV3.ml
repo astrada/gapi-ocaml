@@ -113,11 +113,28 @@ let test_parse_calendar_acl () =
       calendar_acl_json
       json
 
+let test_parse_calendars () =
+  let calendars_json =
+    Json_io.load_json "test/data/test_calendars.json" in
+  let tree = GapiJson.json_to_data_model calendars_json in
+  let calendars = CalendarsResource.of_data_model tree in
+  let tree' = CalendarsResource.to_data_model calendars in
+  let json = GapiJson.data_model_to_json tree' in
+    assert_equal
+      ~printer:TestHelper.string_of_json_data_model
+      tree
+      tree';
+    assert_equal
+      ~printer:Json_io.string_of_json
+      calendars_json
+      json
+
 let suite = "Calendar (v3) Data Model test" >:::
   ["test_lenses_get" >:: test_lenses_get;
    "test_lenses_set" >:: test_lenses_set;
    "test_lenses_modify" >:: test_lenses_modify;
    "test_parse_calendar_list" >:: test_parse_calendar_list;
    "test_parse_calendar_acl" >:: test_parse_calendar_acl;
+   "test_parse_calendars" >:: test_parse_calendars;
   ]
 
