@@ -14,7 +14,7 @@ Supported APIs:
 ### Features
 
 * Monadic interface
-* Functional lenses to access calendar data
+* Functional lenses to access data structures
 
 Building gapi-ocaml
 ------------------
