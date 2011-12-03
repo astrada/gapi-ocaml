@@ -429,16 +429,16 @@ struct
         ~post_data:GapiCore.PostData.empty
         ~query_parameters:[("destination", destination_id)]
         url'
-        GapiRequest.parse_empty_response
+        EventsConf.parse_resource
         session
 
   let reset
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
         ?(container_id = "primary")
-        event_id
+        instance_id
         session =
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "events"; event_id; "reset"]
+                 [container_id; "events"; instance_id; "reset"]
                  url
     in
       GapiService.service_request

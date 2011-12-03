@@ -224,7 +224,7 @@ sig
     string ->
     string ->
     GapiConversation.Session.t ->
-    (unit * GapiConversation.Session.t)
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
 
   val reset :
     ?url:string ->

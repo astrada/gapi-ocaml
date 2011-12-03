@@ -9,8 +9,8 @@ let suite = "Google API OCaml client test suite" >:::
    TestMonadic.suite;
    TestCalendarList.suite;
    TestCalendarACL.suite;
-   TestCalendars.suite;*)
-   TestCalendarServiceV3.suite;
+   TestCalendars.suite;
+   TestCalendarServiceV3.suite;*)
    TestCalendarModelV3.suite;
   ]
 
