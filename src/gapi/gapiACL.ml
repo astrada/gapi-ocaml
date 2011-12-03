@@ -198,7 +198,7 @@ struct
       | AnnotatedTree.Node
           ({ name = "items"; data_type = Array },
            cs) ->
-          parse_array
+          parse_collection
             ACLResource.parse
             ACLResource.empty
             (fun xs -> { x with items = xs })

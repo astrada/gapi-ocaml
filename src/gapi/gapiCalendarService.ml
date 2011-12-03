@@ -200,7 +200,7 @@ end
 module ACL =
   GapiService.Make
     (ACLConf)
-    (QueryParameters)
+    (StandardParameters)
 
 module CalendarsConf =
 struct
@@ -253,4 +253,57 @@ struct
         session
 
 end
+
+module Colors =
+struct
+  let get
+        ?(url = "https://www.googleapis.com/calendar/v3/colors")
+        session =
+    GapiService.query
+      url
+      (GapiJson.parse_json_response ColorList.of_data_model)
+      session
+
+end
+
+module SettingsConf =
+struct
+  type resource_list_t = SettingsList.t
+  type resource_t = SettingsResource.t
+
+  let service_url =
+    "https://www.googleapis.com/calendar/v3/users/me/settings"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response SettingsList.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response SettingsResource.of_data_model
+
+  let render_resource =
+    GapiJson.render_json SettingsResource.to_data_model
+
+  let create_resource_from_id id =
+    { SettingsResource.empty with
+          SettingsResource.id = id
+    }
+
+  let get_url ?container_id ?resource base_url =
+    match resource with
+        None ->
+          base_url
+      | Some r ->
+          GapiUtils.add_path_to_url
+            [r.SettingsResource.id]
+            base_url
+
+  let get_etag resource =
+    GapiUtils.etag_option resource.SettingsResource.etag
+
+end
+
+module Settings =
+  GapiService.Make
+    (SettingsConf)
+    (StandardParameters)
 

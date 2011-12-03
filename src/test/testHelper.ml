@@ -53,6 +53,10 @@ let build_oauth2_auth test_config =
        { GapiConversation.Session.oauth2_token = get "oa2_token";
          GapiConversation.Session.refresh_token = get "oa2_refresh" })
 
+let build_no_auth _ =
+  (GapiConfig.NoAuth,
+   GapiConversation.Session.NoAuth)
+
 (* val build_config : GapiConfig.auth_config -> GapiConfig.t *)
 let build_config auth_config =
   { GapiConfig.default with

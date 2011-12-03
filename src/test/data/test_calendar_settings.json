@@ -1,0 +1,22 @@
+{
+  "kind": "calendar#settings",
+  "etag": "settingsEtag",
+  "items": [
+    {
+      "kind": "calendar#setting",
+      "id": "defaultCalendarMode",
+      "value": "defaultCalendarModeValue"
+    },
+    {
+      "kind": "calendar#setting",
+      "id": "customCalendarMode",
+      "value": "customCalendarModeValue"
+    },
+    {
+      "kind": "calendar#setting",
+      "id": "userLocation",
+      "value": "userLocationValue"
+    }
+  ]
+}
+

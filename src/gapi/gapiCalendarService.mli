@@ -54,7 +54,7 @@ module ACL :
   GapiService.SERVICE with
     type resource_list_t = GapiACL.ACLList.t
       and type resource_t = GapiACL.ACLResource.t
-      and type query_parameters_t = QueryParameters.t
+      and type query_parameters_t = StandardParameters.t
 
 module Calendars :
 sig
@@ -104,6 +104,34 @@ sig
     ?url:string ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
+
+end
+
+module Colors :
+sig
+  val get :
+    ?url:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.ColorList.t * GapiConversation.Session.t)
+
+end
+
+module Settings :
+sig
+  val list :
+    ?url:string ->
+    ?etag:string ->
+    ?parameters:StandardParameters.t ->
+    ?container_id:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.SettingsList.t * GapiConversation.Session.t)
+
+  val get :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.SettingsResource.t * GapiConversation.Session.t)
 
 end
 

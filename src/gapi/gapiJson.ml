@@ -61,9 +61,12 @@ let render_struct name data_type xs =
 let render_object name xs =
   render_struct name Object xs
 
-let render_array name render xs =
+let render_collection name data_type render xs =
   let xs' = List.map render xs in
-    render_struct name Array xs'
+    render_struct name data_type xs'
+
+let render_array name render xs =
+  render_collection name Array render xs
 
 let render_root render x =
   render x
@@ -77,7 +80,7 @@ let parse_children parse_child empty_element update cs =
   in
     update element
 
-let parse_array parse_child empty_element update cs =
+let parse_collection parse_child empty_element update cs =
   let xs = List.fold_right
                   (fun x xs' -> parse_child empty_element x :: xs')
                   cs

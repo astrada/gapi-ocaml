@@ -54,6 +54,16 @@ let second = {
   set = (fun v a -> fst a, v)
 }
 
+let head = {
+  get = List.hd;
+  set = (fun v xs -> v :: List.tl xs)
+}
+
+let tail = {
+  get = List.tl;
+  set = (fun v xs -> List.hd xs :: v)
+}
+
 let for_hash key = {
   get = (fun h -> try Some (Hashtbl.find h key) with Not_found -> None);
   set = (fun v h ->

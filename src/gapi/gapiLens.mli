@@ -35,6 +35,10 @@ val first : ('a * 'b, 'a) t
 
 val second : ('a * 'b, 'b) t
 
+val head : ('a list, 'a) t
+
+val tail : ('a list, 'a list) t
+
 val for_hash : 'a -> (('a, 'b) Hashtbl.t, 'b option) t
 
 val for_array : int -> ('a array, 'a) t

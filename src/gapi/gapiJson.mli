@@ -51,6 +51,13 @@ val render_object :
   json_data_model list list ->
   json_data_model list
 
+val render_collection :
+  string ->
+  json_data_type ->
+  ('a -> json_data_model list) ->
+  'a list ->
+  json_data_model list
+
 val render_array :
   string ->
   ('a -> json_data_model list) ->
@@ -69,7 +76,7 @@ val parse_children :
   json_data_model list ->
   'b
 
-val parse_array :
+val parse_collection :
   ('a -> json_data_model -> 'a) ->
   'a ->
   ('a list -> 'b) ->

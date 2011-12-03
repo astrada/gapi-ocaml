@@ -24,6 +24,10 @@ val build_oauth2_auth :
   Config.t ->
   GapiConfig.auth_config * GapiConversation.Session.auth_context
 
+val build_no_auth :
+  Config.t ->
+  GapiConfig.auth_config * GapiConversation.Session.auth_context
+
 val test_request :
   ?configfile:string ->
   ?handle_exception:(exn -> unit) ->
