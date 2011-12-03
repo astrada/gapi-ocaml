@@ -49,8 +49,8 @@ let render_int_value ?(default = 0) name value =
 let render_bool_value ?(default = false) name value =
   render_value name (Json_type.Bool default) (Json_type.Bool value)
 
-let render_date_value ?(default = GapiDate.epoch) name value =
-  let to_json v = Json_type.String (GapiDate.to_string v) in
+let render_date_value ?time ?(default = GapiDate.epoch) name value =
+  let to_json v = Json_type.String (GapiDate.to_string ?time v) in
     render_value name (to_json default) (to_json value)
 
 let render_struct name data_type xs =

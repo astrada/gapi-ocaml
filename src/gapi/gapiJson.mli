@@ -41,6 +41,7 @@ val render_bool_value :
   json_data_model list
 
 val render_date_value :
+  ?time:bool ->
   ?default:GapiDate.t ->
   string ->
   GapiDate.t ->

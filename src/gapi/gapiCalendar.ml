@@ -1112,7 +1112,7 @@ struct
   }
 
   let render x =
-    [render_date_value "date" x.date;
+    [render_date_value ~time:false "date" x.date;
      render_date_value "dateTime" x.dateTime;
      render_string_value "timeZone" x.timeZone]
 

@@ -3,7 +3,7 @@ type t = Netdate.t
 
 let epoch = Netdate.create 0.0
 
-let to_string date =
+let to_string ?(time = true) date =
   let timezone = Netdate.format ~fmt:"%z" date in
   let tz =
     if timezone = "+0000" then
@@ -12,8 +12,11 @@ let to_string date =
       let tz_hour = String.sub timezone 0 3 in
       let tz_minute = String.sub timezone 3 2 in
         tz_hour ^ ":" ^ tz_minute in
-  let result = Netdate.format ~fmt:"%Y-%m-%dT%T" date in
-    result ^ ".000" ^ tz
+    if time then
+      let result = Netdate.format ~fmt:"%Y-%m-%dT%T" date in
+        result ^ ".000" ^ tz
+    else
+      Netdate.format ~fmt:"%Y-%m-%d" date
 
 let rfc3339_regexp = Str.regexp "^\\([0-9][0-9][0-9][0-9]\\)-\\([0-9][0-9]\\)-\\([0-9][0-9]\\)\\(T\\([0-9][0-9]\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)\\(\\.[0-9]+\\)?\\(Z\\|\\([-+]\\)\\([0-9][0-9]\\):\\([0-9][0-9]\\)\\)\\)?$"
 

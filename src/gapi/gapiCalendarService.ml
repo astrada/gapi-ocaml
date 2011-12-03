@@ -248,7 +248,6 @@ struct
     let url' = GapiUtils.add_path_to_url ["primary"; "clear"] url in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
-        ~request_type:GapiRequest.Query
         url'
         GapiRequest.parse_empty_response
         session
@@ -319,9 +318,133 @@ struct
                       parameters in
       GapiService.service_request
         ~post_data
-        ~request_type:GapiRequest.Query
         url
         (GapiJson.parse_json_response FreeBusyResource.of_data_model)
+        session
+
+end
+
+module EventsConf =
+struct
+  type resource_list_t = EventsList.t
+  type resource_t = EventsResource.t
+
+  let service_url =
+    "https://www.googleapis.com/calendar/v3/calendars"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response EventsList.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response EventsResource.of_data_model
+
+  let render_resource =
+    GapiJson.render_json EventsResource.to_data_model
+
+  let create_resource_from_id id =
+    { EventsResource.empty with
+          EventsResource.id = id
+    }
+
+  let get_url ?(container_id = "primary") ?resource base_url =
+    let container_path =
+      [container_id; "events"] in
+    let resource_path =
+      match resource with
+          None ->
+            []
+        | Some r ->
+            [r.EventsResource.id]
+    in
+      GapiUtils.add_path_to_url
+        (container_path @ resource_path)
+        base_url
+
+  let get_etag resource =
+    GapiUtils.etag_option resource.EventsResource.etag
+
+end
+
+module Events =
+struct
+  include GapiService.Make(EventsConf)(QueryParameters)
+
+  let instances
+        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(container_id = "primary")
+        event_id
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [container_id; "events"; event_id; "instances"]
+                 url
+    in
+      GapiService.query
+        url'
+        EventsConf.parse_resource_list
+        session
+
+  let import
+        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(container_id = "primary")
+        event_resource
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [container_id; "events"; "import"]
+                 url
+    in
+      GapiService.create
+        EventsConf.render_resource
+        event_resource
+        url'
+        EventsConf.parse_resource
+        session
+
+  let quickAdd
+        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(container_id = "primary")
+        text
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [container_id; "events"; "quickAdd"]
+                 url
+    in
+      GapiService.service_request
+        ~post_data:GapiCore.PostData.empty
+        ~query_parameters:[("text", text)]
+        url'
+        EventsConf.parse_resource
+        session
+
+  let move
+        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(container_id = "primary")
+        event_id
+        destination_id
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [container_id; "events"; event_id; "move"]
+                 url
+    in
+      GapiService.service_request
+        ~post_data:GapiCore.PostData.empty
+        ~query_parameters:[("destination", destination_id)]
+        url'
+        GapiRequest.parse_empty_response
+        session
+
+  let reset
+        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(container_id = "primary")
+        event_id
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [container_id; "events"; event_id; "reset"]
+                 url
+    in
+      GapiService.service_request
+        ~post_data:GapiCore.PostData.empty
+        url'
+        EventsConf.parse_resource
         session
 
 end

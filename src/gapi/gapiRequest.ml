@@ -94,7 +94,7 @@ let single_request
               None -> GapiCore.HttpMethod.GET
             | Some _ -> GapiCore.HttpMethod.POST
           end
-      | Create
+      | Create -> GapiCore.HttpMethod.POST
       | Update -> GapiCore.HttpMethod.PUT
       | Patch -> GapiCore.HttpMethod.PATCH
       | Delete -> GapiCore.HttpMethod.DELETE in

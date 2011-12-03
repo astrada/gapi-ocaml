@@ -145,3 +145,93 @@ sig
 
 end
 
+module Events :
+sig
+  val list :
+    ?url:string ->
+    ?etag:string ->
+    ?parameters:QueryParameters.t ->
+    ?container_id:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsList.t * GapiConversation.Session.t)
+
+  val get :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val refresh :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.EventsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val insert :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.EventsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val update :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.EventsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val patch :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.EventsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val delete :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.EventsResource.t ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+  val instances :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsList.t * GapiConversation.Session.t)
+
+  val import :
+    ?url:string ->
+    ?container_id:string ->
+    GapiCalendar.EventsResource.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val quickAdd :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+  val move :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    string ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+  val reset :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+
+end
+
