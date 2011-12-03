@@ -10,7 +10,6 @@ type request_type =
   | Update
   | Patch
   | Delete
-  | Post
 
 let parse_empty_response _ =
   ()
@@ -96,7 +95,6 @@ let single_request
             | Some _ -> GapiCore.HttpMethod.POST
           end
       | Create
-      | Post -> GapiCore.HttpMethod.POST
       | Update -> GapiCore.HttpMethod.PUT
       | Patch -> GapiCore.HttpMethod.PATCH
       | Delete -> GapiCore.HttpMethod.DELETE in
@@ -127,8 +125,7 @@ let single_request
                         Some (GapiCore.Header.IfNoneMatch e)
                     | Update
                     | Patch
-                    | Delete
-                    | Post ->
+                    | Delete ->
                         if GapiUtils.is_weak_etag e then
                           None
                         else

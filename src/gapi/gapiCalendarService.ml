@@ -247,8 +247,8 @@ struct
         session =
     let url' = GapiUtils.add_path_to_url ["primary"; "clear"] url in
       GapiService.service_request
-        ~post_data:(GapiCore.PostData.Fields [])
-        ~request_type:GapiRequest.Post
+        ~post_data:GapiCore.PostData.empty
+        ~request_type:GapiRequest.Query
         url'
         GapiRequest.parse_empty_response
         session
@@ -319,7 +319,7 @@ struct
                       parameters in
       GapiService.service_request
         ~post_data
-        ~request_type:GapiRequest.Post
+        ~request_type:GapiRequest.Query
         url
         (GapiJson.parse_json_response FreeBusyResource.of_data_model)
         session

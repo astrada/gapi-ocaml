@@ -86,6 +86,8 @@ struct
       Fields of (string * string) list    (* field list (key/value pair) *)
     | Body of string * string             (* body and content type *)
 
+  let empty = Fields []
+
 end
 
 module Header =

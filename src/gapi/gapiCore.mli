@@ -69,6 +69,8 @@ sig
       Fields of (string * string) list
     | Body of string * string
 
+  val empty : t
+
 end
 
 module Header :
