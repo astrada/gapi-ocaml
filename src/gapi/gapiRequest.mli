@@ -6,7 +6,7 @@ type request_type =
   | Update
   | Patch
   | Delete
-  | PostNoBody
+  | Post
 
 val parse_empty_response : 'a -> unit
 

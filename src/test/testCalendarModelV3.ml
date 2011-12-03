@@ -162,6 +162,35 @@ let test_parse_settings () =
       settings_json
       json
 
+let test_render_free_busy_parameters () =
+  let params =
+    { FreeBusyParameters.empty with
+          FreeBusyParameters.timeMin = GapiDate.of_string "2011-11-10";
+          FreeBusyParameters.timeMax = GapiDate.of_string "2011-12-01";
+          FreeBusyParameters.items = [ "calendar_id"; "calendar_id_2" ]
+    } in
+  let tree = FreeBusyParameters.to_data_model params in
+  let json = GapiJson.data_model_to_json tree in
+    TestHelper.assert_equal_file
+      "test/data/test_freebusy_parameters.json"
+      (Json_io.string_of_json ~compact:true json)
+
+let test_parse_free_busy_resource () =
+  let freeBusy_json =
+    Json_io.load_json "test/data/test_freebusy.json" in
+  let tree = GapiJson.json_to_data_model freeBusy_json in
+  let freeBusy = FreeBusyResource.of_data_model tree in
+  let tree' = FreeBusyResource.to_data_model freeBusy in
+  let json = GapiJson.data_model_to_json tree' in
+    assert_equal
+      ~printer:TestHelper.string_of_json_data_model
+      tree
+      tree';
+    assert_equal
+      ~printer:Json_io.string_of_json
+      freeBusy_json
+      json
+
 let suite = "Calendar (v3) Data Model test" >:::
   ["test_lenses_get" >:: test_lenses_get;
    "test_lenses_set" >:: test_lenses_set;
@@ -171,5 +200,7 @@ let suite = "Calendar (v3) Data Model test" >:::
    "test_parse_calendars" >:: test_parse_calendars;
    "test_parse_colors" >:: test_parse_colors;
    "test_parse_settings" >:: test_parse_settings;
+   "test_render_free_busy_parameters" >:: test_render_free_busy_parameters;
+   "test_parse_free_busy_resource" >:: test_parse_free_busy_resource;
   ]
 

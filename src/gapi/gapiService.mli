@@ -1,3 +1,25 @@
+val service_request :
+  ?post_data:GapiCore.PostData.t ->
+  ?version:string ->
+  ?query_parameters:(string * string) list ->
+  ?etag:string ->
+  ?request_type:GapiRequest.request_type ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
+
+val service_request_with_data :
+  GapiRequest.request_type ->
+  ('a -> GapiCore.PostData.t) ->
+  ?version:string ->
+  ?etag:string ->
+  'a ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
+
 val query :
   ?version:string ->
   ?etag:string ->

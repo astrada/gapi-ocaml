@@ -211,7 +211,10 @@ let string_of_json_data_model tree =
            | _ -> assert false)
       (fun m value ->
          let s = Json_type.Browse.describe value in
-           Printf.sprintf "\"%s\":%s" m.GapiJson.name s)
+           if m.GapiJson.name <> "" then
+             Printf.sprintf "\"%s\":%s" m.GapiJson.name s
+           else
+             s)
       tree
 
 let assert_false msg b =

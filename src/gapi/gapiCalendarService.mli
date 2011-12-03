@@ -135,3 +135,13 @@ sig
 
 end
 
+module FreeBusy :
+sig
+  val query :
+    ?url:string ->
+    GapiCalendar.FreeBusyParameters.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.FreeBusyResource.t * GapiConversation.Session.t)
+
+end
+

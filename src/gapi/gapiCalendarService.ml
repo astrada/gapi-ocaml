@@ -246,8 +246,9 @@ struct
         ?(url = CalendarsConf.service_url)
         session =
     let url' = GapiUtils.add_path_to_url ["primary"; "clear"] url in
-      GapiRequest.gapi_request
-        GapiRequest.PostNoBody
+      GapiService.service_request
+        ~post_data:(GapiCore.PostData.Fields [])
+        ~request_type:GapiRequest.Post
         url'
         GapiRequest.parse_empty_response
         session
@@ -306,4 +307,22 @@ module Settings =
   GapiService.Make
     (SettingsConf)
     (StandardParameters)
+
+module FreeBusy =
+struct
+  let query
+        ?(url = "https://www.googleapis.com/calendar/v3/freeBusy")
+        parameters
+        session =
+    let post_data = GapiJson.render_json
+                      FreeBusyParameters.to_data_model
+                      parameters in
+      GapiService.service_request
+        ~post_data
+        ~request_type:GapiRequest.Post
+        url
+        (GapiJson.parse_json_response FreeBusyResource.of_data_model)
+        session
+
+end
 

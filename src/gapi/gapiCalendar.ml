@@ -670,3 +670,377 @@ struct
 
 end
 
+module FreeBusyParameters =
+struct
+  type t = {
+    timeMin : GapiDate.t;
+    timeMax : GapiDate.t;
+    timeZone : string;
+    groupExpansionMax : int;
+    calendarExpansionMax : int;
+    items : string list
+  }
+
+  let timeMin = {
+    GapiLens.get = (fun x -> x.timeMin);
+    GapiLens.set = (fun v x -> { x with timeMin = v })
+  }
+  let timeMax = {
+    GapiLens.get = (fun x -> x.timeMax);
+    GapiLens.set = (fun v x -> { x with timeMax = v })
+  }
+  let timeZone = {
+    GapiLens.get = (fun x -> x.timeZone);
+    GapiLens.set = (fun v x -> { x with timeZone = v })
+  }
+  let groupExpansionMax = {
+    GapiLens.get = (fun x -> x.groupExpansionMax);
+    GapiLens.set = (fun v x -> { x with groupExpansionMax = v })
+  }
+  let calendarExpansionMax = {
+    GapiLens.get = (fun x -> x.calendarExpansionMax);
+    GapiLens.set = (fun v x -> { x with calendarExpansionMax = v })
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v })
+  }
+
+  let empty = {
+    timeMin = GapiDate.epoch;
+    timeMax = GapiDate.epoch;
+    timeZone = "";
+    groupExpansionMax = 0;
+    calendarExpansionMax = 0;
+    items = []
+  }
+
+  let render x =
+    let render_item id =
+      render_object ""
+        [render_string_value "id" id]
+    in
+      render_object ""
+        [render_date_value "timeMin" x.timeMin;
+         render_date_value "timeMax" x.timeMax;
+         render_string_value "timeZone" x.timeZone;
+         render_int_value "groupExpansionMax" x.groupExpansionMax;
+         render_int_value "calendarExpansionMax" x.calendarExpansionMax;
+         render_array "items" render_item x.items]
+
+  let to_data_model = render_root render
+
+end
+
+module Error =
+struct
+  type t = {
+    domain : string;
+    reason : string
+  }
+
+  let domain = {
+    GapiLens.get = (fun x -> x.domain);
+    GapiLens.set = (fun v x -> { x with domain = v })
+  }
+  let reason = {
+    GapiLens.get = (fun x -> x.reason);
+    GapiLens.set = (fun v x -> { x with reason = v })
+  }
+
+  let empty = {
+    domain = "";
+    reason = ""
+  }
+
+  let render x =
+    render_object ""
+      [render_string_value "domain" x.domain;
+       render_string_value "reason" x.reason]
+
+  let rec parse x tree =
+    match tree with
+        AnnotatedTree.Leaf
+          ({ name = "domain"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with domain = v }
+      | AnnotatedTree.Leaf
+          ({ name = "reason"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with reason = v }
+      | AnnotatedTree.Node
+          ({ name = ""; data_type = Object },
+           cs) ->
+          parse_children
+            parse
+            empty
+            Std.identity
+            cs
+      | e ->
+          unexpected "GapiCalendar.Error.parse" e
+
+end
+
+module FreeBusyGroup =
+struct
+  type group = {
+    errors : Error.t list;
+    calendars : string list
+  }
+  type t = string * group
+
+  let errors = {
+    GapiLens.get = (fun x -> x.errors);
+    GapiLens.set = (fun v x -> { x with errors = v })
+  }
+  let calendars = {
+    GapiLens.get = (fun x -> x.calendars);
+    GapiLens.set = (fun v x -> { x with calendars = v })
+  }
+  let id = GapiLens.first
+  let group = GapiLens.second
+
+  let empty = ("", {
+    errors = [];
+    calendars = []
+  })
+
+  let render (id, x) =
+    render_object id
+      [render_array "errors" Error.render x.errors;
+       render_array "calendars" (render_string_value "") x.calendars]
+
+  let rec parse (id, x) tree =
+    let parse_calendar _ = function
+        AnnotatedTree.Leaf
+          ({ name = ""; data_type = Scalar },
+           Json_type.String v) ->
+          v
+      | e ->
+          unexpected "GapiCalendar.FreeBusyGroup.parse_calendar" e
+    in
+      match tree with
+          AnnotatedTree.Node
+            ({ name = "errors"; data_type = Array },
+             cs) ->
+            (id, parse_collection
+                   Error.parse
+                   Error.empty
+                   (fun xs -> { x with errors = xs })
+                   cs)
+        | AnnotatedTree.Node
+            ({ name = "calendars"; data_type = Array },
+             cs) ->
+            (id, parse_collection
+                   parse_calendar
+                   ""
+                   (fun xs -> { x with calendars = xs })
+                   cs)
+        | AnnotatedTree.Node
+            ({ name = n; data_type = Object },
+             cs) ->
+            parse_children
+              (fun (_, c) t -> parse (n, c) t)
+              empty
+              Std.identity
+              cs
+        | e ->
+            unexpected "GapiCalendar.FreeBusyGroup.parse" e
+
+end
+
+module Busy =
+struct
+  type t = {
+    start : GapiDate.t;
+    _end : GapiDate.t
+  }
+
+  let start = {
+    GapiLens.get = (fun x -> x.start);
+    GapiLens.set = (fun v x -> { x with start = v })
+  }
+  let _end = {
+    GapiLens.get = (fun x -> x._end);
+    GapiLens.set = (fun v x -> { x with _end = v })
+  }
+
+  let empty = {
+    start = GapiDate.epoch;
+    _end = GapiDate.epoch
+  }
+
+  let render x =
+    render_object ""
+      [render_date_value "start" x.start;
+       render_date_value "end" x._end]
+
+  let rec parse x tree =
+    match tree with
+        AnnotatedTree.Leaf
+          ({ name = "start"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with start = GapiDate.of_string v }
+      | AnnotatedTree.Leaf
+          ({ name = "end"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with _end = GapiDate.of_string v }
+      | AnnotatedTree.Node
+          ({ name = ""; data_type = Object },
+           cs) ->
+          parse_children
+            parse
+            empty
+            Std.identity
+            cs
+      | e ->
+          unexpected "GapiCalendar.Busy.parse" e
+
+end
+
+module FreeBusyCalendar =
+struct
+  type calendar = {
+    errors : Error.t list;
+    busy : Busy.t list
+  }
+  type t = string * calendar
+
+  let errors = {
+    GapiLens.get = (fun x -> x.errors);
+    GapiLens.set = (fun v x -> { x with errors = v })
+  }
+  let busy = {
+    GapiLens.get = (fun x -> x.busy);
+    GapiLens.set = (fun v x -> { x with busy = v })
+  }
+  let id = GapiLens.first
+  let calendar = GapiLens.second
+
+  let empty = ("", {
+    errors = [];
+    busy = []
+  })
+
+  let render (id, x) =
+    render_object id
+      [render_array "errors" Error.render x.errors;
+       render_array "busy" Busy.render x.busy]
+
+  let rec parse (id, x) tree =
+    match tree with
+        AnnotatedTree.Node
+          ({ name = "errors"; data_type = Array },
+           cs) ->
+          (id, parse_collection
+                 Error.parse
+                 Error.empty
+                 (fun xs -> { x with errors = xs })
+                 cs)
+      | AnnotatedTree.Node
+          ({ name = "busy"; data_type = Array },
+           cs) ->
+          (id, parse_collection
+                 Busy.parse
+                 Busy.empty
+                 (fun xs -> { x with busy = xs })
+                 cs)
+      | AnnotatedTree.Node
+          ({ name = n; data_type = Object },
+           cs) ->
+          parse_children
+            (fun (_, c) t -> parse (n, c) t)
+            empty
+            Std.identity
+            cs
+      | e ->
+          unexpected "GapiCalendar.FreeBusyCalendar.parse" e
+
+end
+
+module FreeBusyResource =
+struct
+  type t = {
+    kind : string;
+    timeMin : GapiDate.t;
+    timeMax : GapiDate.t;
+    groups : FreeBusyGroup.t list;
+    calendars : FreeBusyCalendar.t list;
+  }
+
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let timeMin = {
+    GapiLens.get = (fun x -> x.timeMin);
+    GapiLens.set = (fun v x -> { x with timeMin = v })
+  }
+  let timeMax = {
+    GapiLens.get = (fun x -> x.timeMax);
+    GapiLens.set = (fun v x -> { x with timeMax = v })
+  }
+  let groups = {
+    GapiLens.get = (fun x -> x.groups);
+    GapiLens.set = (fun v x -> { x with groups = v })
+  }
+  let calendars = {
+    GapiLens.get = (fun x -> x.calendars);
+    GapiLens.set = (fun v x -> { x with calendars = v })
+  }
+
+  let empty = {
+    kind = "";
+    timeMin = GapiDate.epoch;
+    timeMax = GapiDate.epoch;
+    groups = [];
+    calendars = []
+  }
+
+  let render x =
+    render_object ""
+      [render_string_value "kind" x.kind;
+       render_date_value "timeMin" x.timeMin;
+       render_date_value "timeMax" x.timeMax;
+       render_collection "groups" Object FreeBusyGroup.render x.groups;
+       render_collection "calendars" Object FreeBusyCalendar.render x.calendars]
+
+  let parse x tree =
+    match tree with
+        AnnotatedTree.Leaf
+          ({ name = "kind"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "timeMin"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with timeMin = GapiDate.of_string v }
+      | AnnotatedTree.Leaf
+          ({ name = "timeMax"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with timeMax = GapiDate.of_string v }
+      | AnnotatedTree.Node
+          ({ name = "groups"; data_type = Object },
+           cs) ->
+          parse_collection
+            FreeBusyGroup.parse
+            FreeBusyGroup.empty
+            (fun xs -> { x with groups = xs })
+            cs
+      | AnnotatedTree.Node
+          ({ name = "calendars"; data_type = Object },
+           cs) ->
+          parse_collection
+            FreeBusyCalendar.parse
+            FreeBusyCalendar.empty
+            (fun xs -> { x with calendars = xs })
+            cs
+      | e ->
+          unexpected "GapiCalendar.FreeBusyResource.parse" e
+
+  let to_data_model = render_root render
+
+  let of_data_model = parse_root parse empty
+
+end
+

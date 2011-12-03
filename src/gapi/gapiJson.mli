@@ -40,6 +40,12 @@ val render_bool_value :
   bool ->
   json_data_model list
 
+val render_date_value :
+  ?default:GapiDate.t ->
+  string ->
+  GapiDate.t ->
+  json_data_model list
+
 val render_struct :
   string ->
   json_data_type ->
