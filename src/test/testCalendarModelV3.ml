@@ -191,6 +191,22 @@ let test_parse_free_busy_resource () =
       freeBusy_json
       json
 
+let test_parse_event_resource () =
+  let event_json =
+    Json_io.load_json "test/data/test_calendar_event_resource.json" in
+  let tree = GapiJson.json_to_data_model event_json in
+  let event = EventsResource.of_data_model tree in
+  let tree' = EventsResource.to_data_model event in
+  let json = GapiJson.data_model_to_json tree' in
+    assert_equal
+      ~printer:TestHelper.string_of_json_data_model
+      tree
+      tree';
+    assert_equal
+      ~printer:Json_io.string_of_json
+      event_json
+      json
+
 let suite = "Calendar (v3) Data Model test" >:::
   ["test_lenses_get" >:: test_lenses_get;
    "test_lenses_set" >:: test_lenses_set;
@@ -202,5 +218,6 @@ let suite = "Calendar (v3) Data Model test" >:::
    "test_parse_settings" >:: test_parse_settings;
    "test_render_free_busy_parameters" >:: test_render_free_busy_parameters;
    "test_parse_free_busy_resource" >:: test_parse_free_busy_resource;
+   "test_parse_event_resource" >:: test_parse_event_resource;
   ]
 

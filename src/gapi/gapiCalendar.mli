@@ -348,3 +348,220 @@ sig
 
 end
 
+module Person :
+sig
+  type t = {
+    email : string;
+    displayName : string
+  }
+
+  val email : (t, string) GapiLens.t
+  val displayName : (t, string) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+end
+
+module DateTime :
+sig
+  type t = {
+    date : GapiDate.t;
+    dateTime : GapiDate.t;
+    timeZone : string
+  }
+
+  val date : (t, GapiDate.t) GapiLens.t
+  val dateTime : (t, GapiDate.t) GapiLens.t
+  val timeZone : (t, string) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+end
+
+module Attendee :
+sig
+  type t = {
+    email : string;
+    displayName : string;
+    organizer : bool;
+    self : bool;
+    resource : bool;
+    optional : bool;
+    responseStatus : string;
+    comment : string;
+    additionalGuests : int
+  }
+
+  val email : (t, string) GapiLens.t
+  val displayName : (t, string) GapiLens.t
+  val organizer : (t, bool) GapiLens.t
+  val self : (t, bool) GapiLens.t
+  val resource : (t, bool) GapiLens.t
+  val optional : (t, bool) GapiLens.t
+  val comment : (t, string) GapiLens.t
+  val additionalGuests : (t, int) GapiLens.t
+             
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+end
+
+module ExtendedProperties :
+sig
+  type t = {
+    _private : (string * string) list;
+    shared : (string * string) list
+  }
+
+  val _private : (t, (string * string) list) GapiLens.t
+  val shared : (t, (string * string) list) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+end
+
+module Gadget :
+sig
+  type t = {
+    _type : string;
+    title : string;
+    link : string;
+    iconLink : string;
+    width : int;
+    height : int;
+    display : string;
+    preferences : (string * string) list;
+  }
+
+  val _type : (t, string) GapiLens.t
+  val title : (t, string) GapiLens.t
+  val link : (t, string) GapiLens.t
+  val iconLink : (t, string) GapiLens.t
+  val width : (t, int) GapiLens.t
+  val height : (t, int) GapiLens.t
+  val display : (t, string) GapiLens.t
+  val preferences : (t, (string * string) list) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+end
+
+module Reminders :
+sig
+  type t = {
+    useDefault : bool;
+    overrides : Reminder.t list
+  }
+
+  val useDefault : (t, bool) GapiLens.t
+  val overrides : (t, Reminder.t list) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+end
+
+module EventsResource :
+sig
+  type t = {
+    kind : string;
+    etag : string;
+    id : string;
+    status : string;
+    htmlLink : string;
+    created : GapiDate.t;
+    updated : GapiDate.t;
+    summary : string;
+    description : string;
+    location : string;
+    colorId : string;
+    creator : Person.t;
+    organizer : Person.t;
+    start : DateTime.t;
+    _end : DateTime.t;
+    recurrence : string list;
+    recurringEventId : string;
+    originalStartTime : DateTime.t;
+    transparency : string;
+    visibility : string;
+    iCalUID : string;
+    sequence : int;
+    attendees : Attendee.t list;
+    attendeesOmitted : bool;
+    extendedProperties : ExtendedProperties.t;
+    gadget : Gadget.t;
+    anyoneCanAddSelf : bool;
+    guestsCanInviteOthers : bool;
+    guestsCanModify : bool;
+    guestsCanSeeOtherGuests : bool;
+    privateCopy : bool;
+    reminders : Reminders.t
+  }
+
+  val kind : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val status : (t, string) GapiLens.t
+  val htmlLink : (t, string) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val summary : (t, string) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val location : (t, string) GapiLens.t
+  val colorId : (t, string) GapiLens.t
+  val creator : (t, Person.t) GapiLens.t
+  val organizer : (t, Person.t) GapiLens.t
+  val start : (t, DateTime.t) GapiLens.t
+  val _end : (t, DateTime.t) GapiLens.t
+  val recurrence : (t, string list) GapiLens.t
+  val recurringEventId : (t, string) GapiLens.t
+  val originalStartTime : (t, DateTime.t) GapiLens.t
+  val transparency : (t, string) GapiLens.t
+  val visibility : (t, string) GapiLens.t
+  val iCalUID : (t, string) GapiLens.t
+  val sequence : (t, int) GapiLens.t
+  val attendees : (t, Attendee.t list) GapiLens.t
+  val attendeesOmitted : (t, bool) GapiLens.t
+  val extendedProperties : (t, ExtendedProperties.t) GapiLens.t
+  val gadget : (t, Gadget.t) GapiLens.t
+  val anyoneCanAddSelf : (t, bool) GapiLens.t
+  val guestsCanInviteOthers : (t, bool) GapiLens.t
+  val guestsCanModify : (t, bool) GapiLens.t
+  val guestsCanSeeOtherGuests : (t, bool) GapiLens.t
+  val privateCopy : (t, bool) GapiLens.t
+  val reminders : (t, Reminders.t) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+  val to_data_model : t -> GapiJson.json_data_model
+
+  val of_data_model : GapiJson.json_data_model -> t
+
+end
+
