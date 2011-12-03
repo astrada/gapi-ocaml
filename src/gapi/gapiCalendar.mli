@@ -565,3 +565,41 @@ sig
 
 end
 
+module EventsList :
+sig
+  type t = {
+    kind : string;
+    etag : string;
+    summary : string;
+    description : string;
+    updated : GapiDate.t;
+    timeZone : string;
+    accessRole : string;
+    defaultReminders : Reminder.t list;
+    nextPageToken : string;
+    items : EventsResource.t list
+  }
+
+  val kind : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val summary : (t, string) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val timeZone : (t, string) GapiLens.t
+  val accessRole : (t, string) GapiLens.t
+  val defaultReminders : (t, Reminder.t list) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  val items : (t, EventsResource.t list) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+  val to_data_model : t -> GapiJson.json_data_model
+
+  val of_data_model : GapiJson.json_data_model -> t
+
+end
+
