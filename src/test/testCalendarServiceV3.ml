@@ -346,6 +346,44 @@ let test_recurring_event_instances () =
            3
            (List.length events.GapiCalendar.EventsList.items))
 
+let test_recurring_event_instance_reset () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (event, session) =
+         GapiCalendarService.Events.insert
+           new_recurring_event
+           session in
+       let _ = delay () in
+       let (events, session) =
+         GapiCalendarService.Events.instances
+           event.GapiCalendar.EventsResource.id
+           session in
+       let second_instance = events
+         |. GapiCalendar.EventsList.items
+         |. GapiLens.tail
+         |. GapiLens.head in
+       let canceled_instance = second_instance
+         |> GapiCalendar.EventsResource.status ^= "cancelled" in
+       let (updated_instance, session) =
+         GapiCalendarService.Events.update
+           canceled_instance
+           session in
+       let (restored_instance, session) =
+         GapiCalendarService.Events.reset
+           updated_instance.GapiCalendar.EventsResource.id
+           session
+       in
+         ignore (GapiCalendarService.Events.delete
+                   event
+                   session);
+         assert_equal
+           "cancelled"
+           updated_instance.GapiCalendar.EventsResource.status;
+         assert_equal
+           "confirmed"
+           restored_instance.GapiCalendar.EventsResource.status)
+
 let suite = "Calendar services (v3) test" >:::
   ["test_colors_get" >:: test_colors_get;
    "test_settings_list" >:: test_settings_list;
@@ -362,5 +400,7 @@ let suite = "Calendar services (v3) test" >:::
    "test_import_event" >:: test_import_event;
    "test_move_event" >:: test_move_event;
    "test_recurring_event_instances" >:: test_recurring_event_instances;
+   "test_recurring_event_instance_reset"
+     >:: test_recurring_event_instance_reset;
    ]
 
