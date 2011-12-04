@@ -3,6 +3,8 @@ type t = Netdate.t
 
 let epoch = Netdate.create 0.0
 
+let now () = Netdate.create (Unix.time ())
+
 let to_string ?(time = true) date =
   let timezone = Netdate.format ~fmt:"%z" date in
   let tz =
