@@ -160,7 +160,7 @@ module AclResource =
     (AclResourceConf)
     (StandardParameters)
 
-module CalendarListConf =
+module CalendarListResourceConf =
 struct
   type resource_list_t = CalendarList.t
   type resource_t = CalendarListEntry.t
@@ -198,13 +198,13 @@ end
 
 module CalendarListResource =
   GapiService.Make
-    (CalendarListConf)
+    (CalendarListResourceConf)
     (QueryParameters)
 
-module CalendarsConf =
+module CalendarsResourceConf =
 struct
   type resource_list_t = unit
-  type resource_t = CalendarsResource.t
+  type resource_t = Calendar.t
 
   let service_url =
     "https://www.googleapis.com/calendar/v3/calendars"
@@ -213,14 +213,14 @@ struct
     ()
 
   let parse_resource =
-    GapiJson.parse_json_response CalendarsResource.of_data_model
+    GapiJson.parse_json_response Calendar.of_data_model
 
   let render_resource =
-    GapiJson.render_json CalendarsResource.to_data_model
+    GapiJson.render_json Calendar.to_data_model
 
   let create_resource_from_id id =
-    { CalendarsResource.empty with
-          CalendarsResource.id = id
+    { Calendar.empty with
+          Calendar.id = id
     }
 
   let get_url ?container_id ?resource base_url =
@@ -229,20 +229,20 @@ struct
           base_url
       | Some r ->
           GapiUtils.add_path_to_url
-            [r.CalendarsResource.id]
+            [r.Calendar.id]
             base_url
 
   let get_etag resource =
-    GapiUtils.etag_option resource.CalendarsResource.etag
+    GapiUtils.etag_option resource.Calendar.etag
 
 end
 
-module Calendars =
+module CalendarsResource =
 struct
-  include GapiService.Make(CalendarsConf)(StandardParameters)
+  include GapiService.Make(CalendarsResourceConf)(StandardParameters)
 
   let clear
-        ?(url = CalendarsConf.service_url)
+        ?(url = CalendarsResourceConf.service_url)
         session =
     let url' = GapiUtils.add_path_to_url ["primary"; "clear"] url in
       GapiService.service_request
@@ -253,14 +253,14 @@ struct
 
 end
 
-module Colors =
+module ColorsResource =
 struct
   let get
         ?(url = "https://www.googleapis.com/calendar/v3/colors")
         session =
     GapiService.query
       url
-      (GapiJson.parse_json_response ColorList.of_data_model)
+      (GapiJson.parse_json_response Colors.of_data_model)
       session
 
 end
@@ -325,24 +325,24 @@ end
 
 module EventsConf =
 struct
-  type resource_list_t = EventsList.t
-  type resource_t = EventsResource.t
+  type resource_list_t = Events.t
+  type resource_t = Event.t
 
   let service_url =
     "https://www.googleapis.com/calendar/v3/calendars"
 
   let parse_resource_list =
-    GapiJson.parse_json_response EventsList.of_data_model
+    GapiJson.parse_json_response Events.of_data_model
 
   let parse_resource =
-    GapiJson.parse_json_response EventsResource.of_data_model
+    GapiJson.parse_json_response Event.of_data_model
 
   let render_resource =
-    GapiJson.render_json EventsResource.to_data_model
+    GapiJson.render_json Event.to_data_model
 
   let create_resource_from_id id =
-    { EventsResource.empty with
-          EventsResource.id = id
+    { Event.empty with
+          Event.id = id
     }
 
   let get_url ?(container_id = "primary") ?resource base_url =
@@ -353,18 +353,18 @@ struct
           None ->
             []
         | Some r ->
-            [r.EventsResource.id]
+            [r.Event.id]
     in
       GapiUtils.add_path_to_url
         (container_path @ resource_path)
         base_url
 
   let get_etag resource =
-    GapiUtils.etag_option resource.EventsResource.etag
+    GapiUtils.etag_option resource.Event.etag
 
 end
 
-module Events =
+module EventsResource =
 struct
   include GapiService.Make(EventsConf)(QueryParameters)
 

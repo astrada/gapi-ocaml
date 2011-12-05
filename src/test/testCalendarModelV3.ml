@@ -117,8 +117,8 @@ let test_parse_calendars () =
   let calendars_json =
     Json_io.load_json "test/data/test_calendars.json" in
   let tree = GapiJson.json_to_data_model calendars_json in
-  let calendars = CalendarsResource.of_data_model tree in
-  let tree' = CalendarsResource.to_data_model calendars in
+  let calendars = Calendar.of_data_model tree in
+  let tree' = Calendar.to_data_model calendars in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model
@@ -133,8 +133,8 @@ let test_parse_colors () =
   let colors_json =
     Json_io.load_json "test/data/test_calendar_colors.json" in
   let tree = GapiJson.json_to_data_model colors_json in
-  let colors = ColorList.of_data_model tree in
-  let tree' = ColorList.to_data_model colors in
+  let colors = Colors.of_data_model tree in
+  let tree' = Colors.to_data_model colors in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model
@@ -194,8 +194,8 @@ let test_parse_event_resource () =
   let event_json =
     Json_io.load_json "test/data/test_calendar_event_resource.json" in
   let tree = GapiJson.json_to_data_model event_json in
-  let event = EventsResource.of_data_model tree in
-  let tree' = EventsResource.to_data_model event in
+  let event = Event.of_data_model tree in
+  let tree' = Event.to_data_model event in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model
@@ -210,8 +210,8 @@ let test_parse_event_list () =
   let event_json =
     Json_io.load_json "test/data/test_calendar_event_list.json" in
   let tree = GapiJson.json_to_data_model event_json in
-  let event = EventsList.of_data_model tree in
-  let tree' = EventsList.to_data_model event in
+  let event = Events.of_data_model tree in
+  let tree' = Events.to_data_model event in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model

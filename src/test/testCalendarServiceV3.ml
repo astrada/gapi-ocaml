@@ -127,22 +127,22 @@ let test_delete_acl () =
               e.GapiCalendar.AclRule.id = entry.GapiCalendar.AclRule.id)
            acl'.GapiCalendar.Acl.items)
 
-(* Colors *)
+(* ColorsResource *)
 
 let test_colors_get () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (colors, session) =
-         GapiCalendarService.Colors.get
+         GapiCalendarService.ColorsResource.get
            session
        in
          assert_equal
            "calendar#colors"
-           colors.GapiCalendar.ColorList.kind;
+           colors.GapiCalendar.Colors.kind;
          assert_bool
            "There should be at least 1 calendar color"
-           (List.length colors.GapiCalendar.ColorList.calendar >= 1))
+           (List.length colors.GapiCalendar.Colors.calendar >= 1))
 
 (* Settings *)
 
@@ -177,13 +177,13 @@ let test_settings_get () =
            "country setting should not be empty"
            setting.GapiCalendar.SettingsResource.value)
 
-(* Calendars *)
+(* CalendarsResource *)
 
 let new_calendar =
-  { GapiCalendar.CalendarsResource.empty with
-        GapiCalendar.CalendarsResource.kind = "calendar#calendar";
-        GapiCalendar.CalendarsResource.summary = "New test calendar";
-        GapiCalendar.CalendarsResource.description =
+  { GapiCalendar.Calendar.empty with
+        GapiCalendar.Calendar.kind = "calendar#calendar";
+        GapiCalendar.Calendar.summary = "New test calendar";
+        GapiCalendar.Calendar.description =
           "Description of new test calendar"
   }
 
@@ -192,116 +192,116 @@ let test_insert_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Calendars.delete
+         ignore (GapiCalendarService.CalendarsResource.delete
                    new_entry
                    session);
          TestHelper.assert_not_empty
            "New calendar id should not be empty"
-           new_entry.GapiCalendar.CalendarsResource.id)
+           new_entry.GapiCalendar.Calendar.id)
 
 let test_get_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let (entry', session) =
-         GapiCalendarService.Calendars.get
-           entry.GapiCalendar.CalendarsResource.id
+         GapiCalendarService.CalendarsResource.get
+           entry.GapiCalendar.Calendar.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Calendars.delete
+         ignore (GapiCalendarService.CalendarsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.CalendarsResource.id
-           entry'.GapiCalendar.CalendarsResource.id)
+           entry.GapiCalendar.Calendar.id
+           entry'.GapiCalendar.Calendar.id)
 
 let test_refresh_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let (entry', session) =
-         GapiCalendarService.Calendars.refresh
+         GapiCalendarService.CalendarsResource.refresh
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Calendars.delete
+         ignore (GapiCalendarService.CalendarsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.CalendarsResource.id
-           entry'.GapiCalendar.CalendarsResource.id)
+           entry.GapiCalendar.Calendar.id
+           entry'.GapiCalendar.Calendar.id)
 
 let test_update_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let entry = { entry with
-                         GapiCalendar.CalendarsResource.description =
+                         GapiCalendar.Calendar.description =
                            "Updated description" } in
        let (entry, session) =
-         GapiCalendarService.Calendars.update
+         GapiCalendarService.CalendarsResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Calendars.delete
+         ignore (GapiCalendarService.CalendarsResource.delete
                    entry
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.CalendarsResource.description)
+           entry.GapiCalendar.Calendar.description)
 
 let test_patch_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let entry = {
-         GapiCalendar.CalendarsResource.empty with
-             GapiCalendar.CalendarsResource.id =
-               entry.GapiCalendar.CalendarsResource.id;
-             GapiCalendar.CalendarsResource.description =
+         GapiCalendar.Calendar.empty with
+             GapiCalendar.Calendar.id =
+               entry.GapiCalendar.Calendar.id;
+             GapiCalendar.Calendar.description =
                "Updated description"
        } in
        let (entry, session) =
-         GapiCalendarService.Calendars.patch
+         GapiCalendarService.CalendarsResource.patch
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Calendars.delete
+         ignore (GapiCalendarService.CalendarsResource.delete
                    entry
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.CalendarsResource.description;
+           entry.GapiCalendar.Calendar.description;
          assert_equal
            "calendar#calendar"
-           entry.GapiCalendar.CalendarsResource.kind)
+           entry.GapiCalendar.Calendar.kind)
 
 let test_delete_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let (calendars, session) =
@@ -309,7 +309,7 @@ let test_delete_calendar () =
            session in
        let _ = delay () in
        let ((), session) =
-         GapiCalendarService.Calendars.delete
+         GapiCalendarService.CalendarsResource.delete
            entry
            session in
        let (calendars', _) =
@@ -320,78 +320,78 @@ let test_delete_calendar () =
            "calendars should contain new calendar"
            (fun e ->
               e.GapiCalendar.CalendarListEntry.id =
-                entry.GapiCalendar.CalendarsResource.id)
+                entry.GapiCalendar.Calendar.id)
            calendars.GapiCalendar.CalendarList.items;
          TestHelper.assert_not_exists
            "calendars' should not contain new calendar"
            (fun e ->
               e.GapiCalendar.CalendarListEntry.id =
-                entry.GapiCalendar.CalendarsResource.id)
+                entry.GapiCalendar.Calendar.id)
            calendars'.GapiCalendar.CalendarList.items)
 
 let test_clear_primary_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       ignore (GapiCalendarService.Calendars.clear
+       ignore (GapiCalendarService.CalendarsResource.clear
                  session))
 
-(* Events *)
+(* EventsResource *)
 
 let test_event_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (events, session) =
-         GapiCalendarService.Events.list
+         GapiCalendarService.EventsResource.list
            session
        in
          assert_equal
            "calendar#events"
-           events.GapiCalendar.EventsList.kind;
+           events.GapiCalendar.Events.kind;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
 
 let new_event =
-  { GapiCalendar.EventsResource.empty with
-        GapiCalendar.EventsResource.kind = "calendar#event";
-        GapiCalendar.EventsResource.summary = "New test event";
-        GapiCalendar.EventsResource.description =
+  { GapiCalendar.Event.empty with
+        GapiCalendar.Event.kind = "calendar#event";
+        GapiCalendar.Event.summary = "New test event";
+        GapiCalendar.Event.description =
           "Description of new test event";
-        GapiCalendar.EventsResource.start =
-          { GapiCalendar.DateTime.empty with
-                GapiCalendar.DateTime.dateTime =
+        GapiCalendar.Event.start =
+          { GapiCalendar.EventDateTime.empty with
+                GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T09:00:00Z";
-                GapiCalendar.DateTime.timeZone = "UTC"
+                GapiCalendar.EventDateTime.timeZone = "UTC"
           };
-        GapiCalendar.EventsResource._end =
-          { GapiCalendar.DateTime.empty with
-                GapiCalendar.DateTime.dateTime =
+        GapiCalendar.Event._end =
+          { GapiCalendar.EventDateTime.empty with
+                GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T13:00:00Z";
-                GapiCalendar.DateTime.timeZone = "UTC"
+                GapiCalendar.EventDateTime.timeZone = "UTC"
           }
   }
 
 let new_recurring_event =
-  { GapiCalendar.EventsResource.empty with
-        GapiCalendar.EventsResource.kind = "calendar#event";
-        GapiCalendar.EventsResource.summary = "New recurring event";
-        GapiCalendar.EventsResource.description =
+  { GapiCalendar.Event.empty with
+        GapiCalendar.Event.kind = "calendar#event";
+        GapiCalendar.Event.summary = "New recurring event";
+        GapiCalendar.Event.description =
           "Description of new recurring event";
-        GapiCalendar.EventsResource.start =
-          { GapiCalendar.DateTime.empty with
-                GapiCalendar.DateTime.dateTime =
+        GapiCalendar.Event.start =
+          { GapiCalendar.EventDateTime.empty with
+                GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T10:00:00Z";
-                GapiCalendar.DateTime.timeZone = "UTC"
+                GapiCalendar.EventDateTime.timeZone = "UTC"
           };
-        GapiCalendar.EventsResource._end =
-          { GapiCalendar.DateTime.empty with
-                GapiCalendar.DateTime.dateTime =
+        GapiCalendar.Event._end =
+          { GapiCalendar.EventDateTime.empty with
+                GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T15:00:00Z";
-                GapiCalendar.DateTime.timeZone = "UTC"
+                GapiCalendar.EventDateTime.timeZone = "UTC"
           };
-        GapiCalendar.EventsResource.recurrence =
+        GapiCalendar.Event.recurrence =
           [ "RRULE:FREQ=DAILY;UNTIL=20111206" ]
   }
 
@@ -400,267 +400,267 @@ let test_insert_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.EventsResource.id)
+           event.GapiCalendar.Event.id)
 
 let test_get_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let (entry', session) =
-         GapiCalendarService.Events.get
-           entry.GapiCalendar.EventsResource.id
+         GapiCalendarService.EventsResource.get
+           entry.GapiCalendar.Event.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.EventsResource.id
-           entry'.GapiCalendar.EventsResource.id)
+           entry.GapiCalendar.Event.id
+           entry'.GapiCalendar.Event.id)
 
 let test_refresh_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let (entry', session) =
-         GapiCalendarService.Events.refresh
+         GapiCalendarService.EventsResource.refresh
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.EventsResource.id
-           entry'.GapiCalendar.EventsResource.id)
+           entry.GapiCalendar.Event.id
+           entry'.GapiCalendar.Event.id)
 
 let test_update_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let entry = { entry with
-                         GapiCalendar.EventsResource.description =
+                         GapiCalendar.Event.description =
                            "Updated description" } in
        let (entry, session) =
-         GapiCalendarService.Events.update
+         GapiCalendarService.EventsResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    entry
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.EventsResource.description)
+           entry.GapiCalendar.Event.description)
 
 let test_patch_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let entry = {
-         GapiCalendar.EventsResource.empty with
-             GapiCalendar.EventsResource.id =
-               entry.GapiCalendar.EventsResource.id;
-             GapiCalendar.EventsResource.description =
+         GapiCalendar.Event.empty with
+             GapiCalendar.Event.id =
+               entry.GapiCalendar.Event.id;
+             GapiCalendar.Event.description =
                "Updated description"
        } in
        let (entry, session) =
-         GapiCalendarService.Events.patch
+         GapiCalendarService.EventsResource.patch
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    entry
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.EventsResource.description;
+           entry.GapiCalendar.Event.description;
          assert_equal
            "calendar#event"
-           entry.GapiCalendar.EventsResource.kind)
+           entry.GapiCalendar.Event.kind)
 
 let test_delete_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let (events, session) =
-         GapiCalendarService.Events.list
+         GapiCalendarService.EventsResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiCalendarService.Events.delete
+         GapiCalendarService.EventsResource.delete
            entry
            session in
        let (events', _) =
-         GapiCalendarService.Events.list
+         GapiCalendarService.EventsResource.list
            session
        in
          TestHelper.assert_exists
            "events list should contain new event"
            (fun e ->
-              e.GapiCalendar.EventsResource.id =
-                entry.GapiCalendar.EventsResource.id)
-           events.GapiCalendar.EventsList.items;
+              e.GapiCalendar.Event.id =
+                entry.GapiCalendar.Event.id)
+           events.GapiCalendar.Events.items;
          TestHelper.assert_not_exists
            "events' list should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.EventsResource.id =
-                entry.GapiCalendar.EventsResource.id)
-           events'.GapiCalendar.EventsList.items)
+              e.GapiCalendar.Event.id =
+                entry.GapiCalendar.Event.id)
+           events'.GapiCalendar.Events.items)
 
 let test_quick_add_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.Events.quickAdd
+         GapiCalendarService.EventsResource.quickAdd
            "Appointment at Somewhere on June 3rd 10am-10:25am"
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.EventsResource.id)
+           event.GapiCalendar.Event.id)
 
 let test_import_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let event = new_event
-         |> GapiCalendar.EventsResource.iCalUID ^=
+         |> GapiCalendar.Event.iCalUID ^=
            GapiDate.to_string (GapiDate.now ()) ^ "imported_event" in
        let (event, session) =
-         GapiCalendarService.Events.import
+         GapiCalendarService.EventsResource.import
            event
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.EventsResource.id)
+           event.GapiCalendar.Event.id)
 
 let test_move_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let (calendar, session) =
-         GapiCalendarService.Calendars.insert
+         GapiCalendarService.CalendarsResource.insert
            new_calendar
            session in
        let _ = delay () in
        let (event, session) =
-         GapiCalendarService.Events.move
-           event.GapiCalendar.EventsResource.id
-           calendar.GapiCalendar.CalendarsResource.id
+         GapiCalendarService.EventsResource.move
+           event.GapiCalendar.Event.id
+           calendar.GapiCalendar.Calendar.id
            session in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
-         ignore (GapiCalendarService.Calendars.delete
+         ignore (GapiCalendarService.CalendarsResource.delete
                    calendar
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.EventsResource.id)
+           event.GapiCalendar.Event.id)
 
 let test_recurring_event_instances () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_recurring_event
            session in
        let _ = delay () in
        let (events, session) =
-         GapiCalendarService.Events.instances
-           event.GapiCalendar.EventsResource.id
+         GapiCalendarService.EventsResource.instances
+           event.GapiCalendar.Event.id
            session
        in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
          assert_equal
            "calendar#events"
-           events.GapiCalendar.EventsList.kind;
+           events.GapiCalendar.Events.kind;
          assert_equal
            3
-           (List.length events.GapiCalendar.EventsList.items))
+           (List.length events.GapiCalendar.Events.items))
 
 let test_recurring_event_instance_reset () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_recurring_event
            session in
        let _ = delay () in
        let (events, session) =
-         GapiCalendarService.Events.instances
-           event.GapiCalendar.EventsResource.id
+         GapiCalendarService.EventsResource.instances
+           event.GapiCalendar.Event.id
            session in
        let second_instance = events
-         |. GapiCalendar.EventsList.items
+         |. GapiCalendar.Events.items
          |. GapiLens.tail
          |. GapiLens.head in
        let canceled_instance = second_instance
-         |> GapiCalendar.EventsResource.status ^= "cancelled" in
+         |> GapiCalendar.Event.status ^= "cancelled" in
        let (updated_instance, session) =
-         GapiCalendarService.Events.update
+         GapiCalendarService.EventsResource.update
            canceled_instance
            session in
        let (restored_instance, session) =
-         GapiCalendarService.Events.reset
-           updated_instance.GapiCalendar.EventsResource.id
+         GapiCalendarService.EventsResource.reset
+           updated_instance.GapiCalendar.Event.id
            session
        in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
          assert_equal
            "cancelled"
-           updated_instance.GapiCalendar.EventsResource.status;
+           updated_instance.GapiCalendar.Event.status;
          assert_equal
            "confirmed"
-           restored_instance.GapiCalendar.EventsResource.status)
+           restored_instance.GapiCalendar.Event.status)
 
 (* Calendar List *)
 
@@ -852,11 +852,11 @@ let test_free_busy_query () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (calendar, session) =
-         GapiCalendarService.Calendars.get
+         GapiCalendarService.CalendarsResource.get
            "primary"
            session in
        let (event, session) =
-         GapiCalendarService.Events.insert
+         GapiCalendarService.EventsResource.insert
            new_event
            session in
        let _ = delay () in
@@ -867,14 +867,14 @@ let test_free_busy_query () =
                GapiCalendar.FreeBusyParameters.timeMax =
                  GapiDate.of_string "2011-12-04";
                GapiCalendar.FreeBusyParameters.items =
-                 [ calendar.GapiCalendar.CalendarsResource.id ]
+                 [ calendar.GapiCalendar.Calendar.id ]
          } in
        let (freeBusy, _) =
          GapiCalendarService.FreeBusy.query
            params
            session
        in
-         ignore (GapiCalendarService.Events.delete
+         ignore (GapiCalendarService.EventsResource.delete
                    event
                    session);
          assert_equal

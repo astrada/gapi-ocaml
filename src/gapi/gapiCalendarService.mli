@@ -56,47 +56,47 @@ module CalendarListResource :
       and type resource_t = GapiCalendar.CalendarListEntry.t
       and type query_parameters_t = QueryParameters.t
 
-module Calendars :
+module CalendarsResource :
 sig
   val get :
     ?url:string ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   val refresh :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.CalendarsResource.t ->
+    GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   val insert :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.CalendarsResource.t ->
+    GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   val update :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.CalendarsResource.t ->
+    GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   val patch :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.CalendarsResource.t ->
+    GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   val delete :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.CalendarsResource.t ->
+    GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -107,12 +107,12 @@ sig
 
 end
 
-module Colors :
+module ColorsResource :
 sig
   val get :
     ?url:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.ColorList.t * GapiConversation.Session.t)
+    (GapiCalendar.Colors.t * GapiConversation.Session.t)
 
 end
 
@@ -145,7 +145,7 @@ sig
 
 end
 
-module Events :
+module EventsResource :
 sig
   val list :
     ?url:string ->
@@ -153,47 +153,47 @@ sig
     ?parameters:QueryParameters.t ->
     ?container_id:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsList.t * GapiConversation.Session.t)
+    (GapiCalendar.Events.t * GapiConversation.Session.t)
 
   val get :
     ?url:string ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val refresh :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.EventsResource.t ->
+    GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val insert :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.EventsResource.t ->
+    GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val update :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.EventsResource.t ->
+    GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val patch :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.EventsResource.t ->
+    GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val delete :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.EventsResource.t ->
+    GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -202,21 +202,21 @@ sig
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsList.t * GapiConversation.Session.t)
+    (GapiCalendar.Events.t * GapiConversation.Session.t)
 
   val import :
     ?url:string ->
     ?container_id:string ->
-    GapiCalendar.EventsResource.t ->
+    GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val quickAdd :
     ?url:string ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val move :
     ?url:string ->
@@ -224,14 +224,14 @@ sig
     string ->
     string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
   val reset :
     ?url:string ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.EventsResource.t * GapiConversation.Session.t)
+    (GapiCalendar.Event.t * GapiConversation.Session.t)
 
 end
 
