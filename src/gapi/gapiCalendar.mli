@@ -72,9 +72,9 @@ sig
 
 end
 
-(* Calendar list *)
+(* Calendar List *)
 
-module Reminder :
+module EventReminder :
 sig
   type t = {
     _method : string;
@@ -92,7 +92,7 @@ sig
 
 end
 
-module CalendarListResource :
+module CalendarListEntry :
 sig
   type t = {
     kind : string;
@@ -107,7 +107,7 @@ sig
     hidden : bool;
     selected : bool;
     accessRole : string;
-    defaultReminders : Reminder.t list
+    defaultReminders : EventReminder.t list
   }
 
   val kind : (t, string) GapiLens.t
@@ -122,7 +122,7 @@ sig
   val hidden : (t, bool) GapiLens.t
   val selected : (t, bool) GapiLens.t
   val accessRole : (t, string) GapiLens.t
-  val defaultReminders : (t, Reminder.t list) GapiLens.t
+  val defaultReminders : (t, EventReminder.t list) GapiLens.t
 
   val empty : t
 
@@ -136,19 +136,19 @@ sig
 
 end
 
-module CalendarListList :
+module CalendarList :
 sig
   type t = {
     kind : string;
     etag : string;
     nextPageToken : string;
-    items : CalendarListResource.t list
+    items : CalendarListEntry.t list
   }
 
   val kind : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
-  val items : (t, CalendarListResource.t list) GapiLens.t
+  val items : (t, CalendarListEntry.t list) GapiLens.t
 
   val empty : t
 
@@ -545,11 +545,11 @@ module Reminders :
 sig
   type t = {
     useDefault : bool;
-    overrides : Reminder.t list
+    overrides : EventReminder.t list
   }
 
   val useDefault : (t, bool) GapiLens.t
-  val overrides : (t, Reminder.t list) GapiLens.t
+  val overrides : (t, EventReminder.t list) GapiLens.t
 
   val empty : t
 
@@ -651,7 +651,7 @@ sig
     updated : GapiDate.t;
     timeZone : string;
     accessRole : string;
-    defaultReminders : Reminder.t list;
+    defaultReminders : EventReminder.t list;
     nextPageToken : string;
     items : EventsResource.t list
   }
@@ -663,7 +663,7 @@ sig
   val updated : (t, GapiDate.t) GapiLens.t
   val timeZone : (t, string) GapiLens.t
   val accessRole : (t, string) GapiLens.t
-  val defaultReminders : (t, Reminder.t list) GapiLens.t
+  val defaultReminders : (t, EventReminder.t list) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   val items : (t, EventsResource.t list) GapiLens.t
 

@@ -162,24 +162,24 @@ module AclResource =
 
 module CalendarListConf =
 struct
-  type resource_list_t = CalendarListList.t
-  type resource_t = CalendarListResource.t
+  type resource_list_t = CalendarList.t
+  type resource_t = CalendarListEntry.t
 
   let service_url =
     "https://www.googleapis.com/calendar/v3/users/me/calendarList"
 
   let parse_resource_list =
-    GapiJson.parse_json_response CalendarListList.of_data_model
+    GapiJson.parse_json_response CalendarList.of_data_model
 
   let parse_resource =
-    GapiJson.parse_json_response CalendarListResource.of_data_model
+    GapiJson.parse_json_response CalendarListEntry.of_data_model
 
   let render_resource =
-    GapiJson.render_json CalendarListResource.to_data_model
+    GapiJson.render_json CalendarListEntry.to_data_model
 
   let create_resource_from_id id =
-    { CalendarListResource.empty with
-          CalendarListResource.id = id
+    { CalendarListEntry.empty with
+          CalendarListEntry.id = id
     }
 
   let get_url ?container_id ?resource base_url =
@@ -188,15 +188,15 @@ struct
           base_url
       | Some r ->
           GapiUtils.add_path_to_url
-            [r.CalendarListResource.id]
+            [r.CalendarListEntry.id]
             base_url
 
   let get_etag resource =
-    GapiUtils.etag_option resource.CalendarListResource.etag
+    GapiUtils.etag_option resource.CalendarListEntry.etag
 
 end
 
-module CalendarList =
+module CalendarListResource =
   GapiService.Make
     (CalendarListConf)
     (QueryParameters)

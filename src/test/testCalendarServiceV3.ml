@@ -305,7 +305,7 @@ let test_delete_calendar () =
            new_calendar
            session in
        let (calendars, session) =
-         GapiCalendarService.CalendarList.list
+         GapiCalendarService.CalendarListResource.list
            session in
        let _ = delay () in
        let ((), session) =
@@ -313,21 +313,21 @@ let test_delete_calendar () =
            entry
            session in
        let (calendars', _) =
-         GapiCalendarService.CalendarList.list
+         GapiCalendarService.CalendarListResource.list
            session
        in
          TestHelper.assert_exists
            "calendars should contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListResource.id =
+              e.GapiCalendar.CalendarListEntry.id =
                 entry.GapiCalendar.CalendarsResource.id)
-           calendars.GapiCalendar.CalendarListList.items;
+           calendars.GapiCalendar.CalendarList.items;
          TestHelper.assert_not_exists
            "calendars' should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListResource.id =
+              e.GapiCalendar.CalendarListEntry.id =
                 entry.GapiCalendar.CalendarsResource.id)
-           calendars'.GapiCalendar.CalendarListList.items)
+           calendars'.GapiCalendar.CalendarList.items)
 
 let test_clear_primary_calendar () =
   TestHelper.test_request
@@ -668,8 +668,8 @@ let australian_calendar_id =
   "en.australian#holiday@group.v.calendar.google.com"
 
 let australian_calendar =
-  { GapiCalendar.CalendarListResource.empty with
-        GapiCalendar.CalendarListResource.id = australian_calendar_id
+  { GapiCalendar.CalendarListEntry.empty with
+        GapiCalendar.CalendarListEntry.id = australian_calendar_id
   }
 
 let test_list_calendar_list () =
@@ -677,15 +677,15 @@ let test_list_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (calendars, session) =
-         GapiCalendarService.CalendarList.list
+         GapiCalendarService.CalendarListResource.list
            session
        in
          assert_equal
            "calendar#calendarList"
-           calendars.GapiCalendar.CalendarListList.kind;
+           calendars.GapiCalendar.CalendarList.kind;
          assert_bool
            "There should be at least 1 calendar"
-           (List.length calendars.GapiCalendar.CalendarListList.items >= 1);
+           (List.length calendars.GapiCalendar.CalendarList.items >= 1);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
@@ -700,150 +700,150 @@ let test_list_calendar_list_with_max_results () =
              GapiCalendarService.QueryParameters.maxResults = 1
        } in
        let (calendars, session) =
-         GapiCalendarService.CalendarList.list
+         GapiCalendarService.CalendarListResource.list
            ~parameters
            session
        in
          assert_equal
            1
-           (List.length calendars.GapiCalendar.CalendarListList.items))
+           (List.length calendars.GapiCalendar.CalendarList.items))
 
 let test_insert_calendar_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiCalendarService.CalendarList.insert
+         GapiCalendarService.CalendarListResource.insert
            australian_calendar
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarList.delete
+         ignore (GapiCalendarService.CalendarListResource.delete
                    new_entry
                    session);
          assert_equal
            australian_calendar_id
-           new_entry.GapiCalendar.CalendarListResource.id)
+           new_entry.GapiCalendar.CalendarListEntry.id)
 
 let test_get_calendar_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarList.insert
+         GapiCalendarService.CalendarListResource.insert
            australian_calendar
            session in
        let (entry, session) =
-         GapiCalendarService.CalendarList.get
+         GapiCalendarService.CalendarListResource.get
            australian_calendar_id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarList.delete
+         ignore (GapiCalendarService.CalendarListResource.delete
                    entry
                    session);
          assert_equal
            australian_calendar_id
-           entry.GapiCalendar.CalendarListResource.id)
+           entry.GapiCalendar.CalendarListEntry.id)
 
 let test_refresh_calendar_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarList.insert
+         GapiCalendarService.CalendarListResource.insert
            australian_calendar
            session in
        let (entry, session) =
-         GapiCalendarService.CalendarList.refresh
+         GapiCalendarService.CalendarListResource.refresh
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarList.delete
+         ignore (GapiCalendarService.CalendarListResource.delete
                    entry
                    session);
          assert_equal
            australian_calendar_id
-           entry.GapiCalendar.CalendarListResource.id)
+           entry.GapiCalendar.CalendarListEntry.id)
 
 let test_update_calendar_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarList.insert
+         GapiCalendarService.CalendarListResource.insert
            australian_calendar
            session in
        let entry = { entry with
-                         GapiCalendar.CalendarListResource.hidden = true } in
+                         GapiCalendar.CalendarListEntry.hidden = true } in
        let (entry, session) =
-         GapiCalendarService.CalendarList.update
+         GapiCalendarService.CalendarListResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarList.delete
+         ignore (GapiCalendarService.CalendarListResource.delete
                    entry
                    session);
          assert_equal
            true
-           entry.GapiCalendar.CalendarListResource.hidden)
+           entry.GapiCalendar.CalendarListEntry.hidden)
 
 let test_patch_calendar_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarList.insert
+         GapiCalendarService.CalendarListResource.insert
            australian_calendar
            session in
        let entry = {
-         GapiCalendar.CalendarListResource.empty with
-             GapiCalendar.CalendarListResource.id = australian_calendar_id;
-             GapiCalendar.CalendarListResource.hidden = true
+         GapiCalendar.CalendarListEntry.empty with
+             GapiCalendar.CalendarListEntry.id = australian_calendar_id;
+             GapiCalendar.CalendarListEntry.hidden = true
        } in
        let (entry, session) =
-         GapiCalendarService.CalendarList.patch
+         GapiCalendarService.CalendarListResource.patch
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarList.delete
+         ignore (GapiCalendarService.CalendarListResource.delete
                    entry
                    session);
          assert_equal
            true
-           entry.GapiCalendar.CalendarListResource.hidden;
+           entry.GapiCalendar.CalendarListEntry.hidden;
          assert_equal
            "calendar#calendarListEntry"
-           entry.GapiCalendar.CalendarListResource.kind)
+           entry.GapiCalendar.CalendarListEntry.kind)
 
 let test_delete_calendar_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarList.insert
+         GapiCalendarService.CalendarListResource.insert
            australian_calendar
            session in
        let (calendars, session) =
-         GapiCalendarService.CalendarList.list
+         GapiCalendarService.CalendarListResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiCalendarService.CalendarList.delete
+         GapiCalendarService.CalendarListResource.delete
            entry
            session in
        let (calendars', _) =
-         GapiCalendarService.CalendarList.list
+         GapiCalendarService.CalendarListResource.list
            session
        in
          TestHelper.assert_exists
            "calendars should contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListResource.id = australian_calendar_id)
-           calendars.GapiCalendar.CalendarListList.items;
+              e.GapiCalendar.CalendarListEntry.id = australian_calendar_id)
+           calendars.GapiCalendar.CalendarList.items;
          TestHelper.assert_not_exists
            "calendars' should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListResource.id = australian_calendar_id)
-           calendars'.GapiCalendar.CalendarListList.items)
+              e.GapiCalendar.CalendarListEntry.id = australian_calendar_id)
+           calendars'.GapiCalendar.CalendarList.items)
 
 (* Free/busy *)
 

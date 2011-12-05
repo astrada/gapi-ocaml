@@ -4,26 +4,26 @@ open GapiLens.Infix
 open GapiUtils.Infix
 
 let first_item_timeZone =
-  CalendarListList.items
+  CalendarList.items
     |-- GapiLens.head
-      |-- CalendarListResource.timeZone
+      |-- CalendarListEntry.timeZone
 let second_item_summary =
-  CalendarListList.items
+  CalendarList.items
     |-- GapiLens.tail
       |-- GapiLens.head
-        |-- CalendarListResource.summary
+        |-- CalendarListEntry.summary
 let second_item_first_defaultReminder_minutes =
-  CalendarListList.items
+  CalendarList.items
     |-- GapiLens.for_list 1
-      |-- CalendarListResource.defaultReminders
+      |-- CalendarListEntry.defaultReminders
         |-- GapiLens.head
-          |-- Reminder.minutes
+          |-- EventReminder.minutes
 
 let load_calendar_list () =
   let calendar_list_json =
     Json_io.load_json "test/data/test_calendar_list.json" in
   let tree = GapiJson.json_to_data_model calendar_list_json in
-    CalendarListList.of_data_model tree
+    CalendarList.of_data_model tree
 
 let test_lenses_get () =
   let calendar_list = load_calendar_list () in
@@ -68,13 +68,13 @@ let test_lenses_set () =
 let test_lenses_modify () =
   let calendar_list = load_calendar_list () in
   let calendar_list' = calendar_list
-    |> CalendarListList.items
+    |> CalendarList.items
     ^%= GapiLens.for_list 1
-    ^%= CalendarListResource.summary ^= "Updated Summary" in
+    ^%= CalendarListEntry.summary ^= "Updated Summary" in
   let summ = calendar_list'
-    |. CalendarListList.items
+    |. CalendarList.items
     |. GapiLens.for_list 1
-    |. CalendarListResource.summary
+    |. CalendarListEntry.summary
   in
     assert_equal
       ~printer:Std.identity
@@ -85,8 +85,8 @@ let test_parse_calendar_list () =
   let calendar_list_json =
     Json_io.load_json "test/data/test_calendar_list.json" in
   let tree = GapiJson.json_to_data_model calendar_list_json in
-  let calendarListList = CalendarListList.of_data_model tree in
-  let tree' = CalendarListList.to_data_model calendarListList in
+  let calendarListList = CalendarList.of_data_model tree in
+  let tree' = CalendarList.to_data_model calendarListList in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model

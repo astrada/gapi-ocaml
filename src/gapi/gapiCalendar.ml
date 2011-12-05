@@ -215,7 +215,7 @@ end
 
 (* Calendar list *)
 
-module Reminder =
+module EventReminder =
 struct
   type t = {
     _method : string;
@@ -260,11 +260,11 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiCalendar.Reminder.parse" e
+          unexpected "GapiCalendar.EventReminder.parse" e
 
 end
 
-module CalendarListResource =
+module CalendarListEntry =
 struct
   type t = {
     kind : string;
@@ -279,7 +279,7 @@ struct
     hidden : bool;
     selected : bool;
     accessRole : string;
-    defaultReminders : Reminder.t list
+    defaultReminders : EventReminder.t list
   }
 
   let kind = {
@@ -365,7 +365,7 @@ struct
        render_bool_value "hidden" x.hidden;
        render_bool_value "selected" x.selected;
        render_string_value "accessRole" x.accessRole;
-       render_array "defaultReminders" Reminder.render x.defaultReminders]
+       render_array "defaultReminders" EventReminder.render x.defaultReminders]
 
   let rec parse x tree =
     match tree with
@@ -421,8 +421,8 @@ struct
           ({ name = "defaultReminders"; data_type = Array },
            cs) ->
           parse_collection
-            Reminder.parse
-            Reminder.empty
+            EventReminder.parse
+            EventReminder.empty
             (fun xs -> { x with defaultReminders = xs })
             cs
       | AnnotatedTree.Node
@@ -434,7 +434,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiCalendar.CalendarListResource.parse" e
+          unexpected "GapiCalendar.CalendarListEntry.parse" e
 
   let to_data_model = render_root render
 
@@ -442,13 +442,13 @@ struct
 
 end
 
-module CalendarListList =
+module CalendarList =
 struct
   type t = {
     kind : string;
     etag : string;
     nextPageToken : string;
-    items : CalendarListResource.t list
+    items : CalendarListEntry.t list
   }
 
   let kind = {
@@ -480,7 +480,7 @@ struct
       [render_string_value "kind" x.kind;
        render_string_value "etag" x.etag;
        render_string_value "nextPageToken" x.nextPageToken;
-       render_array "items" CalendarListResource.render x.items]
+       render_array "items" CalendarListEntry.render x.items]
 
   let parse x tree =
     match tree with
@@ -500,12 +500,12 @@ struct
           ({ name = "items"; data_type = Array },
            cs) ->
           parse_collection
-            CalendarListResource.parse
-            CalendarListResource.empty
+            CalendarListEntry.parse
+            CalendarListEntry.empty
             (fun xs -> { x with items = xs })
             cs
       | e ->
-          unexpected "GapiCalendar.CalendarListList.parse" e
+          unexpected "GapiCalendar.CalendarList.parse" e
 
   let to_data_model = render_root render
 
@@ -1664,7 +1664,7 @@ module Reminders =
 struct
   type t = {
     useDefault : bool;
-    overrides : Reminder.t list
+    overrides : EventReminder.t list
   }
 
   let useDefault = {
@@ -1684,7 +1684,7 @@ struct
   let render x =
     render_object "reminders"
       [render_bool_value "useDefault" x.useDefault;
-       render_array "overrides" Reminder.render x.overrides]
+       render_array "overrides" EventReminder.render x.overrides]
 
   let rec parse x tree =
     match tree with
@@ -1696,8 +1696,8 @@ struct
           ({ name = "overrides"; data_type = Array },
            cs) ->
           parse_collection
-            Reminder.parse
-            Reminder.empty
+            EventReminder.parse
+            EventReminder.empty
             (fun xs -> { x with overrides = xs })
             cs
       | AnnotatedTree.Node
@@ -2154,7 +2154,7 @@ struct
     updated : GapiDate.t;
     timeZone : string;
     accessRole : string;
-    defaultReminders : Reminder.t list;
+    defaultReminders : EventReminder.t list;
     nextPageToken : string;
     items : EventsResource.t list
   }
@@ -2222,7 +2222,7 @@ struct
        render_date_value "updated" x.updated;
        render_string_value "timeZone" x.timeZone;
        render_string_value "accessRole" x.accessRole;
-       render_array "defaultReminders" Reminder.render x.defaultReminders;
+       render_array "defaultReminders" EventReminder.render x.defaultReminders;
        render_string_value "nextPageToken" x.nextPageToken;
        render_array "items" EventsResource.render x.items]
 
@@ -2260,8 +2260,8 @@ struct
           ({ name = "defaultReminders"; data_type = Array },
            cs) ->
           parse_collection
-            Reminder.parse
-            Reminder.empty
+            EventReminder.parse
+            EventReminder.empty
             (fun xs -> { x with defaultReminders = xs })
             cs
       | AnnotatedTree.Leaf

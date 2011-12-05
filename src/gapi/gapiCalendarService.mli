@@ -50,10 +50,10 @@ module AclResource :
       and type resource_t = GapiCalendar.AclRule.t
       and type query_parameters_t = StandardParameters.t
 
-module CalendarList :
+module CalendarListResource :
   GapiService.SERVICE with
-    type resource_list_t = GapiCalendar.CalendarListList.t
-      and type resource_t = GapiCalendar.CalendarListResource.t
+    type resource_list_t = GapiCalendar.CalendarList.t
+      and type resource_t = GapiCalendar.CalendarListEntry.t
       and type query_parameters_t = QueryParameters.t
 
 module Calendars :
