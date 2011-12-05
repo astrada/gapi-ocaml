@@ -116,35 +116,6 @@ sig
 
 end
 
-module Settings :
-sig
-  val list :
-    ?url:string ->
-    ?etag:string ->
-    ?parameters:StandardParameters.t ->
-    ?container_id:string ->
-    GapiConversation.Session.t ->
-    (GapiCalendar.SettingsList.t * GapiConversation.Session.t)
-
-  val get :
-    ?url:string ->
-    ?container_id:string ->
-    string ->
-    GapiConversation.Session.t ->
-    (GapiCalendar.SettingsResource.t * GapiConversation.Session.t)
-
-end
-
-module FreeBusy :
-sig
-  val query :
-    ?url:string ->
-    GapiCalendar.FreeBusyParameters.t ->
-    GapiConversation.Session.t ->
-    (GapiCalendar.FreeBusyResource.t * GapiConversation.Session.t)
-
-end
-
 module EventsResource :
 sig
   val list :
@@ -232,6 +203,35 @@ sig
     string ->
     GapiConversation.Session.t ->
     (GapiCalendar.Event.t * GapiConversation.Session.t)
+
+end
+
+module FreebusyResource :
+sig
+  val query :
+    ?url:string ->
+    GapiCalendar.FreeBusyRequest.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.FreeBusyResource.t * GapiConversation.Session.t)
+
+end
+
+module SettingsResource :
+sig
+  val list :
+    ?url:string ->
+    ?etag:string ->
+    ?parameters:StandardParameters.t ->
+    ?container_id:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.Settings.t * GapiConversation.Session.t)
+
+  val get :
+    ?url:string ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.Setting.t * GapiConversation.Session.t)
 
 end
 

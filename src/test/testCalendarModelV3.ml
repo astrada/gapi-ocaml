@@ -149,8 +149,8 @@ let test_parse_settings () =
   let settings_json =
     Json_io.load_json "test/data/test_calendar_settings.json" in
   let tree = GapiJson.json_to_data_model settings_json in
-  let settings = SettingsList.of_data_model tree in
-  let tree' = SettingsList.to_data_model settings in
+  let settings = Settings.of_data_model tree in
+  let tree' = Settings.to_data_model settings in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model
@@ -163,12 +163,12 @@ let test_parse_settings () =
 
 let test_render_free_busy_parameters () =
   let params =
-    { FreeBusyParameters.empty with
-          FreeBusyParameters.timeMin = GapiDate.of_string "2011-11-10";
-          FreeBusyParameters.timeMax = GapiDate.of_string "2011-12-01";
-          FreeBusyParameters.items = [ "calendar_id"; "calendar_id_2" ]
+    { FreeBusyRequest.empty with
+          FreeBusyRequest.timeMin = GapiDate.of_string "2011-11-10";
+          FreeBusyRequest.timeMax = GapiDate.of_string "2011-12-01";
+          FreeBusyRequest.items = [ "calendar_id"; "calendar_id_2" ]
     } in
-  let tree = FreeBusyParameters.to_data_model params in
+  let tree = FreeBusyRequest.to_data_model params in
   let json = GapiJson.data_model_to_json tree in
     TestHelper.assert_equal_file
       "test/data/test_freebusy_parameters.json"

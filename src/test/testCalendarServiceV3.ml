@@ -144,38 +144,38 @@ let test_colors_get () =
            "There should be at least 1 calendar color"
            (List.length colors.GapiCalendar.Colors.calendar >= 1))
 
-(* Settings *)
+(* SettingsResource *)
 
 let test_settings_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (settings, _) =
-         GapiCalendarService.Settings.list
+         GapiCalendarService.SettingsResource.list
            session
        in
          assert_equal
            "calendar#settings"
-           settings.GapiCalendar.SettingsList.kind;
+           settings.GapiCalendar.Settings.kind;
          assert_bool
            "There should be at least 1 setting"
-           (List.length settings.GapiCalendar.SettingsList.items >= 1))
+           (List.length settings.GapiCalendar.Settings.items >= 1))
 
 let test_settings_get () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (setting, _) =
-         GapiCalendarService.Settings.get
+         GapiCalendarService.SettingsResource.get
            "country"
            session
        in
          assert_equal
            "calendar#setting"
-           setting.GapiCalendar.SettingsResource.kind;
+           setting.GapiCalendar.Setting.kind;
          TestHelper.assert_not_empty
            "country setting should not be empty"
-           setting.GapiCalendar.SettingsResource.value)
+           setting.GapiCalendar.Setting.value)
 
 (* CalendarsResource *)
 
@@ -861,16 +861,16 @@ let test_free_busy_query () =
            session in
        let _ = delay () in
        let params =
-         { GapiCalendar.FreeBusyParameters.empty with
-               GapiCalendar.FreeBusyParameters.timeMin =
+         { GapiCalendar.FreeBusyRequest.empty with
+               GapiCalendar.FreeBusyRequest.timeMin =
                  GapiDate.of_string "2011-12-02";
-               GapiCalendar.FreeBusyParameters.timeMax =
+               GapiCalendar.FreeBusyRequest.timeMax =
                  GapiDate.of_string "2011-12-04";
-               GapiCalendar.FreeBusyParameters.items =
+               GapiCalendar.FreeBusyRequest.items =
                  [ calendar.GapiCalendar.Calendar.id ]
          } in
        let (freeBusy, _) =
-         GapiCalendarService.FreeBusy.query
+         GapiCalendarService.FreebusyResource.query
            params
            session
        in

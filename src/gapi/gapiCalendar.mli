@@ -502,59 +502,9 @@ sig
 
 end
 
-(* Settings *)
+(* Freebusy *)
 
-module SettingsResource :
-sig
-  type t = {
-    kind : string;
-    etag : string;
-    id : string;
-    value : string
-  }
-
-  val kind : (t, string) GapiLens.t
-  val etag : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
-  val value : (t, string) GapiLens.t
-
-  val empty : t
-
-  val render : t -> GapiJson.json_data_model list
-
-  val parse : t -> GapiJson.json_data_model -> t
-
-  val to_data_model : t -> GapiJson.json_data_model
-
-  val of_data_model : GapiJson.json_data_model -> t
-
-end
-
-module SettingsList :
-sig
-  type t = {
-    kind : string;
-    etag : string;
-    items : SettingsResource.t list
-  }
-
-  val kind : (t, string) GapiLens.t
-  val etag : (t, string) GapiLens.t
-  val items : (t, SettingsResource.t list) GapiLens.t
-
-  val empty : t
-
-  val render : t -> GapiJson.json_data_model list
-
-  val parse : t -> GapiJson.json_data_model -> t
-
-  val to_data_model : t -> GapiJson.json_data_model
-
-  val of_data_model : GapiJson.json_data_model -> t
-
-end
-
-module FreeBusyParameters :
+module FreeBusyRequest :
 sig
   type t = {
     timeMin : GapiDate.t;
@@ -619,7 +569,7 @@ sig
 
 end
 
-module Busy :
+module TimePeriod :
 sig
   type t = {
     start : GapiDate.t;
@@ -641,12 +591,12 @@ module FreeBusyCalendar :
 sig
   type calendar = {
     errors : Error.t list;
-    busy : Busy.t list
+    busy : TimePeriod.t list
   }
   type t = string * calendar
 
   val errors : (calendar, Error.t list) GapiLens.t
-  val busy : (calendar, Busy.t list) GapiLens.t
+  val busy : (calendar, TimePeriod.t list) GapiLens.t
   val id : ('a * 'b, 'a) GapiLens.t
   val calendar : ('a * 'b, 'b) GapiLens.t
 
@@ -674,6 +624,58 @@ sig
   val timeMax : (t, GapiDate.t) GapiLens.t
   val groups : (t, FreeBusyGroup.t list) GapiLens.t
   val calendars : (t, FreeBusyCalendar.t list) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+  val to_data_model : t -> GapiJson.json_data_model
+
+  val of_data_model : GapiJson.json_data_model -> t
+
+end
+
+(* Settings *)
+
+module Setting :
+sig
+  type t = {
+    kind : string;
+    etag : string;
+    id : string;
+    value : string
+  }
+
+  val kind : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
+
+  val empty : t
+
+  val render : t -> GapiJson.json_data_model list
+
+  val parse : t -> GapiJson.json_data_model -> t
+
+  val to_data_model : t -> GapiJson.json_data_model
+
+  val of_data_model : GapiJson.json_data_model -> t
+
+end
+
+module Settings :
+sig
+  type t = {
+    kind : string;
+    etag : string;
+    items : Setting.t list
+  }
+
+  val kind : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val items : (t, Setting.t list) GapiLens.t
 
   val empty : t
 

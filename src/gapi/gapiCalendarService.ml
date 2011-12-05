@@ -265,64 +265,6 @@ struct
 
 end
 
-module SettingsConf =
-struct
-  type resource_list_t = SettingsList.t
-  type resource_t = SettingsResource.t
-
-  let service_url =
-    "https://www.googleapis.com/calendar/v3/users/me/settings"
-
-  let parse_resource_list =
-    GapiJson.parse_json_response SettingsList.of_data_model
-
-  let parse_resource =
-    GapiJson.parse_json_response SettingsResource.of_data_model
-
-  let render_resource =
-    GapiJson.render_json SettingsResource.to_data_model
-
-  let create_resource_from_id id =
-    { SettingsResource.empty with
-          SettingsResource.id = id
-    }
-
-  let get_url ?container_id ?resource base_url =
-    match resource with
-        None ->
-          base_url
-      | Some r ->
-          GapiUtils.add_path_to_url
-            [r.SettingsResource.id]
-            base_url
-
-  let get_etag resource =
-    GapiUtils.etag_option resource.SettingsResource.etag
-
-end
-
-module Settings =
-  GapiService.Make
-    (SettingsConf)
-    (StandardParameters)
-
-module FreeBusy =
-struct
-  let query
-        ?(url = "https://www.googleapis.com/calendar/v3/freeBusy")
-        parameters
-        session =
-    let post_data = GapiJson.render_json
-                      FreeBusyParameters.to_data_model
-                      parameters in
-      GapiService.service_request
-        ~post_data
-        url
-        (GapiJson.parse_json_response FreeBusyResource.of_data_model)
-        session
-
-end
-
 module EventsConf =
 struct
   type resource_list_t = Events.t
@@ -447,4 +389,62 @@ struct
         session
 
 end
+
+module FreebusyResource =
+struct
+  let query
+        ?(url = "https://www.googleapis.com/calendar/v3/freeBusy")
+        parameters
+        session =
+    let post_data = GapiJson.render_json
+                      FreeBusyRequest.to_data_model
+                      parameters in
+      GapiService.service_request
+        ~post_data
+        url
+        (GapiJson.parse_json_response FreeBusyResource.of_data_model)
+        session
+
+end
+
+module SettingsConf =
+struct
+  type resource_list_t = Settings.t
+  type resource_t = Setting.t
+
+  let service_url =
+    "https://www.googleapis.com/calendar/v3/users/me/settings"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response Settings.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response Setting.of_data_model
+
+  let render_resource =
+    GapiJson.render_json Setting.to_data_model
+
+  let create_resource_from_id id =
+    { Setting.empty with
+          Setting.id = id
+    }
+
+  let get_url ?container_id ?resource base_url =
+    match resource with
+        None ->
+          base_url
+      | Some r ->
+          GapiUtils.add_path_to_url
+            [r.Setting.id]
+            base_url
+
+  let get_etag resource =
+    GapiUtils.etag_option resource.Setting.etag
+
+end
+
+module SettingsResource =
+  GapiService.Make
+    (SettingsConf)
+    (StandardParameters)
 

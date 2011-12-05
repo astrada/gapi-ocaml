@@ -1791,144 +1791,9 @@ struct
 
 end
 
-(* Settings *)
+(* Freebusy *)
 
-module SettingsResource =
-struct
-  type t = {
-    kind : string;
-    etag : string;
-    id : string;
-    value : string
-  }
-
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v })
-  }
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v })
-  }
-  let id = {
-    GapiLens.get = (fun x -> x.id);
-    GapiLens.set = (fun v x -> { x with id = v })
-  }
-  let value = {
-    GapiLens.get = (fun x -> x.value);
-    GapiLens.set = (fun v x -> { x with value = v })
-  }
-
-  let empty = {
-    kind = "";
-    etag = "";
-    id = "";
-    value = ""
-  }
-
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "etag" x.etag;
-       render_string_value "id" x.id;
-       render_string_value "value" x.value]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ name = "etag"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with etag = v }
-      | AnnotatedTree.Leaf
-          ({ name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ name = "value"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with value = v }
-      | AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiCalendar.SettingsResource.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
-end
-
-module SettingsList =
-struct
-  type t = {
-    kind : string;
-    etag : string;
-    items : SettingsResource.t list
-  }
-
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v })
-  }
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v })
-  }
-  let items = {
-    GapiLens.get = (fun x -> x.items);
-    GapiLens.set = (fun v x -> { x with items = v })
-  }
-
-  let empty = {
-    kind = "";
-    etag = "";
-    items = []
-  }
-
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "etag" x.etag;
-       render_array "items" SettingsResource.render x.items]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ name = "etag"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with etag = v }
-      | AnnotatedTree.Node
-          ({ name = "items"; data_type = Array },
-           cs) ->
-          parse_collection
-            SettingsResource.parse
-            SettingsResource.empty
-            (fun xs -> { x with items = xs })
-            cs
-      | e ->
-          unexpected "GapiCalendar.SettingsList.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
-end
-
-module FreeBusyParameters =
+module FreeBusyRequest =
 struct
   type t = {
     timeMin : GapiDate.t;
@@ -2107,7 +1972,7 @@ struct
 
 end
 
-module Busy =
+module TimePeriod =
 struct
   type t = {
     start : GapiDate.t;
@@ -2152,7 +2017,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiCalendar.Busy.parse" e
+          unexpected "GapiCalendar.TimePeriod.parse" e
 
 end
 
@@ -2160,7 +2025,7 @@ module FreeBusyCalendar =
 struct
   type calendar = {
     errors : Error.t list;
-    busy : Busy.t list
+    busy : TimePeriod.t list
   }
   type t = string * calendar
 
@@ -2183,7 +2048,7 @@ struct
   let render (id, x) =
     render_object id
       [render_array "errors" Error.render x.errors;
-       render_array "busy" Busy.render x.busy]
+       render_array "busy" TimePeriod.render x.busy]
 
   let rec parse (id, x) tree =
     match tree with
@@ -2199,8 +2064,8 @@ struct
           ({ name = "busy"; data_type = Array },
            cs) ->
           (id, parse_collection
-                 Busy.parse
-                 Busy.empty
+                 TimePeriod.parse
+                 TimePeriod.empty
                  (fun xs -> { x with busy = xs })
                  cs)
       | AnnotatedTree.Node
@@ -2295,6 +2160,143 @@ struct
             cs
       | e ->
           unexpected "GapiCalendar.FreeBusyResource.parse" e
+
+  let to_data_model = render_root render
+
+  let of_data_model = parse_root parse empty
+
+end
+
+(* Settings *)
+
+module Setting =
+struct
+  type t = {
+    kind : string;
+    etag : string;
+    id : string;
+    value : string
+  }
+
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v })
+  }
+  let value = {
+    GapiLens.get = (fun x -> x.value);
+    GapiLens.set = (fun v x -> { x with value = v })
+  }
+
+  let empty = {
+    kind = "";
+    etag = "";
+    id = "";
+    value = ""
+  }
+
+  let render x =
+    render_object ""
+      [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
+       render_string_value "id" x.id;
+       render_string_value "value" x.value]
+
+  let rec parse x tree =
+    match tree with
+        AnnotatedTree.Leaf
+          ({ name = "kind"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
+      | AnnotatedTree.Leaf
+          ({ name = "id"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with id = v }
+      | AnnotatedTree.Leaf
+          ({ name = "value"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with value = v }
+      | AnnotatedTree.Node
+          ({ name = ""; data_type = Object },
+           cs) ->
+          parse_children
+            parse
+            empty
+            Std.identity
+            cs
+      | e ->
+          unexpected "GapiCalendar.Setting.parse" e
+
+  let to_data_model = render_root render
+
+  let of_data_model = parse_root parse empty
+
+end
+
+module Settings =
+struct
+  type t = {
+    kind : string;
+    etag : string;
+    items : Setting.t list
+  }
+
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v })
+  }
+
+  let empty = {
+    kind = "";
+    etag = "";
+    items = []
+  }
+
+  let render x =
+    render_object ""
+      [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
+       render_array "items" Setting.render x.items]
+
+  let parse x tree =
+    match tree with
+        AnnotatedTree.Leaf
+          ({ name = "kind"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
+      | AnnotatedTree.Node
+          ({ name = "items"; data_type = Array },
+           cs) ->
+          parse_collection
+            Setting.parse
+            Setting.empty
+            (fun xs -> { x with items = xs })
+            cs
+      | e ->
+          unexpected "GapiCalendar.Settings.parse" e
 
   let to_data_model = render_root render
 
