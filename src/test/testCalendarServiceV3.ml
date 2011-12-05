@@ -590,7 +590,9 @@ let test_move_event () =
            event.GapiCalendar.Event.id
            calendar.GapiCalendar.Calendar.id
            session in
+       let _ = delay () in
          ignore (GapiCalendarService.EventsResource.delete
+                   ~container_id:calendar.GapiCalendar.Calendar.id
                    event
                    session);
          ignore (GapiCalendarService.CalendarsResource.delete

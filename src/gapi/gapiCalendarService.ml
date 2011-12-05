@@ -265,7 +265,7 @@ struct
 
 end
 
-module EventsConf =
+module EventsResourceConf =
 struct
   type resource_list_t = Events.t
   type resource_t = Event.t
@@ -308,7 +308,7 @@ end
 
 module EventsResource =
 struct
-  include GapiService.Make(EventsConf)(QueryParameters)
+  include GapiService.Make(EventsResourceConf)(QueryParameters)
 
   let instances
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
@@ -321,7 +321,7 @@ struct
     in
       GapiService.query
         url'
-        EventsConf.parse_resource_list
+        EventsResourceConf.parse_resource_list
         session
 
   let import
@@ -334,10 +334,10 @@ struct
                  url
     in
       GapiService.create
-        EventsConf.render_resource
+        EventsResourceConf.render_resource
         event_resource
         url'
-        EventsConf.parse_resource
+        EventsResourceConf.parse_resource
         session
 
   let quickAdd
@@ -353,7 +353,7 @@ struct
         ~post_data:GapiCore.PostData.empty
         ~query_parameters:[("text", text)]
         url'
-        EventsConf.parse_resource
+        EventsResourceConf.parse_resource
         session
 
   let move
@@ -370,7 +370,7 @@ struct
         ~post_data:GapiCore.PostData.empty
         ~query_parameters:[("destination", destination_id)]
         url'
-        EventsConf.parse_resource
+        EventsResourceConf.parse_resource
         session
 
   let reset
@@ -385,7 +385,7 @@ struct
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
         url'
-        EventsConf.parse_resource
+        EventsResourceConf.parse_resource
         session
 
 end
@@ -407,7 +407,7 @@ struct
 
 end
 
-module SettingsConf =
+module SettingResourceConf =
 struct
   type resource_list_t = Settings.t
   type resource_t = Setting.t
@@ -445,6 +445,6 @@ end
 
 module SettingsResource =
   GapiService.Make
-    (SettingsConf)
+    (SettingResourceConf)
     (StandardParameters)
 
