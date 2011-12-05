@@ -11,13 +11,13 @@ let delay () =
 (* ACL *)
 
 let acl_test_resource = {
-  GapiACL.AclRule.empty with
-      GapiACL.AclRule.kind = "calendar#acl";
-      GapiACL.AclRule.scope = {
-        GapiACL.ScopeData._type = "user";
-        GapiACL.ScopeData.value = "test@example.com"
+  GapiCalendar.AclRule.empty with
+      GapiCalendar.AclRule.kind = "calendar#acl";
+      GapiCalendar.AclRule.scope = {
+        GapiCalendar.ScopeData._type = "user";
+        GapiCalendar.ScopeData.value = "test@example.com"
       };
-      GapiACL.AclRule.role = "reader"
+      GapiCalendar.AclRule.role = "reader"
 }
 
 let test_list_acl () =
@@ -30,10 +30,10 @@ let test_list_acl () =
        in
          assert_equal
            "calendar#acl"
-           acl.GapiACL.Acl.kind;
+           acl.GapiCalendar.Acl.kind;
          assert_bool
            "There should be at least 1 ACL"
-           (List.length acl.GapiACL.Acl.items >= 1);
+           (List.length acl.GapiCalendar.Acl.items >= 1);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
@@ -52,7 +52,7 @@ let test_insert_acl () =
                    session);
          TestHelper.assert_not_empty
            "ACL id should not be empty"
-           new_entry.GapiACL.AclRule.id)
+           new_entry.GapiCalendar.AclRule.id)
 
 let test_get_acl () =
   TestHelper.test_request
@@ -64,15 +64,15 @@ let test_get_acl () =
            session in
        let (entry', session) =
          GapiCalendarService.AclResource.get
-           entry.GapiACL.AclRule.id
+           entry.GapiCalendar.AclRule.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.AclResource.delete
                    entry
                    session);
          assert_equal
-           entry.GapiACL.AclRule.id
-           entry'.GapiACL.AclRule.id)
+           entry.GapiCalendar.AclRule.id
+           entry'.GapiCalendar.AclRule.id)
 
 let test_update_acl () =
   TestHelper.test_request
@@ -83,7 +83,7 @@ let test_update_acl () =
            acl_test_resource
            session in
        let entry = { entry with
-                         GapiACL.AclRule.role = "freeBusyReader" } in
+                         GapiCalendar.AclRule.role = "freeBusyReader" } in
        let (entry, session) =
          GapiCalendarService.AclResource.update
            entry
@@ -94,7 +94,7 @@ let test_update_acl () =
                    session);
          assert_equal
            "freeBusyReader"
-           entry.GapiACL.AclRule.role)
+           entry.GapiCalendar.AclRule.role)
 
 let test_delete_acl () =
   TestHelper.test_request
@@ -119,13 +119,13 @@ let test_delete_acl () =
          TestHelper.assert_exists
            "acl should contain new acl"
            (fun e ->
-              e.GapiACL.AclRule.id = entry.GapiACL.AclRule.id)
-           acl.GapiACL.Acl.items;
+              e.GapiCalendar.AclRule.id = entry.GapiCalendar.AclRule.id)
+           acl.GapiCalendar.Acl.items;
          TestHelper.assert_not_exists
            "acl' should not contain new acl"
            (fun e ->
-              e.GapiACL.AclRule.id = entry.GapiACL.AclRule.id)
-           acl'.GapiACL.Acl.items)
+              e.GapiCalendar.AclRule.id = entry.GapiCalendar.AclRule.id)
+           acl'.GapiCalendar.Acl.items)
 
 (* Colors *)
 

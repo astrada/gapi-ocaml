@@ -46,8 +46,8 @@ end
 
 module AclResource :
   GapiService.SERVICE with
-    type resource_list_t = GapiACL.Acl.t
-      and type resource_t = GapiACL.AclRule.t
+    type resource_list_t = GapiCalendar.Acl.t
+      and type resource_t = GapiCalendar.AclRule.t
       and type query_parameters_t = StandardParameters.t
 
 module CalendarList :
