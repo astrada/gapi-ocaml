@@ -102,8 +102,8 @@ let test_parse_calendar_acl () =
   let calendar_acl_json =
     Json_io.load_json "test/data/test_calendar_acl.json" in
   let tree = GapiJson.json_to_data_model calendar_acl_json in
-  let acl_list = ACLList.of_data_model tree in
-  let tree' = ACLList.to_data_model acl_list in
+  let acl_list = Acl.of_data_model tree in
+  let tree' = Acl.to_data_model acl_list in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model

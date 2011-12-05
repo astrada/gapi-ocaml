@@ -44,17 +44,17 @@ sig
 
 end
 
+module AclResource :
+  GapiService.SERVICE with
+    type resource_list_t = GapiACL.Acl.t
+      and type resource_t = GapiACL.AclRule.t
+      and type query_parameters_t = StandardParameters.t
+
 module CalendarList :
   GapiService.SERVICE with
     type resource_list_t = GapiCalendar.CalendarListList.t
       and type resource_t = GapiCalendar.CalendarListResource.t
       and type query_parameters_t = QueryParameters.t
-
-module ACL :
-  GapiService.SERVICE with
-    type resource_list_t = GapiACL.ACLList.t
-      and type resource_t = GapiACL.ACLResource.t
-      and type query_parameters_t = StandardParameters.t
 
 module Calendars :
 sig

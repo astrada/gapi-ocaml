@@ -115,6 +115,52 @@ struct
 
 end
 
+module AclResourceConf =
+struct
+  type resource_list_t = Acl.t
+  type resource_t = AclRule.t
+
+  let service_url =
+    "https://www.googleapis.com/calendar/v3/calendars"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response Acl.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response AclRule.of_data_model
+
+  let render_resource =
+    GapiJson.render_json AclRule.to_data_model
+
+  let create_resource_from_id id =
+    { AclRule.empty with
+          AclRule.id = id
+    }
+
+  let get_url ?(container_id = "primary") ?resource base_url =
+    let container_path =
+      [container_id; "acl"] in
+    let resource_path =
+      match resource with
+          None ->
+            []
+        | Some r ->
+            [r.AclRule.id]
+    in
+      GapiUtils.add_path_to_url
+        (container_path @ resource_path)
+        base_url
+
+  let get_etag resource =
+    GapiUtils.etag_option resource.AclRule.etag
+
+end
+
+module AclResource =
+  GapiService.Make
+    (AclResourceConf)
+    (StandardParameters)
+
 module CalendarListConf =
 struct
   type resource_list_t = CalendarListList.t
@@ -155,52 +201,6 @@ module CalendarList =
   GapiService.Make
     (CalendarListConf)
     (QueryParameters)
-
-module ACLConf =
-struct
-  type resource_list_t = ACLList.t
-  type resource_t = ACLResource.t
-
-  let service_url =
-    "https://www.googleapis.com/calendar/v3/calendars"
-
-  let parse_resource_list =
-    GapiJson.parse_json_response ACLList.of_data_model
-
-  let parse_resource =
-    GapiJson.parse_json_response ACLResource.of_data_model
-
-  let render_resource =
-    GapiJson.render_json ACLResource.to_data_model
-
-  let create_resource_from_id id =
-    { ACLResource.empty with
-          ACLResource.id = id
-    }
-
-  let get_url ?(container_id = "primary") ?resource base_url =
-    let container_path =
-      [container_id; "acl"] in
-    let resource_path =
-      match resource with
-          None ->
-            []
-        | Some r ->
-            [r.ACLResource.id]
-    in
-      GapiUtils.add_path_to_url
-        (container_path @ resource_path)
-        base_url
-
-  let get_etag resource =
-    GapiUtils.etag_option resource.ACLResource.etag
-
-end
-
-module ACL =
-  GapiService.Make
-    (ACLConf)
-    (StandardParameters)
 
 module CalendarsConf =
 struct

@@ -2,7 +2,7 @@ open GapiUtils.Infix
 open GapiCore
 open GapiJson
 
-module Scope =
+module ScopeData =
 struct
   type t = {
     _type : string;
@@ -47,17 +47,17 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiACL.Scope.parse" e
+          unexpected "GapiACL.ScopeData.parse" e
 
 end
 
-module ACLResource =
+module AclRule =
 struct
   type t = {
     kind : string;
     etag : string;
     id : string;
-    scope : Scope.t;
+    scope : ScopeData.t;
     role : string
   }
 
@@ -86,7 +86,7 @@ struct
     kind = "";
     etag = "";
     id = "";
-    scope = Scope.empty;
+    scope = ScopeData.empty;
     role = ""
   }
 
@@ -95,7 +95,7 @@ struct
       [render_string_value "kind" x.kind;
        render_string_value "etag" x.etag;
        render_string_value "id" x.id;
-       Scope.render x.scope;
+       ScopeData.render x.scope;
        render_string_value "role" x.role]
 
   let rec parse x tree =
@@ -116,8 +116,8 @@ struct
           ({ name = "scope"; data_type = Object },
            cs) ->
           parse_children
-            Scope.parse
-            Scope.empty
+            ScopeData.parse
+            ScopeData.empty
             (fun s -> { x with scope = s })
             cs
       | AnnotatedTree.Leaf
@@ -133,7 +133,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiACL.ACLResource.parse" e
+          unexpected "GapiACL.AclRule.parse" e
 
   let to_data_model = render_root render
 
@@ -141,13 +141,13 @@ struct
 
 end
 
-module ACLList =
+module Acl =
 struct
   type t = {
     kind : string;
     etag : string;
     nextPageToken : string;
-    items : ACLResource.t list
+    items : AclRule.t list
   }
 
   let kind = {
@@ -179,7 +179,7 @@ struct
       [render_string_value "kind" x.kind;
        render_string_value "etag" x.etag;
        render_string_value "nextPageToken" x.nextPageToken;
-       render_array "items" ACLResource.render x.items]
+       render_array "items" AclRule.render x.items]
 
   let parse x tree =
     match tree with
@@ -199,12 +199,12 @@ struct
           ({ name = "items"; data_type = Array },
            cs) ->
           parse_collection
-            ACLResource.parse
-            ACLResource.empty
+            AclRule.parse
+            AclRule.empty
             (fun xs -> { x with items = xs })
             cs
       | e ->
-          unexpected "GapiACL.ACLList.parse" e
+          unexpected "GapiACL.Acl.parse" e
 
   let to_data_model = render_root render
 

@@ -1,4 +1,4 @@
-module Scope :
+module ScopeData :
 sig
   type t = {
     _type : string;
@@ -16,20 +16,20 @@ sig
 
 end
 
-module ACLResource :
+module AclRule :
 sig
   type t = {
     kind : string;
     etag : string;
     id : string;
-    scope : Scope.t;
+    scope : ScopeData.t;
     role : string;
   }
 
   val kind : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
-  val scope : (t, Scope.t) GapiLens.t
+  val scope : (t, ScopeData.t) GapiLens.t
   val role : (t, string) GapiLens.t
 
   val empty : t
@@ -44,19 +44,19 @@ sig
 
 end
 
-module ACLList :
+module Acl :
 sig
   type t = {
     kind : string;
     etag : string;
     nextPageToken : string;
-    items : ACLResource.t list;
+    items : AclRule.t list;
   }
 
   val kind : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
-  val items : (t, ACLResource.t list) GapiLens.t
+  val items : (t, AclRule.t list) GapiLens.t
 
   val empty : t
 
