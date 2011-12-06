@@ -93,6 +93,25 @@ sig
 
 end
 
+val build_param :
+  'a -> 'a -> ('a -> 'b) -> ('b -> string) -> string ->
+  (string * string) list
+
+module StandardParameters :
+sig
+  type t = {
+    fields : string;
+    prettyPrint : bool;
+    quotaUser : string;
+    userIp : string
+  }
+
+  val default : t
+
+  val to_key_value_list : t -> (string * string) list
+
+end
+
 module type SERVICECONF =
 sig
   type resource_list_t

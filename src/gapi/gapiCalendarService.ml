@@ -1,41 +1,6 @@
 open GapiUtils.Infix
 open GapiCalendar
 
-let build_param default_params params get_value to_string name = 
-  let value = get_value params in
-    if value <> get_value default_params then
-      [(name, to_string value)]
-    else
-      []
-
-module StandardParameters =
-struct
-  type t = {
-    fields : string;
-    prettyPrint : bool;
-    quotaUser : string;
-    userIp : string
-  }
-
-  let default = {
-    fields = "";
-    prettyPrint = true;
-    quotaUser = "";
-    userIp = ""
-  }
-
-  let to_key_value_list qp =
-    let param get_value to_string name =
-      build_param default qp get_value to_string name
-    in
-      [param (fun p -> p.fields) Std.identity "fields";
-       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-       param (fun p -> p.quotaUser) Std.identity "quotaUser";
-       param (fun p -> p.userIp) Std.identity "userIp"]
-      |> List.concat
-
-end
-
 module QueryParameters =
 struct
   type t = {
@@ -88,7 +53,7 @@ struct
 
   let to_key_value_list qp =
     let param get_value to_string name =
-      build_param default qp get_value to_string name
+      GapiService.build_param default qp get_value to_string name
     in
       [param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
@@ -158,7 +123,7 @@ end
 module AclResource =
   GapiService.Make
     (AclResourceConf)
-    (StandardParameters)
+    (GapiService.StandardParameters)
 
 module CalendarListResourceConf =
 struct
@@ -239,7 +204,9 @@ end
 
 module CalendarsResource =
 struct
-  include GapiService.Make(CalendarsResourceConf)(StandardParameters)
+  include GapiService.Make
+    (CalendarsResourceConf)
+    (GapiService.StandardParameters)
 
   let clear
         ?(url = CalendarsResourceConf.service_url)
@@ -446,5 +413,5 @@ end
 module SettingsResource =
   GapiService.Make
     (SettingResourceConf)
-    (StandardParameters)
+    (GapiService.StandardParameters)
 

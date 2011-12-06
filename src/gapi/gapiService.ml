@@ -1,3 +1,5 @@
+open GapiUtils.Infix
+
 let service_request
       ?post_data
       ?version
@@ -163,6 +165,41 @@ sig
   val default : t
 
   val to_key_value_list : t -> (string * string) list
+
+end
+
+let build_param default_params params get_value to_string name = 
+  let value = get_value params in
+    if value <> get_value default_params then
+      [(name, to_string value)]
+    else
+      []
+
+module StandardParameters =
+struct
+  type t = {
+    fields : string;
+    prettyPrint : bool;
+    quotaUser : string;
+    userIp : string
+  }
+
+  let default = {
+    fields = "";
+    prettyPrint = true;
+    quotaUser = "";
+    userIp = ""
+  }
+
+  let to_key_value_list qp =
+    let param get_value to_string name =
+      build_param default qp get_value to_string name
+    in
+      [param (fun p -> p.fields) Std.identity "fields";
+       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+       param (fun p -> p.quotaUser) Std.identity "quotaUser";
+       param (fun p -> p.userIp) Std.identity "userIp"]
+      |> List.concat
 
 end
 

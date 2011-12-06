@@ -1,18 +1,3 @@
-module StandardParameters :
-sig
-  type t = {
-    fields : string;
-    prettyPrint : bool;
-    quotaUser : string;
-    userIp : string
-  }
-
-  val default : t
-
-  val to_key_value_list : t -> (string * string) list
-
-end
-
 module QueryParameters :
 sig
   type t = {
@@ -48,7 +33,7 @@ module AclResource :
   GapiService.SERVICE with
     type resource_list_t = GapiCalendar.Acl.t
       and type resource_t = GapiCalendar.AclRule.t
-      and type query_parameters_t = StandardParameters.t
+      and type query_parameters_t = GapiService.StandardParameters.t
 
 module CalendarListResource :
   GapiService.SERVICE with
@@ -221,7 +206,7 @@ sig
   val list :
     ?url:string ->
     ?etag:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiConversation.Session.t ->
     (GapiCalendar.Settings.t * GapiConversation.Session.t)
