@@ -357,7 +357,7 @@ struct
 
 end
 
-module FreeBusyResponse =
+module FreebusyResource =
 struct
   let query
         ?(url = "https://www.googleapis.com/calendar/v3/freeBusy")

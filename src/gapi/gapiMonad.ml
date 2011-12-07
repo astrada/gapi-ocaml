@@ -1,4 +1,4 @@
-module type MONAD =
+module type Monad =
 sig
   type 'a t
 
@@ -8,9 +8,9 @@ sig
 
 end
 
-module type MONAD_COMBINATORS =
+module type MonadCombinators =
 sig
-  include MONAD
+  include Monad
 
   module Infix :
   sig
@@ -36,7 +36,7 @@ sig
 
 end
 
-module MakeMonadCombinators(M : MONAD) =
+module MakeMonadCombinators(M : Monad) =
 struct
   type 'a t = 'a M.t
 

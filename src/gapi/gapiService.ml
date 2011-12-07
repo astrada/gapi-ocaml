@@ -158,7 +158,7 @@ let batch_request
     parse_response
     session
 
-module type QUERYPARAMETERS = 
+module type QueryParameters = 
 sig
   type t
 
@@ -203,7 +203,7 @@ struct
 
 end
 
-module type SERVICECONF =
+module type ServiceConf =
 sig
   type resource_list_t
   type resource_t
@@ -286,8 +286,8 @@ sig
 end
 
 module Make
-  (S : SERVICECONF)
-  (Q : QUERYPARAMETERS) =
+  (S : ServiceConf)
+  (Q : QueryParameters) =
 struct
   type resource_list_t = S.resource_list_t
   type resource_t = S.resource_t

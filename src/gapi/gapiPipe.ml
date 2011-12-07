@@ -1,4 +1,4 @@
-module type PIPE =
+module type Pipe =
 sig
   type t
 

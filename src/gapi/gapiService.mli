@@ -83,7 +83,7 @@ val batch_request :
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
-module type QUERYPARAMETERS = 
+module type QueryParameters = 
 sig
   type t
 
@@ -112,7 +112,7 @@ sig
 
 end
 
-module type SERVICECONF =
+module type ServiceConf =
 sig
   type resource_list_t
   type resource_t
@@ -195,8 +195,8 @@ sig
 end
 
 module Make :
-  functor(S : SERVICECONF) ->
-  functor(Q : QUERYPARAMETERS) ->
+  functor(S : ServiceConf) ->
+  functor(Q : QueryParameters) ->
   SERVICE with type resource_list_t = S.resource_list_t
                 and type resource_t = S.resource_t
                 and type query_parameters_t = Q.t

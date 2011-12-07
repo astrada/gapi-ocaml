@@ -178,8 +178,8 @@ let test_parse_free_busy_resource () =
   let freeBusy_json =
     Json_io.load_json "test/data/test_freebusy.json" in
   let tree = GapiJson.json_to_data_model freeBusy_json in
-  let freeBusy = FreeBusyResource.of_data_model tree in
-  let tree' = FreeBusyResource.to_data_model freeBusy in
+  let freeBusy = FreeBusyResponse.of_data_model tree in
+  let tree' = FreeBusyResponse.to_data_model freeBusy in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model

@@ -405,7 +405,7 @@ sig
 end
 
 (** The "freebusy" service. *)
-module FreeBusyResponse :
+module FreebusyResource :
 sig
   (** Returns free/busy information for a set of calendars.
 

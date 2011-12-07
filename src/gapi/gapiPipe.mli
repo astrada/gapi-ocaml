@@ -1,4 +1,4 @@
-module type PIPE =
+module type Pipe =
 sig
   type t
 
@@ -20,5 +20,5 @@ sig
 
 end
 
-module OcamlnetPipe : PIPE
+module OcamlnetPipe : Pipe
 

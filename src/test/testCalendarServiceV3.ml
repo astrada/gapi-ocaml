@@ -881,10 +881,10 @@ let test_free_busy_query () =
                    session);
          assert_equal
            "calendar#freeBusy"
-           freeBusy.GapiCalendar.FreeBusyResource.kind;
+           freeBusy.GapiCalendar.FreeBusyResponse.kind;
          assert_bool
            "There should be at least 1 calendar in free/busy resource"
-           (List.length freeBusy.GapiCalendar.FreeBusyResource.calendars >= 1))
+           (List.length freeBusy.GapiCalendar.FreeBusyResponse.calendars >= 1))
 
 let suite = "Calendar services (v3) test" >:::
   ["test_list_acl" >:: test_list_acl;

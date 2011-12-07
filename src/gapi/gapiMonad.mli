@@ -1,4 +1,4 @@
-module type MONAD =
+module type Monad =
 sig
   type 'a t
 
@@ -8,9 +8,9 @@ sig
 
 end
 
-module type MONAD_COMBINATORS =
+module type MonadCombinators =
 sig
-  include MONAD
+  include Monad
 
   module Infix :
   sig
@@ -37,14 +37,14 @@ sig
 end
 
 module MakeMonadCombinators :
-  functor (M : MONAD) -> MONAD_COMBINATORS
+  functor (M : Monad) -> MonadCombinators
 
 module MakeStateMonad :
-  functor (T : sig type s end) -> MONAD
+  functor (T : sig type s end) -> Monad
 
 module SessionM :
 sig
-  include MONAD_COMBINATORS
+  include MonadCombinators
     with type 'a t = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
 
   val get : 'a -> 'a * 'a
