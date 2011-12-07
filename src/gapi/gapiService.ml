@@ -15,8 +15,8 @@ let parse_error pipe response_code =
 let service_request
       ?post_data
       ?version
-      ?query_parameters
       ?etag
+      ?query_parameters
       ?(request_type = GapiRequest.Query)
       url
       parse_response
@@ -42,6 +42,7 @@ let service_request_with_data
       data_to_post
       ?version
       ?etag
+      ?query_parameters
       data
       url
       parse_response
@@ -52,6 +53,7 @@ let service_request_with_data
         ~post_data
         ?version
         ?etag
+        ?query_parameters
         ~request_type
         url
         parse_response
@@ -78,6 +80,7 @@ let query
 let create
       data_to_post
       ?version
+      ?query_parameters
       data
       url
       parse_response
@@ -86,6 +89,7 @@ let create
     GapiRequest.Create
     data_to_post
     ?version
+    ?query_parameters
     data
     url
     parse_response
@@ -94,6 +98,7 @@ let create
 let read
       ?version
       ?etag
+      ?query_parameters
       data
       url
       parse_response
@@ -102,6 +107,7 @@ let read
     service_request
       ?version
       ?etag
+      ?query_parameters
       url
       parse_response
       session
@@ -112,6 +118,7 @@ let update
       data_to_post
       ?version
       ?etag
+      ?query_parameters
       data
       url
       parse_response
@@ -121,6 +128,7 @@ let update
     data_to_post
     ?version
     ?etag
+    ?query_parameters
     data
     url
     parse_response
@@ -130,6 +138,7 @@ let patch
       data_to_post
       ?version
       ?etag
+      ?query_parameters
       data
       url
       parse_response
@@ -139,6 +148,7 @@ let patch
     data_to_post
     ?version
     ?etag
+    ?query_parameters
     data
     url
     parse_response
@@ -256,6 +266,7 @@ sig
 
   val get :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -263,6 +274,7 @@ sig
 
   val refresh :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -270,6 +282,7 @@ sig
 
   val insert :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -277,6 +290,7 @@ sig
 
   val update :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -284,6 +298,7 @@ sig
 
   val patch :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -297,6 +312,9 @@ sig
     (unit * GapiConversation.Session.t)
 
 end
+
+let map_standard_parameters =
+  Option.map StandardParameters.to_key_value_list
 
 module Make
   (S : ServiceConf)
@@ -325,25 +343,31 @@ struct
 
   let get
         ?(url = S.service_url)
+        ?parameters
         ?container_id
         id
         session =
     let resource = S.create_resource_from_id id in
     let url' = S.get_url ?container_id ~resource url in
+    let query_parameters = map_standard_parameters parameters in
       query
+        ?query_parameters
         url'
         S.parse_resource
         session
 
   let refresh
         ?(url = S.service_url)
+        ?parameters
         ?container_id
         resource
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
+    let query_parameters = map_standard_parameters parameters in
       read
         ?etag
+        ?query_parameters
         resource
         url'
         S.parse_resource
@@ -351,11 +375,14 @@ struct
 
   let insert
         ?(url = S.service_url)
+        ?parameters
         ?container_id
         resource
         session =
     let url' = S.get_url ?container_id url in
+    let query_parameters = map_standard_parameters parameters in
       create
+        ?query_parameters
         S.render_resource
         resource
         url'
@@ -364,14 +391,17 @@ struct
 
   let update
         ?(url = S.service_url)
+        ?parameters
         ?container_id
         resource
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
+    let query_parameters = map_standard_parameters parameters in
       update
         S.render_resource
         ?etag
+        ?query_parameters
         resource
         url'
         S.parse_resource
@@ -379,14 +409,17 @@ struct
 
   let patch
         ?(url = S.service_url)
+        ?parameters
         ?container_id
         resource
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
+    let query_parameters = map_standard_parameters parameters in
       patch
         S.render_resource
         ?etag
+        ?query_parameters
         resource
         url'
         S.parse_resource

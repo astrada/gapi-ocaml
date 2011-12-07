@@ -5,13 +5,52 @@ let data_to_post data_to_tree data =
 
 let query = GapiService.query
 
-let create data_to_tree =
-  GapiService.create (data_to_post data_to_tree)
+let create
+      data_to_tree
+      ?version
+      data
+      url
+      parse_response
+      session =
+  GapiService.create
+    (data_to_post data_to_tree)
+    ?version
+    data
+    url
+    parse_response
+    session
 
-let read = GapiService.read
+let read
+      ?version
+      ?etag
+      data
+      url
+      parse_response
+      session =
+  GapiService.read
+    ?version
+    ?etag
+    data
+    url
+    parse_response
+    session
 
-let update data_to_tree =
-  GapiService.update (data_to_post data_to_tree)
+let update
+      data_to_tree
+      ?version
+      ?etag
+      data
+      url
+      parse_response
+      session =
+  GapiService.update
+    (data_to_post data_to_tree)
+    ?version
+    ?etag
+    data
+    url
+    parse_response
+    session
 
 let delete = GapiService.delete
 

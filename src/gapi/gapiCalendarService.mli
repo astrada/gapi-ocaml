@@ -128,6 +128,7 @@ sig
     *)
   val get :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -141,6 +142,7 @@ sig
     *)
   val refresh :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
@@ -154,6 +156,7 @@ sig
     *)
   val insert :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
@@ -167,6 +170,7 @@ sig
     *)
   val update :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
@@ -180,6 +184,7 @@ sig
     *)
   val patch :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
@@ -222,6 +227,7 @@ sig
     *)
   val get :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     GapiConversation.Session.t ->
     (GapiCalendar.Colors.t * GapiConversation.Session.t)
 
@@ -256,6 +262,7 @@ sig
     *)
   val get :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -270,6 +277,7 @@ sig
     *)
   val refresh :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
@@ -284,6 +292,7 @@ sig
     *)
   val insert :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
@@ -298,6 +307,7 @@ sig
     *)
   val update :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
@@ -312,6 +322,7 @@ sig
     *)
   val patch :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
@@ -340,6 +351,7 @@ sig
     *)
   val instances :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -354,6 +366,7 @@ sig
     *)
   val import :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     GapiCalendar.Event.t ->
     GapiConversation.Session.t ->
@@ -368,6 +381,7 @@ sig
     *)
   val quickAdd :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -382,6 +396,7 @@ sig
     *)
   val move :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     string ->
@@ -397,6 +412,7 @@ sig
     *)
   val reset :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -415,6 +431,7 @@ sig
     *)
   val query :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     GapiCalendar.FreeBusyRequest.t ->
     GapiConversation.Session.t ->
     (GapiCalendar.FreeBusyResponse.t * GapiConversation.Session.t)
@@ -448,6 +465,7 @@ sig
     *)
   val get :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->

@@ -224,11 +224,14 @@ module ColorsResource =
 struct
   let get
         ?(url = "https://www.googleapis.com/calendar/v3/colors")
+        ?parameters
         session =
-    GapiService.query
-      url
-      (GapiJson.parse_json_response Colors.of_data_model)
-      session
+    let query_parameters = GapiService.map_standard_parameters parameters in
+      GapiService.query
+        ?query_parameters
+        url
+        (GapiJson.parse_json_response Colors.of_data_model)
+        session
 
 end
 
@@ -279,29 +282,35 @@ struct
 
   let instances
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?parameters
         ?(container_id = "primary")
         event_id
         session =
+    let query_parameters = GapiService.map_standard_parameters parameters in
     let url' = GapiUtils.add_path_to_url
                  [container_id; "events"; event_id; "instances"]
                  url
     in
       GapiService.query
+        ?query_parameters
         url'
         EventsResourceConf.parse_resource_list
         session
 
   let import
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?parameters
         ?(container_id = "primary")
         event_resource
         session =
+    let query_parameters = GapiService.map_standard_parameters parameters in
     let url' = GapiUtils.add_path_to_url
                  [container_id; "events"; "import"]
                  url
     in
       GapiService.create
         EventsResourceConf.render_resource
+        ?query_parameters
         event_resource
         url'
         EventsResourceConf.parse_resource
@@ -309,48 +318,60 @@ struct
 
   let quickAdd
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?parameters
         ?(container_id = "primary")
         text
         session =
+    let standard_parameters = GapiService.map_standard_parameters parameters in
+    let query_parameters =
+      ("text", text) :: Option.default [] standard_parameters in
     let url' = GapiUtils.add_path_to_url
                  [container_id; "events"; "quickAdd"]
                  url
     in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
-        ~query_parameters:[("text", text)]
+        ~query_parameters
         url'
         EventsResourceConf.parse_resource
         session
 
   let move
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?parameters
         ?(container_id = "primary")
         event_id
         destination_id
         session =
+    let standard_parameters = GapiService.map_standard_parameters parameters in
+    let query_parameters =
+      ("destination", destination_id) :: Option.default
+                                           [] standard_parameters in
     let url' = GapiUtils.add_path_to_url
                  [container_id; "events"; event_id; "move"]
                  url
     in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
-        ~query_parameters:[("destination", destination_id)]
+        ~query_parameters
         url'
         EventsResourceConf.parse_resource
         session
 
   let reset
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?parameters
         ?(container_id = "primary")
         instance_id
         session =
+    let query_parameters = GapiService.map_standard_parameters parameters in
     let url' = GapiUtils.add_path_to_url
                  [container_id; "events"; instance_id; "reset"]
                  url
     in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
+        ?query_parameters
         url'
         EventsResourceConf.parse_resource
         session
@@ -361,13 +382,16 @@ module FreebusyResource =
 struct
   let query
         ?(url = "https://www.googleapis.com/calendar/v3/freeBusy")
-        parameters
+        ?parameters
+        request
         session =
+    let query_parameters = GapiService.map_standard_parameters parameters in
     let post_data = GapiJson.render_json
                       FreeBusyRequest.to_data_model
-                      parameters in
+                      request in
       GapiService.service_request
         ~post_data
+        ?query_parameters
         url
         (GapiJson.parse_json_response FreeBusyResponse.of_data_model)
         session

@@ -224,6 +224,37 @@ let test_get_calendar () =
            entry.GapiCalendar.Calendar.id
            entry'.GapiCalendar.Calendar.id)
 
+let test_get_calendar_partial_response () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (entry, session) =
+         GapiCalendarService.CalendarsResource.insert
+           new_calendar
+           session in
+       let parameters =
+         { GapiService.StandardParameters.default
+             with GapiService.StandardParameters.fields = "kind,id,summary"
+         } in
+       let (entry', session) =
+         GapiCalendarService.CalendarsResource.get
+           ~parameters
+           entry.GapiCalendar.Calendar.id
+           session in
+       let _ = delay () in
+         ignore (GapiCalendarService.CalendarsResource.delete
+                   entry'
+                   session);
+         assert_equal
+           entry.GapiCalendar.Calendar.id
+           entry'.GapiCalendar.Calendar.id;
+         assert_equal
+           entry.GapiCalendar.Calendar.summary
+           entry'.GapiCalendar.Calendar.summary;
+         assert_equal
+           ""
+           entry'.GapiCalendar.Calendar.description)
+
 let test_refresh_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
@@ -920,6 +951,7 @@ let suite = "Calendar services (v3) test" >:::
    "test_patch_calendar_list" >:: test_patch_calendar_list;
    "test_delete_calendar_list" >:: test_delete_calendar_list;
    "test_get_calendar" >:: test_get_calendar;
+   "test_get_calendar_partial_response" >:: test_get_calendar_partial_response;
    "test_refresh_calendar" >:: test_refresh_calendar;
    "test_insert_calendar" >:: test_insert_calendar;
    "test_update_calendar" >:: test_update_calendar;

@@ -6,8 +6,8 @@ exception ServiceError of GapiError.RequestError.t
 val service_request :
   ?post_data:GapiCore.PostData.t ->
   ?version:string ->
-  ?query_parameters:(string * string) list ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   ?request_type:GapiRequest.request_type ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -19,6 +19,7 @@ val service_request_with_data :
   ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -37,6 +38,7 @@ val query :
 val create :
   ('a -> GapiCore.PostData.t) ->
   ?version:string ->
+  ?query_parameters:(string * string) list ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -46,6 +48,7 @@ val create :
 val read :
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -56,6 +59,7 @@ val update :
   ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -66,6 +70,7 @@ val patch :
   ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -157,6 +162,7 @@ sig
 
   val get :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -164,6 +170,7 @@ sig
 
   val refresh :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -171,6 +178,7 @@ sig
 
   val insert :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -178,6 +186,7 @@ sig
 
   val update :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -185,6 +194,7 @@ sig
 
   val patch :
     ?url:string ->
+    ?parameters:StandardParameters.t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -198,6 +208,10 @@ sig
     (unit * GapiConversation.Session.t)
 
 end
+
+val map_standard_parameters :
+  StandardParameters.t option ->
+  (string * string) list option
 
 module Make :
   functor(S : ServiceConf) ->
