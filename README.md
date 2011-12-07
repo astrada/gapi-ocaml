@@ -60,6 +60,14 @@ To build the tests, execute
 
 To run the tests, see [tests README](src/test/README.md).
 
+To generate the documentation, execute
+
+    $ cd src
+    $ ocamlbuild gapi/gapi.docdir/index.html
+
+Then you can access the HTML documentation starting from
+`src/gapi.docdir/index.html`.
+
 ### Usage
 
 See [auth examples](src/examples/auth) for some examples of how to use
