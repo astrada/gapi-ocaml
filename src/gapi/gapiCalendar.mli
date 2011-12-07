@@ -21,10 +21,10 @@ sig
     (** The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type ["default"]. *)
   }
 
-  (** Functional accessors for {!_type} *)
   val _type : (t, string) GapiLens.t
-  (** Functional accessors for {!value} *)
+  (** Functional accessors for {!_type} *)
   val value : (t, string) GapiLens.t
+  (** Functional accessors for {!value} *)
 
   (** Default value. *)
   val empty : t

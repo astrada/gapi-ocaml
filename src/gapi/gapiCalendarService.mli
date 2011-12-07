@@ -90,7 +90,7 @@ end
   [delete]: Deletes an access control rule.
   *)
 module AclResource :
-  GapiService.SERVICE with
+  GapiService.Service with
     type resource_list_t = GapiCalendar.Acl.t
       and type resource_t = GapiCalendar.AclRule.t
       and type query_parameters_t = GapiService.StandardParameters.t
@@ -112,7 +112,7 @@ module AclResource :
   [delete]: Deletes an entry on the user's calendar list.
   *)
 module CalendarListResource :
-  GapiService.SERVICE with
+  GapiService.Service with
     type resource_list_t = GapiCalendar.CalendarList.t
       and type resource_t = GapiCalendar.CalendarListEntry.t
       and type query_parameters_t = QueryParameters.t

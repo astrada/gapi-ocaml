@@ -227,7 +227,7 @@ sig
 
 end
 
-module type SERVICE =
+module type Service =
 sig
   type resource_list_t
   type resource_t

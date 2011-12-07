@@ -136,7 +136,7 @@ sig
 
 end
 
-module type SERVICE =
+module type Service =
 sig
   type resource_list_t
   type resource_t
@@ -197,7 +197,7 @@ end
 module Make :
   functor(S : ServiceConf) ->
   functor(Q : QueryParameters) ->
-  SERVICE with type resource_list_t = S.resource_list_t
+  Service with type resource_list_t = S.resource_list_t
                 and type resource_t = S.resource_t
                 and type query_parameters_t = Q.t
 
