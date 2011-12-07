@@ -1,6 +1,6 @@
 open GapiUtils.Infix
 
-module type COMMENTS =
+module type Comments =
 sig
   type link_t
 
@@ -31,7 +31,7 @@ sig
 
   module Feed :
   sig
-    include GdataAtom.FEED
+    include GdataAtom.Feed
       with type entry_t = Entry.t
         and type link_t = link_t
 
@@ -66,7 +66,7 @@ sig
 
 end
 
-module Make(Link : GdataAtom.ATOMDATA) =
+module Make(Link : GdataAtom.AtomData) =
 struct
   type link_t = Link.t
 

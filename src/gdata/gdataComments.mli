@@ -1,4 +1,4 @@
-module type COMMENTS =
+module type Comments =
 sig
   type link_t
 
@@ -28,7 +28,7 @@ sig
   end
 
   module Feed :
-    GdataAtom.FEED
+    GdataAtom.Feed
       with type entry_t = Entry.t
         and type link_t = link_t
 
@@ -62,7 +62,7 @@ sig
 end
 
 module Make :
-  functor (Link : GdataAtom.ATOMDATA) ->
-  COMMENTS
+  functor (Link : GdataAtom.AtomData) ->
+  Comments
     with type link_t = Link.t
 

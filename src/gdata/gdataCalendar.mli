@@ -169,7 +169,7 @@ sig
 end
 
 module Where :
-  GdataAtom.ATOMDATA with type t = string
+  GdataAtom.AtomData with type t = string
 
 module Link :
 sig
@@ -226,12 +226,12 @@ sig
 end
 
 module Feed :
-  GdataAtom.FEED
+  GdataAtom.Feed
     with type entry_t = Entry.t
       and type link_t = Link.t
 
 module Comments :
-  GdataComments.COMMENTS
+  GdataComments.Comments
     with type link_t = Link.t
 
 val parse_calendar_entry :

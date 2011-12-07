@@ -1,6 +1,6 @@
 open GapiUtils.Infix
 
-module type ATOMDATA =
+module type AtomData =
 sig
   type t
 
@@ -178,7 +178,7 @@ let element_to_data_model get_prefix render_element element =
 (* END Rendering *)
 
 (* Atom complex types *)
-module type PERSONCONSTRUCT =
+module type PersonConstruct =
 sig
   type t = {
     lang : string;
@@ -336,7 +336,7 @@ struct
 
 end
 
-module type TEXTCONSTRUCT =
+module type TextConstruct =
 sig
   type t = {
     src : string;
@@ -468,7 +468,7 @@ struct
 
 end
 
-module type FEED =
+module type Feed =
 sig
   type entry_t
 
@@ -507,8 +507,8 @@ sig
 end
 
 module MakeFeed
-  (Entry : ATOMDATA)
-  (Link : ATOMDATA) =
+  (Entry : AtomData)
+  (Link : AtomData) =
 struct
   type entry_t = Entry.t
 

@@ -101,7 +101,7 @@ sig
 end
 
 module Feed :
-  GdataAtom.FEED
+  GdataAtom.Feed
     with type entry_t = Entry.t
       and type link_t = GdataCalendar.Link.t
 

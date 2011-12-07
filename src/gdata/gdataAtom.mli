@@ -1,4 +1,4 @@
-module type ATOMDATA =
+module type AtomData =
 sig
   type t
 
@@ -146,7 +146,7 @@ val element_to_data_model :
   'a ->
   GdataCore.xml_data_model
 
-module type PERSONCONSTRUCT =
+module type PersonConstruct =
 sig
   type t = {
     lang : string;
@@ -165,11 +165,11 @@ end
 
 module MakePersonConstruct :
   functor (M : sig val element_name : string end) ->
-  PERSONCONSTRUCT
+  PersonConstruct
 
-module Author : PERSONCONSTRUCT
+module Author : PersonConstruct
 
-module Contributor : PERSONCONSTRUCT
+module Contributor : PersonConstruct
 
 module Category :
 sig
@@ -204,7 +204,7 @@ sig
 
 end
 
-module type TEXTCONSTRUCT =
+module type TextConstruct =
 sig
   type t = {
     src : string;
@@ -222,17 +222,17 @@ sig
 end
 
 module MakeTextConstruct :
-  functor (M : sig val element_name : string end) -> TEXTCONSTRUCT
+  functor (M : sig val element_name : string end) -> TextConstruct
 
-module Content : TEXTCONSTRUCT
+module Content : TextConstruct
 
-module Title : TEXTCONSTRUCT
+module Title : TextConstruct
 
-module Subtitle : TEXTCONSTRUCT
+module Subtitle : TextConstruct
 
-module Summary : TEXTCONSTRUCT
+module Summary : TextConstruct
 
-module Rights : TEXTCONSTRUCT
+module Rights : TextConstruct
 
 module Link :
 sig
@@ -252,7 +252,7 @@ sig
 
 end
 
-module type FEED =
+module type Feed =
 sig
   type entry_t
 
@@ -291,9 +291,9 @@ sig
 end
 
 module MakeFeed :
-  functor (Entry : ATOMDATA) ->
-  functor (Link : ATOMDATA) ->
-  FEED
+  functor (Entry : AtomData) ->
+  functor (Link : AtomData) ->
+  Feed
     with type entry_t = Entry.t
       and type link_t = Link.t
 
