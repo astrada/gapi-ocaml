@@ -357,7 +357,7 @@ struct
 
 end
 
-module FreebusyResource =
+module FreeBusyResponse =
 struct
   let query
         ?(url = "https://www.googleapis.com/calendar/v3/freeBusy")
@@ -369,7 +369,7 @@ struct
       GapiService.service_request
         ~post_data
         url
-        (GapiJson.parse_json_response FreeBusyResource.of_data_model)
+        (GapiJson.parse_json_response FreeBusyResponse.of_data_model)
         session
 
 end

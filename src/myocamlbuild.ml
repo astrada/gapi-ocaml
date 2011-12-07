@@ -30,6 +30,11 @@ struct
   (* ocamlfind command *)
   let ocamlfind x = S[A"ocamlfind"; x]
 
+  let ocamldoc =
+    S[A"ocamlfind";
+      A"ocamldoc";
+      A"-css-style"; A"../../doc/style.css"]
+
   let  before_options () =
     (* by using Before_options one let command line options have an higher priority *)
     (* on the contrary using After_options will guarantee to have the higher priority *)
@@ -38,7 +43,8 @@ struct
     Options.ocamlc     := ocamlfind & A"ocamlc";
     Options.ocamlopt   := ocamlfind & A"ocamlopt";
     Options.ocamldep   := ocamlfind & A"ocamldep";
-    Options.ocamldoc   := ocamlfind & A"ocamldoc";
+    (*Options.ocamldoc   := ocamlfind & A"ocamldoc";*)
+    Options.ocamldoc   := ocamldoc;
     Options.ocamlmktop := ocamlfind & A"ocamlmktop"
 
   let get_ocamldoc_directory () =
@@ -320,7 +326,6 @@ let _ = dispatch begin function
        OCamlFind.after_rules ();
        Batteries.after_rules ();
        Dynamic.after_rules()
-       
    | _ -> ()
 end
 

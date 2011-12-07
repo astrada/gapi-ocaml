@@ -682,7 +682,7 @@ module Colors =
 struct
   type t = {
     kind : string;
-    updated : string;
+    updated : GapiDate.t;
     calendar : ColorDefinition.t list;
     event : ColorDefinition.t list
   }
@@ -706,7 +706,7 @@ struct
 
   let empty = {
     kind = "";
-    updated = "";
+    updated = GapiDate.epoch;
     calendar = [];
     event = []
   }
@@ -714,7 +714,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
-       render_string_value "updated" x.updated;
+       render_date_value "updated" x.updated;
        render_collection "calendar" Object ColorDefinition.render x.calendar;
        render_collection "event" Object ColorDefinition.render x.event]
 
@@ -727,7 +727,7 @@ struct
       | AnnotatedTree.Leaf
           ({ name = "updated"; data_type = Scalar },
            Json_type.String v) ->
-          { x with updated = v }
+          { x with updated = GapiDate.of_string v }
       | AnnotatedTree.Node
           ({ name = "calendar"; data_type = Object },
            cs) ->
@@ -2081,7 +2081,7 @@ struct
 
 end
 
-module FreeBusyResource =
+module FreeBusyResponse =
 struct
   type t = {
     kind : string;
@@ -2159,7 +2159,7 @@ struct
             (fun xs -> { x with calendars = xs })
             cs
       | e ->
-          unexpected "GapiCalendar.FreeBusyResource.parse" e
+          unexpected "GapiCalendar.FreeBusyResponse.parse" e
 
   let to_data_model = render_root render
 
