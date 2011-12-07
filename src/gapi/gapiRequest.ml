@@ -14,7 +14,13 @@ type request_type =
 let parse_empty_response _ =
   ()
 
-let parse_response parse_output pipe response_code headers session =
+let parse_response
+      parse_output
+      parse_error
+      pipe
+      response_code
+      headers
+      session =
   match response_code with
       200 (* OK *)
     | 201 (* Created *)
@@ -36,7 +42,7 @@ let parse_response parse_output pipe response_code headers session =
     | 412 (* Precondition failed *) ->
         raise (NotModified session)
     | _ ->
-        GapiConversation.parse_error pipe response_code
+        parse_error pipe response_code
 
 let build_auth_data session =
   match session.GapiConversation.Session.config.GapiConfig.auth with
@@ -85,6 +91,7 @@ let single_request
       request_type
       url
       parse_output
+      parse_error
       session =
   let auth_data = build_auth_data session in
   let http_method =
@@ -144,7 +151,7 @@ let single_request
       http_method
       session
       url
-      (parse_response parse_output)
+      (parse_response parse_output parse_error)
 
 let refresh_oauth2_token session =
   let auth_data = build_auth_data session in
@@ -181,6 +188,7 @@ let rec gapi_request
       ?post_data
       ?version
       ?etag
+      ?(parse_error = GapiConversation.parse_error)
       request_type
       url
       parse_output
@@ -200,6 +208,7 @@ let rec gapi_request
         request_type
         url
         parse_output
+        parse_error
         verified_session
   with
       Redirect (target, new_session) ->
@@ -208,6 +217,7 @@ let rec gapi_request
             ?post_data
             ?version
             ?etag
+            ~parse_error
             request_type
             target
             parse_output
@@ -220,6 +230,7 @@ let rec gapi_request
             ?post_data
             ?version
             ?etag
+            ~parse_error
             request_type
             url
             parse_output

@@ -1,3 +1,5 @@
+open GapiUtils.Infix
+
 module Config =
 struct
   type t = (string, string) Hashtbl.t
@@ -69,6 +71,27 @@ let update_session auth_session session =
   { session with
         GapiConversation.Session.auth = auth_session }
 
+let string_of_json_data_model tree =
+  let join _ = String.concat "," in
+    GapiCore.AnnotatedTree.fold
+      (fun m xs ->
+         match m.GapiJson.data_type with
+             GapiJson.Object ->
+               Printf.sprintf "%a{%a}"
+                 (fun _ n ->
+                    if n <> "" then "\"" ^ n ^ "\":" else "") m.GapiJson.name
+                 join xs
+           | GapiJson.Array ->
+               Printf.sprintf "\"%s\":[%a]" m.GapiJson.name join xs
+           | _ -> assert false)
+      (fun m value ->
+         let s = Json_type.Browse.describe value in
+           if m.GapiJson.name <> "" then
+             Printf.sprintf "\"%s\":%s" m.GapiJson.name s
+           else
+             s)
+      tree
+
 let do_request
       config
       auth_session
@@ -90,6 +113,12 @@ let do_request
                 try_request ()
               else
                 handle_exception e
+          | GapiService.ServiceError e ->
+              let e' = Failure (
+                e |> GapiError.RequestError.to_data_model
+                  |> string_of_json_data_model)
+              in
+                handle_exception e'
           | e -> handle_exception e
       end;
       ignore (GapiCurl.global_cleanup state)
@@ -195,27 +224,6 @@ let string_of_xml_data_model tree =
             ~print_string:(Buffer.add_string buffer)
             tree in
     Buffer.contents buffer
-
-let string_of_json_data_model tree =
-  let join _ = String.concat "," in
-    GapiCore.AnnotatedTree.fold
-      (fun m xs ->
-         match m.GapiJson.data_type with
-             GapiJson.Object ->
-               Printf.sprintf "%a{%a}"
-                 (fun _ n ->
-                    if n <> "" then "\"" ^ n ^ "\":" else "") m.GapiJson.name
-                 join xs
-           | GapiJson.Array ->
-               Printf.sprintf "\"%s\":[%a]" m.GapiJson.name join xs
-           | _ -> assert false)
-      (fun m value ->
-         let s = Json_type.Browse.describe value in
-           if m.GapiJson.name <> "" then
-             Printf.sprintf "\"%s\":%s" m.GapiJson.name s
-           else
-             s)
-      tree
 
 let assert_false msg b =
   OUnit.assert_bool msg (not b)

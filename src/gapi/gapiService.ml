@@ -1,5 +1,17 @@
 open GapiUtils.Infix
 
+exception ServiceError of GapiError.RequestError.t
+
+let parse_error pipe response_code =
+  try
+    let error = GapiJson.parse_json_response
+                  GapiError.RequestError.of_data_model
+                  pipe
+    in
+      raise (ServiceError error)
+  with Json_type.Json_error _ ->
+    GapiConversation.parse_error pipe response_code
+
 let service_request
       ?post_data
       ?version
@@ -19,6 +31,7 @@ let service_request
       ?post_data
       ?version
       ?etag
+      ~parse_error
       request_type
       query_url
       parse_response

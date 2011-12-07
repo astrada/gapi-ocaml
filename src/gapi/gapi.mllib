@@ -11,6 +11,7 @@ GapiOAuth2
 GapiAuth
 GapiRequest
 GapiMonad
+GapiError
 GapiService
 GapiDate
 GapiJson

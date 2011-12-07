@@ -129,12 +129,13 @@ let test_delete_acl () =
 
 (* ColorsResource *)
 
-let test_colors_get () =
+let test_get_colors () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (colors, session) =
          GapiCalendarService.ColorsResource.get
+           ~url:"https://www.googleapis.com/calendar/v3/colors?key=AIzaSyCxmj--5AFh3tMpf1zEkkdodiZgcYUX4uc"
            session
        in
          assert_equal
@@ -892,7 +893,8 @@ let suite = "Calendar services (v3) test" >:::
    "test_get_acl" >:: test_get_acl;
    "test_update_acl" >:: test_update_acl;
    "test_delete_acl" >:: test_delete_acl;
-   "test_colors_get" >:: test_colors_get;
+   (*"test_get_colors" >:: test_get_colors;
+    * -- requires an API key, does not work with OAuth2.0 token *)
    "test_settings_list" >:: test_settings_list;
    "test_settings_get" >:: test_settings_get;
    "test_event_list" >:: test_event_list;

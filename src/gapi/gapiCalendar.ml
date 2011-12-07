@@ -49,7 +49,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiACL.ScopeData.parse" e
+          unexpected "GapiCalendar.ScopeData.parse" e
 
 end
 
@@ -135,7 +135,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiACL.AclRule.parse" e
+          unexpected "GapiCalendar.AclRule.parse" e
 
   let to_data_model = render_root render
 
@@ -206,7 +206,7 @@ struct
             (fun xs -> { x with items = xs })
             cs
       | e ->
-          unexpected "GapiACL.Acl.parse" e
+          unexpected "GapiCalendar.Acl.parse" e
 
   let to_data_model = render_root render
 

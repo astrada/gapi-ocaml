@@ -1,6 +1,7 @@
 GapiLens
 GapiCalendar
 GapiConversation
+GapiError
 GapiService
 GapiCalendarService
 

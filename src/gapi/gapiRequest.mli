@@ -13,6 +13,7 @@ val gapi_request :
   ?post_data:GapiCore.PostData.t ->
   ?version:string ->
   ?etag:string ->
+  ?parse_error:(GapiPipe.OcamlnetPipe.t -> int -> 'a) ->
   request_type ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
