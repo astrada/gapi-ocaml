@@ -114,3 +114,61 @@ struct
 
 end
 
+module CommentsResourceConf =
+struct
+  type resource_list_t = CommentFeed.t
+  type resource_t = Comment.t
+
+  let service_url =
+    "https://www.googleapis.com/plus/v1/comments"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response CommentFeed.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response Comment.of_data_model
+
+  let render_resource =
+    GapiJson.render_json Comment.to_data_model
+
+  let create_resource_from_id id =
+    { Comment.empty with
+          Comment.id = id
+    }
+
+  let get_url ?container_id ?resource base_url =
+    match resource with
+        None ->
+          base_url
+      | Some r ->
+          GapiUtils.add_path_to_url
+            [r.Comment.id]
+            base_url
+
+  let get_etag resource =
+    None
+
+end
+
+module CommentsResource =
+struct
+  include GapiService.Make
+    (CommentsResourceConf)
+    (PlusParameters)
+
+  let list
+        ?(url = "https://www.googleapis.com/plus/v1/activities")
+        ?parameters
+        activity_id
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [activity_id; "comments"]
+                 url
+    in
+      list
+        ~url:url'
+        ?parameters
+        session
+
+end
+

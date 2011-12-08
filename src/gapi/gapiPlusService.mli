@@ -47,10 +47,10 @@ sig
 
     Usage: [list session] where [session] is the current session.
 
-    @param userId The ID of the user to get activities for. The special value ["me"] can be used to indicate the authenticated user. Defaults to ["me"].
+    @param user_id The ID of the user to get activities for. The special value ["me"] can be used to indicate the authenticated user. Defaults to ["me"].
     @param collection The collection of activities to list. Defaults to ["public"].
-
     @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/people"])
+    @param parameters request parameters
     *)
   val list :
     ?url:string ->
@@ -65,6 +65,7 @@ sig
     Usage: [get activity_id session] where [activity_id] is the ID of the activity to get, and [session] is the current session.
 
     @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/activities"])
+    @param parameters request parameters
     *)
   val get :
     ?url:string ->
@@ -79,12 +80,45 @@ sig
     Usage: [search parameters session] where [parameters] specify the query parameters, and [session] is the current session.
 
     @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/activities"])
+    @param parameters request parameters
     *)
   val search :
     ?url:string ->
     PlusParameters.t ->
     GapiConversation.Session.t ->
     GapiPlus.ActivityFeed.t * GapiConversation.Session.t
+
+end
+
+(** The "comments" service. *)
+module CommentsResource :
+sig
+  (** List all of the comments for an activity.
+
+    Usage: [list activity_id session] where [activity_id] is the ID of the activity to get comments for, and [session] is the current session.
+
+    @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/activities"])
+    @param parameters request parameters
+    *)
+  val list :
+    ?url:string ->
+    ?parameters:PlusParameters.t ->
+    string ->
+    GapiConversation.Session.t ->
+    GapiPlus.CommentFeed.t * GapiConversation.Session.t
+
+  (** Get a comment.
+   
+    @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/comments"])
+    @param parameters request parameters
+   *)
+  val get :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    GapiPlus.Comment.t * GapiConversation.Session.t
 
 end
 
