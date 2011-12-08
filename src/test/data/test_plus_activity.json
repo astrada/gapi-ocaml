@@ -1,0 +1,91 @@
+{
+  "kind": "plus#activity",
+  "placeholder": true,
+  "title": "string",
+  "published": "2011-12-01T00:00:00.000Z",
+  "updated": "2011-12-01T00:00:00.000Z",
+  "id": "string",
+  "url": "string",
+  "actor": {
+    "id": "string",
+    "displayName": "string",
+    "url": "string",
+    "image": {
+      "url": "string"
+    }
+  },
+  "verb": "string",
+  "object": {
+    "objectType": "string",
+    "id": "string",
+    "actor": {
+      "id": "string",
+      "displayName": "string",
+      "url": "string",
+      "image": {
+        "url": "string"
+      }
+    },
+    "content": "string",
+    "originalContent": "string",
+    "url": "string",
+    "replies": {
+      "totalItems": 2,
+      "selfLink": "string"
+    },
+    "plusoners": {
+      "totalItems": 2,
+      "selfLink": "string"
+    },
+    "resharers": {
+      "totalItems": 2,
+      "selfLink": "string"
+    },
+    "attachments": [
+      {
+        "objectType": "string",
+        "displayName": "string",
+        "id": "string",
+        "content": "string",
+        "url": "string",
+        "image": {
+          "url": "string",
+          "type": "string",
+          "height": 2,
+          "width": 2
+        },
+        "fullImage": {
+          "url": "string",
+          "type": "string",
+          "height": 2,
+          "width": 2
+        },
+        "embed": {
+          "url": "string",
+          "type": "string"
+        }
+      }
+    ]
+  },
+  "annotation": "string",
+  "crosspostSource": "string",
+  "provider": {
+    "title": "string"
+  },
+  "access": {
+    "kind": "plus#acl",
+    "description": "string",
+    "items": [
+      {
+        "type": "string",
+        "id": "string"
+      }
+    ]
+  },
+  "geocode": "string",
+  "address": "string",
+  "radius": "string",
+  "placeId": "string",
+  "placeName": "string"
+}
+

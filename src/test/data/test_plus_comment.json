@@ -1,0 +1,27 @@
+{
+  "kind": "plus#comment",
+  "id": "string",
+  "published": "2011-12-01T00:00:00.000Z",
+  "updated": "2011-12-01T00:00:00.000Z",
+  "actor": {
+    "id": "string",
+    "displayName": "string",
+    "url": "string",
+    "image": {
+      "url": "string"
+    }
+  },
+  "verb": "post",
+  "object": {
+    "objectType": "comment",
+    "content": "string"
+  },
+  "selfLink": "string",
+  "inReplyTo": [
+    {
+      "id": "string",
+      "url": "string"
+    }
+  ]
+}
+

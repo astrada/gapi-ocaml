@@ -1,0 +1,63 @@
+{
+  "kind": "plus#person",
+  "objectType": "string",
+  "id": "string",
+  "displayName": "string",
+  "name": {
+    "formatted": "string",
+    "familyName": "string",
+    "givenName": "string",
+    "middleName": "string",
+    "honorificPrefix": "string",
+    "honorificSuffix": "string"
+  },
+  "nickname": "string",
+  "tagline": "string",
+  "birthday": "string",
+  "gender": "string",
+  "aboutMe": "string",
+  "currentLocation": "string",
+  "relationshipStatus": "string",
+  "url": "string",
+  "image": {
+    "url": "string"
+  },
+  "emails": [
+    {
+      "value": "string",
+      "type": "string",
+      "primary": true
+    }
+  ],
+  "urls": [
+    {
+      "value": "string",
+      "type": "string",
+      "primary": true
+    }
+  ],
+  "organizations": [
+    {
+      "name": "string",
+      "department": "string",
+      "title": "string",
+      "type": "string",
+      "startDate": "string",
+      "endDate": "string",
+      "location": "string",
+      "description": "string",
+      "primary": true
+    }
+  ],
+  "placesLived": [
+    {
+      "value": "string",
+      "primary": true
+    }
+  ],
+  "languagesSpoken": [
+    "string"
+  ],
+  "hasApp": true
+}
+

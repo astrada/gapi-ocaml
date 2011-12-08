@@ -1,0 +1,11 @@
+{
+  "kind": "plus#peopleFeed",
+  "selfLink": "string",
+  "title": "string",
+  "nextPageToken": "string",
+  "items": [
+    {
+      "kind": "plus#person"
+    }
+  ]
+}

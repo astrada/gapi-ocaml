@@ -4,4 +4,5 @@ GapiConversation
 GapiError
 GapiService
 GapiCalendarService
+GapiPlus
 

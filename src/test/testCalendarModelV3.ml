@@ -234,6 +234,5 @@ let suite = "Calendar (v3) Data Model test" >:::
    "test_render_free_busy_parameters" >:: test_render_free_busy_parameters;
    "test_parse_free_busy_resource" >:: test_parse_free_busy_resource;
    "test_parse_event_resource" >:: test_parse_event_resource;
-   "test_parse_event_list" >:: test_parse_event_list;
-  ]
+   "test_parse_event_list" >:: test_parse_event_list]
 
