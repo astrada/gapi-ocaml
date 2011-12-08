@@ -1,3 +1,10 @@
+(** Data definition for Google+ (v1).
+  
+  For more information about this data model, see the
+  {{:http://developers.google.com/+/api/}API Documentation}
+
+  *)
+
 module PlusAclentryResource :
 sig
   type t = {

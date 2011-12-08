@@ -5,4 +5,5 @@ GapiError
 GapiService
 GapiCalendarService
 GapiPlus
+GapiPlusService
 
