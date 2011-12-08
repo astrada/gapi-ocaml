@@ -8,8 +8,11 @@ Google APIs Client library for OCaml
 library supports ClientLogin, OAuth 1.0a, and OAuth 2.0 authentication.
 Supported RESTful APIs:
 
-* Calendar Data API (Atom based)
 * Google Calendar APIs v3 (JSON based)
+* Google+ API v1
+
+Old versions:
+* Calendar Data API v2 (Atom based)
 
 ### Features
 
