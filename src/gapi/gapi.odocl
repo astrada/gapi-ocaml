@@ -6,4 +6,5 @@ GapiService
 GapiCalendarService
 GapiPlus
 GapiPlusService
+GapiTasks
 

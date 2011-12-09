@@ -1,0 +1,16 @@
+{
+  "kind": "tasks#task",
+  "id": "taskID",
+  "etag": "ETag",
+  "title": "Something to do",
+  "updated": "2010-10-15T11:03:47.000Z",
+  "selfLink": "https://www.googleapis.com/tasks/v1/lists/taskListID/tasks/taskID",
+  "parent": "parentTaskID",
+  "position": "position",
+  "notes": "To do",
+  "status": "needsAction",
+  "due": "2010-10-15T11:03:47.000Z",
+  "deleted": "false",
+  "hidden": "false"
+}
+

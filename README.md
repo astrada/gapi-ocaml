@@ -10,6 +10,7 @@ Supported RESTful APIs:
 
 * Google Calendar APIs v3 (JSON based)
 * Google+ API v1
+* Tasks API v1
 
 Old versions:
 * Calendar Data API v2 (Atom based)

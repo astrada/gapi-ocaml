@@ -21,4 +21,5 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <gapiCalendarService.*> : pkg_json-wheel, pkg_extlib
 <gapiPlus.*> : pkg_json-wheel, pkg_extlib
 <gapiPlusService.*> : pkg_json-wheel, pkg_extlib
+<gapiTasks.*> : pkg_json-wheel, pkg_extlib
 

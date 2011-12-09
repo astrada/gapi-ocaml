@@ -1,0 +1,7 @@
+{
+  "kind": "tasks#taskList",
+  "id": "taskListID",
+  "title": "My Tasks",
+  "selfLink": "https://www.googleapis.com/tasks/v1/users/@me/lists/taskListID"
+}
+
