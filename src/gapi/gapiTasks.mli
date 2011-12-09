@@ -1,3 +1,10 @@
+(** Data definition for Tasks (v1).
+  
+  For more information about this data model, see the
+  {{:http://code.google.com/apis/tasks/v1/reference.html}API Documentation}
+
+  *)
+
 module Task :
 sig
   type t = {

@@ -14,12 +14,10 @@ true : dtypes, warn_A, warn_e, warn_z, warn_error_A, warn_error_e, warn_error_z
 <gapiAuth.*> : pkg_netstring, pkg_extlib
 <gapiRequest.*> : pkg_netstring, pkg_extlib, pkg_xmlm
 <gapiError.*> : pkg_json-wheel, pkg_extlib
-<gapiService.*> : pkg_json-wheel, pkg_extlib
 <gapiDate.*> : pkg_netstring
 <gapiJson.*> : pkg_json-wheel, pkg_extlib
 <gapiCalendar.*> : pkg_json-wheel, pkg_extlib
-<gapiCalendarService.*> : pkg_json-wheel, pkg_extlib
 <gapiPlus.*> : pkg_json-wheel, pkg_extlib
-<gapiPlusService.*> : pkg_json-wheel, pkg_extlib
 <gapiTasks.*> : pkg_json-wheel, pkg_extlib
+<gapi*Service.*> : pkg_json-wheel, pkg_extlib
 

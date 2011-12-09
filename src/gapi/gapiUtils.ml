@@ -38,6 +38,7 @@ let add_path_to_url path_to_add url =
   let path = Neturl.url_path neturl in
   let new_path = path @ path_to_add in
   let new_neturl = Neturl.modify_url
+                     ~encoded:true
                      ~path:new_path
                      neturl in
     Neturl.string_of_url new_neturl
