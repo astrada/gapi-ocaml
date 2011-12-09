@@ -109,6 +109,8 @@ sig
 
   (** Get a comment.
    
+    Usage: [get comment_id session] where [comment_id] is the ID of the comment to get, and [session] is the current session.
+
     @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/comments"])
     @param parameters request parameters
    *)
@@ -119,6 +121,53 @@ sig
     string ->
     GapiConversation.Session.t ->
     GapiPlus.Comment.t * GapiConversation.Session.t
+
+end
+
+(** The "people" collection of methods. *)
+module PeopleResource :
+sig
+  (**
+    List all of the people in the specified collection for a particular activity.
+    Usage: [listByActivity activity_id collection session] where [activity_id] is the ID of the activity to get the list of people for, [collection] is the collection of people to list, and [session] is the current session.
+
+    @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/activities"])
+    @param parameters request parameters
+    *)
+  val listByActivity :
+    ?url:string ->
+    ?parameters:PlusParameters.t ->
+    string ->
+    string ->
+    GapiConversation.Session.t ->
+    GapiPlus.PeopleFeed.t * GapiConversation.Session.t
+
+  (** Search all public profiles.
+
+    Usage: [search parameters session] where [parameters] specify the query parameters, and [session] is the current session.
+   
+    @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/people"])
+   *)
+  val search :
+    ?url:string ->
+    PlusParameters.t ->
+    GapiConversation.Session.t ->
+    GapiPlus.PeopleFeed.t * GapiConversation.Session.t
+
+  (** Get a person's profile.
+   
+    Usage: [get user_id session] where [user_id] is the ID of the person to get the profile for. The special value ["me"] can be used to indicate the authenticated user, and [session] is the current session.
+
+    @param url the service endpoint (defaults to ["https://www.googleapis.com/plus/v1/people"])
+    @param parameters request parameters
+   *)
+  val get :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?container_id:string ->
+    string ->
+    GapiConversation.Session.t ->
+    GapiPlus.Person.t * GapiConversation.Session.t
 
 end
 

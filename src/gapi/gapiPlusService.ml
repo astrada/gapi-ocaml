@@ -172,3 +172,71 @@ struct
 
 end
 
+module PeopleResourceConf =
+struct
+  type resource_list_t = PeopleFeed.t
+  type resource_t = Person.t
+
+  let service_url =
+    "https://www.googleapis.com/plus/v1/people"
+
+  let parse_resource_list =
+    GapiJson.parse_json_response PeopleFeed.of_data_model
+
+  let parse_resource =
+    GapiJson.parse_json_response Person.of_data_model
+
+  let render_resource =
+    GapiJson.render_json Person.to_data_model
+
+  let create_resource_from_id id =
+    { Person.empty with
+          Person.id = id
+    }
+
+  let get_url ?container_id ?resource base_url =
+    match resource with
+        None ->
+          base_url
+      | Some r ->
+          GapiUtils.add_path_to_url
+            [r.Person.id]
+            base_url
+
+  let get_etag resource =
+    None
+
+end
+
+module PeopleResource =
+struct
+  include GapiService.Make
+    (PeopleResourceConf)
+    (PlusParameters)
+
+  let listByActivity
+        ?(url = "https://www.googleapis.com/plus/v1/activities")
+        ?parameters
+        activity_id
+        collection
+        session =
+    let url' = GapiUtils.add_path_to_url
+                 [activity_id; "people"; collection]
+                 url
+    in
+      list
+        ~url:url'
+        ?parameters
+        session
+
+  let search 
+        ?(url = PeopleResourceConf.service_url)
+        parameters
+        session =
+    list
+      ~url
+      ~parameters
+      session
+
+end
+
