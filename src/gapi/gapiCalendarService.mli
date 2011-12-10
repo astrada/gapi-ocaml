@@ -7,6 +7,11 @@
 
   *)
 
+(** OAuth 2.0 scope to get read/write access to Calendars, Calendar Events and Calendar ACLs *)
+val scope : string
+(** OAuth 2.0 scope to get read-only access to Calendars, Calendar Events and Calendar ACLs *)
+val read_only_scope : string
+
 (** The query parameters you can use with the Google Calendar API. *)
 module CalendarParameters :
 sig

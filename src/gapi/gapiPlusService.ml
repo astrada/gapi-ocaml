@@ -1,6 +1,8 @@
 open GapiUtils.Infix
 open GapiPlus
 
+let scope = "https://www.googleapis.com/auth/plus.me"
+
 module PlusParameters =
 struct
   type t = {

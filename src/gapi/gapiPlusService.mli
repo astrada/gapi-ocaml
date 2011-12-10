@@ -6,6 +6,9 @@
   {{:http://developers.google.com/+/api/}API Documentation}
  *)
 
+(** OAuth 2.0 scope that allows you to identify who the authenticated user is. *)
+val scope : string
+
 (** The query parameters you can use with the Google+ API. *)
 module PlusParameters :
 sig

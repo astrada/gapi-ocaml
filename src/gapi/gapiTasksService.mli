@@ -4,6 +4,11 @@
   {{:http://code.google.com/apis/tasks/v1/using.html}API Documentation}
  *)
 
+(** OAuth 2.0 scope to get read/write access to Tasks *)
+val scope : string
+(** OAuth 2.0 scope to get read-only access to Tasks *)
+val read_only_scope : string
+
 (** The query parameters you can use with the Tasks API. *)
 module TasksParameters :
 sig

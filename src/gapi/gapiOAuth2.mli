@@ -3,7 +3,7 @@ val authorization_code_url :
   ?access_type:string ->
   ?approval_prompt:string ->
   redirect_uri:string ->
-  scope:string ->
+  scope:string list ->
   response_type:string ->
   string ->
   string

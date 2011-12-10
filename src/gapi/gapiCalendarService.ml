@@ -1,6 +1,9 @@
 open GapiUtils.Infix
 open GapiCalendar
 
+let scope = "https://www.googleapis.com/auth/calendar"
+let read_only_scope = "https://www.googleapis.com/auth/calendar.readonly"
+
 module CalendarParameters =
 struct
   type t = {

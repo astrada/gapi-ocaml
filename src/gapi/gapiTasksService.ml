@@ -1,6 +1,9 @@
 open GapiUtils.Infix
 open GapiTasks
 
+let scope = "https://www.googleapis.com/auth/tasks"
+let read_only_scope = "https://www.googleapis.com/auth/tasks.readonly"
+
 module TasksParameters =
 struct
   type t = {

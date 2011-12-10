@@ -6,10 +6,11 @@ let authorization_code_url
       ~scope
       ~response_type
       client_id =
+  let scope_string = String.concat " " scope in
   let fields =
     [("client_id", client_id);
      ("redirect_uri", redirect_uri);
-     ("scope", scope);
+     ("scope", scope_string);
      ("response_type", response_type);
      ("access_type", access_type);
      ("approval_prompt", approval_prompt)] in
