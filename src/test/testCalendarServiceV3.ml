@@ -729,9 +729,9 @@ let test_list_calendar_list_with_max_results () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let parameters = {
-         GapiCalendarService.QueryParameters.default with
-             GapiCalendarService.QueryParameters.prettyPrint = false;
-             GapiCalendarService.QueryParameters.maxResults = 1
+         GapiCalendarService.CalendarParameters.default with
+             GapiCalendarService.CalendarParameters.prettyPrint = false;
+             GapiCalendarService.CalendarParameters.maxResults = 1
        } in
        let (calendars, session) =
          GapiCalendarService.CalendarListResource.list

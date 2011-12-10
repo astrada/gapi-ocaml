@@ -1,7 +1,7 @@
 open GapiUtils.Infix
 open GapiCalendar
 
-module QueryParameters =
+module CalendarParameters =
 struct
   type t = {
     (* Standard query parameters *)
@@ -164,7 +164,7 @@ end
 module CalendarListResource =
   GapiService.Make
     (CalendarListResourceConf)
-    (QueryParameters)
+    (CalendarParameters)
 
 module CalendarsResourceConf =
 struct
@@ -278,7 +278,7 @@ end
 
 module EventsResource =
 struct
-  include GapiService.Make(EventsResourceConf)(QueryParameters)
+  include GapiService.Make(EventsResourceConf)(CalendarParameters)
 
   let instances
         ?(url = "https://www.googleapis.com/calendar/v3/calendars")

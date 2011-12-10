@@ -8,7 +8,7 @@
   *)
 
 (** The query parameters you can use with the Google Calendar API. *)
-module QueryParameters :
+module CalendarParameters :
 sig
   type t = {
     fields : string;
@@ -115,7 +115,7 @@ module CalendarListResource :
   GapiService.Service with
     type resource_list_t = GapiCalendar.CalendarList.t
       and type resource_t = GapiCalendar.CalendarListEntry.t
-      and type query_parameters_t = QueryParameters.t
+      and type query_parameters_t = CalendarParameters.t
 
 (** The "calendars" service. *)
 module CalendarsResource :
@@ -248,7 +248,7 @@ sig
   val list :
     ?url:string ->
     ?etag:string ->
-    ?parameters:QueryParameters.t ->
+    ?parameters:CalendarParameters.t ->
     ?container_id:string ->
     GapiConversation.Session.t ->
     (GapiCalendar.Events.t * GapiConversation.Session.t)
