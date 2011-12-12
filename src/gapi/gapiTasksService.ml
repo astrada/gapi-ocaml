@@ -68,6 +68,46 @@ struct
        param (fun p -> p.updatedMin) GapiDate.to_string "updatedMin"]
       |> List.concat
 
+  let merge_parameters
+        ?standard_parameters
+        ?completedMax
+        ?completedMin
+        ?dueMax
+        ?dueMin
+        ?maxResults
+        ?pageToken
+        ?parent
+        ?previous
+        ?showCompleted
+        ?showDeleted
+        ?showHidden
+        ?updatedMin
+        () =
+    let p =
+      Option.map_default
+        (fun sp ->
+           { default with
+                 fields = sp.GapiService.StandardParameters.fields;
+                 prettyPrint = sp.GapiService.StandardParameters.prettyPrint;
+                 quotaUser = sp.GapiService.StandardParameters.quotaUser;
+                 userIp = sp.GapiService.StandardParameters.userIp
+           })
+        default
+        standard_parameters in
+    let p = Option.map_default (fun x -> { p with completedMax = x }) p completedMax in
+    let p = Option.map_default (fun x -> { p with completedMin = x }) p completedMin in
+    let p = Option.map_default (fun x -> { p with dueMax = x }) p dueMax in
+    let p = Option.map_default (fun x -> { p with dueMin = x }) p dueMin in
+    let p = Option.map_default (fun x -> { p with maxResults = x }) p maxResults in
+    let p = Option.map_default (fun x -> { p with pageToken = x }) p pageToken in
+    let p = Option.map_default (fun x -> { p with parent = x }) p parent in
+    let p = Option.map_default (fun x -> { p with previous = x }) p previous in
+    let p = Option.map_default (fun x -> { p with showCompleted = x }) p showCompleted in
+    let p = Option.map_default (fun x -> { p with showDeleted = x }) p showDeleted in
+    let p = Option.map_default (fun x -> { p with showHidden = x }) p showHidden in
+    let p = Option.map_default (fun x -> { p with updatedMin = x }) p updatedMin in
+      p
+
 end
 
 module TasklistsResourceConf =
@@ -112,9 +152,35 @@ struct
 end
 
 module TasklistsResource =
-  GapiService.Make
-    (TasklistsResourceConf)
-    (GapiService.StandardParameters)
+struct
+  module Service = GapiService.Make
+                     (TasklistsResourceConf)
+                     (TasksParameters)
+
+  let list ?url ?etag ?parameters ?maxResults ?pageToken session =
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters ?maxResults ?pageToken () in
+      Service.list ?url ?etag ~parameters:params session
+
+  let get ?url ?parameters tasklist_id session =
+    Service.get ?url ?parameters tasklist_id session
+
+  let refresh ?url ?parameters tasklist session =
+    Service.refresh ?url ?parameters tasklist session
+
+  let insert ?url ?parameters tasklist session =
+    Service.insert ?url ?parameters tasklist session
+
+  let update ?url ?parameters tasklist session =
+    Service.update ?url ?parameters tasklist session
+
+  let patch ?url ?parameters tasklist session =
+    Service.patch ?url ?parameters tasklist session
+
+  let delete ?url tasklist session =
+    Service.delete ?url tasklist session
+
+end
 
 module TasksResourceConf =
 struct
