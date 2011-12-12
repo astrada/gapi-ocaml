@@ -3,6 +3,7 @@ open GapiUtils.Infix
 exception Redirect of string * GapiConversation.Session.t
 exception Unauthorized of GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
+exception PreconditionFailed of GapiConversation.Session.t
 
 type request_type =
     Query
@@ -38,9 +39,10 @@ let parse_response
           raise (Redirect (url, session))
     | 401 (* Unauthorized *) ->
         raise (Unauthorized session)
-    | 304 (* Not modified *)
-    | 412 (* Precondition failed *) ->
+    | 304 (* Not modified *) ->
         raise (NotModified session)
+    | 412 (* Precondition failed *) ->
+        raise (PreconditionFailed session)
     | _ ->
         parse_error pipe response_code
 
