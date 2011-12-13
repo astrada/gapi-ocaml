@@ -157,10 +157,12 @@ let patch
 let delete
       ?version
       ?etag
+      ?query_parameters
       url =
   service_request
     ?version
     ?etag
+    ?query_parameters
     ~request_type:GapiRequest.Delete
     url
     GapiRequest.parse_empty_response
@@ -266,7 +268,7 @@ sig
 
   val get :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -274,7 +276,7 @@ sig
 
   val refresh :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -282,7 +284,7 @@ sig
 
   val insert :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -290,7 +292,7 @@ sig
 
   val update :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -298,7 +300,7 @@ sig
 
   val patch :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -306,6 +308,7 @@ sig
 
   val delete :
     ?url:string ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -324,6 +327,8 @@ struct
   type resource_t = S.resource_t
   type query_parameters_t = Q.t
 
+  let map_parameters = Option.map Q.to_key_value_list
+
   let list
         ?(url = S.service_url)
         ?etag
@@ -331,9 +336,7 @@ struct
         ?container_id
         session =
     let url' = S.get_url ?container_id url in
-    let query_parameters = Option.map
-                             Q.to_key_value_list
-                             parameters in
+    let query_parameters = map_parameters parameters in
       query
         ?etag
         ?query_parameters
@@ -349,7 +352,7 @@ struct
         session =
     let resource = S.create_resource_from_id id in
     let url' = S.get_url ?container_id ~resource url in
-    let query_parameters = map_standard_parameters parameters in
+    let query_parameters = map_parameters parameters in
       query
         ?query_parameters
         url'
@@ -364,7 +367,7 @@ struct
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
-    let query_parameters = map_standard_parameters parameters in
+    let query_parameters = map_parameters parameters in
       read
         ?etag
         ?query_parameters
@@ -380,7 +383,7 @@ struct
         resource
         session =
     let url' = S.get_url ?container_id url in
-    let query_parameters = map_standard_parameters parameters in
+    let query_parameters = map_parameters parameters in
       create
         ?query_parameters
         S.render_resource
@@ -397,7 +400,7 @@ struct
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
-    let query_parameters = map_standard_parameters parameters in
+    let query_parameters = map_parameters parameters in
       update
         S.render_resource
         ?etag
@@ -415,7 +418,7 @@ struct
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
-    let query_parameters = map_standard_parameters parameters in
+    let query_parameters = map_parameters parameters in
       patch
         S.render_resource
         ?etag
@@ -427,13 +430,16 @@ struct
 
   let delete
         ?(url = S.service_url)
+        ?parameters
         ?container_id
         resource
         session =
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
+    let query_parameters = map_parameters parameters in
       delete
         ?etag
+        ?query_parameters
         url'
         session
 

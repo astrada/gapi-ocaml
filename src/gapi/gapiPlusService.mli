@@ -72,7 +72,7 @@ sig
     *)
   val get :
     ?url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
+    ?parameters:PlusParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -119,7 +119,7 @@ sig
    *)
   val get :
     ?url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
+    ?parameters:PlusParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -166,7 +166,7 @@ sig
    *)
   val get :
     ?url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
+    ?parameters:PlusParameters.t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->

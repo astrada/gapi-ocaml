@@ -83,23 +83,26 @@ struct
         ?(showHidden = default.showHidden)
         ?(updatedMin = default.updatedMin)
         () =
-    { fields = standard_parameters.GapiService.StandardParameters.fields;
-      prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
-      quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
-      userIp = standard_parameters.GapiService.StandardParameters.userIp;
-      completedMax = completedMax;
-      completedMin = completedMin;
-      dueMax = dueMax;
-      dueMin = dueMin;
-      maxResults = maxResults;
-      pageToken = pageToken;
-      parent = parent;
-      previous = previous;
-      showCompleted = showCompleted;
-      showDeleted = showDeleted;
-      showHidden = showHidden;
-      updatedMin = updatedMin
-    }
+    let parameters =
+      { fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        completedMax = completedMax;
+        completedMin = completedMin;
+        dueMax = dueMax;
+        dueMin = dueMin;
+        maxResults = maxResults;
+        pageToken = pageToken;
+        parent = parent;
+        previous = previous;
+        showCompleted = showCompleted;
+        showDeleted = showDeleted;
+        showHidden = showHidden;
+        updatedMin = updatedMin
+      }
+    in
+      if parameters = default then None else Some parameters
 
 end
 
@@ -152,25 +155,37 @@ struct
   let list ?url ?etag ?parameters ?maxResults ?pageToken session =
     let params = TasksParameters.merge_parameters
                    ?standard_parameters:parameters ?maxResults ?pageToken () in
-      Service.list ?url ?etag ~parameters:params session
+      Service.list ?url ?etag ?parameters:params session
 
   let get ?url ?parameters tasklist_id session =
-    Service.get ?url ?parameters tasklist_id session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.get ?url ?parameters:params tasklist_id session
 
   let refresh ?url ?parameters tasklist session =
-    Service.refresh ?url ?parameters tasklist session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.refresh ?url ?parameters:params tasklist session
 
   let insert ?url ?parameters tasklist session =
-    Service.insert ?url ?parameters tasklist session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.insert ?url ?parameters:params tasklist session
 
   let update ?url ?parameters tasklist session =
-    Service.update ?url ?parameters tasklist session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.update ?url ?parameters:params tasklist session
 
   let patch ?url ?parameters tasklist session =
-    Service.patch ?url ?parameters tasklist session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.patch ?url ?parameters:params tasklist session
 
-  let delete ?url tasklist session =
-    Service.delete ?url tasklist session
+  let delete ?url ?parameters tasklist session =
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.delete ?url ?parameters:params tasklist session
 
 end
 
@@ -219,42 +234,58 @@ module TasksResource =
 struct
   module Service = GapiService.Make(TasksResourceConf)(TasksParameters)
 
-  let list ?url ?etag ?parameters ?tasklist session =
-    Service.list ?url ?etag ?parameters ?container_id:tasklist session
+  let list ?url ?etag ?parameters ?tasklist
+        ?completedMax ?completedMin ?dueMax ?dueMin ?maxResults ?pageToken
+        ?showCompleted ?showDeleted ?showHidden ?updatedMin session =
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?completedMax ?completedMin ?dueMax ?dueMin ?maxResults
+                   ?pageToken ?showCompleted ?showDeleted ?showHidden
+                   ?updatedMin () in
+      Service.list ?url ?etag ?parameters:params ?container_id:tasklist session
 
   let get ?url ?parameters ?tasklist task_id session =
-    Service.get ?url ?parameters ?container_id:tasklist task_id session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.get ?url ?parameters:params ?container_id:tasklist task_id session
 
   let refresh ?url ?parameters ?tasklist task session =
-    Service.refresh ?url ?parameters ?container_id:tasklist task session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.refresh ?url ?parameters:params ?container_id:tasklist task session
 
   let insert ?url ?parameters ?tasklist ?parent ?previous task session =
-    Service.insert ?url ?parameters ?container_id:tasklist task session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.insert ?url ?parameters:params ?container_id:tasklist task session
 
   let update ?url ?parameters ?tasklist task session =
-    Service.update ?url ?parameters ?container_id:tasklist task session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.update ?url ?parameters:params ?container_id:tasklist task session
 
   let patch ?url ?parameters ?tasklist task session =
-    Service.patch ?url ?parameters ?container_id:tasklist task session
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.patch ?url ?parameters:params ?container_id:tasklist task session
 
-  let delete ?url ?tasklist task session =
-    Service.delete ?url ?container_id:tasklist task session
+  let delete ?url ?parameters ?tasklist task session =
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.delete ?url ?parameters:params ?container_id:tasklist task session
 
   let move
         ?(url = TasksResourceConf.service_url)
         ?parameters
         ?(tasklist = "@default")
-        ?(parent = "")
-        ?(previous = "")
+        ?parent
+        ?previous
         task_id
         session =
-    let standard_parameters = GapiService.map_standard_parameters parameters in
-    let target = { TasksParameters.default with
-                       TasksParameters.parent = parent;
-                       TasksParameters.previous = previous } in
-    let query_parameters =
-      TasksParameters.to_key_value_list target @ Option.default
-                                                   [] standard_parameters in
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters ?parent ?previous () in
+    let query_parameters = Option.map_default TasksParameters.to_key_value_list
+                             [] params in
     let url' = GapiUtils.add_path_to_url
                  [tasklist; "tasks"; task_id; "move"]
                  url
@@ -268,11 +299,17 @@ struct
 
   let clear
         ?(url = TasksResourceConf.service_url)
+        ?parameters
         ?(tasklist = "@default")
         session =
+    let params = TasksParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+    let query_parameters = Option.map_default TasksParameters.to_key_value_list
+                             [] params in
     let url' = GapiUtils.add_path_to_url [tasklist; "clear"] url in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
+        ~query_parameters
         url'
         GapiRequest.parse_empty_response
         session

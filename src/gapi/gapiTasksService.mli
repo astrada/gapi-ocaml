@@ -10,50 +10,6 @@ val scope : string
 (** OAuth 2.0 scope to get read-only access to Tasks *)
 val read_only_scope : string
 
-(** The query parameters you can use with the Tasks API. *)
-module TasksParameters :
-sig
-  type t = {
-    fields : string;
-    (** Selector specifying which fields to include in a partial response. *)
-    prettyPrint : bool;
-    (** Returns response with indentations and line breaks. *)
-    quotaUser : string;
-    (** Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides [userIp] if both are provided. *)
-    userIp : string;
-    (** IP address of the end user for whom the API call is being made. *)
-    completedMax : GapiDate.t;
-    (** Upper bound for a task's completion date (as an RFC 3339 timestamp) to filter by. *) 
-    completedMin : GapiDate.t;
-    (** Lower bound for a task's completion date (as an RFC 3339 timestamp) to filter by. *)
-    dueMax : GapiDate.t;
-    (** Upper bound for a task's due date (as an RFC 3339 timestamp) to filter by. *)
-    dueMin : GapiDate.t;
-    (** Lower bound for a task's due date (as an RFC 3339 timestamp) to filter by. *)
-    maxResults : int;
-    (** The maximum number of elements to return with this request. *)
-    pageToken : string;
-    (** Token specifying the result page to return. *)
-    parent : string;
-    (** Specify the task's parent task ID. *)
-    previous : string;
-    (** Specify the task's previous task ID. *)
-    showCompleted : bool;
-    (** Specify whether or not to show completed tasks. Defaults to [true]. *)
-    showDeleted : bool;
-    (** Specify whether or not to show deleted tasks. Defaults to [false]. *)
-    showHidden : bool;
-    (** Specify whether or not to show hidden tasks. Defaults to [true]. *)
-    updatedMin : GapiDate.t;
-    (** Lower bound for a task's last modification time (as an RFC 3339 timestamp) to filter by. *) 
-  }
-
-  val default : t
-
-  val to_key_value_list : t -> (string * string) list
-
-end
-
 (** The "tasklists" service. *)
 module TasklistsResource :
 sig
@@ -155,6 +111,7 @@ sig
     *)
   val delete :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     GapiTasks.TaskList.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
@@ -172,12 +129,32 @@ sig
     @param etag optional ETag
     @param parameters optional specific parameters
     @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    @param completedMax Upper bound for a task's completion date (as an RFC 3339 timestamp) to filter by.
+    @param completedMin Lower bound for a task's completion date (as an RFC 3339 timestamp) to filter by.
+    @param dueMax Upper bound for a task's due date (as an RFC 3339 timestamp) to filter by.
+    @param dueMin Lower bound for a task's due date (as an RFC 3339 timestamp) to filter by.
+    @param maxResults The maximum number of elements to return with this request.
+    @param pageToken Token specifying the result page to return.
+    @param showCompleted Specify whether or not to show completed tasks. Defaults to [true].
+    @param showDeleted Specify whether or not to show deleted tasks. Defaults to [false].
+    @param showHidden Specify whether or not to show hidden tasks. Defaults to [true].
+    @param updatedMin Lower bound for a task's last modification time (as an RFC 3339 timestamp) to filter by.
     *)
   val list :
     ?url:string ->
     ?etag:string ->
-    ?parameters:TasksParameters.t ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
+    ?completedMax:GapiDate.t ->
+    ?completedMin:GapiDate.t ->
+    ?dueMax:GapiDate.t ->
+    ?dueMin:GapiDate.t ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?showCompleted:bool ->
+    ?showDeleted:bool ->
+    ?showHidden:bool ->
+    ?updatedMin:GapiDate.t ->
     GapiConversation.Session.t ->
     GapiTasks.Tasks.t * GapiConversation.Session.t
 
@@ -238,6 +215,7 @@ sig
     Usage [update task session], where [task] is the task to update, and [session] is the current session.
 
     @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
     @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val update :
@@ -253,6 +231,7 @@ sig
     Usage [patch task session], where [task] is the task to update, and [session] is the current session.
 
     @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
     @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val patch :
@@ -268,10 +247,12 @@ sig
     Usage [delete task session], where [task] is the task to delete, and [session] is the current session.
 
     @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
     @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val delete :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
     GapiTasks.Task.t ->
     GapiConversation.Session.t -> unit * GapiConversation.Session.t
@@ -281,6 +262,7 @@ sig
     Usage [move task_id session], where [task_id] is the task identifier to move, and [session] is the current session.
 
     @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
     @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val move :
@@ -298,10 +280,12 @@ sig
     Usage: [clear session], where [session] is the current session.
 
     @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
     @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val clear :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t

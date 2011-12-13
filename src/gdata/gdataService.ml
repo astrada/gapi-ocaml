@@ -52,7 +52,16 @@ let update
     parse_response
     session
 
-let delete = GapiService.delete
+let delete
+      ?version
+      ?etag
+      id
+      session =
+  GapiService.delete
+    ?version
+    ?etag
+    id
+    session
 
 let batch_request data_to_tree =
   GapiService.batch_request (data_to_post data_to_tree)

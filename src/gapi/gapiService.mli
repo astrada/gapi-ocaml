@@ -80,6 +80,7 @@ val patch :
 val delete :
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   string ->
   GapiConversation.Session.t ->
   unit * GapiConversation.Session.t
@@ -162,7 +163,7 @@ sig
 
   val get :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     string ->
     GapiConversation.Session.t ->
@@ -170,7 +171,7 @@ sig
 
   val refresh :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -178,7 +179,7 @@ sig
 
   val insert :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -186,7 +187,7 @@ sig
 
   val update :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -194,7 +195,7 @@ sig
 
   val patch :
     ?url:string ->
-    ?parameters:StandardParameters.t ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
@@ -202,6 +203,7 @@ sig
 
   val delete :
     ?url:string ->
+    ?parameters:query_parameters_t ->
     ?container_id:string ->
     resource_t ->
     GapiConversation.Session.t ->
