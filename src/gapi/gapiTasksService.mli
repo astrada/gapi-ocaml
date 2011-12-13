@@ -164,92 +164,145 @@ end
 (** The "tasks" service. *)
 module TasksResource :
 sig
-  (** Returns all tasks in the specified task list. *)
+  (** Returns all tasks in the specified task list.
+
+    Usage [list session], where [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param etag optional ETag
+    @param parameters optional specific parameters
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    *)
   val list :
     ?url:string ->
     ?etag:string ->
     ?parameters:TasksParameters.t ->
-    ?container_id:string ->
+    ?tasklist:string ->
     GapiConversation.Session.t ->
     GapiTasks.Tasks.t * GapiConversation.Session.t
 
   (** Returns the specified task.
+
+    Usage [get task_id session], where [task_id] is the task identifier to retrieve, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val get :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
+    ?tasklist:string ->
     string ->
     GapiConversation.Session.t ->
     GapiTasks.Task.t * GapiConversation.Session.t
 
+  (** Reloads the specified task.
+
+    Usage [refresh task_id session], where [task] is the task to reload, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    *)
   val refresh :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
+    ?tasklist:string ->
     GapiTasks.Task.t ->
     GapiConversation.Session.t ->
     GapiTasks.Task.t * GapiConversation.Session.t
 
   (** Creates a new task on the specified task list.
    
-    @param tasklist Task list identifier.
+    Usage [refresh task session], where [task] is the task to insert, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param parameters optional standard parameters
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    @param parent Parent task identifier. If the task is created at the top level, this parameter is omitted.
+    @param previous Previous sibling task identifier. If the task is created at the first position among its siblings, this parameter is omitted.
    *)
   val insert :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
+    ?tasklist:string ->
+    ?parent:string ->
+    ?previous:string ->
     GapiTasks.Task.t ->
     GapiConversation.Session.t ->
     GapiTasks.Task.t * GapiConversation.Session.t
 
-  (** Updates the specified task. *)
+  (** Updates the specified task.
+
+    Usage [update task session], where [task] is the task to update, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    *)
   val update :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
+    ?tasklist:string ->
     GapiTasks.Task.t ->
     GapiConversation.Session.t ->
     GapiTasks.Task.t * GapiConversation.Session.t
 
-  (** Updates the specified task. {e This method supports patch semantics.} *)
+  (** Updates the specified task. This method supports patch semantics.
+
+    Usage [patch task session], where [task] is the task to update, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    *)
   val patch :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
+    ?tasklist:string ->
     GapiTasks.Task.t ->
     GapiConversation.Session.t ->
     GapiTasks.Task.t * GapiConversation.Session.t
 
-  (** Deletes the specified task from the task list. *)
+  (** Deletes the specified task from the task list.
+
+    Usage [delete task session], where [task] is the task to delete, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
+    *)
   val delete :
     ?url:string ->
-    ?container_id:string ->
+    ?tasklist:string ->
     GapiTasks.Task.t ->
     GapiConversation.Session.t -> unit * GapiConversation.Session.t
 
   (** Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks.
 
-    @param tasklist Task list identifier.
-    @param task Task identifier.
+    Usage [move task_id session], where [task_id] is the task identifier to move, and [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val move :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
-    ?new_parent:string ->
-    ?new_previous:string ->
+    ?tasklist:string ->
+    ?parent:string ->
+    ?previous:string ->
     string ->
     GapiConversation.Session.t ->
     GapiTasks.Task.t * GapiConversation.Session.t
 
   (** Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.
 
-    @param tasklist Task list identifier.
+    Usage: [clear session], where [session] is the current session.
+
+    @param url the service endpoint base url (defaults to ["https://www.googleapis.com/tasks/v1/lists"])
+    @param tasklist Task list identifier. The default is ["@default"], i.e. the authenticated user's default task list 
     *)
   val clear :
     ?url:string ->
-    ?container_id:string ->
+    ?tasklist:string ->
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
 

@@ -69,44 +69,37 @@ struct
       |> List.concat
 
   let merge_parameters
-        ?standard_parameters
-        ?completedMax
-        ?completedMin
-        ?dueMax
-        ?dueMin
-        ?maxResults
-        ?pageToken
-        ?parent
-        ?previous
-        ?showCompleted
-        ?showDeleted
-        ?showHidden
-        ?updatedMin
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(completedMax = default.completedMax)
+        ?(completedMin = default.completedMin)
+        ?(dueMax = default.dueMax)
+        ?(dueMin = default.dueMin)
+        ?(maxResults = default.maxResults)
+        ?(pageToken = default.pageToken)
+        ?(parent = default.parent)
+        ?(previous = default.previous)
+        ?(showCompleted = default.showCompleted)
+        ?(showDeleted = default.showDeleted)
+        ?(showHidden = default.showHidden)
+        ?(updatedMin = default.updatedMin)
         () =
-    let p =
-      Option.map_default
-        (fun sp ->
-           { default with
-                 fields = sp.GapiService.StandardParameters.fields;
-                 prettyPrint = sp.GapiService.StandardParameters.prettyPrint;
-                 quotaUser = sp.GapiService.StandardParameters.quotaUser;
-                 userIp = sp.GapiService.StandardParameters.userIp
-           })
-        default
-        standard_parameters in
-    let p = Option.map_default (fun x -> { p with completedMax = x }) p completedMax in
-    let p = Option.map_default (fun x -> { p with completedMin = x }) p completedMin in
-    let p = Option.map_default (fun x -> { p with dueMax = x }) p dueMax in
-    let p = Option.map_default (fun x -> { p with dueMin = x }) p dueMin in
-    let p = Option.map_default (fun x -> { p with maxResults = x }) p maxResults in
-    let p = Option.map_default (fun x -> { p with pageToken = x }) p pageToken in
-    let p = Option.map_default (fun x -> { p with parent = x }) p parent in
-    let p = Option.map_default (fun x -> { p with previous = x }) p previous in
-    let p = Option.map_default (fun x -> { p with showCompleted = x }) p showCompleted in
-    let p = Option.map_default (fun x -> { p with showDeleted = x }) p showDeleted in
-    let p = Option.map_default (fun x -> { p with showHidden = x }) p showHidden in
-    let p = Option.map_default (fun x -> { p with updatedMin = x }) p updatedMin in
-      p
+    { fields = standard_parameters.GapiService.StandardParameters.fields;
+      prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+      quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+      userIp = standard_parameters.GapiService.StandardParameters.userIp;
+      completedMax = completedMax;
+      completedMin = completedMin;
+      dueMax = dueMax;
+      dueMin = dueMin;
+      maxResults = maxResults;
+      pageToken = pageToken;
+      parent = parent;
+      previous = previous;
+      showCompleted = showCompleted;
+      showDeleted = showDeleted;
+      showHidden = showHidden;
+      updatedMin = updatedMin
+    }
 
 end
 
@@ -153,9 +146,8 @@ end
 
 module TasklistsResource =
 struct
-  module Service = GapiService.Make
-                     (TasklistsResourceConf)
-                     (TasksParameters)
+  module Service =
+    GapiService.Make(TasklistsResourceConf)(TasksParameters)
 
   let list ?url ?etag ?parameters ?maxResults ?pageToken session =
     let params = TasksParameters.merge_parameters
@@ -225,25 +217,46 @@ end
 
 module TasksResource =
 struct
-  include GapiService.Make(TasksResourceConf)(TasksParameters)
+  module Service = GapiService.Make(TasksResourceConf)(TasksParameters)
+
+  let list ?url ?etag ?parameters ?tasklist session =
+    Service.list ?url ?etag ?parameters ?container_id:tasklist session
+
+  let get ?url ?parameters ?tasklist task_id session =
+    Service.get ?url ?parameters ?container_id:tasklist task_id session
+
+  let refresh ?url ?parameters ?tasklist task session =
+    Service.refresh ?url ?parameters ?container_id:tasklist task session
+
+  let insert ?url ?parameters ?tasklist ?parent ?previous task session =
+    Service.insert ?url ?parameters ?container_id:tasklist task session
+
+  let update ?url ?parameters ?tasklist task session =
+    Service.update ?url ?parameters ?container_id:tasklist task session
+
+  let patch ?url ?parameters ?tasklist task session =
+    Service.patch ?url ?parameters ?container_id:tasklist task session
+
+  let delete ?url ?tasklist task session =
+    Service.delete ?url ?container_id:tasklist task session
 
   let move
         ?(url = TasksResourceConf.service_url)
         ?parameters
-        ?(container_id = "@default")
-        ?(new_parent = "")
-        ?(new_previous = "")
+        ?(tasklist = "@default")
+        ?(parent = "")
+        ?(previous = "")
         task_id
         session =
     let standard_parameters = GapiService.map_standard_parameters parameters in
     let target = { TasksParameters.default with
-                       TasksParameters.parent = new_parent;
-                       TasksParameters.previous = new_previous } in
+                       TasksParameters.parent = parent;
+                       TasksParameters.previous = previous } in
     let query_parameters =
       TasksParameters.to_key_value_list target @ Option.default
                                                    [] standard_parameters in
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "tasks"; task_id; "move"]
+                 [tasklist; "tasks"; task_id; "move"]
                  url
     in
       GapiService.service_request
@@ -255,9 +268,9 @@ struct
 
   let clear
         ?(url = TasksResourceConf.service_url)
-        ?(container_id = "@default")
+        ?(tasklist = "@default")
         session =
-    let url' = GapiUtils.add_path_to_url [container_id; "clear"] url in
+    let url' = GapiUtils.add_path_to_url [tasklist; "clear"] url in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
         url'

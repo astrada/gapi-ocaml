@@ -266,7 +266,7 @@ let test_move_task () =
        let _ = delay () in
        let (new_entry', session) =
          GapiTasksService.TasksResource.move
-           ~new_parent:new_entry_2.GapiTasks.Task.id
+           ~parent:new_entry_2.GapiTasks.Task.id
            new_entry.GapiTasks.Task.id
            session in
          ignore (GapiTasksService.TasksResource.delete
