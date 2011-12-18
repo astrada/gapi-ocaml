@@ -157,10 +157,10 @@ struct
                    ?standard_parameters:parameters ?maxResults ?pageToken () in
       Service.list ?url ?etag ?parameters:params session
 
-  let get ?url ?parameters tasklist_id session =
+  let get ?url ?parameters ~tasklist session =
     let params = TasksParameters.merge_parameters
                    ?standard_parameters:parameters () in
-      Service.get ?url ?parameters:params tasklist_id session
+      Service.get ?url ?parameters:params tasklist session
 
   let refresh ?url ?parameters tasklist session =
     let params = TasksParameters.merge_parameters
@@ -244,10 +244,10 @@ struct
                    ?updatedMin () in
       Service.list ?url ?etag ?parameters:params ?container_id:tasklist session
 
-  let get ?url ?parameters ?tasklist task_id session =
+  let get ?url ?parameters ?tasklist ~task session =
     let params = TasksParameters.merge_parameters
                    ?standard_parameters:parameters () in
-      Service.get ?url ?parameters:params ?container_id:tasklist task_id session
+      Service.get ?url ?parameters:params ?container_id:tasklist task session
 
   let refresh ?url ?parameters ?tasklist task session =
     let params = TasksParameters.merge_parameters
@@ -280,14 +280,14 @@ struct
         ?(tasklist = "@default")
         ?parent
         ?previous
-        task_id
+        ~task
         session =
     let params = TasksParameters.merge_parameters
                    ?standard_parameters:parameters ?parent ?previous () in
     let query_parameters = Option.map_default TasksParameters.to_key_value_list
                              [] params in
     let url' = GapiUtils.add_path_to_url
-                 [tasklist; "tasks"; task_id; "move"]
+                 [tasklist; "tasks"; task; "move"]
                  url
     in
       GapiService.service_request

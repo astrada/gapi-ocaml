@@ -59,7 +59,7 @@ let test_get_task_list () =
            session in
        let (entry', session) =
          GapiTasksService.TasklistsResource.get
-           entry.GapiTasks.TaskList.id
+           ~tasklist:entry.GapiTasks.TaskList.id
            session in
        let _ = delay () in
          ignore (GapiTasksService.TasklistsResource.delete
@@ -180,7 +180,7 @@ let test_get_task () =
            session in
        let (entry', session) =
          GapiTasksService.TasksResource.get
-           entry.GapiTasks.Task.id
+           ~task:entry.GapiTasks.Task.id
            session in
        let _ = delay () in
          ignore (GapiTasksService.TasksResource.delete
@@ -267,7 +267,7 @@ let test_move_task () =
        let (new_entry', session) =
          GapiTasksService.TasksResource.move
            ~parent:new_entry_2.GapiTasks.Task.id
-           new_entry.GapiTasks.Task.id
+           ~task:new_entry.GapiTasks.Task.id
            session in
          ignore (GapiTasksService.TasksResource.delete
                    new_entry'
