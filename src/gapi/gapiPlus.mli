@@ -274,6 +274,8 @@ sig
   type t = {
     kind : string;
     (** Identifies this resource as an activity. Value: ["plus#activity"]. *)
+    etag : string;
+    (** ETag of this response for caching purposes. *)
     placeholder : bool;
     (** [true] if this activity is a placeholder. *)
     title : string;
@@ -351,6 +353,8 @@ sig
   type t = {
     kind : string;
     (** Identifies this resource as a collection of activities. Value: ["plus#activityFeed"]. *)
+    etag : string;
+    (** ETag of this response for caching purposes. *)
     nextPageToken : string;
     (** The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     selfLink : string;
@@ -434,6 +438,8 @@ sig
   type t = {
     kind : string;
     (** Identifies this resource as a comment. Value: ["plus#comment"]. *)
+    etag : string;
+    (** ETag of this response for caching purposes. *)
     id : string;
     (** The ID of this comment. *)
     published : GapiDate.t;
@@ -480,6 +486,8 @@ sig
   type t = {
     kind : string;
     (** Identifies this resource as a collection of comments. Value: ["plus#commentFeed"]. *)
+    etag : string;
+    (** ETag of this response for caching purposes. *)
     nextPageToken : string;
     (** The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     nextLink : string;
@@ -669,6 +677,8 @@ sig
   type t = {
     kind : string;
     (** Identifies this resource as a person. Value: ["plus#person"]. *)
+    etag : string;
+    (** ETag of this response for caching purposes. *)
     objectType : string;
     (** Type of person within Google+. Possible values are:  
     - ["person"] - represents an actual person. 
@@ -763,6 +773,8 @@ sig
   type t = {
     kind : string;
     (** Identifies this resource as a collection of people. Value: ["plus#peopleFeed"]. *)
+    etag : string;
+    (** ETag of this response for caching purposes. *)
     selfLink : string;
     (** Link to this resource. *)
     title : string;

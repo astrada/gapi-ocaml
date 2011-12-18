@@ -675,6 +675,7 @@ module Activity =
 struct
   type t = {
     kind : string;
+    etag : string;
     placeholder : bool;
     title : string;
     published : GapiDate.t;
@@ -698,6 +699,10 @@ struct
   let kind = {
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
   }
   let placeholder = {
     GapiLens.get = (fun x -> x.placeholder);
@@ -774,6 +779,7 @@ struct
 
   let empty = {
     kind = "";
+    etag = "";
     placeholder = false;
     title = "";
     published = GapiDate.epoch;
@@ -797,6 +803,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
        render_bool_value "placeholder" x.placeholder;
        render_string_value "title" x.title;
        render_date_value "published" x.published;
@@ -822,6 +829,10 @@ struct
           ({ name = "kind"; data_type = Scalar },
            Json_type.String v) ->
           { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
       | AnnotatedTree.Leaf
           ({ name = "placeholder"; data_type = Scalar },
            Json_type.Bool v) ->
@@ -931,6 +942,7 @@ module ActivityFeed =
 struct
   type t = {
     kind : string;
+    etag : string;
     nextPageToken : string;
     selfLink : string;
     nextLink : string;
@@ -943,6 +955,10 @@ struct
   let kind = {
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
   }
   let nextPageToken = {
     GapiLens.get = (fun x -> x.nextPageToken);
@@ -975,6 +991,7 @@ struct
 
   let empty = {
     kind = "";
+    etag = "";
     nextPageToken = "";
     selfLink = "";
     nextLink = "";
@@ -987,6 +1004,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
        render_string_value "nextPageToken" x.nextPageToken;
        render_string_value "selfLink" x.selfLink;
        render_string_value "nextLink" x.nextLink;
@@ -1001,6 +1019,10 @@ struct
           ({ name = "kind"; data_type = Scalar },
            Json_type.String v) ->
           { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
       | AnnotatedTree.Leaf
           ({ name = "nextPageToken"; data_type = Scalar },
            Json_type.String v) ->
@@ -1154,6 +1176,7 @@ module Comment =
 struct
   type t = {
     kind : string;
+    etag : string;
     id : string;
     published : GapiDate.t;
     updated : GapiDate.t;
@@ -1167,6 +1190,10 @@ struct
 	let kind = {
 		GapiLens.get = (fun x -> x.kind);
 		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
 	}
 	let id = {
 		GapiLens.get = (fun x -> x.id);
@@ -1203,6 +1230,7 @@ struct
 
   let empty = {
     kind = "";
+    etag = "";
     id = "";
     published = GapiDate.epoch;
     updated = GapiDate.epoch;
@@ -1216,6 +1244,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
        render_string_value "id" x.id;
        render_date_value "published" x.published;
        render_date_value "updated" x.updated;
@@ -1231,6 +1260,10 @@ struct
           ({ name = "kind"; data_type = Scalar },
            Json_type.String v) ->
           { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
       | AnnotatedTree.Leaf
           ({ name = "id"; data_type = Scalar },
            Json_type.String v) ->
@@ -1296,6 +1329,7 @@ module CommentFeed =
 struct
   type t = {
     kind : string;
+    etag : string;
     nextPageToken : string;
     nextLink : string;
     title : string;
@@ -1307,6 +1341,10 @@ struct
 	let kind = {
 		GapiLens.get = (fun x -> x.kind);
 		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
 	}
 	let nextPageToken = {
 		GapiLens.get = (fun x -> x.nextPageToken);
@@ -1335,6 +1373,7 @@ struct
 
   let empty = {
     kind = "";
+    etag = "";
     nextPageToken = "";
     nextLink = "";
     title = "";
@@ -1346,6 +1385,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
        render_string_value "nextPageToken" x.nextPageToken;
        render_string_value "nextLink" x.nextLink;
        render_string_value "title" x.title;
@@ -1359,6 +1399,10 @@ struct
           ({ name = "kind"; data_type = Scalar },
            Json_type.String v) ->
           { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
       | AnnotatedTree.Leaf
           ({ name = "nextPageToken"; data_type = Scalar },
            Json_type.String v) ->
@@ -1797,6 +1841,7 @@ module Person =
 struct
   type t = {
     kind : string;
+    etag : string;
     objectType : string;
     id : string;
     displayName : string;
@@ -1821,6 +1866,10 @@ struct
 	let kind = {
 		GapiLens.get = (fun x -> x.kind);
 		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
 	}
 	let objectType = {
 		GapiLens.get = (fun x -> x.objectType);
@@ -1901,6 +1950,7 @@ struct
 
   let empty = {
     kind = "";
+    etag = "";
     objectType = "";
     id = "";
     displayName = "";
@@ -1925,6 +1975,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
        render_string_value "objectType" x.objectType;
        render_string_value "id" x.id;
        render_string_value "displayName" x.displayName;
@@ -1959,6 +2010,10 @@ struct
           ({ GapiJson.name = "kind"; data_type = Scalar },
            Json_type.String v) ->
           { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ GapiJson.name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
       | AnnotatedTree.Leaf
           ({ GapiJson.name = "objectType"; data_type = Scalar },
            Json_type.String v) ->
@@ -2084,6 +2139,7 @@ module PeopleFeed =
 struct
   type t = {
     kind : string;
+    etag : string;
     selfLink : string;
     title : string;
     nextPageToken : string;
@@ -2093,6 +2149,10 @@ struct
 	let kind = {
 		GapiLens.get = (fun x -> x.kind);
 		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
 	}
 	let selfLink = {
 		GapiLens.get = (fun x -> x.selfLink);
@@ -2113,6 +2173,7 @@ struct
 
   let empty = {
     kind = "";
+    etag = "";
     selfLink = "";
     title = "";
     nextPageToken = "";
@@ -2122,6 +2183,7 @@ struct
   let render x =
     render_object ""
       [render_string_value "kind" x.kind;
+       render_string_value "etag" x.etag;
        render_string_value "selfLink" x.selfLink;
        render_string_value "title" x.title;
        render_string_value "nextPageToken" x.nextPageToken;
@@ -2133,6 +2195,10 @@ struct
           ({ name = "kind"; data_type = Scalar },
            Json_type.String v) ->
           { x with kind = v }
+      | AnnotatedTree.Leaf
+          ({ name = "etag"; data_type = Scalar },
+           Json_type.String v) ->
+          { x with etag = v }
       | AnnotatedTree.Leaf
           ({ name = "selfLink"; data_type = Scalar },
            Json_type.String v) ->
