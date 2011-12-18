@@ -64,7 +64,7 @@ let test_get_acl () =
            session in
        let (entry', session) =
          GapiCalendarService.AclResource.get
-           entry.GapiCalendar.AclRule.id
+           ~ruleId:entry.GapiCalendar.AclRule.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.AclResource.delete

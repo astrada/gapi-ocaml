@@ -124,9 +124,32 @@ struct
 end
 
 module AclResource =
-  GapiService.Make
-    (AclResourceConf)
-    (GapiService.StandardParameters)
+struct
+  module Service =
+    GapiService.Make(AclResourceConf)(GapiService.StandardParameters)
+
+  let list ?url ?etag ?parameters ?calendarId session =
+    Service.list ?url ?etag ?parameters ?container_id:calendarId session
+
+  let get ?url ?parameters ?calendarId ~ruleId session =
+    Service.get ?url ?parameters ?container_id:calendarId ruleId session
+
+  let refresh ?url ?parameters ?calendarId aclRule session =
+    Service.refresh ?url ?parameters ?container_id:calendarId aclRule session
+
+  let insert ?url ?parameters ?calendarId aclRule session =
+    Service.insert ?url ?parameters ?container_id:calendarId aclRule session
+
+  let update ?url ?parameters ?calendarId aclRule session =
+    Service.update ?url ?parameters ?container_id:calendarId aclRule session
+
+  let patch ?url ?parameters ?calendarId aclRule session =
+    Service.patch ?url ?parameters ?container_id:calendarId aclRule session
+
+  let delete ?url ?parameters ?calendarId aclRule session =
+    Service.delete ?url ?parameters ?container_id:calendarId aclRule session
+
+end
 
 module CalendarListResourceConf =
 struct

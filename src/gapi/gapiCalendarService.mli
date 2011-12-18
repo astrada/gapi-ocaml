@@ -80,25 +80,114 @@ end
 
 (** The "acl" service.
   
-  [list]: Returns the rules in the access control list for the calendar.
 
-  [get]: Returns an access control rule.
 
-  [refresh]: Reloads an access control rule.
 
-  [insert]: Creates an access control rule.
 
-  [update]: Updates an access control rule.
-
-  [patch]: Updates an access control rule. {e This method supports patch semantics. }
-
-  [delete]: Deletes an access control rule.
   *)
 module AclResource :
-  GapiService.Service with
-    type resource_list_t = GapiCalendar.Acl.t
-      and type resource_t = GapiCalendar.AclRule.t
-      and type query_parameters_t = GapiService.StandardParameters.t
+sig
+  (** Returns the rules in the access control list for the calendar.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param etag Optional ETag.
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val list :
+    ?url:string ->
+    ?etag:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.Acl.t * GapiConversation.Session.t)
+
+  (** Returns an access control rule.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    @param ruleId ACL rule identifier.
+    *)
+  val get :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    ruleId:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+
+  (** Reloads an access control rule.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val refresh :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    GapiCalendar.AclRule.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+
+  (** Creates an access control rule.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val insert :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    GapiCalendar.AclRule.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+
+  (** Updates an access control rule.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val update :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    GapiCalendar.AclRule.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+
+  (** Updates an access control rule. This method supports patch semantics.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val patch :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    GapiCalendar.AclRule.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+
+  (** Deletes an access control rule.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val delete :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
+    GapiCalendar.AclRule.t ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+end
 
 (** The "calendarList" service.
   
