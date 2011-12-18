@@ -313,16 +313,39 @@ end
 
 module CalendarsResource =
 struct
-  include GapiService.Make
-    (CalendarsResourceConf)
-    (GapiService.StandardParameters)
+  module Service =
+    GapiService.Make(CalendarsResourceConf)(GapiService.StandardParameters)
+
+  let get ?url ?parameters ~calendarId session =
+    Service.get ?url ?parameters calendarId session
+
+  let refresh ?url ?parameters calendar session =
+    Service.refresh ?url ?parameters calendar session
+
+  let insert ?url ?parameters calendar session =
+    Service.insert ?url ?parameters calendar session
+
+  let update ?url ?parameters calendar session =
+    Service.update ?url ?parameters calendar session
+
+  let patch ?url ?parameters calendar session =
+    Service.patch ?url ?parameters calendar session
+
+  let delete ?url ?parameters calendar session =
+    Service.delete ?url ?parameters calendar session
 
   let clear
         ?(url = CalendarsResourceConf.service_url)
+        ?parameters
+        ?(calendarId = "primary")
         session =
-    let url' = GapiUtils.add_path_to_url ["primary"; "clear"] url in
+    let url' = GapiUtils.add_path_to_url [calendarId; "clear"] url in
+    let query_parameters = Option.map
+                             GapiService.StandardParameters.to_key_value_list
+                             parameters in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
+        ?query_parameters
         url'
         GapiRequest.parse_empty_response
         session

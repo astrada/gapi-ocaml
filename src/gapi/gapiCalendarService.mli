@@ -288,96 +288,87 @@ module CalendarsResource :
 sig
   (** Returns metadata for a calendar.
 
-    Usage: [get ?url calendar_id session] where [calendar_id] is the ID of the calendar to retrieve, and [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
     *)
   val get :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
-    string ->
+    calendarId:string ->
     GapiConversation.Session.t ->
     (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   (** Refreshes metadata for a calendar.
 
-    Usage: [refresh ?url calendar session] where [calendar] is the calendar to reload, and [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
     *)
   val refresh :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
     (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   (** Creates a secondary calendar.
      
-    Usage: [insert ?url calendar session] where [calendar] is the calendar to insert, and [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
     *)
   val insert :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
     (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   (** Updates metadata for a calendar.
      
-    Usage: [update ?url calendar session] where [calendar] is the updated calendar to upload, and [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
     *)
   val update :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
     (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
-  (** Updates metadata for a calendar. {e This method supports patch semantics.}
+  (** Updates metadata for a calendar. This method supports patch semantics.
      
-    Usage: [patch ?url calendar session] where [calendar] is the updated calendar to merge, and [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
     *)
   val patch :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
     (GapiCalendar.Calendar.t * GapiConversation.Session.t)
 
   (** Deletes a secondary calendar.
      
-    Usage: [delete ?url calendar session] where [calendar] is the calendar to delete, and [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
     *)
   val delete :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
     GapiCalendar.Calendar.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
-  (** Clears a primary calendar. {e This operation deletes all data associated with the primary calendar.}
+  (** Clears a primary calendar. This operation deletes all data associated with the primary calendar.
      
-    Usage: [clear ?url session] where [session] is the current session.
-     
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
     *)
   val clear :
     ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?calendarId:string ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -390,7 +381,7 @@ sig
      
     Usage: [get ?url session] where [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/colors"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/colors"]).
     *)
   val get :
     ?url:string ->
@@ -407,10 +398,10 @@ sig
 
     Usage: [list ?url ?etag ?parameters ?container_id session] where [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param etag optional ETag
-    @param parameters request parameters
-    @param container_id ID of the calendar containing the events to list (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param etag optional ETag.
+    @param parameters request parameters.
+    @param container_id ID of the calendar containing the events to list (defaults to {e primary} calendar).
     *)
   val list :
     ?url:string ->
@@ -424,8 +415,8 @@ sig
 
     Usage: [get ?url ?container_id event_id session] where [event_id] is the ID of the event to retrieve, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar).
     *)
   val get :
     ?url:string ->
@@ -439,8 +430,8 @@ sig
 
     Usage: [refresh ?url ?container_id event session] where [event] is the event to reload, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar).
     *)
   val refresh :
     ?url:string ->
@@ -454,8 +445,8 @@ sig
      
     Usage: [insert ?url ?container_id event session] where [event] is the event to insert, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar that will contain the new event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar that will contain the new event (defaults to {e primary} calendar).
     *)
   val insert :
     ?url:string ->
@@ -469,8 +460,8 @@ sig
      
     Usage: [update ?url ?container_id event session] where [event] is the updated event to upload, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar).
     *)
   val update :
     ?url:string ->
@@ -484,8 +475,8 @@ sig
      
     Usage: [patch ?url ?container_id event session] where [event] is the updated event to merge, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar).
     *)
   val patch :
     ?url:string ->
@@ -499,8 +490,8 @@ sig
      
     Usage: [delete ?url ?container_id event session] where [event] is the event to delete, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar).
     *)
   val delete :
     ?url:string ->
@@ -514,8 +505,8 @@ sig
 
     Usage: [instances ?url ?container_id event_id session] where [event_id] is the ID of the recurring event, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event (defaults to {e primary} calendar).
     *)
   val instances :
     ?url:string ->
@@ -529,8 +520,8 @@ sig
      
     Usage: [import ?url ?container_id event session] where [event] is the event to import, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar that will contain the new event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar that will contain the new event (defaults to {e primary} calendar).
     *)
   val import :
     ?url:string ->
@@ -544,8 +535,8 @@ sig
 
     Usage: [quickAdd ?url ?container_id text session] where [text] is the description of the event to add, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar that will contain the new event (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar that will contain the new event (defaults to {e primary} calendar).
     *)
   val quickAdd :
     ?url:string ->
@@ -559,8 +550,8 @@ sig
      
     Usage: [move ?url ?container_id event_id destination_id session] where [event_id] is the ID of the event to move, [destination_id] is the ID of the destination calendar, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event to move (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event to move (defaults to {e primary} calendar).
     *)
   val move :
     ?url:string ->
@@ -575,8 +566,8 @@ sig
      
     Usage: [reset ?url ?container_id instance_id session] where [event_id] is the ID of the instance to reset, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/calendars"])
-    @param container_id ID of the calendar containing the event to reset (defaults to {e primary} calendar)
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param container_id ID of the calendar containing the event to reset (defaults to {e primary} calendar).
     *)
   val reset :
     ?url:string ->
@@ -595,7 +586,7 @@ sig
 
     Usage: [query ?url parameters session] where [parameters] specifies the request parameters (e.g.: target calendar IDs), and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/freeBusy"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/freeBusy"]).
     *)
   val query :
     ?url:string ->
@@ -613,9 +604,9 @@ sig
 
     Usage: [list ?url ?etag ?parameters session] where [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/users/me/settings"])
-    @param etag optional ETag
-    @param parameters standard parameters
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/users/me/settings"]).
+    @param etag optional ETag.
+    @param parameters standard parameters.
     *)
   val list :
     ?url:string ->
@@ -629,7 +620,7 @@ sig
 
     Usage: [get ?url setting_id session] where [setting_id] is the name of the user setting, and [session] is the current session.
      
-    @param url the service endpoint (defaults to ["https://www.googleapis.com/calendar/v3/users/me/settings"])
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/users/me/settings"]).
     *)
   val get :
     ?url:string ->

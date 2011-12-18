@@ -214,7 +214,7 @@ let test_get_calendar () =
            session in
        let (entry', session) =
          GapiCalendarService.CalendarsResource.get
-           entry.GapiCalendar.Calendar.id
+           ~calendarId:entry.GapiCalendar.Calendar.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.CalendarsResource.delete
@@ -239,7 +239,7 @@ let test_get_calendar_partial_response () =
        let (entry', session) =
          GapiCalendarService.CalendarsResource.get
            ~parameters
-           entry.GapiCalendar.Calendar.id
+           ~calendarId:entry.GapiCalendar.Calendar.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.CalendarsResource.delete
@@ -887,7 +887,7 @@ let test_free_busy_query () =
     (fun session ->
        let (calendar, session) =
          GapiCalendarService.CalendarsResource.get
-           "primary"
+           ~calendarId:"primary"
            session in
        let (event, session) =
          GapiCalendarService.EventsResource.insert
