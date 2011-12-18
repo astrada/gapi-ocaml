@@ -80,6 +80,50 @@ struct
        param (fun p -> p.updatedMin) GapiDate.to_string "updatedMin"]
       |> List.concat
 
+  let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(maxAttendees = default.maxAttendees)
+        ?(maxResults = default.maxResults)
+        ?(minAccessRole = default.minAccessRole)
+        ?(orderBy = default.orderBy)
+        ?(originalStart = default.originalStart)
+        ?(pageToken = default.pageToken)
+        ?(q = default.q)
+        ?(sendNotifications = default.sendNotifications)
+        ?(singleEvents = default.singleEvents)
+        ?(showDeleted = default.showDeleted)
+        ?(showHidden = default.showHidden)
+        ?(showHiddenInvitations = default.showHiddenInvitations)
+        ?(timeMax = default.timeMax)
+        ?(timeMin = default.timeMin)
+        ?(timeZone = default.timeZone)
+        ?(updatedMin = default.updatedMin)
+        () =
+    let parameters =
+      { fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        maxAttendees = maxAttendees;
+        maxResults = maxResults;
+        minAccessRole = minAccessRole;
+        orderBy = orderBy;
+        originalStart = originalStart;
+        pageToken = pageToken;
+        q = q;
+        sendNotifications = sendNotifications;
+        singleEvents = singleEvents;
+        showDeleted = showDeleted;
+        showHidden = showHidden;
+        showHiddenInvitations = showHiddenInvitations;
+        timeMax = timeMax;
+        timeMin = timeMin;
+        timeZone = timeZone;
+        updatedMin = updatedMin
+      }
+    in
+      if parameters = default then None else Some parameters
+
 end
 
 module AclResourceConf =
@@ -178,7 +222,7 @@ struct
         None ->
           base_url
       | Some r ->
-          GapiUtils.add_path_to_url
+          GapiUtils.add_path_to_url ~encoded:false
             [r.CalendarListEntry.id]
             base_url
 
@@ -188,9 +232,48 @@ struct
 end
 
 module CalendarListResource =
-  GapiService.Make
-    (CalendarListResourceConf)
-    (CalendarParameters)
+struct
+  module Service =
+    GapiService.Make(CalendarListResourceConf)(CalendarParameters)
+
+  let list ?url ?etag ?parameters
+        ?maxResults ?minAccessRole ?pageToken ?showHidden session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?maxResults ?minAccessRole ?pageToken ?showHidden () in
+      Service.list ?url ?etag ?parameters:params session
+
+  let get ?url ?parameters ~calendarId session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.get ?url ?parameters:params calendarId session
+
+  let refresh ?url ?parameters calendarListEntry session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.refresh ?url ?parameters:params calendarListEntry session
+
+  let insert ?url ?parameters calendarListEntry session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.insert ?url ?parameters:params calendarListEntry session
+
+  let update ?url ?parameters calendarListEntry session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.update ?url ?parameters:params calendarListEntry session
+
+  let patch ?url ?parameters calendarListEntry session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.patch ?url ?parameters:params calendarListEntry session
+
+  let delete ?url ?parameters calendarListEntry session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.delete ?url ?parameters:params calendarListEntry session
+
+end
 
 module CalendarsResourceConf =
 struct

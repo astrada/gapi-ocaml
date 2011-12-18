@@ -18,7 +18,7 @@ let etag_option etag =
       "" -> None
     | v -> Some v
 
-let merge_query_string parameters url =
+let merge_query_string ?(encoded = true) parameters url =
   let neturl = Neturl.parse_url url in
   let fields =
     try
@@ -33,12 +33,12 @@ let merge_query_string parameters url =
                      neturl in
     Neturl.string_of_url new_neturl
 
-let add_path_to_url path_to_add url =
+let add_path_to_url ?(encoded = true) path_to_add url =
   let neturl = Neturl.parse_url url in
   let path = Neturl.url_path neturl in
   let new_path = path @ path_to_add in
   let new_neturl = Neturl.modify_url
-                     ~encoded:true
+                     ~encoded
                      ~path:new_path
                      neturl in
     Neturl.string_of_url new_neturl

@@ -78,13 +78,7 @@ sig
 
 end
 
-(** The "acl" service.
-  
-
-
-
-
-  *)
+(** The "acl" service. *)
 module AclResource :
 sig
   (** Returns the rules in the access control list for the calendar.
@@ -189,27 +183,105 @@ sig
 
 end
 
-(** The "calendarList" service.
-  
-  [list]: Returns entries on the user's calendar list.
-
-  [get]: Returns an entry on the user's calendar list.
-
-  [refresh]: Reloads an entry on the user's calendar list.
-
-  [insert]: Adds an entry to the user's calendar list.
-
-  [update]: Updates an entry on the user's calendar list.
-
-  [patch]: Updates an entry on the user's calendar list. {e This method supports patch semantics.}
-
-  [delete]: Deletes an entry on the user's calendar list.
-  *)
+(** The "calendarList" service. *)
 module CalendarListResource :
-  GapiService.Service with
-    type resource_list_t = GapiCalendar.CalendarList.t
-      and type resource_t = GapiCalendar.CalendarListEntry.t
-      and type query_parameters_t = CalendarParameters.t
+sig
+  (** Returns entries on the user's calendar list.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param etag Optional ETag.
+    @param parameters Optional standard parameters.
+    @param maxResults Maximum number of entries returned on one result page. Optional.
+    @param minAccessRole The minimum access role for the user in the returned entires. Optional. The default is no restriction.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param showHidden Whether to show hidden entries. Optional. The default is False.
+    *)
+  val list :
+    ?url:string ->
+    ?etag:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?minAccessRole:string ->
+    ?pageToken:string ->
+    ?showHidden:bool ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarList.t * GapiConversation.Session.t)
+
+  (** Returns an entry on the user's calendar list.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    @param calendarId Calendar identifier.
+    *)
+  val get :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    calendarId:string ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+
+  (** Reloads an entry on the user's calendar list.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    *)
+  val refresh :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    GapiCalendar.CalendarListEntry.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+
+  (** Adds an entry to the user's calendar list.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    *)
+  val insert :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    GapiCalendar.CalendarListEntry.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+
+  (** Updates an entry on the user's calendar list.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    *)
+  val update :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    GapiCalendar.CalendarListEntry.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+
+  (** Updates an entry on the user's calendar list. This method supports patch semantics.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/calendars"]).
+    @param parameters Optional standard parameters.
+    *)
+  val patch :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    GapiCalendar.CalendarListEntry.t ->
+    GapiConversation.Session.t ->
+    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+
+  (** Deletes an entry on the user's calendar list.
+
+    @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/users/me/calendarList"]).
+    @param parameters Optional standard parameters.
+    *)
+  val delete :
+    ?url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    GapiCalendar.CalendarListEntry.t ->
+    GapiConversation.Session.t ->
+    (unit * GapiConversation.Session.t)
+
+end
+
 
 (** The "calendars" service. *)
 module CalendarsResource :

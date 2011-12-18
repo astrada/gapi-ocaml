@@ -729,13 +729,13 @@ let test_list_calendar_list_with_max_results () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let parameters = {
-         GapiCalendarService.CalendarParameters.default with
-             GapiCalendarService.CalendarParameters.prettyPrint = false;
-             GapiCalendarService.CalendarParameters.maxResults = 1
+         GapiService.StandardParameters.default with
+             GapiService.StandardParameters.prettyPrint = false
        } in
        let (calendars, session) =
          GapiCalendarService.CalendarListResource.list
            ~parameters
+           ~maxResults:1
            session
        in
          assert_equal
@@ -768,7 +768,7 @@ let test_get_calendar_list () =
            session in
        let (entry, session) =
          GapiCalendarService.CalendarListResource.get
-           australian_calendar_id
+           ~calendarId:australian_calendar_id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.CalendarListResource.delete
