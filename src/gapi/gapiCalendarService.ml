@@ -340,9 +340,7 @@ struct
         ?(calendarId = "primary")
         session =
     let url' = GapiUtils.add_path_to_url [calendarId; "clear"] url in
-    let query_parameters = Option.map
-                             GapiService.StandardParameters.to_key_value_list
-                             parameters in
+    let query_parameters = GapiService.map_standard_parameters parameters in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
         ?query_parameters

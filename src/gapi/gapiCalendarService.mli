@@ -379,9 +379,8 @@ module ColorsResource :
 sig
   (** Returns the color definitions for calendars and events.
      
-    Usage: [get ?url session] where [session] is the current session.
-     
     @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/colors"]).
+    @param parameters Optional standard parameters.
     *)
   val get :
     ?url:string ->

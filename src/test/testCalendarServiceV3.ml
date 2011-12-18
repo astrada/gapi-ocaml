@@ -924,8 +924,7 @@ let suite = "Calendar services (v3) test" >:::
    "test_get_acl" >:: test_get_acl;
    "test_update_acl" >:: test_update_acl;
    "test_delete_acl" >:: test_delete_acl;
-   (*"test_get_colors" >:: test_get_colors;
-    * -- requires an API key, does not work with OAuth2.0 token *)
+   "test_get_colors" >:: test_get_colors;
    "test_settings_list" >:: test_settings_list;
    "test_settings_get" >:: test_settings_get;
    "test_event_list" >:: test_event_list;
