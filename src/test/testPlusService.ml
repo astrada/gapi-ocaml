@@ -19,10 +19,10 @@ let get_first_activity_id session =
     else
       (None, session)
 
-let get_first_comment_id activity_id session =
+let get_first_comment_id activityId session =
   let (comments, session) =
     GapiPlusService.CommentsResource.list
-      activity_id
+      ~activityId
       session
   in
     if (List.length comments.GapiPlus.CommentFeed.items > 0) then
@@ -58,17 +58,17 @@ let test_get_activity () =
          match activity_id with
              None ->
                ()
-           | Some aid ->
+           | Some activityId ->
                let (activity, _) =
                  GapiPlusService.ActivitiesResource.get
-                   aid
+                   ~activityId
                    session
                in
                  assert_equal
                    "plus#activity"
                    activity.GapiPlus.Activity.kind;
                  assert_equal
-                   aid
+                   activityId
                    activity.GapiPlus.Activity.id)
            
 
@@ -78,8 +78,7 @@ let test_search_activities () =
     (fun session ->
        let (activities, _) =
          GapiPlusService.ActivitiesResource.search
-           { GapiPlusService.PlusParameters.default with
-                 GapiPlusService.PlusParameters.query = "first test post" }
+           ~query:"first test post"
            session
        in
          assert_equal
@@ -99,7 +98,7 @@ let test_list_comments () =
            | Some aid ->
                let (comments, _) =
                  GapiPlusService.CommentsResource.list
-                   aid
+                   ~activityId:aid
                    session
                in
                  assert_equal
@@ -119,17 +118,17 @@ let test_get_comment () =
                  match comment_id with
                      None ->
                        ()
-                   | Some cid ->
+                   | Some commentId ->
                        let (comment, _) =
                          GapiPlusService.CommentsResource.get
-                           cid
+                           ~commentId
                            session
                        in
                          assert_equal
                            "plus#comment"
                            comment.GapiPlus.Comment.kind;
                          assert_equal
-                           cid
+                           commentId
                            comment.GapiPlus.Comment.id)
 
 (* People *)
@@ -142,11 +141,11 @@ let test_list_people_by_activity () =
          match activity_id with
              None ->
                ()
-           | Some aid ->
+           | Some activityId ->
                let (plusoners, _) =
                  GapiPlusService.PeopleResource.listByActivity
-                   aid
-                   "plusoners"
+                   ~activityId
+                   ~collection:"plusoners"
                    session
                in
                  assert_equal
@@ -159,8 +158,7 @@ let test_search_people () =
     (fun session ->
        let (people, _) =
          GapiPlusService.PeopleResource.search
-           { GapiPlusService.PlusParameters.default with
-                 GapiPlusService.PlusParameters.query = "Larry Page" }
+           ~query:"Larry Page"
            session
        in
          assert_equal
@@ -176,23 +174,22 @@ let test_get_person () =
     (fun session ->
        let (people, session) =
          GapiPlusService.PeopleResource.search
-           { GapiPlusService.PlusParameters.default with
-                 GapiPlusService.PlusParameters.query = "Larry Page" }
+           ~query:"Larry Page"
            session in
-       let person_id = people
+       let userId = people
          |. GapiPlus.PeopleFeed.items
          |. GapiLens.head
          |. GapiPlus.Person.id in
        let (person, _) =
          GapiPlusService.PeopleResource.get
-           person_id
+           ~userId
            session
        in
          assert_equal
            "plus#person"
            person.GapiPlus.Person.kind;
          assert_equal
-           person_id
+           userId
            person.GapiPlus.Person.id)
 
 let suite = "Google+ services test" >:::

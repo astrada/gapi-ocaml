@@ -46,6 +46,28 @@ struct
        param (fun p -> p.pageToken) Std.identity "pageToken"]
       |> List.concat
 
+  let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(query = default.query)
+        ?(language = default.language)
+        ?(maxResults = default.maxResults)
+        ?(orderBy = default.orderBy)
+        ?(pageToken = default.pageToken)
+        () =
+    let parameters =
+      { fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        query = query;
+        language = language;
+        maxResults = maxResults;
+        orderBy = orderBy;
+        pageToken = pageToken
+      }
+    in
+      if parameters = default then None else Some parameters
+
 end
 
 module ActivitiesResourceConf =
@@ -86,33 +108,32 @@ end
 
 module ActivitiesResource =
 struct
-  include GapiService.Make
-    (ActivitiesResourceConf)
-    (PlusParameters)
+  module Service =
+    GapiService.Make(ActivitiesResourceConf)(PlusParameters)
 
-  let search 
-        ?(url = ActivitiesResourceConf.service_url)
-        parameters
-        session =
-    list
-      ~url
-      ~parameters
-      session
+  let get ?url ?parameters ~activityId session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.get ?url ?parameters:params activityId session
 
   let list
         ?(url = "https://www.googleapis.com/plus/v1/people")
-        ?parameters
-        ?(user_id = "me")
-        ?(collection = "public")
-        session =
+        ?parameters ?(userId = "me") ?(collection = "public")
+        ?maxResults ?pageToken session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?maxResults ?pageToken () in
     let url' = GapiUtils.add_path_to_url
-                 [user_id; "activities"; collection]
-                 url
-    in
-      list
-        ~url:url'
-        ?parameters
-        session
+                 [userId; "activities"; collection]
+                 url in
+      Service.list ~url:url' ?parameters:params session
+
+  let search ?url ?parameters ~query ?language ?maxResults ?orderBy
+        ?pageToken session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ~query ?language ?maxResults ?orderBy ?pageToken () in
+      Service.list ?url ?parameters:params session
 
 end
 
@@ -154,23 +175,24 @@ end
 
 module CommentsResource =
 struct
-  include GapiService.Make
-    (CommentsResourceConf)
-    (PlusParameters)
+  module Service =
+    GapiService.Make(CommentsResourceConf)(PlusParameters)
 
   let list
         ?(url = "https://www.googleapis.com/plus/v1/activities")
-        ?parameters
-        activity_id
-        session =
+        ?parameters ~activityId ?maxResults ?pageToken session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?maxResults ?pageToken () in
     let url' = GapiUtils.add_path_to_url
-                 [activity_id; "comments"]
-                 url
-    in
-      list
-        ~url:url'
-        ?parameters
-        session
+                 [activityId; "comments"]
+                 url in
+      Service.list ~url:url' ?parameters:params session
+
+  let get ?url ?parameters ~commentId session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.get ?url ?parameters:params commentId session
 
 end
 
@@ -212,33 +234,41 @@ end
 
 module PeopleResource =
 struct
-  include GapiService.Make
-    (PeopleResourceConf)
-    (PlusParameters)
+  module Service =
+    GapiService.Make(PeopleResourceConf)(PlusParameters)
 
   let listByActivity
         ?(url = "https://www.googleapis.com/plus/v1/activities")
         ?parameters
-        activity_id
-        collection
+        ~activityId
+        ~collection
+        ?maxResults
+        ?pageToken
         session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?maxResults ?pageToken () in
     let url' = GapiUtils.add_path_to_url
-                 [activity_id; "people"; collection]
-                 url
-    in
-      list
-        ~url:url'
-        ?parameters
-        session
+                 [activityId; "people"; collection]
+                 url in
+      Service.list ~url:url' ?parameters:params session
 
-  let search 
-        ?(url = PeopleResourceConf.service_url)
-        parameters
+  let search ?url
+        ?parameters
+        ~query
+        ?language
+        ?maxResults
+        ?pageToken
         session =
-    list
-      ~url
-      ~parameters
-      session
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?language ~query ?maxResults ?pageToken () in
+      Service.list ?url ?parameters:params session
+
+  let get ?url ?parameters ~userId session =
+    let params = PlusParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.get ?url ?parameters:params userId session
 
 end
 

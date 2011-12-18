@@ -37,11 +37,15 @@ let parse_token_info pipe =
 
 let parse_error pipe response_code =
   let response = GapiConversation.read_all pipe in
-  let json = Json_io.json_of_string response in
-  let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
-  let error_message = Json_type.Browse.string
-                        (Json_type.Browse.field table "error") in
-    failwith (Printf.sprintf "Error: %s (HTTP response code: %d)"
+  let error_message =
+    try
+      let json = Json_io.json_of_string response in
+      let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
+        Json_type.Browse.string (Json_type.Browse.field table "error")
+    with Json_type.Json_error _ ->
+      response
+  in
+    failwith (Printf.sprintf "OAuth2 error: %s (HTTP response code: %d)"
                 error_message
                 response_code)
 
