@@ -394,13 +394,13 @@ let new_event =
         GapiCalendar.Event.start =
           { GapiCalendar.EventDateTime.empty with
                 GapiCalendar.EventDateTime.dateTime =
-                  GapiDate.of_string "2011-12-03T09:00:00Z";
+                  GapiDate.of_string "2011-12-19T09:00:00Z";
                 GapiCalendar.EventDateTime.timeZone = "UTC"
           };
         GapiCalendar.Event._end =
           { GapiCalendar.EventDateTime.empty with
                 GapiCalendar.EventDateTime.dateTime =
-                  GapiDate.of_string "2011-12-03T13:00:00Z";
+                  GapiDate.of_string "2011-12-19T13:00:00Z";
                 GapiCalendar.EventDateTime.timeZone = "UTC"
           }
   }
@@ -453,7 +453,7 @@ let test_get_event () =
            session in
        let (entry', session) =
          GapiCalendarService.EventsResource.get
-           entry.GapiCalendar.Event.id
+           ~eventId:entry.GapiCalendar.Event.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.EventsResource.delete
@@ -544,29 +544,29 @@ let test_delete_event () =
          GapiCalendarService.EventsResource.insert
            new_event
            session in
+       let _ = delay () in
        let (events, session) =
          GapiCalendarService.EventsResource.list
+           ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
            session in
-       let _ = delay () in
        let ((), session) =
          GapiCalendarService.EventsResource.delete
            entry
            session in
        let (events', _) =
          GapiCalendarService.EventsResource.list
+           ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
            session
        in
          TestHelper.assert_exists
            "events list should contain new event"
            (fun e ->
-              e.GapiCalendar.Event.id =
-                entry.GapiCalendar.Event.id)
+              e.GapiCalendar.Event.id = entry.GapiCalendar.Event.id)
            events.GapiCalendar.Events.items;
          TestHelper.assert_not_exists
            "events' list should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.Event.id =
-                entry.GapiCalendar.Event.id)
+              e.GapiCalendar.Event.id = entry.GapiCalendar.Event.id)
            events'.GapiCalendar.Events.items)
 
 let test_quick_add_event () =
@@ -575,7 +575,7 @@ let test_quick_add_event () =
     (fun session ->
        let (event, session) =
          GapiCalendarService.EventsResource.quickAdd
-           "Appointment at Somewhere on June 3rd 10am-10:25am"
+           ~text:"Appointment at Somewhere on June 3rd 10am-10:25am"
            session in
        let _ = delay () in
          ignore (GapiCalendarService.EventsResource.delete
@@ -619,12 +619,12 @@ let test_move_event () =
        let _ = delay () in
        let (event, session) =
          GapiCalendarService.EventsResource.move
-           event.GapiCalendar.Event.id
-           calendar.GapiCalendar.Calendar.id
+           ~eventId:event.GapiCalendar.Event.id
+           ~destination:calendar.GapiCalendar.Calendar.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.EventsResource.delete
-                   ~container_id:calendar.GapiCalendar.Calendar.id
+                   ~calendarId:calendar.GapiCalendar.Calendar.id
                    event
                    session);
          ignore (GapiCalendarService.CalendarsResource.delete
@@ -645,7 +645,7 @@ let test_recurring_event_instances () =
        let _ = delay () in
        let (events, session) =
          GapiCalendarService.EventsResource.instances
-           event.GapiCalendar.Event.id
+           ~eventId:event.GapiCalendar.Event.id
            session
        in
          ignore (GapiCalendarService.EventsResource.delete
@@ -669,7 +669,7 @@ let test_recurring_event_instance_reset () =
        let _ = delay () in
        let (events, session) =
          GapiCalendarService.EventsResource.instances
-           event.GapiCalendar.Event.id
+           ~eventId:event.GapiCalendar.Event.id
            session in
        let second_instance = events
          |. GapiCalendar.Events.items
@@ -683,7 +683,7 @@ let test_recurring_event_instance_reset () =
            session in
        let (restored_instance, session) =
          GapiCalendarService.EventsResource.reset
-           updated_instance.GapiCalendar.Event.id
+           ~eventId:updated_instance.GapiCalendar.Event.id
            session
        in
          ignore (GapiCalendarService.EventsResource.delete

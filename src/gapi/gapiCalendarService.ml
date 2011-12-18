@@ -28,7 +28,10 @@ struct
     timeMax : GapiDate.t;
     timeMin : GapiDate.t;
     timeZone : string;
-    updatedMin : GapiDate.t
+    updatedMin : GapiDate.t;
+    destination : string;
+    text : string;
+    iCalUID : string
   }
 
   let default = {
@@ -51,7 +54,10 @@ struct
     timeMax = GapiDate.epoch;
     timeMin = GapiDate.epoch;
     timeZone = "";
-    updatedMin = GapiDate.epoch
+    updatedMin = GapiDate.epoch;
+    destination = "";
+    text = "";
+    iCalUID = ""
   }
 
   let to_key_value_list qp =
@@ -77,7 +83,10 @@ struct
        param (fun p -> p.timeMax) GapiDate.to_string "timeMax";
        param (fun p -> p.timeMin) GapiDate.to_string "timeMin";
        param (fun p -> p.timeZone) Std.identity "timeZone";
-       param (fun p -> p.updatedMin) GapiDate.to_string "updatedMin"]
+       param (fun p -> p.updatedMin) GapiDate.to_string "updatedMin";
+       param (fun p -> p.destination) Std.identity "destination";
+       param (fun p -> p.text) Std.identity "text";
+       param (fun p -> p.iCalUID) Std.identity "iCalUID"]
       |> List.concat
 
   let merge_parameters
@@ -98,6 +107,9 @@ struct
         ?(timeMin = default.timeMin)
         ?(timeZone = default.timeZone)
         ?(updatedMin = default.updatedMin)
+        ?(destination = default.destination)
+        ?(text = default.text)
+        ?(iCalUID = default.iCalUID)
         () =
     let parameters =
       { fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -119,7 +131,10 @@ struct
         timeMax = timeMax;
         timeMin = timeMin;
         timeZone = timeZone;
-        updatedMin = updatedMin
+        updatedMin = updatedMin;
+        destination = destination;
+        text = text;
+        iCalUID = iCalUID
       }
     in
       if parameters = default then None else Some parameters
@@ -408,17 +423,76 @@ end
 
 module EventsResource =
 struct
-  include GapiService.Make(EventsResourceConf)(CalendarParameters)
+  module Service =
+    GapiService.Make(EventsResourceConf)(CalendarParameters)
+
+  let list ?url ?etag ?parameters ?calendarId
+        ?iCalUID ?maxAttendees ?maxResults ?orderBy ?pageToken ?q
+        ?showDeleted ?showHiddenInvitations ?singleEvents ?timeMax
+        ?timeMin ?timeZone ?updatedMin session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?iCalUID ?maxAttendees ?maxResults ?orderBy ?pageToken ?q
+                   ?showDeleted ?showHiddenInvitations ?singleEvents ?timeMax
+                   ?timeMin ?timeZone ?updatedMin () in
+      Service.list ?url ?parameters:params ?container_id:calendarId session
+
+  let get ?url ?parameters ?calendarId ~eventId
+        ?maxAttendees ?timeZone session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?maxAttendees ?timeZone () in
+      Service.get ?url ?parameters:params ?container_id:calendarId eventId session
+
+  let refresh ?url ?parameters ?calendarId event session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.refresh ?url ?parameters:params ?container_id:calendarId event session
+
+  let insert ?url ?parameters ?calendarId ?sendNotifications event session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?sendNotifications () in
+      Service.insert ?url ?parameters:params ?container_id:calendarId event session
+
+  let update ?url ?parameters ?calendarId ?sendNotifications event session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?sendNotifications () in
+      Service.update ?url ?parameters:params ?container_id:calendarId event session
+
+  let patch ?url ?parameters ?calendarId ?sendNotifications event session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?sendNotifications () in
+      Service.patch ?url ?parameters:params ?container_id:calendarId event session
+
+  let delete ?url ?parameters ?calendarId event session =
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters () in
+      Service.delete ?url ?parameters:params ?container_id:calendarId event session
 
   let instances
-        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(url = EventsResourceConf.service_url)
         ?parameters
-        ?(container_id = "primary")
-        event_id
+        ?(calendarId = "primary")
+        ~eventId
+        ?maxAttendees
+        ?maxResults
+        ?originalStart
+        ?pageToken
+        ?showDeleted
+        ?timeZone
         session =
-    let query_parameters = GapiService.map_standard_parameters parameters in
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?maxAttendees ?maxResults ?originalStart ?pageToken
+                   ?showDeleted ?timeZone () in
+    let query_parameters = Option.map
+                             CalendarParameters.to_key_value_list
+                             params in
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "events"; event_id; "instances"]
+                 [calendarId; "events"; eventId; "instances"]
                  url
     in
       GapiService.query
@@ -428,14 +502,14 @@ struct
         session
 
   let import
-        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(url = EventsResourceConf.service_url)
         ?parameters
-        ?(container_id = "primary")
+        ?(calendarId = "primary")
         event_resource
         session =
     let query_parameters = GapiService.map_standard_parameters parameters in
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "events"; "import"]
+                 [calendarId; "events"; "import"]
                  url
     in
       GapiService.create
@@ -447,56 +521,69 @@ struct
         session
 
   let quickAdd
-        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(url = EventsResourceConf.service_url)
         ?parameters
-        ?(container_id = "primary")
-        text
+        ?(calendarId = "primary")
+        ~text
+        ?sendNotifications
         session =
-    let standard_parameters = GapiService.map_standard_parameters parameters in
-    let query_parameters =
-      ("text", text) :: Option.default [] standard_parameters in
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ~text ?sendNotifications () in
+    let query_parameters = Option.map
+                             CalendarParameters.to_key_value_list
+                             params in
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "events"; "quickAdd"]
+                 [calendarId; "events"; "quickAdd"]
                  url
     in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
-        ~query_parameters
+        ?query_parameters
         url'
         EventsResourceConf.parse_resource
         session
 
   let move
-        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(url = EventsResourceConf.service_url)
         ?parameters
-        ?(container_id = "primary")
-        event_id
-        destination_id
+        ?(calendarId = "primary")
+        ~eventId
+        ~destination
+        ?sendNotifications
         session =
-    let standard_parameters = GapiService.map_standard_parameters parameters in
-    let query_parameters =
-      ("destination", destination_id) :: Option.default
-                                           [] standard_parameters in
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ~destination ?sendNotifications () in
+    let query_parameters = Option.map
+                             CalendarParameters.to_key_value_list
+                             params in
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "events"; event_id; "move"]
+                 [calendarId; "events"; eventId; "move"]
                  url
     in
       GapiService.service_request
         ~post_data:GapiCore.PostData.empty
-        ~query_parameters
+        ?query_parameters
         url'
         EventsResourceConf.parse_resource
         session
 
   let reset
-        ?(url = "https://www.googleapis.com/calendar/v3/calendars")
+        ?(url = EventsResourceConf.service_url)
         ?parameters
-        ?(container_id = "primary")
-        instance_id
+        ?(calendarId = "primary")
+        ~eventId
+        ?sendNotifications
         session =
-    let query_parameters = GapiService.map_standard_parameters parameters in
+    let params = CalendarParameters.merge_parameters
+                   ?standard_parameters:parameters
+                   ?sendNotifications () in
+    let query_parameters = Option.map
+                             CalendarParameters.to_key_value_list
+                             params in
     let url' = GapiUtils.add_path_to_url
-                 [container_id; "events"; instance_id; "reset"]
+                 [calendarId; "events"; eventId; "reset"]
                  url
     in
       GapiService.service_request
