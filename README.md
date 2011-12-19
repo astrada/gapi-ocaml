@@ -26,19 +26,19 @@ Building gapi-ocaml
 
 ### Requirements
 
-This library was developed with the following dependencies (versions found in
-Ubuntu 11.04):
+This library was developed with the following dependencies ([Unofficial OCaml
+packages for Debian](http://ocaml.debian.net/debian/ocaml-3.12.1/)):
 
-* [OCaml][] = 3.11.2
-* [Findlib][] = 1.2.5
-* [Ocamlnet][] = 2.2.9
+* [OCaml][] = 3.12.1
+* [Findlib][] = 1.2.7
+* [Ocamlnet][] = 3.3.5
 * [Ocurl][] = 0.5.3
 * [Cryptokit][] = 1.3.14
 * [ExtLib][] = 1.5.1
 * [json-wheel][] = 1.0.6
 * [Xmlm][] = 1.0.2
 * [pa_monad][] = 6.0 Syntax extension for Monads (optional)
-* [OUnit][] = 1.0.3 to build and run the tests (optional)
+* [OUnit][] = 1.1.0 to build and run the tests (optional)
 
 [OCaml]: http://caml.inria.fr/ocaml/release.en.html
 [Findlib]: http://projects.camlcity.org/projects/findlib.html/
