@@ -168,7 +168,7 @@ let test_settings_get () =
     (fun session ->
        let (setting, _) =
          GapiCalendarService.SettingsResource.get
-           "country"
+           ~setting:"country"
            session
        in
          assert_equal

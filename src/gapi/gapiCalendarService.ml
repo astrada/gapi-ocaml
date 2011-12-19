@@ -652,7 +652,15 @@ struct
 end
 
 module SettingsResource =
-  GapiService.Make
-    (SettingResourceConf)
-    (GapiService.StandardParameters)
+struct
+  module Service =
+    GapiService.Make(SettingResourceConf)(GapiService.StandardParameters)
+
+  let list ?url ?etag ?parameters session =
+    Service.list ?url ?etag ?parameters session
+
+  let get ?url ?parameters ~setting session =
+    Service.get ?url ?parameters setting session
+
+end
 

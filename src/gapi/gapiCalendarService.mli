@@ -564,9 +564,8 @@ module FreebusyResource :
 sig
   (** Returns free/busy information for a set of calendars.
 
-    Usage: [query ?url parameters session] where [parameters] specifies the request parameters (e.g.: target calendar IDs), and [session] is the current session.
-     
     @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/freeBusy"]).
+    @param parameters Optional standard parameters..
     *)
   val query :
     ?url:string ->
@@ -582,31 +581,27 @@ module SettingsResource :
 sig
   (** Returns all user settings for the authenticated user.
 
-    Usage: [list ?url ?etag ?parameters session] where [session] is the current session.
-     
     @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/users/me/settings"]).
-    @param etag optional ETag.
-    @param parameters standard parameters.
+    @param etag Optional ETag.
+    @param parameters Optional standard parameters..
     *)
   val list :
     ?url:string ->
     ?etag:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
     GapiConversation.Session.t ->
     (GapiCalendar.Settings.t * GapiConversation.Session.t)
 
   (** Returns a single user setting.
 
-    Usage: [get ?url setting_id session] where [setting_id] is the name of the user setting, and [session] is the current session.
-     
     @param url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/users/me/settings"]).
+    @param parameters Optional standard parameters..
+    @param setting Name of the user setting.
     *)
   val get :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?container_id:string ->
-    string ->
+    setting:string ->
     GapiConversation.Session.t ->
     (GapiCalendar.Setting.t * GapiConversation.Session.t)
 
