@@ -7,14 +7,9 @@ let do_request interact =
     ignore (GapiCurl.global_cleanup state)
 
 let start_netplex callback =
-  let process_compat
-        process
-        (cgi : Netcgi1_compat.Netcgi_types.cgi_activation) =
-    let cgi' = Netcgi1_compat.Netcgi_types.of_compat_activation cgi in
-      process cgi' in
   let handler_data =
     { Nethttpd_services.dyn_handler =
-        (fun _ -> process_compat callback);
+        (fun _ -> callback);
       dyn_activation =
         Nethttpd_services.std_activation `Std_activation_buffered;
       dyn_uri = None;
