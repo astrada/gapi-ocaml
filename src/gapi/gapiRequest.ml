@@ -160,7 +160,7 @@ let refresh_oauth2_token session =
     match auth_data with
         GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
                            GapiAuth.client_secret = client_secret;
-                           GapiAuth.refresh_token = refresh_token } ->
+                           GapiAuth.refresh_token = refresh_token; _ } ->
           let (response, new_session) =
             GapiOAuth2.refresh_access_token
               ~client_id
@@ -198,7 +198,9 @@ let rec gapi_request
   try
     let verified_session =
       match session.GapiConversation.Session.auth with
-          GapiConversation.Session.OAuth2 { GapiConversation.Session.oauth2_token = "" } ->
+          GapiConversation.Session.OAuth2 {
+            GapiConversation.Session.oauth2_token = ""; _
+          } ->
             refresh_oauth2_token session
         | _ ->
             session

@@ -62,6 +62,6 @@ let generate_authorization_header
           Some (GapiOAuth1.generate_oauth_header
                   oauth_fields_to_sign
                   signature)
-    | OAuth2 { oauth2_token = token } ->
+    | OAuth2 { oauth2_token = token; _ } ->
         Some ("Bearer " ^ token)
 
