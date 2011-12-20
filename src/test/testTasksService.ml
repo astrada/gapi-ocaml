@@ -127,8 +127,8 @@ let test_delete_task_list () =
 let new_task = {
   GapiTasks.Task.empty with
       GapiTasks.Task.title = "New test task";
-      GapiTasks.Task.notes = "Please complete me";
-      GapiTasks.Task.due = GapiDate.of_string "2011-12-15T12:00:00.000Z"
+      notes = "Please complete me";
+      due = GapiDate.of_string "2011-12-15T12:00:00.000Z"
 }
 
 let test_insert_task () =

@@ -89,7 +89,7 @@ struct
 
   let create_resource_from_id id =
     { Activity.empty with
-          Activity.id = id
+          Activity.id
     }
 
   let get_url ?container_id ?resource base_url =
@@ -156,7 +156,7 @@ struct
 
   let create_resource_from_id id =
     { Comment.empty with
-          Comment.id = id
+          Comment.id
     }
 
   let get_url ?container_id ?resource base_url =
@@ -215,7 +215,7 @@ struct
 
   let create_resource_from_id id =
     { Person.empty with
-          Person.id = id
+          Person.id
     }
 
   let get_url ?container_id ?resource base_url =

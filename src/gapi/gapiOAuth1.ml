@@ -186,8 +186,8 @@ let parse_request_token pipe =
                  GapiAuthResponse.OAuth1.callback_confirmed =
                    bool_of_string value })]
        { GapiAuthResponse.OAuth1.request_token = "";
-         GapiAuthResponse.OAuth1.request_token_secret = "";
-         GapiAuthResponse.OAuth1.callback_confirmed = false }
+         request_token_secret = "";
+         callback_confirmed = false }
        pipe)
 
 let parse_access_token pipe =
@@ -202,7 +202,7 @@ let parse_access_token pipe =
            { response with
                  GapiAuthResponse.OAuth1.access_token_secret = value })]
        { GapiAuthResponse.OAuth1.access_token = "";
-         GapiAuthResponse.OAuth1.access_token_secret = "" }
+         access_token_secret = "" }
        pipe)
 
 let parse_token_info pipe =
@@ -232,8 +232,8 @@ let parse_token_info pipe =
     GapiAuthResponse.AuthSubTokenInfo
       (GapiConversation.loop
          (parse_next_line { GapiAuthResponse.AuthSub.target = "";
-                            GapiAuthResponse.AuthSub.scope = "";
-                            GapiAuthResponse.AuthSub.secure = false })
+                            scope = "";
+                            secure = false })
          pipe)
 
 let parse_response parse_ok pipe response_code _ _ =

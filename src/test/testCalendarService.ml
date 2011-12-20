@@ -45,7 +45,7 @@ let test_personal_settings () =
 
 let test_all_calendars () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let (feed, session) = GdataCalendarService.all_calendars session in
          assert_equal
@@ -57,7 +57,7 @@ let test_all_calendars () =
 
 let test_own_calendars () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let (feed, session) = GdataCalendarService.own_calendars session in
          assert_equal
@@ -70,7 +70,7 @@ let test_own_calendars () =
 let test_create_new_calendar () =
   let entry = new_calendar_entry "test_create_new_calendar" in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_calendar entry session in
@@ -91,7 +91,7 @@ let test_create_new_calendar () =
 let test_delete_calendar () =
   let entry = new_calendar_entry "test_delete_calendar" in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_calendar entry session in
@@ -111,7 +111,7 @@ let test_delete_calendar () =
 let test_update_calendar () =
   let entry = new_calendar_entry "test_update_calendar" in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_calendar entry session in
@@ -138,7 +138,7 @@ let test_add_new_subscription () =
             "en.australian#holiday@group.v.calendar.google.com" }
   in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, _) =
            GdataCalendarService.add_new_subscription
@@ -154,7 +154,7 @@ let test_add_new_subscription () =
 
 let test_retrieve_events () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let (feed, session) = GdataCalendarService.retrieve_events session in
          assert_equal
@@ -170,7 +170,7 @@ let test_create_new_event () =
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
@@ -191,7 +191,7 @@ let test_update_event () =
                 (fun () -> input_byte ch)
                 GdataCalendarEvent.parse_calendar_event_entry in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
@@ -212,7 +212,7 @@ let test_update_event () =
 
 let test_retrieve_events_with_parameters () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let parameters =
          { GdataCalendarService.QueryParameters.default with
@@ -240,7 +240,7 @@ let test_create_quick_add_event () =
     }
   in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
@@ -266,7 +266,7 @@ let test_create_recurring_event () =
                     GdataCalendarEvent.Entry.recurrence = "DTSTART;VALUE=DATE:20100505\r\nDTEND;VALUE=DATE:20100506\r\nRRULE:FREQ=WEEKLY;BYDAY=Tu;UNTIL=20100904\r\n"
   } in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (new_entry, session) =
            GdataCalendarService.create_new_event entry session in
@@ -283,7 +283,7 @@ let test_create_recurring_event () =
 
 let test_retrieve_acl () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let (own, session) = GdataCalendarService.own_calendars session in
        let entry = List.hd own.GdataCalendar.Feed.entries in
@@ -299,7 +299,7 @@ let test_retrieve_acl () =
 
 let test_create_acl () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let (own, session) = GdataCalendarService.own_calendars session in
        let calendar_entry = List.hd own.GdataCalendar.Feed.entries in
@@ -320,7 +320,7 @@ let test_create_acl () =
 
 let test_update_acl () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let (own, session) = GdataCalendarService.own_calendars session in
        let calendar_entry = List.hd own.GdataCalendar.Feed.entries in
@@ -353,7 +353,7 @@ let test_event_batch_request () =
       feed.GdataCalendarEvent.Feed.entries
   in
     TestHelper.test_request
-      TestHelper.build_oauth2_auth
+      TestHelper.build_oauth1_auth
       (fun session ->
          let (target_feed, session) =
            GdataCalendarService.retrieve_events

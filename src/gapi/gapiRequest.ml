@@ -57,14 +57,14 @@ let build_auth_data session =
           | _ ->
               failwith "Unexpected auth context for Client Login"
         end
-    | GapiConfig.OAuth1 { GapiConfig.signature_method = signature_method;
+    | GapiConfig.OAuth1 { GapiConfig.signature_method;
                           consumer_key;
                           consumer_secret } ->
         begin match session.GapiConversation.Session.auth with
             GapiConversation.Session.OAuth1
-              { GapiConversation.Session.token = token;
+              { GapiConversation.Session.token;
                 secret } ->
-              GapiAuth.OAuth1 { GapiAuth.signature_method = signature_method;
+              GapiAuth.OAuth1 { GapiAuth.signature_method;
                                 consumer_key;
                                 consumer_secret;
                                 token;
@@ -72,13 +72,13 @@ let build_auth_data session =
           | _ ->
               failwith "Unexpected auth context for OAuth1"
         end
-    | GapiConfig.OAuth2 { GapiConfig.client_id = client_id;
+    | GapiConfig.OAuth2 { GapiConfig.client_id;
                           client_secret } ->
         begin match session.GapiConversation.Session.auth with
             GapiConversation.Session.OAuth2
-              { GapiConversation.Session.oauth2_token = oauth2_token;
+              { GapiConversation.Session.oauth2_token;
                 refresh_token } ->
-              GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
+              GapiAuth.OAuth2 { GapiAuth.client_id;
                                 client_secret;
                                 oauth2_token;
                                 refresh_token }
@@ -114,14 +114,14 @@ let single_request
       | GapiAuth.OAuth2 _ ->
           None
       | GapiAuth.OAuth1 _ ->
-          let post_fields =
+          let post_fields_to_sign =
             match post_data with
                 Some (GapiCore.PostData.Fields fields) -> fields
               | _ -> []
           in
-            Some { GapiAuth.http_method = http_method;
-                   url = url;
-                   post_fields_to_sign = post_fields } in
+            Some { GapiAuth.http_method;
+                   url;
+                   post_fields_to_sign } in
   let authorization_header =
     Option.map (fun a -> GapiCore.Header.Authorization a)
       (GapiAuth.generate_authorization_header ?oauth1_params auth_data) in
@@ -158,7 +158,7 @@ let single_request
 let refresh_oauth2_token session =
   let auth_data = build_auth_data session in
     match auth_data with
-        GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
+        GapiAuth.OAuth2 { GapiAuth.client_id;
                            client_secret;
                            refresh_token; _ } ->
           let (response, new_session) =

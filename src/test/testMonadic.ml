@@ -5,7 +5,7 @@ open GapiMonad.SessionM.Infix
 
 let test_monadic_session () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let s = { session with
                      GapiConversation.Session.etag =
@@ -33,7 +33,7 @@ let test_monadic_session () =
 
 let test_monadic_session_perform () =
   TestHelper.test_request
-    TestHelper.build_oauth2_auth
+    TestHelper.build_oauth1_auth
     (fun session ->
        let s = { session with
                      GapiConversation.Session.etag =
@@ -62,6 +62,5 @@ let test_monadic_session_perform () =
 
 let suite = "Monadic interface test" >:::
   ["test_monadic_session" >:: test_monadic_session;
-   "test_monadic_session_perform" >:: test_monadic_session_perform;
-   ]
+   "test_monadic_session_perform" >:: test_monadic_session_perform]
 

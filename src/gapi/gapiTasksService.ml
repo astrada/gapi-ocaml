@@ -125,7 +125,7 @@ struct
 
   let create_resource_from_id id =
     { TaskList.empty with
-          TaskList.id = id
+          TaskList.id
     }
 
   let get_url ?(container_id = "@me") ?resource base_url =
@@ -208,7 +208,7 @@ struct
 
   let create_resource_from_id id =
     { Task.empty with
-          Task.id = id
+          Task.id
     }
 
   let get_url ?(container_id = "@default") ?resource base_url =

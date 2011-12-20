@@ -71,87 +71,87 @@ let test_calendar_entry_to_data_model () =
   let entry =
     { GdataCalendar.Entry.empty with
           GdataCalendar.Entry.id = "id";
-          GdataCalendar.Entry.authors = [
+          authors = [
             { GdataAtom.Author.lang = "en-US";
-              GdataAtom.Author.email = "author1@test.com";
-              GdataAtom.Author.name = "author1";
-              GdataAtom.Author.uri = "urn:uri";
+              email = "author1@test.com";
+              name = "author1";
+              uri = "urn:uri";
             };
             { GdataAtom.Author.empty with
                   GdataAtom.Author.email = "author2@test.com";
-                  GdataAtom.Author.name = "author2";
+                  name = "author2";
             };
           ];
-          GdataCalendar.Entry.categories = [
+          categories = [
             { GdataAtom.Category.label = "label";
-              GdataAtom.Category.scheme = "scheme";
-              GdataAtom.Category.term = "term";
-              GdataAtom.Category.lang = "en-US";
+              scheme = "scheme";
+              term = "term";
+              lang = "en-US";
             };
             { GdataAtom.Category.empty with
                   GdataAtom.Category.scheme = "scheme2";
-                  GdataAtom.Category.term = "term2";
+                  term = "term2";
             }
           ];
-          GdataCalendar.Entry.contributors = [
+          contributors = [
             { GdataAtom.Contributor.lang = "en-US";
-              GdataAtom.Contributor.email = "contributor1@test.com";
-              GdataAtom.Contributor.name = "contributor1";
-              GdataAtom.Contributor.uri = "urn:uri";
+              email = "contributor1@test.com";
+              name = "contributor1";
+              uri = "urn:uri";
             };
             { GdataAtom.Contributor.empty with
                   GdataAtom.Contributor.email = "contributor2@test.com";
-                  GdataAtom.Contributor.name = "contributor2";
+                  name = "contributor2";
             };
           ];
-          GdataCalendar.Entry.content =
+          content =
             { GdataAtom.Content.empty with
                   GdataAtom.Content.src = "src";
             };
-          GdataCalendar.Entry.published = GapiDate.of_string "2010-05-15T20:00:00.000Z";
-          GdataCalendar.Entry.updated = GapiDate.of_string "2011-08-16T12:00:00.000Z";
-          GdataCalendar.Entry.edited = GapiDate.of_string "2011-06-06T15:00:00.000Z";
-          GdataCalendar.Entry.accesslevel = "accesslevel";
-          GdataCalendar.Entry.links = [
+          published = GapiDate.of_string "2010-05-15T20:00:00.000Z";
+          updated = GapiDate.of_string "2011-08-16T12:00:00.000Z";
+          edited = GapiDate.of_string "2011-06-06T15:00:00.000Z";
+          accesslevel = "accesslevel";
+          links = [
             { GdataCalendar.Link.empty with
                   GdataCalendar.Link.href = "http://href";
-                  GdataCalendar.Link.rel = "self";
-                  GdataCalendar.Link._type = "application/atom+xml";
+                  rel = "self";
+                  _type = "application/atom+xml";
             };
             { GdataCalendar.Link.href = "http://href2";
-              GdataCalendar.Link.length = Int64.of_int 10;
-              GdataCalendar.Link.rel = "alternate";
-              GdataCalendar.Link.title = "title";
-              GdataCalendar.Link._type = "application/atom+xml";
-              GdataCalendar.Link.webContent =
+              length = Int64.of_int 10;
+              rel = "alternate";
+              title = "title";
+              _type = "application/atom+xml";
+              webContent =
                 { GdataCalendar.WebContent.height = 100;
-                  GdataCalendar.WebContent.url = "http://webcontent";
-                  GdataCalendar.WebContent.width = 200;
-                  GdataCalendar.WebContent.webContentGadgetPrefs = [
+                  url = "http://webcontent";
+                  width = 200;
+                  webContentGadgetPrefs = [
                     { GdataCalendar.WebContentGadgetPref.name = "name";
-                      GdataCalendar.WebContentGadgetPref.value = "value";
+                      value = "value";
                     };
                     { GdataCalendar.WebContentGadgetPref.name = "name2";
-                      GdataCalendar.WebContentGadgetPref.value = "value2";
+                      value = "value2";
                     };
                   ];
                 };
             };
           ];
-          GdataCalendar.Entry.where = [
+          where = [
             "where1";
             "where2";
           ];
-          GdataCalendar.Entry.color = "#5A6986";
-          GdataCalendar.Entry.hidden = true;
-          GdataCalendar.Entry.selected = true;
-          GdataCalendar.Entry.timezone = "America/Los_Angeles";
-          GdataCalendar.Entry.timesCleaned = 1;
-          GdataCalendar.Entry.summary =
+          color = "#5A6986";
+          hidden = true;
+          selected = true;
+          timezone = "America/Los_Angeles";
+          timesCleaned = 1;
+          summary =
             { GdataAtom.Summary.src = "src";
-              GdataAtom.Summary._type = "type";
-              GdataAtom.Summary.lang = "en-US";
-              GdataAtom.Summary.value = "summary";
+              _type = "type";
+              lang = "en-US";
+              value = "summary";
             };
           GdataCalendar.Entry.title =
             { GdataAtom.Title.empty with

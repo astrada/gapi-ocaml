@@ -53,7 +53,7 @@ let update_session headers session =
                headers
   in
     { session with
-          Session.cookies = cookies;
+          Session.cookies;
           etag }
 
 let request

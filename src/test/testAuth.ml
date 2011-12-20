@@ -129,7 +129,8 @@ let test_oauth2_authorization_url () =
               ~response_type:"code"
               "dummy key" in
     assert_equal
-      "https://accounts.google.com/o/oauth2/auth?client_id=dummy+key&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=http%3A%2F%2Fwww.google.com%2Fcalendar%2Ffeeds&response_type=code&access_type=offline&approval_prompt=force"
+      ~printer:(fun x -> x)
+      "https://accounts.google.com/o/oauth2/auth?client_id=dummy+key&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&access_type=offline&approval_prompt=force"
       url
 
 let test_invalid_oauth2_access_token () =
@@ -140,7 +141,7 @@ let test_invalid_oauth2_access_token () =
        let client_secret = get "oa2_secret" in
        let redirect_uri = get "oa2_uri" in
          assert_raises
-           (Failure "Error: invalid_grant (HTTP response code: 400)")
+           (Failure "OAuth2 error: invalid_grant (HTTP response code: 400)")
            (fun () ->
               GapiOAuth2.get_access_token
                 ~client_id

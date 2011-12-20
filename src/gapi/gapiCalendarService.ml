@@ -160,7 +160,7 @@ struct
 
   let create_resource_from_id id =
     { AclRule.empty with
-          AclRule.id = id
+          AclRule.id
     }
 
   let get_url ?(container_id = "primary") ?resource base_url =
@@ -229,7 +229,7 @@ struct
 
   let create_resource_from_id id =
     { CalendarListEntry.empty with
-          CalendarListEntry.id = id
+          CalendarListEntry.id
     }
 
   let get_url ?container_id ?resource base_url =
@@ -309,7 +309,7 @@ struct
 
   let create_resource_from_id id =
     { Calendar.empty with
-          Calendar.id = id
+          Calendar.id
     }
 
   let get_url ?container_id ?resource base_url =
@@ -399,7 +399,7 @@ struct
 
   let create_resource_from_id id =
     { Event.empty with
-          Event.id = id
+          Event.id
     }
 
   let get_url ?(container_id = "primary") ?resource base_url =
@@ -634,7 +634,7 @@ struct
 
   let create_resource_from_id id =
     { Setting.empty with
-          Setting.id = id
+          Setting.id
     }
 
   let get_url ?container_id ?resource base_url =
