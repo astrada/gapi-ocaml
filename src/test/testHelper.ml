@@ -33,27 +33,27 @@ let build_client_login_auth test_config =
   let get = Config.get test_config in
     (GapiConfig.ClientLogin
        { GapiConfig.username = get "cl_user";
-         GapiConfig.password = get "cl_pass" },
+         password = get "cl_pass" },
      GapiConversation.Session.ClientLogin (get "cl_token"))
 
 let build_oauth1_auth test_config =
   let get = Config.get test_config in
     (GapiConfig.OAuth1
       { GapiConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
-        GapiConfig.consumer_key = get "oa1_cons_key";
-        GapiConfig.consumer_secret = get "oa1_cons_secret" },
+        consumer_key = get "oa1_cons_key";
+        consumer_secret = get "oa1_cons_secret" },
      GapiConversation.Session.OAuth1
        { GapiConversation.Session.token = get "oa1_token";
-         GapiConversation.Session.secret = get "oa1_secret" })
+         secret = get "oa1_secret" })
 
 let build_oauth2_auth test_config =
   let get = Config.get test_config in
     (GapiConfig.OAuth2
        { GapiConfig.client_id = get "oa2_id";
-         GapiConfig.client_secret = get "oa2_secret" },
+         client_secret = get "oa2_secret" },
      GapiConversation.Session.OAuth2
        { GapiConversation.Session.oauth2_token = get "oa2_token";
-         GapiConversation.Session.refresh_token = get "oa2_refresh" })
+         refresh_token = get "oa2_refresh" })
 
 let build_no_auth _ =
   (GapiConfig.NoAuth,

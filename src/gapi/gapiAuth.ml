@@ -31,11 +31,11 @@ let generate_authorization_header
         None
     | ClientLogin auth ->
         Some ("GoogleLogin auth=" ^ auth)
-    | OAuth1 { signature_method = signature_method;
-               consumer_key = consumer_key;
-               consumer_secret = consumer_secret;
-               token = token;
-               secret = secret } ->
+    | OAuth1 { signature_method;
+               consumer_key;
+               consumer_secret;
+               token;
+               secret } ->
         let params = Option.get oauth1_params in
         let oauth_fields_to_sign = GapiOAuth1.build_oauth_fields_to_sign
                                      ~oauth_token:token

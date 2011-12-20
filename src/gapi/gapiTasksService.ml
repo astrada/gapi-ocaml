@@ -88,18 +88,18 @@ struct
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        completedMax = completedMax;
-        completedMin = completedMin;
-        dueMax = dueMax;
-        dueMin = dueMin;
-        maxResults = maxResults;
-        pageToken = pageToken;
-        parent = parent;
-        previous = previous;
-        showCompleted = showCompleted;
-        showDeleted = showDeleted;
-        showHidden = showHidden;
-        updatedMin = updatedMin
+        completedMax;
+        completedMin;
+        dueMax;
+        dueMin;
+        maxResults;
+        pageToken;
+        parent;
+        previous;
+        showCompleted;
+        showDeleted;
+        showHidden;
+        updatedMin
       }
     in
       if parameters = default then None else Some parameters

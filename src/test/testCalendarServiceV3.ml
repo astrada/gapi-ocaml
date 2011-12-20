@@ -13,11 +13,11 @@ let delay () =
 let acl_test_resource = {
   GapiCalendar.AclRule.empty with
       GapiCalendar.AclRule.kind = "calendar#acl";
-      GapiCalendar.AclRule.scope = {
+      scope = {
         GapiCalendar.ScopeData._type = "user";
-        GapiCalendar.ScopeData.value = "test@example.com"
+        value = "test@example.com"
       };
-      GapiCalendar.AclRule.role = "reader"
+      role = "reader"
 }
 
 let test_list_acl () =
@@ -183,9 +183,8 @@ let test_settings_get () =
 let new_calendar =
   { GapiCalendar.Calendar.empty with
         GapiCalendar.Calendar.kind = "calendar#calendar";
-        GapiCalendar.Calendar.summary = "New test calendar";
-        GapiCalendar.Calendar.description =
-          "Description of new test calendar"
+        summary = "New test calendar";
+        description = "Description of new test calendar"
   }
 
 let test_insert_calendar () =
@@ -233,8 +232,8 @@ let test_get_calendar_partial_response () =
            new_calendar
            session in
        let parameters =
-         { GapiService.StandardParameters.default
-             with GapiService.StandardParameters.fields = "kind,id,summary"
+         { GapiService.StandardParameters.default with
+               GapiService.StandardParameters.fields = "kind,id,summary"
          } in
        let (entry', session) =
          GapiCalendarService.CalendarsResource.get
@@ -308,10 +307,8 @@ let test_patch_calendar () =
            session in
        let entry = {
          GapiCalendar.Calendar.empty with
-             GapiCalendar.Calendar.id =
-               entry.GapiCalendar.Calendar.id;
-             GapiCalendar.Calendar.description =
-               "Updated description"
+             GapiCalendar.Calendar.id = entry.GapiCalendar.Calendar.id;
+             description = "Updated description"
        } in
        let (entry, session) =
          GapiCalendarService.CalendarsResource.patch
@@ -388,42 +385,40 @@ let test_event_list () =
 let new_event =
   { GapiCalendar.Event.empty with
         GapiCalendar.Event.kind = "calendar#event";
-        GapiCalendar.Event.summary = "New test event";
-        GapiCalendar.Event.description =
-          "Description of new test event";
-        GapiCalendar.Event.start =
+        summary = "New test event";
+        description = "Description of new test event";
+        start =
           { GapiCalendar.EventDateTime.empty with
                 GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-19T09:00:00Z";
-                GapiCalendar.EventDateTime.timeZone = "UTC"
+                timeZone = "UTC"
           };
-        GapiCalendar.Event._end =
+        _end =
           { GapiCalendar.EventDateTime.empty with
                 GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-19T13:00:00Z";
-                GapiCalendar.EventDateTime.timeZone = "UTC"
+                timeZone = "UTC"
           }
   }
 
 let new_recurring_event =
   { GapiCalendar.Event.empty with
         GapiCalendar.Event.kind = "calendar#event";
-        GapiCalendar.Event.summary = "New recurring event";
-        GapiCalendar.Event.description =
-          "Description of new recurring event";
-        GapiCalendar.Event.start =
+        summary = "New recurring event";
+        description = "Description of new recurring event";
+        start =
           { GapiCalendar.EventDateTime.empty with
                 GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T10:00:00Z";
-                GapiCalendar.EventDateTime.timeZone = "UTC"
+                timeZone = "UTC"
           };
-        GapiCalendar.Event._end =
+        _end =
           { GapiCalendar.EventDateTime.empty with
                 GapiCalendar.EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T15:00:00Z";
-                GapiCalendar.EventDateTime.timeZone = "UTC"
+                timeZone = "UTC"
           };
-        GapiCalendar.Event.recurrence =
+        recurrence =
           [ "RRULE:FREQ=DAILY;UNTIL=20111206" ]
   }
 
@@ -516,10 +511,8 @@ let test_patch_event () =
            session in
        let entry = {
          GapiCalendar.Event.empty with
-             GapiCalendar.Event.id =
-               entry.GapiCalendar.Event.id;
-             GapiCalendar.Event.description =
-               "Updated description"
+             GapiCalendar.Event.id = entry.GapiCalendar.Event.id;
+             description = "Updated description"
        } in
        let (entry, session) =
          GapiCalendarService.EventsResource.patch
@@ -831,7 +824,7 @@ let test_patch_calendar_list () =
        let entry = {
          GapiCalendar.CalendarListEntry.empty with
              GapiCalendar.CalendarListEntry.id = australian_calendar_id;
-             GapiCalendar.CalendarListEntry.hidden = true
+             hidden = true
        } in
        let (entry, session) =
          GapiCalendarService.CalendarListResource.patch
@@ -898,10 +891,8 @@ let test_free_busy_query () =
          { GapiCalendar.FreeBusyRequest.empty with
                GapiCalendar.FreeBusyRequest.timeMin =
                  GapiDate.of_string "2011-12-02";
-               GapiCalendar.FreeBusyRequest.timeMax =
-                 GapiDate.of_string "2011-12-04";
-               GapiCalendar.FreeBusyRequest.items =
-                 [ calendar.GapiCalendar.Calendar.id ]
+               timeMax = GapiDate.of_string "2011-12-04";
+               items = [ calendar.GapiCalendar.Calendar.id ]
          } in
        let (freeBusy, _) =
          GapiCalendarService.FreebusyResource.query

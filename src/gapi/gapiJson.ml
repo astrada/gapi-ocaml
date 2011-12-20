@@ -35,7 +35,7 @@ let unexpected r e =
 let render_value name default value =
   if value <> default then
     [AnnotatedTree.Leaf (
-      { name = name; data_type = Scalar },
+      { name; data_type = Scalar },
       value)]
   else
     []
@@ -57,7 +57,7 @@ let render_struct name data_type xs =
   let xs' = List.concat xs in
     if xs' <> [] then
       [AnnotatedTree.Node (
-        { name = name; data_type = data_type },
+        { name; data_type },
         xs')]
     else
       []
@@ -110,20 +110,15 @@ let json_to_data_model json_value =
     match value with
         Json_type.Object xs ->
           AnnotatedTree.Node (
-            { name = name;
-              data_type = Object },
+            { name; data_type = Object },
             List.map map xs)
       | Json_type.Array xs ->
           AnnotatedTree.Node (
-            { name = name;
-              data_type = Array
-            },
+            { name; data_type = Array },
             List.map (fun x -> map ("", x)) xs)
       | _ ->
           AnnotatedTree.Leaf (
-            { name = name;
-              data_type = Scalar
-            },
+            { name; data_type = Scalar },
             value)
   in
     map ("", json_value)

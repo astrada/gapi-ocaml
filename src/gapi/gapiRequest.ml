@@ -58,30 +58,30 @@ let build_auth_data session =
               failwith "Unexpected auth context for Client Login"
         end
     | GapiConfig.OAuth1 { GapiConfig.signature_method = signature_method;
-                           GapiConfig.consumer_key = consumer_key;
-                           GapiConfig.consumer_secret = consumer_secret } ->
+                          consumer_key;
+                          consumer_secret } ->
         begin match session.GapiConversation.Session.auth with
             GapiConversation.Session.OAuth1
               { GapiConversation.Session.token = token;
-                GapiConversation.Session.secret = secret } ->
+                secret } ->
               GapiAuth.OAuth1 { GapiAuth.signature_method = signature_method;
-                                 GapiAuth.consumer_key = consumer_key;
-                                 GapiAuth.consumer_secret = consumer_secret;
-                                 GapiAuth.token = token;
-                                 GapiAuth.secret = secret }
+                                consumer_key;
+                                consumer_secret;
+                                token;
+                                secret }
           | _ ->
               failwith "Unexpected auth context for OAuth1"
         end
     | GapiConfig.OAuth2 { GapiConfig.client_id = client_id;
-                           GapiConfig.client_secret = client_secret } ->
+                          client_secret } ->
         begin match session.GapiConversation.Session.auth with
             GapiConversation.Session.OAuth2
               { GapiConversation.Session.oauth2_token = oauth2_token;
-                GapiConversation.Session.refresh_token = refresh_token } ->
+                refresh_token } ->
               GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
-                                 GapiAuth.client_secret = client_secret;
-                                 GapiAuth.oauth2_token = oauth2_token;
-                                 GapiAuth.refresh_token = refresh_token }
+                                client_secret;
+                                oauth2_token;
+                                refresh_token }
           | _ ->
               failwith "Unexpected auth context for OAuth2"
         end
@@ -120,8 +120,8 @@ let single_request
               | _ -> []
           in
             Some { GapiAuth.http_method = http_method;
-                   GapiAuth.url = url;
-                   GapiAuth.post_fields_to_sign = post_fields } in
+                   url = url;
+                   post_fields_to_sign = post_fields } in
   let authorization_header =
     Option.map (fun a -> GapiCore.Header.Authorization a)
       (GapiAuth.generate_authorization_header ?oauth1_params auth_data) in
@@ -159,8 +159,8 @@ let refresh_oauth2_token session =
   let auth_data = build_auth_data session in
     match auth_data with
         GapiAuth.OAuth2 { GapiAuth.client_id = client_id;
-                           GapiAuth.client_secret = client_secret;
-                           GapiAuth.refresh_token = refresh_token; _ } ->
+                           client_secret;
+                           refresh_token; _ } ->
           let (response, new_session) =
             GapiOAuth2.refresh_access_token
               ~client_id

@@ -59,11 +59,11 @@ struct
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        query = query;
-        language = language;
-        maxResults = maxResults;
-        orderBy = orderBy;
-        pageToken = pageToken
+        query;
+        language;
+        maxResults;
+        orderBy;
+        pageToken
       }
     in
       if parameters = default then None else Some parameters

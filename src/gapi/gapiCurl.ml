@@ -73,8 +73,8 @@ let init
     end;
     Curl.set_errorbuffer curl error_buffer;
     Curl.set_followlocation curl follow_location;
-    Created { curl = curl;
-              error_buffer = error_buffer;
+    Created { curl;
+              error_buffer;
               disposed = false }
 
 let with_curl_context f (state : [`Created] t) =

@@ -35,13 +35,13 @@ let of_string date_string =
         let day = parse_int 3 in
         let full_date = {
               Netdate.year = year;
-              Netdate.month = month;
-              Netdate.day = day;
-              Netdate.hour = 0;
-              Netdate.minute = 0;
-              Netdate.second = 0;
-              Netdate.zone = 0;
-              Netdate.week_day = -1 }
+              month = month;
+              day = day;
+              hour = 0;
+              minute = 0;
+              second = 0;
+              zone = 0;
+              week_day = -1 }
         in
           try
             let hour = parse_int 5 in
@@ -57,10 +57,10 @@ let of_string date_string =
             in
               { full_date with
                     Netdate.hour = hour;
-                    Netdate.minute = minute;
-                    Netdate.second = second;
-                    Netdate.zone = tz_sign * (tz_hour * 60 + tz_minute);
-                    Netdate.week_day = -1
+                    minute = minute;
+                    second = second;
+                    zone = tz_sign * (tz_hour * 60 + tz_minute);
+                    week_day = -1
               }
           with Not_found ->
             full_date

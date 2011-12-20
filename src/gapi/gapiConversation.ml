@@ -54,7 +54,7 @@ let update_session headers session =
   in
     { session with
           Session.cookies = cookies;
-          Session.etag = etag }
+          etag }
 
 let request
       ?header_list
@@ -159,10 +159,10 @@ let with_session
                        curl_state in
   let session =
     { Session.curl = curl_session;
-      Session.config = config;
-      Session.cookies = [];
-      Session.auth = auth_context;
-      Session.etag = "" }
+      config = config;
+      cookies = [];
+      auth = auth_context;
+      etag = "" }
   in
     try
       let result = interact session in

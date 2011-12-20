@@ -599,7 +599,7 @@ struct
           parse_children
             Generator.of_xml_data_model
             Generator.empty
-            (fun generator -> { feed with generator = generator })
+            (fun generator -> { feed with generator })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "icon"; `Namespace ns],
@@ -643,7 +643,7 @@ struct
           parse_children
             Rights.of_xml_data_model
             Rights.empty
-            (fun rights -> { feed with rights = rights })
+            (fun rights -> { feed with rights })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "subtitle"; `Namespace ns],
@@ -651,7 +651,7 @@ struct
           parse_children
             Subtitle.of_xml_data_model
             Subtitle.empty
-            (fun subtitle -> { feed with subtitle = subtitle })
+            (fun subtitle -> { feed with subtitle })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
@@ -659,7 +659,7 @@ struct
           parse_children
             Title.of_xml_data_model
             Title.empty
-            (fun title -> { feed with title = title })
+            (fun title -> { feed with title })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "totalResults"; `Namespace ns],
@@ -682,7 +682,7 @@ struct
           feed
       | extension ->
           let extensions = extension :: feed.extensions in
-            { feed with extensions = extensions }
+            { feed with extensions }
 
   let to_xml_data_model feed =
     render_element ns_atom "feed"

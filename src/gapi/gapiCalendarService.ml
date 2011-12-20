@@ -116,25 +116,25 @@ struct
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        maxAttendees = maxAttendees;
-        maxResults = maxResults;
-        minAccessRole = minAccessRole;
-        orderBy = orderBy;
-        originalStart = originalStart;
-        pageToken = pageToken;
-        q = q;
-        sendNotifications = sendNotifications;
-        singleEvents = singleEvents;
-        showDeleted = showDeleted;
-        showHidden = showHidden;
-        showHiddenInvitations = showHiddenInvitations;
-        timeMax = timeMax;
-        timeMin = timeMin;
-        timeZone = timeZone;
-        updatedMin = updatedMin;
-        destination = destination;
-        text = text;
-        iCalUID = iCalUID
+        maxAttendees;
+        maxResults;
+        minAccessRole;
+        orderBy;
+        originalStart;
+        pageToken;
+        q;
+        sendNotifications;
+        singleEvents;
+        showDeleted;
+        showHidden;
+        showHiddenInvitations;
+        timeMax;
+        timeMin;
+        timeZone;
+        updatedMin;
+        destination;
+        text;
+        iCalUID
       }
     in
       if parameters = default then None else Some parameters

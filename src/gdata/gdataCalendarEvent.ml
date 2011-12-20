@@ -112,7 +112,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Content.of_xml_data_model
             GdataAtom.Content.empty
-            (fun content -> { entry with content = content })
+            (fun content -> { entry with content })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
@@ -144,7 +144,7 @@ struct
           GdataAtom.parse_children
             GdataCalendar.Comments.of_xml_data_model
             GdataCalendar.Comments.empty
-            (fun comments -> { entry with comments = comments })
+            (fun comments -> { entry with comments })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
@@ -188,7 +188,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Title.of_xml_data_model
             GdataAtom.Title.empty
-            (fun title -> { entry with title = title })
+            (fun title -> { entry with title })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "eventStatus"; `Namespace ns],
@@ -226,7 +226,7 @@ struct
             cs
       | extension ->
           let extensions = extension :: entry.extensions in
-            { entry with extensions = extensions }
+            { entry with extensions }
 
 end
 
@@ -276,7 +276,7 @@ struct
             GdataAtom.parse_children
               parse_recurrenceExceptionEntryLink
               RecurrenceExceptionEntry.empty
-              (fun entry -> { ex with entry = entry })
+              (fun entry -> { ex with entry })
               cs
         | e ->
             GdataUtils.unexpected e
@@ -452,7 +452,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Content.of_xml_data_model
             GdataAtom.Content.empty
-            (fun content -> { entry with content = content })
+            (fun content -> { entry with content })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "contributor"; `Namespace ns],
@@ -489,7 +489,7 @@ struct
           GdataAtom.parse_children
             GdataCalendar.Comments.of_xml_data_model
             GdataCalendar.Comments.empty
-            (fun comments -> { entry with comments = comments })
+            (fun comments -> { entry with comments })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "extendedProperty"; `Namespace ns],
@@ -565,7 +565,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Summary.of_xml_data_model
             GdataAtom.Summary.empty
-            (fun summary -> { entry with summary = summary })
+            (fun summary -> { entry with summary })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "title"; `Namespace ns],
@@ -573,7 +573,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Title.of_xml_data_model
             GdataAtom.Title.empty
-            (fun title -> { entry with title = title })
+            (fun title -> { entry with title })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "category"; `Namespace ns],
@@ -661,7 +661,7 @@ struct
           entry
       | extension ->
           let extensions = extension :: entry.extensions in
-            { entry with extensions = extensions }
+            { entry with extensions }
 
 end
 

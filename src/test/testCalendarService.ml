@@ -3,18 +3,18 @@ open OUnit
 let new_calendar_entry title =
   { GdataCalendar.Entry.empty with
         GdataCalendar.Entry.where = ["Oakland"];
-        GdataCalendar.Entry.color = "#2952A3";
-        GdataCalendar.Entry.hidden = false;
-        GdataCalendar.Entry.timezone = "America/Los_Angeles";
-        GdataCalendar.Entry.summary =
+        color = "#2952A3";
+        hidden = false;
+        timezone = "America/Los_Angeles";
+        summary =
           { GdataAtom.Summary.empty with
                 GdataAtom.Summary._type = "text";
-                GdataAtom.Summary.value = "This calendar contains the practice schedule and game times.";
+                value = "This calendar contains the practice schedule and game times.";
           };
         GdataCalendar.Entry.title =
                   { GdataAtom.Title.empty with
                         GdataAtom.Title._type = "text";
-                        GdataAtom.Title.value = title;
+                        value = title;
                   };
   }
 
@@ -24,11 +24,11 @@ let acl_entry =
           { GdataAtom.Category.empty with
                 GdataAtom.Category.scheme =
                   "http://schemas.google.com/g/2005#kind";
-                GdataAtom.Category.term =
+                term =
                   "http://schemas.google.com/acl/2007#accessRule" } ];
         GdataACL.Entry.scope =
           { GdataACL.Scope._type = "user";
-            GdataACL.Scope.value = "darcy@gmail.com" };
+            value = "darcy@gmail.com" };
         GdataACL.Entry.role =
           "http://schemas.google.com/gCal/2005#editor" }
 
@@ -134,7 +134,8 @@ let test_update_calendar () =
 let test_add_new_subscription () =
   let entry =
     { GdataCalendar.Entry.empty with
-          GdataCalendar.Entry.id = "en.australian#holiday@group.v.calendar.google.com" }
+          GdataCalendar.Entry.id =
+            "en.australian#holiday@group.v.calendar.google.com" }
   in
     TestHelper.test_request
       TestHelper.build_oauth2_auth
@@ -217,8 +218,7 @@ let test_retrieve_events_with_parameters () =
          { GdataCalendarService.QueryParameters.default with
                GdataCalendarService.QueryParameters.start_min =
                  GapiDate.of_string "2021-10-10T00:00:00.000Z";
-               GdataCalendarService.QueryParameters.start_max =
-                 GapiDate.of_string "2021-10-10T00:00:00.000Z" } in
+               start_max = GapiDate.of_string "2021-10-10T00:00:00.000Z" } in
        let (feed, session) =
          GdataCalendarService.retrieve_events
            ~parameters
@@ -232,10 +232,10 @@ let test_create_quick_add_event () =
   let entry =
     { GdataCalendarEvent.Entry.empty with
           GdataCalendarEvent.Entry.quickAdd = true;
-          GdataCalendarEvent.Entry.content =
+          content =
             { GdataAtom.Content.empty with
                   GdataAtom.Content._type = "text";
-                  GdataAtom.Content.value = "Tennis with John November 11 3pm-3:30pm"
+                  value = "Tennis with John November 11 3pm-3:30pm"
             }
     }
   in

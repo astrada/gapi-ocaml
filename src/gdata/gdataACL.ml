@@ -133,7 +133,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Content.of_xml_data_model
             GdataAtom.Content.empty
-            (fun content -> { entry with content = content })
+            (fun content -> { entry with content })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "published"; `Namespace ns],
@@ -164,7 +164,7 @@ struct
           GdataAtom.parse_children
             GdataAtom.Title.of_xml_data_model
             GdataAtom.Title.empty
-            (fun title -> { entry with title = title })
+            (fun title -> { entry with title })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "scope"; `Namespace ns],
@@ -172,7 +172,7 @@ struct
           GdataAtom.parse_children
             Scope.of_xml_data_model
             Scope.empty
-            (fun scope -> { entry with scope = scope })
+            (fun scope -> { entry with scope })
             cs
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "role"; `Namespace ns],
