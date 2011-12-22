@@ -186,7 +186,7 @@ let refresh_oauth2_token session =
       | _ ->
           failwith "Unauthorized" (* TODO: better error handling *)
 
-let rec gapi_request
+let gapi_request
       ?post_data
       ?version
       ?etag
@@ -195,48 +195,74 @@ let rec gapi_request
       url
       parse_output
       session =
-  try
-    let verified_session =
-      match session.GapiConversation.Session.auth with
-          GapiConversation.Session.OAuth2 {
-            GapiConversation.Session.oauth2_token = ""; _
-          } ->
-            refresh_oauth2_token session
-        | _ ->
-            session
-    in
-      single_request
+  let rec request_loop
         ?post_data
         ?version
         ?etag
         request_type
+        request_number
         url
         parse_output
         parse_error
-        verified_session
-  with
-      Redirect (target, new_session) ->
-        if url <> target then
-          gapi_request
-            ?post_data
-            ?version
-            ?etag
-            ~parse_error
-            request_type
-            target
-            parse_output
-            new_session
-        else
-          failwith ("Redirection loop detected: url=" ^ url)
-    | Unauthorized new_session ->
-        let refreshed_session = refresh_oauth2_token new_session in
-          gapi_request
-            ?post_data
-            ?version
-            ?etag
-            ~parse_error
-            request_type
-            url
-            parse_output
-            refreshed_session
+        session =
+    try
+      let verified_session =
+        match session.GapiConversation.Session.auth with
+            GapiConversation.Session.OAuth2 {
+              GapiConversation.Session.oauth2_token = ""; _
+            } ->
+              refresh_oauth2_token session
+          | _ ->
+              session
+      in
+        single_request
+          ?post_data
+          ?version
+          ?etag
+          request_type
+          url
+          parse_output
+          parse_error
+          verified_session
+    with
+        Redirect (target, new_session) ->
+          if url <> target then
+            request_loop
+              ?post_data
+              ?version
+              ?etag
+              request_type
+              (succ request_number)
+              url
+              parse_output
+              parse_error
+              new_session
+          else
+            failwith ("Redirection loop detected: url=" ^ url)
+      | (Unauthorized new_session) as e->
+          if request_number > 1 then
+            raise e
+          else
+            let refreshed_session = refresh_oauth2_token new_session in
+              request_loop
+                ?post_data
+                ?version
+                ?etag
+                request_type
+                (succ request_number)
+                url
+                parse_output
+                parse_error
+                refreshed_session
+  in
+    request_loop
+      ?post_data
+      ?version
+      ?etag
+      request_type
+      0
+      url
+      parse_output
+      parse_error
+      session
 
