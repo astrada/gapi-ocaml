@@ -1,0 +1,2 @@
+<serviceGenerator.*> : pkg_extlib, pkg_json-wheel
+
