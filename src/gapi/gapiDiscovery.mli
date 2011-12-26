@@ -50,7 +50,7 @@ sig
     (** A link to human readable documentation for the API. *)
     labels : string list;
     (** Labels for the status of this API, such as labs or deprecated. *)
-    preferred : string;
+    preferred : bool;
     (** True if this version is the preferred version to use. *)
   }
 
@@ -64,7 +64,7 @@ sig
   val icons : (t, IconsData.t) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
   val labels : (t, string list) GapiLens.t
-  val preferred : (t, string) GapiLens.t
+  val preferred : (t, bool) GapiLens.t
 
   val empty : t
 
@@ -134,7 +134,7 @@ sig
 
   val render : t -> GapiJson.json_data_model list list
 
-  val parse : 'a -> GapiJson.json_data_model -> t
+  val parse : t -> GapiJson.json_data_model -> t
 
 end
 

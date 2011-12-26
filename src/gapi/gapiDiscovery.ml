@@ -27,7 +27,7 @@ struct
     [render_string_value "x16" x.x16;
      render_string_value "x32" x.x32]
 
-  let rec parse x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ GapiJson.name = "x16"; data_type = Scalar },
@@ -55,7 +55,7 @@ struct
     icons : IconsData.t;
     documentationLink : string;
     labels : string list;
-    preferred : string
+    preferred : bool
   }
 
 	let kind = {
@@ -114,7 +114,7 @@ struct
     icons = IconsData.empty;
     documentationLink = "";
     labels = [];
-    preferred = ""
+    preferred = false
   }
 
   let render x =
@@ -129,7 +129,7 @@ struct
        render_object "icons" (IconsData.render x.icons);
        render_string_value "documentationLink" x.documentationLink;
        render_array "labels" (render_string_value "") x.labels;
-       render_string_value "preferred" x.preferred]
+       render_bool_value "preferred" x.preferred]
 
   let rec parse x tree =
     match tree with
@@ -183,7 +183,7 @@ struct
             cs
       | AnnotatedTree.Leaf
           ({ GapiJson.name = "preferred"; data_type = Scalar },
-           Json_type.String v) ->
+           Json_type.Bool v) ->
           { x with preferred = v }
       | AnnotatedTree.Node
           ({ GapiJson.name = ""; data_type = Object },
@@ -277,7 +277,7 @@ struct
   let render x =
     [render_string_value "description" x.description]
 
-  let rec parse x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ GapiJson.name = "description"; data_type = Scalar },
@@ -304,11 +304,12 @@ struct
   }
 
   let render x =
-    [render_collection "scopes" Object (fun (id, v) -> render_object id (ScopesData.render v)) x.scopes]
+    [render_object "oauth2"
+       [render_collection "scopes" Object (fun (id, v) -> render_object id (ScopesData.render v)) x.scopes]]
 
-  let parse x tree =
+  let rec parse x tree =
     match tree with
-      | AnnotatedTree.Node
+        AnnotatedTree.Node
           ({ GapiJson.name = "scopes"; data_type = Object },
            cs) ->
           parse_collection
@@ -325,6 +326,14 @@ struct
                    unexpected "GapiDiscovery.Oauth2Data.parse.parse_scopes" e)
             ("", ScopesData.empty)
             (fun xs -> { scopes = xs })
+            cs
+      | AnnotatedTree.Node
+          ({ GapiJson.name = "oauth2"; data_type = Object },
+           cs) ->
+          parse_children
+            parse
+            empty
+            Std.identity
             cs
       | e ->
           unexpected "GapiDiscovery.Oauth2Data.parse" e
@@ -468,7 +477,7 @@ struct
            Json_type.String v) ->
           { x with id = v }
       | AnnotatedTree.Leaf
-          ({ name = "_type"; data_type = Scalar },
+          ({ name = "type"; data_type = Scalar },
            Json_type.String v) ->
           { x with _type = v }
       | AnnotatedTree.Leaf
@@ -592,7 +601,7 @@ struct
   let render x =
     [render_string_value "$ref" x._ref]
 
-  let rec parse x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ name = "$ref"; data_type = Scalar },
@@ -628,7 +637,7 @@ struct
     [render_bool_value "multipart" x.multipart;
      render_string_value "path" x.path]
 
-  let rec parse x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Leaf
           ({ name = "multipart"; data_type = Scalar },
@@ -668,7 +677,7 @@ struct
     [render_object "simple" (ProtocolData.render x.simple);
      render_object "resumable" (ProtocolData.render x.resumable)]
 
-  let rec parse x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Node
           ({ name = "simple"; data_type = Object },
@@ -723,7 +732,7 @@ struct
      render_string_value "maxSize" x.maxSize;
      render_object "protocols" (ProtocolsData.render x.protocols)]
 
-  let rec parse x tree =
+  let parse x tree =
     match tree with
         AnnotatedTree.Node
           ({ name = "accept"; data_type = Array },
