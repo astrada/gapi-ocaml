@@ -96,6 +96,11 @@ val parse_root :
   json_data_model ->
   'a
 
+val parse_string_element :
+  'a ->
+  json_data_model ->
+  string
+
 val json_to_data_model :
   Json_type.json_type ->
   json_data_model

@@ -105,6 +105,14 @@ let parse_root parse_object empty_object tree =
     | e ->
         unexpected "GapiJson.parse_root" e
 
+let parse_string_element _ = function
+    AnnotatedTree.Leaf
+      ({ name = ""; data_type = Scalar },
+       Json_type.String v) ->
+      v
+  | e ->
+      unexpected "GapiJson.parse_string_element" e
+
 let json_to_data_model json_value =
   let rec map (name, value) =
     match value with
