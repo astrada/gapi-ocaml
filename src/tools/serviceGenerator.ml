@@ -479,6 +479,12 @@ struct
     | ServiceModule
     | ServiceModuleInterface
 
+  let string_of_file_type = function
+      SchemaModule -> "schema module"
+    | SchemaModuleInterface -> "schema module interface"
+    | ServiceModule -> "service module"
+    | ServiceModuleInterface -> "service module interface"
+
   type t = {
     name : string;
     file_name : string;
@@ -491,7 +497,7 @@ struct
     let name =
       match file_type with
           SchemaModule
-        | SchemaModuleInterface -> module_base_name
+        | SchemaModuleInterface -> module_base_name ^ "Schema"
         | ServiceModule
         | ServiceModuleInterface -> module_base_name ^ "Service" in
     let extension =
@@ -669,28 +675,149 @@ let build_schema_inner_module
     render_parse_function ();
     Format.fprintf formatter "@]@\nend@\n@\n"
 
-let build_schema_module service_name complex_types type_table =
+(* TODO: generalize *)
+let replace_invalid_characters s =
+  ExtString.String.map
+    (fun c ->
+       match c with
+           'a'..'z'
+         | 'A'..'Z'
+         | '0'..'9'
+         | '_' -> c
+         | _ -> '_'
+    ) s
+
+let generate_rest_method formatter (id, rest_method) base_url type_table =
+  let generate_method_body () =
+    let function_name = String.lowercase rest_method.RestMethod.httpMethod in
+      (* TODO: build url *)
+      Format.fprintf formatter
+        "@[<hov 2>let url' =@ base_url@ in@]@\n";
+      (* TODO: get etag *)
+      (* TODO: build parameters *)
+      Format.fprintf formatter
+        "@[<hov 2>let query_parameters =@ Option.map@ GapiService.StandardParameters.to_key_value_list@ parameters@ in@]@\n";
+      Format.fprintf formatter
+        "@[<hov 2>GapiService.%s@ ?query_parameters@ "
+        function_name;
+      if rest_method.RestMethod.request <> RefData.empty then begin
+        Format.fprintf formatter
+          "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
+          rest_method.RestMethod.request.RefData._ref
+          (String.uncapitalize rest_method.RestMethod.request.RefData._ref);
+      end else if rest_method.RestMethod.httpMethod = "POST" then begin
+        Format.fprintf formatter
+          "~data:%s.empty@ "
+          rest_method.RestMethod.response.RefData._ref;
+      end;
+      Format.fprintf formatter
+        "url'@ (GapiJson.parse_json_response %s.of_data_model)@ "
+        rest_method.RestMethod.response.RefData._ref;
+      Format.fprintf formatter "session@ @]@\n";
+  in
+
+  let url = base_url ^ rest_method.RestMethod.path in
+    Format.fprintf formatter
+      "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?parameters@ "
+      id url;
+    (* Optional parameters with default *)
+    List.iter
+      (fun (id, parameter) ->
+         Format.fprintf formatter "?(%s = %S)@ "
+           (replace_invalid_characters id) parameter.JsonSchema.default)
+      (List.filter
+         (fun (_, param) ->
+            not param.JsonSchema.required && param.JsonSchema.default <> "")
+         rest_method.RestMethod.parameters);
+    (* Optional parameters without default *)
+    List.iter
+      (fun (id, _) ->
+         Format.fprintf formatter "?%s@ " (replace_invalid_characters id))
+      (List.filter
+         (fun (_, param) ->
+            not param.JsonSchema.required && param.JsonSchema.default = "")
+         rest_method.RestMethod.parameters);
+    (* Required parameters *)
+    List.iter
+      (fun id ->
+         Format.fprintf formatter "~%s@ " (replace_invalid_characters id))
+      rest_method.RestMethod.parameterOrder;
+    (* Request *)
+    if rest_method.RestMethod.request <> RefData.empty then
+    begin
+      rest_method.RestMethod.request.RefData._ref
+        |> String.uncapitalize
+        |> replace_invalid_characters
+        |> Format.fprintf formatter "%s@ ";
+    end;
+    Format.fprintf formatter "session =@]@\n";
+    generate_method_body ();
+    Format.fprintf formatter "@]@\n"
+
+let build_service_inner_module formatter (resource_id, resource) base_url type_table =
+  let module_name =
+    (String.capitalize resource_id) ^ "Resource"
+  in
+    Format.fprintf formatter
+      "module %s =@\n@[<v 2>struct@,"
+      module_name;
+    List.iter
+      (fun rest_method ->
+         generate_rest_method formatter rest_method base_url type_table)
+      resource.RestResource.methods;
+    Format.fprintf formatter "@]@\nend@\n@\n"
+
+
+let build_module file_type service_name generate_body =
   let new_module =
-    Module.create service_name Module.SchemaModule in
+    Module.create service_name file_type in
   let () =
-    Printf.printf "Building schema module %s (%s)...%!"
-      new_module.Module.name new_module.Module.file_name in
+    Printf.printf "Building %s %s (%s)...%!"
+      (Module.string_of_file_type file_type)
+      new_module.Module.name
+      new_module.Module.file_name in
   let (oc, formatter) = open_file new_module.Module.file_name in
-  let () =
-    Format.fprintf formatter "(* Warning! This file is generated. Modify at your own risk. *)@\n@\n" in
+    Format.fprintf formatter "(* Warning! This file is generated. Modify at your own risk. *)@\n@\n";
+    generate_body formatter new_module.Module.name;
+    close_file oc formatter;
+    print_endline "Done"
+
+let build_schema_module service_name complex_types type_table =
+  let generate_body formatter module_name =
     List.iter
       (fun complex_type ->
          build_schema_inner_module
-           formatter complex_type type_table new_module.Module.name)
-      complex_types;
-    close_file oc formatter;
-    print_endline "Done"
+           formatter complex_type type_table module_name)
+      complex_types
+  in
+    build_module Module.SchemaModule service_name generate_body
 
 let build_schema_module_interface service =
   ()
 
-let build_service_module service =
-  ()
+let build_service_module service complex_types type_table =
+  let generate_body formatter module_name =
+    List.iter
+      (fun (value, _) ->
+         let suffix =
+           let last_dot_position = String.rindex value '.' in
+           let last_slash_position = String.rindex value '/' in
+             if last_slash_position > last_dot_position then
+               ""
+             else
+               "_" ^ (Str.string_after value (last_dot_position + 1))
+            in
+         Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value)
+      service.RestDescription.auth.Oauth2Data.scopes;
+    (* TODO: parameters *)
+    Format.fprintf formatter "open %s@\n@\n" ("Gapi" ^ String.capitalize service.RestDescription.name ^ "Schema"); (* <- FIXME *)
+    List.iter
+      (fun resource ->
+         build_service_inner_module
+           formatter resource service.RestDescription.basePath type_table)
+      service.RestDescription.resources
+  in
+    build_module Module.ServiceModule service.RestDescription.name generate_body
 
 let build_service_module_interface service =
   ()
@@ -703,16 +830,18 @@ let generate_code service =
   let type_table = 
     TypeTable.create complex_types in
   let (sorted_complex_types, type_table) =
-    TypeTable.sort type_table
-  in
+    TypeTable.sort type_table in
+  let service_name = service.RestDescription.name in
     build_schema_module
-      service.RestDescription.name
+      service_name
       sorted_complex_types
       type_table;
     build_schema_module_interface service;
-    build_service_module service;
-    build_service_module_interface service(*;
-    GapiUrlshortener.StringCount.empty*)
+    build_service_module
+      service
+      sorted_complex_types
+      type_table;
+    build_service_module_interface service
 
 (* Argument parsing and program entry point *)
 

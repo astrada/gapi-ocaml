@@ -445,3 +445,33 @@ struct
 
 end
 
+let get
+      ?etag
+      ?query_parameters
+      url
+      parse_response
+      session =
+  service_request
+    ?etag
+    ?query_parameters
+    ~request_type:GapiRequest.Query
+    url
+    parse_response
+    session
+
+let post
+      ?query_parameters
+      ?(data_to_post = (fun _ -> GapiCore.PostData.empty))
+      ~data
+      url
+      parse_response
+      session =
+  service_request_with_data
+    GapiRequest.Create
+    data_to_post
+    ?query_parameters
+    data
+    url
+    parse_response
+    session
+

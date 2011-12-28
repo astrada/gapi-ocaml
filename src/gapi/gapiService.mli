@@ -222,3 +222,20 @@ module Make :
                 and type resource_t = S.resource_t
                 and type query_parameters_t = Q.t
 
+val get :
+  ?etag:string ->
+  ?query_parameters:(string * string) list ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
+
+val post :
+  ?query_parameters:(string * string) list ->
+  ?data_to_post:('a -> GapiCore.PostData.t) ->
+  data:'a ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
+
