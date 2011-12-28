@@ -48,6 +48,29 @@ let get_service_description api version nocache =
 (* Generate OCaml source files *)
 
 (* Parameters and properties *)
+
+module Name =
+struct
+  type t = {
+    original_name : string;
+    ocaml_name : string
+  }
+
+  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"]
+
+  let create name =
+    let ocaml_name =
+      if List.mem name keywords then
+        "_" ^ name
+      else
+        name
+    in
+      { original_name = name;
+        ocaml_name
+      }
+
+end
+
 module ScalarType =
 struct
   type format_t =
@@ -86,6 +109,20 @@ struct
       | "integer" -> true
       | _ -> false
 
+  type data_t =
+      String
+    | Boolean
+    | Integer
+    | DateTime
+    | Date
+
+  let data_type_to_string = function
+      String -> "string"
+    | Boolean -> "bool"
+    | Integer -> "int"
+    | DateTime
+    | Date -> "GapiDate.t"
+
   type t = {
     original_type : string;
     description : string;
@@ -99,52 +136,65 @@ struct
     enumDescriptions : string list;
     repeated : bool;
     location : location_t;
+    data_type : data_t;
+    empty_value : string;
   }
 
   let create json_schema =
-    if not (is_scalar json_schema) then
-      failwith ("Unexpected non-scalar type: " ^ json_schema.JsonSchema._type)
-    else
-      { original_type = json_schema.JsonSchema._type;
-        description = json_schema.JsonSchema.description;
-        default = json_schema.JsonSchema.default;
-        required = json_schema.JsonSchema.required;
-        format = format_of_string json_schema.JsonSchema.format;
-        pattern = json_schema.JsonSchema.pattern;
-        minimum = json_schema.JsonSchema.minimum;
-        maximum = json_schema.JsonSchema.maximum;
-        enum = json_schema.JsonSchema.enum;
-        enumDescriptions = json_schema.JsonSchema.enumDescriptions;
-        repeated = json_schema.JsonSchema.repeated;
-        location = location_of_string json_schema.JsonSchema.location;
-      }
+    let get_data_type original_type format =
+      match original_type with
+          "boolean" -> Boolean
+        | "integer" -> Integer
+        | "string" ->
+            begin match format with
+                DateTimeFormat -> DateTime
+              | DateFormat -> Date
+              | _ -> String
+            end
+        | _ ->
+            failwith ("Unexpected original type: " ^ original_type)
+    in
 
-  type data_t =
-      String
-    | Boolean
-    | Integer
+    let get_empty_value = function
+        String -> "\"\""
+      | Boolean -> "false"
+      | Integer -> "0"
+      | DateTime
+      | Date -> "GapiDate.epoch"
+    in
+
+    let format = format_of_string json_schema.JsonSchema.format in
+    let data_type = get_data_type json_schema.JsonSchema._type format in
+    let empty_value = get_empty_value data_type in
+      if not (is_scalar json_schema) then
+        failwith ("Unexpected non-scalar type: " ^ json_schema.JsonSchema._type)
+      else
+        { original_type = json_schema.JsonSchema._type;
+          description = json_schema.JsonSchema.description;
+          default = json_schema.JsonSchema.default;
+          required = json_schema.JsonSchema.required;
+          format;
+          pattern = json_schema.JsonSchema.pattern;
+          minimum = json_schema.JsonSchema.minimum;
+          maximum = json_schema.JsonSchema.maximum;
+          enum = json_schema.JsonSchema.enum;
+          enumDescriptions = json_schema.JsonSchema.enumDescriptions;
+          repeated = json_schema.JsonSchema.repeated;
+          location = location_of_string json_schema.JsonSchema.location;
+          data_type;
+          empty_value;
+        }
+
+  let get_render_template = function
+      String ->
+        ["GapiJson.render_string_value"; "x."; ""]
+    | Boolean ->
+        ["GapiJson.render_bool_value"; "x."; ""]
+    | Integer ->
+        ["GapiJson.render_int_value"; "x."; ""]
     | DateTime
-    | Date
-
-  let get_data_type st =
-    match st.original_type with
-        "boolean" -> Boolean
-      | "integer" -> Integer
-      | "string" ->
-          begin match st.format with
-              DateTimeFormat -> DateTime
-            | DateFormat -> Date
-            | _ -> String
-          end
-      | _ ->
-          failwith ("Unexpected original type: " ^ st.original_type)
-
-  let data_type_to_string = function
-      String -> "string"
-    | Boolean -> "bool"
-    | Integer -> "int"
-    | DateTime -> "GapiDate.t"
-    | Date -> "GapiDate.t"
+    | Date ->
+        ["GapiJson.render_date_value"; "x."; ""]
 
 end
 
@@ -161,7 +211,7 @@ struct
 
   type data_t =
       Scalar of ScalarType.t
-    | Object of (string * t) list
+    | Object of (Name.t * t) list
     | Array of t
     | Reference of string
     | Dynamic of t
@@ -174,13 +224,13 @@ struct
 
   let rec data_type_to_string = function
       Scalar scalar ->
-        scalar |> ScalarType.get_data_type |> ScalarType.data_type_to_string
+        scalar.ScalarType.data_type |> ScalarType.data_type_to_string
     | Reference type_name ->
         type_name ^ ".t"
     | Array inner_type ->
         (data_type_to_string inner_type.data_type) ^ " list"
     | _ ->
-        ""
+        failwith "Unsupported type in ComplexType.data_type_to_string"
 
   let get_references complex_type =
     let merge xs ys =
@@ -213,14 +263,55 @@ struct
     in
       loop complex_type []
 
+  (* TODO: refactor *)
+  let get_direct_references complex_type =
+    let merge xs ys =
+      List.fold_left
+        (fun zs x ->
+           if List.mem x zs then
+             zs
+           else
+             x :: zs)
+        ys
+        xs
+    in
+
+    let rec loop complex_type' accu =
+      match complex_type'.data_type with
+        | Reference type_name ->
+            type_name :: accu
+        | Object properties ->
+            List.fold_left
+              (fun a (_, prop) ->
+                 let refs = loop prop accu in
+                   merge a refs)
+              accu
+              properties
+        | Array _
+        | Scalar _
+        | _ ->
+            accu
+    in
+      loop complex_type []
+
   let is_anonymous complex_type =
     complex_type.id = ""
+
+  let get_empty_value = function
+      Scalar scalar ->
+        scalar.ScalarType.empty_value
+    | Reference type_name ->
+        type_name ^ ".empty"
+    | Array inner_type ->
+        "[]"
+    | _ ->
+        failwith "Unsupported type in ComplexType.get_empty_value"
 
   let rec create json_schema =
     let create_object () =
       match json_schema.JsonSchema.additionalProperties with
           None -> Object (List.map
-                            (fun (n, v) -> (n, create v))
+                            (fun (n, v) -> (Name.create n, create v))
                             json_schema.JsonSchema.properties)
             | Some p -> Dynamic (create p)
     in
@@ -262,11 +353,39 @@ struct
         description = json_schema.JsonSchema.description;
       }
 
+  let get_render_template t =
+    match t.data_type with
+        Scalar scalar ->
+          ScalarType.get_render_template scalar.ScalarType.data_type
+      (*| Object _ ->
+          "GapiJson.render_object"*)
+      | Reference type_name ->
+          ["GapiJson.render_object"; "(" ^ type_name ^ ".render x."; ")"]
+      | Array { data_type = Reference type_name; _ } ->
+          ["GapiJson.render_array"; type_name ^ ".render x."; ""]
+      | _ ->
+          failwith "Unexpected complex type in ComplexType.get_render_template."
+
+end
+
+module StringSet =
+struct
+  include Set.Make(struct type t = string let compare = compare end)
+
+  let add_list xs s =
+    List.fold_left
+      (fun s' x -> add x s')
+      s
+      xs
+
 end
 
 module TypeTable =
 struct
-  type t = (string, ComplexType.t) Hashtbl.t
+  type t = {
+    table : (string, ComplexType.t) Hashtbl.t;
+    referenced : StringSet.t;
+  }
 
   let create complex_types =
     let table = Hashtbl.create 64 in
@@ -275,9 +394,9 @@ struct
            if not (ComplexType.is_anonymous complex_type) then
              Hashtbl.add table complex_type.ComplexType.id complex_type)
         complex_types;
-      table
+      { table; referenced = StringSet.empty }
 
-  let sort table =
+  let sort { table; referenced } =
     let get_references id complex_type =
       let rec loop id' complex_type' accu =
         let references = ComplexType.get_references complex_type' in
@@ -305,44 +424,30 @@ struct
         ys
     in
 
+    let referenced =
+      Hashtbl.fold
+        (fun _ complex_type referenced' ->
+           let references = ComplexType.get_direct_references complex_type in
+             StringSet.add_list references referenced')
+        table
+        referenced
+    in
+
     let complex_types =
       Hashtbl.fold
         (fun id complex_type sorted ->
-           Printf.printf "id=%s\n" id;
            if List.mem_assoc id sorted then
              sorted
            else
              let references = get_references id complex_type in
-               print_string "References: ";
-           List.iter (fun (id, _) -> Printf.printf "id=%s;" id) references;
-               print_string "\nSorted: ";
-           List.iter (fun (id, _) -> Printf.printf "id=%s;" id) sorted;
-           print_newline ();
-               merge references sorted
-           )
+               merge references sorted)
         table
         []
     in
-      List.rev_map snd complex_types
+      (List.rev_map snd complex_types, { table; referenced })
 
-end
-
-module Record =
-struct
-  type field = {
-    name : string;
-    field_type : ComplexType.t;
-  }
-  type t = field list
-
-end
-
-module InnerModule =
-struct
-  type t = {
-    name : string;
-    record : Record.t;
-  }
+  let is_referenced id { referenced; _ } =
+    StringSet.mem id referenced
 
 end
 
@@ -358,7 +463,6 @@ struct
     name : string;
     file_name : string;
     file_type : file_type;
-    inner_modules : InnerModule.t list;
   }
 
   let create service_name file_type =
@@ -379,7 +483,7 @@ struct
     let file_name =
       base_path ^ (String.uncapitalize name) ^ extension
     in
-      { name; file_name; file_type; inner_modules = [] }
+      { name; file_name; file_type; }
 
 end
 
@@ -392,23 +496,98 @@ let close_file oc formatter =
   Format.fprintf formatter "@?";
   close_out oc
 
-let build_schema_inner_module complex_type type_table formatter =
-  Format.fprintf formatter
-    "module %s =@\n@[<v 2>struct@,@[<v 2>type t = {@,"
-    complex_type.ComplexType.id;
-  begin match complex_type.ComplexType.data_type with
-      ComplexType.Object properties ->
-        List.iter
-          (fun (name, property) ->
-             Format.fprintf formatter
-               "%s : %s;@,"
-               name (ComplexType.data_type_to_string
-                       property.ComplexType.data_type))
-          properties;
-    | _ -> ()
-  end;
-  Format.fprintf formatter "@]@,}@,";
-  Format.fprintf formatter "@]@\nend@\n@\n"
+let build_schema_inner_module formatter complex_type type_table =
+  let render_type_t () =
+    Format.fprintf formatter "@[<v 2>type t = {@,";
+    begin match complex_type.ComplexType.data_type with
+        ComplexType.Object properties ->
+          List.iter
+            (fun ({ Name.ocaml_name; _ }, property) ->
+               Format.fprintf formatter
+                 "%s : %s;@,"
+                 ocaml_name
+                 (ComplexType.data_type_to_string
+                    property.ComplexType.data_type))
+            properties;
+      | _ ->
+          failwith ("Unexpected root (must be an Object): "
+                    ^ complex_type.ComplexType.id)
+    end;
+    Format.fprintf formatter "@]@,}@,"
+  in
+
+  let render_lenses () =
+    match complex_type.ComplexType.data_type with
+        ComplexType.Object properties ->
+          List.iter
+            (fun ({ Name.ocaml_name; _ }, _) ->
+               Format.fprintf formatter
+                 "@,@[<v 2>let %s = {@," ocaml_name;
+               Format.fprintf formatter
+                 "GapiLens.get = (fun x -> x.%s);@," ocaml_name;
+               Format.fprintf formatter
+                 "GapiLens.set = (fun v x -> { x with %s = v });" ocaml_name;
+               Format.fprintf formatter "@]@,}")
+            properties;
+      | _ ->
+          failwith ("Unexpected root (must be an Object): "
+                    ^ complex_type.ComplexType.id)
+  in
+
+  let render_empty () =
+    Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
+    begin match complex_type.ComplexType.data_type with
+        ComplexType.Object properties ->
+          List.iter
+            (fun ({ Name.ocaml_name; _ }, property) ->
+               Format.fprintf formatter
+                 "%s = %s;@,"
+                 ocaml_name
+                 (ComplexType.get_empty_value
+                    property.ComplexType.data_type))
+            properties;
+      | _ ->
+          failwith ("Unexpected root (must be an Object): "
+                    ^ complex_type.ComplexType.id)
+    end;
+    Format.fprintf formatter "@]@,}@,"
+  in
+
+  let render_render_function () =
+    Format.fprintf formatter "@,@,@[<v 2>let render x = @,";
+    if not (TypeTable.is_referenced complex_type.ComplexType.id type_table) then
+      Format.fprintf formatter "@[<v 2>GapiJson.render_object \"\" [@,"
+    else
+      Format.fprintf formatter "@[<v 2> [@,";
+    begin match complex_type.ComplexType.data_type with
+        ComplexType.Object properties ->
+          List.iter
+            (fun ({ Name.ocaml_name; original_name }, property) ->
+               let render_template =
+                 ComplexType.get_render_template property in
+               Format.fprintf formatter
+                 "%s \"%s\" %s%s%s;@,"
+                 (List.nth render_template 0)
+                 original_name
+                 (List.nth render_template 1)
+                 ocaml_name
+                 (List.nth render_template 2))
+            properties;
+      | _ ->
+          failwith ("Unexpected root (must be an Object): "
+                    ^ complex_type.ComplexType.id)
+    end;
+    Format.fprintf formatter "@,@]]@]@,"
+  in
+
+    Format.fprintf formatter
+      "module %s =@\n@[<v 2>struct@,"
+      complex_type.ComplexType.id;
+    render_type_t ();
+    render_lenses ();
+    render_empty ();
+    render_render_function ();
+    Format.fprintf formatter "@,@]@\nend@\n@\n"
 
 let build_schema_module service_name complex_types type_table =
   let new_module =
@@ -417,9 +596,11 @@ let build_schema_module service_name complex_types type_table =
     Printf.printf "Building schema module %s (%s)...%!"
       new_module.Module.name new_module.Module.file_name in
   let (oc, formatter) = open_file new_module.Module.file_name in
+  let () =
+    Format.fprintf formatter "(* Warning! This file is generated. Modify at your own risk. *)@\n@\n" in
     List.iter
       (fun complex_type ->
-         build_schema_inner_module complex_type type_table formatter)
+         build_schema_inner_module formatter complex_type type_table)
       complex_types;
     close_file oc formatter;
     print_endline "Done"
@@ -440,11 +621,9 @@ let generate_code service =
       service.RestDescription.schemas in
   let type_table = 
     TypeTable.create complex_types in
-  let sorted_complex_types =
+  let (sorted_complex_types, type_table) =
     TypeTable.sort type_table
   in
-    print_newline ();
-    List.iter (fun t -> print_endline t.ComplexType.id) sorted_complex_types;
     build_schema_module
       service.RestDescription.name
       sorted_complex_types
