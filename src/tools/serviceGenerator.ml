@@ -2,7 +2,7 @@ open GapiUtils.Infix
 open GapiLens.Infix
 open GapiDiscovery
 
-let base_path = "tools/"
+let base_path = "generated/"
 
 
 (* Download service description document *)
@@ -196,6 +196,20 @@ struct
     | Date ->
         ["GapiJson.render_date_value"; "x."; ""]
 
+  let get_json_type = function
+      String
+    | DateTime
+    | Date -> "String"
+    | Boolean -> "Bool"
+    | Integer -> "Int"
+
+  let get_convert_function = function
+    | DateTime
+    | Date -> "GapiDate.of_string "
+    | String
+    | Boolean
+    | Integer -> ""
+
 end
 
 module ComplexType =
@@ -366,6 +380,12 @@ struct
       | _ ->
           failwith "Unexpected complex type in ComplexType.get_render_template."
 
+  let get_content arr =
+    match arr.data_type with
+        Reference type_name -> type_name
+      | _ ->
+          failwith "Unsupported type in ComplexType.get_content"
+
 end
 
 module StringSet =
@@ -496,7 +516,11 @@ let close_file oc formatter =
   Format.fprintf formatter "@?";
   close_out oc
 
-let build_schema_inner_module formatter complex_type type_table =
+let build_schema_inner_module
+      formatter
+      complex_type
+      type_table
+      container_name =
   let render_type_t () =
     Format.fprintf formatter "@[<v 2>type t = {@,";
     begin match complex_type.ComplexType.data_type with
@@ -554,7 +578,7 @@ let build_schema_inner_module formatter complex_type type_table =
   in
 
   let render_render_function () =
-    Format.fprintf formatter "@,@,@[<v 2>let render x = @,";
+    Format.fprintf formatter "@,@[<v 2>let render x = @,";
     if not (TypeTable.is_referenced complex_type.ComplexType.id type_table) then
       Format.fprintf formatter "@[<v 2>GapiJson.render_object \"\" [@,"
     else
@@ -577,7 +601,62 @@ let build_schema_inner_module formatter complex_type type_table =
           failwith ("Unexpected root (must be an Object): "
                     ^ complex_type.ComplexType.id)
     end;
-    Format.fprintf formatter "@,@]]@]@,"
+    Format.fprintf formatter "@]@,@]]@,"
+  in
+
+  let render_parse_function () =
+    let is_recursive =
+      not (TypeTable.is_referenced complex_type.ComplexType.id type_table) in
+
+    Format.fprintf formatter "@,@[<v 2>let %sparse x = function@,"
+      (if is_recursive then "rec " else "");
+    begin match complex_type.ComplexType.data_type with
+        ComplexType.Object properties ->
+          List.iter
+            (fun ({ Name.ocaml_name; original_name }, property) ->
+               match property.ComplexType.data_type with
+                   ComplexType.Scalar scalar ->
+                     Format.fprintf formatter
+                       "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Scalar },@ Json_type.%s v) ->@]@,{ x with %s = %sv }@]@,"
+                       original_name
+                       (ScalarType.get_json_type scalar.ScalarType.data_type)
+                       ocaml_name
+                       (ScalarType.get_convert_function scalar.ScalarType.data_type)
+                 | ComplexType.Array arr ->
+                     let content_module_name = ComplexType.get_content arr in
+                       Format.fprintf formatter
+                         "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                         original_name
+                         content_module_name
+                         content_module_name
+                         ocaml_name
+                 | ComplexType.Reference module_name ->
+                     Format.fprintf formatter
+                       "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> { x with %s = v })@ cs@]@]@,"
+                       original_name
+                       module_name
+                       module_name
+                       ocaml_name
+                 | _ -> ()
+            )
+            properties;
+          if is_recursive then begin
+            Format.fprintf formatter
+              "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ Std.identity@ cs@]@]@,"
+          end;
+          Format.fprintf formatter
+            "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e@]@]"
+            container_name
+            complex_type.ComplexType.id;
+          if is_recursive then begin
+            Format.fprintf formatter
+              "@,@,let to_data_model = GapiJson.render_root render@,@,let of_data_model = GapiJson.parse_root parse empty";
+          end;
+      | _ ->
+          failwith ("Unexpected root (must be an Object): "
+                    ^ complex_type.ComplexType.id)
+    end;
+    Format.fprintf formatter "@,"
   in
 
     Format.fprintf formatter
@@ -587,7 +666,8 @@ let build_schema_inner_module formatter complex_type type_table =
     render_lenses ();
     render_empty ();
     render_render_function ();
-    Format.fprintf formatter "@,@]@\nend@\n@\n"
+    render_parse_function ();
+    Format.fprintf formatter "@]@\nend@\n@\n"
 
 let build_schema_module service_name complex_types type_table =
   let new_module =
@@ -600,7 +680,8 @@ let build_schema_module service_name complex_types type_table =
     Format.fprintf formatter "(* Warning! This file is generated. Modify at your own risk. *)@\n@\n" in
     List.iter
       (fun complex_type ->
-         build_schema_inner_module formatter complex_type type_table)
+         build_schema_inner_module
+           formatter complex_type type_table new_module.Module.name)
       complex_types;
     close_file oc formatter;
     print_endline "Done"
@@ -630,7 +711,8 @@ let generate_code service =
       type_table;
     build_schema_module_interface service;
     build_service_module service;
-    build_service_module_interface service
+    build_service_module_interface service(*;
+    GapiUrlshortener.StringCount.empty*)
 
 (* Argument parsing and program entry point *)
 
