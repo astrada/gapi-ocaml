@@ -32,7 +32,14 @@ let cond pred lt lf =
       set = (fun b a -> choose a |> _set b a)
     }
 
-(* TODO: State monad... *)
+let get_state l =
+  fun a -> _get a l, a
+
+let put_state l v =
+  fun a -> (), _set v a l
+
+let modify_state l f =
+  fun a -> (), _modify f l a
 
 let ignore = {
   get = ignore;
@@ -118,6 +125,16 @@ struct
   let (+=) l v = _modify ((+) v) l
 
   let (-=) l v = _modify ((-) v) l
+
+end
+
+module StateInfix =
+struct
+  let (+=) l v = modify_state l ((+) v)
+
+  let (-=) l v = modify_state l ((-) v)
+
+  let (^=) l v = put_state l v
 
 end
 

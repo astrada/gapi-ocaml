@@ -26,13 +26,24 @@ val modify : ('a, 'b) t -> ('b -> 'b) -> 'a -> 'a
 (** Sequentially composes two lenses *)
 val compose : ('a, 'b) t -> ('c, 'a) t -> ('c, 'b) t
 
-(** Pair two lenses *)
+(** Pairs two lenses *)
 val pair : ('a, 'b) t -> ('c, 'd) t -> ('a * 'c, 'b * 'd) t
 
 (** Selects a lens checking a predicate.
   
   [cond pred lensTrue lensFalse]: [pred] is applied to source. If [true], [lensTrue] is selected. If [false], [lensFalse] is selected. *)
 val cond : ('a -> bool) -> ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
+
+(** {3 State monad integration} *)
+
+(** Gets a value from the state monad. *)
+val get_state : ('a, 'b) t -> 'a -> 'b * 'a
+
+(** Puts a value in the state monad. *)
+val put_state : ('a, 'b) t -> 'b -> 'a -> unit * 'a
+
+(** Modifies a value in the state monad. *)
+val modify_state : ('a, 'b) t -> ('b -> 'b) -> 'a -> unit * 'a
 
 (** {3 Stock lenses} *)
 
@@ -101,6 +112,20 @@ sig
   val ( += ) : ('a, int) t -> int -> 'a -> 'a
 
   val ( -= ) : ('a, int) t -> int -> 'a -> 'a
+
+end
+
+(** Infix operators for the state monad *)
+module StateInfix :
+sig
+  val ( ^= ) : ('a, 'b) t -> 'b -> 'a -> unit * 'a
+  (** Set operator *)
+
+  (** {3 Pseudo-imperatives} *)
+
+  val ( += ) : ('a, int) t -> int -> 'a -> unit * 'a
+
+  val ( -= ) : ('a, int) t -> int -> 'a -> unit * 'a
 
 end
 
