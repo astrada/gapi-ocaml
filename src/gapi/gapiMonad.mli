@@ -37,7 +37,9 @@ sig
 end
 
 module MakeMonadCombinators :
-  functor (M : Monad) -> MonadCombinators
+  functor (M : Monad) ->
+  MonadCombinators
+    with type 'a m = 'a M.t
 
 module type StateMonad =
 sig
@@ -50,15 +52,18 @@ sig
 end
 
 module MakeStateMonad :
-  functor (T : sig type s end) -> StateMonad
+  functor (T : sig type s end) ->
+  StateMonad
+    with type 'a t = T.s -> 'a * T.s
 
 module SessionM :
 sig
-  include StateMonad with
-    type 'a t = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
+  include StateMonad
+    with type 'a t =
+      GapiConversation.Session.t -> 'a * GapiConversation.Session.t
 
-  include MonadCombinators with
-    type 'a m = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
+  include MonadCombinators
+    with type 'a m = 'a t
 
 end
 
