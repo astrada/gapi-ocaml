@@ -10,43 +10,39 @@ end
 
 module type MonadCombinators =
 sig
-  include Monad
+  type 'a m
 
   module Infix :
   sig
-    val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
+    val ( >>= ) : 'a m -> ('a -> 'b m) -> 'b m
 
-    val ( >> ) : 'a t -> 'b t -> 'b t
+    val ( >> ) : 'a m -> 'b m -> 'b m
 
   end
 
-  val join : 'a t t -> 'a t
+  val join : 'a m m -> 'a m
 
-  val liftM : ('a -> 'b) -> 'a t -> 'b t
+  val liftM : ('a -> 'b) -> 'a m -> 'b m
 
-  val liftM2 : ('a -> 'b -> 'c t) -> 'a t -> 'b t -> 'c t
+  val liftM2 : ('a -> 'b -> 'c m) -> 'a m -> 'b m -> 'c m
 
-  val fmap : ('a -> 'b) -> 'a t -> 'b t
+  val fmap : ('a -> 'b) -> 'a m -> 'b m
 
-  val sequence : 'a t list -> 'a list t
+  val sequence : 'a m list -> 'a list m
 
-  val mapM : ('a -> 'b t) -> 'a list -> 'b list t
+  val mapM : ('a -> 'b m) -> 'a list -> 'b list m
 
-  val foldM : ('a -> 'b -> 'a t) -> 'a -> 'b list -> 'a t
+  val foldM : ('a -> 'b -> 'a m) -> 'a -> 'b list -> 'a m
 
 end
 
 module MakeMonadCombinators(M : Monad) =
 struct
-  type 'a t = 'a M.t
-
-  let return = M.return
-
-  let bind = M.bind
+  type 'a m = 'a M.t
 
   module Infix =
   struct
-    let (>>=) = bind
+    let (>>=) = M.bind
 
     let (>>) m n = m >>= (fun _ -> n)
   end
@@ -55,7 +51,7 @@ struct
 
   let join n = n >>= (fun x -> x)
 
-  let liftM f m = m >>= (fun x -> return (f x))
+  let liftM f m = m >>= (fun x -> M.return (f x))
 
   let liftM2 f m1 m2 = m1 >>= (fun a -> m2 >>= (f a))
 
@@ -65,19 +61,29 @@ struct
     let mcons p q =
       p >>= fun x ->
         q >>= fun y ->
-          return (x :: y)
+          M.return (x :: y)
     in
-      List.fold_right mcons xs (return [])
+      List.fold_right mcons xs (M.return [])
 
   let mapM f xs =
     sequence (List.map f xs)
 
   let rec foldM f s = function
       [] ->
-        return s
+        M.return s
     | x :: xs ->
         f s x >>= fun y ->
           foldM f y xs
+
+end
+
+module type StateMonad =
+sig
+  include Monad
+
+  val get : 'a -> 'a * 'a
+
+  val put : 'a -> 'b -> unit * 'a
 
 end
 
@@ -94,6 +100,10 @@ struct
        let m' = k a in
          m' s')
 
+  let get s = (s, s)
+
+  let put x s = ((), x)
+
 end
 
 module SessionStateMonad =
@@ -101,11 +111,9 @@ module SessionStateMonad =
 
 module SessionM =
 struct
+  include SessionStateMonad
+
   include MakeMonadCombinators(SessionStateMonad)
-
-  let get s = (s, s)
-
-  let put x s = ((), x)
 
 end
 

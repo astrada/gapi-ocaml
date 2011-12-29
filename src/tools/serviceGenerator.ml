@@ -1,51 +1,58 @@
 open GapiUtils.Infix
-open GapiLens.Infix
 open GapiDiscovery
+
+(* Configuration *)
 
 let base_path = "generated/"
 
+(* END Configuration *)
+                  
+(* Symbol name generation *)
 
-(* Download service description document *)
+type name_type =
+    ModuleName
+  | TypeName
+  | ValueName
+  | ParameterName
+  | FieldName
+  | ConstructorName
 
-let do_request interact =
-  let state = GapiCurl.global_init () in
-  let result =
-    GapiConversation.with_session
-      GapiConfig.default
-      state
-      interact
-  in
-    ignore (GapiCurl.global_cleanup state);
-    result
+module OCamlName =
+struct
+  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"]
 
-let get_service_description api version nocache =
-  let file_name = base_path ^ api ^ "." ^ version ^ ".json" in
-    if not (Sys.file_exists file_name) || nocache then begin
-      Printf.printf "Downloading %s %s service description to file %s...%!"
-        api version file_name;
-      let document =
-        do_request
-          (fun session ->
-             GapiDiscoveryService.ApisResource.getRest
-               ~api
-               ~version
-               session
-             |> fst) in
-      let () = print_endline "Done" in
-      let tree = RestDescription.to_data_model document in
-      let json = GapiJson.data_model_to_json tree in
-      let () = Json_io.save_json file_name json in
-        document
-    end else begin
-      Printf.printf "Reusing %s %s service description file %s\n%!"
-        api version file_name;
-      let json = Json_io.load_json file_name in
-      let tree = GapiJson.json_to_data_model json in
-        RestDescription.of_data_model tree
-    end
+  let replace_invalid_characters s =
+    ExtString.String.map
+      (fun c ->
+         match c with
+             'a'..'z'
+           | 'A'..'Z'
+           | '0'..'9'
+           | '_' -> c
+           | _ -> '_'
+      ) s
 
+  let get_ocaml_name name_type name =
+    let name_without_invalid_characters = replace_invalid_characters name in
+    let name_with_proper_first_letter_case =
+      match name_type with
+          ModuleName
+        | ConstructorName ->
+            String.capitalize name_without_invalid_characters
+        | TypeName
+        | ValueName
+        | ParameterName
+        | FieldName ->
+            String.uncapitalize name_without_invalid_characters
+    in
+      if List.mem name_with_proper_first_letter_case keywords then
+        "_" ^ name_with_proper_first_letter_case
+      else
+        name_with_proper_first_letter_case
 
-(* Generate OCaml source files *)
+end
+
+(* END Symbol name generation *)
 
 (* Parameters and properties *)
 
@@ -56,14 +63,9 @@ struct
     ocaml_name : string
   }
 
-  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"]
-
   let create name =
     let ocaml_name =
-      if List.mem name keywords then
-        "_" ^ name
-      else
-        name
+      OCamlName.get_ocaml_name FieldName name
     in
       { original_name = name;
         ocaml_name
@@ -388,6 +390,184 @@ struct
 
 end
 
+(* Field description *)
+
+module Field =
+struct
+  type t = {
+    original_name : string;
+    ocaml_name : string;
+    field_type : ComplexType.t;
+  }
+
+
+end
+
+(* END Field description *)
+
+(* Record description *)
+
+module Record =
+struct
+  type t = {
+    original_name : string;
+    ocaml_name : string;
+    fields : Field.t list;
+  }
+
+
+end
+
+(* END Record description *)
+
+(* Value description *)
+
+module Value =
+struct
+  type t = {
+    original_name : string;
+    ocaml_name : string;
+    parameters : Field.t list;
+  }
+
+
+end
+
+(* END Value description *)
+
+(* Inner module description *)
+
+module InnerModule =
+struct
+  type t = {
+    original_name : string;
+    ocaml_name : string;
+    records : Record.t list;
+    values : Value.t list;
+    inner_modules : t list;
+  }
+
+
+end
+
+(* END Inner module description *)
+
+(* File description *)
+
+type file_type =
+    SchemaModule
+  | SchemaModuleInterface
+  | ServiceModule
+  | ServiceModuleInterface
+
+let string_of_file_type = function
+    SchemaModule -> "schema module"
+  | SchemaModuleInterface -> "schema module interface"
+  | ServiceModule -> "service module"
+  | ServiceModuleInterface -> "service module interface"
+
+module File =
+struct
+  type t = {
+    file_type : file_type;
+    service_name : string;
+    module_name : string;
+    file_name : string;
+    inner_modules : (string * InnerModule.t) list
+  }
+
+  let create service_name file_type =
+    let ocaml_name = OCamlName.get_ocaml_name ModuleName service_name in
+    let module_base_name = "Gapi" ^ ocaml_name in
+    let module_name =
+      match file_type with
+          SchemaModule
+        | SchemaModuleInterface -> module_base_name ^ "Schema"
+        | ServiceModule
+        | ServiceModuleInterface -> module_base_name ^ "Service" in
+    let extension =
+      match file_type with
+          SchemaModule
+        | ServiceModule -> ".ml"
+        | SchemaModuleInterface
+        | ServiceModuleInterface -> ".mli" in
+    let file_name =
+      base_path ^ (String.uncapitalize module_name) ^ extension
+    in
+      { file_type;
+        service_name;
+        module_name;
+        file_name;
+        inner_modules = []
+      }
+
+end
+
+(* END File description *)
+
+(* Generator state *)
+
+module State =
+struct
+  type t = (file_type * File.t) list
+
+end
+
+module GeneratorStateMonad =
+  GapiMonad.MakeStateMonad(struct type s = State.t end)
+
+module GeneratorM =
+struct
+  include GeneratorStateMonad
+
+  include GapiMonad.MakeMonadCombinators(GeneratorStateMonad)
+
+end
+
+(* END Generator state *)
+
+(* Download service description document *)
+
+let do_request interact =
+  let state = GapiCurl.global_init () in
+  let result =
+    GapiConversation.with_session
+      GapiConfig.default
+      state
+      interact
+  in
+    ignore (GapiCurl.global_cleanup state);
+    result
+
+let get_service_description api version nocache =
+  let file_name = base_path ^ api ^ "." ^ version ^ ".json" in
+    if not (Sys.file_exists file_name) || nocache then begin
+      Printf.printf "Downloading %s %s service description to file %s...%!"
+        api version file_name;
+      let document =
+        do_request
+          (fun session ->
+             GapiDiscoveryService.ApisResource.getRest
+               ~api
+               ~version
+               session
+             |> fst) in
+      let () = print_endline "Done" in
+      let tree = RestDescription.to_data_model document in
+      let json = GapiJson.data_model_to_json tree in
+      let () = Json_io.save_json file_name json in
+        document
+    end else begin
+      Printf.printf "Reusing %s %s service description file %s\n%!"
+        api version file_name;
+      let json = Json_io.load_json file_name in
+      let tree = GapiJson.json_to_data_model json in
+        RestDescription.of_data_model tree
+    end
+
+
+(* Generate OCaml source files *)
+
 module StringSet =
 struct
   include Set.Make(struct type t = string let compare = compare end)
@@ -468,48 +648,6 @@ struct
 
   let is_referenced id { referenced; _ } =
     StringSet.mem id referenced
-
-end
-
-module Module =
-struct
-  type file_type =
-      SchemaModule
-    | SchemaModuleInterface
-    | ServiceModule
-    | ServiceModuleInterface
-
-  let string_of_file_type = function
-      SchemaModule -> "schema module"
-    | SchemaModuleInterface -> "schema module interface"
-    | ServiceModule -> "service module"
-    | ServiceModuleInterface -> "service module interface"
-
-  type t = {
-    name : string;
-    file_name : string;
-    file_type : file_type;
-  }
-
-  let create service_name file_type =
-    let module_base_name =
-      "Gapi" ^ (String.capitalize service_name) in
-    let name =
-      match file_type with
-          SchemaModule
-        | SchemaModuleInterface -> module_base_name ^ "Schema"
-        | ServiceModule
-        | ServiceModuleInterface -> module_base_name ^ "Service" in
-    let extension =
-      match file_type with
-          SchemaModule
-        | ServiceModule -> ".ml"
-        | SchemaModuleInterface
-        | ServiceModuleInterface -> ".mli" in
-    let file_name =
-      base_path ^ (String.uncapitalize name) ^ extension
-    in
-      { name; file_name; file_type; }
 
 end
 
@@ -770,15 +908,15 @@ let build_service_inner_module formatter (resource_id, resource) base_url type_t
 
 let build_module file_type service_name generate_body =
   let new_module =
-    Module.create service_name file_type in
+    File.create service_name file_type in
   let () =
     Printf.printf "Building %s %s (%s)...%!"
-      (Module.string_of_file_type file_type)
-      new_module.Module.name
-      new_module.Module.file_name in
-  let (oc, formatter) = open_file new_module.Module.file_name in
+      (string_of_file_type file_type)
+      new_module.File.module_name
+      new_module.File.file_name in
+  let (oc, formatter) = open_file new_module.File.file_name in
     Format.fprintf formatter "(* Warning! This file is generated. Modify at your own risk. *)@\n@\n";
-    generate_body formatter new_module.Module.name;
+    generate_body formatter new_module.File.module_name;
     close_file oc formatter;
     print_endline "Done"
 
@@ -790,7 +928,7 @@ let build_schema_module service_name complex_types type_table =
            formatter complex_type type_table module_name)
       complex_types
   in
-    build_module Module.SchemaModule service_name generate_body
+    build_module SchemaModule service_name generate_body
 
 let build_schema_module_interface service =
   ()
@@ -817,7 +955,7 @@ let build_service_module service complex_types type_table =
            formatter resource service.RestDescription.basePath type_table)
       service.RestDescription.resources
   in
-    build_module Module.ServiceModule service.RestDescription.name generate_body
+    build_module ServiceModule service.RestDescription.name generate_body
 
 let build_service_module_interface service =
   ()

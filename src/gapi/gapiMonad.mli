@@ -10,46 +10,55 @@ end
 
 module type MonadCombinators =
 sig
-  include Monad
+  type 'a m
 
   module Infix :
   sig
-    val ( >>= ) : 'a t -> ('a -> 'b t) -> 'b t
+    val ( >>= ) : 'a m -> ('a -> 'b m) -> 'b m
 
-    val ( >> ) : 'a t -> 'b t -> 'b t
+    val ( >> ) : 'a m -> 'b m -> 'b m
 
   end
 
-  val join : 'a t t -> 'a t
+  val join : 'a m m -> 'a m
 
-  val liftM : ('a -> 'b) -> 'a t -> 'b t
+  val liftM : ('a -> 'b) -> 'a m -> 'b m
 
-  val liftM2 : ('a -> 'b -> 'c t) -> 'a t -> 'b t -> 'c t
+  val liftM2 : ('a -> 'b -> 'c m) -> 'a m -> 'b m -> 'c m
 
-  val fmap : ('a -> 'b) -> 'a t -> 'b t
+  val fmap : ('a -> 'b) -> 'a m -> 'b m
 
-  val sequence : 'a t list -> 'a list t
+  val sequence : 'a m list -> 'a list m
 
-  val mapM : ('a -> 'b t) -> 'a list -> 'b list t
+  val mapM : ('a -> 'b m) -> 'a list -> 'b list m
 
-  val foldM : ('a -> 'b -> 'a t) -> 'a -> 'b list -> 'a t
+  val foldM : ('a -> 'b -> 'a m) -> 'a -> 'b list -> 'a m
 
 end
 
 module MakeMonadCombinators :
   functor (M : Monad) -> MonadCombinators
 
-module MakeStateMonad :
-  functor (T : sig type s end) -> Monad
-
-module SessionM :
+module type StateMonad =
 sig
-  include MonadCombinators
-    with type 'a t = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
+  include Monad
 
   val get : 'a -> 'a * 'a
 
   val put : 'a -> 'b -> unit * 'a
+
+end
+
+module MakeStateMonad :
+  functor (T : sig type s end) -> StateMonad
+
+module SessionM :
+sig
+  include StateMonad with
+    type 'a t = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
+
+  include MonadCombinators with
+    type 'a m = GapiConversation.Session.t -> 'a * GapiConversation.Session.t
 
 end
 
