@@ -30,7 +30,11 @@ sig
 
   val sequence : 'a m list -> 'a list m
 
+  val sequence_ : 'a m list -> unit m
+
   val mapM : ('a -> 'b m) -> 'a list -> 'b list m
+
+  val mapM_ : ('a -> 'b m) -> 'a list -> unit m
 
   val foldM : ('a -> 'b -> 'a m) -> 'a -> 'b list -> 'a m
 
@@ -65,8 +69,14 @@ struct
     in
       List.fold_right mcons xs (M.return [])
 
+  let sequence_ xs =
+    List.fold_right (>>) xs (M.return ())
+
   let mapM f xs =
     sequence (List.map f xs)
+
+  let mapM_ f xs =
+    sequence_ (List.map f xs)
 
   let rec foldM f s = function
       [] ->

@@ -1,2 +1,2 @@
-<serviceGenerator.*> : pkg_extlib, pkg_json-wheel
+<serviceGenerator.*> : pkg_extlib, pkg_json-wheel, pkg_monad, syntax_camlp4o
 

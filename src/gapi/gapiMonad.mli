@@ -30,7 +30,11 @@ sig
 
   val sequence : 'a m list -> 'a list m
 
+  val sequence_ : 'a m list -> unit m
+
   val mapM : ('a -> 'b m) -> 'a list -> 'b list m
+
+  val mapM_ : ('a -> 'b m) -> 'a list -> unit m
 
   val foldM : ('a -> 'b -> 'a m) -> 'a -> 'b list -> 'a m
 

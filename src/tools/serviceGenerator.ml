@@ -1,5 +1,7 @@
 open GapiUtils.Infix
 open GapiDiscovery
+open GapiLens.Infix
+open GapiLens.StateInfix
 
 (* Configuration *)
 
@@ -142,6 +144,63 @@ struct
     empty_value : string;
   }
 
+	let original_type = {
+		GapiLens.get = (fun x -> x.original_type);
+		GapiLens.set = (fun v x -> { x with original_type = v })
+	}
+	let description = {
+		GapiLens.get = (fun x -> x.description);
+		GapiLens.set = (fun v x -> { x with description = v })
+	}
+	let default = {
+		GapiLens.get = (fun x -> x.default);
+		GapiLens.set = (fun v x -> { x with default = v })
+	}
+	let required = {
+		GapiLens.get = (fun x -> x.required);
+		GapiLens.set = (fun v x -> { x with required = v })
+	}
+	let format = {
+		GapiLens.get = (fun x -> x.format);
+		GapiLens.set = (fun v x -> { x with format = v })
+	}
+	let pattern = {
+		GapiLens.get = (fun x -> x.pattern);
+		GapiLens.set = (fun v x -> { x with pattern = v })
+	}
+	let minimum = {
+		GapiLens.get = (fun x -> x.minimum);
+		GapiLens.set = (fun v x -> { x with minimum = v })
+	}
+	let maximum = {
+		GapiLens.get = (fun x -> x.maximum);
+		GapiLens.set = (fun v x -> { x with maximum = v })
+	}
+	let enum = {
+		GapiLens.get = (fun x -> x.enum);
+		GapiLens.set = (fun v x -> { x with enum = v })
+	}
+	let enumDescriptions = {
+		GapiLens.get = (fun x -> x.enumDescriptions);
+		GapiLens.set = (fun v x -> { x with enumDescriptions = v })
+	}
+	let repeated = {
+		GapiLens.get = (fun x -> x.repeated);
+		GapiLens.set = (fun v x -> { x with repeated = v })
+	}
+	let location = {
+		GapiLens.get = (fun x -> x.location);
+		GapiLens.set = (fun v x -> { x with location = v })
+	}
+	let data_type = {
+		GapiLens.get = (fun x -> x.data_type);
+		GapiLens.set = (fun v x -> { x with data_type = v })
+	}
+	let empty_value = {
+		GapiLens.get = (fun x -> x.empty_value);
+		GapiLens.set = (fun v x -> { x with empty_value = v })
+	}
+
   let create json_schema =
     let get_data_type original_type format =
       match original_type with
@@ -237,6 +296,23 @@ struct
     original_type : string;
     description : string;
   }
+
+	let id = {
+		GapiLens.get = (fun x -> x.id);
+		GapiLens.set = (fun v x -> { x with id = v })
+	}
+	let data_type = {
+		GapiLens.get = (fun x -> x.data_type);
+		GapiLens.set = (fun v x -> { x with data_type = v })
+	}
+	let original_type = {
+		GapiLens.get = (fun x -> x.original_type);
+		GapiLens.set = (fun v x -> { x with original_type = v })
+	}
+	let description = {
+		GapiLens.get = (fun x -> x.description);
+		GapiLens.set = (fun v x -> { x with description = v })
+	}
 
   let rec data_type_to_string = function
       Scalar scalar ->
@@ -400,6 +476,18 @@ struct
     field_type : ComplexType.t;
   }
 
+	let original_name = {
+		GapiLens.get = (fun x -> x.original_name);
+		GapiLens.set = (fun v x -> { x with original_name = v })
+	}
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let field_type = {
+		GapiLens.get = (fun x -> x.field_type);
+		GapiLens.set = (fun v x -> { x with field_type = v })
+	}
 
 end
 
@@ -415,6 +503,18 @@ struct
     fields : Field.t list;
   }
 
+	let original_name = {
+		GapiLens.get = (fun x -> x.original_name);
+		GapiLens.set = (fun v x -> { x with original_name = v })
+	}
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let fields = {
+		GapiLens.get = (fun x -> x.fields);
+		GapiLens.set = (fun v x -> { x with fields = v })
+	}
 
 end
 
@@ -430,6 +530,18 @@ struct
     parameters : Field.t list;
   }
 
+	let original_name = {
+		GapiLens.get = (fun x -> x.original_name);
+		GapiLens.set = (fun v x -> { x with original_name = v })
+	}
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let parameters = {
+		GapiLens.get = (fun x -> x.parameters);
+		GapiLens.set = (fun v x -> { x with parameters = v })
+	}
 
 end
 
@@ -447,6 +559,26 @@ struct
     inner_modules : t list;
   }
 
+	let original_name = {
+		GapiLens.get = (fun x -> x.original_name);
+		GapiLens.set = (fun v x -> { x with original_name = v })
+	}
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let records = {
+		GapiLens.get = (fun x -> x.records);
+		GapiLens.set = (fun v x -> { x with records = v })
+	}
+	let values = {
+		GapiLens.get = (fun x -> x.values);
+		GapiLens.set = (fun v x -> { x with values = v })
+	}
+	let inner_modules = {
+		GapiLens.get = (fun x -> x.inner_modules);
+		GapiLens.set = (fun v x -> { x with inner_modules = v })
+	}
 
 end
 
@@ -473,8 +605,34 @@ struct
     service_name : string;
     module_name : string;
     file_name : string;
+    formatter : Format.formatter;
     inner_modules : (string * InnerModule.t) list
   }
+
+	let file_type = {
+		GapiLens.get = (fun x -> x.file_type);
+		GapiLens.set = (fun v x -> { x with file_type = v })
+	}
+	let service_name = {
+		GapiLens.get = (fun x -> x.service_name);
+		GapiLens.set = (fun v x -> { x with service_name = v })
+	}
+	let module_name = {
+		GapiLens.get = (fun x -> x.module_name);
+		GapiLens.set = (fun v x -> { x with module_name = v })
+	}
+	let file_name = {
+		GapiLens.get = (fun x -> x.file_name);
+		GapiLens.set = (fun v x -> { x with file_name = v })
+	}
+	let formatter = {
+		GapiLens.get = (fun x -> x.formatter);
+		GapiLens.set = (fun v x -> { x with formatter = v })
+	}
+	let inner_modules = {
+		GapiLens.get = (fun x -> x.inner_modules);
+		GapiLens.set = (fun v x -> { x with inner_modules = v })
+	}
 
   let create service_name file_type =
     let ocaml_name = OCamlName.get_ocaml_name ModuleName service_name in
@@ -498,6 +656,7 @@ struct
         service_name;
         module_name;
         file_name;
+        formatter = Format.std_formatter;
         inner_modules = []
       }
 
@@ -505,11 +664,173 @@ end
 
 (* END File description *)
 
+(* Type table *)
+
+module StringSet =
+struct
+  include Set.Make(struct type t = string let compare = compare end)
+
+  let add_list xs s =
+    List.fold_left
+      (fun s' x -> add x s')
+      s
+      xs
+
+end
+
+module TypeTable =
+struct
+  type t = (string, ComplexType.t) Hashtbl.t
+
+  let create () =
+    Hashtbl.create 64
+
+  let fold f v table =
+    Hashtbl.fold f table v
+
+  (* Topological sort: see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml *)
+  let toposort graph = 
+    let dfs graph visited start_node = 
+      let rec explore path visited node = 
+        (*if List.mem node path    then raise (CycleFound path) else*)
+        if List.mem node visited then visited else     
+          let new_path = node :: path in 
+          let edges    = List.assoc node graph in
+          let visited  = List.fold_left (explore new_path) visited edges in
+            node :: visited
+      in
+        explore [] visited start_node
+    in
+      List.fold_left (fun visited (node,_) -> dfs graph visited node) [] graph
+
+  let build complex_types =
+    let table = Hashtbl.create 64 in
+      List.iter
+        (fun complex_type ->
+           if not (ComplexType.is_anonymous complex_type) then
+             Hashtbl.add table complex_type.ComplexType.id complex_type)
+        complex_types;
+      table
+
+  let sort table =
+    let get_references id complex_type =
+      let rec loop id' complex_type' accu =
+        let references = ComplexType.get_references complex_type' in
+        let full_references =
+          List.fold_left
+            (fun a r ->
+               let referenced_type = Hashtbl.find table r in
+                 loop r referenced_type a)
+            accu
+            references
+        in
+          (id', complex_type') :: full_references
+      in
+        loop id complex_type []
+    in
+
+    let merge xs ys =
+      List.fold_right
+        (fun (k, v) zs ->
+           if List.mem_assoc k zs then
+             zs
+           else
+             (k, v) :: zs)
+        xs
+        ys
+    in
+
+    let complex_types =
+      Hashtbl.fold
+        (fun id complex_type sorted ->
+           if List.mem_assoc id sorted then
+             sorted
+           else
+             let references = get_references id complex_type in
+               merge references sorted)
+        table
+        []
+    in
+      List.rev_map snd complex_types
+
+end
+
+(* END Type table *)
+
 (* Generator state *)
 
 module State =
 struct
-  type t = (file_type * File.t) list
+  type t = {
+    service : RestDescription.t;
+    files : (file_type, File.t) Hashtbl.t;
+    type_table : TypeTable.t;
+    sorted_types : ComplexType.t list;
+    referenced_types : StringSet.t;
+  }
+
+  let service = {
+		GapiLens.get = (fun x -> x.service);
+		GapiLens.set = (fun v x -> { x with service = v })
+  }
+	let files = {
+		GapiLens.get = (fun x -> x.files);
+		GapiLens.set = (fun v x -> { x with files = v })
+	}
+	let type_table = {
+		GapiLens.get = (fun x -> x.type_table);
+		GapiLens.set = (fun v x -> { x with type_table = v })
+	}
+	let sorted_types = {
+		GapiLens.get = (fun x -> x.sorted_types);
+		GapiLens.set = (fun v x -> { x with sorted_types = v })
+	}
+	let referenced_types = {
+		GapiLens.get = (fun x -> x.referenced_types);
+		GapiLens.set = (fun v x -> { x with referenced_types = v })
+	}
+  let file file_type = GapiLens.for_hash file_type
+
+  let create service = {
+    service;
+    files = Hashtbl.create 4;
+    type_table = TypeTable.create ();
+    sorted_types = [];
+    referenced_types = StringSet.empty;
+  }
+                    
+  let build_type_table state =
+    let complex_types =
+      List.map
+        (fun (_, s) -> ComplexType.create s)
+        state.service.RestDescription.schemas in
+    let table = 
+      TypeTable.build complex_types
+    in
+      state |> type_table ^=! table
+
+  let build_sorted_types state =
+    let sorted =
+      TypeTable.sort state.type_table
+    in
+      state |> sorted_types ^=! sorted
+
+  let build_referenced_types state =
+    let referenced =
+      TypeTable.fold
+        (fun _ complex_type referenced ->
+           let references = ComplexType.get_direct_references complex_type in
+             StringSet.add_list references referenced)
+        state.referenced_types
+        state.type_table
+    in
+      state |> referenced_types ^=! referenced
+
+  let is_type_referenced type_id state =
+    StringSet.mem type_id state.referenced_types
+
+  let get_file_lens file_type =
+    files |-- file file_type |-- GapiLens.option_get
 
 end
 
@@ -523,6 +844,8 @@ struct
   include GapiMonad.MakeMonadCombinators(GeneratorStateMonad)
 
 end
+
+open GeneratorM
 
 (* END Generator state *)
 
@@ -568,89 +891,6 @@ let get_service_description api version nocache =
 
 (* Generate OCaml source files *)
 
-module StringSet =
-struct
-  include Set.Make(struct type t = string let compare = compare end)
-
-  let add_list xs s =
-    List.fold_left
-      (fun s' x -> add x s')
-      s
-      xs
-
-end
-
-module TypeTable =
-struct
-  type t = {
-    table : (string, ComplexType.t) Hashtbl.t;
-    referenced : StringSet.t;
-  }
-
-  let create complex_types =
-    let table = Hashtbl.create 64 in
-      List.iter
-        (fun complex_type ->
-           if not (ComplexType.is_anonymous complex_type) then
-             Hashtbl.add table complex_type.ComplexType.id complex_type)
-        complex_types;
-      { table; referenced = StringSet.empty }
-
-  let sort { table; referenced } =
-    let get_references id complex_type =
-      let rec loop id' complex_type' accu =
-        let references = ComplexType.get_references complex_type' in
-        let full_references =
-          List.fold_left
-            (fun a r ->
-               let referenced_type = Hashtbl.find table r in
-                 loop r referenced_type a)
-            accu
-            references
-        in
-          (id', complex_type') :: full_references
-      in
-        loop id complex_type []
-    in
-
-    let merge xs ys =
-      List.fold_right
-        (fun (k, v) zs ->
-           if List.mem_assoc k zs then
-             zs
-           else
-             (k, v) :: zs)
-        xs
-        ys
-    in
-
-    let referenced =
-      Hashtbl.fold
-        (fun _ complex_type referenced' ->
-           let references = ComplexType.get_direct_references complex_type in
-             StringSet.add_list references referenced')
-        table
-        referenced
-    in
-
-    let complex_types =
-      Hashtbl.fold
-        (fun id complex_type sorted ->
-           if List.mem_assoc id sorted then
-             sorted
-           else
-             let references = get_references id complex_type in
-               merge references sorted)
-        table
-        []
-    in
-      (List.rev_map snd complex_types, { table; referenced })
-
-  let is_referenced id { referenced; _ } =
-    StringSet.mem id referenced
-
-end
-
 let open_file file_name =
   let oc = open_out file_name in
   let formatter = Format.formatter_of_out_channel oc in
@@ -661,10 +901,12 @@ let close_file oc formatter =
   close_out oc
 
 let build_schema_inner_module
-      formatter
+      file_lens
       complex_type
-      type_table
-      container_name =
+      state =
+  let file = state |. file_lens in
+  let formatter = file.File.formatter in
+  let container_name = file.File.module_name in
   let render_type_t () =
     Format.fprintf formatter "@[<v 2>type t = {@,";
     begin match complex_type.ComplexType.data_type with
@@ -723,7 +965,7 @@ let build_schema_inner_module
 
   let render_render_function () =
     Format.fprintf formatter "@,@[<v 2>let render x = @,";
-    if not (TypeTable.is_referenced complex_type.ComplexType.id type_table) then
+    if not (State.is_type_referenced complex_type.ComplexType.id state) then
       Format.fprintf formatter "@[<v 2>GapiJson.render_object \"\" [@,"
     else
       Format.fprintf formatter "@[<v 2> [@,";
@@ -750,7 +992,7 @@ let build_schema_inner_module
 
   let render_parse_function () =
     let is_recursive =
-      not (TypeTable.is_referenced complex_type.ComplexType.id type_table) in
+      not (State.is_type_referenced complex_type.ComplexType.id state) in
 
     Format.fprintf formatter "@,@[<v 2>let %sparse x = function@,"
       (if is_recursive then "rec " else "");
@@ -811,7 +1053,8 @@ let build_schema_inner_module
     render_empty ();
     render_render_function ();
     render_parse_function ();
-    Format.fprintf formatter "@]@\nend@\n@\n"
+    Format.fprintf formatter "@]@\nend@\n@\n";
+    ((), state)
 
 (* TODO: generalize *)
 let replace_invalid_characters s =
@@ -892,7 +1135,9 @@ let generate_rest_method formatter (id, rest_method) base_url type_table =
     generate_method_body ();
     Format.fprintf formatter "@]@\n"
 
-let build_service_inner_module formatter (resource_id, resource) base_url type_table =
+let build_service_inner_module file_lens (resource_id, resource) state =
+  let base_url = state.State.service.RestDescription.basePath in
+  let formatter = state |. file_lens |. File.formatter in
   let module_name =
     (String.capitalize resource_id) ^ "Resource"
   in
@@ -901,85 +1146,96 @@ let build_service_inner_module formatter (resource_id, resource) base_url type_t
       module_name;
     List.iter
       (fun rest_method ->
-         generate_rest_method formatter rest_method base_url type_table)
+         generate_rest_method formatter rest_method base_url state.State.type_table)
       resource.RestResource.methods;
-    Format.fprintf formatter "@]@\nend@\n@\n"
+    Format.fprintf formatter "@]@\nend@\n@\n";
+    ((), state)
 
-
-let build_module file_type service_name generate_body =
-  let new_module =
+let build_module file_type generate_body state =
+  let service_name = state
+    |. State.service
+    |. RestDescription.name in
+  let file_lens = State.get_file_lens file_type in
+  let file =
     File.create service_name file_type in
   let () =
     Printf.printf "Building %s %s (%s)...%!"
       (string_of_file_type file_type)
-      new_module.File.module_name
-      new_module.File.file_name in
-  let (oc, formatter) = open_file new_module.File.file_name in
+      file.File.module_name
+      file.File.file_name in
+  let (oc, formatter) = open_file file.File.file_name in
+  let file = file
+    |> File.formatter ^= formatter in
+  let state = state
+    |> file_lens ^= file
+  in
     Format.fprintf formatter "(* Warning! This file is generated. Modify at your own risk. *)@\n@\n";
-    generate_body formatter new_module.File.module_name;
+    let run =
+      generate_body file_lens state in
     close_file oc formatter;
-    print_endline "Done"
+    print_endline "Done";
+    run state
 
-let build_schema_module service_name complex_types type_table =
-  let generate_body formatter module_name =
-    List.iter
+let build_schema_module state =
+  let generate_body file_lens state =
+    mapM_
       (fun complex_type ->
-         build_schema_inner_module
-           formatter complex_type type_table module_name)
-      complex_types
+         build_schema_inner_module file_lens complex_type)
+      state.State.sorted_types
   in
-    build_module SchemaModule service_name generate_body
+    build_module SchemaModule generate_body state
 
-let build_schema_module_interface service =
-  ()
-
-let build_service_module service complex_types type_table =
-  let generate_body formatter module_name =
-    List.iter
-      (fun (value, _) ->
-         let suffix =
-           let last_dot_position = String.rindex value '.' in
-           let last_slash_position = String.rindex value '/' in
-             if last_slash_position > last_dot_position then
-               ""
-             else
-               "_" ^ (Str.string_after value (last_dot_position + 1))
-            in
-         Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value)
-      service.RestDescription.auth.Oauth2Data.scopes;
-    (* TODO: parameters *)
-    Format.fprintf formatter "open %s@\n@\n" ("Gapi" ^ String.capitalize service.RestDescription.name ^ "Schema"); (* <- FIXME *)
-    List.iter
-      (fun resource ->
-         build_service_inner_module
-           formatter resource service.RestDescription.basePath type_table)
-      service.RestDescription.resources
+let build_service_module state =
+  let generate_body file_lens state =
+    let service = state.State.service in
+    let schema_module_name = state
+      |. State.get_file_lens SchemaModule
+      |. File.module_name in
+    let file = state |. file_lens in
+    let formatter = file.File.formatter in
+      List.iter
+        (fun (value, _) ->
+           let suffix =
+             let last_dot_position = String.rindex value '.' in
+             let last_slash_position = String.rindex value '/' in
+               if last_slash_position > last_dot_position then
+                 ""
+               else
+                 "_" ^ (Str.string_after value (last_dot_position + 1))
+              in
+           Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value)
+        service.RestDescription.auth.Oauth2Data.scopes;
+      (* TODO: parameters *)
+      Format.fprintf formatter "open %s@\n@\n" schema_module_name;
+      mapM_
+        (fun resource ->
+           build_service_inner_module file_lens resource)
+        service.RestDescription.resources
   in
-    build_module ServiceModule service.RestDescription.name generate_body
+    build_module ServiceModule generate_body state
 
-let build_service_module_interface service =
-  ()
+let build_schema_module_interface state =
+  (* TODO *)
+  ((), state)
+
+let build_service_module_interface state =
+  (* TODO *)
+  ((), state)
 
 let generate_code service =
-  let complex_types =
-    List.map
-      (fun (_, s) -> ComplexType.create s)
-      service.RestDescription.schemas in
-  let type_table = 
-    TypeTable.create complex_types in
-  let (sorted_complex_types, type_table) =
-    TypeTable.sort type_table in
-  let service_name = service.RestDescription.name in
-    build_schema_module
-      service_name
-      sorted_complex_types
-      type_table;
-    build_schema_module_interface service;
-    build_service_module
-      service
-      sorted_complex_types
-      type_table;
-    build_service_module_interface service
+  let run =
+    perform
+      State.build_type_table;
+      State.build_sorted_types;
+      State.build_referenced_types;
+      build_schema_module;
+      build_service_module;
+      build_schema_module_interface;
+      build_service_module_interface;
+  in
+
+  let state = State.create service in
+    run state
 
 (* Argument parsing and program entry point *)
 
