@@ -72,7 +72,10 @@ let tail = {
 }
 
 let for_hash key = {
-  get = (fun h -> try Some (Hashtbl.find h key) with Not_found -> None);
+  get = (fun h ->
+           try
+             Some (Hashtbl.find h key)
+           with Not_found -> None);
   set = (fun v h ->
            match v with
                Some value -> Hashtbl.add h key value; h
@@ -94,6 +97,11 @@ let for_list i = {
              xs
              (fun _ -> [])
              0)
+}
+
+let option_get = {
+  get = Option.get;
+  set = (fun v _ -> Some v)
 }
 
 let list_map l = {
@@ -130,11 +138,11 @@ end
 
 module StateInfix =
 struct
-  let (+=) l v = modify_state l ((+) v)
+  let (^=!) l v = put_state l v
 
-  let (-=) l v = modify_state l ((-) v)
+  let (+=!) l v = modify_state l ((+) v)
 
-  let (^=) l v = put_state l v
+  let (-=!) l v = modify_state l ((-) v)
 
 end
 

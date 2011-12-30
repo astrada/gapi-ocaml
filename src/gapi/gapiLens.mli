@@ -74,6 +74,9 @@ val for_array : int -> ('a array, 'a) t
 (** Lens for a particular position in a list *)
 val for_list : int -> ('a list, 'a) t
 
+(** Lens for extracting the value from an option type (same as Option.get) *)
+val option_get : ('a option, 'a) t
+
 (** {3 List combinators} *)
 
 (** Creates a lens that maps the given lens in a list *)
@@ -118,14 +121,14 @@ end
 (** Infix operators for the state monad *)
 module StateInfix :
 sig
-  val ( ^= ) : ('a, 'b) t -> 'b -> 'a -> unit * 'a
+  val ( ^=! ) : ('a, 'b) t -> 'b -> 'a -> unit * 'a
   (** Set operator *)
 
   (** {3 Pseudo-imperatives} *)
 
-  val ( += ) : ('a, int) t -> int -> 'a -> unit * 'a
+  val ( +=! ) : ('a, int) t -> int -> 'a -> unit * 'a
 
-  val ( -= ) : ('a, int) t -> int -> 'a -> unit * 'a
+  val ( -=! ) : ('a, int) t -> int -> 'a -> unit * 'a
 
 end
 
