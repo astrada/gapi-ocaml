@@ -1,4 +1,5 @@
 # Packages deps
+<gapiLens.*> : pkg_extlib
 <gapiCore.*> : pkg_extlib
 <gapiUtils.*> : pkg_netstring, pkg_extlib
 <gapiCurl.*> : pkg_netstring, pkg_curl
