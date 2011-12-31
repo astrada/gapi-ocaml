@@ -82,6 +82,19 @@ let for_hash key = {
              | None -> Hashtbl.remove h key; h)
 }
 
+let for_assoc key = {
+  get = (fun l ->
+           try
+             Some (List.assoc key l)
+           with Not_found -> None);
+  set = (fun v l ->
+           match v with
+               Some value ->
+                 let l' = List.remove_assoc key l in
+                   (key, value) :: l'
+             | None -> List.remove_assoc key l)
+}
+
 let for_array i = {
   get = (fun a -> Array.get a i);
   set = (fun v a -> let a' = Array.copy a in Array.set a' i v; a')

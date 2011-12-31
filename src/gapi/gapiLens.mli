@@ -68,6 +68,9 @@ val tail : ('a list, 'a list) t
 (** Lens for a particular key in a hashtable *)
 val for_hash : 'a -> (('a, 'b) Hashtbl.t, 'b option) t
 
+(** Lens for a particular key in an associative list *)
+val for_assoc : 'a -> (('a * 'b) list, 'b option) t
+
 (** Lens for a particular position in an array *)
 val for_array : int -> ('a array, 'a) t
 
