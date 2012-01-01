@@ -825,6 +825,7 @@ struct
     type_table : TypeTable.t;
     sorted_types : ComplexType.t list;
     referenced_types : StringSet.t;
+    parameters_module_name : string;
   }
 
   let service = {
@@ -851,6 +852,10 @@ struct
 		GapiLens.get = (fun x -> x.referenced_types);
 		GapiLens.set = (fun v x -> { x with referenced_types = v })
 	}
+	let parameters_module_name = {
+		GapiLens.get = (fun x -> x.parameters_module_name);
+		GapiLens.set = (fun v x -> { x with parameters_module_name = v })
+	}
   let file file_type = GapiLens.for_hash file_type
   let _module name = GapiLens.for_hash name
 
@@ -867,6 +872,7 @@ struct
     type_table = TypeTable.create ();
     sorted_types = [];
     referenced_types = StringSet.empty;
+    parameters_module_name = "";
   }
                     
   let build_type_table state =
@@ -1173,15 +1179,26 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body =
     let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
       perform
-        (* FIXME: remove this get, inserted to force evaluation order *)
-        get;
+        parameters_module_name <-- GapiLens.get_state
+                                     State.parameters_module_name;
         (* TODO: build url *)
         lift_io (
           Format.fprintf formatter "@[<hov 2>let url' =@ base_url@ in@]@\n";
         (* TODO: get etag *)
-        (* TODO: build parameters *)
           Format.fprintf formatter
-            "@[<hov 2>let query_parameters =@ Option.map@ GapiService.StandardParameters.to_key_value_list@ parameters@ in@]@\n";
+            "@[<hov 2>let params =@ %s.merge_parameters@ ?standard_parameters:parameters@ "
+            parameters_module_name;
+          List.iter
+            (fun (id, json_schema) ->
+               let parameter = value |. Value.get_parameter_lens id in
+                 if json_schema.JsonSchema.location = "query" then
+                   Format.fprintf formatter "%s%s@ "
+                     (if json_schema.JsonSchema.required then "~" else "?")
+                     parameter.Field.ocaml_name)
+            rest_method.RestMethod.parameters;
+          Format.fprintf formatter
+            "()@ in@]@\n@[<hov 2>let query_parameters =@ Option.map@ %s.to_key_value_list@ params@ in@]@\n"
+            parameters_module_name;
           Format.fprintf formatter
             "@[<hov 2>GapiService.%s@ ?query_parameters@ "
             function_to_call);
@@ -1204,7 +1221,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
   in
 
   let render_parameters formatter =
-    let render_optional_parameters with_default printer =
+    let render_optional_parameters with_default render =
       let optional_parameters =
         let test_default =
           if with_default then (fun d -> d <> "") else (fun d -> d = "")
@@ -1217,7 +1234,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         List.iter
           (fun (id, _) ->
              let parameter = value |. Value.get_parameter_lens id in
-               printer parameter)
+               render parameter)
           optional_parameters
     in
       (* Optional parameters with default *)
@@ -1324,6 +1341,23 @@ let build_schema_module =
     build_module SchemaModule generate_body
 
 let build_service_module =
+  let generate_scope formatter (value, _) =
+    perform
+       (* Gets the string following the last dot in scope URL (e.g.
+        * 'https://www.googleapis.com/auth/tasks.readonly' -> readonly)
+        *)
+       let suffix =
+         let last_dot_position = String.rindex value '.' in
+         let last_slash_position = String.rindex value '/' in
+           if last_slash_position > last_dot_position then
+             ""
+           else
+             "_" ^ (Str.string_after value (last_dot_position + 1))
+          in
+       lift_io $
+         Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value;
+  in
+
   let module FieldSet =
   struct
     include Set.Make(struct
@@ -1363,8 +1397,10 @@ let build_service_module =
       service.RestDescription.resources
   in
 
-  let render_type_t formatter parameters =
-    Format.fprintf formatter "@[<v 2>type t = {@,";
+  let render_type_t formatter parameters service_name =
+    Format.fprintf formatter
+      "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,(* %s-specific query parameters *)@,"
+      service_name;
     FieldSet.iter
       (fun (id, field) ->
          Format.fprintf formatter
@@ -1377,7 +1413,7 @@ let build_service_module =
   in
 
   let render_default formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let default = {@,";
+    Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,";
     FieldSet.iter
       (fun (id, field) ->
          Format.fprintf formatter
@@ -1389,7 +1425,7 @@ let build_service_module =
   in
 
   let render_to_key_value_list formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,";
+    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) Std.identity \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) Std.identity \"quotaUser\";@,param (fun p -> p.userIp) Std.identity \"userIp\";@,";
     FieldSet.iter
       (fun (id, field) ->
          Format.fprintf formatter
@@ -1417,7 +1453,8 @@ let build_service_module =
            "%s;@,"
            field.Field.ocaml_name)
       parameters;
-    Format.fprintf formatter "@]@,}@]@,"
+    Format.fprintf formatter "@]@,} in@,if parameters = default then None else Some parameters@]@,"
+    
   in
 
   let generate_parameters_module formatter =
@@ -1426,31 +1463,15 @@ let build_service_module =
       let service_name = service.RestDescription.name in
       let module_name =
         OCamlName.get_ocaml_name ModuleName (service_name ^ "Parameters") in
+      State.parameters_module_name ^=! module_name;
       lift_io (
         Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
         let parameters = get_parameters_set service in
-          render_type_t formatter parameters;
+          render_type_t formatter parameters service_name;
           render_default formatter parameters;
           render_to_key_value_list formatter parameters;
           render_merge_parameters formatter parameters;
           Format.fprintf formatter "@]@\nend@\n@\n")
-  in
-
-  let generate_scope formatter (value, _) =
-    perform
-       (* Gets the string following the last dot in scope URL (e.g.
-        * 'https://www.googleapis.com/auth/tasks.readonly' -> readonly)
-        *)
-       let suffix =
-         let last_dot_position = String.rindex value '.' in
-         let last_slash_position = String.rindex value '/' in
-           if last_slash_position > last_dot_position then
-             ""
-           else
-             "_" ^ (Str.string_after value (last_dot_position + 1))
-          in
-       lift_io $
-         Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value;
   in
 
   let generate_header file_lens =
@@ -1459,7 +1480,7 @@ let build_service_module =
       schema_module_name <-- GapiLens.get_state
                                (State.get_file_lens SchemaModule
                                   |-- File.module_name);
-      lift_io $ Format.fprintf formatter "open %s@\n@\n" schema_module_name;
+      lift_io $ Format.fprintf formatter "open GapiUtils.Infix@\nopen %s@\n@\n" schema_module_name;
       scopes <-- GapiLens.get_state (State.service
                                        |-- RestDescription.auth
                                        |-- Oauth2Data.scopes);
