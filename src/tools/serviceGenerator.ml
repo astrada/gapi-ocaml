@@ -184,6 +184,13 @@ struct
 		GapiLens.set = (fun v x -> { x with empty_value = v })
 	}
 
+  let get_empty_value = function
+      String -> "\"\""
+    | Boolean -> "false"
+    | Integer -> "0"
+    | DateTime
+    | Date -> "GapiDate.epoch"
+
   let create json_schema =
     let get_data_type original_type format =
       match original_type with
@@ -197,14 +204,6 @@ struct
             end
         | _ ->
             failwith ("Unexpected original type: " ^ original_type)
-    in
-
-    let get_empty_value = function
-        String -> "\"\""
-      | Boolean -> "false"
-      | Integer -> "0"
-      | DateTime
-      | Date -> "GapiDate.epoch"
     in
 
     let format = format_of_string json_schema.JsonSchema.format in
@@ -242,6 +241,25 @@ struct
     | String
     | Boolean
     | Integer -> ""
+
+  let get_default scalar =
+    if scalar.default = "" then
+      get_empty_value scalar.data_type
+    else
+      match scalar.data_type with
+          String -> "\"" ^ scalar.default ^ "\""
+        | Boolean
+        | Integer
+        | DateTime
+        | Date -> scalar.default
+
+  let get_to_string_function scalar =
+    match scalar.data_type with
+        String -> "Std.identity"
+      | Boolean -> "string_of_bool"
+      | Integer -> "string_of_int"
+      | DateTime
+      | Date -> "GapiDate.to_string"
 
 end
 
@@ -448,17 +466,22 @@ struct
 		GapiLens.set = (fun v x -> { x with field_type = v })
 	}
 
-  let get_default field =
-    match field.field_type.ComplexType.data_type with
-        ComplexType.Scalar scalar -> scalar.ScalarType.default
-      | _ -> failwith "Default not supported for complex types"
-
   let create (original_name, property) =
     let ocaml_name = OCamlName.get_ocaml_name FieldName original_name in
       { original_name;
         ocaml_name;
         field_type = property
       }
+
+  let get_default field =
+    match field.field_type.ComplexType.data_type with
+        ComplexType.Scalar scalar -> ScalarType.get_default scalar
+      | _ -> failwith "Default not supported for complex types"
+
+  let get_to_string_function field =
+    match field.field_type.ComplexType.data_type with
+        ComplexType.Scalar scalar -> ScalarType.get_to_string_function scalar
+      | _ -> failwith "to_string function not supported for complex types"
 
 end
 
@@ -529,8 +552,9 @@ struct
   let create original_name rest_parameters =
     let ocaml_name = OCamlName.get_ocaml_name ValueName original_name in
     let parameters = List.map
-                       (fun (id, rest_paramter) ->
-                          let complex_type = ComplexType.create rest_paramter in
+                       (fun (id, rest_parameter) ->
+                          let complex_type = ComplexType.create
+                                               rest_parameter in
                             (id, Field.create (id, complex_type)))
                        rest_parameters
     in
@@ -957,7 +981,7 @@ let build_schema_inner_module file_lens complex_type =
   let render_type_t formatter fields =
     Format.fprintf formatter "@[<v 2>type t = {@,";
     List.iter
-      (fun ({ Field.ocaml_name; field_type; _ }) ->
+      (fun { Field.ocaml_name; field_type; _ } ->
          Format.fprintf formatter
            "%s : %s;@,"
            ocaml_name
@@ -969,7 +993,7 @@ let build_schema_inner_module file_lens complex_type =
 
   let render_lenses formatter fields =
     List.iter
-      (fun ({ Field.ocaml_name; field_type; _ }) ->
+      (fun { Field.ocaml_name; field_type; _ } ->
          Format.fprintf formatter
            "@,@[<v 2>let %s = {@," ocaml_name;
          Format.fprintf formatter
@@ -983,7 +1007,7 @@ let build_schema_inner_module file_lens complex_type =
   let render_empty formatter fields =
     Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
     List.iter
-      (fun ({ Field.ocaml_name; field_type; _ }) ->
+      (fun { Field.ocaml_name; field_type; _ } ->
          Format.fprintf formatter
            "%s = %s;@,"
            ocaml_name
@@ -1000,7 +1024,7 @@ let build_schema_inner_module file_lens complex_type =
     else
       Format.fprintf formatter "@[<v 2> [@,";
     List.iter
-      (fun ({ Field.ocaml_name; original_name; field_type}) ->
+      (fun { Field.ocaml_name; original_name; field_type} ->
          match field_type.ComplexType.data_type with
              ComplexType.Scalar scalar ->
                let render_value =
@@ -1049,7 +1073,7 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@,@[<v 2>let %sparse x = function@,"
       (if is_recursive then "rec " else "");
     List.iter
-      (fun ({ Field.ocaml_name; original_name; field_type }) ->
+      (fun { Field.ocaml_name; original_name; field_type } ->
          match field_type.ComplexType.data_type with
              ComplexType.Scalar scalar ->
                Format.fprintf formatter
@@ -1300,6 +1324,118 @@ let build_schema_module =
     build_module SchemaModule generate_body
 
 let build_service_module =
+  let module FieldSet =
+  struct
+    include Set.Make(struct
+                       type t = string * Field.t
+
+                       let compare (id1, _) (id2, _) = compare id1 id2
+                     end)
+
+    let add_parameters_list xs s =
+      List.fold_left
+        (fun s' (id, parameter) ->
+           let complex_type = ComplexType.create parameter in
+           let field = Field.create (id, complex_type) in
+             add (id, field) s')
+        s
+        xs
+
+  end in
+
+  let get_parameters_set service =
+    List.fold_left
+      (fun qp (_, resource) ->
+         let parameters =
+           let open GapiMonad.ListM in
+             perform
+               rest_method <-- resource
+                 |. RestResource.methods |. GapiLens.list_map GapiLens.second;
+               parameter <-- rest_method
+                 |. RestMethod.parameters;
+               let json_schema = snd parameter in
+               guard (json_schema.JsonSchema.location = "query");
+               return parameter;
+         in
+           FieldSet.add_parameters_list parameters qp
+      )
+      FieldSet.empty
+      service.RestDescription.resources
+  in
+
+  let render_type_t formatter parameters =
+    Format.fprintf formatter "@[<v 2>type t = {@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "%s : %s;@,"
+           field.Field.ocaml_name
+           (ComplexType.data_type_to_string
+              field.Field.field_type.ComplexType.data_type))
+      parameters;
+    Format.fprintf formatter "@]@,}@,"
+  in
+
+  let render_default formatter parameters =
+    Format.fprintf formatter "@,@[<v 2>let default = {@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "%s = %s;@,"
+           field.Field.ocaml_name
+           (Field.get_default field))
+      parameters;
+    Format.fprintf formatter "@]@,}@,"
+  in
+
+  let render_to_key_value_list formatter parameters =
+    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "param (fun p -> p.%s) %s \"%s\";@,"
+           field.Field.ocaml_name
+           (Field.get_to_string_function field)
+           field.Field.original_name)
+      parameters;
+    Format.fprintf formatter "@]@,] |> List.concat@,"
+  in
+
+  let render_merge_parameters formatter parameters =
+    Format.fprintf formatter "@,@[<v 2>@[<hv 4>let merge_parameters@,?(standard_parameters = GapiService.StandardParameters.default)@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "?(%s = default.%s)@,"
+           field.Field.ocaml_name
+           field.Field.ocaml_name)
+      parameters;
+    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "%s;@,"
+           field.Field.ocaml_name)
+      parameters;
+    Format.fprintf formatter "@]@,}@]@,"
+  in
+
+  let generate_parameters_module formatter =
+    perform
+      service <-- GapiLens.get_state State.service;
+      let service_name = service.RestDescription.name in
+      let module_name =
+        OCamlName.get_ocaml_name ModuleName (service_name ^ "Parameters") in
+      lift_io (
+        Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+        let parameters = get_parameters_set service in
+          render_type_t formatter parameters;
+          render_default formatter parameters;
+          render_to_key_value_list formatter parameters;
+          render_merge_parameters formatter parameters;
+          Format.fprintf formatter "@]@\nend@\n@\n")
+  in
+
   let generate_scope formatter (value, _) =
     perform
        (* Gets the string following the last dot in scope URL (e.g.
@@ -1324,11 +1460,11 @@ let build_service_module =
                                (State.get_file_lens SchemaModule
                                   |-- File.module_name);
       lift_io $ Format.fprintf formatter "open %s@\n@\n" schema_module_name;
-      (* TODO: parameters module *)
       scopes <-- GapiLens.get_state (State.service
                                        |-- RestDescription.auth
                                        |-- Oauth2Data.scopes);
       mapM_ (generate_scope formatter) scopes;
+      generate_parameters_module formatter;
   in
 
   let generate_body file_lens =
@@ -1343,13 +1479,15 @@ let build_service_module =
   in
     build_module ServiceModule generate_body
 
-let build_schema_module_interface state =
+let build_schema_module_interface =
+  perform
   (* TODO *)
-  ((), state)
+    return ()
 
-let build_service_module_interface state =
+let build_service_module_interface =
+  perform
   (* TODO *)
-  ((), state)
+    return ()
 
 let generate_code service =
   let build_all =
