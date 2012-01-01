@@ -71,3 +71,26 @@ sig
 
 end
 
+module type ListMonad =
+sig
+  include Monad
+    with type 'a t = 'a list
+
+  (* MonadPlus *)
+  val mzero : 'a t
+
+  val mplus : 'a t -> 'a t -> 'a t
+
+  val guard : bool -> unit t
+
+end
+
+module ListM :
+sig
+  include ListMonad
+
+  include MonadCombinators
+    with type 'a m = 'a t
+
+end
+

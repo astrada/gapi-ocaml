@@ -127,3 +127,43 @@ struct
 
 end
 
+module type ListMonad =
+sig
+  include Monad
+    with type 'a t = 'a list
+
+  (* MonadPlus *)
+  val mzero : 'a t
+
+  val mplus : 'a t -> 'a t -> 'a t
+
+  val guard : bool -> unit t
+
+end
+
+module ListMonad =
+struct
+  type 'a t = 'a list
+
+  let return x = [x]
+
+  let bind m k =
+    List.concat (List.map k m)
+
+  let mzero = []
+
+  let mplus = (@)
+
+  let guard cond =
+    if cond then return () else mzero
+
+end
+
+module ListM =
+struct
+  include ListMonad
+
+  include MakeMonadCombinators(ListMonad)
+
+end
+
