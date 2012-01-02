@@ -435,6 +435,17 @@ struct
       | _ ->
           failwith "Unsupported type in ComplexType.get_content"
 
+  let get_description complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> scalar.ScalarType.description
+      | _ -> complex_type.description
+
+  let is_required complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> scalar.ScalarType.required
+      | _ ->
+          failwith "Unsupported type in ComplexType.is_required"
+
 end
 
 (* Field description *)
@@ -523,6 +534,7 @@ struct
   type t = {
     original_name : string;
     ocaml_name : string;
+    description : string;
     parameters : (string * Field.t) list;
     request : Field.t option;
     response : Field.t option;
@@ -536,6 +548,10 @@ struct
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
 	}
+	let description = {
+		GapiLens.get = (fun x -> x.description);
+		GapiLens.set = (fun v x -> { x with description = v })
+	}
 	let parameters = {
 		GapiLens.get = (fun x -> x.parameters);
 		GapiLens.set = (fun v x -> { x with parameters = v })
@@ -548,11 +564,12 @@ struct
   let create
         original_name
         rest_parameters
+        description
         request_ref
         response_ref
         type_table =
     let get_field_from_ref reference =
-      if request_ref = "" then None
+      if reference = "" then None
       else
         let id = OCamlName.get_ocaml_name ParameterName reference in
         let complex_type = Hashtbl.find type_table reference in
@@ -570,6 +587,7 @@ struct
     let response = get_field_from_ref response_ref in
       { original_name;
         ocaml_name;
+        description;
         parameters;
         request;
         response;
@@ -852,6 +870,7 @@ struct
     sorted_types : ComplexType.t list;
     referenced_types : StringSet.t;
     parameters_module_name : string;
+    scopes : (string * string) list;
   }
 
   let service = {
@@ -886,7 +905,12 @@ struct
 		GapiLens.get = (fun x -> x.parameters_module_name);
 		GapiLens.set = (fun v x -> { x with parameters_module_name = v })
 	}
+	let scopes = {
+		GapiLens.get = (fun x -> x.scopes);
+		GapiLens.set = (fun v x -> { x with scopes = v })
+	}
   let file file_type = GapiLens.for_hash file_type
+  let scope id = GapiLens.for_assoc id
 
   let get_schema_module_lens =
     schema_module |-- GapiLens.option_get
@@ -897,6 +921,9 @@ struct
   let get_file_lens file_type =
     files |-- file file_type |-- GapiLens.option_get
 
+  let get_scope_lens id =
+    scopes |-- scope id |-- GapiLens.option_get
+
   let create service = {
     service;
     files = Hashtbl.create 4;
@@ -906,6 +933,7 @@ struct
     sorted_types = [];
     referenced_types = StringSet.empty;
     parameters_module_name = "";
+    scopes = [];
   }
                     
   let build_type_table state =
