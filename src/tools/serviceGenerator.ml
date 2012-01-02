@@ -7,6 +7,7 @@ open GapiLens.StateInfix
 
 let output_path = ref "generated/"
 let no_overwrite = ref false
+let google_endpoint = "https://www.googleapis.com"
 
 (* END Configuration *)
 
@@ -1384,7 +1385,8 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       lift_io $
         Format.fprintf formatter
           "@[<v 2>let @[<hv 2>%s@ ?(base_path = \"%s\")@ ?parameters@ "
-          value.Method.ocaml_name base_path;
+          value.Method.ocaml_name
+          (google_endpoint ^ base_path);
 
       lift_io $ render_parameters formatter value;
 
