@@ -5,7 +5,7 @@ open GapiLens.StateInfix
 
 (* Configuration *)
 
-let output_path = "generated/"
+let output_path = ref "generated/"
 
 (* END Configuration *)
 
@@ -522,14 +522,16 @@ end
 
 (* END Record description *)
 
-(* Value description *)
+(* Method description *)
 
-module Value =
+module Method =
 struct
   type t = {
     original_name : string;
     ocaml_name : string;
     parameters : (string * Field.t) list;
+    request : Field.t option;
+    response : Field.t option;
   }
 
 	let original_name = {
@@ -549,23 +551,39 @@ struct
   let get_parameter_lens id =
     parameters |-- parameter id |-- GapiLens.option_get
 
-  let create original_name rest_parameters =
+  let create
+        original_name
+        rest_parameters
+        request_ref
+        response_ref
+        type_table =
+    let get_field_from_ref reference =
+      if request_ref = "" then None
+      else
+        let id = OCamlName.get_ocaml_name ParameterName reference in
+        let complex_type = Hashtbl.find type_table reference in
+          Some (Field.create (id, complex_type))
+    in
+
     let ocaml_name = OCamlName.get_ocaml_name ValueName original_name in
     let parameters = List.map
                        (fun (id, rest_parameter) ->
                           let complex_type = ComplexType.create
                                                rest_parameter in
                             (id, Field.create (id, complex_type)))
-                       rest_parameters
-    in
+                       rest_parameters in
+    let request = get_field_from_ref request_ref in
+    let response = get_field_from_ref response_ref in
       { original_name;
         ocaml_name;
-        parameters
+        parameters;
+        request;
+        response;
       }
 
 end
 
-(* END Value description *)
+(* END Method description *)
 
 (* Inner module description *)
 
@@ -575,7 +593,7 @@ struct
     original_name : string;
     ocaml_name : string;
     record : Record.t option;
-    values : (string * Value.t) list;
+    values : (string * Method.t) list;
     inner_modules : (string * t) list;
   }
 
@@ -708,7 +726,7 @@ struct
         | SchemaModuleInterface
         | ServiceModuleInterface -> ".mli" in
     let file_name =
-      output_path ^ (String.uncapitalize module_name) ^ extension
+      !output_path ^ (String.uncapitalize module_name) ^ extension
     in
       { file_type;
         service_name;
@@ -745,7 +763,7 @@ struct
   let fold f v table =
     Hashtbl.fold f table v
 
-  (* Topological sort: see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml *)
+  (* TODO: Topological sort: see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml *)
   let toposort graph = 
     let dfs graph visited start_node = 
       let rec explore path visited node = 
@@ -821,7 +839,8 @@ struct
   type t = {
     service : RestDescription.t;
     files : (file_type, File.t) Hashtbl.t;
-    modules : (string, Module.t) Hashtbl.t;
+    schema_module : Module.t option;
+    service_module : Module.t option;
     type_table : TypeTable.t;
     sorted_types : ComplexType.t list;
     referenced_types : StringSet.t;
@@ -836,9 +855,13 @@ struct
 		GapiLens.get = (fun x -> x.files);
 		GapiLens.set = (fun v x -> { x with files = v })
 	}
-	let modules = {
-		GapiLens.get = (fun x -> x.modules);
-		GapiLens.set = (fun v x -> { x with modules = v })
+	let schema_module = {
+		GapiLens.get = (fun x -> x.schema_module);
+		GapiLens.set = (fun v x -> { x with schema_module = v })
+	}
+	let service_module = {
+		GapiLens.get = (fun x -> x.service_module);
+		GapiLens.set = (fun v x -> { x with service_module = v })
 	}
 	let type_table = {
 		GapiLens.get = (fun x -> x.type_table);
@@ -857,18 +880,21 @@ struct
 		GapiLens.set = (fun v x -> { x with parameters_module_name = v })
 	}
   let file file_type = GapiLens.for_hash file_type
-  let _module name = GapiLens.for_hash name
+
+  let get_schema_module_lens =
+    schema_module |-- GapiLens.option_get
+
+  let get_service_module =
+    service_module |-- GapiLens.option_get
 
   let get_file_lens file_type =
     files |-- file file_type |-- GapiLens.option_get
 
-  let get_module_lens module_name =
-    modules |-- _module module_name |-- GapiLens.option_get
-
   let create service = {
     service;
     files = Hashtbl.create 4;
-    modules = Hashtbl.create 2;
+    schema_module = None;
+    service_module = None;
     type_table = TypeTable.create ();
     sorted_types = [];
     referenced_types = StringSet.empty;
@@ -904,6 +930,16 @@ struct
 
   let is_type_referenced type_id state =
     (StringSet.mem type_id state.referenced_types, state)
+
+  let find_inner_schema_module id state =
+    if id = "" then
+      (None, state)
+    else
+      let inner_module = state
+        |. get_schema_module_lens
+        |. Module.get_inner_module_lens id
+      in
+        (Some inner_module, state)
 
 end
 
@@ -946,7 +982,7 @@ let do_request interact =
     result
 
 let get_service_description api version nocache =
-  let file_name = output_path ^ api ^ "." ^ version ^ ".json" in
+  let file_name = !output_path ^ api ^ "." ^ version ^ ".json" in
     if not (Sys.file_exists file_name) || nocache then begin
       Printf.printf "Downloading %s %s service description to file %s...%!"
         api version file_name;
@@ -1139,18 +1175,18 @@ let build_schema_inner_module file_lens complex_type =
   let inner_module =
     { InnerModule.create complex_type.ComplexType.id module_name with
           InnerModule.record = Some record
-    }
+    } in
+  let inner_module_lens =
+    State.get_schema_module_lens
+      |-- Module.get_inner_module_lens module_name
   in
     perform
+      (* Insert inner module into state *)
+      inner_module_lens ^=! inner_module;
+
       file <-- GapiLens.get_state file_lens;
       let formatter = file.File.formatter in
       let container_name = file.File.module_name in
-
-      (* Insert inner module into state *)
-      let inner_module_lens =
-        State.get_module_lens file.File.module_name
-          |-- Module.get_inner_module_lens module_name in
-      inner_module_lens ^=! inner_module;
 
       lift_io $
         Format.fprintf formatter
@@ -1174,9 +1210,7 @@ let build_schema_inner_module file_lens complex_type =
       lift_io $ render_footer formatter is_recursive
 
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
-  let value = Value.create id rest_method.RestMethod.parameters in
-
-  let generate_method_body =
+  let generate_method_body value =
     let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
       perform
         parameters_module_name <-- GapiLens.get_state
@@ -1205,38 +1239,36 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%s]@ base_path@ in@]@\n"
             path_string;
 
-        (* Get etag *)
-        type_table <-- GapiLens.get_state State.type_table;
-        let is_etag_present =
-          if rest_method.RestMethod.request <> RefData.empty then
-            let complex_type = Hashtbl.find
-                                 type_table
-                                 rest_method.RestMethod.request.RefData._ref in
-              match complex_type.ComplexType.data_type with
-                  ComplexType.Object properties ->
-                    List.exists (fun (id, _) -> id = "etag") properties
-                | _ ->
-                    failwith "Only Objects are supported looking for etag field"
-          else
-            false in
+        let request_parameter = value.Method.request in
+        request_module <-- State.find_inner_schema_module
+                             rest_method.RestMethod.request.RefData._ref;
 
-          lift_io (
-            if is_etag_present then begin
-              Format.fprintf formatter "@[<hov 2>let etag =@ GapiUtils.etag_option %s.%s.etag@ in@]@\n"
-              (* TODO get param OCaml name *)
-              (String.uncapitalize rest_method.RestMethod.request.RefData._ref)
-              (* TODO get module name *)
-              rest_method.RestMethod.response.RefData._ref;
-            end);
+        (* Get etag *)
+        let is_etag_present =
+          Option.map_default
+            (fun { Field.field_type; _ } ->
+               match field_type.ComplexType.data_type with
+                   ComplexType.Object properties ->
+                     List.exists (fun (id, _) -> id = "etag") properties
+                 | _ ->
+                     failwith "Only Objects are supported looking for etag field"
+            )
+            false
+            request_parameter in
 
         lift_io (
+          if is_etag_present then begin
+            Format.fprintf formatter "@[<hov 2>let etag =@ GapiUtils.etag_option %s.%s.etag@ in@]@\n"
+              (request_parameter |. GapiLens.option_get |. Field.ocaml_name)
+              (request_module |. GapiLens.option_get |. InnerModule.ocaml_name)
+          end;
           (* Build query parameters *)
           Format.fprintf formatter
             "@[<hov 2>let params =@ %s.merge_parameters@ ?standard_parameters:parameters@ "
             parameters_module_name;
           List.iter
             (fun (id, json_schema) ->
-               let parameter = value |. Value.get_parameter_lens id in
+               let parameter = value |. Method.get_parameter_lens id in
                  if json_schema.JsonSchema.location = "query" then
                    Format.fprintf formatter "%s%s@ "
                      (if json_schema.JsonSchema.required then "~" else "?")
@@ -1254,26 +1286,32 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
           if is_etag_present then begin
             Format.fprintf formatter "?etag@ ";
           end;
-          if rest_method.RestMethod.request <> RefData.empty then begin
+          if Option.is_some request_parameter then begin
             Format.fprintf formatter
               "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
-              rest_method.RestMethod.request.RefData._ref
-              (* TODO get param OCaml name *)
-              (String.uncapitalize rest_method.RestMethod.request.RefData._ref);
+              (request_module |. GapiLens.option_get |. InnerModule.ocaml_name)
+              (request_parameter |. GapiLens.option_get |. Field.ocaml_name);
           end else if rest_method.RestMethod.httpMethod = "POST" then begin
             Format.fprintf formatter
               "~data:%s.empty@ "
-              (* TODO get module name *)
-              rest_method.RestMethod.response.RefData._ref;
+              (request_module |. GapiLens.option_get |. InnerModule.ocaml_name)
           end);
+        response_module <-- State.find_inner_schema_module
+                              rest_method.RestMethod.response.RefData._ref;
         lift_io (
-          Format.fprintf formatter
-            "full_url@ (GapiJson.parse_json_response %s.of_data_model)@ "
-            rest_method.RestMethod.response.RefData._ref;
+          Format.fprintf formatter "full_url@ ";
+          if Option.is_some response_module then begin
+            Format.fprintf formatter
+              "(GapiJson.parse_json_response %s.of_data_model)@ "
+              (response_module |. GapiLens.option_get |. InnerModule.ocaml_name)
+          end else begin
+            Format.fprintf formatter
+              "GapiRequest.parse_empty_response@ "
+          end;
           Format.fprintf formatter "session@ @]@\n")
   in
 
-  let render_parameters formatter =
+  let render_parameters formatter value =
     let render_optional_parameters with_default render =
       let optional_parameters =
         let test_default =
@@ -1286,7 +1324,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       in
         List.iter
           (fun (id, _) ->
-             let parameter = value |. Value.get_parameter_lens id in
+             let parameter = value |. Method.get_parameter_lens id in
                render parameter)
           optional_parameters
     in
@@ -1304,22 +1342,27 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       (* Required parameters *)
       List.iter
         (fun id ->
-           let parameter = value |. Value.get_parameter_lens id in
+           let parameter = value |. Method.get_parameter_lens id in
              Format.fprintf formatter "~%s@ " parameter.Field.ocaml_name)
         rest_method.RestMethod.parameterOrder;
       (* Request parameter *)
-      if rest_method.RestMethod.request <> RefData.empty then begin
-        let request_parameter = OCamlName.get_ocaml_name ParameterName
-                                  rest_method.RestMethod.request.RefData._ref
-        in
-          Format.fprintf formatter "%s@ " request_parameter;
+      if Option.is_some value.Method.request then begin
+        Format.fprintf formatter "%s@ "
+          (value.Method.request |. GapiLens.option_get |. Field.ocaml_name);
       end;
       Format.fprintf formatter "session =@]@\n"
   in
 
+  let value_lens = inner_module_lens
+    |-- InnerModule.get_value_lens id
+  in
     perform
-      let value_lens = inner_module_lens
-        |-- InnerModule.get_value_lens id in
+      type_table <-- GapiLens.get_state State.type_table;
+      let value = Method.create id
+                    rest_method.RestMethod.parameters
+                    rest_method.RestMethod.request.RefData._ref
+                    rest_method.RestMethod.response.RefData._ref
+                    type_table in
       value_lens ^=! value;
 
       base_path <-- GapiLens.get_state
@@ -1327,11 +1370,11 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       lift_io $
         Format.fprintf formatter
           "@[<v 2>let @[<hv 2>%s@ ?(base_path = \"%s\")@ ?parameters@ "
-          value.Value.ocaml_name base_path;
+          value.Method.ocaml_name base_path;
 
-      lift_io $ render_parameters formatter;
+      lift_io $ render_parameters formatter value;
 
-      generate_method_body;
+      generate_method_body value;
 
       lift_io $ Format.fprintf formatter "@]@\n"
 
@@ -1339,14 +1382,17 @@ let build_service_inner_module file_lens (resource_id, resource) =
   let module_name =
     OCamlName.get_ocaml_name ModuleName (resource_id ^ "Resource") in
   let inner_module =
-    InnerModule.create resource_id module_name
+    InnerModule.create resource_id module_name in
+  let inner_module_lens =
+    State.get_service_module
+      |-- Module.get_inner_module_lens module_name
   in
     perform
-      file <-- GapiLens.get_state file_lens;
-      let inner_module_lens =
-        State.get_module_lens file.File.module_name
-          |-- Module.get_inner_module_lens module_name in
+      (* Insert inner module *)
       inner_module_lens ^=! inner_module;
+
+      file <-- GapiLens.get_state file_lens;
+
       let formatter = file.File.formatter in
       lift_io $
         Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
@@ -1365,10 +1411,6 @@ let build_module file_type generate_body =
       let file =
         File.create service_name file_type in
       file_lens ^=! file;
-      let _module =
-        Module.create file.File.module_name in
-      let module_lens = State.get_module_lens file.File.module_name in
-      module_lens ^=! _module;
       lift_io $
         Printf.printf "Building %s %s (%s)...%!"
           (string_of_file_type file_type)
@@ -1384,6 +1426,13 @@ let build_module file_type generate_body =
 let build_schema_module =
   let generate_body file_lens =
     perform
+      file <-- GapiLens.get_state file_lens;
+
+      (* Insert schema module *)
+      let schema_module =
+        Module.create file.File.module_name in
+      State.get_schema_module_lens ^=! schema_module;
+
       sorted_types <-- GapiLens.get_state State.sorted_types;
       mapM_
         (fun complex_type ->
@@ -1395,19 +1444,19 @@ let build_schema_module =
 let build_service_module =
   let generate_scope formatter (value, _) =
     perform
-       (* Gets the string following the last dot in scope URL (e.g.
-        * 'https://www.googleapis.com/auth/tasks.readonly' -> readonly)
-        *)
-       let suffix =
-         let last_dot_position = String.rindex value '.' in
-         let last_slash_position = String.rindex value '/' in
-           if last_slash_position > last_dot_position then
-             ""
-           else
-             "_" ^ (Str.string_after value (last_dot_position + 1))
-          in
-       lift_io $
-         Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value;
+      (* Gets the string following the last dot in scope URL (e.g.
+       * 'https://www.googleapis.com/auth/tasks.readonly' -> readonly)
+       *)
+      let suffix =
+        let last_dot_position = String.rindex value '.' in
+        let last_slash_position = String.rindex value '/' in
+          if last_slash_position > last_dot_position then
+            ""
+          else
+            "_" ^ (Str.string_after value (last_dot_position + 1))
+         in
+      lift_io $
+        Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value;
   in
 
   let module FieldSet =
@@ -1542,7 +1591,15 @@ let build_service_module =
 
   let generate_body file_lens =
     perform
+      file <-- GapiLens.get_state file_lens;
+
+      (* Insert service module *)
+      let service_module =
+        Module.create file.File.module_name in
+      State.get_service_module ^=! service_module;
+
       generate_header file_lens;
+
       resources <-- GapiLens.get_state (State.service
                                           |-- RestDescription.resources);
       mapM_
@@ -1589,13 +1646,16 @@ let _ =
     Arg.align (
       ["-api",
        Arg.Set_string api,
-       "apiname The name of the API.";
+       "<apiname> The name of the API.";
        "-version",
        Arg.Set_string version,
-       "apiver The version of the API.";
+       "<apiver> The version of the API.";
        "-nocache",
        Arg.Set nocache,
-       " Downloads the service description, ignoring locally saved versions"
+       " Downloads the service description, ignoring locally saved versions";
+       "-outdir",
+       Arg.Set_string output_path,
+       "<path> Place the generated files into <path> (defaults to: \"./generated\")"
       ]) in
   let () =
     Arg.parse
