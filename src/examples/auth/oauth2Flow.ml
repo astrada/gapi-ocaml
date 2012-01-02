@@ -39,7 +39,8 @@ let main () =
               ~redirect_uri
               ~scope:[GapiCalendarService.scope;
                       GapiPlusService.scope;
-                      GapiTasksService.scope]
+                      GapiTasksService.scope;
+                      GapiUrlshortenerService.scope]
               ~response_type:"code"
               client_id in
     print_endline ("Open this URL in a web browser:\n" ^ url);

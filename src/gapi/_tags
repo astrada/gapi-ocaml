@@ -20,4 +20,5 @@
 <gapiTasks.*> : pkg_json-wheel, pkg_extlib
 <gapiDiscovery.*> : pkg_json-wheel, pkg_extlib
 <gapi*Service.*> : pkg_json-wheel, pkg_extlib
+<gapi*Schema.*> : pkg_json-wheel, pkg_extlib
 
