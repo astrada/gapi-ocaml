@@ -17,7 +17,7 @@ let service_tests =
    TestPlusService.suite;
    TestTasksService.suite;
    TestDiscoveryService.suite;
-   TestUrlshortenerService.suite;
+   TestUrlshortenerV1Service.suite;
   ]
 
 let build_service_test_list service =
@@ -29,7 +29,7 @@ let build_service_test_list service =
       | "plus" -> [TestPlusService.suite]
       | "tasks" -> [TestTasksService.suite]
       | "discovery" -> [TestDiscoveryService.suite]
-      | "urlshortener" -> [TestUrlshortenerService.suite]
+      | "urlshortener" -> [TestUrlshortenerV1Service.suite]
       | _ -> failwith ("Service not supported: " ^ service)
   in
     model_tests @ service_suite

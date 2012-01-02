@@ -24,6 +24,6 @@ GapiTasks
 GapiTasksService
 GapiDiscovery
 GapiDiscoveryService
-GapiUrlshortenerSchema
-GapiUrlshortenerService
+GapiUrlshortenerV1Schema
+GapiUrlshortenerV1Service
 

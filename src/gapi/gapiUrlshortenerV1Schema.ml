@@ -44,7 +44,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty Std.identity cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerSchema.StringCount.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Schema.StringCount.parse" e
   
   let to_data_model = GapiJson.render_root render
   
@@ -152,7 +152,7 @@ struct
         Json_type.String v) ->
       { x with shortUrlClicks = v }
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerSchema.AnalyticsSnapshot.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Schema.AnalyticsSnapshot.parse" e
   
 end
 
@@ -249,7 +249,7 @@ struct
         (fun v -> { x with week = v })
         cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerSchema.AnalyticsSummary.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Schema.AnalyticsSummary.parse" e
   
 end
 
@@ -345,7 +345,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty Std.identity cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerSchema.Url.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Schema.Url.parse" e
   
   let to_data_model = GapiJson.render_root render
   
@@ -434,7 +434,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty Std.identity cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerSchema.UrlHistory.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Schema.UrlHistory.parse" e
   
   let to_data_model = GapiJson.render_root render
   

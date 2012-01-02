@@ -9,20 +9,20 @@ let test_get_url () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, _) =
-         GapiUrlshortenerService.UrlResource.get
+         GapiUrlshortenerV1Service.UrlResource.get
            ~shortUrl:google_url_id
            session
        in
          assert_equal
            "urlshortener#url"
-           entry.GapiUrlshortenerSchema.Url.kind;
+           entry.GapiUrlshortenerV1Schema.Url.kind;
          assert_equal
            google_url_id
-           entry.GapiUrlshortenerSchema.Url.id)
+           entry.GapiUrlshortenerV1Schema.Url.id)
 
 let new_url = {
-  GapiUrlshortenerSchema.Url.empty with
-    GapiUrlshortenerSchema.Url.longUrl = "http://www.google.com/"
+  GapiUrlshortenerV1Schema.Url.empty with
+    GapiUrlshortenerV1Schema.Url.longUrl = "http://www.google.com/"
 }
 
 let test_insert_url () =
@@ -30,25 +30,25 @@ let test_insert_url () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiUrlshortenerService.UrlResource.insert
+         GapiUrlshortenerV1Service.UrlResource.insert
            new_url
            session
        in
          TestHelper.assert_not_empty
            "Url id should not be empty"
-           new_entry.GapiUrlshortenerSchema.Url.id)
+           new_entry.GapiUrlshortenerV1Schema.Url.id)
 
 let test_list_url () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (urls, _) =
-         GapiUrlshortenerService.UrlResource.list
+         GapiUrlshortenerV1Service.UrlResource.list
            session
        in
          assert_equal
            "urlshortener#urlHistory"
-           urls.GapiUrlshortenerSchema.UrlHistory.kind)
+           urls.GapiUrlshortenerV1Schema.UrlHistory.kind)
 
 let suite = "Urlshortener services test" >:::
   ["test_get_url" >:: test_get_url;
