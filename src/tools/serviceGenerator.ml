@@ -2,6 +2,7 @@ open GapiUtils.Infix
 open GapiDiscovery
 open GapiLens.Infix
 open GapiLens.StateInfix
+open ServiceGeneratorState
 
 (* Configuration *)
 
@@ -11,954 +12,7 @@ let google_endpoint = "https://www.googleapis.com"
 
 (* END Configuration *)
 
-(* Symbol name generation *)
-
-type name_type =
-    ModuleName
-  | TypeName
-  | ValueName
-  | ParameterName
-  | FieldName
-  | ConstructorName
-
-module OCamlName =
-struct
-  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"]
-
-  let replace_invalid_characters s =
-    ExtString.String.map
-      (fun c ->
-         match c with
-             'a'..'z'
-           | 'A'..'Z'
-           | '0'..'9'
-           | '_' -> c
-           | _ -> '_'
-      ) s
-
-  let get_ocaml_name name_type name =
-    let name_without_invalid_characters = replace_invalid_characters name in
-    let name_with_proper_first_letter_case =
-      match name_type with
-          ModuleName
-        | ConstructorName ->
-            String.capitalize name_without_invalid_characters
-        | TypeName
-        | ValueName
-        | ParameterName
-        | FieldName ->
-            String.uncapitalize name_without_invalid_characters
-    in
-      if List.mem name_with_proper_first_letter_case keywords then
-        "_" ^ name_with_proper_first_letter_case
-      else
-        name_with_proper_first_letter_case
-
-end
-
-(* END Symbol name generation *)
-
-(* Parameters and properties *)
-
-module ScalarType =
-struct
-  type format_t =
-      NoFormat
-    | DateTimeFormat
-    | DateFormat
-    | TimeFormat
-    | Int32Format
-    | Int64Format
-    | OtherFormat of string
-
-  let format_of_string = function
-      "" -> NoFormat
-    | "date-time" -> DateTimeFormat
-    | "date" -> DateFormat
-    | "time" -> TimeFormat
-    | "int32" -> Int32Format
-    | "int64" -> Int64Format
-    | s -> OtherFormat s
-
-  type location_t =
-      NoLocation
-    | Query
-    | Path
-
-  let location_of_string = function
-      "" -> NoLocation
-    | "query" -> Query
-    | "path" -> Path
-    | s -> failwith ("Unexpected location " ^ s)
-
-  let is_scalar json_schema =
-    match json_schema.JsonSchema._type with
-        "string"
-      | "boolean"
-      | "integer" -> true
-      | _ -> false
-
-  type data_t =
-      String
-    | Boolean
-    | Integer
-    | DateTime
-    | Date
-
-  let data_type_to_string = function
-      String -> "string"
-    | Boolean -> "bool"
-    | Integer -> "int"
-    | DateTime
-    | Date -> "GapiDate.t"
-
-  type t = {
-    original_type : string;
-    description : string;
-    default : string;
-    required : bool;
-    format : format_t;
-    pattern : string;
-    minimum : string;
-    maximum : string;
-    enum : string list;
-    enumDescriptions : string list;
-    repeated : bool;
-    location : location_t;
-    data_type : data_t;
-    empty_value : string;
-  }
-
-	let original_type = {
-		GapiLens.get = (fun x -> x.original_type);
-		GapiLens.set = (fun v x -> { x with original_type = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let default = {
-		GapiLens.get = (fun x -> x.default);
-		GapiLens.set = (fun v x -> { x with default = v })
-	}
-	let required = {
-		GapiLens.get = (fun x -> x.required);
-		GapiLens.set = (fun v x -> { x with required = v })
-	}
-	let format = {
-		GapiLens.get = (fun x -> x.format);
-		GapiLens.set = (fun v x -> { x with format = v })
-	}
-	let pattern = {
-		GapiLens.get = (fun x -> x.pattern);
-		GapiLens.set = (fun v x -> { x with pattern = v })
-	}
-	let minimum = {
-		GapiLens.get = (fun x -> x.minimum);
-		GapiLens.set = (fun v x -> { x with minimum = v })
-	}
-	let maximum = {
-		GapiLens.get = (fun x -> x.maximum);
-		GapiLens.set = (fun v x -> { x with maximum = v })
-	}
-	let enum = {
-		GapiLens.get = (fun x -> x.enum);
-		GapiLens.set = (fun v x -> { x with enum = v })
-	}
-	let enumDescriptions = {
-		GapiLens.get = (fun x -> x.enumDescriptions);
-		GapiLens.set = (fun v x -> { x with enumDescriptions = v })
-	}
-	let repeated = {
-		GapiLens.get = (fun x -> x.repeated);
-		GapiLens.set = (fun v x -> { x with repeated = v })
-	}
-	let location = {
-		GapiLens.get = (fun x -> x.location);
-		GapiLens.set = (fun v x -> { x with location = v })
-	}
-	let data_type = {
-		GapiLens.get = (fun x -> x.data_type);
-		GapiLens.set = (fun v x -> { x with data_type = v })
-	}
-	let empty_value = {
-		GapiLens.get = (fun x -> x.empty_value);
-		GapiLens.set = (fun v x -> { x with empty_value = v })
-	}
-
-  let get_empty_value = function
-      String -> "\"\""
-    | Boolean -> "false"
-    | Integer -> "0"
-    | DateTime
-    | Date -> "GapiDate.epoch"
-
-  let create json_schema =
-    let get_data_type original_type format =
-      match original_type with
-          "boolean" -> Boolean
-        | "integer" -> Integer
-        | "string" ->
-            begin match format with
-                DateTimeFormat -> DateTime
-              | DateFormat -> Date
-              | _ -> String
-            end
-        | _ ->
-            failwith ("Unexpected original type: " ^ original_type)
-    in
-
-    let format = format_of_string json_schema.JsonSchema.format in
-    let data_type = get_data_type json_schema.JsonSchema._type format in
-    let empty_value = get_empty_value data_type in
-      if not (is_scalar json_schema) then
-        failwith ("Unexpected non-scalar type: " ^ json_schema.JsonSchema._type)
-      else
-        { original_type = json_schema.JsonSchema._type;
-          description = json_schema.JsonSchema.description;
-          default = json_schema.JsonSchema.default;
-          required = json_schema.JsonSchema.required;
-          format;
-          pattern = json_schema.JsonSchema.pattern;
-          minimum = json_schema.JsonSchema.minimum;
-          maximum = json_schema.JsonSchema.maximum;
-          enum = json_schema.JsonSchema.enum;
-          enumDescriptions = json_schema.JsonSchema.enumDescriptions;
-          repeated = json_schema.JsonSchema.repeated;
-          location = location_of_string json_schema.JsonSchema.location;
-          data_type;
-          empty_value;
-        }
-
-  let get_json_type = function
-      String
-    | DateTime
-    | Date -> "String"
-    | Boolean -> "Bool"
-    | Integer -> "Int"
-
-  let get_convert_function = function
-    | DateTime
-    | Date -> "GapiDate.of_string "
-    | String
-    | Boolean
-    | Integer -> ""
-
-  let get_default scalar =
-    if scalar.default = "" then
-      get_empty_value scalar.data_type
-    else
-      match scalar.data_type with
-          String -> "\"" ^ scalar.default ^ "\""
-        | Boolean
-        | Integer
-        | DateTime
-        | Date -> scalar.default
-
-  let get_to_string_function scalar =
-    match scalar.data_type with
-        String -> "Std.identity"
-      | Boolean -> "string_of_bool"
-      | Integer -> "string_of_int"
-      | DateTime
-      | Date -> "GapiDate.to_string"
-
-end
-
-module ComplexType =
-struct
-  let is_reference json_schema =
-    json_schema.JsonSchema._ref <> ""
-
-  let is_complex json_schema =
-    match json_schema.JsonSchema._type with
-        "object"
-      | "array" -> true
-      | _ -> false
-
-  type data_t =
-      Scalar of ScalarType.t
-    | Object of (string * t) list
-    | Array of t
-    | Reference of string
-    | Dynamic of t
-  and t = {
-    id : string;
-    data_type : data_t;
-    original_type : string;
-    description : string;
-  }
-
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let data_type = {
-		GapiLens.get = (fun x -> x.data_type);
-		GapiLens.set = (fun v x -> { x with data_type = v })
-	}
-	let original_type = {
-		GapiLens.get = (fun x -> x.original_type);
-		GapiLens.set = (fun v x -> { x with original_type = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-
-  let rec data_type_to_string = function
-      Scalar scalar ->
-        scalar.ScalarType.data_type |> ScalarType.data_type_to_string
-    | Reference type_name ->
-        type_name ^ ".t"
-    | Array inner_type ->
-        (data_type_to_string inner_type.data_type) ^ " list"
-    | _ ->
-        failwith "Unsupported type in ComplexType.data_type_to_string"
-
-  let get_references complex_type =
-    let merge xs ys =
-      List.fold_left
-        (fun zs x ->
-           if List.mem x zs then
-             zs
-           else
-             x :: zs)
-        ys
-        xs
-    in
-
-    let rec loop complex_type' accu =
-      match complex_type'.data_type with
-        | Reference type_name ->
-            type_name :: accu
-        | Array inner_type ->
-            loop inner_type accu
-        | Object properties ->
-            List.fold_left
-              (fun a (_, prop) ->
-                 let refs = loop prop accu in
-                   merge a refs)
-              accu
-              properties
-        | Scalar _
-        | _ ->
-            accu
-    in
-      loop complex_type []
-
-  (* TODO: refactor *)
-  let get_direct_references complex_type =
-    let merge xs ys =
-      List.fold_left
-        (fun zs x ->
-           if List.mem x zs then
-             zs
-           else
-             x :: zs)
-        ys
-        xs
-    in
-
-    let rec loop complex_type' accu =
-      match complex_type'.data_type with
-        | Reference type_name ->
-            type_name :: accu
-        | Object properties ->
-            List.fold_left
-              (fun a (_, prop) ->
-                 let refs = loop prop accu in
-                   merge a refs)
-              accu
-              properties
-        | Array _
-        | Scalar _
-        | _ ->
-            accu
-    in
-      loop complex_type []
-
-  let is_anonymous complex_type =
-    complex_type.id = ""
-
-  let get_empty_value = function
-      Scalar scalar ->
-        scalar.ScalarType.empty_value
-    | Reference type_name ->
-        type_name ^ ".empty"
-    | Array inner_type ->
-        "[]"
-    | _ ->
-        failwith "Unsupported type in ComplexType.get_empty_value"
-
-  let rec create json_schema =
-    let create_object () =
-      match json_schema.JsonSchema.additionalProperties with
-          None -> Object (List.map
-                            (fun (id, v) -> (id, create v))
-                            json_schema.JsonSchema.properties)
-            | Some p -> Dynamic (create p)
-    in
-
-    let create_array () =
-      Array (json_schema.JsonSchema.items
-               |> Option.get
-               |> create)
-    in
-
-    let create_complex () =
-      match json_schema.JsonSchema._type with
-          "object" -> create_object ()
-        | "array" -> create_array ()
-        | _ ->
-            failwith ("Unexpected complex type: "
-                      ^ json_schema.JsonSchema._type)
-    in
-
-    let create_reference () =
-      Reference json_schema.JsonSchema._ref
-    in
-
-    let create_scalar () =
-        Scalar (ScalarType.create json_schema)
-    in
-
-    let data_type =
-      if is_reference json_schema then
-        create_reference ()
-      else if is_complex json_schema then
-        create_complex ()
-      else
-        create_scalar ()
-    in
-      { id = json_schema.JsonSchema.id;
-        data_type;
-        original_type = json_schema.JsonSchema._type;
-        description = json_schema.JsonSchema.description;
-      }
-
-  let get_content arr =
-    match arr.data_type with
-        Reference type_name -> type_name
-      | _ ->
-          failwith "Unsupported type in ComplexType.get_content"
-
-end
-
-(* Field description *)
-
-module Field =
-struct
-  type t = {
-    original_name : string;
-    ocaml_name : string;
-    field_type : ComplexType.t;
-  }
-
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let field_type = {
-		GapiLens.get = (fun x -> x.field_type);
-		GapiLens.set = (fun v x -> { x with field_type = v })
-	}
-
-  let create (original_name, property) =
-    let ocaml_name = OCamlName.get_ocaml_name FieldName original_name in
-      { original_name;
-        ocaml_name;
-        field_type = property
-      }
-
-  let get_default field =
-    match field.field_type.ComplexType.data_type with
-        ComplexType.Scalar scalar -> ScalarType.get_default scalar
-      | _ -> failwith "Default not supported for complex types"
-
-  let get_to_string_function field =
-    match field.field_type.ComplexType.data_type with
-        ComplexType.Scalar scalar -> ScalarType.get_to_string_function scalar
-      | _ -> failwith "to_string function not supported for complex types"
-
-end
-
-(* END Field description *)
-
-(* Record description *)
-
-module Record =
-struct
-  type t = {
-    ocaml_name : string;
-    fields : (string * Field.t) list;
-  }
-
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let fields = {
-		GapiLens.get = (fun x -> x.fields);
-		GapiLens.set = (fun v x -> { x with fields = v })
-	}
-  let field id = GapiLens.for_assoc id
-  let field_list = fields |-- GapiLens.list_map GapiLens.second
-
-  let get_field id =
-    fields |-- field id |-- GapiLens.option_get
-
-  let create properties =
-    let fields = List.map
-                   (function (id, _) as property -> (id, Field.create property))
-                   properties in
-      { ocaml_name = "t";
-        fields;
-      }
-
-end
-
-(* END Record description *)
-
-(* Method description *)
-
-module Method =
-struct
-  type t = {
-    original_name : string;
-    ocaml_name : string;
-    parameters : (string * Field.t) list;
-    request : Field.t option;
-    response : Field.t option;
-  }
-
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let parameters = {
-		GapiLens.get = (fun x -> x.parameters);
-		GapiLens.set = (fun v x -> { x with parameters = v })
-	}
-  let parameter id = GapiLens.for_assoc id
-
-  let get_parameter_lens id =
-    parameters |-- parameter id |-- GapiLens.option_get
-
-  let create
-        original_name
-        rest_parameters
-        request_ref
-        response_ref
-        type_table =
-    let get_field_from_ref reference =
-      if request_ref = "" then None
-      else
-        let id = OCamlName.get_ocaml_name ParameterName reference in
-        let complex_type = Hashtbl.find type_table reference in
-          Some (Field.create (id, complex_type))
-    in
-
-    let ocaml_name = OCamlName.get_ocaml_name ValueName original_name in
-    let parameters = List.map
-                       (fun (id, rest_parameter) ->
-                          let complex_type = ComplexType.create
-                                               rest_parameter in
-                            (id, Field.create (id, complex_type)))
-                       rest_parameters in
-    let request = get_field_from_ref request_ref in
-    let response = get_field_from_ref response_ref in
-      { original_name;
-        ocaml_name;
-        parameters;
-        request;
-        response;
-      }
-
-end
-
-(* END Method description *)
-
-(* Inner module description *)
-
-module InnerModule =
-struct
-  type t = {
-    original_name : string;
-    ocaml_name : string;
-    record : Record.t option;
-    values : (string * Method.t) list;
-    inner_modules : (string * t) list;
-  }
-
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let record = {
-		GapiLens.get = (fun x -> x.record);
-		GapiLens.set = (fun v x -> { x with record = v })
-	}
-	let values = {
-		GapiLens.get = (fun x -> x.values);
-		GapiLens.set = (fun v x -> { x with values = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
-  let inner_module id = GapiLens.for_assoc id
-  let value id = GapiLens.for_assoc id
-
-  let get_value_lens id =
-    values |-- value id |-- GapiLens.option_get
-
-  let create original_name ocaml_name =
-    { original_name;
-      ocaml_name;
-      record = None;
-      values = [];
-      inner_modules = [];
-    }
-
-end
-
-(* END Inner module description *)
-
-(* Module description *)
-
-module Module =
-struct
-  type t = {
-    ocaml_name : string;
-    inner_modules : (string * InnerModule.t) list;
-  }
-    
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
-  let inner_module id = GapiLens.for_assoc id
-  let get_inner_module_lens id =
-    inner_modules |-- inner_module id |-- GapiLens.option_get
-
-  let create name =
-    { ocaml_name = name;
-      inner_modules = [];
-    }
-
-end
-
-(* END Module description *)
-
-(* File description *)
-
-let get_full_path file_name =
-  let output_path = !output_path in
-    if ExtString.String.ends_with output_path "/" then
-      output_path ^ file_name
-    else
-      output_path ^ "/" ^ file_name
-    
-
-type file_type =
-    SchemaModule
-  | SchemaModuleInterface
-  | ServiceModule
-  | ServiceModuleInterface
-
-let string_of_file_type = function
-    SchemaModule -> "schema module"
-  | SchemaModuleInterface -> "schema module interface"
-  | ServiceModule -> "service module"
-  | ServiceModuleInterface -> "service module interface"
-
-module File =
-struct
-  type t = {
-    file_type : file_type;
-    service_name : string;
-    service_version : string;
-    module_name : string;
-    file_name : string;
-    formatter : Format.formatter;
-  }
-
-	let file_type = {
-		GapiLens.get = (fun x -> x.file_type);
-		GapiLens.set = (fun v x -> { x with file_type = v })
-	}
-	let service_name = {
-		GapiLens.get = (fun x -> x.service_name);
-		GapiLens.set = (fun v x -> { x with service_name = v })
-	}
-	let service_version = {
-		GapiLens.get = (fun x -> x.service_version);
-		GapiLens.set = (fun v x -> { x with service_version = v })
-	}
-	let module_name = {
-		GapiLens.get = (fun x -> x.module_name);
-		GapiLens.set = (fun v x -> { x with module_name = v })
-	}
-	let file_name = {
-		GapiLens.get = (fun x -> x.file_name);
-		GapiLens.set = (fun v x -> { x with file_name = v })
-	}
-	let formatter = {
-		GapiLens.get = (fun x -> x.formatter);
-		GapiLens.set = (fun v x -> { x with formatter = v })
-	}
-
-  let create service_name service_version file_type =
-    let base_name = service_name ^ (String.capitalize service_version) in
-    let ocaml_name = OCamlName.get_ocaml_name ModuleName base_name in
-    let module_base_name = "Gapi" ^ ocaml_name in
-    let module_name =
-      match file_type with
-          SchemaModule
-        | SchemaModuleInterface -> module_base_name ^ "Schema"
-        | ServiceModule
-        | ServiceModuleInterface -> module_base_name ^ "Service" in
-    let extension =
-      match file_type with
-          SchemaModule
-        | ServiceModule -> ".ml"
-        | SchemaModuleInterface
-        | ServiceModuleInterface -> ".mli" in
-    let file_name =
-      get_full_path ((String.uncapitalize module_name) ^ extension)
-    in
-      { file_type;
-        service_name;
-        service_version;
-        module_name;
-        file_name;
-        formatter = Format.std_formatter;
-      }
-
-end
-
-(* END File description *)
-
-(* Type table *)
-
-module StringSet =
-struct
-  include Set.Make(struct type t = string let compare = compare end)
-
-  let add_list xs s =
-    List.fold_left
-      (fun s' x -> add x s')
-      s
-      xs
-
-end
-
-module TypeTable =
-struct
-  type t = (string, ComplexType.t) Hashtbl.t
-
-  let create () =
-    Hashtbl.create 64
-
-  let fold f v table =
-    Hashtbl.fold f table v
-
-  (* TODO: Topological sort: see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml *)
-  let toposort graph = 
-    let dfs graph visited start_node = 
-      let rec explore path visited node = 
-        (*if List.mem node path    then raise (CycleFound path) else*)
-        if List.mem node visited then visited else     
-          let new_path = node :: path in 
-          let edges    = List.assoc node graph in
-          let visited  = List.fold_left (explore new_path) visited edges in
-            node :: visited
-      in
-        explore [] visited start_node
-    in
-      List.fold_left (fun visited (node,_) -> dfs graph visited node) [] graph
-
-  let build complex_types =
-    let table = Hashtbl.create 64 in
-      List.iter
-        (fun complex_type ->
-           if not (ComplexType.is_anonymous complex_type) then
-             Hashtbl.add table complex_type.ComplexType.id complex_type)
-        complex_types;
-      table
-
-  let sort table =
-    let get_references id complex_type =
-      let rec loop id' complex_type' accu =
-        let references = ComplexType.get_references complex_type' in
-        let full_references =
-          List.fold_left
-            (fun a r ->
-               let referenced_type = Hashtbl.find table r in
-                 loop r referenced_type a)
-            accu
-            references
-        in
-          (id', complex_type') :: full_references
-      in
-        loop id complex_type []
-    in
-
-    let merge xs ys =
-      List.fold_right
-        (fun (k, v) zs ->
-           if List.mem_assoc k zs then
-             zs
-           else
-             (k, v) :: zs)
-        xs
-        ys
-    in
-
-    let complex_types =
-      Hashtbl.fold
-        (fun id complex_type sorted ->
-           if List.mem_assoc id sorted then
-             sorted
-           else
-             let references = get_references id complex_type in
-               merge references sorted)
-        table
-        []
-    in
-      List.rev_map snd complex_types
-
-end
-
-(* END Type table *)
-
-(* Generator state *)
-
-module State =
-struct
-  type t = {
-    service : RestDescription.t;
-    files : (file_type, File.t) Hashtbl.t;
-    schema_module : Module.t option;
-    service_module : Module.t option;
-    type_table : TypeTable.t;
-    sorted_types : ComplexType.t list;
-    referenced_types : StringSet.t;
-    parameters_module_name : string;
-  }
-
-  let service = {
-		GapiLens.get = (fun x -> x.service);
-		GapiLens.set = (fun v x -> { x with service = v })
-  }
-	let files = {
-		GapiLens.get = (fun x -> x.files);
-		GapiLens.set = (fun v x -> { x with files = v })
-	}
-	let schema_module = {
-		GapiLens.get = (fun x -> x.schema_module);
-		GapiLens.set = (fun v x -> { x with schema_module = v })
-	}
-	let service_module = {
-		GapiLens.get = (fun x -> x.service_module);
-		GapiLens.set = (fun v x -> { x with service_module = v })
-	}
-	let type_table = {
-		GapiLens.get = (fun x -> x.type_table);
-		GapiLens.set = (fun v x -> { x with type_table = v })
-	}
-	let sorted_types = {
-		GapiLens.get = (fun x -> x.sorted_types);
-		GapiLens.set = (fun v x -> { x with sorted_types = v })
-	}
-	let referenced_types = {
-		GapiLens.get = (fun x -> x.referenced_types);
-		GapiLens.set = (fun v x -> { x with referenced_types = v })
-	}
-	let parameters_module_name = {
-		GapiLens.get = (fun x -> x.parameters_module_name);
-		GapiLens.set = (fun v x -> { x with parameters_module_name = v })
-	}
-  let file file_type = GapiLens.for_hash file_type
-
-  let get_schema_module_lens =
-    schema_module |-- GapiLens.option_get
-
-  let get_service_module =
-    service_module |-- GapiLens.option_get
-
-  let get_file_lens file_type =
-    files |-- file file_type |-- GapiLens.option_get
-
-  let create service = {
-    service;
-    files = Hashtbl.create 4;
-    schema_module = None;
-    service_module = None;
-    type_table = TypeTable.create ();
-    sorted_types = [];
-    referenced_types = StringSet.empty;
-    parameters_module_name = "";
-  }
-                    
-  let build_type_table state =
-    let complex_types =
-      List.map
-        (fun (_, s) -> ComplexType.create s)
-        state.service.RestDescription.schemas in
-    let table = 
-      TypeTable.build complex_types
-    in
-      state |> type_table ^=! table
-
-  let build_sorted_types state =
-    let sorted =
-      TypeTable.sort state.type_table
-    in
-      state |> sorted_types ^=! sorted
-
-  let build_referenced_types state =
-    let referenced =
-      TypeTable.fold
-        (fun _ complex_type referenced ->
-           let references = ComplexType.get_direct_references complex_type in
-             StringSet.add_list references referenced)
-        state.referenced_types
-        state.type_table
-    in
-      state |> referenced_types ^=! referenced
-
-  let is_type_referenced type_id state =
-    (StringSet.mem type_id state.referenced_types, state)
-
-  let find_inner_schema_module id state =
-    if id = "" then
-      (None, state)
-    else
-      let inner_module = state
-        |. get_schema_module_lens
-        |. Module.get_inner_module_lens id
-      in
-        (Some inner_module, state)
-
-end
+(* State monad implementation *)
 
 module GeneratorStateMonad =
   GapiMonad.MakeStateMonad(struct type s = State.t end)
@@ -973,7 +27,7 @@ end
 
 open GeneratorM
 
-(* END Generator state *)
+(* END State monad implementation *)
 
 (* Monad helpers *)
 
@@ -999,7 +53,7 @@ let do_request interact =
     result
 
 let get_service_description api version nocache =
-  let file_name = get_full_path (api ^ "." ^ version ^ ".json") in
+  let file_name = get_full_path !output_path (api ^ "." ^ version ^ ".json") in
     if not (Sys.file_exists file_name) || nocache then begin
       Printf.printf "Downloading %s %s service description to file %s...%!"
         api version file_name;
@@ -1024,8 +78,9 @@ let get_service_description api version nocache =
         RestDescription.of_data_model tree
     end
 
+(* END Download service description document *)
 
-(* Generate OCaml source files *)
+(* File opening and closing *)
 
 let open_file file_name =
   let () =
@@ -1040,6 +95,10 @@ let open_file file_name =
 let close_file oc formatter =
   Format.fprintf formatter "@?";
   close_out oc
+
+(* END File opening and closing *)
+
+(* Generate schema inner modules *)
 
 let build_schema_inner_module file_lens complex_type =
   let render_type_t formatter fields =
@@ -1231,6 +290,10 @@ let build_schema_inner_module file_lens complex_type =
         formatter fields is_recursive container_name module_name;
       lift_io $ render_footer formatter is_recursive
 
+(* END Generate schema inner modules *)
+
+(* Generate service inner modules *)
+
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body value =
     let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
@@ -1258,7 +321,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             path_list in
         lift_io $
           Format.fprintf formatter
-            "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%s]@ base_path@ in@]@\n"
+            "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%s]@ base_url@ in@]@\n"
             path_string;
 
         let request_parameter = value.Method.request in
@@ -1382,6 +445,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       type_table <-- GapiLens.get_state State.type_table;
       let value = Method.create id
                     rest_method.RestMethod.parameters
+                    rest_method.RestMethod.description
                     rest_method.RestMethod.request.RefData._ref
                     rest_method.RestMethod.response.RefData._ref
                     type_table in
@@ -1391,7 +455,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                       (State.service |-- RestDescription.basePath);
       lift_io $
         Format.fprintf formatter
-          "@[<v 2>let @[<hv 2>%s@ ?(base_path = \"%s\")@ ?parameters@ "
+          "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?parameters@ "
           value.Method.ocaml_name
           (google_endpoint ^ base_path);
 
@@ -1425,6 +489,10 @@ let build_service_inner_module file_lens (resource_id, resource) =
         resource.RestResource.methods;
       lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
 
+(* END Generate service inner modules *)
+
+(* Generate main modules *)
+
 let build_module file_type generate_body =
   let file_lens = State.get_file_lens file_type in
   let formatter_lens = file_lens |-- File.formatter in
@@ -1433,7 +501,7 @@ let build_module file_type generate_body =
       let service_name = service.RestDescription.name in
       let service_version = service.RestDescription.version in
       let file =
-        File.create service_name service_version file_type in
+        File.create service_name service_version !output_path file_type in
       file_lens ^=! file;
       lift_io $
         Printf.printf "Building %s %s (%s)...%!"
@@ -1466,7 +534,7 @@ let build_schema_module =
     build_module SchemaModule generate_body
 
 let build_service_module =
-  let generate_scope formatter (value, _) =
+  let generate_scope formatter (value, scope) =
     perform
       (* Gets the string following the last dot in scope URL (e.g.
        * 'https://www.googleapis.com/auth/tasks.readonly' -> readonly)
@@ -1479,8 +547,10 @@ let build_service_module =
           else
             "_" ^ (Str.string_after value (last_dot_position + 1))
          in
+      let scope_id = "scope" ^ suffix in
       lift_io $
-        Format.fprintf formatter "let scope%s = \"%s\"@\n@\n" suffix value;
+        Format.fprintf formatter "let %s = \"%s\"@\n@\n" scope_id value;
+      State.get_scope_lens scope_id ^=! scope.ScopesData.description;
   in
 
   let module FieldSet =
@@ -1602,10 +672,14 @@ let build_service_module =
   let generate_header file_lens =
     perform
       formatter <-- GapiLens.get_state (file_lens |-- File.formatter);
+
       schema_module_name <-- GapiLens.get_state
                                (State.get_file_lens SchemaModule
                                   |-- File.module_name);
-      lift_io $ Format.fprintf formatter "open GapiUtils.Infix@\nopen %s@\n@\n" schema_module_name;
+      lift_io $
+        Format.fprintf formatter
+        "open GapiUtils.Infix@\nopen %s@\n@\n" schema_module_name;
+
       scopes <-- GapiLens.get_state (State.service
                                        |-- RestDescription.auth
                                        |-- Oauth2Data.scopes);
@@ -1633,15 +707,213 @@ let build_service_module =
   in
     build_module ServiceModule generate_body
 
+(* END Generate main modules *)
+
+(* Generate module interfaces *)
+
+let generate_schema_module_signature formatter schema_module =
+  let fields = schema_module
+    |. InnerModule.record
+    |. GapiLens.option_get
+    |. Record.fields
+  in
+    perform
+      is_referenced <-- State.is_type_referenced
+                          schema_module.InnerModule.original_name;
+      lift_io (
+        (* Type t *)
+        Format.fprintf formatter
+          "module %s :@\n@[<v 2>sig@,@[<v 2>type t = {@,"
+          schema_module.InnerModule.ocaml_name;
+        List.iter
+          (fun (_, { Field.ocaml_name; field_type; _ }) ->
+             Format.fprintf formatter
+               "%s : %s;@,(** %s *)@,"
+               ocaml_name
+               (ComplexType.data_type_to_string field_type.ComplexType.data_type)
+               (ComplexType.get_description field_type))
+          fields;
+        Format.fprintf formatter
+          "@]@,}@\n@\n";
+
+        (* Lenses *)
+        List.iter
+          (fun (_, { Field.ocaml_name; field_type; _ }) ->
+             Format.fprintf formatter
+               "val %s : (t, %s) GapiLens.t@,"
+               ocaml_name
+               (ComplexType.data_type_to_string field_type.ComplexType.data_type))
+          fields;
+
+        if is_referenced then begin
+          (* TODO: review render return type (list list) *)
+          (* empty, render, parse *)
+          Format.fprintf formatter
+            "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
+        end else begin
+          (* empty, render, parse *)
+          Format.fprintf formatter
+            "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
+
+          (* of_data_model, to_data_model *)
+          Format.fprintf formatter
+            "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
+        end;
+        (* module end *)
+        Format.fprintf formatter
+          "@]\nend@\n@\n")
+
 let build_schema_module_interface =
-  perform
-  (* TODO *)
-    return ()
+  let generate_body file_lens =
+    perform
+      formatter <-- GapiLens.get_state (file_lens
+                                          |-- File.formatter);
+      service <-- GapiLens.get_state State.service;
+
+      (* Generate opening comment *)
+      lift_io $
+        Format.fprintf formatter
+"@[<hov 2>(** Data definition for %s (%s).@\n@\nFor@ more@ information@ about@ this@ data@ model,@ see@ the@ {{:%s}API Documentation}.@\n*)@]@\n@\n"
+          service.RestDescription.title
+          service.RestDescription.version
+          service.RestDescription.documentationLink;
+
+      (* Schema modules are stored in reverse order *)
+      schema_modules <-- GapiLens.get_state
+                           (State.get_schema_module_lens
+                              |-- Module.inner_modules);
+      mapM_
+        (fun (_, schema_module) ->
+           generate_schema_module_signature formatter schema_module)
+        (List.rev schema_modules);
+
+  in
+    build_module SchemaModuleInterface generate_body
+
+let generate_service_module_signature formatter service_module =
+  let render_method formatter value =
+    let request_ref =
+      Option.map_default
+        (fun f -> f.Field.field_type.ComplexType.id)
+        "" value.Method.request in
+    let response_ref =
+      Option.map_default
+        (fun f -> f.Field.field_type.ComplexType.id)
+        "" value.Method.response
+    in
+      perform
+        base_path <-- GapiLens.get_state
+                        (State.service |-- RestDescription.basePath);
+        schema_module <-- GapiLens.get_state State.get_schema_module_lens;
+        request_module <-- State.find_inner_schema_module request_ref;
+        response_module <-- State.find_inner_schema_module response_ref;
+
+        lift_io (
+          (* Documentation *)
+          Format.fprintf formatter
+            "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n@@param parameters Optional standard parameters.@\n"
+            value.Method.description
+            (google_endpoint ^ base_path);
+          List.iter
+            (fun (_, { Field.ocaml_name; field_type; _ }) ->
+               Format.fprintf formatter
+                 "@@param %s %s@\n"
+                 ocaml_name
+                 (ComplexType.get_description field_type))
+            value.Method.parameters;
+          Format.fprintf formatter "*)@]@\n";
+          (* Declaration *)
+          Format.fprintf formatter
+            "@[<hv 2>val %s :@ ?base_url:string ->@ ?parameters:GapiService.StandardParameters.t ->@ "
+            value.Method.ocaml_name;
+          (* Parameters *)
+          List.iter
+            (fun (_, { Field.ocaml_name; field_type; _ }) ->
+               Format.fprintf formatter
+                 "%s%s:%s ->@,"
+                 (if ComplexType.is_required field_type then "" else "?")
+                 ocaml_name
+                 (ComplexType.data_type_to_string
+                    field_type.ComplexType.data_type))
+            value.Method.parameters);
+
+        lift_io (
+          (* Request *)
+          if Option.is_some request_module then begin
+            Format.fprintf formatter "%s.%s.t ->@,"
+              schema_module.Module.ocaml_name
+              (request_module |. GapiLens.option_get |. InnerModule.ocaml_name);
+          end;
+          (* Session *)
+          Format.fprintf formatter
+            "GapiConversation.Session.t ->@,";
+          (* Response *)
+          if Option.is_some response_module then begin
+            Format.fprintf formatter "%s.%s.t"
+              schema_module.Module.ocaml_name
+              (response_module |. GapiLens.option_get |. InnerModule.ocaml_name);
+          end else begin
+            Format.fprintf formatter "unit";
+          end;
+          Format.fprintf formatter " * GapiConversation.Session.t@]@\n@\n")
+  in
+
+  let values = service_module
+   |. InnerModule.values
+  in
+    perform
+      scopes <-- GapiLens.get_state State.scopes;
+      lift_io $
+        List.iter
+          (fun (id, scope) ->
+             Format.fprintf formatter
+               "(** %s *)@\nval %s : string@\n"
+               scope id)
+          scopes;
+      lift_io $
+        Format.fprintf formatter
+          "@\nmodule %s :@\nsig@,@[<v 2>@,"
+          service_module.InnerModule.ocaml_name;
+      mapM_
+        (fun (_, value) ->
+           render_method formatter value)
+        values;
+      (* module end *)
+      lift_io $
+        Format.fprintf formatter
+          "@]\nend@\n@\n"
 
 let build_service_module_interface =
-  perform
-  (* TODO *)
-    return ()
+  let generate_body file_lens =
+    perform
+      formatter <-- GapiLens.get_state (file_lens
+                                          |-- File.formatter);
+      service <-- GapiLens.get_state State.service;
+
+      (* Generate opening comment *)
+      lift_io $
+        Format.fprintf formatter
+          "@[<hov 2>(** Service definition for %s (%s).@\n@\n%s.@\n@\nFor@ more@ information@ about@ this@ service,@ see@ the@ {{:%s}API Documentation}.@\n*)@]@\n@\n"
+          service.RestDescription.title
+          service.RestDescription.version
+          service.RestDescription.description
+          service.RestDescription.documentationLink;
+
+      (* Schema modules are stored in reverse order *)
+      service_modules <-- GapiLens.get_state
+                            (State.get_service_module
+                               |-- Module.inner_modules);
+      mapM_
+        (fun (_, service_module) ->
+           generate_service_module_signature formatter service_module)
+        (List.rev service_modules);
+
+  in
+    build_module ServiceModuleInterface generate_body
+
+(* END Generate module interfaces *)
+
+(* Main program *)
 
 let generate_code service =
   let build_all =
@@ -1665,7 +937,7 @@ let _ =
   let version = ref "" in
   let nocache = ref false in
   let usage =
-    "Usage: " ^ Sys.executable_name ^ " -api apiname -version apiver [-nocache]" in
+    "Usage: " ^ Sys.executable_name ^ " -api <apiname> -version <apiver> [-nocache] [-nooverwrite] [-outdir <path>]" in
   let arg_specs =
     Arg.align (
       ["-api",
@@ -1676,13 +948,13 @@ let _ =
        "<apiver> The version of the API.";
        "-nocache",
        Arg.Set nocache,
-       " Downloads the service description, ignoring locally saved versions";
+       " Downloads the service description, ignoring locally saved versions.";
        "-nooverwrite",
        Arg.Set no_overwrite,
        " Refuse to overwrite previously generated files.";
        "-outdir",
        Arg.Set_string output_path,
-       "<path> Place the generated files into <path> (defaults to: \"./generated/\")"
+       "<path> Place the generated files into <path> (defaults to: \"./generated/\")."
       ]) in
   let () =
     Arg.parse
@@ -1704,4 +976,6 @@ let _ =
     end in
   let service = get_service_description !api !version !nocache in
     generate_code service
+
+(* END Main program *)
 
