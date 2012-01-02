@@ -231,6 +231,7 @@ val get :
   'a * GapiConversation.Session.t
 
 val post :
+  ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->

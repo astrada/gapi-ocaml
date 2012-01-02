@@ -460,6 +460,7 @@ let get
     session
 
 let post
+      ?etag
       ?query_parameters
       ?(data_to_post = (fun _ -> GapiCore.PostData.empty))
       ~data
