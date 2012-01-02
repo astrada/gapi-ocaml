@@ -17,6 +17,9 @@ let test_get_url () =
            "urlshortener#url"
            entry.GapiUrlshortenerV1Schema.Url.kind;
          assert_equal
+           "http://www.google.com/"
+           entry.GapiUrlshortenerV1Schema.Url.longUrl;
+         assert_equal
            google_url_id
            entry.GapiUrlshortenerV1Schema.Url.id)
 
