@@ -668,6 +668,14 @@ end
 
 (* File description *)
 
+let get_full_path file_name =
+  let output_path = !output_path in
+    if ExtString.String.ends_with output_path "/" then
+      output_path ^ file_name
+    else
+      output_path ^ "/" ^ file_name
+    
+
 type file_type =
     SchemaModule
   | SchemaModuleInterface
@@ -727,7 +735,7 @@ struct
         | SchemaModuleInterface
         | ServiceModuleInterface -> ".mli" in
     let file_name =
-      !output_path ^ (String.uncapitalize module_name) ^ extension
+      get_full_path ((String.uncapitalize module_name) ^ extension)
     in
       { file_type;
         service_name;
@@ -983,7 +991,7 @@ let do_request interact =
     result
 
 let get_service_description api version nocache =
-  let file_name = !output_path ^ api ^ "." ^ version ^ ".json" in
+  let file_name = get_full_path (api ^ "." ^ version ^ ".json") in
     if not (Sys.file_exists file_name) || nocache then begin
       Printf.printf "Downloading %s %s service description to file %s...%!"
         api version file_name;
@@ -1664,7 +1672,7 @@ let _ =
        " Refuse to overwrite previously generated files.";
        "-outdir",
        Arg.Set_string output_path,
-       "<path> Place the generated files into <path> (defaults to: \"./generated\")"
+       "<path> Place the generated files into <path> (defaults to: \"./generated/\")"
       ]) in
   let () =
     Arg.parse
