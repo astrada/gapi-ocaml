@@ -694,6 +694,7 @@ struct
   type t = {
     file_type : file_type;
     service_name : string;
+    service_version : string;
     module_name : string;
     file_name : string;
     formatter : Format.formatter;
@@ -706,6 +707,10 @@ struct
 	let service_name = {
 		GapiLens.get = (fun x -> x.service_name);
 		GapiLens.set = (fun v x -> { x with service_name = v })
+	}
+	let service_version = {
+		GapiLens.get = (fun x -> x.service_version);
+		GapiLens.set = (fun v x -> { x with service_version = v })
 	}
 	let module_name = {
 		GapiLens.get = (fun x -> x.module_name);
@@ -720,8 +725,9 @@ struct
 		GapiLens.set = (fun v x -> { x with formatter = v })
 	}
 
-  let create service_name file_type =
-    let ocaml_name = OCamlName.get_ocaml_name ModuleName service_name in
+  let create service_name service_version file_type =
+    let base_name = service_name ^ (String.capitalize service_version) in
+    let ocaml_name = OCamlName.get_ocaml_name ModuleName base_name in
     let module_base_name = "Gapi" ^ ocaml_name in
     let module_name =
       match file_type with
@@ -740,6 +746,7 @@ struct
     in
       { file_type;
         service_name;
+        service_version;
         module_name;
         file_name;
         formatter = Format.std_formatter;
@@ -1422,10 +1429,11 @@ let build_module file_type generate_body =
   let file_lens = State.get_file_lens file_type in
   let formatter_lens = file_lens |-- File.formatter in
     perform
-      service_name <-- GapiLens.get_state
-                         (State.service |-- RestDescription.name);
+      service <-- GapiLens.get_state State.service;
+      let service_name = service.RestDescription.name in
+      let service_version = service.RestDescription.version in
       let file =
-        File.create service_name file_type in
+        File.create service_name service_version file_type in
       file_lens ^=! file;
       lift_io $
         Printf.printf "Building %s %s (%s)...%!"
