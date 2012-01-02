@@ -7,6 +7,8 @@ module Infix = struct
 
 end
 
+open Infix
+
 let is_weak_etag etag =
   if String.length etag > 2 then
     String.sub etag 0 2 = "W/"
@@ -35,8 +37,8 @@ let merge_query_string ?(encoded = true) parameters url =
 
 let add_path_to_url ?(encoded = true) path_to_add url =
   let neturl = Neturl.parse_url url in
-  let path = Neturl.url_path neturl in
-  let new_path = path @ path_to_add in
+  let path = Neturl.url_path neturl |> List.filter (fun p -> p <> "") in
+  let new_path = "" :: (path @ path_to_add) in
   let new_neturl = Neturl.modify_url
                      ~encoded
                      ~path:new_path
