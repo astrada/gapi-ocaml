@@ -950,3 +950,5 @@ struct
 
 end
 
+(* END Generator state *)
+

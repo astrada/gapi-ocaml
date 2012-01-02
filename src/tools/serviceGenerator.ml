@@ -12,6 +12,8 @@ let google_endpoint = "https://www.googleapis.com"
 
 (* END Configuration *)
 
+(* State monad implementation *)
+
 module GeneratorStateMonad =
   GapiMonad.MakeStateMonad(struct type s = State.t end)
 
@@ -25,7 +27,7 @@ end
 
 open GeneratorM
 
-(* END Generator state *)
+(* END State monad implementation *)
 
 (* Monad helpers *)
 
@@ -76,8 +78,9 @@ let get_service_description api version nocache =
         RestDescription.of_data_model tree
     end
 
+(* END Download service description document *)
 
-(* Generate OCaml source files *)
+(* File opening and closing *)
 
 let open_file file_name =
   let () =
@@ -92,6 +95,10 @@ let open_file file_name =
 let close_file oc formatter =
   Format.fprintf formatter "@?";
   close_out oc
+
+(* END File opening and closing *)
+
+(* Generate schema inner modules *)
 
 let build_schema_inner_module file_lens complex_type =
   let render_type_t formatter fields =
@@ -282,6 +289,10 @@ let build_schema_inner_module file_lens complex_type =
       lift_io $ render_parse_function
         formatter fields is_recursive container_name module_name;
       lift_io $ render_footer formatter is_recursive
+
+(* END Generate schema inner modules *)
+
+(* Generate service inner modules *)
 
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body value =
@@ -476,6 +487,10 @@ let build_service_inner_module file_lens (resource_id, resource) =
            generate_rest_method formatter inner_module_lens rest_method)
         resource.RestResource.methods;
       lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
+
+(* END Generate service inner modules *)
+
+(* Generate main modules *)
 
 let build_module file_type generate_body =
   let file_lens = State.get_file_lens file_type in
@@ -685,6 +700,10 @@ let build_service_module =
   in
     build_module ServiceModule generate_body
 
+(* END Generate main modules *)
+
+(* Generate module interfaces *)
+
 let build_schema_module_interface =
   perform
   (* TODO *)
@@ -694,6 +713,10 @@ let build_service_module_interface =
   perform
   (* TODO *)
     return ()
+
+(* END Generate module interfaces *)
+
+(* Main program *)
 
 let generate_code service =
   let build_all =
@@ -717,7 +740,7 @@ let _ =
   let version = ref "" in
   let nocache = ref false in
   let usage =
-    "Usage: " ^ Sys.executable_name ^ " -api apiname -version apiver [-nocache]" in
+    "Usage: " ^ Sys.executable_name ^ " -api <apiname> -version <apiver> [-nocache] [-nooverwrite] [-outdir <path>]" in
   let arg_specs =
     Arg.align (
       ["-api",
@@ -756,4 +779,6 @@ let _ =
     end in
   let service = get_service_description !api !version !nocache in
     generate_code service
+
+(* END Main program *)
 
