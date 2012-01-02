@@ -67,12 +67,12 @@ end
 module UrlResource =
 struct
   let get
-        ?(base_path = "https://www.googleapis.com/urlshortener/v1/")
+        ?(base_url = "https://www.googleapis.com/urlshortener/v1/")
         ?parameters
         ?projection
         ~shortUrl
         session =
-    let full_url = GapiUtils.add_path_to_url ["url"] base_path in
+    let full_url = GapiUtils.add_path_to_url ["url"] base_url in
     let params = UrlshortenerParameters.merge_parameters
       ?standard_parameters:parameters ?projection ~shortUrl () in
     let query_parameters = Option.map
@@ -81,11 +81,11 @@ struct
       (GapiJson.parse_json_response Url.of_data_model) session 
     
   let insert
-        ?(base_path = "https://www.googleapis.com/urlshortener/v1/")
+        ?(base_url = "https://www.googleapis.com/urlshortener/v1/")
         ?parameters
         url
         session =
-    let full_url = GapiUtils.add_path_to_url ["url"] base_path in
+    let full_url = GapiUtils.add_path_to_url ["url"] base_url in
     let params = UrlshortenerParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map
@@ -95,12 +95,12 @@ struct
       full_url (GapiJson.parse_json_response Url.of_data_model) session 
     
   let list
-        ?(base_path = "https://www.googleapis.com/urlshortener/v1/")
+        ?(base_url = "https://www.googleapis.com/urlshortener/v1/")
         ?parameters
         ?projection
         ?start_token
         session =
-    let full_url = GapiUtils.add_path_to_url ["url"; "history"] base_path in
+    let full_url = GapiUtils.add_path_to_url ["url"; "history"] base_url in
     let params = UrlshortenerParameters.merge_parameters
       ?standard_parameters:parameters ?projection ?start_token () in
     let query_parameters = Option.map
