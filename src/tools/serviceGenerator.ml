@@ -1181,10 +1181,56 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       perform
         parameters_module_name <-- GapiLens.get_state
                                      State.parameters_module_name;
-        (* TODO: build url *)
+
+        (* Build complete url *)
+        let path = rest_method.RestMethod.path in
+        let splitted_path =
+          ExtString.String.nsplit path "/" in
+        let path_list =
+          List.map
+            (fun p ->
+               if ExtString.String.starts_with p "{" then
+                 String.sub p 1 (String.length p - 2)
+               else
+                 "\"" ^ p ^ "\"")
+            splitted_path in
+        let path_string =
+          List.fold_left
+            (fun s p ->
+               if s = "" then p else s ^ "; " ^ p)
+            ""
+            path_list in
+        lift_io $
+          Format.fprintf formatter
+            "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%s]@ base_path@ in@]@\n"
+            path_string;
+
+        (* Get etag *)
+        type_table <-- GapiLens.get_state State.type_table;
+        let is_etag_present =
+          if rest_method.RestMethod.request <> RefData.empty then
+            let complex_type = Hashtbl.find
+                                 type_table
+                                 rest_method.RestMethod.request.RefData._ref in
+              match complex_type.ComplexType.data_type with
+                  ComplexType.Object properties ->
+                    List.exists (fun (id, _) -> id = "etag") properties
+                | _ ->
+                    failwith "Only Objects are supported looking for etag field"
+          else
+            false in
+
+          lift_io (
+            if is_etag_present then begin
+              Format.fprintf formatter "@[<hov 2>let etag =@ GapiUtils.etag_option %s.%s.etag@ in@]@\n"
+              (* TODO get param OCaml name *)
+              (String.uncapitalize rest_method.RestMethod.request.RefData._ref)
+              (* TODO get module name *)
+              rest_method.RestMethod.response.RefData._ref;
+            end);
+
         lift_io (
-          Format.fprintf formatter "@[<hov 2>let url' =@ base_url@ in@]@\n";
-        (* TODO: get etag *)
+          (* Build query parameters *)
           Format.fprintf formatter
             "@[<hov 2>let params =@ %s.merge_parameters@ ?standard_parameters:parameters@ "
             parameters_module_name;
@@ -1198,24 +1244,31 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             rest_method.RestMethod.parameters;
           Format.fprintf formatter
             "()@ in@]@\n@[<hov 2>let query_parameters =@ Option.map@ %s.to_key_value_list@ params@ in@]@\n"
-            parameters_module_name;
+            parameters_module_name);
+
+        (* Invoke service function *)
+        lift_io (
           Format.fprintf formatter
             "@[<hov 2>GapiService.%s@ ?query_parameters@ "
-            function_to_call);
-        lift_io (
+            function_to_call;
+          if is_etag_present then begin
+            Format.fprintf formatter "?etag@ ";
+          end;
           if rest_method.RestMethod.request <> RefData.empty then begin
             Format.fprintf formatter
               "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
               rest_method.RestMethod.request.RefData._ref
+              (* TODO get param OCaml name *)
               (String.uncapitalize rest_method.RestMethod.request.RefData._ref);
           end else if rest_method.RestMethod.httpMethod = "POST" then begin
             Format.fprintf formatter
               "~data:%s.empty@ "
+              (* TODO get module name *)
               rest_method.RestMethod.response.RefData._ref;
           end);
         lift_io (
           Format.fprintf formatter
-            "url'@ (GapiJson.parse_json_response %s.of_data_model)@ "
+            "full_url@ (GapiJson.parse_json_response %s.of_data_model)@ "
             rest_method.RestMethod.response.RefData._ref;
           Format.fprintf formatter "session@ @]@\n")
   in
@@ -1269,13 +1322,12 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         |-- InnerModule.get_value_lens id in
       value_lens ^=! value;
 
-      base_url <-- GapiLens.get_state
-                     (State.service |-- RestDescription.basePath);
-      let url = base_url ^ rest_method.RestMethod.path in
+      base_path <-- GapiLens.get_state
+                      (State.service |-- RestDescription.basePath);
       lift_io $
         Format.fprintf formatter
-          "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?parameters@ "
-          value.Value.ocaml_name url;
+          "@[<v 2>let @[<hv 2>%s@ ?(base_path = \"%s\")@ ?parameters@ "
+          value.Value.ocaml_name base_path;
 
       lift_io $ render_parameters formatter;
 
