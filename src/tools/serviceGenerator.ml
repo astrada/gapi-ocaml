@@ -6,6 +6,7 @@ open GapiLens.StateInfix
 (* Configuration *)
 
 let output_path = ref "generated/"
+let no_overwrite = ref false
 
 (* END Configuration *)
 
@@ -1011,6 +1012,11 @@ let get_service_description api version nocache =
 (* Generate OCaml source files *)
 
 let open_file file_name =
+  let () =
+    if (Sys.file_exists file_name) && !no_overwrite then begin
+      Printf.fprintf stderr "\nError: File %s already exists.\n" file_name;
+      exit 1
+    end in
   let oc = open_out file_name in
   let formatter = Format.formatter_of_out_channel oc in
     (oc, formatter)
@@ -1653,6 +1659,9 @@ let _ =
        "-nocache",
        Arg.Set nocache,
        " Downloads the service description, ignoring locally saved versions";
+       "-nooverwrite",
+       Arg.Set no_overwrite,
+       " Refuse to overwrite previously generated files.";
        "-outdir",
        Arg.Set_string output_path,
        "<path> Place the generated files into <path> (defaults to: \"./generated\")"
