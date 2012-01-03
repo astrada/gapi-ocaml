@@ -597,16 +597,14 @@ end
 
 (* END Method description *)
 
-(* Inner module description *)
+(* Inner schema module description *)
 
-module InnerModule =
+module InnerSchemaModule =
 struct
   type t = {
     original_name : string;
     ocaml_name : string;
     record : Record.t option;
-    values : (string * Method.t) list;
-    inner_modules : (string * t) list;
   }
 
 	let original_name = {
@@ -621,39 +619,88 @@ struct
 		GapiLens.get = (fun x -> x.record);
 		GapiLens.set = (fun v x -> { x with record = v })
 	}
-	let values = {
-		GapiLens.get = (fun x -> x.values);
-		GapiLens.set = (fun v x -> { x with values = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
-  let inner_module id = GapiLens.for_assoc id
-  let value id = GapiLens.for_assoc id
-
-  let get_value_lens id =
-    values |-- value id |-- GapiLens.option_get
 
   let create original_name ocaml_name =
     { original_name;
       ocaml_name;
       record = None;
-      values = [];
+    }
+
+end
+
+(* END Inner schema module description *)
+
+(* Inner service module description *)
+
+module InnerServiceModule =
+struct
+  type t = {
+    original_name : string;
+    ocaml_name : string;
+    methods : (string * Method.t) list;
+    inner_modules : (string * t) list;
+  }
+
+	let original_name = {
+		GapiLens.get = (fun x -> x.original_name);
+		GapiLens.set = (fun v x -> { x with original_name = v })
+	}
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let methods = {
+		GapiLens.get = (fun x -> x.methods);
+		GapiLens.set = (fun v x -> { x with methods = v })
+	}
+	let inner_modules = {
+		GapiLens.get = (fun x -> x.inner_modules);
+		GapiLens.set = (fun v x -> { x with inner_modules = v })
+	}
+  let _method id = GapiLens.for_assoc id
+  let inner_module id = GapiLens.for_assoc id
+
+  let get_method_lens id =
+    methods |-- _method id |-- GapiLens.option_get
+
+  let create original_name ocaml_name =
+    { original_name;
+      ocaml_name;
+      methods = [];
       inner_modules = [];
     }
 
 end
 
-(* END Inner module description *)
+(* END Inner schema module description *)
 
-(* Module description *)
+(* Schema and service main module *)
 
-module Module =
-struct
+module type MainModule =
+sig
+  type inner_module_t
   type t = {
     ocaml_name : string;
-    inner_modules : (string * InnerModule.t) list;
+    inner_modules : (string * inner_module_t) list;
+  }
+    
+  val ocaml_name : (t, string) GapiLens.t
+  val inner_modules : (t, (string * inner_module_t) list) GapiLens.t
+  val inner_module :
+    string -> ((string * inner_module_t) list, inner_module_t option) GapiLens.t
+  val get_inner_module_lens :
+    string -> (t, inner_module_t) GapiLens.t
+
+  val create : string -> t
+
+end
+
+module MakeMainModule(T : sig type t end) =
+struct
+  type inner_module_t = T.t
+  type t = {
+    ocaml_name : string;
+    inner_modules : (string * inner_module_t) list;
   }
     
 	let ocaml_name = {
@@ -675,7 +722,13 @@ struct
 
 end
 
-(* END Module description *)
+module SchemaModule =
+  MakeMainModule(struct type t = InnerSchemaModule.t end)
+
+module ServiceModule =
+  MakeMainModule(struct type t = InnerServiceModule.t end)
+
+(* END Schema and service main module *)
 
 (* File description *)
 
@@ -864,8 +917,8 @@ struct
   type t = {
     service : RestDescription.t;
     files : (file_type, File.t) Hashtbl.t;
-    schema_module : Module.t option;
-    service_module : Module.t option;
+    schema_module : SchemaModule.t option;
+    service_module : ServiceModule.t option;
     type_table : TypeTable.t;
     sorted_types : ComplexType.t list;
     referenced_types : StringSet.t;
@@ -972,7 +1025,7 @@ struct
     else
       let inner_module = state
         |. get_schema_module_lens
-        |. Module.get_inner_module_lens id
+        |. SchemaModule.get_inner_module_lens id
       in
         (Some inner_module, state)
 
