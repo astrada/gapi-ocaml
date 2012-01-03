@@ -7,6 +7,7 @@ let model_tests =
    TestPlusModel.suite;
    TestTasksModel.suite;
    TestDiscoveryModel.suite;
+   TestUrlshortenerV1Model.suite;
   ]
 
 let service_tests = 

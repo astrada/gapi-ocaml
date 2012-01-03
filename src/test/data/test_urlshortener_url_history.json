@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "created": "2012-01-01T10:00:00.000+00:00",
+      "id": "http://goo.gl/fbsS",
+      "kind": "urlshortener#url",
+      "longUrl": "http://www.google.com/",
+      "status": "OK"
+    }
+  ],
+  "itemsPerPage": 30,
+  "kind": "urlshortener#urlHistory",
+  "totalItems": 1
+}
