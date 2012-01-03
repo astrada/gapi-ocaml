@@ -937,7 +937,7 @@ struct
     let module_name =
       match file_type with
           SchemaModule
-        | SchemaModuleInterface -> module_base_name ^ "Schema"
+        | SchemaModuleInterface -> module_base_name ^ "Model"
         | ServiceModule
         | ServiceModuleInterface -> module_base_name ^ "Service" in
     let extension =
