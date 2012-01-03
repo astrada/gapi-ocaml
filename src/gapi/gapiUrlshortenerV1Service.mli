@@ -41,7 +41,7 @@ sig
     ?projection:Projection.t ->
     ?start_token:string ->
     GapiConversation.Session.t ->
-    GapiUrlshortenerV1Schema.UrlHistory.t * GapiConversation.Session.t
+    GapiUrlshortenerV1Model.UrlHistory.t * GapiConversation.Session.t
   
   (** Creates a new short URL.
     
@@ -51,9 +51,9 @@ sig
   val insert :
     ?base_url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiUrlshortenerV1Schema.Url.t ->
+    GapiUrlshortenerV1Model.Url.t ->
     GapiConversation.Session.t ->
-    GapiUrlshortenerV1Schema.Url.t * GapiConversation.Session.t
+    GapiUrlshortenerV1Model.Url.t * GapiConversation.Session.t
   
   (** Expands a short URL or gets creation time and analytics.
     
@@ -68,7 +68,7 @@ sig
     ?projection:Projection.t ->
     shortUrl:string ->
     GapiConversation.Session.t ->
-    GapiUrlshortenerV1Schema.Url.t * GapiConversation.Session.t
+    GapiUrlshortenerV1Model.Url.t * GapiConversation.Session.t
   
   
 end

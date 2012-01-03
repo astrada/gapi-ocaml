@@ -1,5 +1,5 @@
 open OUnit
-open GapiUrlshortenerV1Schema
+open GapiUrlshortenerV1Model
 
 let test_parse_url () =
   let url_json =

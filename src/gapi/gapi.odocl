@@ -10,6 +10,6 @@ GapiTasks
 GapiTasksService
 GapiDiscovery
 GapiDiscoveryService
-GapiUrlshortenerV1Schema
+GapiUrlshortenerV1Model
 gapiUrlshortenerV1Service
 

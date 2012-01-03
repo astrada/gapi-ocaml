@@ -1,6 +1,7 @@
 open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
+open GapiUrlshortenerV1Model
 
 let google_url_id = "http://goo.gl/fbsS"
 
@@ -16,20 +17,20 @@ let test_get_url () =
        in
          assert_equal
            "urlshortener#url"
-           entry.GapiUrlshortenerV1Schema.Url.kind;
+           entry.Url.kind;
          assert_equal
            "http://www.google.com/"
-           entry.GapiUrlshortenerV1Schema.Url.longUrl;
+           entry.Url.longUrl;
          assert_equal
            google_url_id
-           entry.GapiUrlshortenerV1Schema.Url.id;
+           entry.Url.id;
          assert_bool
            "All time long url clicks should be greater than 0"
-           GapiUrlshortenerV1Schema.(int_of_string entry.Url.analytics.AnalyticsSummary.allTime.AnalyticsSnapshot.longUrlClicks > 0))
+           (int_of_string entry.Url.analytics.AnalyticsSummary.allTime.AnalyticsSnapshot.longUrlClicks > 0))
 
 let new_url = {
-  GapiUrlshortenerV1Schema.Url.empty with
-    GapiUrlshortenerV1Schema.Url.longUrl = "http://www.google.com/"
+  Url.empty with
+    Url.longUrl = "http://www.google.com/"
 }
 
 let test_insert_url () =
@@ -43,7 +44,7 @@ let test_insert_url () =
        in
          TestHelper.assert_not_empty
            "Url id should not be empty"
-           new_entry.GapiUrlshortenerV1Schema.Url.id)
+           new_entry.Url.id)
 
 let test_list_url () =
   TestHelper.test_request
@@ -55,7 +56,7 @@ let test_list_url () =
        in
          assert_equal
            "urlshortener#urlHistory"
-           urls.GapiUrlshortenerV1Schema.UrlHistory.kind)
+           urls.UrlHistory.kind)
 
 let suite = "Urlshortener services test" >:::
   ["test_get_url" >:: test_get_url;

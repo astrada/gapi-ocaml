@@ -1,7 +1,7 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
 open GapiUtils.Infix
-open GapiUrlshortenerV1Schema
+open GapiUrlshortenerV1Model
 
 let scope = "https://www.googleapis.com/auth/urlshortener"
 
