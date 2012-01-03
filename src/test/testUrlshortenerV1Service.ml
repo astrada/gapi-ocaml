@@ -10,6 +10,7 @@ let test_get_url () =
     (fun session ->
        let (entry, _) =
          GapiUrlshortenerV1Service.UrlResource.get
+           ~projection:GapiUrlshortenerV1Service.Projection.ANALYTICS_CLICKS
            ~shortUrl:google_url_id
            session
        in
@@ -21,7 +22,10 @@ let test_get_url () =
            entry.GapiUrlshortenerV1Schema.Url.longUrl;
          assert_equal
            google_url_id
-           entry.GapiUrlshortenerV1Schema.Url.id)
+           entry.GapiUrlshortenerV1Schema.Url.id;
+         assert_bool
+           "All time long url clicks should be greater than 0"
+           GapiUrlshortenerV1Schema.(int_of_string entry.Url.analytics.AnalyticsSummary.allTime.AnalyticsSnapshot.longUrlClicks > 0))
 
 let new_url = {
   GapiUrlshortenerV1Schema.Url.empty with
