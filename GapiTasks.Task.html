@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="GapiTasks.Tasks.html">
+<link rel="Up" href="GapiTasks.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiTasks.Task</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="GapiTasks.html">Up</a>
+&nbsp;<a href="GapiTasks.Tasks.html">Next</a>
+</div>
+<center><h1>Module <a href="type_GapiTasks.Task.html">GapiTasks.Task</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Task: <code class="code">sig</code> <a href="GapiTasks.Task.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the resource. This is always <code class="code">"tasks#task"</code>.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Task identifier.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of the resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>title&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Title of the task.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>updated&nbsp;: <code class="type">GapiDate.t</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Last modification time of the task (as a RFC 3339 timestamp).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >URL pointing to this task. Used to retrieve, update, or delete this task.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>parent&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Parent task identifier. This field is omitted if it is a top-level task. This field is read-only. Use the <code class="code">move</code> method to move the task under a different parent or to the top level.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>position&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >String indicating the position of the task among its sibling tasks under the same parent task or at the top level. If this string is greater than another task's corresponding position string according to lexicographical ordering, the task is positioned after the other task under the same parent task (or at the top level). This field is read-only. Use the <code class="code">move</code> method to move the task to another position.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>notes&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Notes describing the task. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>status&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Status of the task. This is either <code class="code">"needsAction"</code> or <code class="code">"completed"</code>.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>due&nbsp;: <code class="type">GapiDate.t</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Due date of the task (as a RFC 3339 timestamp). Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>completed&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Completion date of the task (as a RFC 3339 timestamp). This field is omitted if the task has not been completed.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>deleted&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Flag indicating whether the task has been deleted. The default is <code class="code">false</code>.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>hidden&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Flag indicating whether the task is hidden. This is the case if the task had been marked completed when the task list was last cleared. The default is <code class="code">false</code>. This field is read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+}
+
+
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, GapiDate.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALparent"><span class="keyword">val</span> parent</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALposition"><span class="keyword">val</span> position</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALnotes"><span class="keyword">val</span> notes</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALstatus"><span class="keyword">val</span> status</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdue"><span class="keyword">val</span> due</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, GapiDate.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcompleted"><span class="keyword">val</span> completed</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdeleted"><span class="keyword">val</span> deleted</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhidden"><span class="keyword">val</span> hidden</span> : <code class="type">(<a href="GapiTasks.Task.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiTasks.Task.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiTasks.Task.html#TYPEt">t</a> -> GapiJson.json_data_model list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiTasks.Task.html#TYPEt">t</a> -> GapiJson.json_data_model -> <a href="GapiTasks.Task.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiTasks.Task.html#TYPEt">t</a> -> GapiJson.json_data_model</code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type">GapiJson.json_data_model -> <a href="GapiTasks.Task.html#TYPEt">t</a></code></pre></body></html>

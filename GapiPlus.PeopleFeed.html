@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiPlus.Person.html">
+<link rel="Up" href="GapiPlus.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiPlus.PeopleFeed</title>
+</head>
+<body>
+<div class="navbar"><a href="GapiPlus.Person.html">Previous</a>
+&nbsp;<a href="GapiPlus.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="type_GapiPlus.PeopleFeed.html">GapiPlus.PeopleFeed</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> PeopleFeed: <code class="code">sig</code> <a href="GapiPlus.PeopleFeed.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifies this resource as a collection of people. Value: <code class="code">"plus#peopleFeed"</code>.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of this response for caching purposes.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>title&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of this collection of people.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>nextPageToken&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>items&nbsp;: <code class="type"><a href="GapiPlus.Person.html#TYPEt">GapiPlus.Person.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The people in this page of results. Each item will include the id, displayName, image, and url for the person. To retrieve additional profile data, see the people.get method.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+}
+
+
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiPlus.PeopleFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiPlus.PeopleFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiPlus.PeopleFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALnextPageToken"><span class="keyword">val</span> nextPageToken</span> : <code class="type">(<a href="GapiPlus.PeopleFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALitems"><span class="keyword">val</span> items</span> : <code class="type">(<a href="GapiPlus.PeopleFeed.html#TYPEt">t</a>, <a href="GapiPlus.Person.html#TYPEt">GapiPlus.Person.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlus.PeopleFeed.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlus.PeopleFeed.html#TYPEt">t</a> -> GapiJson.json_data_model list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlus.PeopleFeed.html#TYPEt">t</a> -> GapiJson.json_data_model -> <a href="GapiPlus.PeopleFeed.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiPlus.PeopleFeed.html#TYPEt">t</a> -> GapiJson.json_data_model</code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type">GapiJson.json_data_model -> <a href="GapiPlus.PeopleFeed.html#TYPEt">t</a></code></pre></body></html>

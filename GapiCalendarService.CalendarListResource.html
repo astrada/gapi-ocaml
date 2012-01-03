@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiCalendarService.AclResource.html">
+<link rel="next" href="GapiCalendarService.CalendarsResource.html">
+<link rel="Up" href="GapiCalendarService.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiCalendarService.CalendarListResource</title>
+</head>
+<body>
+<div class="navbar"><a href="GapiCalendarService.AclResource.html">Previous</a>
+&nbsp;<a href="GapiCalendarService.html">Up</a>
+&nbsp;<a href="GapiCalendarService.CalendarsResource.html">Next</a>
+</div>
+<center><h1>Module <a href="type_GapiCalendarService.CalendarListResource.html">GapiCalendarService.CalendarListResource</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> CalendarListResource: <code class="code">sig</code> <a href="GapiCalendarService.CalendarListResource.html">..</a> <code class="code">end</code></pre>The "calendarList" service.<br>
+<hr width="100%">
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?minAccessRole:string -><br>       ?pageToken:string -><br>       ?showHidden:bool -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendar.CalendarList.html#TYPEt">GapiCalendar.CalendarList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Returns entries on the user's calendar list.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/calendars"</code>).</div>
+<div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">maxResults</code> : Maximum number of entries returned on one result page. Optional.</div>
+<div class="param_info"><code class="code">minAccessRole</code> : The minimum access role for the user in the returned entires. Optional. The default is no restriction.</div>
+<div class="param_info"><code class="code">pageToken</code> : Token specifying which result page to return. Optional.</div>
+<div class="param_info"><code class="code">showHidden</code> : Whether to show hidden entries. Optional. The default is False.</div>
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Returns an entry on the user's calendar list.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/calendars"</code>).</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<pre><span id="VALrefresh"><span class="keyword">val</span> refresh</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Reloads an entry on the user's calendar list.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/calendars"</code>).</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Adds an entry to the user's calendar list.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/calendars"</code>).</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Updates an entry on the user's calendar list.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/calendars"</code>).</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Updates an entry on the user's calendar list. This method supports patch semantics.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/calendars"</code>).</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendar.CalendarListEntry.html#TYPEt">GapiCalendar.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Deletes an entry on the user's calendar list.<br>
+</div>
+<div class="param_info"><code class="code">url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/users/me/calendarList"</code>).</div>
+<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+</body></html>

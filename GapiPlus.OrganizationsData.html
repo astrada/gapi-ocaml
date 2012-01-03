@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiPlus.NameData.html">
+<link rel="next" href="GapiPlus.PlaceLivedData.html">
+<link rel="Up" href="GapiPlus.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiPlus.OrganizationsData</title>
+</head>
+<body>
+<div class="navbar"><a href="GapiPlus.NameData.html">Previous</a>
+&nbsp;<a href="GapiPlus.html">Up</a>
+&nbsp;<a href="GapiPlus.PlaceLivedData.html">Next</a>
+</div>
+<center><h1>Module <a href="type_GapiPlus.OrganizationsData.html">GapiPlus.OrganizationsData</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> OrganizationsData: <code class="code">sig</code> <a href="GapiPlus.OrganizationsData.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>name&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of the organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>department&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The department within the organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>title&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The person's job title or role within the organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>_type&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of organization. Possible values are:  <ul>
+<li><code class="code">"work"</code> - Work. </li>
+<li><code class="code">"school"</code> - School.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>startDate&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The date the person joined this organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>endDate&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The date the person left this organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>location&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The location of this organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A short description of the person's role in this organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>primary&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If <code class="code">true</code>, indicates this organization is the person's primary one (typically interpreted as current one).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+}
+
+
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdepartment"><span class="keyword">val</span> department</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALstartDate"><span class="keyword">val</span> startDate</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALendDate"><span class="keyword">val</span> endDate</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprimary"><span class="keyword">val</span> primary</span> : <code class="type">(<a href="GapiPlus.OrganizationsData.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlus.OrganizationsData.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlus.OrganizationsData.html#TYPEt">t</a> -> GapiJson.json_data_model list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlus.OrganizationsData.html#TYPEt">t</a> -><br>       GapiJson.json_data_model -> <a href="GapiPlus.OrganizationsData.html#TYPEt">t</a></code></pre></body></html>

@@ -1,0 +1,70 @@
+<html><head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiPlus.Activity</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;placeholder&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;published&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;updated&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;actor&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ActorData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verb&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_object&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ObjectData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;annotation&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;crosspostSource&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;provider&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ProviderData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;access&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Acl</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;geocode&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;placeId&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;placeName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;placeholder&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;title&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;published&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;updated&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;url&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;actor&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ActorData</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;verb&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;_object&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ObjectData</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;annotation&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;crosspostSource&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;provider&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ProviderData</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;access&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Acl</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;geocode&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;address&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;radius&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;placeId&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;placeName&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Activity</span>.t<br>
+<span class="keyword">end</span></code></body></html>

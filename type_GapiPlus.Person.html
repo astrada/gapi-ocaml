@@ -1,0 +1,75 @@
+<html><head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiPlus.Person</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;objectType&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;displayName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">NameData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nickname&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tagline&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;birthday&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gender&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;aboutMe&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;currentLocation&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;relationshipStatus&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ImageData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;emails&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">EmailsData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;urls&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">UrlsData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;organizations&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">OrganizationsData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;placesLived&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">PlaceLivedData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;languagesSpoken&nbsp;:&nbsp;string&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hasApp&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;objectType&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;displayName&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;name&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">NameData</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;nickname&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tagline&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;birthday&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;gender&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;aboutMe&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;currentLocation&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;relationshipStatus&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;url&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">ImageData</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;emails&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">EmailsData</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;urls&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">UrlsData</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;organizations&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">OrganizationsData</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;placesLived&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">PlaceLivedData</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;languagesSpoken&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;hasApp&nbsp;:&nbsp;(<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse_languageSpoken&nbsp;:&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiPlus</span>.<span class="constructor">Person</span>.t<br>
+<span class="keyword">end</span></code></body></html>

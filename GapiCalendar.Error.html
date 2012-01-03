@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiCalendar.FreeBusyRequest.html">
+<link rel="next" href="GapiCalendar.FreeBusyGroup.html">
+<link rel="Up" href="GapiCalendar.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
+<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
+<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
+<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
+<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiCalendar.Error</title>
+</head>
+<body>
+<div class="navbar"><a href="GapiCalendar.FreeBusyRequest.html">Previous</a>
+&nbsp;<a href="GapiCalendar.html">Up</a>
+&nbsp;<a href="GapiCalendar.FreeBusyGroup.html">Next</a>
+</div>
+<center><h1>Module <a href="type_GapiCalendar.Error.html">GapiCalendar.Error</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Error: <code class="code">sig</code> <a href="GapiCalendar.Error.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>domain&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Domain, or broad category, of the error.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>reason&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Specific reason for the error. Some of the possible values are:  <ul>
+<li><code class="code">"groupTooBig"</code> - The group of users requested is too large for a single query. </li>
+<li><code class="code">"tooManyCalendarsRequested"</code> - The number of calendars requested is too large for a single query. </li>
+<li><code class="code">"notFound"</code> - The requested resource was not found. </li>
+<li><code class="code">"internalError"</code> - The API service has encountered an internal error.  Additional error types may be added in the future, so clients should gracefully handle additional error statuses not included in this list.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+}
+
+
+<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">(<a href="GapiCalendar.Error.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALreason"><span class="keyword">val</span> reason</span> : <code class="type">(<a href="GapiCalendar.Error.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendar.Error.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendar.Error.html#TYPEt">t</a> -> GapiJson.json_data_model list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendar.Error.html#TYPEt">t</a> -> GapiJson.json_data_model -> <a href="GapiCalendar.Error.html#TYPEt">t</a></code></pre></body></html>
