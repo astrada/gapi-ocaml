@@ -5,6 +5,29 @@ open GapiUrlshortenerV1Schema
 
 let scope = "https://www.googleapis.com/auth/urlshortener"
 
+module Projection =
+struct
+  type t =
+    | Default
+    | ANALYTICS_CLICKS
+    | ANALYTICS_TOP_STRINGS
+    | FULL
+    
+  let to_string = function
+    | Default -> ""
+    | ANALYTICS_CLICKS -> "ANALYTICS_CLICKS"
+    | ANALYTICS_TOP_STRINGS -> "ANALYTICS_TOP_STRINGS"
+    | FULL -> "FULL"
+    
+  let of_string = function
+    | "" -> Default
+    | "ANALYTICS_CLICKS" -> ANALYTICS_CLICKS
+    | "ANALYTICS_TOP_STRINGS" -> ANALYTICS_TOP_STRINGS
+    | "FULL" -> FULL
+    | s -> failwith ("Unexpected value for Projection:" ^ s)
+
+end
+
 module UrlshortenerParameters =
 struct
   type t = {
@@ -14,7 +37,7 @@ struct
     quotaUser : string;
     userIp : string;
     (* urlshortener-specific query parameters *)
-    projection : string;
+    projection : Projection.t;
     shortUrl : string;
     start_token : string;
     
@@ -25,7 +48,7 @@ struct
     prettyPrint = true;
     quotaUser = "";
     userIp = "";
-    projection = "";
+    projection = Projection.Default;
     shortUrl = "";
     start_token = "";
     
@@ -38,7 +61,7 @@ struct
     param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
     param (fun p -> p.quotaUser) Std.identity "quotaUser";
     param (fun p -> p.userIp) Std.identity "userIp";
-    param (fun p -> p.projection) Std.identity "projection";
+    param (fun p -> p.projection) Projection.to_string "projection";
     param (fun p -> p.shortUrl) Std.identity "shortUrl";
     param (fun p -> p.start_token) Std.identity "start-token";
     

@@ -11,6 +11,20 @@
 (** Manage your goo.gl short URLs *)
 val scope : string
 
+module Projection :
+sig
+  type t =
+    | Default
+    | ANALYTICS_CLICKS
+    | ANALYTICS_TOP_STRINGS
+    | FULL
+    
+  val to_string : t -> string
+  
+  val of_string : string -> t
+  
+end
+
 module UrlResource :
 sig
 
@@ -24,7 +38,7 @@ sig
   val list :
     ?base_url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?projection:string ->
+    ?projection:Projection.t ->
     ?start_token:string ->
     GapiConversation.Session.t ->
     GapiUrlshortenerV1Schema.UrlHistory.t * GapiConversation.Session.t
@@ -51,7 +65,7 @@ sig
   val get :
     ?base_url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    ?projection:string ->
+    ?projection:Projection.t ->
     shortUrl:string ->
     GapiConversation.Session.t ->
     GapiUrlshortenerV1Schema.Url.t * GapiConversation.Session.t
