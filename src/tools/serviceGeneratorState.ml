@@ -259,15 +259,6 @@ end
 
 module ComplexType =
 struct
-  let is_reference json_schema =
-    json_schema.JsonSchema._ref <> ""
-
-  let is_complex json_schema =
-    match json_schema.JsonSchema._type with
-        "object"
-      | "array" -> true
-      | _ -> false
-
   type data_t =
       Scalar of ScalarType.t
     | Object of (string * t) list
@@ -384,6 +375,17 @@ struct
         failwith "Unsupported type in ComplexType.get_empty_value"
 
   let rec create json_schema =
+    let is_reference json_schema =
+      json_schema.JsonSchema._ref <> ""
+    in
+
+    let is_complex json_schema =
+      match json_schema.JsonSchema._type with
+          "object"
+        | "array" -> true
+        | _ -> false
+    in
+
     let create_object () =
       match json_schema.JsonSchema.additionalProperties with
           None -> Object (List.map
@@ -446,6 +448,31 @@ struct
       | _ ->
           failwith "Unsupported type in ComplexType.is_required"
 
+  let is_enum complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> scalar.ScalarType.enum != []
+      | _ -> false
+
+  let is_object complex_type =
+    match complex_type.data_type with
+        Object _ -> true
+      | _ -> false
+
+  let get_default complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> ScalarType.get_default scalar
+      | _ -> failwith "Default not supported for complex types"
+
+  let is_scalar complex_type =
+    match complex_type.data_type with
+        Scalar _ -> true
+      | _ -> false
+
+  let get_to_string_function complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> ScalarType.get_to_string_function scalar
+      | _ -> failwith "to_string function not supported for complex types"
+
 end
 
 (* Field description *)
@@ -455,7 +482,11 @@ struct
   type t = {
     original_name : string;
     ocaml_name : string;
+    ocaml_type : string;
     field_type : ComplexType.t;
+    empty_value : string;
+    default : string;
+    to_string_function : string;
   }
 
 	let original_name = {
@@ -466,27 +497,64 @@ struct
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
 	}
+	let ocaml_type = {
+		GapiLens.get = (fun x -> x.ocaml_type);
+		GapiLens.set = (fun v x -> { x with ocaml_type = v })
+	}
 	let field_type = {
 		GapiLens.get = (fun x -> x.field_type);
 		GapiLens.set = (fun v x -> { x with field_type = v })
 	}
+	let empty_value = {
+		GapiLens.get = (fun x -> x.empty_value);
+		GapiLens.set = (fun v x -> { x with empty_value = v })
+	}
+	let default = {
+		GapiLens.get = (fun x -> x.default);
+		GapiLens.set = (fun v x -> { x with default = v })
+	}
+	let to_string_function = {
+		GapiLens.get = (fun x -> x.to_string_function);
+		GapiLens.set = (fun v x -> { x with to_string_function = v })
+	}
 
   let create (original_name, property) =
     let ocaml_name = OCamlName.get_ocaml_name FieldName original_name in
+    let module_name =
+      OCamlName.get_ocaml_name ModuleName original_name in
+    let (ocaml_type, empty_value) =
+      if ComplexType.is_enum property then
+        (module_name ^ ".t",
+         module_name ^ ".Default")
+      else if ComplexType.is_object property then
+        (module_name ^ "Data.t",
+         module_name ^ "Data.empty")
+      else
+        (ComplexType.data_type_to_string property.ComplexType.data_type,
+         ComplexType.get_empty_value property.ComplexType.data_type) in
+    let default =
+      if ComplexType.is_enum property || ComplexType.is_object property then
+        empty_value
+      else if ComplexType.is_scalar property then
+        ComplexType.get_default property
+      else
+        "" in
+    let to_string_function =
+      if ComplexType.is_enum property then
+        module_name ^ ".to_string"
+      else if ComplexType.is_scalar property then
+        ComplexType.get_to_string_function property
+      else
+        ""
+    in
       { original_name;
         ocaml_name;
-        field_type = property
+        ocaml_type;
+        field_type = property;
+        empty_value;
+        default;
+        to_string_function;
       }
-
-  let get_default field =
-    match field.field_type.ComplexType.data_type with
-        ComplexType.Scalar scalar -> ScalarType.get_default scalar
-      | _ -> failwith "Default not supported for complex types"
-
-  let get_to_string_function field =
-    match field.field_type.ComplexType.data_type with
-        ComplexType.Scalar scalar -> ScalarType.get_to_string_function scalar
-      | _ -> failwith "to_string function not supported for complex types"
 
 end
 
@@ -674,7 +742,7 @@ end
 
 (* END Inner schema module description *)
 
-(* Schema and service main module *)
+(* Schema main module *)
 
 module SchemaModule =
 struct
@@ -692,6 +760,7 @@ struct
 		GapiLens.set = (fun v x -> { x with inner_modules = v })
 	}
   let inner_module id = GapiLens.for_assoc id
+
   let get_inner_module_lens id =
     inner_modules |-- inner_module id |-- GapiLens.option_get
 
@@ -702,12 +771,67 @@ struct
 
 end
 
+(* END Schema main module *)
+
+(* Enum module *)
+
+module EnumModule =
+struct
+  type value = {
+    constructor : string;
+    value : string;
+    description : string;
+  }
+  type t = {
+    original_name : string;
+    ocaml_name : string;
+    values : (string * value) list;
+  }
+
+	let original_name = {
+		GapiLens.get = (fun x -> x.original_name);
+		GapiLens.set = (fun v x -> { x with original_name = v })
+	}
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let values = {
+		GapiLens.get = (fun x -> x.values);
+		GapiLens.set = (fun v x -> { x with values = v })
+	}
+
+  let create original_name enums enum_descriptions =
+    let ocaml_name = OCamlName.get_ocaml_name ModuleName original_name in
+    let values =
+      List.map2
+        (fun value description ->
+           let constructor = OCamlName.get_ocaml_name ConstructorName value in
+             (value, { constructor;
+                       value;
+                       description; })
+        )
+        enums
+        enum_descriptions
+    in
+      { original_name;
+        ocaml_name;
+        values;
+      }
+
+end
+
+(* END Enum module *)
+
+(* Service main module *)
+
 module ServiceModule =
 struct
   type t = {
     ocaml_name : string;
     inner_modules : (string * InnerServiceModule.t) list;
     scopes : (string * string) list;
+    enums : (string * EnumModule.t) list;
   }
     
 	let ocaml_name = {
@@ -722,8 +846,13 @@ struct
 		GapiLens.get = (fun x -> x.scopes);
 		GapiLens.set = (fun v x -> { x with scopes = v })
 	}
+	let enums = {
+		GapiLens.get = (fun x -> x.enums);
+		GapiLens.set = (fun v x -> { x with enums = v })
+	}
   let inner_module id = GapiLens.for_assoc id
   let scope id = GapiLens.for_assoc id
+  let enum id = GapiLens.for_assoc id
 
   let get_inner_module_lens id =
     inner_modules |-- inner_module id |-- GapiLens.option_get
@@ -731,15 +860,19 @@ struct
   let get_scope_lens id =
     scopes |-- scope id |-- GapiLens.option_get
 
+  let get_enum_lens id =
+    enums |-- enum id |-- GapiLens.option_get
+
   let create name =
     { ocaml_name = name;
       inner_modules = [];
       scopes = [];
+      enums = [];
     }
 
 end
 
-(* END Schema and service main module *)
+(* END Service main module *)
 
 (* File description *)
 
