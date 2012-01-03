@@ -676,31 +676,11 @@ end
 
 (* Schema and service main module *)
 
-module type MainModule =
-sig
-  type inner_module_t
-  type t = {
-    ocaml_name : string;
-    inner_modules : (string * inner_module_t) list;
-  }
-    
-  val ocaml_name : (t, string) GapiLens.t
-  val inner_modules : (t, (string * inner_module_t) list) GapiLens.t
-  val inner_module :
-    string -> ((string * inner_module_t) list, inner_module_t option) GapiLens.t
-  val get_inner_module_lens :
-    string -> (t, inner_module_t) GapiLens.t
-
-  val create : string -> t
-
-end
-
-module MakeMainModule(T : sig type t end) =
+module SchemaModule =
 struct
-  type inner_module_t = T.t
   type t = {
     ocaml_name : string;
-    inner_modules : (string * inner_module_t) list;
+    inner_modules : (string * InnerSchemaModule.t) list;
   }
     
 	let ocaml_name = {
@@ -722,11 +702,42 @@ struct
 
 end
 
-module SchemaModule =
-  MakeMainModule(struct type t = InnerSchemaModule.t end)
-
 module ServiceModule =
-  MakeMainModule(struct type t = InnerServiceModule.t end)
+struct
+  type t = {
+    ocaml_name : string;
+    inner_modules : (string * InnerServiceModule.t) list;
+    scopes : (string * string) list;
+  }
+    
+	let ocaml_name = {
+		GapiLens.get = (fun x -> x.ocaml_name);
+		GapiLens.set = (fun v x -> { x with ocaml_name = v })
+	}
+	let inner_modules = {
+		GapiLens.get = (fun x -> x.inner_modules);
+		GapiLens.set = (fun v x -> { x with inner_modules = v })
+	}
+	let scopes = {
+		GapiLens.get = (fun x -> x.scopes);
+		GapiLens.set = (fun v x -> { x with scopes = v })
+	}
+  let inner_module id = GapiLens.for_assoc id
+  let scope id = GapiLens.for_assoc id
+
+  let get_inner_module_lens id =
+    inner_modules |-- inner_module id |-- GapiLens.option_get
+
+  let get_scope_lens id =
+    scopes |-- scope id |-- GapiLens.option_get
+
+  let create name =
+    { ocaml_name = name;
+      inner_modules = [];
+      scopes = [];
+    }
+
+end
 
 (* END Schema and service main module *)
 
@@ -923,7 +934,6 @@ struct
     sorted_types : ComplexType.t list;
     referenced_types : StringSet.t;
     parameters_module_name : string;
-    scopes : (string * string) list;
   }
 
   let service = {
@@ -958,12 +968,7 @@ struct
 		GapiLens.get = (fun x -> x.parameters_module_name);
 		GapiLens.set = (fun v x -> { x with parameters_module_name = v })
 	}
-	let scopes = {
-		GapiLens.get = (fun x -> x.scopes);
-		GapiLens.set = (fun v x -> { x with scopes = v })
-	}
   let file file_type = GapiLens.for_hash file_type
-  let scope id = GapiLens.for_assoc id
 
   let get_schema_module_lens =
     schema_module |-- GapiLens.option_get
@@ -974,9 +979,6 @@ struct
   let get_file_lens file_type =
     files |-- file file_type |-- GapiLens.option_get
 
-  let get_scope_lens id =
-    scopes |-- scope id |-- GapiLens.option_get
-
   let create service = {
     service;
     files = Hashtbl.create 4;
@@ -986,7 +988,6 @@ struct
     sorted_types = [];
     referenced_types = StringSet.empty;
     parameters_module_name = "";
-    scopes = [];
   }
                     
   let build_type_table state =

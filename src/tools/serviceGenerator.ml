@@ -549,7 +549,9 @@ let build_service_module =
       let scope_id = "scope" ^ suffix in
       lift_io $
         Format.fprintf formatter "let %s = \"%s\"@\n@\n" scope_id value;
-      State.get_scope_lens scope_id ^=! scope.ScopesData.description;
+      let scope_lens = State.get_service_module
+        |-- ServiceModule.get_scope_lens scope_id in
+      scope_lens ^=! scope.ScopesData.description;
   in
 
   let module FieldSet =
@@ -865,7 +867,8 @@ let generate_service_module_signature formatter service_module =
    |. InnerServiceModule.methods
   in
     perform
-      scopes <-- GapiLens.get_state State.scopes;
+      scopes <-- GapiLens.get_state (State.get_service_module
+                                       |-- ServiceModule.scopes);
       lift_io $
         List.iter
           (fun (id, scope) ->
