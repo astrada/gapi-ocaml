@@ -5,7 +5,7 @@ GapiError
 GapiService
 GapiCalendarService
 GapiPlusV1Model
-GapiPlusService
+GapiPlusV1Service
 GapiTasksV1Model
 GapiTasksV1Service
 GapiDiscoveryV1Model

@@ -2,12 +2,13 @@ open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
 open GapiPlusV1Model
+open GapiPlusV1Service
 
 (* Activities *)
 
 let get_first_activity_id session =
   let (activities, session) =
-    GapiPlusService.ActivitiesResource.list
+    ActivitiesResource.list
       session
   in
     if (List.length activities.ActivityFeed.items > 0) then
@@ -22,7 +23,7 @@ let get_first_activity_id session =
 
 let get_first_comment_id activityId session =
   let (comments, session) =
-    GapiPlusService.CommentsResource.list
+    CommentsResource.list
       ~activityId
       session
   in
@@ -41,7 +42,7 @@ let test_list_activities () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (activities, session) =
-         GapiPlusService.ActivitiesResource.list
+         ActivitiesResource.list
            session
        in
          assert_equal
@@ -53,7 +54,7 @@ let test_get_activity () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (activities, session) =
-         GapiPlusService.ActivitiesResource.list
+         ActivitiesResource.list
            session in
        let (activity_id, _) = get_first_activity_id session in
          match activity_id with
@@ -61,7 +62,7 @@ let test_get_activity () =
                ()
            | Some activityId ->
                let (activity, _) =
-                 GapiPlusService.ActivitiesResource.get
+                 ActivitiesResource.get
                    ~activityId
                    session
                in
@@ -78,7 +79,7 @@ let test_search_activities () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (activities, _) =
-         GapiPlusService.ActivitiesResource.search
+         ActivitiesResource.search
            ~query:"first test post"
            session
        in
@@ -98,7 +99,7 @@ let test_list_comments () =
                ()
            | Some aid ->
                let (comments, _) =
-                 GapiPlusService.CommentsResource.list
+                 CommentsResource.list
                    ~activityId:aid
                    session
                in
@@ -121,7 +122,7 @@ let test_get_comment () =
                        ()
                    | Some commentId ->
                        let (comment, _) =
-                         GapiPlusService.CommentsResource.get
+                         CommentsResource.get
                            ~commentId
                            session
                        in
@@ -144,7 +145,7 @@ let test_list_people_by_activity () =
                ()
            | Some activityId ->
                let (plusoners, _) =
-                 GapiPlusService.PeopleResource.listByActivity
+                 PeopleResource.listByActivity
                    ~activityId
                    ~collection:"plusoners"
                    session
@@ -158,7 +159,7 @@ let test_search_people () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (people, _) =
-         GapiPlusService.PeopleResource.search
+         PeopleResource.search
            ~query:"Larry Page"
            session
        in
@@ -174,7 +175,7 @@ let test_get_person () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (people, session) =
-         GapiPlusService.PeopleResource.search
+         PeopleResource.search
            ~query:"Larry Page"
            session in
        let userId = people
@@ -182,7 +183,7 @@ let test_get_person () =
          |. GapiLens.head
          |. Person.id in
        let (person, _) =
-         GapiPlusService.PeopleResource.get
+         PeopleResource.get
            ~userId
            session
        in
