@@ -18,6 +18,6 @@
 <gapiCalendar.*> : pkg_json-wheel, pkg_extlib
 <gapiPlus.*> : pkg_json-wheel, pkg_extlib
 <gapiTasks.*> : pkg_json-wheel, pkg_extlib
-<gapiDiscovery.*> : pkg_json-wheel, pkg_extlib
 <gapi*Service.*> : pkg_json-wheel, pkg_extlib
+<gapi*Model.*> : pkg_json-wheel, pkg_extlib
 

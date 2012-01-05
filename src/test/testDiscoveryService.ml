@@ -1,5 +1,6 @@
 open OUnit
 open GapiUtils.Infix
+open GapiDiscoveryV1Model
 
 let test_list_apis () =
   TestHelper.test_request
@@ -12,10 +13,10 @@ let test_list_apis () =
        in
          assert_equal
            "discovery#directoryList"
-           apis.GapiDiscovery.DirectoryList.kind;
+           apis.DirectoryList.kind;
          assert_bool
            "There should be at least 1 discovery api"
-           (List.length apis.GapiDiscovery.DirectoryList.items >= 1))
+           (List.length apis.DirectoryList.items >= 1))
 
 let test_get_rest () =
   TestHelper.test_request
@@ -29,16 +30,16 @@ let test_get_rest () =
        in
          assert_equal
            "discovery#restDescription"
-           api.GapiDiscovery.RestDescription.kind;
+           api.RestDescription.kind;
          assert_bool
            "There should be at least 1 parameter"
-           (List.length api.GapiDiscovery.RestDescription.parameters >= 1);
+           (List.length api.RestDescription.parameters >= 1);
          assert_bool
            "There should be at least 1 schema"
-           (List.length api.GapiDiscovery.RestDescription.schemas >= 1);
+           (List.length api.RestDescription.schemas >= 1);
          assert_bool
            "There should be at least 1 resource"
-           (List.length api.GapiDiscovery.RestDescription.resources >= 1))
+           (List.length api.RestDescription.resources >= 1))
 
 let suite = "Discovery service test" >:::
   ["test_list_apis" >:: test_list_apis;

@@ -8,6 +8,6 @@ GapiPlus
 GapiPlusService
 GapiTasks
 GapiTasksService
-GapiDiscovery
+GapiDiscoveryV1Model
 GapiDiscoveryService
 
