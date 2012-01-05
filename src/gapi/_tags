@@ -16,7 +16,6 @@
 <gapiDate.*> : pkg_netstring
 <gapiJson.*> : pkg_json-wheel, pkg_extlib
 <gapiCalendar.*> : pkg_json-wheel, pkg_extlib
-<gapiPlus.*> : pkg_json-wheel, pkg_extlib
 <gapi*Service.*> : pkg_json-wheel, pkg_extlib
 <gapi*Model.*> : pkg_json-wheel, pkg_extlib
 

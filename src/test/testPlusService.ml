@@ -1,6 +1,7 @@
 open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
+open GapiPlusV1Model
 
 (* Activities *)
 
@@ -9,11 +10,11 @@ let get_first_activity_id session =
     GapiPlusService.ActivitiesResource.list
       session
   in
-    if (List.length activities.GapiPlus.ActivityFeed.items > 0) then
+    if (List.length activities.ActivityFeed.items > 0) then
       let activity_id = activities
-        |. GapiPlus.ActivityFeed.items
+        |. ActivityFeed.items
         |. GapiLens.head
-        |. GapiPlus.Activity.id
+        |. Activity.id
       in
         (Some activity_id, session)
     else
@@ -25,11 +26,11 @@ let get_first_comment_id activityId session =
       ~activityId
       session
   in
-    if (List.length comments.GapiPlus.CommentFeed.items > 0) then
+    if (List.length comments.CommentFeed.items > 0) then
       let comment_id = comments
-        |. GapiPlus.CommentFeed.items
+        |. CommentFeed.items
         |. GapiLens.head
-        |. GapiPlus.Comment.id
+        |. Comment.id
       in
         (Some comment_id, session)
     else
@@ -45,7 +46,7 @@ let test_list_activities () =
        in
          assert_equal
            "plus#activityFeed"
-           activities.GapiPlus.ActivityFeed.kind)
+           activities.ActivityFeed.kind)
 
 let test_get_activity () =
   TestHelper.test_request
@@ -66,10 +67,10 @@ let test_get_activity () =
                in
                  assert_equal
                    "plus#activity"
-                   activity.GapiPlus.Activity.kind;
+                   activity.Activity.kind;
                  assert_equal
                    activityId
-                   activity.GapiPlus.Activity.id)
+                   activity.Activity.id)
            
 
 let test_search_activities () =
@@ -83,7 +84,7 @@ let test_search_activities () =
        in
          assert_equal
            "plus#activityFeed"
-           activities.GapiPlus.ActivityFeed.kind)
+           activities.ActivityFeed.kind)
 
 (* Comments *)
 
@@ -103,7 +104,7 @@ let test_list_comments () =
                in
                  assert_equal
                    "plus#commentFeed"
-                   comments.GapiPlus.CommentFeed.kind)
+                   comments.CommentFeed.kind)
 
 let test_get_comment () =
   TestHelper.test_request
@@ -126,10 +127,10 @@ let test_get_comment () =
                        in
                          assert_equal
                            "plus#comment"
-                           comment.GapiPlus.Comment.kind;
+                           comment.Comment.kind;
                          assert_equal
                            commentId
-                           comment.GapiPlus.Comment.id)
+                           comment.Comment.id)
 
 (* People *)
 
@@ -150,7 +151,7 @@ let test_list_people_by_activity () =
                in
                  assert_equal
                    "plus#peopleFeed"
-                   plusoners.GapiPlus.PeopleFeed.kind)
+                   plusoners.PeopleFeed.kind)
 
 let test_search_people () =
   TestHelper.test_request
@@ -163,10 +164,10 @@ let test_search_people () =
        in
          assert_equal
            "plus#peopleFeed"
-           people.GapiPlus.PeopleFeed.kind;
+           people.PeopleFeed.kind;
          assert_bool
            "There should be at least 1 person matching \"Larry Page\""
-           (List.length people.GapiPlus.PeopleFeed.items >= 1))
+           (List.length people.PeopleFeed.items >= 1))
 
 let test_get_person () =
   TestHelper.test_request
@@ -177,9 +178,9 @@ let test_get_person () =
            ~query:"Larry Page"
            session in
        let userId = people
-         |. GapiPlus.PeopleFeed.items
+         |. PeopleFeed.items
          |. GapiLens.head
-         |. GapiPlus.Person.id in
+         |. Person.id in
        let (person, _) =
          GapiPlusService.PeopleResource.get
            ~userId
@@ -187,10 +188,10 @@ let test_get_person () =
        in
          assert_equal
            "plus#person"
-           person.GapiPlus.Person.kind;
+           person.Person.kind;
          assert_equal
            userId
-           person.GapiPlus.Person.id)
+           person.Person.id)
 
 let suite = "Google+ services test" >:::
   ["test_list_activities" >:: test_list_activities;
