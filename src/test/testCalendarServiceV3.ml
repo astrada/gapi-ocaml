@@ -2,6 +2,7 @@ open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
 open GapiCalendarV3Model
+open GapiCalendarV3Service
 
 (* We should add a delay to let Google persist the new entry, after a write
  * operation, otherwise DELETE will return a 503 HTTP error (Service
@@ -26,7 +27,7 @@ let test_list_acl () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (acl, session) =
-         GapiCalendarService.AclResource.list
+         AclResource.list
            session
        in
          assert_equal
@@ -44,11 +45,11 @@ let test_insert_acl () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiCalendarService.AclResource.insert
+         AclResource.insert
            acl_test_resource
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.AclResource.delete
+         ignore (AclResource.delete
                    new_entry
                    session);
          TestHelper.assert_not_empty
@@ -60,15 +61,15 @@ let test_get_acl () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.AclResource.insert
+         AclResource.insert
            acl_test_resource
            session in
        let (entry', session) =
-         GapiCalendarService.AclResource.get
+         AclResource.get
            ~ruleId:entry.AclRule.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.AclResource.delete
+         ignore (AclResource.delete
                    entry
                    session);
          assert_equal
@@ -80,17 +81,17 @@ let test_update_acl () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.AclResource.insert
+         AclResource.insert
            acl_test_resource
            session in
        let entry = { entry with
                          AclRule.role = "freeBusyReader" } in
        let (entry, session) =
-         GapiCalendarService.AclResource.update
+         AclResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.AclResource.delete
+         ignore (AclResource.delete
                    entry
                    session);
          assert_equal
@@ -102,19 +103,19 @@ let test_delete_acl () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.AclResource.insert
+         AclResource.insert
            acl_test_resource
            session in
        let (acl, session) =
-         GapiCalendarService.AclResource.list
+         AclResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiCalendarService.AclResource.delete
+         AclResource.delete
            entry
            session in
        let (acl', _) =
-         GapiCalendarService.AclResource.list
+         AclResource.list
            session
        in
          TestHelper.assert_exists
@@ -135,7 +136,7 @@ let test_get_colors () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (colors, session) =
-         GapiCalendarService.ColorsResource.get
+         ColorsResource.get
            ~url:"https://www.googleapis.com/calendar/v3/colors?key=AIzaSyCxmj--5AFh3tMpf1zEkkdodiZgcYUX4uc"
            session
        in
@@ -153,7 +154,7 @@ let test_settings_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (settings, _) =
-         GapiCalendarService.SettingsResource.list
+         SettingsResource.list
            session
        in
          assert_equal
@@ -168,7 +169,7 @@ let test_settings_get () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (setting, _) =
-         GapiCalendarService.SettingsResource.get
+         SettingsResource.get
            ~setting:"country"
            session
        in
@@ -193,11 +194,11 @@ let test_insert_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    new_entry
                    session);
          TestHelper.assert_not_empty
@@ -209,15 +210,15 @@ let test_get_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let (entry', session) =
-         GapiCalendarService.CalendarsResource.get
+         CalendarsResource.get
            ~calendarId:entry.Calendar.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    entry'
                    session);
          assert_equal
@@ -229,7 +230,7 @@ let test_get_calendar_partial_response () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let parameters =
@@ -237,12 +238,12 @@ let test_get_calendar_partial_response () =
                GapiService.StandardParameters.fields = "kind,id,summary"
          } in
        let (entry', session) =
-         GapiCalendarService.CalendarsResource.get
+         CalendarsResource.get
            ~parameters
            ~calendarId:entry.Calendar.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    entry'
                    session);
          assert_equal
@@ -260,15 +261,15 @@ let test_refresh_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let (entry', session) =
-         GapiCalendarService.CalendarsResource.refresh
+         CalendarsResource.refresh
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    entry'
                    session);
          assert_equal
@@ -280,18 +281,18 @@ let test_update_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let entry = { entry with
                          Calendar.description =
                            "Updated description" } in
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.update
+         CalendarsResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    entry
                    session);
          assert_equal
@@ -303,7 +304,7 @@ let test_patch_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let entry = {
@@ -312,11 +313,11 @@ let test_patch_calendar () =
              description = "Updated description"
        } in
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.patch
+         CalendarsResource.patch
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    entry
                    session);
          assert_equal
@@ -331,19 +332,19 @@ let test_delete_calendar () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let (calendars, session) =
-         GapiCalendarService.CalendarListResource.list
+         CalendarListResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiCalendarService.CalendarsResource.delete
+         CalendarsResource.delete
            entry
            session in
        let (calendars', _) =
-         GapiCalendarService.CalendarListResource.list
+         CalendarListResource.list
            session
        in
          TestHelper.assert_exists
@@ -363,7 +364,7 @@ let test_clear_primary_calendar () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       ignore (GapiCalendarService.CalendarsResource.clear
+       ignore (CalendarsResource.clear
                  session))
 
 (* EventsResource *)
@@ -373,7 +374,7 @@ let test_event_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (events, session) =
-         GapiCalendarService.EventsResource.list
+         EventsResource.list
            session
        in
          assert_equal
@@ -428,11 +429,11 @@ let test_insert_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    event
                    session);
          TestHelper.assert_not_empty
@@ -444,15 +445,15 @@ let test_get_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let (entry', session) =
-         GapiCalendarService.EventsResource.get
+         EventsResource.get
            ~eventId:entry.Event.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    entry'
                    session);
          assert_equal
@@ -464,15 +465,15 @@ let test_refresh_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let (entry', session) =
-         GapiCalendarService.EventsResource.refresh
+         EventsResource.refresh
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    entry'
                    session);
          assert_equal
@@ -484,18 +485,18 @@ let test_update_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let entry = { entry with
                          Event.description =
                            "Updated description" } in
        let (entry, session) =
-         GapiCalendarService.EventsResource.update
+         EventsResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    entry
                    session);
          assert_equal
@@ -507,7 +508,7 @@ let test_patch_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let entry = {
@@ -516,11 +517,11 @@ let test_patch_event () =
              description = "Updated description"
        } in
        let (entry, session) =
-         GapiCalendarService.EventsResource.patch
+         EventsResource.patch
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    entry
                    session);
          assert_equal
@@ -535,20 +536,20 @@ let test_delete_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let _ = delay () in
        let (events, session) =
-         GapiCalendarService.EventsResource.list
+         EventsResource.list
            ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
            session in
        let ((), session) =
-         GapiCalendarService.EventsResource.delete
+         EventsResource.delete
            entry
            session in
        let (events', _) =
-         GapiCalendarService.EventsResource.list
+         EventsResource.list
            ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
            session
        in
@@ -568,11 +569,11 @@ let test_quick_add_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.EventsResource.quickAdd
+         EventsResource.quickAdd
            ~text:"Appointment at Somewhere on June 3rd 10am-10:25am"
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    event
                    session);
          TestHelper.assert_not_empty
@@ -587,11 +588,11 @@ let test_import_event () =
          |> Event.iCalUID ^=
            GapiDate.to_string (GapiDate.now ()) ^ "imported_event" in
        let (event, session) =
-         GapiCalendarService.EventsResource.import
+         EventsResource.import
            event
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    event
                    session);
          TestHelper.assert_not_empty
@@ -603,25 +604,25 @@ let test_move_event () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let (calendar, session) =
-         GapiCalendarService.CalendarsResource.insert
+         CalendarsResource.insert
            new_calendar
            session in
        let _ = delay () in
        let (event, session) =
-         GapiCalendarService.EventsResource.move
+         EventsResource.move
            ~eventId:event.Event.id
            ~destination:calendar.Calendar.id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    ~calendarId:calendar.Calendar.id
                    event
                    session);
-         ignore (GapiCalendarService.CalendarsResource.delete
+         ignore (CalendarsResource.delete
                    calendar
                    session);
          TestHelper.assert_not_empty
@@ -633,16 +634,16 @@ let test_recurring_event_instances () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_recurring_event
            session in
        let _ = delay () in
        let (events, session) =
-         GapiCalendarService.EventsResource.instances
+         EventsResource.instances
            ~eventId:event.Event.id
            session
        in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    event
                    session);
          assert_equal
@@ -657,12 +658,12 @@ let test_recurring_event_instance_reset () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (event, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_recurring_event
            session in
        let _ = delay () in
        let (events, session) =
-         GapiCalendarService.EventsResource.instances
+         EventsResource.instances
            ~eventId:event.Event.id
            session in
        let second_instance = events
@@ -672,15 +673,15 @@ let test_recurring_event_instance_reset () =
        let canceled_instance = second_instance
          |> Event.status ^= "cancelled" in
        let (updated_instance, session) =
-         GapiCalendarService.EventsResource.update
+         EventsResource.update
            canceled_instance
            session in
        let (restored_instance, session) =
-         GapiCalendarService.EventsResource.reset
+         EventsResource.reset
            ~eventId:updated_instance.Event.id
            session
        in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    event
                    session);
          assert_equal
@@ -705,7 +706,7 @@ let test_list_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (calendars, session) =
-         GapiCalendarService.CalendarListResource.list
+         CalendarListResource.list
            session
        in
          assert_equal
@@ -727,7 +728,7 @@ let test_list_calendar_list_with_max_results () =
              GapiService.StandardParameters.prettyPrint = false
        } in
        let (calendars, session) =
-         GapiCalendarService.CalendarListResource.list
+         CalendarListResource.list
            ~parameters
            ~maxResults:1
            session
@@ -741,11 +742,11 @@ let test_insert_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiCalendarService.CalendarListResource.insert
+         CalendarListResource.insert
            australian_calendar
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarListResource.delete
+         ignore (CalendarListResource.delete
                    new_entry
                    session);
          assert_equal
@@ -757,15 +758,15 @@ let test_get_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.insert
+         CalendarListResource.insert
            australian_calendar
            session in
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.get
+         CalendarListResource.get
            ~calendarId:australian_calendar_id
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarListResource.delete
+         ignore (CalendarListResource.delete
                    entry
                    session);
          assert_equal
@@ -777,15 +778,15 @@ let test_refresh_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.insert
+         CalendarListResource.insert
            australian_calendar
            session in
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.refresh
+         CalendarListResource.refresh
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarListResource.delete
+         ignore (CalendarListResource.delete
                    entry
                    session);
          assert_equal
@@ -797,17 +798,17 @@ let test_update_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.insert
+         CalendarListResource.insert
            australian_calendar
            session in
        let entry = { entry with
                          CalendarListEntry.hidden = true } in
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.update
+         CalendarListResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarListResource.delete
+         ignore (CalendarListResource.delete
                    entry
                    session);
          assert_equal
@@ -819,7 +820,7 @@ let test_patch_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.insert
+         CalendarListResource.insert
            australian_calendar
            session in
        let entry = {
@@ -828,11 +829,11 @@ let test_patch_calendar_list () =
              hidden = true
        } in
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.patch
+         CalendarListResource.patch
            entry
            session in
        let _ = delay () in
-         ignore (GapiCalendarService.CalendarListResource.delete
+         ignore (CalendarListResource.delete
                    entry
                    session);
          assert_equal
@@ -847,19 +848,19 @@ let test_delete_calendar_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiCalendarService.CalendarListResource.insert
+         CalendarListResource.insert
            australian_calendar
            session in
        let (calendars, session) =
-         GapiCalendarService.CalendarListResource.list
+         CalendarListResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiCalendarService.CalendarListResource.delete
+         CalendarListResource.delete
            entry
            session in
        let (calendars', _) =
-         GapiCalendarService.CalendarListResource.list
+         CalendarListResource.list
            session
        in
          TestHelper.assert_exists
@@ -880,11 +881,11 @@ let test_free_busy_query () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (calendar, session) =
-         GapiCalendarService.CalendarsResource.get
+         CalendarsResource.get
            ~calendarId:"primary"
            session in
        let (event, session) =
-         GapiCalendarService.EventsResource.insert
+         EventsResource.insert
            new_event
            session in
        let _ = delay () in
@@ -896,11 +897,11 @@ let test_free_busy_query () =
                items = [ calendar.Calendar.id ]
          } in
        let (freeBusy, _) =
-         GapiCalendarService.FreebusyResource.query
+         FreebusyResource.query
            params
            session
        in
-         ignore (GapiCalendarService.EventsResource.delete
+         ignore (EventsResource.delete
                    event
                    session);
          assert_equal

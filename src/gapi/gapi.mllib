@@ -17,7 +17,7 @@ GapiDate
 GapiJson
 GapiLens
 GapiCalendarV3Model
-GapiCalendarService
+GapiCalendarV3Service
 GapiPlusV1Model
 GapiPlusV1Service
 GapiTasksV1Model
