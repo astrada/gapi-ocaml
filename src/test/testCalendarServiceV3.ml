@@ -1,6 +1,7 @@
 open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
+open GapiCalendarV3Model
 
 (* We should add a delay to let Google persist the new entry, after a write
  * operation, otherwise DELETE will return a 503 HTTP error (Service
@@ -11,10 +12,10 @@ let delay () =
 (* ACL *)
 
 let acl_test_resource = {
-  GapiCalendar.AclRule.empty with
-      GapiCalendar.AclRule.kind = "calendar#acl";
+  AclRule.empty with
+      AclRule.kind = "calendar#acl";
       scope = {
-        GapiCalendar.ScopeData._type = "user";
+        ScopeData._type = "user";
         value = "test@example.com"
       };
       role = "reader"
@@ -30,10 +31,10 @@ let test_list_acl () =
        in
          assert_equal
            "calendar#acl"
-           acl.GapiCalendar.Acl.kind;
+           acl.Acl.kind;
          assert_bool
            "There should be at least 1 ACL"
-           (List.length acl.GapiCalendar.Acl.items >= 1);
+           (List.length acl.Acl.items >= 1);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
@@ -52,7 +53,7 @@ let test_insert_acl () =
                    session);
          TestHelper.assert_not_empty
            "ACL id should not be empty"
-           new_entry.GapiCalendar.AclRule.id)
+           new_entry.AclRule.id)
 
 let test_get_acl () =
   TestHelper.test_request
@@ -64,15 +65,15 @@ let test_get_acl () =
            session in
        let (entry', session) =
          GapiCalendarService.AclResource.get
-           ~ruleId:entry.GapiCalendar.AclRule.id
+           ~ruleId:entry.AclRule.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.AclResource.delete
                    entry
                    session);
          assert_equal
-           entry.GapiCalendar.AclRule.id
-           entry'.GapiCalendar.AclRule.id)
+           entry.AclRule.id
+           entry'.AclRule.id)
 
 let test_update_acl () =
   TestHelper.test_request
@@ -83,7 +84,7 @@ let test_update_acl () =
            acl_test_resource
            session in
        let entry = { entry with
-                         GapiCalendar.AclRule.role = "freeBusyReader" } in
+                         AclRule.role = "freeBusyReader" } in
        let (entry, session) =
          GapiCalendarService.AclResource.update
            entry
@@ -94,7 +95,7 @@ let test_update_acl () =
                    session);
          assert_equal
            "freeBusyReader"
-           entry.GapiCalendar.AclRule.role)
+           entry.AclRule.role)
 
 let test_delete_acl () =
   TestHelper.test_request
@@ -119,13 +120,13 @@ let test_delete_acl () =
          TestHelper.assert_exists
            "acl should contain new acl"
            (fun e ->
-              e.GapiCalendar.AclRule.id = entry.GapiCalendar.AclRule.id)
-           acl.GapiCalendar.Acl.items;
+              e.AclRule.id = entry.AclRule.id)
+           acl.Acl.items;
          TestHelper.assert_not_exists
            "acl' should not contain new acl"
            (fun e ->
-              e.GapiCalendar.AclRule.id = entry.GapiCalendar.AclRule.id)
-           acl'.GapiCalendar.Acl.items)
+              e.AclRule.id = entry.AclRule.id)
+           acl'.Acl.items)
 
 (* ColorsResource *)
 
@@ -140,10 +141,10 @@ let test_get_colors () =
        in
          assert_equal
            "calendar#colors"
-           colors.GapiCalendar.Colors.kind;
+           colors.Colors.kind;
          assert_bool
            "There should be at least 1 calendar color"
-           (List.length colors.GapiCalendar.Colors.calendar >= 1))
+           (List.length colors.Colors.calendar >= 1))
 
 (* SettingsResource *)
 
@@ -157,10 +158,10 @@ let test_settings_list () =
        in
          assert_equal
            "calendar#settings"
-           settings.GapiCalendar.Settings.kind;
+           settings.Settings.kind;
          assert_bool
            "There should be at least 1 setting"
-           (List.length settings.GapiCalendar.Settings.items >= 1))
+           (List.length settings.Settings.items >= 1))
 
 let test_settings_get () =
   TestHelper.test_request
@@ -173,16 +174,16 @@ let test_settings_get () =
        in
          assert_equal
            "calendar#setting"
-           setting.GapiCalendar.Setting.kind;
+           setting.Setting.kind;
          TestHelper.assert_not_empty
            "country setting should not be empty"
-           setting.GapiCalendar.Setting.value)
+           setting.Setting.value)
 
 (* CalendarsResource *)
 
 let new_calendar =
-  { GapiCalendar.Calendar.empty with
-        GapiCalendar.Calendar.kind = "calendar#calendar";
+  { Calendar.empty with
+        Calendar.kind = "calendar#calendar";
         summary = "New test calendar";
         description = "Description of new test calendar"
   }
@@ -201,7 +202,7 @@ let test_insert_calendar () =
                    session);
          TestHelper.assert_not_empty
            "New calendar id should not be empty"
-           new_entry.GapiCalendar.Calendar.id)
+           new_entry.Calendar.id)
 
 let test_get_calendar () =
   TestHelper.test_request
@@ -213,15 +214,15 @@ let test_get_calendar () =
            session in
        let (entry', session) =
          GapiCalendarService.CalendarsResource.get
-           ~calendarId:entry.GapiCalendar.Calendar.id
+           ~calendarId:entry.Calendar.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.CalendarsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.Calendar.id
-           entry'.GapiCalendar.Calendar.id)
+           entry.Calendar.id
+           entry'.Calendar.id)
 
 let test_get_calendar_partial_response () =
   TestHelper.test_request
@@ -238,21 +239,21 @@ let test_get_calendar_partial_response () =
        let (entry', session) =
          GapiCalendarService.CalendarsResource.get
            ~parameters
-           ~calendarId:entry.GapiCalendar.Calendar.id
+           ~calendarId:entry.Calendar.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.CalendarsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.Calendar.id
-           entry'.GapiCalendar.Calendar.id;
+           entry.Calendar.id
+           entry'.Calendar.id;
          assert_equal
-           entry.GapiCalendar.Calendar.summary
-           entry'.GapiCalendar.Calendar.summary;
+           entry.Calendar.summary
+           entry'.Calendar.summary;
          assert_equal
            ""
-           entry'.GapiCalendar.Calendar.description)
+           entry'.Calendar.description)
 
 let test_refresh_calendar () =
   TestHelper.test_request
@@ -271,8 +272,8 @@ let test_refresh_calendar () =
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.Calendar.id
-           entry'.GapiCalendar.Calendar.id)
+           entry.Calendar.id
+           entry'.Calendar.id)
 
 let test_update_calendar () =
   TestHelper.test_request
@@ -283,7 +284,7 @@ let test_update_calendar () =
            new_calendar
            session in
        let entry = { entry with
-                         GapiCalendar.Calendar.description =
+                         Calendar.description =
                            "Updated description" } in
        let (entry, session) =
          GapiCalendarService.CalendarsResource.update
@@ -295,7 +296,7 @@ let test_update_calendar () =
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.Calendar.description)
+           entry.Calendar.description)
 
 let test_patch_calendar () =
   TestHelper.test_request
@@ -306,8 +307,8 @@ let test_patch_calendar () =
            new_calendar
            session in
        let entry = {
-         GapiCalendar.Calendar.empty with
-             GapiCalendar.Calendar.id = entry.GapiCalendar.Calendar.id;
+         Calendar.empty with
+             Calendar.id = entry.Calendar.id;
              description = "Updated description"
        } in
        let (entry, session) =
@@ -320,10 +321,10 @@ let test_patch_calendar () =
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.Calendar.description;
+           entry.Calendar.description;
          assert_equal
            "calendar#calendar"
-           entry.GapiCalendar.Calendar.kind)
+           entry.Calendar.kind)
 
 let test_delete_calendar () =
   TestHelper.test_request
@@ -348,15 +349,15 @@ let test_delete_calendar () =
          TestHelper.assert_exists
            "calendars should contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListEntry.id =
-                entry.GapiCalendar.Calendar.id)
-           calendars.GapiCalendar.CalendarList.items;
+              e.CalendarListEntry.id =
+                entry.Calendar.id)
+           calendars.CalendarList.items;
          TestHelper.assert_not_exists
            "calendars' should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListEntry.id =
-                entry.GapiCalendar.Calendar.id)
-           calendars'.GapiCalendar.CalendarList.items)
+              e.CalendarListEntry.id =
+                entry.Calendar.id)
+           calendars'.CalendarList.items)
 
 let test_clear_primary_calendar () =
   TestHelper.test_request
@@ -377,44 +378,44 @@ let test_event_list () =
        in
          assert_equal
            "calendar#events"
-           events.GapiCalendar.Events.kind;
+           events.Events.kind;
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
 
 let new_event =
-  { GapiCalendar.Event.empty with
-        GapiCalendar.Event.kind = "calendar#event";
+  { Event.empty with
+        Event.kind = "calendar#event";
         summary = "New test event";
         description = "Description of new test event";
         start =
-          { GapiCalendar.EventDateTime.empty with
-                GapiCalendar.EventDateTime.dateTime =
+          { EventDateTime.empty with
+                EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-19T09:00:00Z";
                 timeZone = "UTC"
           };
         _end =
-          { GapiCalendar.EventDateTime.empty with
-                GapiCalendar.EventDateTime.dateTime =
+          { EventDateTime.empty with
+                EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-19T13:00:00Z";
                 timeZone = "UTC"
           }
   }
 
 let new_recurring_event =
-  { GapiCalendar.Event.empty with
-        GapiCalendar.Event.kind = "calendar#event";
+  { Event.empty with
+        Event.kind = "calendar#event";
         summary = "New recurring event";
         description = "Description of new recurring event";
         start =
-          { GapiCalendar.EventDateTime.empty with
-                GapiCalendar.EventDateTime.dateTime =
+          { EventDateTime.empty with
+                EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T10:00:00Z";
                 timeZone = "UTC"
           };
         _end =
-          { GapiCalendar.EventDateTime.empty with
-                GapiCalendar.EventDateTime.dateTime =
+          { EventDateTime.empty with
+                EventDateTime.dateTime =
                   GapiDate.of_string "2011-12-03T15:00:00Z";
                 timeZone = "UTC"
           };
@@ -436,7 +437,7 @@ let test_insert_event () =
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.Event.id)
+           event.Event.id)
 
 let test_get_event () =
   TestHelper.test_request
@@ -448,15 +449,15 @@ let test_get_event () =
            session in
        let (entry', session) =
          GapiCalendarService.EventsResource.get
-           ~eventId:entry.GapiCalendar.Event.id
+           ~eventId:entry.Event.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.EventsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.Event.id
-           entry'.GapiCalendar.Event.id)
+           entry.Event.id
+           entry'.Event.id)
 
 let test_refresh_event () =
   TestHelper.test_request
@@ -475,8 +476,8 @@ let test_refresh_event () =
                    entry'
                    session);
          assert_equal
-           entry.GapiCalendar.Event.id
-           entry'.GapiCalendar.Event.id)
+           entry.Event.id
+           entry'.Event.id)
 
 let test_update_event () =
   TestHelper.test_request
@@ -487,7 +488,7 @@ let test_update_event () =
            new_event
            session in
        let entry = { entry with
-                         GapiCalendar.Event.description =
+                         Event.description =
                            "Updated description" } in
        let (entry, session) =
          GapiCalendarService.EventsResource.update
@@ -499,7 +500,7 @@ let test_update_event () =
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.Event.description)
+           entry.Event.description)
 
 let test_patch_event () =
   TestHelper.test_request
@@ -510,8 +511,8 @@ let test_patch_event () =
            new_event
            session in
        let entry = {
-         GapiCalendar.Event.empty with
-             GapiCalendar.Event.id = entry.GapiCalendar.Event.id;
+         Event.empty with
+             Event.id = entry.Event.id;
              description = "Updated description"
        } in
        let (entry, session) =
@@ -524,10 +525,10 @@ let test_patch_event () =
                    session);
          assert_equal
            "Updated description"
-           entry.GapiCalendar.Event.description;
+           entry.Event.description;
          assert_equal
            "calendar#event"
-           entry.GapiCalendar.Event.kind)
+           entry.Event.kind)
 
 let test_delete_event () =
   TestHelper.test_request
@@ -554,13 +555,13 @@ let test_delete_event () =
          TestHelper.assert_exists
            "events list should contain new event"
            (fun e ->
-              e.GapiCalendar.Event.id = entry.GapiCalendar.Event.id)
-           events.GapiCalendar.Events.items;
+              e.Event.id = entry.Event.id)
+           events.Events.items;
          TestHelper.assert_not_exists
            "events' list should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.Event.id = entry.GapiCalendar.Event.id)
-           events'.GapiCalendar.Events.items)
+              e.Event.id = entry.Event.id)
+           events'.Events.items)
 
 let test_quick_add_event () =
   TestHelper.test_request
@@ -576,14 +577,14 @@ let test_quick_add_event () =
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.Event.id)
+           event.Event.id)
 
 let test_import_event () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let event = new_event
-         |> GapiCalendar.Event.iCalUID ^=
+         |> Event.iCalUID ^=
            GapiDate.to_string (GapiDate.now ()) ^ "imported_event" in
        let (event, session) =
          GapiCalendarService.EventsResource.import
@@ -595,7 +596,7 @@ let test_import_event () =
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.Event.id)
+           event.Event.id)
 
 let test_move_event () =
   TestHelper.test_request
@@ -612,12 +613,12 @@ let test_move_event () =
        let _ = delay () in
        let (event, session) =
          GapiCalendarService.EventsResource.move
-           ~eventId:event.GapiCalendar.Event.id
-           ~destination:calendar.GapiCalendar.Calendar.id
+           ~eventId:event.Event.id
+           ~destination:calendar.Calendar.id
            session in
        let _ = delay () in
          ignore (GapiCalendarService.EventsResource.delete
-                   ~calendarId:calendar.GapiCalendar.Calendar.id
+                   ~calendarId:calendar.Calendar.id
                    event
                    session);
          ignore (GapiCalendarService.CalendarsResource.delete
@@ -625,7 +626,7 @@ let test_move_event () =
                    session);
          TestHelper.assert_not_empty
            "New event id should not be empty"
-           event.GapiCalendar.Event.id)
+           event.Event.id)
 
 let test_recurring_event_instances () =
   TestHelper.test_request
@@ -638,7 +639,7 @@ let test_recurring_event_instances () =
        let _ = delay () in
        let (events, session) =
          GapiCalendarService.EventsResource.instances
-           ~eventId:event.GapiCalendar.Event.id
+           ~eventId:event.Event.id
            session
        in
          ignore (GapiCalendarService.EventsResource.delete
@@ -646,10 +647,10 @@ let test_recurring_event_instances () =
                    session);
          assert_equal
            "calendar#events"
-           events.GapiCalendar.Events.kind;
+           events.Events.kind;
          assert_equal
            3
-           (List.length events.GapiCalendar.Events.items))
+           (List.length events.Events.items))
 
 let test_recurring_event_instance_reset () =
   TestHelper.test_request
@@ -662,21 +663,21 @@ let test_recurring_event_instance_reset () =
        let _ = delay () in
        let (events, session) =
          GapiCalendarService.EventsResource.instances
-           ~eventId:event.GapiCalendar.Event.id
+           ~eventId:event.Event.id
            session in
        let second_instance = events
-         |. GapiCalendar.Events.items
+         |. Events.items
          |. GapiLens.tail
          |. GapiLens.head in
        let canceled_instance = second_instance
-         |> GapiCalendar.Event.status ^= "cancelled" in
+         |> Event.status ^= "cancelled" in
        let (updated_instance, session) =
          GapiCalendarService.EventsResource.update
            canceled_instance
            session in
        let (restored_instance, session) =
          GapiCalendarService.EventsResource.reset
-           ~eventId:updated_instance.GapiCalendar.Event.id
+           ~eventId:updated_instance.Event.id
            session
        in
          ignore (GapiCalendarService.EventsResource.delete
@@ -684,10 +685,10 @@ let test_recurring_event_instance_reset () =
                    session);
          assert_equal
            "cancelled"
-           updated_instance.GapiCalendar.Event.status;
+           updated_instance.Event.status;
          assert_equal
            "confirmed"
-           restored_instance.GapiCalendar.Event.status)
+           restored_instance.Event.status)
 
 (* Calendar List *)
 
@@ -695,8 +696,8 @@ let australian_calendar_id =
   "en.australian#holiday@group.v.calendar.google.com"
 
 let australian_calendar =
-  { GapiCalendar.CalendarListEntry.empty with
-        GapiCalendar.CalendarListEntry.id = australian_calendar_id
+  { CalendarListEntry.empty with
+        CalendarListEntry.id = australian_calendar_id
   }
 
 let test_list_calendar_list () =
@@ -709,10 +710,10 @@ let test_list_calendar_list () =
        in
          assert_equal
            "calendar#calendarList"
-           calendars.GapiCalendar.CalendarList.kind;
+           calendars.CalendarList.kind;
          assert_bool
            "There should be at least 1 calendar"
-           (List.length calendars.GapiCalendar.CalendarList.items >= 1);
+           (List.length calendars.CalendarList.items >= 1);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
@@ -733,7 +734,7 @@ let test_list_calendar_list_with_max_results () =
        in
          assert_equal
            1
-           (List.length calendars.GapiCalendar.CalendarList.items))
+           (List.length calendars.CalendarList.items))
 
 let test_insert_calendar_list () =
   TestHelper.test_request
@@ -749,7 +750,7 @@ let test_insert_calendar_list () =
                    session);
          assert_equal
            australian_calendar_id
-           new_entry.GapiCalendar.CalendarListEntry.id)
+           new_entry.CalendarListEntry.id)
 
 let test_get_calendar_list () =
   TestHelper.test_request
@@ -769,7 +770,7 @@ let test_get_calendar_list () =
                    session);
          assert_equal
            australian_calendar_id
-           entry.GapiCalendar.CalendarListEntry.id)
+           entry.CalendarListEntry.id)
 
 let test_refresh_calendar_list () =
   TestHelper.test_request
@@ -789,7 +790,7 @@ let test_refresh_calendar_list () =
                    session);
          assert_equal
            australian_calendar_id
-           entry.GapiCalendar.CalendarListEntry.id)
+           entry.CalendarListEntry.id)
 
 let test_update_calendar_list () =
   TestHelper.test_request
@@ -800,7 +801,7 @@ let test_update_calendar_list () =
            australian_calendar
            session in
        let entry = { entry with
-                         GapiCalendar.CalendarListEntry.hidden = true } in
+                         CalendarListEntry.hidden = true } in
        let (entry, session) =
          GapiCalendarService.CalendarListResource.update
            entry
@@ -811,7 +812,7 @@ let test_update_calendar_list () =
                    session);
          assert_equal
            true
-           entry.GapiCalendar.CalendarListEntry.hidden)
+           entry.CalendarListEntry.hidden)
 
 let test_patch_calendar_list () =
   TestHelper.test_request
@@ -822,8 +823,8 @@ let test_patch_calendar_list () =
            australian_calendar
            session in
        let entry = {
-         GapiCalendar.CalendarListEntry.empty with
-             GapiCalendar.CalendarListEntry.id = australian_calendar_id;
+         CalendarListEntry.empty with
+             CalendarListEntry.id = australian_calendar_id;
              hidden = true
        } in
        let (entry, session) =
@@ -836,10 +837,10 @@ let test_patch_calendar_list () =
                    session);
          assert_equal
            true
-           entry.GapiCalendar.CalendarListEntry.hidden;
+           entry.CalendarListEntry.hidden;
          assert_equal
            "calendar#calendarListEntry"
-           entry.GapiCalendar.CalendarListEntry.kind)
+           entry.CalendarListEntry.kind)
 
 let test_delete_calendar_list () =
   TestHelper.test_request
@@ -864,13 +865,13 @@ let test_delete_calendar_list () =
          TestHelper.assert_exists
            "calendars should contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListEntry.id = australian_calendar_id)
-           calendars.GapiCalendar.CalendarList.items;
+              e.CalendarListEntry.id = australian_calendar_id)
+           calendars.CalendarList.items;
          TestHelper.assert_not_exists
            "calendars' should not contain new calendar"
            (fun e ->
-              e.GapiCalendar.CalendarListEntry.id = australian_calendar_id)
-           calendars'.GapiCalendar.CalendarList.items)
+              e.CalendarListEntry.id = australian_calendar_id)
+           calendars'.CalendarList.items)
 
 (* Free/busy *)
 
@@ -888,11 +889,11 @@ let test_free_busy_query () =
            session in
        let _ = delay () in
        let params =
-         { GapiCalendar.FreeBusyRequest.empty with
-               GapiCalendar.FreeBusyRequest.timeMin =
+         { FreeBusyRequest.empty with
+               FreeBusyRequest.timeMin =
                  GapiDate.of_string "2011-12-02";
                timeMax = GapiDate.of_string "2011-12-04";
-               items = [ calendar.GapiCalendar.Calendar.id ]
+               items = [ calendar.Calendar.id ]
          } in
        let (freeBusy, _) =
          GapiCalendarService.FreebusyResource.query
@@ -904,10 +905,10 @@ let test_free_busy_query () =
                    session);
          assert_equal
            "calendar#freeBusy"
-           freeBusy.GapiCalendar.FreeBusyResponse.kind;
+           freeBusy.FreeBusyResponse.kind;
          assert_bool
            "There should be at least 1 calendar in free/busy resource"
-           (List.length freeBusy.GapiCalendar.FreeBusyResponse.calendars >= 1))
+           (List.length freeBusy.FreeBusyResponse.calendars >= 1))
 
 let suite = "Calendar services (v3) test" >:::
   ["test_list_acl" >:: test_list_acl;

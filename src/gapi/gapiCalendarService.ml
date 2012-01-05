@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiCalendar
+open GapiCalendarV3Model
 
 let scope = "https://www.googleapis.com/auth/calendar"
 let read_only_scope = "https://www.googleapis.com/auth/calendar.readonly"
