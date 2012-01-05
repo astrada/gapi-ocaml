@@ -37,9 +37,9 @@ let oauth2_callback (cgi : Netcgi.cgi_activation) =
 let main () =
   let url = GapiOAuth2.authorization_code_url
               ~redirect_uri
-              ~scope:[GapiCalendarService.scope;
-                      GapiPlusService.scope;
-                      GapiTasksService.scope]
+              ~scope:[GapiCalendarV3Service.scope;
+                      GapiPlusV1Service.scope;
+                      GapiTasksV1Service.scope]
               ~response_type:"code"
               client_id in
     print_endline ("Open this URL in a web browser:\n" ^ url);

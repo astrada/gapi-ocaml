@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiDiscovery
+open GapiDiscoveryV1Model
 open GapiLens.Infix
 open GapiLens.StateInfix
 open ServiceGeneratorState
@@ -60,7 +60,7 @@ let get_service_description api version nocache =
       let document =
         do_request
           (fun session ->
-             GapiDiscoveryService.ApisResource.getRest
+             GapiDiscoveryV1Service.ApisResource.getRest
                ~api
                ~version
                session

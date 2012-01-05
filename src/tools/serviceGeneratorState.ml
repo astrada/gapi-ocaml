@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiDiscovery
+open GapiDiscoveryV1Model
 open GapiLens.Infix
 open GapiLens.StateInfix
 
