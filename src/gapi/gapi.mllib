@@ -20,7 +20,7 @@ GapiCalendar
 GapiCalendarService
 GapiPlus
 GapiPlusService
-GapiTasks
+GapiTasksV1Model
 GapiTasksService
 GapiDiscoveryV1Model
 GapiDiscoveryV1Service
