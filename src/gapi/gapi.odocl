@@ -9,5 +9,5 @@ GapiPlusService
 GapiTasks
 GapiTasksService
 GapiDiscoveryV1Model
-GapiDiscoveryService
+GapiDiscoveryV1Service
 

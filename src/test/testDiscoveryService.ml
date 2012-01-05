@@ -1,13 +1,14 @@
 open OUnit
 open GapiUtils.Infix
 open GapiDiscoveryV1Model
+open GapiDiscoveryV1Service
 
 let test_list_apis () =
   TestHelper.test_request
     TestHelper.build_no_auth
     (fun session ->
        let (apis, session) =
-         GapiDiscoveryService.ApisResource.list
+         ApisResource.list
            ~name:"discovery"
            session
        in
@@ -23,7 +24,7 @@ let test_get_rest () =
     TestHelper.build_no_auth
     (fun session ->
        let (api, session) =
-         GapiDiscoveryService.ApisResource.getRest
+         ApisResource.getRest
            ~api:"discovery"
            ~version:"v1"
            session
