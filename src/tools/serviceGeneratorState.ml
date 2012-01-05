@@ -750,7 +750,7 @@ struct
     ocaml_name : string;
     inner_modules : (string * InnerSchemaModule.t) list;
   }
-    
+
 	let ocaml_name = {
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
@@ -833,7 +833,7 @@ struct
     scopes : (string * string) list;
     enums : (string * EnumModule.t) list;
   }
-    
+
 	let ocaml_name = {
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
@@ -985,21 +985,6 @@ struct
   let fold f v table =
     Hashtbl.fold f table v
 
-  (* TODO: Topological sort: see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml *)
-  let toposort graph = 
-    let dfs graph visited start_node = 
-      let rec explore path visited node = 
-        (*if List.mem node path    then raise (CycleFound path) else*)
-        if List.mem node visited then visited else     
-          let new_path = node :: path in 
-          let edges    = List.assoc node graph in
-          let visited  = List.fold_left (explore new_path) visited edges in
-            node :: visited
-      in
-        explore [] visited start_node
-    in
-      List.fold_left (fun visited (node,_) -> dfs graph visited node) [] graph
-
   let build complex_types =
     let table = Hashtbl.create 64 in
       List.iter
@@ -1009,46 +994,41 @@ struct
         complex_types;
       table
 
-  let sort table =
-    let get_references id complex_type =
-      let rec loop id' complex_type' accu =
-        let references = ComplexType.get_references complex_type' in
-        let full_references =
-          List.fold_left
-            (fun a r ->
-               let referenced_type = Hashtbl.find table r in
-                 loop r referenced_type a)
-            accu
-            references
-        in
-          (id', complex_type') :: full_references
+  (* Topological sort:
+   * see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml
+   *)
+  let topological_sort graph =
+    let dfs graph visited start_node =
+      let rec explore path visited node =
+        if List.mem node path then
+          failwith "Unexpected cycle in type table"
+        else if List.mem node visited then
+          visited
+        else
+          let new_path = node :: path in
+          let edges = List.assoc node graph in
+          let visited = List.fold_left
+                          (explore new_path)
+                          visited
+                          edges in
+            node :: visited
       in
-        loop id complex_type []
+        explore [] visited start_node
     in
-
-    let merge xs ys =
-      List.fold_right
-        (fun (k, v) zs ->
-           if List.mem_assoc k zs then
-             zs
-           else
-             (k, v) :: zs)
-        xs
-        ys
-    in
-
-    let complex_types =
-      Hashtbl.fold
-        (fun id complex_type sorted ->
-           if List.mem_assoc id sorted then
-             sorted
-           else
-             let references = get_references id complex_type in
-               merge references sorted)
-        table
+      List.fold_left
+        (fun visited (node, _) -> dfs graph visited node)
         []
-    in
-      List.rev_map snd complex_types
+        graph
+
+  let sort table =
+    let graph =
+      Hashtbl.fold
+        (fun id complex_type g ->
+           (id, ComplexType.get_references complex_type) :: g)
+        table
+        [] in
+    let sorted_types = topological_sort graph in
+      List.rev_map (fun id -> Hashtbl.find table id) sorted_types
 
 end
 
@@ -1122,13 +1102,13 @@ struct
     referenced_types = StringSet.empty;
     parameters_module_name = "";
   }
-                    
+
   let build_type_table state =
     let complex_types =
       List.map
         (fun (_, s) -> ComplexType.create s)
         state.service.RestDescription.schemas in
-    let table = 
+    let table =
       TypeTable.build complex_types
     in
       state |> type_table ^=! table
