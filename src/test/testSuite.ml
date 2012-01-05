@@ -5,7 +5,7 @@ let model_tests =
    TestDate.suite;
    TestCalendarModelV3.suite;
    TestPlusModel.suite;
-   TestTasksModel.suite;
+   TestTasksV1Model.suite;
    TestDiscoveryV1Model.suite;
   ]
 
@@ -15,7 +15,7 @@ let service_tests =
    TestMonadic.suite;
    TestCalendarServiceV3.suite;
    TestPlusService.suite;
-   TestTasksService.suite;
+   TestTasksV1Service.suite;
    TestDiscoveryV1Service.suite;
   ]
 
@@ -26,7 +26,7 @@ let build_service_test_list service =
                        TestMonadic.suite]
       | "calendar-v3" -> [TestCalendarServiceV3.suite]
       | "plus" -> [TestPlusService.suite]
-      | "tasks" -> [TestTasksService.suite]
+      | "tasks" -> [TestTasksV1Service.suite]
       | "discovery" -> [TestDiscoveryV1Service.suite]
       | _ -> failwith ("Service not supported: " ^ service)
   in
