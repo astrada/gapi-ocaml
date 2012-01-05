@@ -3,7 +3,7 @@ open OUnit
 let model_tests =
   [TestCalendarModel.suite;
    TestDate.suite;
-   TestCalendarModelV3.suite;
+   TestCalendarV3Model.suite;
    TestPlusV1Model.suite;
    TestTasksV1Model.suite;
    TestDiscoveryV1Model.suite;
@@ -13,7 +13,7 @@ let service_tests =
   [TestAuth.suite;
    TestCalendarService.suite;
    TestMonadic.suite;
-   TestCalendarServiceV3.suite;
+   TestCalendarV3Service.suite;
    TestPlusV1Service.suite;
    TestTasksV1Service.suite;
    TestDiscoveryV1Service.suite;
@@ -24,7 +24,7 @@ let build_service_test_list service =
     match service with
         "calendar" -> [TestCalendarService.suite;
                        TestMonadic.suite]
-      | "calendar-v3" -> [TestCalendarServiceV3.suite]
+      | "calendar-v3" -> [TestCalendarV3Service.suite]
       | "plus" -> [TestPlusV1Service.suite]
       | "tasks" -> [TestTasksV1Service.suite]
       | "discovery" -> [TestDiscoveryV1Service.suite]
