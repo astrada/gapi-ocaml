@@ -57,7 +57,7 @@ let delete
       ?etag
       id
       session =
-  GapiService.delete
+  GapiService.delete'
     ?version
     ?etag
     id
