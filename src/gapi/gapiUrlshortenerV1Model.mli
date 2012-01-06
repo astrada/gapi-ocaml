@@ -58,7 +58,7 @@ sig
   
   val empty : t
   
-  val render : t -> GapiJson.json_data_model list list
+  val render : t -> GapiJson.json_data_model list
   
   val parse : t -> GapiJson.json_data_model -> t
   
@@ -88,7 +88,7 @@ sig
   
   val empty : t
   
-  val render : t -> GapiJson.json_data_model list list
+  val render : t -> GapiJson.json_data_model list
   
   val parse : t -> GapiJson.json_data_model -> t
   

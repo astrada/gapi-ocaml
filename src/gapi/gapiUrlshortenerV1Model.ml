@@ -99,7 +99,7 @@ struct
     
   }
   
-  let render x = 
+  let render_content x = 
      [
       GapiJson.render_array "browsers" StringCount.render x.browsers;
       GapiJson.render_array "countries" StringCount.render x.countries;
@@ -109,6 +109,9 @@ struct
       GapiJson.render_string_value "shortUrlClicks" x.shortUrlClicks;
       
     ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
   
   let parse x = function
     | GapiCore.AnnotatedTree.Node
@@ -197,15 +200,18 @@ struct
     
   }
   
-  let render x = 
+  let render_content x = 
      [
-      GapiJson.render_object "allTime" (AnalyticsSnapshot.render x.allTime);
-      GapiJson.render_object "day" (AnalyticsSnapshot.render x.day);
-      GapiJson.render_object "month" (AnalyticsSnapshot.render x.month);
-      GapiJson.render_object "twoHours" (AnalyticsSnapshot.render x.twoHours);
-      GapiJson.render_object "week" (AnalyticsSnapshot.render x.week);
+      GapiJson.render_object "allTime" (AnalyticsSnapshot.render_content x.allTime);
+      GapiJson.render_object "day" (AnalyticsSnapshot.render_content x.day);
+      GapiJson.render_object "month" (AnalyticsSnapshot.render_content x.month);
+      GapiJson.render_object "twoHours" (AnalyticsSnapshot.render_content x.twoHours);
+      GapiJson.render_object "week" (AnalyticsSnapshot.render_content x.week);
       
     ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
   
   let parse x = function
     | GapiCore.AnnotatedTree.Node
@@ -302,7 +308,7 @@ struct
   
   let render x = 
     GapiJson.render_object "" [
-      GapiJson.render_object "analytics" (AnalyticsSummary.render x.analytics);
+      GapiJson.render_object "analytics" (AnalyticsSummary.render_content x.analytics);
       GapiJson.render_string_value "created" x.created;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;

@@ -27,34 +27,6 @@ end
 
 module UrlResource :
 sig
-
-  (** Retrieves a list of URLs shortened by a user.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
-    @param parameters Optional standard parameters.
-    @param projection Additional information to return.
-    @param start_token Token for requesting successive pages of results.
-    *)
-  val list :
-    ?base_url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
-    ?projection:Projection.t ->
-    ?start_token:string ->
-    GapiConversation.Session.t ->
-    GapiUrlshortenerV1Model.UrlHistory.t * GapiConversation.Session.t
-  
-  (** Creates a new short URL.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
-    @param parameters Optional standard parameters.
-    *)
-  val insert :
-    ?base_url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
-    GapiUrlshortenerV1Model.Url.t ->
-    GapiConversation.Session.t ->
-    GapiUrlshortenerV1Model.Url.t * GapiConversation.Session.t
-  
   (** Expands a short URL or gets creation time and analytics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
@@ -70,6 +42,32 @@ sig
     GapiConversation.Session.t ->
     GapiUrlshortenerV1Model.Url.t * GapiConversation.Session.t
   
+  (** Creates a new short URL.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
+    @param parameters Optional standard parameters.
+    *)
+  val insert :
+    ?base_url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    GapiUrlshortenerV1Model.Url.t ->
+    GapiConversation.Session.t ->
+    GapiUrlshortenerV1Model.Url.t * GapiConversation.Session.t
+  
+  (** Retrieves a list of URLs shortened by a user.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
+    @param parameters Optional standard parameters.
+    @param projection Additional information to return.
+    @param start_token Token for requesting successive pages of results.
+    *)
+  val list :
+    ?base_url:string ->
+    ?parameters:GapiService.StandardParameters.t ->
+    ?projection:Projection.t ->
+    ?start_token:string ->
+    GapiConversation.Session.t ->
+    GapiUrlshortenerV1Model.UrlHistory.t * GapiConversation.Session.t
+  
   
 end
-
