@@ -139,11 +139,12 @@ let build_schema_inner_module file_lens complex_type =
   in
 
   let render_render_function formatter fields is_referenced =
-    Format.fprintf formatter "@,@[<v 2>let render x = @,";
     if not is_referenced then
-      Format.fprintf formatter "@[<v 2>GapiJson.render_object \"\" [@,"
+      Format.fprintf formatter
+        "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
     else
-      Format.fprintf formatter "@[<v 2> [@,";
+      Format.fprintf formatter
+        "@,@[<v 2>let render_content x = @,@[<v 2> [@,";
     List.iter
       (fun { Field.ocaml_name; original_name; ocaml_type_module; field_type} ->
          match field_type.ComplexType.data_type with
@@ -167,7 +168,7 @@ let build_schema_inner_module file_lens complex_type =
            | ComplexType.Reference _
            | ComplexType.AnonymousObject _ ->
                Format.fprintf formatter
-                 "GapiJson.render_object \"%s\" (%s.render x.%s);@,"
+                 "GapiJson.render_object \"%s\" (%s.render_content x.%s);@,"
                  original_name
                  ocaml_type_module
                  ocaml_name;
@@ -183,7 +184,11 @@ let build_schema_inner_module file_lens complex_type =
            | _ ->
                failwith "Unexpected complex type rendering render function")
       fields;
-    Format.fprintf formatter "@]@,@]]@,"
+    Format.fprintf formatter "@]@,@]]@,";
+    if is_referenced then begin
+      Format.fprintf formatter
+        "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" (render_content x)@]@]@,"
+    end
   in
 
   let render_parse_function
@@ -836,16 +841,11 @@ let generate_schema_module_signature formatter schema_module =
                ocaml_type)
           fields;
 
-        if is_referenced then begin
-          (* TODO: review render return type (list list) *)
-          (* empty, render, parse *)
-          Format.fprintf formatter
-            "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
-        end else begin
-          (* empty, render, parse *)
-          Format.fprintf formatter
-            "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
+        (* empty, render, parse *)
+        Format.fprintf formatter
+          "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
 
+        if not is_referenced then begin
           (* of_data_model, to_data_model *)
           Format.fprintf formatter
             "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
@@ -1070,7 +1070,7 @@ let _ =
 
   (* Test *)
   let _ =
-    api := "tasks";
+    api := "urlshortener";
     version := "v1"
   in
 
