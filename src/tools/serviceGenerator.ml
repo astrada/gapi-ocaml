@@ -164,16 +164,17 @@ let build_schema_inner_module file_lens complex_type =
                    render_value
                    original_name
                    ocaml_name;
-           (*| Object _ ->
-            "GapiJson.render_object"*)
-           | ComplexType.Reference type_name ->
+           | ComplexType.Reference type_name
+           | ComplexType.AnonymousObject (type_name, _) ->
                Format.fprintf formatter
                  "GapiJson.render_object \"%s\" (%s.render x.%s);@,"
                  original_name
                  type_name
                  ocaml_name;
            | ComplexType.Array { ComplexType.data_type =
-                                   ComplexType.Reference type_name; _ } ->
+                                   ComplexType.Reference type_name; _ }
+           | ComplexType.Array { ComplexType.data_type =
+                                   ComplexType.AnonymousObject (type_name, _); _ } ->
                Format.fprintf formatter
                  "GapiJson.render_array \"%s\" %s.render x.%s;@,"
                  original_name
@@ -203,6 +204,14 @@ let build_schema_inner_module file_lens complex_type =
                  (ScalarType.get_json_type scalar.ScalarType.data_type)
                  ocaml_name
                  (ScalarType.get_convert_function scalar.ScalarType.data_type)
+           | ComplexType.Array arr when ComplexType.is_object arr ->
+               let content_module_name = get_anonymous_type_module_name original_name in
+                 Format.fprintf formatter
+                   "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                   original_name
+                   content_module_name
+                   content_module_name
+                   ocaml_name
            | ComplexType.Array arr ->
                let content_module_name = ComplexType.get_content arr in
                  Format.fprintf formatter
@@ -244,6 +253,7 @@ let build_schema_inner_module file_lens complex_type =
   let properties =
     match complex_type.ComplexType.data_type with
         ComplexType.Object properties -> properties
+      | ComplexType.AnonymousObject (_, properties) -> properties
       | _ ->
         failwith ("Unexpected root (must be an Object): "
                   ^ complex_type.ComplexType.id) in
@@ -373,7 +383,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
               "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
               (request_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name)
               (request_parameter |. GapiLens.option_get |. Field.ocaml_name);
-          end else if rest_method.RestMethod.httpMethod = "POST" then begin
+          end else if rest_method.RestMethod.httpMethod = "POST" && Option.is_some request_module then begin
             Format.fprintf formatter
               "~data:%s.empty@ "
               (request_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name)
@@ -1035,6 +1045,13 @@ let generate_code service =
 let _ =
   let api = ref "" in
   let version = ref "" in
+
+  (* Test *)
+  let _ =
+    api := "tasks";
+    version := "v1"
+  in
+
   let nocache = ref false in
   let usage =
     "Usage: " ^ Sys.executable_name ^ " -api <apiname> -version <apiver> [-nocache] [-nooverwrite] [-outdir <path>]" in
@@ -1061,12 +1078,6 @@ let _ =
       arg_specs
       (fun s -> raise (Arg.Bad ("Unexpected argument: " ^ s)))
       usage in
-
-  (* Test *)
-  let _ =
-    api := "urlshortener";
-    version := "v1"
-  in
 
   let _ =
     if !api = "" || !version = "" then begin
