@@ -1067,13 +1067,6 @@ let generate_code service =
 let _ =
   let api = ref "" in
   let version = ref "" in
-
-  (* Test *)
-  let _ =
-    api := "urlshortener";
-    version := "v1"
-  in
-
   let nocache = ref false in
   let usage =
     "Usage: " ^ Sys.executable_name ^ " -api <apiname> -version <apiver> [-nocache] [-nooverwrite] [-outdir <path>]" in
