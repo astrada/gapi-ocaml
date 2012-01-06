@@ -134,7 +134,7 @@ let update
     parse_response
     session
 
-let patch
+let patch'
       data_to_post
       ?version
       ?etag
@@ -154,7 +154,7 @@ let patch
     parse_response
     session
 
-let delete
+let delete'
       ?version
       ?etag
       ?query_parameters
@@ -419,7 +419,7 @@ struct
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
     let query_parameters = map_parameters parameters in
-      patch
+      patch'
         S.render_resource
         ?etag
         ?query_parameters
@@ -437,7 +437,7 @@ struct
     let url' = S.get_url ?container_id ~resource url in
     let etag = S.get_etag resource in
     let query_parameters = map_parameters parameters in
-      delete
+      delete'
         ?etag
         ?query_parameters
         url'
@@ -472,6 +472,54 @@ let post
     data_to_post
     ?query_parameters
     data
+    url
+    parse_response
+    session
+
+let put
+      ?etag
+      ?query_parameters
+      ~data_to_post
+      ~data
+      url
+      parse_response
+      session =
+  service_request_with_data
+    GapiRequest.Update
+    data_to_post
+    ?query_parameters
+    data
+    url
+    parse_response
+    session
+
+let patch
+      ?etag
+      ?query_parameters
+      ~data_to_post
+      ~data
+      url
+      parse_response
+      session =
+  service_request_with_data
+    GapiRequest.Patch
+    data_to_post
+    ?query_parameters
+    data
+    url
+    parse_response
+    session
+
+let delete
+      ?etag
+      ?query_parameters
+      url
+      parse_response
+      session =
+  service_request
+    ?etag
+    ?query_parameters
+    ~request_type:GapiRequest.Delete
     url
     parse_response
     session

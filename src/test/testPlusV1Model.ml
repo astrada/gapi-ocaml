@@ -1,5 +1,5 @@
 open OUnit
-open GapiPlus
+open GapiPlusV1Model
 open GapiLens.Infix
 open GapiUtils.Infix
 

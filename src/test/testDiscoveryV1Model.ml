@@ -1,5 +1,5 @@
 open OUnit
-open GapiDiscovery
+open GapiDiscoveryV1Model
 
 let test_parse_directory_list () =
   let directory_list_json =

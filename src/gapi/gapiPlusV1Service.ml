@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiPlus
+open GapiPlusV1Model
 
 let scope = "https://www.googleapis.com/auth/plus.me"
 

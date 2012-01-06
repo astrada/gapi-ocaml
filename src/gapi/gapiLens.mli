@@ -133,5 +133,7 @@ sig
 
   val ( -=! ) : ('a, int) t -> int -> 'a -> unit * 'a
 
+  val ( @=! ) : ('a, 'b list) t -> 'b list -> 'a -> unit * 'a
+
 end
 

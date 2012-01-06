@@ -29,7 +29,7 @@ sig
     ?maxResults:int ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
-    GapiPlus.ActivityFeed.t * GapiConversation.Session.t
+    GapiPlusV1Model.ActivityFeed.t * GapiConversation.Session.t
 
   (** Get an activity.
 
@@ -42,7 +42,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     activityId:string ->
     GapiConversation.Session.t ->
-    GapiPlus.Activity.t * GapiConversation.Session.t
+    GapiPlusV1Model.Activity.t * GapiConversation.Session.t
 
   (** Search public activities.
 
@@ -63,7 +63,7 @@ sig
     ?orderBy:string ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
-    GapiPlus.ActivityFeed.t * GapiConversation.Session.t
+    GapiPlusV1Model.ActivityFeed.t * GapiConversation.Session.t
 
 end
 
@@ -85,7 +85,7 @@ sig
     ?maxResults:int ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
-    GapiPlus.CommentFeed.t * GapiConversation.Session.t
+    GapiPlusV1Model.CommentFeed.t * GapiConversation.Session.t
 
   (** Get a comment.
    
@@ -98,7 +98,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     commentId:string ->
     GapiConversation.Session.t ->
-    GapiPlus.Comment.t * GapiConversation.Session.t
+    GapiPlusV1Model.Comment.t * GapiConversation.Session.t
 
 end
 
@@ -122,7 +122,7 @@ sig
     ?maxResults:int ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
-    GapiPlus.PeopleFeed.t * GapiConversation.Session.t
+    GapiPlusV1Model.PeopleFeed.t * GapiConversation.Session.t
 
   (** Search all public profiles.
 
@@ -141,7 +141,7 @@ sig
     ?maxResults:int ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
-    GapiPlus.PeopleFeed.t * GapiConversation.Session.t
+    GapiPlusV1Model.PeopleFeed.t * GapiConversation.Session.t
 
   (** Get a person's profile.
    
@@ -154,7 +154,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     userId:string ->
     GapiConversation.Session.t ->
-    GapiPlus.Person.t * GapiConversation.Session.t
+    GapiPlusV1Model.Person.t * GapiConversation.Session.t
 
 end
 

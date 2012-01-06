@@ -22,7 +22,7 @@ sig
     api:string ->
     version:string ->
     GapiConversation.Session.t ->
-    GapiDiscovery.RestDescription.t * GapiConversation.Session.t
+    GapiDiscoveryV1Model.RestDescription.t * GapiConversation.Session.t
 
   (** Retrieve the list of APIs supported at this endpoint.
 
@@ -39,7 +39,7 @@ sig
     ?name:string ->
     ?preferred:bool ->
     GapiConversation.Session.t ->
-    GapiDiscovery.DirectoryList.t * GapiConversation.Session.t
+    GapiDiscoveryV1Model.DirectoryList.t * GapiConversation.Session.t
 
 end
 

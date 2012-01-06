@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiTasks
+open GapiTasksV1Model
 
 let scope = "https://www.googleapis.com/auth/tasks"
 let read_only_scope = "https://www.googleapis.com/auth/tasks.readonly"

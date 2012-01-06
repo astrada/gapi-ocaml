@@ -1,15 +1,15 @@
 GapiLens
-GapiCalendar
 GapiConversation
 GapiError
 GapiService
-GapiCalendarService
-GapiPlus
-GapiPlusService
-GapiTasks
-GapiTasksService
-GapiDiscovery
-GapiDiscoveryService
+GapiCalendarV3Model
+GapiCalendarV3Service
+GapiPlusV1Model
+GapiPlusV1Service
+GapiTasksV1Model
+GapiTasksV1Service
+GapiDiscoveryV1Model
+GapiDiscoveryV1Service
 GapiUrlshortenerV1Model
-gapiUrlshortenerV1Service
+GapiUrlshortenerV1Service
 

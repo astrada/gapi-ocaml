@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiDiscovery
+open GapiDiscoveryV1Model
 
 module DiscoveryParameters =
 struct

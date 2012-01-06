@@ -1,5 +1,5 @@
 open OUnit
-open GapiCalendar
+open GapiCalendarV3Model
 open GapiLens.Infix
 open GapiUtils.Infix
 

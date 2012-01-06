@@ -66,7 +66,7 @@ val update :
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
-val patch :
+val patch' :
   ('a -> GapiCore.PostData.t) ->
   ?version:string ->
   ?etag:string ->
@@ -77,7 +77,7 @@ val patch :
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
-val delete :
+val delete' :
   ?version:string ->
   ?etag:string ->
   ?query_parameters:(string * string) list ->
@@ -239,4 +239,32 @@ val post :
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
+
+val put :
+  ?etag:string ->
+  ?query_parameters:(string * string) list ->
+  data_to_post:('a -> GapiCore.PostData.t) ->
+  data:'a ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
+
+val patch :
+  ?etag:string ->
+  ?query_parameters:(string * string) list ->
+  data_to_post:('a -> GapiCore.PostData.t) ->
+  data:'a ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
+
+val delete :
+  ?etag:string ->
+  ?query_parameters:(string * string) list ->
+  string ->
+  (GapiPipe.OcamlnetPipe.t -> unit) ->
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 

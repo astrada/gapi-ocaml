@@ -28,7 +28,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Acl.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Acl.t * GapiConversation.Session.t)
 
   (** Returns an access control rule.
 
@@ -43,7 +43,7 @@ sig
     ?calendarId:string ->
     ruleId:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.AclRule.t * GapiConversation.Session.t)
 
   (** Reloads an access control rule.
 
@@ -55,9 +55,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.AclRule.t ->
+    GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.AclRule.t * GapiConversation.Session.t)
 
   (** Creates an access control rule.
 
@@ -69,9 +69,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.AclRule.t ->
+    GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.AclRule.t * GapiConversation.Session.t)
 
   (** Updates an access control rule.
 
@@ -83,9 +83,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.AclRule.t ->
+    GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.AclRule.t * GapiConversation.Session.t)
 
   (** Updates an access control rule. This method supports patch semantics.
 
@@ -97,9 +97,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.AclRule.t ->
+    GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.AclRule.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.AclRule.t * GapiConversation.Session.t)
 
   (** Deletes an access control rule.
 
@@ -111,7 +111,7 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.AclRule.t ->
+    GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -139,7 +139,7 @@ sig
     ?pageToken:string ->
     ?showHidden:bool ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarList.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.CalendarList.t * GapiConversation.Session.t)
 
   (** Returns an entry on the user's calendar list.
 
@@ -152,7 +152,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     calendarId:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t)
 
   (** Reloads an entry on the user's calendar list.
 
@@ -162,9 +162,9 @@ sig
   val refresh :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.CalendarListEntry.t ->
+    GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t)
 
   (** Adds an entry to the user's calendar list.
 
@@ -174,9 +174,9 @@ sig
   val insert :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.CalendarListEntry.t ->
+    GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t)
 
   (** Updates an entry on the user's calendar list.
 
@@ -186,9 +186,9 @@ sig
   val update :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.CalendarListEntry.t ->
+    GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t)
 
   (** Updates an entry on the user's calendar list. This method supports patch semantics.
 
@@ -198,9 +198,9 @@ sig
   val patch :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.CalendarListEntry.t ->
+    GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.CalendarListEntry.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t)
 
   (** Deletes an entry on the user's calendar list.
 
@@ -210,7 +210,7 @@ sig
   val delete :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.CalendarListEntry.t ->
+    GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -231,7 +231,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     calendarId:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Calendar.t * GapiConversation.Session.t)
 
   (** Refreshes metadata for a calendar.
 
@@ -241,9 +241,9 @@ sig
   val refresh :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.Calendar.t ->
+    GapiCalendarV3Model.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Calendar.t * GapiConversation.Session.t)
 
   (** Creates a secondary calendar.
      
@@ -253,9 +253,9 @@ sig
   val insert :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.Calendar.t ->
+    GapiCalendarV3Model.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Calendar.t * GapiConversation.Session.t)
 
   (** Updates metadata for a calendar.
      
@@ -265,9 +265,9 @@ sig
   val update :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.Calendar.t ->
+    GapiCalendarV3Model.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Calendar.t * GapiConversation.Session.t)
 
   (** Updates metadata for a calendar. This method supports patch semantics.
      
@@ -277,9 +277,9 @@ sig
   val patch :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.Calendar.t ->
+    GapiCalendarV3Model.Calendar.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Calendar.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Calendar.t * GapiConversation.Session.t)
 
   (** Deletes a secondary calendar.
      
@@ -289,7 +289,7 @@ sig
   val delete :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.Calendar.t ->
+    GapiCalendarV3Model.Calendar.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -320,7 +320,7 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Colors.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Colors.t * GapiConversation.Session.t)
 
 end
 
@@ -366,7 +366,7 @@ sig
     ?timeZone:string ->
     ?updatedMin:GapiDate.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Events.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Events.t * GapiConversation.Session.t)
 
   (** Returns an event.   
 
@@ -385,7 +385,7 @@ sig
     ?maxAttendees:int ->
     ?timeZone:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Refreshes an event.   
 
@@ -397,9 +397,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.Event.t ->
+    GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Creates an event.
      
@@ -413,9 +413,9 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
     ?sendNotifications:bool ->
-    GapiCalendar.Event.t ->
+    GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Updates an event.
      
@@ -429,9 +429,9 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
     ?sendNotifications:bool ->
-    GapiCalendar.Event.t ->
+    GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Updates an event. This method supports patch semantics.
      
@@ -445,9 +445,9 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
     ?sendNotifications:bool ->
-    GapiCalendar.Event.t ->
+    GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Deletes an event.
      
@@ -459,7 +459,7 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.Event.t ->
+    GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -488,7 +488,7 @@ sig
     ?showDeleted:bool ->
     ?timeZone:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Events.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Events.t * GapiConversation.Session.t)
 
   (** Imports an event.
      
@@ -500,9 +500,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?calendarId:string ->
-    GapiCalendar.Event.t ->
+    GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Creates an event based on a simple text string.
 
@@ -519,7 +519,7 @@ sig
     text:string ->
     ?sendNotifications:bool ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Moves an event to another calendar, i.e. changes an event's organizer.
      
@@ -538,7 +538,7 @@ sig
     destination:string ->
     ?sendNotifications:bool ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
   (** Resets a specialized instance of a recurring event to its original state.
      
@@ -555,7 +555,7 @@ sig
     eventId:string ->
     ?sendNotifications:bool ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Event.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Event.t * GapiConversation.Session.t)
 
 end
 
@@ -570,9 +570,9 @@ sig
   val query :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiCalendar.FreeBusyRequest.t ->
+    GapiCalendarV3Model.FreeBusyRequest.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.FreeBusyResponse.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.FreeBusyResponse.t * GapiConversation.Session.t)
 
 end
 
@@ -590,7 +590,7 @@ sig
     ?etag:string ->
     ?parameters:GapiService.StandardParameters.t ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Settings.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Settings.t * GapiConversation.Session.t)
 
   (** Returns a single user setting.
 
@@ -603,7 +603,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     setting:string ->
     GapiConversation.Session.t ->
-    (GapiCalendar.Setting.t * GapiConversation.Session.t)
+    (GapiCalendarV3Model.Setting.t * GapiConversation.Session.t)
 
 end
 

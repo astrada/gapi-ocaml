@@ -28,7 +28,7 @@ sig
     ?maxResults:int ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
-    (GapiTasks.TaskLists.t * GapiConversation.Session.t)
+    (GapiTasksV1Model.TaskLists.t * GapiConversation.Session.t)
 
   (** Returns the authenticated user's specified task list.
 
@@ -41,7 +41,7 @@ sig
     ?parameters:GapiService.StandardParameters.t ->
     tasklist:string ->
     GapiConversation.Session.t ->
-    (GapiTasks.TaskList.t * GapiConversation.Session.t)
+    (GapiTasksV1Model.TaskList.t * GapiConversation.Session.t)
 
   (** Reloads the authenticated user's specified task list.
 
@@ -51,9 +51,9 @@ sig
   val refresh :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiTasks.TaskList.t ->
+    GapiTasksV1Model.TaskList.t ->
     GapiConversation.Session.t ->
-    (GapiTasks.TaskList.t * GapiConversation.Session.t)
+    (GapiTasksV1Model.TaskList.t * GapiConversation.Session.t)
 
   (** Creates a new task list and adds it to the authenticated user's task
     lists.
@@ -64,9 +64,9 @@ sig
   val insert :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiTasks.TaskList.t ->
+    GapiTasksV1Model.TaskList.t ->
     GapiConversation.Session.t ->
-    (GapiTasks.TaskList.t * GapiConversation.Session.t)
+    (GapiTasksV1Model.TaskList.t * GapiConversation.Session.t)
 
   (** Updates the authenticated user's specified task list.
 
@@ -76,9 +76,9 @@ sig
   val update :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiTasks.TaskList.t ->
+    GapiTasksV1Model.TaskList.t ->
     GapiConversation.Session.t ->
-    (GapiTasks.TaskList.t * GapiConversation.Session.t)
+    (GapiTasksV1Model.TaskList.t * GapiConversation.Session.t)
 
   (** Updates the authenticated user's specified task list. This method supports patch semantics.
 
@@ -88,9 +88,9 @@ sig
   val patch :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiTasks.TaskList.t ->
+    GapiTasksV1Model.TaskList.t ->
     GapiConversation.Session.t ->
-    (GapiTasks.TaskList.t * GapiConversation.Session.t)
+    (GapiTasksV1Model.TaskList.t * GapiConversation.Session.t)
 
   (** Deletes the authenticated user's specified task list.
 
@@ -100,7 +100,7 @@ sig
   val delete :
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
-    GapiTasks.TaskList.t ->
+    GapiTasksV1Model.TaskList.t ->
     GapiConversation.Session.t ->
     (unit * GapiConversation.Session.t)
 
@@ -144,7 +144,7 @@ sig
     ?showHidden:bool ->
     ?updatedMin:GapiDate.t ->
     GapiConversation.Session.t ->
-    GapiTasks.Tasks.t * GapiConversation.Session.t
+    GapiTasksV1Model.Tasks.t * GapiConversation.Session.t
 
   (** Returns the specified task.
 
@@ -159,7 +159,7 @@ sig
     ?tasklist:string ->
     task:string ->
     GapiConversation.Session.t ->
-    GapiTasks.Task.t * GapiConversation.Session.t
+    GapiTasksV1Model.Task.t * GapiConversation.Session.t
 
   (** Reloads the specified task.
 
@@ -171,9 +171,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
-    GapiTasks.Task.t ->
+    GapiTasksV1Model.Task.t ->
     GapiConversation.Session.t ->
-    GapiTasks.Task.t * GapiConversation.Session.t
+    GapiTasksV1Model.Task.t * GapiConversation.Session.t
 
   (** Creates a new task on the specified task list.
 
@@ -189,9 +189,9 @@ sig
     ?tasklist:string ->
     ?parent:string ->
     ?previous:string ->
-    GapiTasks.Task.t ->
+    GapiTasksV1Model.Task.t ->
     GapiConversation.Session.t ->
-    GapiTasks.Task.t * GapiConversation.Session.t
+    GapiTasksV1Model.Task.t * GapiConversation.Session.t
 
   (** Updates the specified task.
 
@@ -203,9 +203,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
-    GapiTasks.Task.t ->
+    GapiTasksV1Model.Task.t ->
     GapiConversation.Session.t ->
-    GapiTasks.Task.t * GapiConversation.Session.t
+    GapiTasksV1Model.Task.t * GapiConversation.Session.t
 
   (** Updates the specified task. This method supports patch semantics.
 
@@ -217,9 +217,9 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
-    GapiTasks.Task.t ->
+    GapiTasksV1Model.Task.t ->
     GapiConversation.Session.t ->
-    GapiTasks.Task.t * GapiConversation.Session.t
+    GapiTasksV1Model.Task.t * GapiConversation.Session.t
 
   (** Deletes the specified task from the task list.
 
@@ -231,7 +231,7 @@ sig
     ?url:string ->
     ?parameters:GapiService.StandardParameters.t ->
     ?tasklist:string ->
-    GapiTasks.Task.t ->
+    GapiTasksV1Model.Task.t ->
     GapiConversation.Session.t -> unit * GapiConversation.Session.t
 
   (** Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks.
@@ -251,7 +251,7 @@ sig
     ?previous:string ->
     task:string ->
     GapiConversation.Session.t ->
-    GapiTasks.Task.t * GapiConversation.Session.t
+    GapiTasksV1Model.Task.t * GapiConversation.Session.t
 
   (** Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.
 

@@ -1,6 +1,8 @@
 open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
+open GapiTasksV1Model
+open GapiTasksV1Service
 
 (* We should add a delay to let Google persist the new entry, after a write
  * operation, otherwise DELETE will return a 503 HTTP error (Service
@@ -11,8 +13,8 @@ let delay () =
 (* Task lists *)
 
 let new_task_list = {
-  GapiTasks.TaskList.empty with
-      GapiTasks.TaskList.title = "New test task list"
+  TaskList.empty with
+      TaskList.title = "New test task list"
 }
 
 let test_list_task_lists () =
@@ -20,15 +22,15 @@ let test_list_task_lists () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (tasklists, session) =
-         GapiTasksService.TasklistsResource.list
+         TasklistsResource.list
            session
        in
          assert_equal
            "tasks#taskLists"
-           tasklists.GapiTasks.TaskLists.kind;
+           tasklists.TaskLists.kind;
          assert_bool
            "There should be at least 1 task list"
-           (List.length tasklists.GapiTasks.TaskLists.items >= 1);
+           (List.length tasklists.TaskLists.items >= 1);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
@@ -38,95 +40,95 @@ let test_insert_task_list () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiTasksService.TasklistsResource.insert
+         TasklistsResource.insert
            new_task_list
            session in
        let _ = delay () in
-         ignore (GapiTasksService.TasklistsResource.delete
+         ignore (TasklistsResource.delete
                    new_entry
                    session);
          TestHelper.assert_not_empty
            "Task list id should not be empty"
-           new_entry.GapiTasks.TaskList.id)
+           new_entry.TaskList.id)
 
 let test_get_task_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiTasksService.TasklistsResource.insert
+         TasklistsResource.insert
            new_task_list
            session in
        let (entry', session) =
-         GapiTasksService.TasklistsResource.get
-           ~tasklist:entry.GapiTasks.TaskList.id
+         TasklistsResource.get
+           ~tasklist:entry.TaskList.id
            session in
        let _ = delay () in
-         ignore (GapiTasksService.TasklistsResource.delete
+         ignore (TasklistsResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiTasks.TaskList.id
-           entry'.GapiTasks.TaskList.id)
+           entry.TaskList.id
+           entry'.TaskList.id)
 
 let test_update_task_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiTasksService.TasklistsResource.insert
+         TasklistsResource.insert
            new_task_list
            session in
        let entry = { entry with
-                         GapiTasks.TaskList.title = "updated task list" } in
+                         TaskList.title = "updated task list" } in
        let (entry, session) =
-         GapiTasksService.TasklistsResource.update
+         TasklistsResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiTasksService.TasklistsResource.delete
+         ignore (TasklistsResource.delete
                    entry
                    session);
          assert_equal
            "updated task list"
-           entry.GapiTasks.TaskList.title)
+           entry.TaskList.title)
 
 let test_delete_task_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiTasksService.TasklistsResource.insert
+         TasklistsResource.insert
            new_task_list
            session in
        let (task_list, session) =
-         GapiTasksService.TasklistsResource.list
+         TasklistsResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiTasksService.TasklistsResource.delete
+         TasklistsResource.delete
            entry
            session in
        let (task_list', _) =
-         GapiTasksService.TasklistsResource.list
+         TasklistsResource.list
            session
        in
          TestHelper.assert_exists
            "task_list should contain new task_list"
            (fun e ->
-              e.GapiTasks.TaskList.id = entry.GapiTasks.TaskList.id)
-           task_list.GapiTasks.TaskLists.items;
+              e.TaskList.id = entry.TaskList.id)
+           task_list.TaskLists.items;
          TestHelper.assert_not_exists
            "task_list' should not contain new task_list"
            (fun e ->
-              e.GapiTasks.TaskList.id = entry.GapiTasks.TaskList.id)
-           task_list'.GapiTasks.TaskLists.items)
+              e.TaskList.id = entry.TaskList.id)
+           task_list'.TaskLists.items)
 
 (* Tasks *)
 
 let new_task = {
-  GapiTasks.Task.empty with
-      GapiTasks.Task.title = "New test task";
+  Task.empty with
+      Task.title = "New test task";
       notes = "Please complete me";
       due = GapiDate.of_string "2011-12-15T12:00:00.000Z"
 }
@@ -136,118 +138,118 @@ let test_insert_task () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            new_task
            session in
        let _ = delay () in
-         ignore (GapiTasksService.TasksResource.delete
+         ignore (TasksResource.delete
                    new_entry
                    session);
          TestHelper.assert_not_empty
            "Task id should not be empty"
-           new_entry.GapiTasks.Task.id)
+           new_entry.Task.id)
 
 let test_list_tasks () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            new_task
            session in
        let _ = delay () in
        let (tasks, session) =
-         GapiTasksService.TasksResource.list
+         TasksResource.list
            session
        in
-         ignore (GapiTasksService.TasksResource.delete
+         ignore (TasksResource.delete
                    new_entry
                    session);
          assert_equal
            "tasks#tasks"
-           tasks.GapiTasks.Tasks.kind;
+           tasks.Tasks.kind;
          assert_bool
            "There should be at least 1 task"
-           (List.length tasks.GapiTasks.Tasks.items >= 1))
+           (List.length tasks.Tasks.items >= 1))
 
 let test_get_task () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            new_task
            session in
        let (entry', session) =
-         GapiTasksService.TasksResource.get
-           ~task:entry.GapiTasks.Task.id
+         TasksResource.get
+           ~task:entry.Task.id
            session in
        let _ = delay () in
-         ignore (GapiTasksService.TasksResource.delete
+         ignore (TasksResource.delete
                    entry'
                    session);
          assert_equal
-           entry.GapiTasks.Task.id
-           entry'.GapiTasks.Task.id)
+           entry.Task.id
+           entry'.Task.id)
 
 let test_update_task () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            new_task
            session in
        let entry = { entry with
-                         GapiTasks.Task.title = "updated task" } in
+                         Task.title = "updated task" } in
        let (entry, session) =
-         GapiTasksService.TasksResource.update
+         TasksResource.update
            entry
            session in
        let _ = delay () in
-         ignore (GapiTasksService.TasksResource.delete
+         ignore (TasksResource.delete
                    entry
                    session);
          assert_equal
            "updated task"
-           entry.GapiTasks.Task.title)
+           entry.Task.title)
 
 let test_delete_task () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            new_task
            session in
        let (task, session) =
-         GapiTasksService.TasksResource.list
+         TasksResource.list
            session in
        let _ = delay () in
        let ((), session) =
-         GapiTasksService.TasksResource.delete
+         TasksResource.delete
            entry
            session in
        let (task', _) =
-         GapiTasksService.TasksResource.list
+         TasksResource.list
            session
        in
          TestHelper.assert_exists
            "task should contain new task"
            (fun e ->
-              e.GapiTasks.Task.id = entry.GapiTasks.Task.id)
-           task.GapiTasks.Tasks.items;
+              e.Task.id = entry.Task.id)
+           task.Tasks.items;
          TestHelper.assert_not_exists
            "task' should not contain new task"
            (fun e ->
-              e.GapiTasks.Task.id = entry.GapiTasks.Task.id)
-           task'.GapiTasks.Tasks.items)
+              e.Task.id = entry.Task.id)
+           task'.Tasks.items)
 
 let test_clear_default_task_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       ignore (GapiTasksService.TasksResource.clear
+       ignore (TasksResource.clear
                  session))
 
 let test_move_task () =
@@ -255,30 +257,30 @@ let test_move_task () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry_2, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            { new_task with
-                 GapiTasks.Task.title = "New test task 2" }
+                 Task.title = "New test task 2" }
            session in
        let (new_entry, session) =
-         GapiTasksService.TasksResource.insert
+         TasksResource.insert
            new_task
            session in
        let _ = delay () in
        let (new_entry', session) =
-         GapiTasksService.TasksResource.move
-           ~parent:new_entry_2.GapiTasks.Task.id
-           ~task:new_entry.GapiTasks.Task.id
+         TasksResource.move
+           ~parent:new_entry_2.Task.id
+           ~task:new_entry.Task.id
            session in
-         ignore (GapiTasksService.TasksResource.delete
+         ignore (TasksResource.delete
                    new_entry'
                    session);
-         ignore (GapiTasksService.TasksResource.delete
+         ignore (TasksResource.delete
                    new_entry_2
                    session);
          assert_bool
            "new_entry' parent should differ from new_entry parent"
-           (new_entry.GapiTasks.Task.parent
-              <> new_entry'.GapiTasks.Task.parent))
+           (new_entry.Task.parent
+              <> new_entry'.Task.parent))
 
 let suite = "Tasks services test" >:::
   ["test_list_task_lists" >:: test_list_task_lists;

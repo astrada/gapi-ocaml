@@ -1,5 +1,5 @@
 open GapiUtils.Infix
-open GapiDiscovery
+open GapiDiscoveryV1Model
 open GapiLens.Infix
 open GapiLens.StateInfix
 
@@ -47,6 +47,9 @@ struct
         name_with_proper_first_letter_case
 
 end
+
+let get_anonymous_type_module_name id =
+  OCamlName.get_ocaml_name ModuleName (id ^ "Data")
 
 (* END Symbol name generation *)
 
@@ -262,6 +265,7 @@ struct
   type data_t =
       Scalar of ScalarType.t
     | Object of (string * t) list
+    | AnonymousObject of (string * (string * t) list)
     | Array of t
     | Reference of string
     | Dynamic of t
@@ -292,7 +296,8 @@ struct
   let rec data_type_to_string = function
       Scalar scalar ->
         scalar.ScalarType.data_type |> ScalarType.data_type_to_string
-    | Reference type_name ->
+    | Reference type_name
+    | AnonymousObject (type_name, _) ->
         type_name ^ ".t"
     | Array inner_type ->
         (data_type_to_string inner_type.data_type) ^ " list"
@@ -313,7 +318,8 @@ struct
 
     let rec loop complex_type' accu =
       match complex_type'.data_type with
-        | Reference type_name ->
+        | Reference type_name
+        | AnonymousObject (type_name, _) when complex_type.id <> type_name ->
             type_name :: accu
         | Array inner_type ->
             loop inner_type accu
@@ -345,7 +351,8 @@ struct
 
     let rec loop complex_type' accu =
       match complex_type'.data_type with
-        | Reference type_name ->
+        | Reference type_name
+        | AnonymousObject (type_name, _) when complex_type'.id <> type_name ->
             type_name :: accu
         | Object properties ->
             List.fold_left
@@ -361,79 +368,88 @@ struct
     in
       loop complex_type []
 
-  let is_anonymous complex_type =
-    complex_type.id = ""
-
   let get_empty_value = function
       Scalar scalar ->
         scalar.ScalarType.empty_value
-    | Reference type_name ->
+    | Reference type_name
+    | AnonymousObject (type_name, _) ->
         type_name ^ ".empty"
     | Array inner_type ->
         "[]"
     | _ ->
         failwith "Unsupported type in ComplexType.get_empty_value"
 
-  let rec create json_schema =
-    let is_reference json_schema =
-      json_schema.JsonSchema._ref <> ""
-    in
+  let create json_schema =
+    let rec inner_create container_id schema =
+      let is_anonymous = schema.JsonSchema.id = "" in
+      let is_reference = schema.JsonSchema._ref <> "" in
+      let is_complex =
+        match schema.JsonSchema._type with
+            "object"
+          | "array" -> true
+          | _ -> false
+      in
 
-    let is_complex json_schema =
-      match json_schema.JsonSchema._type with
-          "object"
-        | "array" -> true
-        | _ -> false
-    in
+      let create_object () =
+        match schema.JsonSchema.additionalProperties with
+            None ->
+              let properties =
+                List.map
+                  (fun (id, v) -> (id, inner_create id v))
+                  schema.JsonSchema.properties
+              in
+                if is_anonymous then
+                  let ocaml_type_module =
+                    get_anonymous_type_module_name container_id
+                  in
+                    AnonymousObject (ocaml_type_module, properties)
+                else
+                  Object properties
+          | Some p -> Dynamic (inner_create container_id p)
+      in
 
-    let create_object () =
-      match json_schema.JsonSchema.additionalProperties with
-          None -> Object (List.map
-                            (fun (id, v) -> (id, create v))
-                            json_schema.JsonSchema.properties)
-            | Some p -> Dynamic (create p)
-    in
+      let create_array () =
+        Array (schema.JsonSchema.items
+                 |> Option.get
+                 |> inner_create container_id)
+      in
 
-    let create_array () =
-      Array (json_schema.JsonSchema.items
-               |> Option.get
-               |> create)
-    in
+      let create_complex () =
+        match schema.JsonSchema._type with
+            "object" -> create_object ()
+          | "array" -> create_array ()
+          | _ ->
+              failwith ("Unexpected complex type: "
+                        ^ schema.JsonSchema._type)
+      in
 
-    let create_complex () =
-      match json_schema.JsonSchema._type with
-          "object" -> create_object ()
-        | "array" -> create_array ()
-        | _ ->
-            failwith ("Unexpected complex type: "
-                      ^ json_schema.JsonSchema._type)
-    in
+      let create_reference () =
+        Reference schema.JsonSchema._ref
+      in
 
-    let create_reference () =
-      Reference json_schema.JsonSchema._ref
-    in
+      let create_scalar () =
+          Scalar (ScalarType.create schema)
+      in
 
-    let create_scalar () =
-        Scalar (ScalarType.create json_schema)
-    in
-
-    let data_type =
-      if is_reference json_schema then
-        create_reference ()
-      else if is_complex json_schema then
-        create_complex ()
-      else
-        create_scalar ()
-    in
-      { id = json_schema.JsonSchema.id;
-        data_type;
-        original_type = json_schema.JsonSchema._type;
-        description = json_schema.JsonSchema.description;
-      }
+      let data_type =
+        if is_reference then
+          create_reference ()
+        else if is_complex then
+          create_complex ()
+        else
+          create_scalar ()
+      in
+        { id = schema.JsonSchema.id;
+          data_type;
+          original_type = schema.JsonSchema._type;
+          description = schema.JsonSchema.description;
+        }
+    in inner_create "" json_schema
 
   let get_content arr =
     match arr.data_type with
-        Reference type_name -> type_name
+        Reference type_name
+      | AnonymousObject (type_name, _) -> type_name
       | _ ->
           failwith "Unsupported type in ComplexType.get_content"
 
@@ -458,6 +474,12 @@ struct
         Object _ -> true
       | _ -> false
 
+  let rec is_anonymous_object complex_type =
+    match complex_type.data_type with
+        AnonymousObject _ -> true
+      | Array arr -> is_anonymous_object arr
+      | _ -> false
+
   let get_default complex_type =
     match complex_type.data_type with
         Scalar scalar -> ScalarType.get_default scalar
@@ -473,6 +495,60 @@ struct
         Scalar scalar -> ScalarType.get_to_string_function scalar
       | _ -> failwith "to_string function not supported for complex types"
 
+  let get_anonymous_types complex_type =
+    let rec loop current_type accu =
+      match current_type.data_type with
+          AnonymousObject (container_id, properties) ->
+            let current_type_with_id = current_type
+              |> id ^= container_id
+            in
+              (container_id, current_type_with_id)
+              :: List.fold_left
+                   (fun new_accu (_, property_type) ->
+                      loop property_type new_accu)
+                   accu
+                   properties
+        | Object properties ->
+            List.fold_left
+              (fun new_accu (_, property_type) ->
+                 loop property_type new_accu)
+              accu
+              properties
+        | Array array_content ->
+            loop array_content accu
+        | _ -> accu
+    in
+      loop complex_type []
+
+  let rec get_module_name field_name complex_type =
+    match complex_type.data_type with
+        AnonymousObject (module_name, _) ->
+          module_name
+      | Reference type_name ->
+          OCamlName.get_ocaml_name ModuleName type_name
+      | Array arr ->
+          get_module_name field_name arr
+      | _ ->
+          OCamlName.get_ocaml_name ModuleName field_name
+
+  let get_ocaml_type ocaml_type_module complex_type =
+    match complex_type.data_type with
+        Scalar scalar when scalar.ScalarType.enum != [] ->
+          ocaml_type_module ^ ".t"
+      | Object _ ->
+          ocaml_type_module ^ ".t"
+      | _ ->
+          data_type_to_string complex_type.data_type
+
+  let get_ocaml_empty_value ocaml_type_module complex_type =
+    match complex_type.data_type with
+        Scalar scalar when scalar.ScalarType.enum != [] ->
+          ocaml_type_module ^ ".Default"
+      | Object _ ->
+          ocaml_type_module ^ ".empty"
+      | _ ->
+          get_empty_value complex_type.data_type
+
 end
 
 (* Field description *)
@@ -483,6 +559,7 @@ struct
     original_name : string;
     ocaml_name : string;
     ocaml_type : string;
+    ocaml_type_module : string;
     field_type : ComplexType.t;
     empty_value : string;
     default : string;
@@ -500,6 +577,10 @@ struct
 	let ocaml_type = {
 		GapiLens.get = (fun x -> x.ocaml_type);
 		GapiLens.set = (fun v x -> { x with ocaml_type = v })
+	}
+	let ocaml_type_module = {
+		GapiLens.get = (fun x -> x.ocaml_type_module);
+		GapiLens.set = (fun v x -> { x with ocaml_type_module = v })
 	}
 	let field_type = {
 		GapiLens.get = (fun x -> x.field_type);
@@ -520,20 +601,16 @@ struct
 
   let create (original_name, property) =
     let ocaml_name = OCamlName.get_ocaml_name FieldName original_name in
-    let module_name =
-      OCamlName.get_ocaml_name ModuleName original_name in
-    let (ocaml_type, empty_value) =
-      if ComplexType.is_enum property then
-        (module_name ^ ".t",
-         module_name ^ ".Default")
-      else if ComplexType.is_object property then
-        (module_name ^ "Data.t",
-         module_name ^ "Data.empty")
-      else
-        (ComplexType.data_type_to_string property.ComplexType.data_type,
-         ComplexType.get_empty_value property.ComplexType.data_type) in
+    let ocaml_type_module =
+      ComplexType.get_module_name original_name property in
+    let ocaml_type =
+      ComplexType.get_ocaml_type ocaml_type_module property in
+    let empty_value =
+      ComplexType.get_ocaml_empty_value ocaml_type_module property in
     let default =
-      if ComplexType.is_enum property || ComplexType.is_object property then
+      if ComplexType.is_enum property
+          || ComplexType.is_object property
+          || ComplexType.is_anonymous_object property then
         empty_value
       else if ComplexType.is_scalar property then
         ComplexType.get_default property
@@ -541,7 +618,7 @@ struct
         "" in
     let to_string_function =
       if ComplexType.is_enum property then
-        module_name ^ ".to_string"
+        ocaml_type_module ^ ".to_string"
       else if ComplexType.is_scalar property then
         ComplexType.get_to_string_function property
       else
@@ -550,6 +627,7 @@ struct
       { original_name;
         ocaml_name;
         ocaml_type;
+        ocaml_type_module;
         field_type = property;
         empty_value;
         default;
@@ -585,7 +663,8 @@ struct
 
   let create properties =
     let fields = List.map
-                   (function (id, _) as property -> (id, Field.create property))
+                   (function (id, _) as property ->
+                     (id, Field.create property))
                    properties in
       { ocaml_name = "t";
         fields;
@@ -604,6 +683,7 @@ struct
     ocaml_name : string;
     description : string;
     parameters : (string * Field.t) list;
+    parameter_order : string list;
     request : Field.t option;
     response : Field.t option;
   }
@@ -623,6 +703,10 @@ struct
 	let parameters = {
 		GapiLens.get = (fun x -> x.parameters);
 		GapiLens.set = (fun v x -> { x with parameters = v })
+	}
+	let parameter_order = {
+		GapiLens.get = (fun x -> x.parameter_order);
+		GapiLens.set = (fun v x -> { x with parameter_order = v })
 	}
   let parameter id = GapiLens.for_assoc id
 
@@ -651,12 +735,20 @@ struct
                                                rest_parameter in
                             (id, Field.create (id, complex_type)))
                        rest_parameters in
-    let request = get_field_from_ref request_ref in
+    let request =
+      Option.map (fun req ->
+                    let name = req.Field.ocaml_name in
+                      if List.mem name (List.map fst parameters) then
+                        req |> Field.ocaml_name ^= name ^ "'"
+                      else
+                        req)
+        (get_field_from_ref request_ref ) in
     let response = get_field_from_ref response_ref in
       { original_name;
         ocaml_name;
         description;
         parameters;
+        parameter_order = [];
         request;
         response;
       }
@@ -750,7 +842,7 @@ struct
     ocaml_name : string;
     inner_modules : (string * InnerSchemaModule.t) list;
   }
-    
+
 	let ocaml_name = {
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
@@ -833,7 +925,7 @@ struct
     scopes : (string * string) list;
     enums : (string * EnumModule.t) list;
   }
-    
+
 	let ocaml_name = {
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
@@ -985,70 +1077,59 @@ struct
   let fold f v table =
     Hashtbl.fold f table v
 
-  (* TODO: Topological sort: see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml *)
-  let toposort graph = 
-    let dfs graph visited start_node = 
-      let rec explore path visited node = 
-        (*if List.mem node path    then raise (CycleFound path) else*)
-        if List.mem node visited then visited else     
-          let new_path = node :: path in 
-          let edges    = List.assoc node graph in
-          let visited  = List.fold_left (explore new_path) visited edges in
-            node :: visited
-      in
-        explore [] visited start_node
-    in
-      List.fold_left (fun visited (node,_) -> dfs graph visited node) [] graph
+  let add_anonymous_types table =
+    Hashtbl.iter
+      (fun id complex_type ->
+         let anonymous_types = ComplexType.get_anonymous_types complex_type in
+           List.iter
+             (fun (id, complex_type) -> Hashtbl.add table id complex_type)
+             anonymous_types)
+      table
 
   let build complex_types =
     let table = Hashtbl.create 64 in
       List.iter
         (fun complex_type ->
-           if not (ComplexType.is_anonymous complex_type) then
-             Hashtbl.add table complex_type.ComplexType.id complex_type)
+           Hashtbl.add table complex_type.ComplexType.id complex_type)
         complex_types;
+      add_anonymous_types table;
       table
 
-  let sort table =
-    let get_references id complex_type =
-      let rec loop id' complex_type' accu =
-        let references = ComplexType.get_references complex_type' in
-        let full_references =
-          List.fold_left
-            (fun a r ->
-               let referenced_type = Hashtbl.find table r in
-                 loop r referenced_type a)
-            accu
-            references
-        in
-          (id', complex_type') :: full_references
+  (* Topological sort:
+   * see http://stackoverflow.com/questions/4653914/topological-sort-in-ocaml
+   *)
+  let topological_sort graph =
+    let dfs graph visited start_node =
+      let rec explore path visited node =
+        if List.mem node path then
+          failwith "Unexpected cycle in type table"
+        else if List.mem node visited then
+          visited
+        else
+          let new_path = node :: path in
+          let edges = List.assoc node graph in
+          let visited = List.fold_left
+                          (explore new_path)
+                          visited
+                          edges in
+            node :: visited
       in
-        loop id complex_type []
+        explore [] visited start_node
     in
-
-    let merge xs ys =
-      List.fold_right
-        (fun (k, v) zs ->
-           if List.mem_assoc k zs then
-             zs
-           else
-             (k, v) :: zs)
-        xs
-        ys
-    in
-
-    let complex_types =
-      Hashtbl.fold
-        (fun id complex_type sorted ->
-           if List.mem_assoc id sorted then
-             sorted
-           else
-             let references = get_references id complex_type in
-               merge references sorted)
-        table
+      List.fold_left
+        (fun visited (node, _) -> dfs graph visited node)
         []
-    in
-      List.rev_map snd complex_types
+        graph
+
+  let sort table =
+    let graph =
+      Hashtbl.fold
+        (fun id complex_type g ->
+           (id, ComplexType.get_references complex_type) :: g)
+        table
+        [] in
+    let sorted_types = topological_sort graph in
+      List.rev_map (fun id -> Hashtbl.find table id) sorted_types
 
 end
 
@@ -1122,13 +1203,13 @@ struct
     referenced_types = StringSet.empty;
     parameters_module_name = "";
   }
-                    
+
   let build_type_table state =
     let complex_types =
       List.map
         (fun (_, s) -> ComplexType.create s)
         state.service.RestDescription.schemas in
-    let table = 
+    let table =
       TypeTable.build complex_types
     in
       state |> type_table ^=! table
