@@ -1,21 +1,19 @@
 {
-  "kind": "tasks#tasks",
-  "nextPageToken": "nextPageToken",
   "items": [
     {
-      "kind": "tasks#task",
+      "due": "2010-10-15T11:03:47.000Z",
       "id": "taskID",
-      "title": "Something to do",
-      "updated": "2010-10-15T11:03:47.000Z",
-      "selfLink": "https://www.googleapis.com/tasks/v1/lists/taskListID/tasks/taskID",
+      "kind": "tasks#task",
+      "notes": "To do",
       "parent": "parentTaskID",
       "position": "position",
-      "notes": "To do",
+      "selfLink": "https://www.googleapis.com/tasks/v1/lists/taskListID/tasks/taskID",
       "status": "needsAction",
-      "due": "2010-10-15T11:03:47.000Z",
-      "deleted": "false",
-      "hidden": "false"
+      "title": "Something to do",
+      "updated": "2010-10-15T11:03:47.000Z"
     }
-  ]
+  ],
+  "kind": "tasks#tasks",
+  "nextPageToken": "nextPageToken"
 }
 

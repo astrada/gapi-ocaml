@@ -4,12 +4,6 @@ open GapiLens.Infix
 open GapiTasksV1Model
 open GapiTasksV1Service
 
-(* We should add a delay to let Google persist the new entry, after a write
- * operation, otherwise DELETE will return a 503 HTTP error (Service
- * Unavailable) *)
-let delay () =
-  Unix.sleep 5
-
 (* Task lists *)
 
 let new_task_list = {
@@ -43,9 +37,9 @@ let test_insert_task_list () =
          TasklistsResource.insert
            new_task_list
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (TasklistsResource.delete
-                   new_entry
+                   ~tasklist:new_entry.TaskList.id
                    session);
          TestHelper.assert_not_empty
            "Task list id should not be empty"
@@ -63,9 +57,9 @@ let test_get_task_list () =
          TasklistsResource.get
            ~tasklist:entry.TaskList.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (TasklistsResource.delete
-                   entry'
+                   ~tasklist:entry'.TaskList.id
                    session);
          assert_equal
            entry.TaskList.id
@@ -83,11 +77,12 @@ let test_update_task_list () =
                          TaskList.title = "updated task list" } in
        let (entry, session) =
          TasklistsResource.update
+           ~tasklist:entry.TaskList.id
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (TasklistsResource.delete
-                   entry
+                   ~tasklist:entry.TaskList.id
                    session);
          assert_equal
            "updated task list"
@@ -104,10 +99,10 @@ let test_delete_task_list () =
        let (task_list, session) =
          TasklistsResource.list
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let ((), session) =
          TasklistsResource.delete
-           entry
+           ~tasklist:entry.TaskList.id
            session in
        let (task_list', _) =
          TasklistsResource.list
@@ -139,11 +134,13 @@ let test_insert_task () =
     (fun session ->
        let (new_entry, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            new_task
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (TasksResource.delete
-                   new_entry
+                   ~tasklist:"@default"
+                   ~task:new_entry.Task.id
                    session);
          TestHelper.assert_not_empty
            "Task id should not be empty"
@@ -155,15 +152,18 @@ let test_list_tasks () =
     (fun session ->
        let (new_entry, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            new_task
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let (tasks, session) =
          TasksResource.list
+           ~tasklist:"@default"
            session
        in
          ignore (TasksResource.delete
-                   new_entry
+                   ~tasklist:"@default"
+                   ~task:new_entry.Task.id
                    session);
          assert_equal
            "tasks#tasks"
@@ -178,15 +178,18 @@ let test_get_task () =
     (fun session ->
        let (entry, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            new_task
            session in
        let (entry', session) =
          TasksResource.get
+           ~tasklist:"@default"
            ~task:entry.Task.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (TasksResource.delete
-                   entry'
+                   ~tasklist:"@default"
+                   ~task:entry'.Task.id
                    session);
          assert_equal
            entry.Task.id
@@ -198,17 +201,21 @@ let test_update_task () =
     (fun session ->
        let (entry, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            new_task
            session in
        let entry = { entry with
                          Task.title = "updated task" } in
        let (entry, session) =
          TasksResource.update
+           ~tasklist:"@default"
+           ~task:entry.Task.id
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (TasksResource.delete
-                   entry
+                   ~tasklist:"@default"
+                   ~task:entry.Task.id
                    session);
          assert_equal
            "updated task"
@@ -220,18 +227,22 @@ let test_delete_task () =
     (fun session ->
        let (entry, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            new_task
            session in
        let (task, session) =
          TasksResource.list
+           ~tasklist:"@default"
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let ((), session) =
          TasksResource.delete
-           entry
+           ~tasklist:"@default"
+           ~task:entry.Task.id
            session in
        let (task', _) =
          TasksResource.list
+           ~tasklist:"@default"
            session
        in
          TestHelper.assert_exists
@@ -249,8 +260,7 @@ let test_clear_default_task_list () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       ignore (TasksResource.clear
-                 session))
+       ignore (TasksResource.clear ~tasklist:"@default" session))
 
 let test_move_task () =
   TestHelper.test_request
@@ -258,24 +268,29 @@ let test_move_task () =
     (fun session ->
        let (new_entry_2, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            { new_task with
                  Task.title = "New test task 2" }
            session in
        let (new_entry, session) =
          TasksResource.insert
+           ~tasklist:"@default"
            new_task
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let (new_entry', session) =
          TasksResource.move
            ~parent:new_entry_2.Task.id
+           ~tasklist:"@default"
            ~task:new_entry.Task.id
            session in
          ignore (TasksResource.delete
-                   new_entry'
+                   ~tasklist:"@default"
+                   ~task:new_entry'.Task.id
                    session);
          ignore (TasksResource.delete
-                   new_entry_2
+                   ~tasklist:"@default"
+                   ~task:new_entry_2.Task.id
                    session);
          assert_bool
            "new_entry' parent should differ from new_entry parent"

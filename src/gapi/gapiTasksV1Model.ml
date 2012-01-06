@@ -1,437 +1,505 @@
-open GapiUtils.Infix
-open GapiCore
-open GapiJson
-
-(* Tasks *)
-
-module Task =
-struct
-  type t = {
-    kind : string;
-    id : string;
-    etag : string;
-    title : string;
-    updated : GapiDate.t;
-    selfLink : string;
-    parent : string;
-    position : string;
-    notes : string;
-    status : string;
-    due : GapiDate.t;
-    completed : string;
-    deleted : string;
-    hidden : string
-  }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let etag = {
-		GapiLens.get = (fun x -> x.etag);
-		GapiLens.set = (fun v x -> { x with etag = v })
-	}
-	let title = {
-		GapiLens.get = (fun x -> x.title);
-		GapiLens.set = (fun v x -> { x with title = v })
-	}
-	let updated = {
-		GapiLens.get = (fun x -> x.updated);
-		GapiLens.set = (fun v x -> { x with updated = v })
-	}
-	let selfLink = {
-		GapiLens.get = (fun x -> x.selfLink);
-		GapiLens.set = (fun v x -> { x with selfLink = v })
-	}
-	let parent = {
-		GapiLens.get = (fun x -> x.parent);
-		GapiLens.set = (fun v x -> { x with parent = v })
-	}
-	let position = {
-		GapiLens.get = (fun x -> x.position);
-		GapiLens.set = (fun v x -> { x with position = v })
-	}
-	let notes = {
-		GapiLens.get = (fun x -> x.notes);
-		GapiLens.set = (fun v x -> { x with notes = v })
-	}
-	let status = {
-		GapiLens.get = (fun x -> x.status);
-		GapiLens.set = (fun v x -> { x with status = v })
-	}
-	let due = {
-		GapiLens.get = (fun x -> x.due);
-		GapiLens.set = (fun v x -> { x with due = v })
-	}
-	let completed = {
-		GapiLens.get = (fun x -> x.completed);
-		GapiLens.set = (fun v x -> { x with completed = v })
-	}
-	let deleted = {
-		GapiLens.get = (fun x -> x.deleted);
-		GapiLens.set = (fun v x -> { x with deleted = v })
-	}
-	let hidden = {
-		GapiLens.get = (fun x -> x.hidden);
-		GapiLens.set = (fun v x -> { x with hidden = v })
-	}
-
-  let empty = {
-    kind = "";
-    id = "";
-    etag = "";
-    title = "";
-    updated = GapiDate.epoch;
-    selfLink = "";
-    parent = "";
-    position = "";
-    notes = "";
-    status = "";
-    due = GapiDate.epoch;
-    completed = "";
-    deleted = "";
-    hidden = ""
-  }
-
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "id" x.id;
-       render_string_value "etag" x.etag;
-       render_string_value "title" x.title;
-       render_date_value "updated" x.updated;
-       render_string_value "selfLink" x.selfLink;
-       render_string_value "parent" x.parent;
-       render_string_value "position" x.position;
-       render_string_value "notes" x.notes;
-       render_string_value "status" x.status;
-       render_date_value "due" x.due;
-       render_string_value "completed" x.completed;
-       render_string_value "deleted" x.deleted;
-       render_string_value "hidden" x.hidden]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ name = "etag"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with etag = v }
-      | AnnotatedTree.Leaf
-          ({ name = "title"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with title = v }
-      | AnnotatedTree.Leaf
-          ({ name = "updated"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with updated = GapiDate.of_string v }
-      | AnnotatedTree.Leaf
-          ({ name = "selfLink"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with selfLink = v }
-      | AnnotatedTree.Leaf
-          ({ name = "parent"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with parent = v }
-      | AnnotatedTree.Leaf
-          ({ name = "position"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with position = v }
-      | AnnotatedTree.Leaf
-          ({ name = "notes"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with notes = v }
-      | AnnotatedTree.Leaf
-          ({ name = "status"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with status = v }
-      | AnnotatedTree.Leaf
-          ({ name = "due"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with due = GapiDate.of_string v }
-      | AnnotatedTree.Leaf
-          ({ name = "completed"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with completed = v }
-      | AnnotatedTree.Leaf
-          ({ name = "deleted"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with deleted = v }
-      | AnnotatedTree.Leaf
-          ({ name = "hidden"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with hidden = v }
-      | AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiTasks.Task.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
-end
-
-module Tasks =
-struct
-  type t = {
-    kind : string;
-    etag : string;
-    nextPageToken : string;
-    items : Task.t list
-  }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let etag = {
-		GapiLens.get = (fun x -> x.etag);
-		GapiLens.set = (fun v x -> { x with etag = v })
-	}
-	let nextPageToken = {
-		GapiLens.get = (fun x -> x.nextPageToken);
-		GapiLens.set = (fun v x -> { x with nextPageToken = v })
-	}
-	let items = {
-		GapiLens.get = (fun x -> x.items);
-		GapiLens.set = (fun v x -> { x with items = v })
-	}
-
-  let empty = {
-    kind = "";
-    etag = "";
-    nextPageToken = "";
-    items = []
-  }
-
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "etag" x.etag;
-       render_string_value "nextPageToken" x.nextPageToken;
-       render_array "items" Task.render x.items]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ name = "etag"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with etag = v }
-      | AnnotatedTree.Leaf
-          ({ name = "nextPageToken"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with nextPageToken = v }
-      | AnnotatedTree.Node
-          ({ name = "items"; data_type = Array },
-           cs) ->
-          parse_collection
-            Task.parse
-            Task.empty
-            (fun xs -> { x with items = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiTasks.Tasks.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
-end
-
-(* Task lists *)
+(* Warning! This file is generated. Modify at your own risk. *)
 
 module TaskList =
 struct
   type t = {
-    kind : string;
-    id : string;
     etag : string;
+    id : string;
+    kind : string;
+    selfLink : string;
     title : string;
-    selfLink : string
+    
   }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let etag = {
-		GapiLens.get = (fun x -> x.etag);
-		GapiLens.set = (fun v x -> { x with etag = v })
-	}
-	let title = {
-		GapiLens.get = (fun x -> x.title);
-		GapiLens.set = (fun v x -> { x with title = v })
-	}
-	let selfLink = {
-		GapiLens.get = (fun x -> x.selfLink);
-		GapiLens.set = (fun v x -> { x with selfLink = v })
-	}
-
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let selfLink = {
+    GapiLens.get = (fun x -> x.selfLink);
+    GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  let title = {
+    GapiLens.get = (fun x -> x.title);
+    GapiLens.set = (fun v x -> { x with title = v });
+  }
+  
   let empty = {
-    kind = "";
-    id = "";
     etag = "";
+    id = "";
+    kind = "";
+    selfLink = "";
     title = "";
-    selfLink = ""
+    
   }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "selfLink" x.selfLink;
+      GapiJson.render_string_value "title" x.title;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with title = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty Std.identity cs
+    | e ->
+      GapiJson.unexpected "GapiTasksV1Model.TaskList.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
 
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "id" x.id;
-       render_string_value "etag" x.etag;
-       render_string_value "title" x.title;
-       render_string_value "selfLink" x.selfLink]
+module LinksData =
+struct
+  type t = {
+    description : string;
+    link : string;
+    _type : string;
+    
+  }
+  
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let link = {
+    GapiLens.get = (fun x -> x.link);
+    GapiLens.set = (fun v x -> { x with link = v });
+  }
+  let _type = {
+    GapiLens.get = (fun x -> x._type);
+    GapiLens.set = (fun v x -> { x with _type = v });
+  }
+  
+  let empty = {
+    description = "";
+    link = "";
+    _type = "";
+    
+  }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_string_value "description" x.description;
+      GapiJson.render_string_value "link" x.link;
+      GapiJson.render_string_value "type" x._type;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with link = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with _type = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty Std.identity cs
+    | e ->
+      GapiJson.unexpected "GapiTasksV1Model.LinksData.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
 
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ name = "etag"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with etag = v }
-      | AnnotatedTree.Leaf
-          ({ name = "title"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with title = v }
-      | AnnotatedTree.Leaf
-          ({ name = "selfLink"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with selfLink = v }
-      | AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiTasks.TaskList.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
+module Task =
+struct
+  type t = {
+    completed : GapiDate.t;
+    deleted : bool;
+    due : GapiDate.t;
+    etag : string;
+    hidden : bool;
+    id : string;
+    kind : string;
+    links : LinksData.t list;
+    notes : string;
+    parent : string;
+    position : string;
+    selfLink : string;
+    status : string;
+    title : string;
+    updated : GapiDate.t;
+    
+  }
+  
+  let completed = {
+    GapiLens.get = (fun x -> x.completed);
+    GapiLens.set = (fun v x -> { x with completed = v });
+  }
+  let deleted = {
+    GapiLens.get = (fun x -> x.deleted);
+    GapiLens.set = (fun v x -> { x with deleted = v });
+  }
+  let due = {
+    GapiLens.get = (fun x -> x.due);
+    GapiLens.set = (fun v x -> { x with due = v });
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let hidden = {
+    GapiLens.get = (fun x -> x.hidden);
+    GapiLens.set = (fun v x -> { x with hidden = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let links = {
+    GapiLens.get = (fun x -> x.links);
+    GapiLens.set = (fun v x -> { x with links = v });
+  }
+  let notes = {
+    GapiLens.get = (fun x -> x.notes);
+    GapiLens.set = (fun v x -> { x with notes = v });
+  }
+  let parent = {
+    GapiLens.get = (fun x -> x.parent);
+    GapiLens.set = (fun v x -> { x with parent = v });
+  }
+  let position = {
+    GapiLens.get = (fun x -> x.position);
+    GapiLens.set = (fun v x -> { x with position = v });
+  }
+  let selfLink = {
+    GapiLens.get = (fun x -> x.selfLink);
+    GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  let status = {
+    GapiLens.get = (fun x -> x.status);
+    GapiLens.set = (fun v x -> { x with status = v });
+  }
+  let title = {
+    GapiLens.get = (fun x -> x.title);
+    GapiLens.set = (fun v x -> { x with title = v });
+  }
+  let updated = {
+    GapiLens.get = (fun x -> x.updated);
+    GapiLens.set = (fun v x -> { x with updated = v });
+  }
+  
+  let empty = {
+    completed = GapiDate.epoch;
+    deleted = false;
+    due = GapiDate.epoch;
+    etag = "";
+    hidden = false;
+    id = "";
+    kind = "";
+    links = [];
+    notes = "";
+    parent = "";
+    position = "";
+    selfLink = "";
+    status = "";
+    title = "";
+    updated = GapiDate.epoch;
+    
+  }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_date_value "completed" x.completed;
+      GapiJson.render_bool_value "deleted" x.deleted;
+      GapiJson.render_date_value "due" x.due;
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_bool_value "hidden" x.hidden;
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_array "links" LinksData.render x.links;
+      GapiJson.render_string_value "notes" x.notes;
+      GapiJson.render_string_value "parent" x.parent;
+      GapiJson.render_string_value "position" x.position;
+      GapiJson.render_string_value "selfLink" x.selfLink;
+      GapiJson.render_string_value "status" x.status;
+      GapiJson.render_string_value "title" x.title;
+      GapiJson.render_date_value "updated" x.updated;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "completed"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with completed = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "deleted"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with deleted = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "due"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with due = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hidden"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with hidden = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "links"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        LinksData.parse
+        LinksData.empty
+        (fun xs -> { x with links = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "notes"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with notes = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "parent"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with parent = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "position"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with position = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "status"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with status = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with title = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "updated"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with updated = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty Std.identity cs
+    | e ->
+      GapiJson.unexpected "GapiTasksV1Model.Task.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
 end
 
 module TaskLists =
 struct
   type t = {
-    kind : string;
     etag : string;
+    items : TaskList.t list;
+    kind : string;
     nextPageToken : string;
-    items : TaskList.t list
+    
   }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let etag = {
-		GapiLens.get = (fun x -> x.etag);
-		GapiLens.set = (fun v x -> { x with etag = v })
-	}
-	let nextPageToken = {
-		GapiLens.get = (fun x -> x.nextPageToken);
-		GapiLens.set = (fun v x -> { x with nextPageToken = v })
-	}
-	let items = {
-		GapiLens.get = (fun x -> x.items);
-		GapiLens.set = (fun v x -> { x with items = v })
-	}
-
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  
   let empty = {
-    kind = "";
     etag = "";
+    items = [];
+    kind = "";
     nextPageToken = "";
-    items = []
+    
   }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_array "items" TaskList.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        TaskList.parse
+        TaskList.empty
+        (fun xs -> { x with items = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty Std.identity cs
+    | e ->
+      GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
 
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "etag" x.etag;
-       render_string_value "nextPageToken" x.nextPageToken;
-       render_array "items" TaskList.render x.items]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ name = "etag"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with etag = v }
-      | AnnotatedTree.Leaf
-          ({ name = "nextPageToken"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with nextPageToken = v }
-      | AnnotatedTree.Node
-          ({ name = "items"; data_type = Array },
-           cs) ->
-          parse_collection
-            TaskList.parse
-            TaskList.empty
-            (fun xs -> { x with items = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiTasks.TaskLists.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
+module Tasks =
+struct
+  type t = {
+    etag : string;
+    items : Task.t list;
+    kind : string;
+    nextPageToken : string;
+    
+  }
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  
+  let empty = {
+    etag = "";
+    items = [];
+    kind = "";
+    nextPageToken = "";
+    
+  }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_array "items" Task.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        Task.parse
+        Task.empty
+        (fun xs -> { x with items = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty Std.identity cs
+    | e ->
+      GapiJson.unexpected "GapiTasksV1Model.Tasks.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
 end
 

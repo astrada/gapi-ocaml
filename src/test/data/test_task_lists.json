@@ -1,12 +1,12 @@
 {
-  "kind": "tasks#taskLists",
-  "nextPageToken": "nextPageToken",
   "items": [
     {
-      "kind": "tasks#taskList",
       "id": "taskListID",
-      "title": "Foo's Tasks",
-      "selfLink": "https://www.googleapis.com/tasks/v1/users/@me/lists/taskListID"
+      "kind": "tasks#taskList",
+      "selfLink": "https://www.googleapis.com/tasks/v1/users/@me/lists/taskListID",
+      "title": "Foo's Tasks"
     }
-  ]
+  ],
+  "kind": "tasks#taskLists",
+  "nextPageToken": "nextPageToken"
 }
