@@ -157,5 +157,7 @@ struct
 
   let (-=!) l v = modify_state l ((-) v)
 
+  let (@=!) l v = modify_state l (fun a -> a @ v)
+
 end
 
