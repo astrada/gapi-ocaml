@@ -1,7 +1,7 @@
 open GapiUtils.Infix
-open GapiDiscoveryV1Model
 open GapiLens.Infix
 open GapiLens.StateInfix
+open GapiDiscoveryV1Model
 
 (* Symbol name generation *)
 
@@ -48,8 +48,15 @@ struct
 
 end
 
-let get_anonymous_type_module_name id =
-  OCamlName.get_ocaml_name ModuleName (id ^ "Data")
+let get_anonymous_type_module_name ids =
+  let module_base_name =
+    List.fold_right
+      (fun id name ->
+         name ^ (OCamlName.get_ocaml_name ModuleName id))
+      ids
+      ""
+  in
+    module_base_name ^ "Data"
 
 (* END Symbol name generation *)
 
@@ -252,7 +259,7 @@ struct
 
   let get_to_string_function scalar =
     match scalar.data_type with
-        String -> "Std.identity"
+        String -> "(fun x -> x)"
       | Boolean -> "string_of_bool"
       | Integer -> "string_of_int"
       | DateTime
@@ -307,6 +314,7 @@ struct
         failwith "Unsupported type in ComplexType.data_type_to_string"
 
   let get_references complex_type =
+    (* TODO: refactor *)
     let merge xs ys =
       List.fold_left
         (fun zs x ->
@@ -340,6 +348,7 @@ struct
       loop complex_type []
 
   let get_direct_references complex_type =
+    (* TODO: refactor *)
     let merge xs ys =
       List.fold_left
         (fun zs x ->
@@ -356,7 +365,8 @@ struct
         | Reference type_name
         | AnonymousObject (type_name, _) when complex_type'.id <> type_name ->
             type_name :: accu
-        | Object properties ->
+        | Object properties
+        | AnonymousObject (_, properties) ->
             List.fold_left
               (fun a (_, prop) ->
                  let refs = loop prop accu in
@@ -383,7 +393,7 @@ struct
         failwith "Unsupported type in ComplexType.get_empty_value"
 
   let create json_schema =
-    let rec inner_create container_id schema =
+    let rec inner_create container_ids schema =
       let is_anonymous = schema.JsonSchema.id = "" in
       let is_reference = schema.JsonSchema._ref <> "" in
       let is_complex =
@@ -398,23 +408,24 @@ struct
             None ->
               let properties =
                 List.map
-                  (fun (id, v) -> (id, inner_create id v))
+                  (fun (id, v) -> (id, inner_create (id :: container_ids) v))
                   schema.JsonSchema.properties
               in
                 if is_anonymous then
                   let ocaml_type_module =
-                    get_anonymous_type_module_name container_id
+                    get_anonymous_type_module_name container_ids
                   in
                     AnonymousObject (ocaml_type_module, properties)
                 else
                   Object properties
-          | Some p -> Dictionary (inner_create container_id p)
+          | Some p ->
+              Dictionary (inner_create container_ids p)
       in
 
       let create_array () =
         Array (schema.JsonSchema.items
                  |> Option.get
-                 |> inner_create container_id)
+                 |> inner_create container_ids)
       in
 
       let create_complex () =
@@ -447,7 +458,7 @@ struct
           original_type = schema.JsonSchema._type;
           description = schema.JsonSchema.description;
         }
-    in inner_create "" json_schema
+    in inner_create [json_schema.JsonSchema.id] json_schema
 
   let get_description complex_type =
     match complex_type.data_type with
