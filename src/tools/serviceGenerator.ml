@@ -778,7 +778,7 @@ let build_service_module =
            field.Field.ocaml_name
            field.Field.ocaml_name)
       parameters;
-    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.key;@,";
+    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.StandardParameters.key;@,";
     FieldSet.iter
       (fun (id, field) ->
          Format.fprintf formatter
