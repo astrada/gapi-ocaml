@@ -1,6 +1,6 @@
 let random_generator =
-  Cryptokit.Random.pseudo_rng
-    (Cryptokit.Random.string Cryptokit.Random.secure_rng 20)
+  lazy (Cryptokit.Random.pseudo_rng
+          (Cryptokit.Random.string Cryptokit.Random.secure_rng 20))
 
 let encode s =
   Netencoding.Url.encode ~plus:false s
@@ -118,7 +118,7 @@ let build_oauth_fields_to_sign
         transform#finish;
         transform#get_string
     in
-      hexa_encode (Cryptokit.Random.string random_generator 8) in
+      hexa_encode (Cryptokit.Random.string (Lazy.force random_generator) 8) in
     
   let generate_timestamp () =
     String.sub (string_of_float (Unix.time ())) 0 10 in
