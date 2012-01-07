@@ -65,8 +65,8 @@ struct
     param (fun p -> p.userIp) (fun x -> x) "userIp";
     param (fun p -> p.key) (fun x -> x) "key";
     param (fun p -> p.projection) Projection.to_string "projection";
-    param (fun p -> p.shortUrl) Std.identity "shortUrl";
-    param (fun p -> p.start_token) Std.identity "start-token";
+    param (fun p -> p.shortUrl) (fun x -> x) "shortUrl";
+    param (fun p -> p.start_token) (fun x -> x) "start-token";
     
   ] |> List.concat
   

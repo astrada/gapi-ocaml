@@ -121,25 +121,25 @@ struct
     param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
     param (fun p -> p.userIp) (fun x -> x) "userIp";
     param (fun p -> p.key) (fun x -> x) "key";
-    param (fun p -> p.destination) Std.identity "destination";
-    param (fun p -> p.iCalUID) Std.identity "iCalUID";
+    param (fun p -> p.destination) (fun x -> x) "destination";
+    param (fun p -> p.iCalUID) (fun x -> x) "iCalUID";
     param (fun p -> p.maxAttendees) string_of_int "maxAttendees";
     param (fun p -> p.maxResults) string_of_int "maxResults";
     param (fun p -> p.minAccessRole) MinAccessRole.to_string "minAccessRole";
     param (fun p -> p.orderBy) OrderBy.to_string "orderBy";
-    param (fun p -> p.originalStart) Std.identity "originalStart";
-    param (fun p -> p.pageToken) Std.identity "pageToken";
-    param (fun p -> p.q) Std.identity "q";
+    param (fun p -> p.originalStart) (fun x -> x) "originalStart";
+    param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+    param (fun p -> p.q) (fun x -> x) "q";
     param (fun p -> p.sendNotifications) string_of_bool "sendNotifications";
     param (fun p -> p.showDeleted) string_of_bool "showDeleted";
     param (fun p -> p.showHidden) string_of_bool "showHidden";
     param (fun p -> p.showHiddenInvitations) string_of_bool "showHiddenInvitations";
     param (fun p -> p.singleEvents) string_of_bool "singleEvents";
-    param (fun p -> p.text) Std.identity "text";
-    param (fun p -> p.timeMax) Std.identity "timeMax";
-    param (fun p -> p.timeMin) Std.identity "timeMin";
-    param (fun p -> p.timeZone) Std.identity "timeZone";
-    param (fun p -> p.updatedMin) Std.identity "updatedMin";
+    param (fun p -> p.text) (fun x -> x) "text";
+    param (fun p -> p.timeMax) (fun x -> x) "timeMax";
+    param (fun p -> p.timeMin) (fun x -> x) "timeMin";
+    param (fun p -> p.timeZone) (fun x -> x) "timeZone";
+    param (fun p -> p.updatedMin) (fun x -> x) "updatedMin";
     
   ] |> List.concat
   
@@ -204,8 +204,8 @@ struct
         ~calendarId
         ~ruleId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "acl"; ruleId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -219,8 +219,8 @@ struct
         ~calendarId
         ~ruleId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "acl"; ruleId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -234,8 +234,8 @@ struct
         ~calendarId
         aclRule
         session =
-    let full_url = GapiUtils.add_path_to_url ["calendars"; calendarId; "acl"]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -251,8 +251,8 @@ struct
         ?parameters
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url ["calendars"; calendarId; "acl"]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -267,8 +267,8 @@ struct
         ~ruleId
         aclRule
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "acl"; ruleId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -286,8 +286,8 @@ struct
         ~ruleId
         aclRule
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "acl"; ruleId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -308,8 +308,8 @@ struct
         ?parameters
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "me"; "calendarList"; calendarId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
+      ((fun x -> x) calendarId)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -322,8 +322,8 @@ struct
         ?parameters
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "me"; "calendarList"; calendarId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
+      ((fun x -> x) calendarId)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -373,8 +373,8 @@ struct
         ~calendarId
         calendarListEntry
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "me"; "calendarList"; calendarId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
+      ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarParameters.merge_parameters
@@ -392,8 +392,8 @@ struct
         ~calendarId
         calendarListEntry
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "me"; "calendarList"; calendarId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
+      ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarParameters.merge_parameters
@@ -415,8 +415,8 @@ struct
         ?parameters
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "clear"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "clear"] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -429,8 +429,8 @@ struct
         ?parameters
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url ["calendars"; calendarId]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -443,8 +443,8 @@ struct
         ?parameters
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url ["calendars"; calendarId]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -474,8 +474,8 @@ struct
         ~calendarId
         calendar
         session =
-    let full_url = GapiUtils.add_path_to_url ["calendars"; calendarId]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -492,8 +492,8 @@ struct
         ~calendarId
         calendar
         session =
-    let full_url = GapiUtils.add_path_to_url ["calendars"; calendarId]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -533,8 +533,9 @@ struct
         ~calendarId
         ~eventId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId)] base_url
+      in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?sendNotifications () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -550,8 +551,9 @@ struct
         ~calendarId
         ~eventId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId)] base_url
+      in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?maxAttendees ?timeZone () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -565,8 +567,8 @@ struct
         ~calendarId
         event
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; "import"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; "import"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -583,8 +585,8 @@ struct
         ~calendarId
         event
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?sendNotifications () in
@@ -606,8 +608,9 @@ struct
         ~calendarId
         ~eventId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId; "instances"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId);
+      "instances"] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?maxAttendees ?maxResults
       ?originalStart ?pageToken ?showDeleted ?timeZone () in
@@ -634,8 +637,8 @@ struct
         ?updatedMin
         ~calendarId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?iCalUID ?maxAttendees ?maxResults
       ?orderBy ?pageToken ?q ?showDeleted ?showHiddenInvitations
@@ -653,8 +656,9 @@ struct
         ~eventId
         ~destination
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId; "move"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId); "move"]
+      base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ~destination ?sendNotifications () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -670,8 +674,9 @@ struct
         ~eventId
         event
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId)] base_url
+      in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?sendNotifications () in
@@ -688,8 +693,8 @@ struct
         ~calendarId
         ~text
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; "quickAdd"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; "quickAdd"] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?sendNotifications ~text () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -704,8 +709,9 @@ struct
         ~calendarId
         ~eventId
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId; "reset"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId); "reset"]
+      base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?sendNotifications () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list
@@ -721,8 +727,9 @@ struct
         ~eventId
         event
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["calendars"; calendarId; "events"; eventId] base_url in
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId)] base_url
+      in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters ?sendNotifications () in
@@ -762,8 +769,8 @@ struct
         ?parameters
         ~setting
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "me"; "settings"; setting] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings";
+      ((fun x -> x) setting)] base_url in
     let params = CalendarParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map CalendarParameters.to_key_value_list

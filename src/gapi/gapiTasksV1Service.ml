@@ -61,18 +61,18 @@ struct
     param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
     param (fun p -> p.userIp) (fun x -> x) "userIp";
     param (fun p -> p.key) (fun x -> x) "key";
-    param (fun p -> p.completedMax) Std.identity "completedMax";
-    param (fun p -> p.completedMin) Std.identity "completedMin";
-    param (fun p -> p.dueMax) Std.identity "dueMax";
-    param (fun p -> p.dueMin) Std.identity "dueMin";
-    param (fun p -> p.maxResults) Std.identity "maxResults";
-    param (fun p -> p.pageToken) Std.identity "pageToken";
-    param (fun p -> p.parent) Std.identity "parent";
-    param (fun p -> p.previous) Std.identity "previous";
+    param (fun p -> p.completedMax) (fun x -> x) "completedMax";
+    param (fun p -> p.completedMin) (fun x -> x) "completedMin";
+    param (fun p -> p.dueMax) (fun x -> x) "dueMax";
+    param (fun p -> p.dueMin) (fun x -> x) "dueMin";
+    param (fun p -> p.maxResults) (fun x -> x) "maxResults";
+    param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+    param (fun p -> p.parent) (fun x -> x) "parent";
+    param (fun p -> p.previous) (fun x -> x) "previous";
     param (fun p -> p.showCompleted) string_of_bool "showCompleted";
     param (fun p -> p.showDeleted) string_of_bool "showDeleted";
     param (fun p -> p.showHidden) string_of_bool "showHidden";
-    param (fun p -> p.updatedMin) Std.identity "updatedMin";
+    param (fun p -> p.updatedMin) (fun x -> x) "updatedMin";
     
   ] |> List.concat
   
@@ -122,8 +122,8 @@ struct
         ?parameters
         ~tasklist
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "@me"; "lists"; tasklist] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists";
+      ((fun x -> x) tasklist)] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -136,8 +136,8 @@ struct
         ?parameters
         ~tasklist
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "@me"; "lists"; tasklist] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists";
+      ((fun x -> x) tasklist)] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -183,8 +183,8 @@ struct
         ~tasklist
         taskList
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "@me"; "lists"; tasklist] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists";
+      ((fun x -> x) tasklist)] base_url in
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -201,8 +201,8 @@ struct
         ~tasklist
         taskList
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["users"; "@me"; "lists"; tasklist] base_url in
+    let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists";
+      ((fun x -> x) tasklist)] base_url in
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -223,8 +223,8 @@ struct
         ?parameters
         ~tasklist
         session =
-    let full_url = GapiUtils.add_path_to_url ["lists"; tasklist; "clear"]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "clear"] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -238,8 +238,8 @@ struct
         ~tasklist
         ~task
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["lists"; tasklist; "tasks"; task] base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -253,8 +253,8 @@ struct
         ~tasklist
         ~task
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["lists"; tasklist; "tasks"; task] base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -270,8 +270,8 @@ struct
         ~tasklist
         task
         session =
-    let full_url = GapiUtils.add_path_to_url ["lists"; tasklist; "tasks"]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"] base_url in
     let etag = GapiUtils.etag_option task.Task.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters ?parent ?previous () in
@@ -296,8 +296,8 @@ struct
         ?updatedMin
         ~tasklist
         session =
-    let full_url = GapiUtils.add_path_to_url ["lists"; tasklist; "tasks"]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters ?completedMax ?completedMin ?dueMax
       ?dueMin ?maxResults ?pageToken ?showCompleted ?showDeleted ?showHidden
@@ -315,8 +315,9 @@ struct
         ~tasklist
         ~task
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["lists"; tasklist; "tasks"; task; "move"] base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task); "move"] base_url
+      in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters ?parent ?previous () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -331,8 +332,8 @@ struct
         ~task
         task'
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["lists"; tasklist; "tasks"; task] base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let etag = GapiUtils.etag_option task'.Task.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
@@ -349,8 +350,8 @@ struct
         ~task
         task'
         session =
-    let full_url = GapiUtils.add_path_to_url
-      ["lists"; tasklist; "tasks"; task] base_url in
+    let full_url = GapiUtils.add_path_to_url ["lists";
+      ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let etag = GapiUtils.etag_option task'.Task.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:parameters () in
