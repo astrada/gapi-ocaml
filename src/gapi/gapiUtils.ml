@@ -38,7 +38,15 @@ let merge_query_string ?(encoded = true) parameters url =
 let add_path_to_url ?(encoded = true) path_to_add url =
   let neturl = Neturl.parse_url url in
   let path = Neturl.url_path neturl |> List.filter (fun p -> p <> "") in
-  let new_path = "" :: (path @ path_to_add) in
+  let path_to_add_encoded =
+    List.map
+      (fun p ->
+         (* In some services: e.g. tasks default list (@default), the '@' should
+          * not be encoded, but if the string contains '#', the resulting URL
+          * will be invalid for Neturl *)
+         if String.contains p '#' then Netencoding.Url.encode p else p)
+      path_to_add in
+  let new_path = "" :: (path @ path_to_add_encoded) in
   let new_neturl = Neturl.modify_url
                      ~encoded
                      ~path:new_path
