@@ -61,6 +61,7 @@ struct
     prettyPrint : bool;
     quotaUser : string;
     userIp : string;
+    key : string;
     (* calendar-specific query parameters *)
     destination : string;
     iCalUID : string;
@@ -89,6 +90,7 @@ struct
     prettyPrint = true;
     quotaUser = "";
     userIp = "";
+    key = "";
     destination = "";
     iCalUID = "";
     maxAttendees = 0;
@@ -114,10 +116,11 @@ struct
   let to_key_value_list qp =
     let param get_value to_string name =
       GapiService.build_param default qp get_value to_string name in [
-    param (fun p -> p.fields) Std.identity "fields";
+    param (fun p -> p.fields) (fun x -> x) "fields";
     param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-    param (fun p -> p.quotaUser) Std.identity "quotaUser";
-    param (fun p -> p.userIp) Std.identity "userIp";
+    param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+    param (fun p -> p.userIp) (fun x -> x) "userIp";
+    param (fun p -> p.key) (fun x -> x) "key";
     param (fun p -> p.destination) Std.identity "destination";
     param (fun p -> p.iCalUID) Std.identity "iCalUID";
     param (fun p -> p.maxAttendees) string_of_int "maxAttendees";
@@ -167,6 +170,7 @@ struct
       prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
       quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
       userIp = standard_parameters.GapiService.StandardParameters.userIp;
+      key = standard_parameters.GapiService.StandardParameters.key;
       destination;
       iCalUID;
       maxAttendees;

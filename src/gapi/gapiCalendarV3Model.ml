@@ -139,7 +139,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Colors.parse" e
   
@@ -213,7 +213,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Setting.parse" e
   
@@ -349,7 +349,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.AclRule.parse" e
   
@@ -401,7 +401,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Error.parse" e
   
@@ -614,7 +614,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.FreeBusyRequestItem.parse" e
   
@@ -790,7 +790,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.EventAttendee.parse" e
   
@@ -900,7 +900,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.EventReminder.parse" e
   
@@ -1475,7 +1475,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Event.parse" e
   
@@ -1575,7 +1575,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.FreeBusyRequest.parse" e
   
@@ -1653,7 +1653,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Acl.parse" e
   
@@ -1801,7 +1801,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Events.parse" e
   
@@ -1868,7 +1868,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Settings.parse" e
   
@@ -1975,7 +1975,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Calendar.parse" e
   
@@ -2027,7 +2027,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.TimePeriod.parse" e
   
@@ -2204,7 +2204,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.CalendarListEntry.parse" e
   
@@ -2372,7 +2372,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse" e
   
@@ -2450,7 +2450,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.CalendarList.parse" e
   
