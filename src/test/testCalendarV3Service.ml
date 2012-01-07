@@ -4,12 +4,6 @@ open GapiLens.Infix
 open GapiCalendarV3Model
 open GapiCalendarV3Service
 
-(* We should add a delay to let Google persist the new entry, after a write
- * operation, otherwise DELETE will return a 503 HTTP error (Service
- * Unavailable) *)
-let delay () =
-  Unix.sleep 5
-
 (* ACL *)
 
 let acl_test_resource = {
@@ -28,6 +22,7 @@ let test_list_acl () =
     (fun session ->
        let (acl, session) =
          AclResource.list
+           ~calendarId:"primary"
            session
        in
          assert_equal
@@ -46,11 +41,13 @@ let test_insert_acl () =
     (fun session ->
        let (new_entry, session) =
          AclResource.insert
+           ~calendarId:"primary"
            acl_test_resource
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (AclResource.delete
-                   new_entry
+                   ~calendarId:"primary"
+                   ~ruleId:new_entry.AclRule.id
                    session);
          TestHelper.assert_not_empty
            "ACL id should not be empty"
@@ -62,15 +59,18 @@ let test_get_acl () =
     (fun session ->
        let (entry, session) =
          AclResource.insert
+           ~calendarId:"primary"
            acl_test_resource
            session in
        let (entry', session) =
          AclResource.get
+           ~calendarId:"primary"
            ~ruleId:entry.AclRule.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (AclResource.delete
-                   entry
+                   ~calendarId:"primary"
+                   ~ruleId:entry.AclRule.id
                    session);
          assert_equal
            entry.AclRule.id
@@ -82,17 +82,21 @@ let test_update_acl () =
     (fun session ->
        let (entry, session) =
          AclResource.insert
+           ~calendarId:"primary"
            acl_test_resource
            session in
        let entry = { entry with
                          AclRule.role = "freeBusyReader" } in
        let (entry, session) =
          AclResource.update
+           ~calendarId:"primary"
+           ~ruleId:entry.AclRule.id
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (AclResource.delete
-                   entry
+                   ~calendarId:"primary"
+                   ~ruleId:entry.AclRule.id
                    session);
          assert_equal
            "freeBusyReader"
@@ -104,18 +108,22 @@ let test_delete_acl () =
     (fun session ->
        let (entry, session) =
          AclResource.insert
+           ~calendarId:"primary"
            acl_test_resource
            session in
        let (acl, session) =
          AclResource.list
+           ~calendarId:"primary"
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let ((), session) =
          AclResource.delete
-           entry
+           ~calendarId:"primary"
+           ~ruleId:entry.AclRule.id
            session in
        let (acl', _) =
          AclResource.list
+           ~calendarId:"primary"
            session
        in
          TestHelper.assert_exists
@@ -137,7 +145,6 @@ let test_get_colors () =
     (fun session ->
        let (colors, session) =
          ColorsResource.get
-           ~url:"https://www.googleapis.com/calendar/v3/colors?key=AIzaSyCxmj--5AFh3tMpf1zEkkdodiZgcYUX4uc"
            session
        in
          assert_equal
@@ -147,6 +154,7 @@ let test_get_colors () =
            "There should be at least 1 calendar color"
            (List.length colors.Colors.calendar >= 1))
 
+    (*
 (* SettingsResource *)
 
 let test_settings_list () =
@@ -197,7 +205,7 @@ let test_insert_calendar () =
          CalendarsResource.insert
            new_calendar
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarsResource.delete
                    new_entry
                    session);
@@ -217,7 +225,7 @@ let test_get_calendar () =
          CalendarsResource.get
            ~calendarId:entry.Calendar.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarsResource.delete
                    entry'
                    session);
@@ -242,7 +250,7 @@ let test_get_calendar_partial_response () =
            ~parameters
            ~calendarId:entry.Calendar.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarsResource.delete
                    entry'
                    session);
@@ -268,7 +276,7 @@ let test_refresh_calendar () =
          CalendarsResource.refresh
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarsResource.delete
                    entry'
                    session);
@@ -291,7 +299,7 @@ let test_update_calendar () =
          CalendarsResource.update
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarsResource.delete
                    entry
                    session);
@@ -316,7 +324,7 @@ let test_patch_calendar () =
          CalendarsResource.patch
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarsResource.delete
                    entry
                    session);
@@ -338,7 +346,7 @@ let test_delete_calendar () =
        let (calendars, session) =
          CalendarListResource.list
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let ((), session) =
          CalendarsResource.delete
            entry
@@ -432,7 +440,7 @@ let test_insert_event () =
          EventsResource.insert
            new_event
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    event
                    session);
@@ -452,7 +460,7 @@ let test_get_event () =
          EventsResource.get
            ~eventId:entry.Event.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    entry'
                    session);
@@ -472,7 +480,7 @@ let test_refresh_event () =
          EventsResource.refresh
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    entry'
                    session);
@@ -495,7 +503,7 @@ let test_update_event () =
          EventsResource.update
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    entry
                    session);
@@ -520,7 +528,7 @@ let test_patch_event () =
          EventsResource.patch
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    entry
                    session);
@@ -539,7 +547,7 @@ let test_delete_event () =
          EventsResource.insert
            new_event
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let (events, session) =
          EventsResource.list
            ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
@@ -572,7 +580,7 @@ let test_quick_add_event () =
          EventsResource.quickAdd
            ~text:"Appointment at Somewhere on June 3rd 10am-10:25am"
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    event
                    session);
@@ -591,7 +599,7 @@ let test_import_event () =
          EventsResource.import
            event
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    event
                    session);
@@ -611,13 +619,13 @@ let test_move_event () =
          CalendarsResource.insert
            new_calendar
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let (event, session) =
          EventsResource.move
            ~eventId:event.Event.id
            ~destination:calendar.Calendar.id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (EventsResource.delete
                    ~calendarId:calendar.Calendar.id
                    event
@@ -637,7 +645,7 @@ let test_recurring_event_instances () =
          EventsResource.insert
            new_recurring_event
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let (events, session) =
          EventsResource.instances
            ~eventId:event.Event.id
@@ -661,7 +669,7 @@ let test_recurring_event_instance_reset () =
          EventsResource.insert
            new_recurring_event
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let (events, session) =
          EventsResource.instances
            ~eventId:event.Event.id
@@ -745,7 +753,7 @@ let test_insert_calendar_list () =
          CalendarListResource.insert
            australian_calendar
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarListResource.delete
                    new_entry
                    session);
@@ -765,7 +773,7 @@ let test_get_calendar_list () =
          CalendarListResource.get
            ~calendarId:australian_calendar_id
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarListResource.delete
                    entry
                    session);
@@ -785,7 +793,7 @@ let test_refresh_calendar_list () =
          CalendarListResource.refresh
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarListResource.delete
                    entry
                    session);
@@ -807,7 +815,7 @@ let test_update_calendar_list () =
          CalendarListResource.update
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarListResource.delete
                    entry
                    session);
@@ -832,7 +840,7 @@ let test_patch_calendar_list () =
          CalendarListResource.patch
            entry
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
          ignore (CalendarListResource.delete
                    entry
                    session);
@@ -854,7 +862,7 @@ let test_delete_calendar_list () =
        let (calendars, session) =
          CalendarListResource.list
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let ((), session) =
          CalendarListResource.delete
            entry
@@ -888,7 +896,7 @@ let test_free_busy_query () =
          EventsResource.insert
            new_event
            session in
-       let _ = delay () in
+       let _ = TestHelper.delay () in
        let params =
          { FreeBusyRequest.empty with
                FreeBusyRequest.timeMin =
@@ -910,15 +918,16 @@ let test_free_busy_query () =
          assert_bool
            "There should be at least 1 calendar in free/busy resource"
            (List.length freeBusy.FreeBusyResponse.calendars >= 1))
+  *)
 
 let suite = "Calendar services (v3) test" >:::
-  ["test_list_acl" >:: test_list_acl;
+  [(*"test_list_acl" >:: test_list_acl;
    "test_insert_acl" >:: test_insert_acl;
    "test_get_acl" >:: test_get_acl;
    "test_update_acl" >:: test_update_acl;
-   "test_delete_acl" >:: test_delete_acl;
+   "test_delete_acl" >:: test_delete_acl;*)
    "test_get_colors" >:: test_get_colors;
-   "test_settings_list" >:: test_settings_list;
+   (*"test_settings_list" >:: test_settings_list;
    "test_settings_get" >:: test_settings_get;
    "test_event_list" >:: test_event_list;
    "test_insert_event" >:: test_insert_event;
@@ -951,5 +960,5 @@ let suite = "Calendar services (v3) test" >:::
    "test_delete_calendar" >:: test_delete_calendar;
    (*"test_clear_primary_calendar" >:: test_clear_primary_calendar;
     * -- clears primary calendar;*)
-   "test_free_busy_query" >:: test_free_busy_query]
+   "test_free_busy_query" >:: test_free_busy_query*)]
 

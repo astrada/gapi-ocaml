@@ -166,7 +166,8 @@ let test_render_free_busy_parameters () =
     { FreeBusyRequest.empty with
           FreeBusyRequest.timeMin = GapiDate.of_string "2011-11-10";
           timeMax = GapiDate.of_string "2011-12-01";
-          items = [ "calendar_id"; "calendar_id_2" ]
+          items = [{ FreeBusyRequestItem.id = "calendar_id" };
+                   { FreeBusyRequestItem.id = "calendar_id_2" }]
     } in
   let tree = FreeBusyRequest.to_data_model params in
   let json = GapiJson.data_model_to_json tree in
