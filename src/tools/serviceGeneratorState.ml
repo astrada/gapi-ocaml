@@ -268,7 +268,7 @@ struct
     | AnonymousObject of (string * (string * t) list)
     | Array of t
     | Reference of string
-    | Dynamic of t
+    | Dictionary of t
   and t = {
     id : string;
     data_type : data_t;
@@ -301,6 +301,8 @@ struct
         type_name ^ ".t"
     | Array inner_type ->
         (data_type_to_string inner_type.data_type) ^ " list"
+    | Dictionary inner_type ->
+        "(string * " ^ (data_type_to_string inner_type.data_type) ^ ") list"
     | _ ->
         failwith "Unsupported type in ComplexType.data_type_to_string"
 
@@ -321,22 +323,22 @@ struct
         | Reference type_name
         | AnonymousObject (type_name, _) when complex_type.id <> type_name ->
             type_name :: accu
-        | Array inner_type ->
+        | Array inner_type
+        | Dictionary inner_type ->
             loop inner_type accu
-        | Object properties ->
+        | Object properties
+        | AnonymousObject (_, properties) ->
             List.fold_left
               (fun a (_, prop) ->
                  let refs = loop prop accu in
                    merge a refs)
               accu
               properties
-        | Scalar _
         | _ ->
             accu
     in
       loop complex_type []
 
-  (* TODO: refactor *)
   let get_direct_references complex_type =
     let merge xs ys =
       List.fold_left
@@ -361,8 +363,8 @@ struct
                    merge a refs)
               accu
               properties
-        | Array _
-        | Scalar _
+        | Dictionary inner_type ->
+            loop inner_type accu
         | _ ->
             accu
     in
@@ -374,7 +376,8 @@ struct
     | Reference type_name
     | AnonymousObject (type_name, _) ->
         type_name ^ ".empty"
-    | Array inner_type ->
+    | Array _
+    | Dictionary _ ->
         "[]"
     | _ ->
         failwith "Unsupported type in ComplexType.get_empty_value"
@@ -405,7 +408,7 @@ struct
                     AnonymousObject (ocaml_type_module, properties)
                 else
                   Object properties
-          | Some p -> Dynamic (inner_create container_id p)
+          | Some p -> Dictionary (inner_create container_id p)
       in
 
       let create_array () =
@@ -445,13 +448,6 @@ struct
           description = schema.JsonSchema.description;
         }
     in inner_create "" json_schema
-
-  let get_content arr =
-    match arr.data_type with
-        Reference type_name
-      | AnonymousObject (type_name, _) -> type_name
-      | _ ->
-          failwith "Unsupported type in ComplexType.get_content"
 
   let get_description complex_type =
     match complex_type.data_type with
@@ -526,8 +522,9 @@ struct
           module_name
       | Reference type_name ->
           OCamlName.get_ocaml_name ModuleName type_name
-      | Array arr ->
-          get_module_name field_name arr
+      | Array inner_type
+      | Dictionary inner_type ->
+          get_module_name field_name inner_type
       | _ ->
           OCamlName.get_ocaml_name ModuleName field_name
 
@@ -1125,7 +1122,8 @@ struct
     let graph =
       Hashtbl.fold
         (fun id complex_type g ->
-           (id, ComplexType.get_references complex_type) :: g)
+           let references = ComplexType.get_references complex_type in
+             (id, references) :: g)
         table
         [] in
     let sorted_types = topological_sort graph in

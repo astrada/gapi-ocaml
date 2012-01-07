@@ -467,14 +467,15 @@ let post
       url
       parse_response
       session =
-  service_request_with_data
-    GapiRequest.Create
-    data_to_post
-    ?query_parameters
-    data
-    url
-    parse_response
-    session
+  let post_data = data_to_post data in
+    service_request
+      ~post_data
+      ?etag
+      ?query_parameters
+      ~request_type:GapiRequest.Create
+      url
+      parse_response
+      session
 
 let put
       ?etag

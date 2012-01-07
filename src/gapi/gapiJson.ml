@@ -113,6 +113,14 @@ let parse_string_element _ = function
   | e ->
       unexpected "GapiJson.parse_string_element" e
 
+let parse_dictionary_entry _ = function
+   AnnotatedTree.Leaf
+     ({ name = n; data_type = Scalar },
+      Json_type.String v) ->
+     (n, v)
+ | e ->
+     unexpected "GapiJson.parse_property" e
+
 let json_to_data_model json_value =
   let rec map (name, value) =
     match value with

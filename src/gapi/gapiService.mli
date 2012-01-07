@@ -236,9 +236,9 @@ val post :
   ?data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
-  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> 'b) ->
   GapiConversation.Session.t ->
-  'a * GapiConversation.Session.t
+  'b * GapiConversation.Session.t
 
 val put :
   ?etag:string ->

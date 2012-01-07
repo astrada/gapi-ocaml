@@ -101,6 +101,11 @@ val parse_string_element :
   json_data_model ->
   string
 
+val parse_dictionary_entry :
+  'a ->
+  json_data_model ->
+  (string * string)
+
 val json_to_data_model :
   Json_type.json_type ->
   json_data_model
