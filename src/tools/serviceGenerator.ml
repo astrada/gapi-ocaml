@@ -281,7 +281,7 @@ let build_schema_inner_module file_lens complex_type =
       fields;
     if is_recursive then begin
       Format.fprintf formatter
-        "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ Std.identity@ cs@]@]@,"
+        "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,"
     end;
     Format.fprintf formatter
       "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e@]@]"
@@ -732,7 +732,7 @@ let build_service_module =
 
   let render_type_t formatter parameters service_name =
     Format.fprintf formatter
-      "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,(* %s-specific query parameters *)@,"
+      "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
       service_name;
     FieldSet.iter
       (fun (id, field) ->
@@ -745,7 +745,7 @@ let build_service_module =
   in
 
   let render_default formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,";
+    Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,key = \"\";@,";
     FieldSet.iter
       (fun (id, { Field.ocaml_name; default; _ }) ->
          Format.fprintf formatter
@@ -757,7 +757,7 @@ let build_service_module =
   in
 
   let render_to_key_value_list formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) Std.identity \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) Std.identity \"quotaUser\";@,param (fun p -> p.userIp) Std.identity \"userIp\";@,";
+    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) (fun x -> x) \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) (fun x -> x) \"quotaUser\";@,param (fun p -> p.userIp) (fun x -> x) \"userIp\";@,param (fun p -> p.key) (fun x -> x) \"key\";@,";
     FieldSet.iter
       (fun (id, { Field.original_name; ocaml_name; to_string_function; _ }) ->
          Format.fprintf formatter
@@ -778,7 +778,7 @@ let build_service_module =
            field.Field.ocaml_name
            field.Field.ocaml_name)
       parameters;
-    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,";
+    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.key;@,";
     FieldSet.iter
       (fun (id, field) ->
          Format.fprintf formatter
