@@ -42,7 +42,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.StringCount.parse" e
   
@@ -349,7 +349,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.Url.parse" e
   
@@ -438,7 +438,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.UrlHistory.parse" e
   
