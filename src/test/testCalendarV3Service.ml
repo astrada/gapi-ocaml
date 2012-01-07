@@ -140,11 +140,16 @@ let test_delete_acl () =
 (* ColorsResource *)
 
 let test_get_colors () =
-  TestHelper.test_request
-    TestHelper.build_oauth2_auth
-    (fun session ->
+  TestHelper.test_request_noauth
+    (fun test_config session ->
+       let parameters = {
+         GapiService.StandardParameters.default with
+             GapiService.StandardParameters.key =
+               TestHelper.Config.get test_config "key"
+       } in
        let (colors, session) =
          ColorsResource.get
+           ~parameters
            session
        in
          assert_equal
