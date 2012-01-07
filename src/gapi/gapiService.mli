@@ -112,9 +112,15 @@ module StandardParameters :
 sig
   type t = {
     fields : string;
+    (** Selector specifying which fields to include in a partial response. *)
     prettyPrint : bool;
+    (** Returns response with indentations and line breaks. *)
     quotaUser : string;
-    userIp : string
+    (** Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided. *)
+    userIp : string;
+    (** IP address of the site where the request originates. Use this if you want to enforce per-user limits. *)
+    key : string;
+    (** API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token. *)
   }
 
   val default : t
