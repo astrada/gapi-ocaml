@@ -15,6 +15,7 @@ struct
     prettyPrint : bool;
     quotaUser : string;
     userIp : string;
+    key : string;
     (* tasks-specific query parameters *)
     completedMax : string;
     completedMin : string;
@@ -36,6 +37,7 @@ struct
     prettyPrint = true;
     quotaUser = "";
     userIp = "";
+    key = "";
     completedMax = "";
     completedMin = "";
     dueMax = "";
@@ -54,10 +56,11 @@ struct
   let to_key_value_list qp =
     let param get_value to_string name =
       GapiService.build_param default qp get_value to_string name in [
-    param (fun p -> p.fields) Std.identity "fields";
+    param (fun p -> p.fields) (fun x -> x) "fields";
     param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-    param (fun p -> p.quotaUser) Std.identity "quotaUser";
-    param (fun p -> p.userIp) Std.identity "userIp";
+    param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+    param (fun p -> p.userIp) (fun x -> x) "userIp";
+    param (fun p -> p.key) (fun x -> x) "key";
     param (fun p -> p.completedMax) Std.identity "completedMax";
     param (fun p -> p.completedMin) Std.identity "completedMin";
     param (fun p -> p.dueMax) Std.identity "dueMax";
@@ -93,6 +96,7 @@ struct
       prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
       quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
       userIp = standard_parameters.GapiService.StandardParameters.userIp;
+      key = standard_parameters.GapiService.StandardParameters.key;
       completedMax;
       completedMin;
       dueMax;

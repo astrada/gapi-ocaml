@@ -75,7 +75,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiTasksV1Model.TaskList.parse" e
   
@@ -138,7 +138,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiTasksV1Model.LinksData.parse" e
   
@@ -337,7 +337,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiTasksV1Model.Task.parse" e
   
@@ -415,7 +415,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse" e
   
@@ -493,7 +493,7 @@ struct
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
-      GapiJson.parse_children parse empty Std.identity cs
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiTasksV1Model.Tasks.parse" e
   
