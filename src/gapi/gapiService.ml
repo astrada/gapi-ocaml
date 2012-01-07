@@ -206,14 +206,16 @@ struct
     fields : string;
     prettyPrint : bool;
     quotaUser : string;
-    userIp : string
+    userIp : string;
+    key : string;
   }
 
   let default = {
     fields = "";
     prettyPrint = true;
     quotaUser = "";
-    userIp = ""
+    userIp = "";
+    key = "";
   }
 
   let to_key_value_list qp =
@@ -223,7 +225,8 @@ struct
       [param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
        param (fun p -> p.quotaUser) Std.identity "quotaUser";
-       param (fun p -> p.userIp) Std.identity "userIp"]
+       param (fun p -> p.userIp) Std.identity "userIp";
+       param (fun p -> p.key) Std.identity "key"]
       |> List.concat
 
 end
