@@ -147,42 +147,66 @@ let build_schema_inner_module file_lens complex_type =
         "@,@[<v 2>let render_content x = @,@[<v 2> [@,";
     List.iter
       (fun { Field.ocaml_name; original_name; ocaml_type_module; field_type} ->
-         match field_type.ComplexType.data_type with
-             ComplexType.Scalar scalar ->
-               let render_value =
-                 match scalar.ScalarType.data_type with
-                     ScalarType.String ->
-                       "GapiJson.render_string_value"
-                   | ScalarType.Boolean ->
-                       "GapiJson.render_bool_value"
-                   | ScalarType.Integer ->
-                       "GapiJson.render_int_value"
-                   | ScalarType.DateTime
-                   | ScalarType.Date ->
-                       "GapiJson.render_date_value" in
+         let render_function scalar =
+           match scalar.ScalarType.data_type with
+               ScalarType.String ->
+                 "GapiJson.render_string_value"
+             | ScalarType.Boolean ->
+                 "GapiJson.render_bool_value"
+             | ScalarType.Integer ->
+                 "GapiJson.render_int_value"
+             | ScalarType.DateTime
+             | ScalarType.Date ->
+                 "GapiJson.render_date_value"
+         in
+           match field_type.ComplexType.data_type with
+               ComplexType.Scalar scalar ->
                  Format.fprintf formatter
                    "%s \"%s\" x.%s;@,"
-                   render_value
+                   (render_function scalar)
                    original_name
                    ocaml_name;
-           | ComplexType.Reference _
-           | ComplexType.AnonymousObject _ ->
-               Format.fprintf formatter
-                 "GapiJson.render_object \"%s\" (%s.render_content x.%s);@,"
-                 original_name
-                 ocaml_type_module
-                 ocaml_name;
-           | ComplexType.Array { ComplexType.data_type =
-                                   ComplexType.Reference _; _ }
-           | ComplexType.Array { ComplexType.data_type =
-                                   ComplexType.AnonymousObject _; _ } ->
-               Format.fprintf formatter
-                 "GapiJson.render_array \"%s\" %s.render x.%s;@,"
-                 original_name
-                 ocaml_type_module
-                 ocaml_name;
-           | _ ->
-               failwith "Unexpected complex type rendering render function")
+             | ComplexType.Reference _
+             | ComplexType.AnonymousObject _ ->
+                 Format.fprintf formatter
+                   "GapiJson.render_object \"%s\" (%s.render_content x.%s);@,"
+                   original_name
+                   ocaml_type_module
+                   ocaml_name;
+             | ComplexType.Array { ComplexType.data_type =
+                                     ComplexType.Reference _; _ }
+             | ComplexType.Array { ComplexType.data_type =
+                                     ComplexType.AnonymousObject _; _ } ->
+                 Format.fprintf formatter
+                   "GapiJson.render_array \"%s\" %s.render x.%s;@,"
+                   original_name
+                   ocaml_type_module
+                   ocaml_name;
+             | ComplexType.Array { ComplexType.data_type =
+                                     ComplexType.Scalar scalar; _ } ->
+                 Format.fprintf formatter
+                   "GapiJson.render_collection \"%s\" GapiJson.Array (%s \"\") x.%s;@,"
+                   original_name
+                   (render_function scalar)
+                   ocaml_name;
+             | ComplexType.Dictionary { ComplexType.data_type =
+                                          ComplexType.Reference _; _ }
+             | ComplexType.Dictionary { ComplexType.data_type =
+                                          ComplexType.AnonymousObject _; _ } ->
+                 Format.fprintf formatter
+                   "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (%s.render_content v)) x.%s;@,"
+                   original_name
+                   ocaml_type_module
+                   ocaml_name;
+             | ComplexType.Dictionary { ComplexType.data_type =
+                                          ComplexType.Scalar scalar; _ } ->
+                 Format.fprintf formatter
+                   "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id [%s id v]) x.%s;@,"
+                   original_name
+                   (render_function scalar)
+                   ocaml_name;
+             | _ ->
+                 failwith "Unexpected complex type rendering render function")
       fields;
     Format.fprintf formatter "@]@,@]]@,";
     if is_referenced then begin
@@ -200,7 +224,7 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@,@[<v 2>let %sparse x = function@,"
       (if is_recursive then "rec " else "");
     List.iter
-      (fun { Field.ocaml_name; original_name; field_type } ->
+      (fun { Field.ocaml_name; original_name; ocaml_type_module; field_type } ->
          match field_type.ComplexType.data_type with
              ComplexType.Scalar scalar ->
                Format.fprintf formatter
@@ -209,31 +233,51 @@ let build_schema_inner_module file_lens complex_type =
                  (ScalarType.get_json_type scalar.ScalarType.data_type)
                  ocaml_name
                  (ScalarType.get_convert_function scalar.ScalarType.data_type)
-           | ComplexType.Array arr when ComplexType.is_object arr ->
-               let content_module_name = get_anonymous_type_module_name original_name in
-                 Format.fprintf formatter
-                   "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                   original_name
-                   content_module_name
-                   content_module_name
-                   ocaml_name
-           | ComplexType.Array arr ->
-               let content_module_name = ComplexType.get_content arr in
-                 Format.fprintf formatter
-                   "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                   original_name
-                   content_module_name
-                   content_module_name
-                   ocaml_name
-           | ComplexType.Reference module_name ->
+           | ComplexType.Array { ComplexType.data_type =
+                                   ComplexType.Reference _; _ }
+           | ComplexType.Array { ComplexType.data_type =
+                                   ComplexType.AnonymousObject _; _ } ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 ocaml_type_module
+                 ocaml_type_module
+                 ocaml_name
+           | ComplexType.Array { ComplexType.data_type =
+                                   ComplexType.Scalar scalar; _ } ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ GapiJson.parse_string_element@ \"\"@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 ocaml_name
+           | ComplexType.Reference _
+           | ComplexType.AnonymousObject _ ->
                Format.fprintf formatter
                  "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> { x with %s = v })@ cs@]@]@,"
                  original_name
-                 module_name
-                 module_name
+                 ocaml_type_module
+                 ocaml_type_module
                  ocaml_name
-           | _ -> ()
-      )
+           | ComplexType.Dictionary { ComplexType.data_type =
+                                        ComplexType.Reference _; _ }
+           | ComplexType.Dictionary { ComplexType.data_type =
+                                        ComplexType.AnonymousObject _; _ } ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun _ -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e)@]@]@ (\"\", %s.empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 ocaml_type_module
+                 ocaml_type_module
+                 container_name
+                 module_name
+                 ocaml_type_module
+                 ocaml_name
+           | ComplexType.Dictionary { ComplexType.data_type =
+                                        ComplexType.Scalar scalar; _ } ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ GapiJson.parse_dictionary_entry@ (\"\", \"\")@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 ocaml_name
+           | _ ->
+               failwith "Unexpected complex type rendering parse function")
       fields;
     if is_recursive then begin
       Format.fprintf formatter
