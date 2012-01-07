@@ -1,7 +1,7 @@
 open GapiUtils.Infix
-open GapiDiscoveryV1Model
 open GapiLens.Infix
 open GapiLens.StateInfix
+open GapiDiscoveryV1Model
 open ServiceGeneratorState
 
 (* Configuration *)
@@ -365,20 +365,26 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
           List.map
             (fun p ->
                if ExtString.String.starts_with p "{" then
-                 String.sub p 1 (String.length p - 2)
+                 let id = String.sub p 1 (String.length p - 2) in
+                 let { Field.ocaml_name; to_string_function; _ } =
+                   methd |. Method.get_parameter_lens id
+                 in
+                   Printf.sprintf "(%s %s)" to_string_function ocaml_name
                else
                  "\"" ^ p ^ "\"")
             splitted_path in
-        let path_string =
-          List.fold_left
-            (fun s p ->
-               if s = "" then p else s ^ "; " ^ p)
-            ""
-            path_list in
+        let print_path_list formatter pl =
+          List.iter
+            (fun p ->
+               if p == List.hd pl then
+                 Format.fprintf formatter "%s" p
+               else
+                 Format.fprintf formatter ";@ %s" p)
+            pl in
         lift_io $
           Format.fprintf formatter
-            "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%s]@ base_url@ in@]@\n"
-            path_string;
+            "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%a]@ base_url@ in@]@\n"
+            print_path_list path_list;
 
         let request_parameter = methd.Method.request in
         request_module <-- State.find_inner_schema_module
@@ -414,7 +420,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                let parameter = methd |. Method.get_parameter_lens id in
                  if json_schema.JsonSchema.location = "query" then
                    Format.fprintf formatter "%s%s@ "
-                     (if json_schema.JsonSchema.required then "~" else "?")
+                     (if json_schema.JsonSchema.required
+                          || json_schema.JsonSchema.default <> "" then
+                        "~" else "?")
                      parameter.Field.ocaml_name)
             rest_method.RestMethod.parameters;
           Format.fprintf formatter
@@ -485,7 +493,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         (* Optional parameters with default *)
         render_optional_parameters true
           (fun { Field.ocaml_name; default; _ } ->
-             Format.fprintf formatter "?(%s = %S)@ "
+             Format.fprintf formatter "?(%s = %s)@ "
                ocaml_name
                default);
         (* Optional parameters without default *)
