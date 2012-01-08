@@ -1238,15 +1238,11 @@ struct
       List.map
         (fun (_, s) -> ComplexType.create s)
         state.service.RestDescription.schemas in
-    let table =
-      TypeTable.build complex_types
-    in
+    let table = TypeTable.build complex_types in
       state |> type_table ^=! table
 
   let build_sorted_types state =
-    let sorted =
-      TypeTable.sort state.type_table
-    in
+    let sorted = TypeTable.sort state.type_table in
       state |> sorted_types ^=! sorted
 
   let build_referenced_types state =

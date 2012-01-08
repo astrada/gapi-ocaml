@@ -238,7 +238,7 @@ let build_schema_inner_module file_lens complex_type =
   let render_parse_function
         formatter
         fields
-        is_recursive
+        is_referenced
         container_name
         module_name =
     Format.fprintf formatter "@,@[<v 2>let rec parse x = function@,";
@@ -320,7 +320,7 @@ let build_schema_inner_module file_lens complex_type =
            | _ ->
                failwith "Unexpected complex type rendering parse function")
       fields;
-    if is_recursive then begin
+    if not is_referenced then begin
       Format.fprintf formatter
         "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,"
     end;
@@ -330,9 +330,9 @@ let build_schema_inner_module file_lens complex_type =
       module_name;
   in
 
-  let render_footer formatter is_recursive =
+  let render_footer formatter is_referenced =
     (* Render footer (to_data_model and of_data_model) *)
-    if is_recursive then begin
+    if not is_referenced then begin
       Format.fprintf formatter
         "@,@,let to_data_model = GapiJson.render_root render@,@,let of_data_model = GapiJson.parse_root parse empty";
     end;
@@ -341,7 +341,7 @@ let build_schema_inner_module file_lens complex_type =
   in
 
   let rec render_inner_module
-        formatter container_name module_name inner_module_lens =
+        formatter container_name module_name is_nested inner_module_lens =
     perform
       inner_module <-- GapiLens.get_state inner_module_lens;
 
@@ -353,7 +353,7 @@ let build_schema_inner_module file_lens complex_type =
       let inner_modules = inner_module.InnerSchemaModule.inner_modules in
       mapM_
         (fun (id, inner_module) ->
-           render_inner_module formatter container_name id
+           render_inner_module formatter container_name id true
              (inner_module_lens
                 |-- InnerSchemaModule.get_inner_module_lens id))
         inner_modules;
@@ -365,12 +365,13 @@ let build_schema_inner_module file_lens complex_type =
       lift_io $ render_type_t formatter fields;
       lift_io $ render_lenses formatter fields;
       lift_io $ render_empty formatter fields;
-      is_referenced <-- State.is_type_referenced complex_type.ComplexType.id;
+      is_type_referenced <-- State.is_type_referenced
+                               complex_type.ComplexType.id;
+      let is_referenced = is_type_referenced || is_nested in
       lift_io $ render_render_function formatter fields is_referenced;
-      let is_recursive = not is_referenced in
       lift_io $ render_parse_function
-        formatter fields is_recursive container_name module_name;
-      lift_io $ render_footer formatter is_recursive
+        formatter fields is_referenced container_name module_name;
+      lift_io $ render_footer formatter is_referenced
   in
 
   let module_name =
@@ -389,7 +390,7 @@ let build_schema_inner_module file_lens complex_type =
       let formatter = file.File.formatter in
       let container_name = file.File.module_name in
       render_inner_module
-        formatter container_name module_name inner_module_lens
+        formatter container_name module_name false inner_module_lens
 
 (* END Generate schema inner modules *)
 
@@ -890,11 +891,13 @@ let build_service_module =
 
 (* Generate schema module interface *)
 
-let rec generate_schema_module_signature formatter schema_module =
+let rec generate_schema_module_signature formatter schema_module is_nested =
   let fields = schema_module.InnerSchemaModule.record.Record.fields in
     perform
-      is_referenced <-- State.is_type_referenced
-                          schema_module.InnerSchemaModule.original_name;
+      is_type_referenced <-- State.is_type_referenced
+                               schema_module.InnerSchemaModule.original_name;
+      let is_referenced = is_type_referenced || is_nested in
+
       lift_io $
         Format.fprintf formatter
           "module %s :@\n@[<v 2>sig@,"
@@ -902,7 +905,7 @@ let rec generate_schema_module_signature formatter schema_module =
 
       mapM_
         (fun (_, inner_module) ->
-           generate_schema_module_signature formatter inner_module)
+           generate_schema_module_signature formatter inner_module true)
         schema_module.InnerSchemaModule.inner_modules;
 
       lift_io (
@@ -961,7 +964,7 @@ let build_schema_module_interface =
                               |-- SchemaModule.inner_modules);
       mapM_
         (fun (_, schema_module) ->
-           generate_schema_module_signature formatter schema_module)
+           generate_schema_module_signature formatter schema_module false)
         (List.rev schema_modules);
 
   in
