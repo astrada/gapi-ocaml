@@ -340,20 +340,43 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@]@\nend@\n@\n"
   in
 
-  let properties =
-    match complex_type.ComplexType.data_type with
-        ComplexType.Object properties -> properties
-      | ComplexType.AnonymousObject (_, properties) -> properties
-      | _ ->
-        failwith ("Unexpected root (must be an Object): "
-                  ^ complex_type.ComplexType.id) in
+  let rec render_inner_module
+        formatter container_name module_name inner_module_lens =
+    perform
+      inner_module <-- GapiLens.get_state inner_module_lens;
+
+      lift_io $
+        Format.fprintf formatter
+          "module %s =@\n@[<v 2>struct@,"
+        inner_module.InnerSchemaModule.ocaml_name;
+
+      let inner_modules = inner_module.InnerSchemaModule.inner_modules in
+      mapM_
+        (fun (id, inner_module) ->
+           render_inner_module formatter container_name id
+             (inner_module_lens
+                |-- InnerSchemaModule.get_inner_module_lens id))
+        inner_modules;
+
+      fields <-- GapiLens.get_state (inner_module_lens
+                                       |-- InnerSchemaModule.record
+                                       |-- Record.field_list);
+
+      lift_io $ render_type_t formatter fields;
+      lift_io $ render_lenses formatter fields;
+      lift_io $ render_empty formatter fields;
+      is_referenced <-- State.is_type_referenced complex_type.ComplexType.id;
+      lift_io $ render_render_function formatter fields is_referenced;
+      let is_recursive = not is_referenced in
+      lift_io $ render_parse_function
+        formatter fields is_recursive container_name module_name;
+      lift_io $ render_footer formatter is_recursive
+  in
+
   let module_name =
     OCamlName.get_ocaml_name ModuleName complex_type.ComplexType.id in
-  let record = Record.create module_name properties in
   let inner_module =
-    { InnerSchemaModule.create complex_type.ComplexType.id module_name with
-          InnerSchemaModule.record = Some record
-    } in
+    InnerSchemaModule.create complex_type module_name in
   let inner_module_lens =
     State.get_schema_module_lens
       |-- SchemaModule.get_inner_module_lens module_name
@@ -365,27 +388,8 @@ let build_schema_inner_module file_lens complex_type =
       file <-- GapiLens.get_state file_lens;
       let formatter = file.File.formatter in
       let container_name = file.File.module_name in
-
-      lift_io $
-        Format.fprintf formatter
-          "module %s =@\n@[<v 2>struct@,"
-        inner_module.InnerSchemaModule.ocaml_name;
-
-      let field_list_lens = inner_module_lens
-        |-- InnerSchemaModule.record
-        |-- GapiLens.option_get
-        |-- Record.field_list in
-      fields <-- GapiLens.get_state field_list_lens;
-
-      lift_io $ render_type_t formatter fields;
-      lift_io $ render_lenses formatter fields;
-      lift_io $ render_empty formatter fields;
-      is_referenced <-- State.is_type_referenced complex_type.ComplexType.id;
-      lift_io $ render_render_function formatter fields is_referenced;
-      let is_recursive = not is_referenced in
-      lift_io $ render_parse_function
-        formatter fields is_recursive container_name module_name;
-      lift_io $ render_footer formatter is_recursive
+      render_inner_module
+        formatter container_name module_name inner_module_lens
 
 (* END Generate schema inner modules *)
 
@@ -886,20 +890,24 @@ let build_service_module =
 
 (* Generate schema module interface *)
 
-let generate_schema_module_signature formatter schema_module =
-  let fields = schema_module
-    |. InnerSchemaModule.record
-    |. GapiLens.option_get
-    |. Record.fields
-  in
+let rec generate_schema_module_signature formatter schema_module =
+  let fields = schema_module.InnerSchemaModule.record.Record.fields in
     perform
       is_referenced <-- State.is_type_referenced
                           schema_module.InnerSchemaModule.original_name;
+      lift_io $
+        Format.fprintf formatter
+          "module %s :@\n@[<v 2>sig@,"
+          schema_module.InnerSchemaModule.ocaml_name;
+
+      mapM_
+        (fun (_, inner_module) ->
+           generate_schema_module_signature formatter inner_module)
+        schema_module.InnerSchemaModule.inner_modules;
+
       lift_io (
         (* Type t *)
-        Format.fprintf formatter
-          "module %s :@\n@[<v 2>sig@,@[<v 2>type t = {@,"
-          schema_module.InnerSchemaModule.ocaml_name;
+        Format.fprintf formatter "@[<v 2>type t = {@,";
         List.iter
           (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
              Format.fprintf formatter
@@ -930,8 +938,7 @@ let generate_schema_module_signature formatter schema_module =
             "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
         end;
         (* module end *)
-        Format.fprintf formatter
-          "@]\nend@\n@\n")
+        Format.fprintf formatter "@]@,end@\n@\n")
 
 let build_schema_module_interface =
   let generate_body file_lens =
