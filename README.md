@@ -8,9 +8,12 @@ Google APIs Client library for OCaml
 library supports ClientLogin, OAuth 1.0a, and OAuth 2.0 authentication.
 Supported RESTful APIs:
 
-* Google Calendar APIs v3 (JSON based)
+* Calendar APIs v3 (JSON based)
 * Google+ API v1
 * Tasks API v1
+* APIs Discovery Service v1
+* URL Shortener API v1
+* OAuth2 API v2
 
 Old versions:
 
@@ -20,6 +23,8 @@ Old versions:
 
 * Monadic interface
 * Functional lenses to access data structures
+* Service generator (experimental): a tool for generating client libraries for
+  APIs based on the Google API Discovery format.
 
 Building gapi-ocaml
 ------------------
