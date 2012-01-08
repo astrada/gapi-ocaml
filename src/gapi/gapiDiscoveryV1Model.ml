@@ -1,1281 +1,1491 @@
-open GapiUtils.Infix
-open GapiCore
-open GapiJson
+(* Warning! This file is generated. Modify at your own risk. *)
 
-module IconsData =
+module RestMethodResponseData =
 struct
   type t = {
-    x16 : string;
-    x32 : string
+    _ref : string;
+    
   }
-
-	let x16 = {
-		GapiLens.get = (fun x -> x.x16);
-		GapiLens.set = (fun v x -> { x with x16 = v })
-	}
-	let x32 = {
-		GapiLens.get = (fun x -> x.x32);
-		GapiLens.set = (fun v x -> { x with x32 = v })
-	}
-
+  
+  let _ref = {
+    GapiLens.get = (fun x -> x._ref);
+    GapiLens.set = (fun v x -> { x with _ref = v });
+  }
+  
   let empty = {
-    x16 = "";
-    x32 = ""
+    _ref = "";
+    
   }
-
-  let render x =
-    [render_string_value "x16" x.x16;
-     render_string_value "x32" x.x32]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ GapiJson.name = "x16"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with x16 = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "x32"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with x32 = v }
-      | e ->
-          unexpected "GapiDiscovery.IconsData.parse" e
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "$ref" x._ref;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "$ref"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with _ref = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethodResponseData.parse" e
+  
 end
 
-module ItemsData =
+module RestMethodMediaUploadProtocolsResumableData =
 struct
   type t = {
-    kind : string;
-    id : string;
-    name : string;
-    version : string;
-    title : string;
-    description : string;
-    discoveryLink : string;
-    icons : IconsData.t;
-    documentationLink : string;
-    labels : string list;
-    preferred : bool
+    multipart : bool;
+    path : string;
+    
   }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let name = {
-		GapiLens.get = (fun x -> x.name);
-		GapiLens.set = (fun v x -> { x with name = v })
-	}
-	let version = {
-		GapiLens.get = (fun x -> x.version);
-		GapiLens.set = (fun v x -> { x with version = v })
-	}
-	let title = {
-		GapiLens.get = (fun x -> x.title);
-		GapiLens.set = (fun v x -> { x with title = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let discoveryLink = {
-		GapiLens.get = (fun x -> x.discoveryLink);
-		GapiLens.set = (fun v x -> { x with discoveryLink = v })
-	}
-	let icons = {
-		GapiLens.get = (fun x -> x.icons);
-		GapiLens.set = (fun v x -> { x with icons = v })
-	}
-	let documentationLink = {
-		GapiLens.get = (fun x -> x.documentationLink);
-		GapiLens.set = (fun v x -> { x with documentationLink = v })
-	}
-	let labels = {
-		GapiLens.get = (fun x -> x.labels);
-		GapiLens.set = (fun v x -> { x with labels = v })
-	}
-	let preferred = {
-		GapiLens.get = (fun x -> x.preferred);
-		GapiLens.set = (fun v x -> { x with preferred = v })
-	}
-
+  
+  let multipart = {
+    GapiLens.get = (fun x -> x.multipart);
+    GapiLens.set = (fun v x -> { x with multipart = v });
+  }
+  let path = {
+    GapiLens.get = (fun x -> x.path);
+    GapiLens.set = (fun v x -> { x with path = v });
+  }
+  
   let empty = {
-    kind = "";
-    id = "";
-    name = "";
-    version = "";
-    title = "";
-    description = "";
-    discoveryLink = "";
-    icons = IconsData.empty;
-    documentationLink = "";
-    labels = [];
-    preferred = false
+    multipart = false;
+    path = "";
+    
   }
-
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "id" x.id;
-       render_string_value "name" x.name;
-       render_string_value "version" x.version;
-       render_string_value "title" x.title;
-       render_string_value "description" x.description;
-       render_string_value "discoveryLink" x.discoveryLink;
-       render_object "icons" (IconsData.render x.icons);
-       render_string_value "documentationLink" x.documentationLink;
-       render_array "labels" (render_string_value "") x.labels;
-       render_bool_value "preferred" x.preferred]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ GapiJson.name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "name"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with name = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "version"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with version = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "title"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with title = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "description"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with description = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "discoveryLink"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with discoveryLink = v }
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "icons"; data_type = Object },
-           cs) ->
-          parse_children
-            IconsData.parse
-            IconsData.empty
-            (fun v -> { x with icons = v })
-            cs
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "documentationLink"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with documentationLink = v }
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "labels"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with labels = xs })
-            cs
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "preferred"; data_type = Scalar },
-           Json_type.Bool v) ->
-          { x with preferred = v }
-      | AnnotatedTree.Node
-          ({ GapiJson.name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiDiscovery.ItemsData.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_bool_value "multipart" x.multipart;
+      GapiJson.render_string_value "path" x.path;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "multipart"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with multipart = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "path"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with path = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethodMediaUploadProtocolsResumableData.parse" e
+  
 end
 
-module DirectoryList =
+module RestMethodMediaUploadProtocolsSimpleData =
 struct
   type t = {
-    kind : string;
-    items : ItemsData.t list
+    multipart : bool;
+    path : string;
+    
   }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let items = {
-		GapiLens.get = (fun x -> x.items);
-		GapiLens.set = (fun v x -> { x with items = v })
-	}
-
+  
+  let multipart = {
+    GapiLens.get = (fun x -> x.multipart);
+    GapiLens.set = (fun v x -> { x with multipart = v });
+  }
+  let path = {
+    GapiLens.get = (fun x -> x.path);
+    GapiLens.set = (fun v x -> { x with path = v });
+  }
+  
   let empty = {
-    kind = "";
-    items = []
+    multipart = false;
+    path = "";
+    
   }
-
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_array "items" ItemsData.render x.items]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Node
-          ({ name = "items"; data_type = Array },
-           cs) ->
-          parse_collection
-            ItemsData.parse
-            ItemsData.empty
-            (fun xs -> { x with items = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiDiscovery.DirectoryList.parse" e
-
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_bool_value "multipart" x.multipart;
+      GapiJson.render_string_value "path" x.path;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "multipart"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with multipart = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "path"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with path = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethodMediaUploadProtocolsSimpleData.parse" e
+  
 end
 
-module ScopesData =
+module RestMethodMediaUploadProtocolsData =
 struct
   type t = {
-    description : string
+    resumable : RestMethodMediaUploadProtocolsResumableData.t;
+    simple : RestMethodMediaUploadProtocolsSimpleData.t;
+    
   }
-
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { description = v })
-	}
-
+  
+  let resumable = {
+    GapiLens.get = (fun x -> x.resumable);
+    GapiLens.set = (fun v x -> { x with resumable = v });
+  }
+  let simple = {
+    GapiLens.get = (fun x -> x.simple);
+    GapiLens.set = (fun v x -> { x with simple = v });
+  }
+  
   let empty = {
-    description = ""
+    resumable = RestMethodMediaUploadProtocolsResumableData.empty;
+    simple = RestMethodMediaUploadProtocolsSimpleData.empty;
+    
   }
-
-  let render x =
-    [render_string_value "description" x.description]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ GapiJson.name = "description"; data_type = Scalar },
-           Json_type.String v) ->
-          { description = v }
-      | e ->
-          unexpected "GapiDiscovery.ScopesData.parse" e
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_object "resumable" (RestMethodMediaUploadProtocolsResumableData.render_content x.resumable);
+      GapiJson.render_object "simple" (RestMethodMediaUploadProtocolsSimpleData.render_content x.simple);
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "resumable"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestMethodMediaUploadProtocolsResumableData.parse
+        RestMethodMediaUploadProtocolsResumableData.empty
+        (fun v -> { x with resumable = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "simple"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestMethodMediaUploadProtocolsSimpleData.parse
+        RestMethodMediaUploadProtocolsSimpleData.empty
+        (fun v -> { x with simple = v })
+        cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethodMediaUploadProtocolsData.parse" e
+  
 end
 
-module Oauth2Data =
+module RestMethodMediaUploadData =
 struct
   type t = {
-    scopes : (string * ScopesData.t) list
+    accept : string list;
+    maxSize : string;
+    protocols : RestMethodMediaUploadProtocolsData.t;
+    
   }
-
-  let scopes = {
-    GapiLens.get = (fun x -> x.scopes);
-    GapiLens.set = (fun v x -> { scopes = v })
+  
+  let accept = {
+    GapiLens.get = (fun x -> x.accept);
+    GapiLens.set = (fun v x -> { x with accept = v });
   }
-
+  let maxSize = {
+    GapiLens.get = (fun x -> x.maxSize);
+    GapiLens.set = (fun v x -> { x with maxSize = v });
+  }
+  let protocols = {
+    GapiLens.get = (fun x -> x.protocols);
+    GapiLens.set = (fun v x -> { x with protocols = v });
+  }
+  
   let empty = {
-    scopes = []
+    accept = [];
+    maxSize = "";
+    protocols = RestMethodMediaUploadProtocolsData.empty;
+    
   }
-
-  let render x =
-    [render_object "oauth2"
-       [render_collection "scopes" Object (fun (id, v) -> render_object id (ScopesData.render v)) x.scopes]]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Node
-          ({ GapiJson.name = "scopes"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     ScopesData.parse
-                     ScopesData.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.Oauth2Data.parse.parse_scopes" e)
-            ("", ScopesData.empty)
-            (fun xs -> { scopes = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "oauth2"; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiDiscovery.Oauth2Data.parse" e
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_collection "accept" GapiJson.Array (GapiJson.render_string_value "") x.accept;
+      GapiJson.render_string_value "maxSize" x.maxSize;
+      GapiJson.render_object "protocols" (RestMethodMediaUploadProtocolsData.render_content x.protocols);
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "accept"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with accept = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "maxSize"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with maxSize = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "protocols"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestMethodMediaUploadProtocolsData.parse
+        RestMethodMediaUploadProtocolsData.empty
+        (fun v -> { x with protocols = v })
+        cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethodMediaUploadData.parse" e
+  
 end
 
 module JsonSchema =
 struct
   type t = {
-    id : string;
-    _type : string;
     _ref : string;
-    description : string;
+    additionalProperties : t option;
     default : string;
-    required : bool;
-    format : string;
-    pattern : string;
-    minimum : string;
-    maximum : string;
+    description : string;
     enum : string list;
     enumDescriptions : string list;
-    repeated : bool;
+    format : string;
+    id : string;
+    items : t option;
     location : string;
+    maximum : string;
+    minimum : string;
+    pattern : string;
     properties : (string * t) list;
-    additionalProperties : t option;
-    items : t option
+    repeated : bool;
+    required : bool;
+    _type : string;
+    
   }
-
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let _type = {
-		GapiLens.get = (fun x -> x._type);
-		GapiLens.set = (fun v x -> { x with _type = v })
-	}
-	let _ref = {
-		GapiLens.get = (fun x -> x._ref);
-		GapiLens.set = (fun v x -> { x with _ref = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let default = {
-		GapiLens.get = (fun x -> x.default);
-		GapiLens.set = (fun v x -> { x with default = v })
-	}
-	let required = {
-		GapiLens.get = (fun x -> x.required);
-		GapiLens.set = (fun v x -> { x with required = v })
-	}
-	let format = {
-		GapiLens.get = (fun x -> x.format);
-		GapiLens.set = (fun v x -> { x with format = v })
-	}
-	let pattern = {
-		GapiLens.get = (fun x -> x.pattern);
-		GapiLens.set = (fun v x -> { x with pattern = v })
-	}
-	let minimum = {
-		GapiLens.get = (fun x -> x.minimum);
-		GapiLens.set = (fun v x -> { x with minimum = v })
-	}
-	let maximum = {
-		GapiLens.get = (fun x -> x.maximum);
-		GapiLens.set = (fun v x -> { x with maximum = v })
-	}
-	let enum = {
-		GapiLens.get = (fun x -> x.enum);
-		GapiLens.set = (fun v x -> { x with enum = v })
-	}
-	let enumDescriptions = {
-		GapiLens.get = (fun x -> x.enumDescriptions);
-		GapiLens.set = (fun v x -> { x with enumDescriptions = v })
-	}
-	let repeated = {
-		GapiLens.get = (fun x -> x.repeated);
-		GapiLens.set = (fun v x -> { x with repeated = v })
-	}
-	let location = {
-		GapiLens.get = (fun x -> x.location);
-		GapiLens.set = (fun v x -> { x with location = v })
-	}
-	let properties = {
-		GapiLens.get = (fun x -> x.properties);
-		GapiLens.set = (fun v x -> { x with properties = v })
-	}
-	let additionalProperties = {
-		GapiLens.get = (fun x -> x.additionalProperties);
-		GapiLens.set = (fun v x -> { x with additionalProperties = v })
-	}
-	let items = {
-		GapiLens.get = (fun x -> x.items);
-		GapiLens.set = (fun v x -> { x with items = v })
-	}
-
+  
+  let _ref = {
+    GapiLens.get = (fun x -> x._ref);
+    GapiLens.set = (fun v x -> { x with _ref = v });
+  }
+  let additionalProperties = {
+    GapiLens.get = (fun x -> x.additionalProperties);
+    GapiLens.set = (fun v x -> { x with additionalProperties = v });
+  }
+  let default = {
+    GapiLens.get = (fun x -> x.default);
+    GapiLens.set = (fun v x -> { x with default = v });
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let enum = {
+    GapiLens.get = (fun x -> x.enum);
+    GapiLens.set = (fun v x -> { x with enum = v });
+  }
+  let enumDescriptions = {
+    GapiLens.get = (fun x -> x.enumDescriptions);
+    GapiLens.set = (fun v x -> { x with enumDescriptions = v });
+  }
+  let format = {
+    GapiLens.get = (fun x -> x.format);
+    GapiLens.set = (fun v x -> { x with format = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let location = {
+    GapiLens.get = (fun x -> x.location);
+    GapiLens.set = (fun v x -> { x with location = v });
+  }
+  let maximum = {
+    GapiLens.get = (fun x -> x.maximum);
+    GapiLens.set = (fun v x -> { x with maximum = v });
+  }
+  let minimum = {
+    GapiLens.get = (fun x -> x.minimum);
+    GapiLens.set = (fun v x -> { x with minimum = v });
+  }
+  let pattern = {
+    GapiLens.get = (fun x -> x.pattern);
+    GapiLens.set = (fun v x -> { x with pattern = v });
+  }
+  let properties = {
+    GapiLens.get = (fun x -> x.properties);
+    GapiLens.set = (fun v x -> { x with properties = v });
+  }
+  let repeated = {
+    GapiLens.get = (fun x -> x.repeated);
+    GapiLens.set = (fun v x -> { x with repeated = v });
+  }
+  let required = {
+    GapiLens.get = (fun x -> x.required);
+    GapiLens.set = (fun v x -> { x with required = v });
+  }
+  let _type = {
+    GapiLens.get = (fun x -> x._type);
+    GapiLens.set = (fun v x -> { x with _type = v });
+  }
+  
   let empty = {
-    id = "";
-    _type = "";
     _ref = "";
-    description = "";
+    additionalProperties = None;
     default = "";
-    required = false;
-    format = "";
-    pattern = "";
-    minimum = "";
-    maximum = "";
+    description = "";
     enum = [];
     enumDescriptions = [];
-    repeated = false;
+    format = "";
+    id = "";
+    items = None;
     location = "";
+    maximum = "";
+    minimum = "";
+    pattern = "";
     properties = [];
-    additionalProperties = None;
-    items = None
+    repeated = false;
+    required = false;
+    _type = "";
+    
   }
-
-  let rec render x =
-    [render_string_value "id" x.id;
-     render_string_value "type" x._type;
-     render_string_value "$ref" x._ref;
-     render_string_value "description" x.description;
-     render_string_value "default" x.default;
-     render_bool_value "required" x.required;
-     render_string_value "format" x.format;
-     render_string_value "pattern" x.pattern;
-     render_string_value "minimum" x.minimum;
-     render_string_value "maximum" x.maximum;
-     render_array "enum" (render_string_value "") x.enum;
-     render_array "enumDescriptions" (render_string_value "") x.enumDescriptions;
-     render_bool_value "repeated" x.repeated;
-     render_string_value "location" x.location;
-     render_collection "properties" Object (fun (id, v) -> render_object id (render v)) x.properties;
-     Option.map_default (fun p -> render_object "additionalProperties" (render p)) [] x.additionalProperties;
-     Option.map_default (fun i -> render_object "items" (render i)) [] x.items]
-
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ name = "type"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with _type = v }
-      | AnnotatedTree.Leaf
-          ({ name = "$ref"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with _ref = v }
-      | AnnotatedTree.Leaf
-          ({ name = "description"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with description = v }
-      | AnnotatedTree.Leaf
-          ({ name = "default"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with default = v }
-      | AnnotatedTree.Leaf
-          ({ name = "required"; data_type = Scalar },
-           Json_type.Bool v) ->
-          { x with required = v }
-      | AnnotatedTree.Leaf
-          ({ name = "format"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with format = v }
-      | AnnotatedTree.Leaf
-          ({ name = "pattern"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with pattern = v }
-      | AnnotatedTree.Leaf
-          ({ name = "minimum"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with minimum = v }
-      | AnnotatedTree.Leaf
-          ({ name = "maximum"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with maximum = v }
-      | AnnotatedTree.Node
-          ({ name = "enum"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with enum = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "enumDescriptions"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with enumDescriptions = xs })
-            cs
-      | AnnotatedTree.Leaf
-          ({ name = "repeated"; data_type = Scalar },
-           Json_type.Bool v) ->
-          { x with repeated = v }
-      | AnnotatedTree.Leaf
-          ({ name = "location"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with location = v }
-      | AnnotatedTree.Node
-          ({ name = "additionalProperties"; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            (fun v -> { x with additionalProperties = Some v })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "properties"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     parse
-                     empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.JsonSchema.parse.parse_properties" e)
-            ("", empty)
-            (fun xs -> { x with properties = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "items"; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            (fun v -> { x with items = Some v })
-            cs
-      | AnnotatedTree.Node
-          ({ name = n; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            (fun v -> { x with properties = (n, v) :: x.properties })
-            cs
-      | e ->
-          unexpected "GapiDiscovery.JsonSchema.parse" e
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "$ref" x._ref;
+      Option.map_default (fun v -> GapiJson.render_object "additionalProperties" (render_content v)) [] x.additionalProperties;
+      GapiJson.render_string_value "default" x.default;
+      GapiJson.render_string_value "description" x.description;
+      GapiJson.render_collection "enum" GapiJson.Array (GapiJson.render_string_value "") x.enum;
+      GapiJson.render_collection "enumDescriptions" GapiJson.Array (GapiJson.render_string_value "") x.enumDescriptions;
+      GapiJson.render_string_value "format" x.format;
+      GapiJson.render_string_value "id" x.id;
+      Option.map_default (fun v -> GapiJson.render_object "items" (render_content v)) [] x.items;
+      GapiJson.render_string_value "location" x.location;
+      GapiJson.render_string_value "maximum" x.maximum;
+      GapiJson.render_string_value "minimum" x.minimum;
+      GapiJson.render_string_value "pattern" x.pattern;
+      GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.properties;
+      GapiJson.render_bool_value "repeated" x.repeated;
+      GapiJson.render_bool_value "required" x.required;
+      GapiJson.render_string_value "type" x._type;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "$ref"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with _ref = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "additionalProperties"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        parse
+        empty
+        (fun v -> { x with additionalProperties = Some v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "default"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with default = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with description = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "enum"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with enum = xs })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "enumDescriptions"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with enumDescriptions = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "format"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with format = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        parse
+        empty
+        (fun v -> { x with items = Some v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "location"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with location = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "maximum"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with maximum = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "minimum"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with minimum = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "pattern"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with pattern = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "properties"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children parse empty (fun v -> (n, v)) cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse.parse_dictionary" e)
+        ("", empty)
+        (fun xs -> { x with properties = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "repeated"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with repeated = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "required"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with required = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with _type = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse" e
+  
 end
 
-module RefData =
+module RestMethodRequestData =
 struct
   type t = {
-    _ref : string
+    _ref : string;
+    
   }
-
-	let _ref = {
-		GapiLens.get = (fun x -> x._ref);
-		GapiLens.set = (fun v x -> { _ref = v })
-	}
-
+  
+  let _ref = {
+    GapiLens.get = (fun x -> x._ref);
+    GapiLens.set = (fun v x -> { x with _ref = v });
+  }
+  
   let empty = {
-    _ref = ""
+    _ref = "";
+    
   }
-
-  let render x =
-    [render_string_value "$ref" x._ref]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "$ref"; data_type = Scalar },
-           Json_type.String v) ->
-          { _ref = v }
-      | e ->
-          unexpected "GapiDiscovery.RefData.parse" e
-
-end
-
-module ProtocolData =
-struct
-  type t = {
-    multipart : bool;
-    path : string
-  }
-
-	let multipart = {
-		GapiLens.get = (fun x -> x.multipart);
-		GapiLens.set = (fun v x -> { x with multipart = v })
-	}
-	let path = {
-		GapiLens.get = (fun x -> x.path);
-		GapiLens.set = (fun v x -> { x with path = v })
-	}
-
-  let empty = {
-    multipart = false;
-    path = ""
-  }
-
-  let render x =
-    [render_bool_value "multipart" x.multipart;
-     render_string_value "path" x.path]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "multipart"; data_type = Scalar },
-           Json_type.Bool v) ->
-          { x with multipart = v }
-      | AnnotatedTree.Leaf
-          ({ name = "path"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with path = v }
-      | e ->
-          unexpected "GapiDiscovery.ProtocolData.parse" e
-
-end
-
-module ProtocolsData =
-struct
-  type t = {
-    simple : ProtocolData.t;
-    resumable : ProtocolData.t
-  }
-
-	let simple = {
-		GapiLens.get = (fun x -> x.simple);
-		GapiLens.set = (fun v x -> { x with simple = v })
-	}
-	let resumable = {
-		GapiLens.get = (fun x -> x.resumable);
-		GapiLens.set = (fun v x -> { x with resumable = v })
-	}
-
-  let empty = {
-    simple = ProtocolData.empty;
-    resumable = ProtocolData.empty
-  }
-
-  let render x =
-    [render_object "simple" (ProtocolData.render x.simple);
-     render_object "resumable" (ProtocolData.render x.resumable)]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Node
-          ({ name = "simple"; data_type = Object },
-           cs) ->
-          parse_children
-            ProtocolData.parse
-            ProtocolData.empty
-            (fun v -> { x with simple = v })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "resumable"; data_type = Object },
-           cs) ->
-          parse_children
-            ProtocolData.parse
-            ProtocolData.empty
-            (fun v -> { x with resumable = v })
-            cs
-      | e ->
-          unexpected "GapiDiscovery.ProtocolsData.parse" e
-
-end
-
-module MediaUploadData =
-struct
-  type t = {
-    accept : string list;
-    maxSize : string;
-    protocols : ProtocolsData.t
-  }
-
-	let accept = {
-		GapiLens.get = (fun x -> x.accept);
-		GapiLens.set = (fun v x -> { x with accept = v })
-	}
-	let maxSize = {
-		GapiLens.get = (fun x -> x.maxSize);
-		GapiLens.set = (fun v x -> { x with maxSize = v })
-	}
-	let protocols = {
-		GapiLens.get = (fun x -> x.protocols);
-		GapiLens.set = (fun v x -> { x with protocols = v })
-	}
-
-  let empty = {
-    accept = [];
-    maxSize = "";
-    protocols = ProtocolsData.empty
-  }
-
-  let render x =
-    [render_array "accept" (render_string_value "") x.accept;
-     render_string_value "maxSize" x.maxSize;
-     render_object "protocols" (ProtocolsData.render x.protocols)]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Node
-          ({ name = "accept"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with accept = xs })
-            cs
-      | AnnotatedTree.Leaf
-          ({ name = "maxSize"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with maxSize = v }
-      | AnnotatedTree.Node
-          ({ name = "protocols"; data_type = Object },
-           cs) ->
-          parse_children
-            ProtocolsData.parse
-            ProtocolsData.empty
-            (fun v -> { x with protocols = v })
-            cs
-      | e ->
-          unexpected "GapiDiscovery.MediaUploadData.parse" e
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "$ref" x._ref;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "$ref"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with _ref = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethodRequestData.parse" e
+  
 end
 
 module RestMethod =
 struct
   type t = {
-    id : string;
-    path : string;
-    httpMethod : string;
     description : string;
-    parameters : (string * JsonSchema.t) list;
+    httpMethod : string;
+    id : string;
+    mediaUpload : RestMethodMediaUploadData.t;
     parameterOrder : string list;
-    request : RefData.t;
-    response : RefData.t;
+    parameters : (string * JsonSchema.t) list;
+    path : string;
+    request : RestMethodRequestData.t;
+    response : RestMethodResponseData.t;
     scopes : string list;
-    mediaUpload : MediaUploadData.t
+    
   }
-
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let path = {
-		GapiLens.get = (fun x -> x.path);
-		GapiLens.set = (fun v x -> { x with path = v })
-	}
-	let httpMethod = {
-		GapiLens.get = (fun x -> x.httpMethod);
-		GapiLens.set = (fun v x -> { x with httpMethod = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let parameters = {
-		GapiLens.get = (fun x -> x.parameters);
-		GapiLens.set = (fun v x -> { x with parameters = v })
-	}
-	let parameterOrder = {
-		GapiLens.get = (fun x -> x.parameterOrder);
-		GapiLens.set = (fun v x -> { x with parameterOrder = v })
-	}
-	let request = {
-		GapiLens.get = (fun x -> x.request);
-		GapiLens.set = (fun v x -> { x with request = v })
-	}
-	let response = {
-		GapiLens.get = (fun x -> x.response);
-		GapiLens.set = (fun v x -> { x with response = v })
-	}
-	let scopes = {
-		GapiLens.get = (fun x -> x.scopes);
-		GapiLens.set = (fun v x -> { x with scopes = v })
-	}
-	let mediaUpload = {
-		GapiLens.get = (fun x -> x.mediaUpload);
-		GapiLens.set = (fun v x -> { x with mediaUpload = v })
-	}
-
+  
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let httpMethod = {
+    GapiLens.get = (fun x -> x.httpMethod);
+    GapiLens.set = (fun v x -> { x with httpMethod = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let mediaUpload = {
+    GapiLens.get = (fun x -> x.mediaUpload);
+    GapiLens.set = (fun v x -> { x with mediaUpload = v });
+  }
+  let parameterOrder = {
+    GapiLens.get = (fun x -> x.parameterOrder);
+    GapiLens.set = (fun v x -> { x with parameterOrder = v });
+  }
+  let parameters = {
+    GapiLens.get = (fun x -> x.parameters);
+    GapiLens.set = (fun v x -> { x with parameters = v });
+  }
+  let path = {
+    GapiLens.get = (fun x -> x.path);
+    GapiLens.set = (fun v x -> { x with path = v });
+  }
+  let request = {
+    GapiLens.get = (fun x -> x.request);
+    GapiLens.set = (fun v x -> { x with request = v });
+  }
+  let response = {
+    GapiLens.get = (fun x -> x.response);
+    GapiLens.set = (fun v x -> { x with response = v });
+  }
+  let scopes = {
+    GapiLens.get = (fun x -> x.scopes);
+    GapiLens.set = (fun v x -> { x with scopes = v });
+  }
+  
   let empty = {
-    id = "";
-    path = "";
-    httpMethod = "";
     description = "";
-    parameters = [];
+    httpMethod = "";
+    id = "";
+    mediaUpload = RestMethodMediaUploadData.empty;
     parameterOrder = [];
-    request = RefData.empty;
-    response = RefData.empty;
+    parameters = [];
+    path = "";
+    request = RestMethodRequestData.empty;
+    response = RestMethodResponseData.empty;
     scopes = [];
-    mediaUpload = MediaUploadData.empty
+    
   }
-
-  let render x =
-    [render_string_value "id" x.id;
-     render_string_value "path" x.path;
-     render_string_value "httpMethod" x.httpMethod;
-     render_string_value "description" x.description;
-     render_collection "parameters" Object (fun (id, v) -> render_object id (JsonSchema.render v)) x.parameters;
-     render_array "parameterOrder" (render_string_value "") x.parameterOrder;
-     render_object "request" (RefData.render x.request);
-     render_object "response" (RefData.render x.response);
-     render_array "scopes" (render_string_value "") x.scopes;
-     render_object "mediaUpload" (MediaUploadData.render x.mediaUpload)]
-
-  let parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ name = "path"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with path = v }
-      | AnnotatedTree.Leaf
-          ({ name = "httpMethod"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with httpMethod = v }
-      | AnnotatedTree.Leaf
-          ({ name = "description"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with description = v }
-      | AnnotatedTree.Node
-          ({ name = "parameters"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     JsonSchema.parse
-                     JsonSchema.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestMethod.parse.parse_parameters" e)
-            ("", JsonSchema.empty)
-            (fun xs -> { x with parameters = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "parameterOrder"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with parameterOrder = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "request"; data_type = Object },
-           cs) ->
-          parse_children
-            RefData.parse
-            RefData.empty
-            (fun v -> { x with request = v })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "response"; data_type = Object },
-           cs) ->
-          parse_children
-            RefData.parse
-            RefData.empty
-            (fun v -> { x with response = v })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "scopes"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with scopes = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "mediaUpload"; data_type = Object },
-           cs) ->
-          parse_children
-            MediaUploadData.parse
-            MediaUploadData.empty
-            (fun v -> { x with mediaUpload = v })
-            cs
-      | e ->
-          unexpected "GapiDiscovery.RestMethod.parse" e
-
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "description" x.description;
+      GapiJson.render_string_value "httpMethod" x.httpMethod;
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_object "mediaUpload" (RestMethodMediaUploadData.render_content x.mediaUpload);
+      GapiJson.render_collection "parameterOrder" GapiJson.Array (GapiJson.render_string_value "") x.parameterOrder;
+      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (JsonSchema.render_content v)) x.parameters;
+      GapiJson.render_string_value "path" x.path;
+      GapiJson.render_object "request" (RestMethodRequestData.render_content x.request);
+      GapiJson.render_object "response" (RestMethodResponseData.render_content x.response);
+      GapiJson.render_collection "scopes" GapiJson.Array (GapiJson.render_string_value "") x.scopes;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "httpMethod"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with httpMethod = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "mediaUpload"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestMethodMediaUploadData.parse
+        RestMethodMediaUploadData.empty
+        (fun v -> { x with mediaUpload = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "parameterOrder"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with parameterOrder = xs })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              JsonSchema.parse
+              JsonSchema.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestMethod.parse.parse_dictionary" e)
+        ("", JsonSchema.empty)
+        (fun xs -> { x with parameters = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "path"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with path = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "request"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestMethodRequestData.parse
+        RestMethodRequestData.empty
+        (fun v -> { x with request = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "response"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestMethodResponseData.parse
+        RestMethodResponseData.empty
+        (fun v -> { x with response = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "scopes"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with scopes = xs })
+        cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethod.parse" e
+  
 end
 
 module RestResource =
 struct
   type t = {
     methods : (string * RestMethod.t) list;
-    resources : (string * t) list
+    resources : (string * t) list;
+    
   }
-
-	let methods = {
-		GapiLens.get = (fun x -> x.methods);
-		GapiLens.set = (fun v x -> { x with methods = v })
-	}
-	let resources = {
-		GapiLens.get = (fun x -> x.resources);
-		GapiLens.set = (fun v x -> { x with resources = v })
-	}
-
+  
+  let methods = {
+    GapiLens.get = (fun x -> x.methods);
+    GapiLens.set = (fun v x -> { x with methods = v });
+  }
+  let resources = {
+    GapiLens.get = (fun x -> x.resources);
+    GapiLens.set = (fun v x -> { x with resources = v });
+  }
+  
   let empty = {
     methods = [];
-    resources = []
+    resources = [];
+    
   }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestMethod.render_content v)) x.methods;
+      GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.resources;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "methods"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              RestMethod.parse
+              RestMethod.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e)
+        ("", RestMethod.empty)
+        (fun xs -> { x with methods = xs })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "resources"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children parse empty (fun v -> (n, v)) cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e)
+        ("", empty)
+        (fun xs -> { x with resources = xs })
+        cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse" e
+  
+end
 
-  let rec render x =
-    [render_collection "methods" Object (fun (id, v) -> render_object id (RestMethod.render v)) x.methods;
-     render_collection "resources" Object (fun (id, v) -> render_object id (render v)) x.resources]
+module RestDescriptionIconsData =
+struct
+  type t = {
+    x16 : string;
+    x32 : string;
+    
+  }
+  
+  let x16 = {
+    GapiLens.get = (fun x -> x.x16);
+    GapiLens.set = (fun v x -> { x with x16 = v });
+  }
+  let x32 = {
+    GapiLens.get = (fun x -> x.x32);
+    GapiLens.set = (fun v x -> { x with x32 = v });
+  }
+  
+  let empty = {
+    x16 = "";
+    x32 = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "x16" x.x16;
+      GapiJson.render_string_value "x32" x.x32;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "x16"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with x16 = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "x32"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with x32 = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescriptionIconsData.parse" e
+  
+end
 
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Node
-          ({ name = "methods"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     RestMethod.parse
-                     RestMethod.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestResource.parse.parse_methods" e)
-            ("", RestMethod.empty)
-            (fun xs -> { x with methods = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ name = "resources"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     parse
-                     empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestResource.parse.parse_resources" e)
-            ("", empty)
-            (fun xs -> { x with resources = xs })
-            cs
-      | e ->
-          unexpected "GapiDiscovery.RestResource.parse" e
+module RestDescriptionAuthOauth2ScopesData =
+struct
+  type t = {
+    description : string;
+    
+  }
+  
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  
+  let empty = {
+    description = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "description" x.description;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with description = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescriptionAuthOauth2ScopesData.parse" e
+  
+end
 
+module RestDescriptionAuthOauth2Data =
+struct
+  type t = {
+    scopes : (string * RestDescriptionAuthOauth2ScopesData.t) list;
+    
+  }
+  
+  let scopes = {
+    GapiLens.get = (fun x -> x.scopes);
+    GapiLens.set = (fun v x -> { x with scopes = v });
+  }
+  
+  let empty = {
+    scopes = [];
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_collection "scopes" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestDescriptionAuthOauth2ScopesData.render_content v)) x.scopes;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "scopes"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              RestDescriptionAuthOauth2ScopesData.parse
+              RestDescriptionAuthOauth2ScopesData.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescriptionAuthOauth2Data.parse.parse_dictionary" e)
+        ("", RestDescriptionAuthOauth2ScopesData.empty)
+        (fun xs -> { x with scopes = xs })
+        cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescriptionAuthOauth2Data.parse" e
+  
+end
+
+module RestDescriptionAuthData =
+struct
+  type t = {
+    oauth2 : RestDescriptionAuthOauth2Data.t;
+    
+  }
+  
+  let oauth2 = {
+    GapiLens.get = (fun x -> x.oauth2);
+    GapiLens.set = (fun v x -> { x with oauth2 = v });
+  }
+  
+  let empty = {
+    oauth2 = RestDescriptionAuthOauth2Data.empty;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_object "oauth2" (RestDescriptionAuthOauth2Data.render_content x.oauth2);
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "oauth2"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestDescriptionAuthOauth2Data.parse
+        RestDescriptionAuthOauth2Data.empty
+        (fun v -> { x with oauth2 = v })
+        cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescriptionAuthData.parse" e
+  
 end
 
 module RestDescription =
 struct
   type t = {
-    kind : string;
-    id : string;
-    name : string;
-    version : string;
-    title : string;
-    description : string;
-    icons : IconsData.t;
-    documentationLink : string;
-    labels : string list;
-    protocol : string;
+    auth : RestDescriptionAuthData.t;
     basePath : string;
-    parameters : (string * JsonSchema.t) list;
-    auth : Oauth2Data.t;
+    description : string;
+    documentationLink : string;
     features : string list;
-    schemas : (string * JsonSchema.t) list;
+    icons : RestDescriptionIconsData.t;
+    id : string;
+    kind : string;
+    labels : string list;
     methods : (string * RestMethod.t) list;
-    resources : (string * RestResource.t) list
+    name : string;
+    parameters : (string * JsonSchema.t) list;
+    protocol : string;
+    resources : (string * RestResource.t) list;
+    schemas : (string * JsonSchema.t) list;
+    title : string;
+    version : string;
+    
   }
-
-	let kind = {
-		GapiLens.get = (fun x -> x.kind);
-		GapiLens.set = (fun v x -> { x with kind = v })
-	}
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let name = {
-		GapiLens.get = (fun x -> x.name);
-		GapiLens.set = (fun v x -> { x with name = v })
-	}
-	let version = {
-		GapiLens.get = (fun x -> x.version);
-		GapiLens.set = (fun v x -> { x with version = v })
-	}
-	let title = {
-		GapiLens.get = (fun x -> x.title);
-		GapiLens.set = (fun v x -> { x with title = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let icons = {
-		GapiLens.get = (fun x -> x.icons);
-		GapiLens.set = (fun v x -> { x with icons = v })
-	}
-	let documentationLink = {
-		GapiLens.get = (fun x -> x.documentationLink);
-		GapiLens.set = (fun v x -> { x with documentationLink = v })
-	}
-	let labels = {
-		GapiLens.get = (fun x -> x.labels);
-		GapiLens.set = (fun v x -> { x with labels = v })
-	}
-	let protocol = {
-		GapiLens.get = (fun x -> x.protocol);
-		GapiLens.set = (fun v x -> { x with protocol = v })
-	}
-	let basePath = {
-		GapiLens.get = (fun x -> x.basePath);
-		GapiLens.set = (fun v x -> { x with basePath = v })
-	}
-	let parameters = {
-		GapiLens.get = (fun x -> x.parameters);
-		GapiLens.set = (fun v x -> { x with parameters = v })
-	}
-	let auth = {
-		GapiLens.get = (fun x -> x.auth);
-		GapiLens.set = (fun v x -> { x with auth = v })
-	}
-	let features = {
-		GapiLens.get = (fun x -> x.features);
-		GapiLens.set = (fun v x -> { x with features = v })
-	}
-	let schemas = {
-		GapiLens.get = (fun x -> x.schemas);
-		GapiLens.set = (fun v x -> { x with schemas = v })
-	}
-	let methods = {
-		GapiLens.get = (fun x -> x.methods);
-		GapiLens.set = (fun v x -> { x with methods = v })
-	}
-	let resources = {
-		GapiLens.get = (fun x -> x.resources);
-		GapiLens.set = (fun v x -> { x with resources = v })
-	}
-
+  
+  let auth = {
+    GapiLens.get = (fun x -> x.auth);
+    GapiLens.set = (fun v x -> { x with auth = v });
+  }
+  let basePath = {
+    GapiLens.get = (fun x -> x.basePath);
+    GapiLens.set = (fun v x -> { x with basePath = v });
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let documentationLink = {
+    GapiLens.get = (fun x -> x.documentationLink);
+    GapiLens.set = (fun v x -> { x with documentationLink = v });
+  }
+  let features = {
+    GapiLens.get = (fun x -> x.features);
+    GapiLens.set = (fun v x -> { x with features = v });
+  }
+  let icons = {
+    GapiLens.get = (fun x -> x.icons);
+    GapiLens.set = (fun v x -> { x with icons = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let labels = {
+    GapiLens.get = (fun x -> x.labels);
+    GapiLens.set = (fun v x -> { x with labels = v });
+  }
+  let methods = {
+    GapiLens.get = (fun x -> x.methods);
+    GapiLens.set = (fun v x -> { x with methods = v });
+  }
+  let name = {
+    GapiLens.get = (fun x -> x.name);
+    GapiLens.set = (fun v x -> { x with name = v });
+  }
+  let parameters = {
+    GapiLens.get = (fun x -> x.parameters);
+    GapiLens.set = (fun v x -> { x with parameters = v });
+  }
+  let protocol = {
+    GapiLens.get = (fun x -> x.protocol);
+    GapiLens.set = (fun v x -> { x with protocol = v });
+  }
+  let resources = {
+    GapiLens.get = (fun x -> x.resources);
+    GapiLens.set = (fun v x -> { x with resources = v });
+  }
+  let schemas = {
+    GapiLens.get = (fun x -> x.schemas);
+    GapiLens.set = (fun v x -> { x with schemas = v });
+  }
+  let title = {
+    GapiLens.get = (fun x -> x.title);
+    GapiLens.set = (fun v x -> { x with title = v });
+  }
+  let version = {
+    GapiLens.get = (fun x -> x.version);
+    GapiLens.set = (fun v x -> { x with version = v });
+  }
+  
   let empty = {
-    kind = "";
-    id = "";
-    name = "";
-    version = "";
-    title = "";
-    description = "";
-    icons = IconsData.empty;
-    documentationLink = "";
-    labels = [];
-    protocol = "";
+    auth = RestDescriptionAuthData.empty;
     basePath = "";
-    parameters = [];
-    auth = Oauth2Data.empty;
+    description = "";
+    documentationLink = "";
     features = [];
-    schemas = [];
+    icons = RestDescriptionIconsData.empty;
+    id = "";
+    kind = "";
+    labels = [];
     methods = [];
-    resources = []
+    name = "";
+    parameters = [];
+    protocol = "";
+    resources = [];
+    schemas = [];
+    title = "";
+    version = "";
+    
   }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_object "auth" (RestDescriptionAuthData.render_content x.auth);
+      GapiJson.render_string_value "basePath" x.basePath;
+      GapiJson.render_string_value "description" x.description;
+      GapiJson.render_string_value "documentationLink" x.documentationLink;
+      GapiJson.render_collection "features" GapiJson.Array (GapiJson.render_string_value "") x.features;
+      GapiJson.render_object "icons" (RestDescriptionIconsData.render_content x.icons);
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_collection "labels" GapiJson.Array (GapiJson.render_string_value "") x.labels;
+      GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestMethod.render_content v)) x.methods;
+      GapiJson.render_string_value "name" x.name;
+      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (JsonSchema.render_content v)) x.parameters;
+      GapiJson.render_string_value "protocol" x.protocol;
+      GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestResource.render_content v)) x.resources;
+      GapiJson.render_collection "schemas" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (JsonSchema.render_content v)) x.schemas;
+      GapiJson.render_string_value "title" x.title;
+      GapiJson.render_string_value "version" x.version;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "auth"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestDescriptionAuthData.parse
+        RestDescriptionAuthData.empty
+        (fun v -> { x with auth = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "basePath"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with basePath = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "documentationLink"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with documentationLink = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "features"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with features = xs })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "icons"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        RestDescriptionIconsData.parse
+        RestDescriptionIconsData.empty
+        (fun v -> { x with icons = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "labels"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with labels = xs })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "methods"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              RestMethod.parse
+              RestMethod.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+        ("", RestMethod.empty)
+        (fun xs -> { x with methods = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with name = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              JsonSchema.parse
+              JsonSchema.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+        ("", JsonSchema.empty)
+        (fun xs -> { x with parameters = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "protocol"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with protocol = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "resources"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              RestResource.parse
+              RestResource.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+        ("", RestResource.empty)
+        (fun xs -> { x with resources = xs })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "schemas"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun _ -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = n; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              JsonSchema.parse
+              JsonSchema.empty
+              (fun v -> (n, v))
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+        ("", JsonSchema.empty)
+        (fun xs -> { x with schemas = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with title = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "version"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with version = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
 
-  let render x =
-    render_object ""
-      [render_string_value "kind" x.kind;
-       render_string_value "id" x.id;
-       render_string_value "name" x.name;
-       render_string_value "version" x.version;
-       render_string_value "title" x.title;
-       render_string_value "description" x.description;
-       render_object "icons" (IconsData.render x.icons);
-       render_string_value "documentationLink" x.documentationLink;
-       render_array "labels" (render_string_value "") x.labels;
-       render_string_value "protocol" x.protocol;
-       render_string_value "basePath" x.basePath;
-       render_collection "parameters" Object (fun (id, v) -> render_object id (JsonSchema.render v)) x.parameters;
-       render_object "auth" (Oauth2Data.render x.auth);
-       render_array "features" (render_string_value "") x.features;
-       render_collection "schemas" Object (fun (id, v) -> render_object id (JsonSchema.render v)) x.schemas;
-       render_collection "methods" Object (fun (id, v) -> render_object id (RestMethod.render v)) x.methods;
-       render_collection "resources" Object (fun (id, v) -> render_object id (RestResource.render v)) x.resources]
+module DirectoryListItemsIconsData =
+struct
+  type t = {
+    x16 : string;
+    x32 : string;
+    
+  }
+  
+  let x16 = {
+    GapiLens.get = (fun x -> x.x16);
+    GapiLens.set = (fun v x -> { x with x16 = v });
+  }
+  let x32 = {
+    GapiLens.get = (fun x -> x.x32);
+    GapiLens.set = (fun v x -> { x with x32 = v });
+  }
+  
+  let empty = {
+    x16 = "";
+    x32 = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "x16" x.x16;
+      GapiJson.render_string_value "x32" x.x32;
+      
+    ]
+  
+  let render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "x16"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with x16 = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "x32"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with x32 = v }
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.DirectoryListItemsIconsData.parse" e
+  
+end
 
-  let rec parse x tree =
-    match tree with
-        AnnotatedTree.Leaf
-          ({ GapiJson.name = "kind"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with kind = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "id"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with id = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "name"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with name = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "version"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with version = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "title"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with title = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "description"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with description = v }
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "icons"; data_type = Object },
-           cs) ->
-          parse_children
-            IconsData.parse
-            IconsData.empty
-            (fun v -> { x with icons = v })
-            cs
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "documentationLink"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with documentationLink = v }
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "labels"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with labels = xs })
-            cs
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "protocol"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with protocol = v }
-      | AnnotatedTree.Leaf
-          ({ GapiJson.name = "basePath"; data_type = Scalar },
-           Json_type.String v) ->
-          { x with basePath = v }
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "parameters"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ GapiJson.name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     JsonSchema.parse
-                     JsonSchema.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestDescription.parse.parse_parameters" e)
-            ("", JsonSchema.empty)
-            (fun xs -> { x with parameters = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "auth"; data_type = Object },
-           cs) ->
-          parse_children
-            Oauth2Data.parse
-            Oauth2Data.empty
-            (fun v -> { x with auth = v })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "features"; data_type = Array },
-           cs) ->
-          parse_collection
-            parse_string_element
-            ""
-            (fun xs -> { x with features = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "schemas"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ GapiJson.name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     JsonSchema.parse
-                     JsonSchema.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestDescription.parse.parse_schemas" e)
-            ("", JsonSchema.empty)
-            (fun xs -> { x with schemas = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "methods"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ GapiJson.name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     RestMethod.parse
-                     RestMethod.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestDescription.parse.parse_methods" e)
-            ("", RestMethod.empty)
-            (fun xs -> { x with methods = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = "resources"; data_type = Object },
-           cs) ->
-          parse_collection
-            (fun _ -> function
-                 AnnotatedTree.Node
-                   ({ GapiJson.name = n; data_type = Object },
-                    cs) ->
-                   parse_children
-                     RestResource.parse
-                     RestResource.empty
-                     (fun v -> (n, v))
-                     cs
-               | e ->
-                   unexpected "GapiDiscovery.RestDescription.parse.parse_resources" e)
-            ("", RestResource.empty)
-            (fun xs -> { x with resources = xs })
-            cs
-      | AnnotatedTree.Node
-          ({ GapiJson.name = ""; data_type = Object },
-           cs) ->
-          parse_children
-            parse
-            empty
-            Std.identity
-            cs
-      | e ->
-          unexpected "GapiDiscovery.ItemsData.parse" e
+module DirectoryListItemsData =
+struct
+  type t = {
+    description : string;
+    discoveryLink : string;
+    documentationLink : string;
+    icons : DirectoryListItemsIconsData.t;
+    id : string;
+    kind : string;
+    labels : string list;
+    name : string;
+    preferred : bool;
+    title : string;
+    version : string;
+    
+  }
+  
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let discoveryLink = {
+    GapiLens.get = (fun x -> x.discoveryLink);
+    GapiLens.set = (fun v x -> { x with discoveryLink = v });
+  }
+  let documentationLink = {
+    GapiLens.get = (fun x -> x.documentationLink);
+    GapiLens.set = (fun v x -> { x with documentationLink = v });
+  }
+  let icons = {
+    GapiLens.get = (fun x -> x.icons);
+    GapiLens.set = (fun v x -> { x with icons = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let labels = {
+    GapiLens.get = (fun x -> x.labels);
+    GapiLens.set = (fun v x -> { x with labels = v });
+  }
+  let name = {
+    GapiLens.get = (fun x -> x.name);
+    GapiLens.set = (fun v x -> { x with name = v });
+  }
+  let preferred = {
+    GapiLens.get = (fun x -> x.preferred);
+    GapiLens.set = (fun v x -> { x with preferred = v });
+  }
+  let title = {
+    GapiLens.get = (fun x -> x.title);
+    GapiLens.set = (fun v x -> { x with title = v });
+  }
+  let version = {
+    GapiLens.get = (fun x -> x.version);
+    GapiLens.set = (fun v x -> { x with version = v });
+  }
+  
+  let empty = {
+    description = "";
+    discoveryLink = "";
+    documentationLink = "";
+    icons = DirectoryListItemsIconsData.empty;
+    id = "";
+    kind = "";
+    labels = [];
+    name = "";
+    preferred = false;
+    title = "";
+    version = "";
+    
+  }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_string_value "description" x.description;
+      GapiJson.render_string_value "discoveryLink" x.discoveryLink;
+      GapiJson.render_string_value "documentationLink" x.documentationLink;
+      GapiJson.render_object "icons" (DirectoryListItemsIconsData.render_content x.icons);
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_collection "labels" GapiJson.Array (GapiJson.render_string_value "") x.labels;
+      GapiJson.render_string_value "name" x.name;
+      GapiJson.render_bool_value "preferred" x.preferred;
+      GapiJson.render_string_value "title" x.title;
+      GapiJson.render_string_value "version" x.version;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "discoveryLink"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with discoveryLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "documentationLink"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with documentationLink = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "icons"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        DirectoryListItemsIconsData.parse
+        DirectoryListItemsIconsData.empty
+        (fun v -> { x with icons = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "labels"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        GapiJson.parse_string_element
+        ""
+        (fun xs -> { x with labels = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with name = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "preferred"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with preferred = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with title = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "version"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with version = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.DirectoryListItemsData.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
 
-  let to_data_model = render_root render
-
-  let of_data_model = parse_root parse empty
-
+module DirectoryList =
+struct
+  type t = {
+    items : DirectoryListItemsData.t list;
+    kind : string;
+    
+  }
+  
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  
+  let empty = {
+    items = [];
+    kind = "";
+    
+  }
+  
+  let render x = 
+    GapiJson.render_object "" [
+      GapiJson.render_array "items" DirectoryListItemsData.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      
+    ]
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        DirectoryListItemsData.parse
+        DirectoryListItemsData.empty
+        (fun xs -> { x with items = xs })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDiscoveryV1Model.DirectoryList.parse" e
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
 end
 

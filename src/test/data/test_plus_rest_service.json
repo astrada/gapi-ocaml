@@ -1,1213 +1,685 @@
 {
-   "kind":"discovery#restDescription",
-   "id":"plus:v1",
-   "name":"plus",
-   "version":"v1",
-   "title":"Google+ API",
-   "description":"The Google+ API enables developers to build on top of the Google+ platform.",
-   "icons":{
-      "x16":"http://www.google.com/images/icons/product/gplus-16.png",
-      "x32":"http://www.google.com/images/icons/product/gplus-32.png"
+   "auth":{
+      "oauth2":{
+         "scopes":{
+            "https://www.googleapis.com/auth/tasks":{
+               "description":"Manage your tasks"
+            },
+            "https://www.googleapis.com/auth/tasks.readonly":{
+               "description":"View your tasks"
+            }
+         }
+      }
    },
-   "documentationLink":"http://developers.google.com/+/api/",
+   "basePath":"/tasks/v1/",
+   "description":"Lets you manage your tasks and task lists.",
+   "documentationLink":"http://code.google.com/apis/tasks/v1/using.html",
+   "icons":{
+      "x16":"http://www.google.com/images/icons/product/tasks-16.png",
+      "x32":"http://www.google.com/images/icons/product/tasks-32.png"
+   },
+   "id":"tasks:v1",
+   "kind":"discovery#restDescription",
    "labels":[
       "labs"
    ],
-   "protocol":"rest",
-   "basePath":"/plus/v1/",
+   "name":"tasks",
    "parameters":{
       "alt":{
-         "type":"string",
-         "description":"Data format for the response.",
          "default":"json",
+         "description":"Data format for the response.",
          "enum":[
             "json"
          ],
          "enumDescriptions":[
             "Responses with Content-Type of application/json"
          ],
-         "location":"query"
+         "location":"query",
+         "type":"string"
       },
       "fields":{
-         "type":"string",
          "description":"Selector specifying which fields to include in a partial response.",
-         "location":"query"
+         "location":"query",
+         "type":"string"
       },
       "key":{
-         "type":"string",
          "description":"API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-         "location":"query"
+         "location":"query",
+         "type":"string"
       },
       "oauth_token":{
-         "type":"string",
          "description":"OAuth 2.0 token for the current user.",
-         "location":"query"
+         "location":"query",
+         "type":"string"
       },
       "prettyPrint":{
-         "type":"boolean",
-         "description":"Returns response with indentations and line breaks.",
          "default":"true",
-         "location":"query"
+         "description":"Returns response with indentations and line breaks.",
+         "location":"query",
+         "type":"boolean"
       },
       "quotaUser":{
-         "type":"string",
          "description":"Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
-         "location":"query"
+         "location":"query",
+         "type":"string"
       },
       "userIp":{
-         "type":"string",
          "description":"IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
-         "location":"query"
+         "location":"query",
+         "type":"string"
       }
    },
-   "auth":{
-      "oauth2":{
-         "scopes":{
-            "https://www.googleapis.com/auth/plus.me":{
-               "description":"Know who you are on Google"
+   "protocol":"rest",
+   "resources":{
+      "tasklists":{
+         "methods":{
+            "delete":{
+               "description":"Deletes the authenticated user's specified task list.",
+               "httpMethod":"DELETE",
+               "id":"tasks.tasklists.delete",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"users/@me/lists/{tasklist}",
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
             },
-            "https://www.googleapis.com/auth/userinfo.email":{
-               "description":"View your email address"
+            "get":{
+               "description":"Returns the authenticated user's specified task list.",
+               "httpMethod":"GET",
+               "id":"tasks.tasklists.get",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"users/@me/lists/{tasklist}",
+               "response":{
+                  "$ref":"TaskList"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks",
+                  "https://www.googleapis.com/auth/tasks.readonly"
+               ]
+            },
+            "insert":{
+               "description":"Creates a new task list and adds it to the authenticated user's task lists.",
+               "httpMethod":"POST",
+               "id":"tasks.tasklists.insert",
+               "path":"users/@me/lists",
+               "request":{
+                  "$ref":"TaskList"
+               },
+               "response":{
+                  "$ref":"TaskList"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "list":{
+               "description":"Returns all the authenticated user's task lists.",
+               "httpMethod":"GET",
+               "id":"tasks.tasklists.list",
+               "parameters":{
+                  "maxResults":{
+                     "description":"Maximum number of task lists returned on one page. Optional. The default is 100.",
+                     "format":"int64",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "pageToken":{
+                     "description":"Token specifying the result page to return. Optional.",
+                     "location":"query",
+                     "type":"string"
+                  }
+               },
+               "path":"users/@me/lists",
+               "response":{
+                  "$ref":"TaskLists"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks",
+                  "https://www.googleapis.com/auth/tasks.readonly"
+               ]
+            },
+            "patch":{
+               "description":"Updates the authenticated user's specified task list. This method supports patch semantics.",
+               "httpMethod":"PATCH",
+               "id":"tasks.tasklists.patch",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"users/@me/lists/{tasklist}",
+               "request":{
+                  "$ref":"TaskList"
+               },
+               "response":{
+                  "$ref":"TaskList"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "update":{
+               "description":"Updates the authenticated user's specified task list.",
+               "httpMethod":"PUT",
+               "id":"tasks.tasklists.update",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"users/@me/lists/{tasklist}",
+               "request":{
+                  "$ref":"TaskList"
+               },
+               "response":{
+                  "$ref":"TaskList"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            }
+         }
+      },
+      "tasks":{
+         "methods":{
+            "clear":{
+               "description":"Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.",
+               "httpMethod":"POST",
+               "id":"tasks.tasks.clear",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/clear",
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "delete":{
+               "description":"Deletes the specified task from the task list.",
+               "httpMethod":"DELETE",
+               "id":"tasks.tasks.delete",
+               "parameterOrder":[
+                  "tasklist",
+                  "task"
+               ],
+               "parameters":{
+                  "task":{
+                     "description":"Task identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks/{task}",
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "get":{
+               "description":"Returns the specified task.",
+               "httpMethod":"GET",
+               "id":"tasks.tasks.get",
+               "parameterOrder":[
+                  "tasklist",
+                  "task"
+               ],
+               "parameters":{
+                  "task":{
+                     "description":"Task identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks/{task}",
+               "response":{
+                  "$ref":"Task"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks",
+                  "https://www.googleapis.com/auth/tasks.readonly"
+               ]
+            },
+            "insert":{
+               "description":"Creates a new task on the specified task list.",
+               "httpMethod":"POST",
+               "id":"tasks.tasks.insert",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "parent":{
+                     "description":"Parent task identifier. If the task is created at the top level, this parameter is omitted. Optional.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "previous":{
+                     "description":"Previous sibling task identifier. If the task is created at the first position among its siblings, this parameter is omitted. Optional.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks",
+               "request":{
+                  "$ref":"Task"
+               },
+               "response":{
+                  "$ref":"Task"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "list":{
+               "description":"Returns all tasks in the specified task list.",
+               "httpMethod":"GET",
+               "id":"tasks.tasks.list",
+               "parameterOrder":[
+                  "tasklist"
+               ],
+               "parameters":{
+                  "completedMax":{
+                     "description":"Upper bound for a task's completion date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by completion date.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "completedMin":{
+                     "description":"Lower bound for a task's completion date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by completion date.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "dueMax":{
+                     "description":"Upper bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "dueMin":{
+                     "description":"Lower bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "maxResults":{
+                     "description":"Maximum number of task lists returned on one page. Optional. The default is 100.",
+                     "format":"int64",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "pageToken":{
+                     "description":"Token specifying the result page to return. Optional.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "showCompleted":{
+                     "description":"Flag indicating whether completed tasks are returned in the result. Optional. The default is True.",
+                     "location":"query",
+                     "type":"boolean"
+                  },
+                  "showDeleted":{
+                     "description":"Flag indicating whether deleted tasks are returned in the result. Optional. The default is False.",
+                     "location":"query",
+                     "type":"boolean"
+                  },
+                  "showHidden":{
+                     "description":"Flag indicating whether hidden tasks are returned in the result. Optional. The default is False.",
+                     "location":"query",
+                     "type":"boolean"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  },
+                  "updatedMin":{
+                     "description":"Lower bound for a task's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+                     "location":"query",
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks",
+               "response":{
+                  "$ref":"Tasks"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks",
+                  "https://www.googleapis.com/auth/tasks.readonly"
+               ]
+            },
+            "move":{
+               "description":"Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks.",
+               "httpMethod":"POST",
+               "id":"tasks.tasks.move",
+               "parameterOrder":[
+                  "tasklist",
+                  "task"
+               ],
+               "parameters":{
+                  "parent":{
+                     "description":"New parent task identifier. If the task is moved to the top level, this parameter is omitted. Optional.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "previous":{
+                     "description":"New previous sibling task identifier. If the task is moved to the first position among its siblings, this parameter is omitted. Optional.",
+                     "location":"query",
+                     "type":"string"
+                  },
+                  "task":{
+                     "description":"Task identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks/{task}/move",
+               "response":{
+                  "$ref":"Task"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "patch":{
+               "description":"Updates the specified task. This method supports patch semantics.",
+               "httpMethod":"PATCH",
+               "id":"tasks.tasks.patch",
+               "parameterOrder":[
+                  "tasklist",
+                  "task"
+               ],
+               "parameters":{
+                  "task":{
+                     "description":"Task identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks/{task}",
+               "request":{
+                  "$ref":"Task"
+               },
+               "response":{
+                  "$ref":"Task"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
+            },
+            "update":{
+               "description":"Updates the specified task.",
+               "httpMethod":"PUT",
+               "id":"tasks.tasks.update",
+               "parameterOrder":[
+                  "tasklist",
+                  "task"
+               ],
+               "parameters":{
+                  "task":{
+                     "description":"Task identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  },
+                  "tasklist":{
+                     "description":"Task list identifier.",
+                     "location":"path",
+                     "required":true,
+                     "type":"string"
+                  }
+               },
+               "path":"lists/{tasklist}/tasks/{task}",
+               "request":{
+                  "$ref":"Task"
+               },
+               "response":{
+                  "$ref":"Task"
+               },
+               "scopes":[
+                  "https://www.googleapis.com/auth/tasks"
+               ]
             }
          }
       }
    },
    "schemas":{
-      "Acl":{
-         "id":"Acl",
-         "type":"object",
+      "Task":{
+         "id":"Task",
          "properties":{
-            "description":{
-               "type":"string",
-               "description":"Description of the access granted, suitable for display."
+            "completed":{
+               "description":"Completion date of the task (as a RFC 3339 timestamp). This field is omitted if the task has not been completed.",
+               "format":"date-time",
+               "type":"string"
             },
-            "items":{
-               "type":"array",
-               "description":"The list of access entries.",
-               "items":{
-                  "$ref":"PlusAclentryResource"
-               }
+            "deleted":{
+               "description":"Flag indicating whether the task has been deleted. The default if False.",
+               "type":"boolean"
             },
-            "kind":{
-               "type":"string",
-               "description":"Identifies this resource as a collection of access controls. Value: \"plus#acl\".",
-               "default":"plus#acl"
-            }
-         }
-      },
-      "Activity":{
-         "id":"Activity",
-         "type":"object",
-         "properties":{
-            "access":{
-               "$ref":"Acl",
-               "description":"Identifies who has access to see this activity."
-            },
-            "actor":{
-               "type":"object",
-               "description":"The person who performed this activity.",
-               "properties":{
-                  "displayName":{
-                     "type":"string",
-                     "description":"The name of the actor, suitable for display."
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"The ID of the actor's person resource."
-                  },
-                  "image":{
-                     "type":"object",
-                     "description":"The image representation of the actor.",
-                     "properties":{
-                        "url":{
-                           "type":"string",
-                           "description":"The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
-                        }
-                     }
-                  },
-                  "url":{
-                     "type":"string",
-                     "description":"The link to the actor's Google profile."
-                  }
-               }
-            },
-            "address":{
-               "type":"string",
-               "description":"Street address where this activity occurred."
-            },
-            "annotation":{
-               "type":"string",
-               "description":"Additional content added by the person who shared this activity, applicable only when resharing an activity."
-            },
-            "crosspostSource":{
-               "type":"string",
-               "description":"If this activity is a crosspost from another system, this property specifies the ID of the original activity."
+            "due":{
+               "description":"Due date of the task (as a RFC 3339 timestamp). Optional.",
+               "format":"date-time",
+               "type":"string"
             },
             "etag":{
-               "type":"string",
-               "description":"ETag of this response for caching purposes."
+               "description":"ETag of the resource.",
+               "type":"string"
             },
-            "geocode":{
-               "type":"string",
-               "description":"Latitude and longitude where this activity occurred. Format is latitude followed by longitude, space separated."
+            "hidden":{
+               "description":"Flag indicating whether the task is hidden. This is the case if the task had been marked completed when the task list was last cleared. The default is False. This field is read-only.",
+               "type":"boolean"
             },
             "id":{
-               "type":"string",
-               "description":"The ID of this activity."
+               "description":"Task identifier.",
+               "type":"string"
             },
             "kind":{
-               "type":"string",
-               "description":"Identifies this resource as an activity. Value: \"plus#activity\".",
-               "default":"plus#activity"
+               "default":"tasks#task",
+               "description":"Type of the resource. This is always \"tasks#task\".",
+               "type":"string"
             },
-            "object":{
-               "type":"object",
-               "description":"The object of this activity.",
-               "properties":{
-                  "actor":{
-                     "type":"object",
-                     "description":"If this activity's object is itself another activity (for example, when a person reshares an activity), this property specifies the original activity's actor.",
-                     "properties":{
-                        "displayName":{
-                           "type":"string",
-                           "description":"The original actor's name, suitable for display."
-                        },
-                        "id":{
-                           "type":"string",
-                           "description":"ID of the original actor."
-                        },
-                        "image":{
-                           "type":"object",
-                           "description":"The image representation of the original actor.",
-                           "properties":{
-                              "url":{
-                                 "type":"string",
-                                 "description":"A URL that points to a thumbnail photo of the original actor."
-                              }
-                           }
-                        },
-                        "url":{
-                           "type":"string",
-                           "description":"A link to the original actor's Google profile."
-                        }
-                     }
-                  },
-                  "attachments":{
-                     "type":"array",
-                     "description":"The media objects attached to this activity.",
-                     "items":{
-                        "type":"object",
-                        "properties":{
-                           "content":{
-                              "type":"string",
-                              "description":"If the attachment is an article, this property contains a snippet of text from the article."
-                           },
-                           "displayName":{
-                              "type":"string",
-                              "description":"The title of the attachment (such as a photo caption or an article title)."
-                           },
-                           "embed":{
-                              "type":"object",
-                              "description":"If the attachment is a video, the embeddable link.",
-                              "properties":{
-                                 "type":{
-                                    "type":"string",
-                                    "description":"Media type of the link."
-                                 },
-                                 "url":{
-                                    "type":"string",
-                                    "description":"URL of the link."
-                                 }
-                              }
-                           },
-                           "fullImage":{
-                              "type":"object",
-                              "description":"The full image url for photo attachments.",
-                              "properties":{
-                                 "height":{
-                                    "type":"integer",
-                                    "description":"The height, in pixels, of the linked resource.",
-                                    "format":"uint32"
-                                 },
-                                 "type":{
-                                    "type":"string",
-                                    "description":"Media type of the link."
-                                 },
-                                 "url":{
-                                    "type":"string",
-                                    "description":"URL of the link."
-                                 },
-                                 "width":{
-                                    "type":"integer",
-                                    "description":"The width, in pixels, of the linked resource.",
-                                    "format":"uint32"
-                                 }
-                              }
-                           },
-                           "id":{
-                              "type":"string",
-                              "description":"The ID of the media object's resource."
-                           },
-                           "image":{
-                              "type":"object",
-                              "description":"The preview image for photos or videos.",
-                              "properties":{
-                                 "height":{
-                                    "type":"integer",
-                                    "description":"The height, in pixels, of the linked resource.",
-                                    "format":"uint32"
-                                 },
-                                 "type":{
-                                    "type":"string",
-                                    "description":"Media type of the link."
-                                 },
-                                 "url":{
-                                    "type":"string",
-                                    "description":"URL of the link."
-                                 },
-                                 "width":{
-                                    "type":"integer",
-                                    "description":"The width, in pixels, of the linked resource.",
-                                    "format":"uint32"
-                                 }
-                              }
-                           },
-                           "objectType":{
-                              "type":"string",
-                              "description":"The type of media object. Possible values are: \n- \"photo\" - A photo. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
-                           },
-                           "url":{
-                              "type":"string",
-                              "description":"The link to the attachment, should be of type text/html."
-                           }
-                        }
-                     }
-                  },
-                  "content":{
-                     "type":"string",
-                     "description":"The HTML-formatted content, suitable for display. When creating or updating an activity, this value must be supplied as plain text in the request. If successful, the response will contain the HTML-formatted content. When updating an activity, use originalContent as the starting value, then assign the updated text to this property."
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"The ID of the object. When resharing an activity, this is the ID of the activity being reshared."
-                  },
-                  "objectType":{
-                     "type":"string",
-                     "description":"The type of the object. Possible values are: \n- \"note\" - Textual content. \n- \"activity\" - A Google+ activity."
-                  },
-                  "originalContent":{
-                     "type":"string",
-                     "description":"The content (text) as provided by the author, stored without any HTML formatting. When updating an activity's content, use the value of originalContent as the starting point from which to make edits."
-                  },
-                  "plusoners":{
-                     "type":"object",
-                     "description":"People who +1'd this activity.",
-                     "properties":{
-                        "selfLink":{
-                           "type":"string",
-                           "description":"The URL for the collection of people who +1'd this activity."
-                        },
-                        "totalItems":{
-                           "type":"integer",
-                           "description":"Total number of people who +1'd this activity.",
-                           "format":"uint32"
-                        }
-                     }
-                  },
-                  "replies":{
-                     "type":"object",
-                     "description":"Comments in reply to this activity.",
-                     "properties":{
-                        "selfLink":{
-                           "type":"string",
-                           "description":"The URL for the collection of comments in reply to this activity."
-                        },
-                        "totalItems":{
-                           "type":"integer",
-                           "description":"Total number of comments on this activity.",
-                           "format":"uint32"
-                        }
-                     }
-                  },
-                  "resharers":{
-                     "type":"object",
-                     "description":"People who reshared this activity.",
-                     "properties":{
-                        "selfLink":{
-                           "type":"string",
-                           "description":"The URL for the collection of resharers."
-                        },
-                        "totalItems":{
-                           "type":"integer",
-                           "description":"Total number of people who reshared this activity.",
-                           "format":"uint32"
-                        }
-                     }
-                  },
-                  "url":{
-                     "type":"string",
-                     "description":"The URL that points to the linked resource."
-                  }
-               }
-            },
-            "placeId":{
-               "type":"string",
-               "description":"ID of the place where this activity occurred."
-            },
-            "placeName":{
-               "type":"string",
-               "description":"Name of the place where this activity occurred."
-            },
-            "placeholder":{
-               "type":"boolean",
-               "description":"True if this activity is a placeholder."
-            },
-            "provider":{
-               "type":"object",
-               "description":"The service provider that initially published this activity.",
-               "properties":{
-                  "title":{
-                     "type":"string",
-                     "description":"Name of the service provider."
-                  }
-               }
-            },
-            "published":{
-               "type":"string",
-               "description":"The time at which this activity was initially published. Formatted as an RFC 3339 timestamp.",
-               "format":"date-time"
-            },
-            "radius":{
-               "type":"string",
-               "description":"Radius, in meters, of the region where this activity occurred, centered at the latitude and longitude identified in geocode."
-            },
-            "title":{
-               "type":"string",
-               "description":"Title of this activity."
-            },
-            "updated":{
-               "type":"string",
-               "description":"The time at which this activity was last updated. Formatted as an RFC 3339 timestamp.",
-               "format":"date-time"
-            },
-            "url":{
-               "type":"string",
-               "description":"The link to this activity."
-            },
-            "verb":{
-               "type":"string",
-               "description":"This activity's verb, indicating what action was performed. Possible values are: \n- \"post\" - Publish content to the stream. \n- \"checkin\" - Check in to a location. \n- \"share\" - Reshare an activity."
-            }
-         }
-      },
-      "ActivityFeed":{
-         "id":"ActivityFeed",
-         "type":"object",
-         "properties":{
-            "etag":{
-               "type":"string",
-               "description":"ETag of this response for caching purposes."
-            },
-            "id":{
-               "type":"string",
-               "description":"The ID of this collection of activities."
-            },
-            "items":{
-               "type":"array",
-               "description":"The activities in this page of results.",
+            "links":{
+               "description":"Collection of links. This collection is read-only.",
                "items":{
-                  "$ref":"Activity"
-               }
-            },
-            "kind":{
-               "type":"string",
-               "description":"Identifies this resource as a collection of activities. Value: \"plus#activityFeed\".",
-               "default":"plus#activityFeed"
-            },
-            "nextLink":{
-               "type":"string",
-               "description":"Link to the next page of activities."
-            },
-            "nextPageToken":{
-               "type":"string",
-               "description":"The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
-            },
-            "selfLink":{
-               "type":"string",
-               "description":"Link to this activity resource."
-            },
-            "title":{
-               "type":"string",
-               "description":"The title of this collection of activities."
-            },
-            "updated":{
-               "type":"string",
-               "description":"The time at which this collection of activities was last updated. Formatted as an RFC 3339 timestamp.",
-               "format":"date-time"
-            }
-         }
-      },
-      "Comment":{
-         "id":"Comment",
-         "type":"object",
-         "properties":{
-            "actor":{
-               "type":"object",
-               "description":"The person who posted this comment.",
-               "properties":{
-                  "displayName":{
-                     "type":"string",
-                     "description":"The name of this actor, suitable for display."
-                  },
-                  "id":{
-                     "type":"string",
-                     "description":"The ID of the actor."
-                  },
-                  "image":{
-                     "type":"object",
-                     "description":"The image representation of this actor.",
-                     "properties":{
-                        "url":{
-                           "type":"string",
-                           "description":"The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
-                        }
-                     }
-                  },
-                  "url":{
-                     "type":"string",
-                     "description":"A link to the person resource for this actor."
-                  }
-               }
-            },
-            "etag":{
-               "type":"string",
-               "description":"ETag of this response for caching purposes."
-            },
-            "id":{
-               "type":"string",
-               "description":"The ID of this comment."
-            },
-            "inReplyTo":{
-               "type":"array",
-               "description":"The activity this comment replied to.",
-               "items":{
-                  "type":"object",
                   "properties":{
-                     "id":{
-                        "type":"string",
-                        "description":"The id of the activity."
-                     },
-                     "url":{
-                        "type":"string",
-                        "description":"The url of the activity."
-                     }
-                  }
-               }
-            },
-            "kind":{
-               "type":"string",
-               "description":"Identifies this resource as a comment. Value: \"plus#comment\".",
-               "default":"plus#comment"
-            },
-            "object":{
-               "type":"object",
-               "description":"The object of this comment.",
-               "properties":{
-                  "content":{
-                     "type":"string",
-                     "description":"The content of this comment."
-                  },
-                  "objectType":{
-                     "type":"string",
-                     "description":"The object type of this comment. Possible values are: \n- \"comment\" - A comment in reply to an activity.",
-                     "default":"comment"
-                  }
-               }
-            },
-            "published":{
-               "type":"string",
-               "description":"The time at which this comment was initially published. Formatted as an RFC 3339 timestamp.",
-               "format":"date-time"
-            },
-            "selfLink":{
-               "type":"string",
-               "description":"Link to this comment resource."
-            },
-            "updated":{
-               "type":"string",
-               "description":"The time at which this comment was last updated. Formatted as an RFC 3339 timestamp.",
-               "format":"date-time"
-            },
-            "verb":{
-               "type":"string",
-               "description":"This comment's verb, indicating what action was performed. Possible values are: \n- \"post\" - Publish content to the stream.",
-               "default":"post"
-            }
-         }
-      },
-      "CommentFeed":{
-         "id":"CommentFeed",
-         "type":"object",
-         "properties":{
-            "etag":{
-               "type":"string",
-               "description":"ETag of this response for caching purposes."
-            },
-            "id":{
-               "type":"string",
-               "description":"The ID of this collection of comments."
-            },
-            "items":{
-               "type":"array",
-               "description":"The comments in this page of results.",
-               "items":{
-                  "$ref":"Comment"
-               }
-            },
-            "kind":{
-               "type":"string",
-               "description":"Identifies this resource as a collection of comments. Value: \"plus#commentFeed\".",
-               "default":"plus#commentFeed"
-            },
-            "nextLink":{
-               "type":"string",
-               "description":"Link to the next page of activities."
-            },
-            "nextPageToken":{
-               "type":"string",
-               "description":"The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
-            },
-            "title":{
-               "type":"string",
-               "description":"The title of this collection of comments."
-            },
-            "updated":{
-               "type":"string",
-               "description":"The time at which this collection of comments was last updated. Formatted as an RFC 3339 timestamp.",
-               "format":"date-time"
-            }
-         }
-      },
-      "PeopleFeed":{
-         "id":"PeopleFeed",
-         "type":"object",
-         "properties":{
-            "etag":{
-               "type":"string",
-               "description":"ETag of this response for caching purposes."
-            },
-            "items":{
-               "type":"array",
-               "description":"The people in this page of results. Each item will include the id, displayName, image, and url for the person. To retrieve additional profile data, see the people.get method.",
-               "items":{
-                  "$ref":"Person"
-               }
-            },
-            "kind":{
-               "type":"string",
-               "description":"Identifies this resource as a collection of people. Value: \"plus#peopleFeed\".",
-               "default":"plus#peopleFeed"
-            },
-            "nextPageToken":{
-               "type":"string",
-               "description":"The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
-            },
-            "selfLink":{
-               "type":"string",
-               "description":"Link to this resource."
-            },
-            "title":{
-               "type":"string",
-               "description":"The title of this collection of people."
-            }
-         }
-      },
-      "Person":{
-         "id":"Person",
-         "type":"object",
-         "properties":{
-            "aboutMe":{
-               "type":"string",
-               "description":"A short biography for this person."
-            },
-            "birthday":{
-               "type":"string",
-               "description":"The person's date of birth, represented as YYYY-MM-DD."
-            },
-            "currentLocation":{
-               "type":"string",
-               "description":"The current location for this person."
-            },
-            "displayName":{
-               "type":"string",
-               "description":"The name of this person, suitable for display."
-            },
-            "emails":{
-               "type":"array",
-               "description":"A list of email addresses for this person.",
-               "items":{
-                  "type":"object",
-                  "properties":{
-                     "primary":{
-                        "type":"boolean",
-                        "description":"If \"true\", indicates this email address is the person's primary one."
-                     },
-                     "type":{
-                        "type":"string",
-                        "description":"The type of address. Possible values are: \n- \"home\" - Home email address. \n- \"work\" - Work email address. \n- \"other\" - Other."
-                     },
-                     "value":{
-                        "type":"string",
-                        "description":"The email address."
-                     }
-                  }
-               }
-            },
-            "etag":{
-               "type":"string",
-               "description":"ETag of this response for caching purposes."
-            },
-            "gender":{
-               "type":"string",
-               "description":"The person's gender. Possible values are: \n- \"male\" - Male gender. \n- \"female\" - Female gender. \n- \"other\" - Other."
-            },
-            "hasApp":{
-               "type":"boolean",
-               "description":"If \"true\", indicates that the person has installed the app that is making the request and has chosen to expose this install state to the caller. A value of \"false\" indicates that the install state cannot be determined (it is either not installed or the person has chosen to keep this information private)."
-            },
-            "id":{
-               "type":"string",
-               "description":"The ID of this person."
-            },
-            "image":{
-               "type":"object",
-               "description":"The representation of the person's profile photo.",
-               "properties":{
-                  "url":{
-                     "type":"string",
-                     "description":"The URL of the person's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
-                  }
-               }
-            },
-            "kind":{
-               "type":"string",
-               "description":"Identifies this resource as a person. Value: \"plus#person\".",
-               "default":"plus#person"
-            },
-            "languagesSpoken":{
-               "type":"array",
-               "description":"The languages spoken by this person.",
-               "items":{
-                  "type":"string"
-               }
-            },
-            "name":{
-               "type":"object",
-               "description":"An object representation of the individual components of a person's name.",
-               "properties":{
-                  "familyName":{
-                     "type":"string",
-                     "description":"The family name (last name) of this person."
-                  },
-                  "formatted":{
-                     "type":"string",
-                     "description":"The full name of this person, including middle names, suffixes, etc."
-                  },
-                  "givenName":{
-                     "type":"string",
-                     "description":"The given name (first name) of this person."
-                  },
-                  "honorificPrefix":{
-                     "type":"string",
-                     "description":"The honorific prefixes (such as \"Dr.\" or \"Mrs.\") for this person."
-                  },
-                  "honorificSuffix":{
-                     "type":"string",
-                     "description":"The honorific suffixes (such as \"Jr.\") for this person."
-                  },
-                  "middleName":{
-                     "type":"string",
-                     "description":"The middle name of this person."
-                  }
-               }
-            },
-            "nickname":{
-               "type":"string",
-               "description":"The nickname of this person."
-            },
-            "objectType":{
-               "type":"string",
-               "description":"Type of person within Google+. Possible values are: \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
-            },
-            "organizations":{
-               "type":"array",
-               "description":"A list of current or past organizations with which this person is associated.",
-               "items":{
-                  "type":"object",
-                  "properties":{
-                     "department":{
-                        "type":"string",
-                        "description":"The department within the organization."
-                     },
                      "description":{
-                        "type":"string",
-                        "description":"A short description of the person's role in this organization."
+                        "description":"The description. In HTML speak: Everything between <a> and </a>.",
+                        "type":"string"
                      },
-                     "endDate":{
-                        "type":"string",
-                        "description":"The date the person left this organization."
-                     },
-                     "location":{
-                        "type":"string",
-                        "description":"The location of this organization."
-                     },
-                     "name":{
-                        "type":"string",
-                        "description":"The name of the organization."
-                     },
-                     "primary":{
-                        "type":"boolean",
-                        "description":"If \"true\", indicates this organization is the person's primary one (typically interpreted as current one)."
-                     },
-                     "startDate":{
-                        "type":"string",
-                        "description":"The date the person joined this organization."
-                     },
-                     "title":{
-                        "type":"string",
-                        "description":"The person's job title or role within the organization."
+                     "link":{
+                        "description":"The URL.",
+                        "type":"string"
                      },
                      "type":{
-                        "type":"string",
-                        "description":"The type of organization. Possible values are: \n- \"work\" - Work. \n- \"school\" - School."
+                        "description":"Type of the link, e.g. \"email\".",
+                        "type":"string"
                      }
-                  }
-               }
+                  },
+                  "type":"object"
+               },
+               "type":"array"
             },
-            "placesLived":{
-               "type":"array",
-               "description":"A list of places where this person has lived.",
-               "items":{
-                  "type":"object",
-                  "properties":{
-                     "primary":{
-                        "type":"boolean",
-                        "description":"If \"true\", this place of residence is this person's primary residence."
-                     },
-                     "value":{
-                        "type":"string",
-                        "description":"A place where this person has lived. For example: \"Seattle, WA\", \"Near Toronto\"."
-                     }
-                  }
-               }
+            "notes":{
+               "description":"Notes describing the task. Optional.",
+               "type":"string"
             },
-            "relationshipStatus":{
-               "type":"string",
-               "description":"The person's relationship status. Possible values are: \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
+            "parent":{
+               "description":"Parent task identifier. This field is omitted if it is a top-level task. This field is read-only. Use the \"move\" method to move the task under a different parent or to the top level.",
+               "type":"string"
             },
-            "tagline":{
-               "type":"string",
-               "description":"The brief description (tagline) of this person."
+            "position":{
+               "description":"String indicating the position of the task among its sibling tasks under the same parent task or at the top level. If this string is greater than another task's corresponding position string according to lexicographical ordering, the task is positioned after the other task under the same parent task (or at the top level). This field is read-only. Use the \"move\" method to move the task to another position.",
+               "type":"string"
             },
-            "url":{
-               "type":"string",
-               "description":"The URL of this person's profile."
+            "selfLink":{
+               "description":"URL pointing to this task. Used to retrieve, update, or delete this task.",
+               "type":"string"
             },
-            "urls":{
-               "type":"array",
-               "description":"A list of URLs for this person.",
-               "items":{
-                  "type":"object",
-                  "properties":{
-                     "primary":{
-                        "type":"boolean",
-                        "description":"If \"true\", this URL is the person's primary URL."
-                     },
-                     "type":{
-                        "type":"string",
-                        "description":"The type of URL. Possible values are: \n- \"home\" - URL for home. \n- \"work\" - URL for work. \n- \"blog\" - URL for blog. \n- \"profile\" - URL for profile. \n- \"other\" - Other."
-                     },
-                     "value":{
-                        "type":"string",
-                        "description":"The URL value."
-                     }
-                  }
-               }
+            "status":{
+               "description":"Status of the task. This is either \"needsAction\" or \"completed\".",
+               "type":"string"
+            },
+            "title":{
+               "description":"Title of the task.",
+               "type":"string"
+            },
+            "updated":{
+               "description":"Last modification time of the task (as a RFC 3339 timestamp).",
+               "format":"date-time",
+               "type":"string"
             }
-         }
+         },
+         "type":"object"
       },
-      "PlusAclentryResource":{
-         "id":"PlusAclentryResource",
-         "type":"object",
+      "TaskList":{
+         "id":"TaskList",
          "properties":{
-            "id":{
-               "type":"string",
-               "description":"The ID of the entry. For entries of type \"person\" or \"circle\", this is the ID of the resource. For other types, this property is not set."
+            "etag":{
+               "description":"ETag of the resource.",
+               "type":"string"
             },
-            "type":{
-               "type":"string",
-               "description":"The type of entry describing to whom access is granted. Possible values are: \n- \"person\" - Access to an individual. \n- \"circle\" - Access to members of a circle. \n- \"myCircles\" - Access to members of all the person's circles. \n- \"extendedCircles\" - Access to members of everyone in a person's circles, plus all of the people in their circles. \n- \"public\" - Access to anyone on the web."
+            "id":{
+               "description":"Task list identifier.",
+               "type":"string"
+            },
+            "kind":{
+               "default":"tasks#taskList",
+               "description":"Type of the resource. This is always \"tasks#taskList\".",
+               "type":"string"
+            },
+            "selfLink":{
+               "description":"URL pointing to this task list. Used to retrieve, update, or delete this task list.",
+               "type":"string"
+            },
+            "title":{
+               "description":"Title of the task list.",
+               "type":"string"
             }
-         }
+         },
+         "type":"object"
+      },
+      "TaskLists":{
+         "id":"TaskLists",
+         "properties":{
+            "etag":{
+               "description":"ETag of the resource.",
+               "type":"string"
+            },
+            "items":{
+               "description":"Collection of task lists.",
+               "items":{
+                  "$ref":"TaskList"
+               },
+               "type":"array"
+            },
+            "kind":{
+               "default":"tasks#taskLists",
+               "description":"Type of the resource. This is always \"tasks#taskLists\".",
+               "type":"string"
+            },
+            "nextPageToken":{
+               "description":"Token that can be used to request the next page of this result.",
+               "type":"string"
+            }
+         },
+         "type":"object"
+      },
+      "Tasks":{
+         "id":"Tasks",
+         "properties":{
+            "etag":{
+               "description":"ETag of the resource.",
+               "type":"string"
+            },
+            "items":{
+               "description":"Collection of tasks.",
+               "items":{
+                  "$ref":"Task"
+               },
+               "type":"array"
+            },
+            "kind":{
+               "default":"tasks#tasks",
+               "description":"Type of the resource. This is always \"tasks#tasks\".",
+               "type":"string"
+            },
+            "nextPageToken":{
+               "description":"Token used to access the next page of this result.",
+               "type":"string"
+            }
+         },
+         "type":"object"
       }
    },
-   "resources":{
-      "activities":{
-         "methods":{
-            "get":{
-               "id":"plus.activities.get",
-               "path":"activities/{activityId}",
-               "httpMethod":"GET",
-               "description":"Get an activity.",
-               "parameters":{
-                  "activityId":{
-                     "type":"string",
-                     "description":"The ID of the activity to get.",
-                     "required":true,
-                     "location":"path"
-                  },
-                  "alt":{
-                     "type":"string",
-                     "description":"Specifies an alternative representation type.",
-                     "default":"json",
-                     "enum":[
-                        "json"
-                     ],
-                     "enumDescriptions":[
-                        "Use JSON format"
-                     ],
-                     "location":"query"
-                  }
-               },
-               "parameterOrder":[
-                  "activityId"
-               ],
-               "response":{
-                  "$ref":"Activity"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            },
-            "list":{
-               "id":"plus.activities.list",
-               "path":"people/{userId}/activities/{collection}",
-               "httpMethod":"GET",
-               "description":"List all of the activities in the specified collection for a particular user.",
-               "parameters":{
-                  "alt":{
-                     "type":"string",
-                     "description":"Specifies an alternative representation type.",
-                     "default":"json",
-                     "enum":[
-                        "json"
-                     ],
-                     "enumDescriptions":[
-                        "Use JSON format"
-                     ],
-                     "location":"query"
-                  },
-                  "collection":{
-                     "type":"string",
-                     "description":"The collection of activities to list.",
-                     "required":true,
-                     "enum":[
-                        "public"
-                     ],
-                     "enumDescriptions":[
-                        "All public activities created by the specified user."
-                     ],
-                     "location":"path"
-                  },
-                  "maxResults":{
-                     "type":"integer",
-                     "description":"The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
-                     "default":"20",
-                     "format":"uint32",
-                     "minimum":"1",
-                     "maximum":"100",
-                     "location":"query"
-                  },
-                  "pageToken":{
-                     "type":"string",
-                     "description":"The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
-                     "location":"query"
-                  },
-                  "userId":{
-                     "type":"string",
-                     "description":"The ID of the user to get activities for. The special value \"me\" can be used to indicate the authenticated user.",
-                     "required":true,
-                     "pattern":"me|[0-9]+",
-                     "location":"path"
-                  }
-               },
-               "parameterOrder":[
-                  "userId",
-                  "collection"
-               ],
-               "response":{
-                  "$ref":"ActivityFeed"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            },
-            "search":{
-               "id":"plus.activities.search",
-               "path":"activities",
-               "httpMethod":"GET",
-               "description":"Search public activities.",
-               "parameters":{
-                  "language":{
-                     "type":"string",
-                     "description":"Specify the preferred language to search with. See search language codes for available values.",
-                     "location":"query"
-                  },
-                  "maxResults":{
-                     "type":"integer",
-                     "description":"The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
-                     "default":"10",
-                     "format":"uint32",
-                     "minimum":"1",
-                     "maximum":"20",
-                     "location":"query"
-                  },
-                  "orderBy":{
-                     "type":"string",
-                     "description":"Specifies how to order search results.",
-                     "default":"recent",
-                     "enum":[
-                        "best",
-                        "recent"
-                     ],
-                     "enumDescriptions":[
-                        "Sort activities by relevance to the user, most relevant first.",
-                        "Sort activities by published date, most recent first."
-                     ],
-                     "location":"query"
-                  },
-                  "pageToken":{
-                     "type":"string",
-                     "description":"The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
-                     "location":"query"
-                  },
-                  "query":{
-                     "type":"string",
-                     "description":"Full-text search query string.",
-                     "required":true,
-                     "location":"query"
-                  }
-               },
-               "parameterOrder":[
-                  "query"
-               ],
-               "response":{
-                  "$ref":"ActivityFeed"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            }
-         }
-      },
-      "comments":{
-         "methods":{
-            "get":{
-               "id":"plus.comments.get",
-               "path":"comments/{commentId}",
-               "httpMethod":"GET",
-               "description":"Get a comment.",
-               "parameters":{
-                  "commentId":{
-                     "type":"string",
-                     "description":"The ID of the comment to get.",
-                     "required":true,
-                     "location":"path"
-                  }
-               },
-               "parameterOrder":[
-                  "commentId"
-               ],
-               "response":{
-                  "$ref":"Comment"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            },
-            "list":{
-               "id":"plus.comments.list",
-               "path":"activities/{activityId}/comments",
-               "httpMethod":"GET",
-               "description":"List all of the comments for an activity.",
-               "parameters":{
-                  "activityId":{
-                     "type":"string",
-                     "description":"The ID of the activity to get comments for.",
-                     "required":true,
-                     "location":"path"
-                  },
-                  "alt":{
-                     "type":"string",
-                     "description":"Specifies an alternative representation type.",
-                     "default":"json",
-                     "enum":[
-                        "json"
-                     ],
-                     "enumDescriptions":[
-                        "Use JSON format"
-                     ],
-                     "location":"query"
-                  },
-                  "maxResults":{
-                     "type":"integer",
-                     "description":"The maximum number of comments to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
-                     "default":"20",
-                     "format":"uint32",
-                     "minimum":"0",
-                     "maximum":"100",
-                     "location":"query"
-                  },
-                  "pageToken":{
-                     "type":"string",
-                     "description":"The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
-                     "location":"query"
-                  }
-               },
-               "parameterOrder":[
-                  "activityId"
-               ],
-               "response":{
-                  "$ref":"CommentFeed"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            }
-         }
-      },
-      "people":{
-         "methods":{
-            "get":{
-               "id":"plus.people.get",
-               "path":"people/{userId}",
-               "httpMethod":"GET",
-               "description":"Get a person's profile.",
-               "parameters":{
-                  "userId":{
-                     "type":"string",
-                     "description":"The ID of the person to get the profile for. The special value \"me\" can be used to indicate the authenticated user.",
-                     "required":true,
-                     "pattern":"me|[0-9]+",
-                     "location":"path"
-                  }
-               },
-               "parameterOrder":[
-                  "userId"
-               ],
-               "response":{
-                  "$ref":"Person"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me",
-                  "https://www.googleapis.com/auth/userinfo.email"
-               ]
-            },
-            "listByActivity":{
-               "id":"plus.people.listByActivity",
-               "path":"activities/{activityId}/people/{collection}",
-               "httpMethod":"GET",
-               "description":"List all of the people in the specified collection for a particular activity.",
-               "parameters":{
-                  "activityId":{
-                     "type":"string",
-                     "description":"The ID of the activity to get the list of people for.",
-                     "required":true,
-                     "location":"path"
-                  },
-                  "collection":{
-                     "type":"string",
-                     "description":"The collection of people to list.",
-                     "required":true,
-                     "enum":[
-                        "plusoners",
-                        "resharers"
-                     ],
-                     "enumDescriptions":[
-                        "List all people who have +1'd this activity.",
-                        "List all people who have reshared this activity."
-                     ],
-                     "location":"path"
-                  },
-                  "maxResults":{
-                     "type":"integer",
-                     "description":"The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
-                     "default":"20",
-                     "format":"uint32",
-                     "minimum":"1",
-                     "maximum":"100",
-                     "location":"query"
-                  },
-                  "pageToken":{
-                     "type":"string",
-                     "description":"The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
-                     "location":"query"
-                  }
-               },
-               "parameterOrder":[
-                  "activityId",
-                  "collection"
-               ],
-               "response":{
-                  "$ref":"PeopleFeed"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            },
-            "search":{
-               "id":"plus.people.search",
-               "path":"people",
-               "httpMethod":"GET",
-               "description":"Search all public profiles.",
-               "parameters":{
-                  "language":{
-                     "type":"string",
-                     "description":"Specify the preferred language to search with. See search language codes for available values.",
-                     "location":"query"
-                  },
-                  "maxResults":{
-                     "type":"integer",
-                     "description":"The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
-                     "default":"10",
-                     "format":"uint32",
-                     "minimum":"1",
-                     "maximum":"20",
-                     "location":"query"
-                  },
-                  "pageToken":{
-                     "type":"string",
-                     "description":"The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
-                     "location":"query"
-                  },
-                  "query":{
-                     "type":"string",
-                     "description":"Full-text search query string.",
-                     "required":true,
-                     "location":"query"
-                  }
-               },
-               "parameterOrder":[
-                  "query"
-               ],
-               "response":{
-                  "$ref":"PeopleFeed"
-               },
-               "scopes":[
-                  "https://www.googleapis.com/auth/plus.me"
-               ]
-            }
-         }
-      }
-   }
+   "title":"Tasks API",
+   "version":"v1"
 }
