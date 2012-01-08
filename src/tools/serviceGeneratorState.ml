@@ -980,6 +980,7 @@ struct
     ocaml_name : string;
     inner_modules : (string * InnerServiceModule.t) list;
     scopes : (string * string) list;
+    api_level_module : InnerServiceModule.t option;
   }
 
 	let ocaml_name = {
@@ -994,6 +995,10 @@ struct
 		GapiLens.get = (fun x -> x.scopes);
 		GapiLens.set = (fun v x -> { x with scopes = v })
 	}
+	let api_level_module = {
+		GapiLens.get = (fun x -> x.api_level_module);
+		GapiLens.set = (fun v x -> { x with api_level_module = v })
+	}
   let inner_module id = GapiLens.for_assoc id
   let scope id = GapiLens.for_assoc id
 
@@ -1003,10 +1008,14 @@ struct
   let get_scope_lens id =
     scopes |-- scope id |-- GapiLens.option_get
 
+  let get_api_level_module =
+    api_level_module |-- GapiLens.option_get
+
   let create name =
     { ocaml_name = name;
       inner_modules = [];
       scopes = [];
+      api_level_module = None;
     }
 
 end

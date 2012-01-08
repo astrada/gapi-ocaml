@@ -452,12 +452,12 @@ let generate_enum_module formatter
           "| s -> failwith (\"Unexpected value for %s:\" ^ s)@]@]@\n@\nend@\n@\n"
           enum_module.EnumModule.ocaml_name)
 
-let filter_parameters resource cond =
+let filter_parameters source methods_lens cond =
   let parameters =
     let open GapiMonad.ListM in
       perform
-        rest_method <-- resource
-          |. RestResource.methods |. GapiLens.list_map GapiLens.second;
+        rest_method <-- source
+          |. methods_lens |. GapiLens.list_map GapiLens.second;
         parameter <-- rest_method |. RestMethod.parameters;
         let json_schema = snd parameter in
         guard (cond json_schema);
@@ -465,9 +465,13 @@ let filter_parameters resource cond =
   in
     FieldSet.add_parameters_list parameters FieldSet.empty
 
-let generate_enum_modules formatter inner_module_lens resource =
+let filter_resource_parameters resource cond =
+  filter_parameters resource RestResource.methods cond
+
+let generate_enum_modules
+      formatter inner_module_lens filter source =
   let enum_parameters_set =
-    filter_parameters resource
+    filter source
       (fun json_schema -> json_schema.JsonSchema.enum != [])
   in
     perform
@@ -476,8 +480,8 @@ let generate_enum_modules formatter inner_module_lens resource =
            generate_enum_module formatter inner_module_lens parameter)
         (FieldSet.elements enum_parameters_set)
 
-let generate_parameters_module formatter
-      inner_module_lens (resource_id, resource) =
+let generate_parameters_module filter_parameters formatter
+      inner_module_lens resource_id resource =
   let render_type_t formatter parameters =
     Format.fprintf formatter
       "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
@@ -779,10 +783,11 @@ let rec build_service_inner_module
            build_service_inner_module file_lens inner_module_lens true (id, r))
         resource.RestResource.resources;
 
-      generate_enum_modules formatter inner_module_lens resource;
+      generate_enum_modules
+        formatter inner_module_lens filter_resource_parameters resource;
 
-      generate_parameters_module formatter
-        inner_module_lens (resource_id, resource);
+      generate_parameters_module filter_resource_parameters formatter
+        inner_module_lens resource_id resource;
 
       mapM_
         (fun rest_method ->
@@ -790,6 +795,35 @@ let rec build_service_inner_module
         resource.RestResource.methods;
 
       lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
+
+let filter_service_parameters rest cond =
+  filter_parameters rest RestDescription.methods cond
+
+let rec build_api_level_service_module file_lens =
+  let api_level_module_lens =
+    State.get_service_module |-- ServiceModule.get_api_level_module
+  in
+    perform
+      name <-- GapiLens.get_state (State.service |-- RestDescription.name);
+
+      let ocaml_name = OCamlName.get_ocaml_name ModuleName name in
+      (* Insert API-level service module *)
+      api_level_module_lens ^=! InnerServiceModule.create name ocaml_name;
+
+      service <-- GapiLens.get_state State.service;
+      formatter <-- GapiLens.get_state (file_lens |-- File.formatter);
+      generate_enum_modules
+        formatter api_level_module_lens filter_service_parameters service;
+
+      generate_parameters_module filter_service_parameters formatter
+        api_level_module_lens name service;
+
+      methods <-- GapiLens.get_state
+                    (State.service |-- RestDescription.methods);
+      mapM_
+        (fun rest_method ->
+           generate_rest_method formatter api_level_module_lens rest_method)
+        methods
 
 (* END Generate service inner modules *)
 
@@ -894,6 +928,8 @@ let build_service_module =
                 |-- ServiceModule.get_inner_module_lens resource_id)
              false (resource_id, resource))
         resources;
+
+      build_api_level_service_module file_lens
   in
     build_module ServiceModule generate_body
 
@@ -984,7 +1020,8 @@ let build_schema_module_interface =
 
 (* Generate service module interface *)
 
-let rec generate_service_module_signature file_lens service_module =
+let rec generate_service_module_signature
+      omit_declaration file_lens service_module =
   let render_enum_module formatter enum_module =
     Format.fprintf formatter
       "@\nmodule %s :@\n@[<v 2>sig@,@[<v 2>type t =@,| Default@,"
@@ -1085,14 +1122,16 @@ let rec generate_service_module_signature file_lens service_module =
                                           |-- File.formatter);
 
       (* Module declaration *)
-      lift_io $
-        Format.fprintf formatter
-          "module %s :@\n@[<v 2>sig@,"
-          service_module.InnerServiceModule.ocaml_name;
+      lift_io (
+        if not omit_declaration then begin
+          Format.fprintf formatter
+            "module %s :@\n@[<v 2>sig@,"
+            service_module.InnerServiceModule.ocaml_name
+        end);
 
       mapM_
         (fun (id, m) ->
-           generate_service_module_signature file_lens m)
+           generate_service_module_signature false file_lens m)
         service_module.InnerServiceModule.inner_modules;
 
       lift_io $ render_enum_modules formatter enum_modules;
@@ -1102,7 +1141,10 @@ let rec generate_service_module_signature file_lens service_module =
         methods;
 
       (* Module end *)
-      lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
+      lift_io (
+        if not omit_declaration then begin
+          Format.fprintf formatter "@]@\nend@\n@\n"
+        end)
 
 let build_service_module_interface =
   let render_scope formatter scopes =
@@ -1139,8 +1181,13 @@ let build_service_module_interface =
                                |-- ServiceModule.inner_modules);
       mapM_
         (fun (_, service_module) ->
-           generate_service_module_signature file_lens service_module)
+           generate_service_module_signature false file_lens service_module)
         (List.rev service_modules);
+
+      api_level_module <-- GapiLens.get_state
+                             (State.get_service_module
+                                |-- ServiceModule.get_api_level_module);
+      generate_service_module_signature true file_lens api_level_module
 
   in
     build_module ServiceModuleInterface generate_body
