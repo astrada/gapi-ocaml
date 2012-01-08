@@ -94,16 +94,6 @@ val batch_request :
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
-module type QueryParameters = 
-sig
-  type t
-
-  val default : t
-
-  val to_key_value_list : t -> (string * string) list
-
-end
-
 val build_param :
   'a -> 'a -> ('a -> 'b) -> ('b -> string) -> string ->
   (string * string) list
@@ -130,105 +120,6 @@ sig
   val merge_parameters : ?standard_parameters:t -> unit -> t option
 
 end
-
-module type ServiceConf =
-sig
-  type resource_list_t
-  type resource_t
-
-  val service_url : string
-
-  val parse_resource_list : GapiPipe.OcamlnetPipe.t -> resource_list_t
-
-  val parse_resource : GapiPipe.OcamlnetPipe.t -> resource_t
-
-  val render_resource : resource_t -> GapiCore.PostData.t
-
-  val create_resource_from_id : string -> resource_t
-
-  val get_url :
-    ?container_id:string ->
-    ?resource:resource_t ->
-    string -> string
-
-  val get_etag : resource_t -> string option
-
-end
-
-module type Service =
-sig
-  type resource_list_t
-  type resource_t
-  type query_parameters_t
-
-  val list :
-    ?url:string ->
-    ?etag:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    GapiConversation.Session.t ->
-    (resource_list_t * GapiConversation.Session.t)
-
-  val get :
-    ?url:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    string ->
-    GapiConversation.Session.t ->
-    (resource_t * GapiConversation.Session.t)
-
-  val refresh :
-    ?url:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    resource_t ->
-    GapiConversation.Session.t ->
-    (resource_t * GapiConversation.Session.t)
-
-  val insert :
-    ?url:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    resource_t ->
-    GapiConversation.Session.t ->
-    (resource_t * GapiConversation.Session.t)
-
-  val update :
-    ?url:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    resource_t ->
-    GapiConversation.Session.t ->
-    (resource_t * GapiConversation.Session.t)
-
-  val patch :
-    ?url:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    resource_t ->
-    GapiConversation.Session.t ->
-    (resource_t * GapiConversation.Session.t)
-
-  val delete :
-    ?url:string ->
-    ?parameters:query_parameters_t ->
-    ?container_id:string ->
-    resource_t ->
-    GapiConversation.Session.t ->
-    (unit * GapiConversation.Session.t)
-
-end
-
-val map_standard_parameters :
-  StandardParameters.t option ->
-  (string * string) list option
-
-module Make :
-  functor(S : ServiceConf) ->
-  functor(Q : QueryParameters) ->
-  Service with type resource_list_t = S.resource_list_t
-                and type resource_t = S.resource_t
-                and type query_parameters_t = Q.t
 
 val get :
   ?etag:string ->
