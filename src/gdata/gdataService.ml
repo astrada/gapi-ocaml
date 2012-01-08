@@ -3,7 +3,21 @@ let data_to_post data_to_tree data =
   let body = GdataUtils.data_to_xml_string tree in
     GapiCore.PostData.Body (body, GdataCore.default_content_type)
 
-let query = GapiService.query
+let query
+      ?version
+      ?etag
+      ?query_parameters
+      url
+      parse_response
+      session =
+  GapiService.service_request
+    ?version
+    ?etag
+    ?query_parameters
+    ~request_type:GapiRequest.Query
+    url
+    parse_response
+    session
 
 let create
       data_to_tree
@@ -12,7 +26,8 @@ let create
       url
       parse_response
       session =
-  GapiService.create
+  GapiService.service_request_with_data
+    GapiRequest.Create
     (data_to_post data_to_tree)
     ?version
     data
@@ -27,13 +42,15 @@ let read
       url
       parse_response
       session =
-  GapiService.read
-    ?version
-    ?etag
-    data
-    url
-    parse_response
-    session
+  try
+    GapiService.service_request
+      ?version
+      ?etag
+      url
+      parse_response
+      session
+  with GapiRequest.NotModified new_session ->
+    (data, new_session)
 
 let update
       data_to_tree
@@ -43,7 +60,26 @@ let update
       url
       parse_response
       session =
-  GapiService.update
+  GapiService.service_request_with_data
+    GapiRequest.Update
+    (data_to_post data_to_tree)
+    ?version
+    ?etag
+    data
+    url
+    parse_response
+    session
+
+let patch
+      data_to_tree
+      ?version
+      ?etag
+      data
+      url
+      parse_response
+      session =
+  GapiService.service_request_with_data
+    GapiRequest.Patch
     (data_to_post data_to_tree)
     ?version
     ?etag
@@ -55,14 +91,29 @@ let update
 let delete
       ?version
       ?etag
-      id
+      url
       session =
-  GapiService.delete'
+  GapiService.service_request
     ?version
     ?etag
-    id
+    ~request_type:GapiRequest.Delete
+    url
+    GapiRequest.parse_empty_response
     session
 
-let batch_request data_to_tree =
-  GapiService.batch_request (data_to_post data_to_tree)
+let batch_request
+      data_to_tree
+      ?version
+      data
+      url
+      parse_response
+      session =
+  GapiService.service_request_with_data
+    GapiRequest.Create
+    (data_to_post data_to_tree)
+    ?version
+    data
+    url
+    parse_response
+    session
 
