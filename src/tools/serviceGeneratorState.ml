@@ -925,6 +925,9 @@ struct
   let get_enum_lens id =
     enums |-- enum id |-- GapiLens.option_get
 
+  let get_inner_module_lens id =
+    inner_modules |-- inner_module id |-- GapiLens.option_get
+
   let create original_name ocaml_name =
     { original_name;
       ocaml_name;

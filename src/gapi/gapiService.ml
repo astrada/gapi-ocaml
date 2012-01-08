@@ -229,6 +229,9 @@ struct
        param (fun p -> p.key) Std.identity "key"]
       |> List.concat
 
+  let merge_parameters ?standard_parameters () =
+    standard_parameters
+
 end
 
 module type ServiceConf =

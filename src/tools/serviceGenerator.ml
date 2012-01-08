@@ -536,23 +536,28 @@ let generate_parameters_module formatter
     Format.fprintf formatter "@]@,} in@,if parameters = default then None else Some parameters@]@,"
   in
 
-  let module_name =
-    OCamlName.get_ocaml_name ModuleName (resource_id ^ "Parameters") in
   let parameters =
     filter_parameters resource
-      (fun json_schema -> json_schema.JsonSchema.location = "query")
+      (fun json_schema -> json_schema.JsonSchema.location = "query") in
+  let module_name =
+    if parameters = FieldSet.empty then
+      "GapiService.StandardParameters"
+    else
+      OCamlName.get_ocaml_name ModuleName (resource_id ^ "Parameters")
   in
     perform
       (inner_module_lens
          |-- InnerServiceModule.parameters_module_name) ^=! module_name;
 
       lift_io (
-        Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
-        render_type_t formatter parameters;
-        render_default formatter parameters;
-        render_to_key_value_list formatter parameters;
-        render_merge_parameters formatter parameters;
-        Format.fprintf formatter "@]@\nend@\n@\n")
+        if parameters <> FieldSet.empty then begin
+          Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+          render_type_t formatter parameters;
+          render_default formatter parameters;
+          render_to_key_value_list formatter parameters;
+          render_merge_parameters formatter parameters;
+          Format.fprintf formatter "@]@\nend@\n@\n"
+        end)
 
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body methd =
@@ -746,25 +751,33 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
 
       lift_io $ Format.fprintf formatter "@]@\n"
 
-let build_service_inner_module file_lens (resource_id, resource) =
+let rec build_service_inner_module
+      file_lens current_module_lens is_nested (resource_id, resource) =
   let module_name =
-    OCamlName.get_ocaml_name ModuleName (resource_id ^ "Resource") in
+    OCamlName.get_ocaml_name ModuleName (if is_nested then resource_id
+                                         else resource_id ^ "Resource") in
   let inner_module =
     InnerServiceModule.create resource_id module_name in
   let inner_module_lens =
-    State.get_service_module
-      |-- ServiceModule.get_inner_module_lens module_name
+    if is_nested then
+      current_module_lens
+        |-- InnerServiceModule.get_inner_module_lens resource_id
+    else
+      current_module_lens
   in
     perform
       (* Insert inner module *)
       inner_module_lens ^=! inner_module;
 
-      file <-- GapiLens.get_state file_lens;
-
-      let formatter = file.File.formatter in
+      formatter <-- GapiLens.get_state (file_lens |-- File.formatter);
 
       lift_io $
         Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+
+      mapM_
+        (fun (id, r) ->
+           build_service_inner_module file_lens inner_module_lens true (id, r))
+        resource.RestResource.resources;
 
       generate_enum_modules formatter inner_module_lens resource;
 
@@ -875,8 +888,11 @@ let build_service_module =
       resources <-- GapiLens.get_state (State.service
                                           |-- RestDescription.resources);
       mapM_
-        (fun resource ->
-           build_service_inner_module file_lens resource)
+        (fun (resource_id, resource) ->
+           build_service_inner_module file_lens
+             (State.get_service_module
+                |-- ServiceModule.get_inner_module_lens resource_id)
+             false (resource_id, resource))
         resources;
   in
     build_module ServiceModule generate_body
@@ -968,7 +984,7 @@ let build_schema_module_interface =
 
 (* Generate service module interface *)
 
-let generate_service_module_signature file_lens service_module =
+let rec generate_service_module_signature file_lens service_module =
   let render_enum_module formatter enum_module =
     Format.fprintf formatter
       "@\nmodule %s :@\n@[<v 2>sig@,@[<v 2>type t =@,| Default@,"
@@ -1071,8 +1087,13 @@ let generate_service_module_signature file_lens service_module =
       (* Module declaration *)
       lift_io $
         Format.fprintf formatter
-          "@\nmodule %s :@\n@[<v 2>sig@,"
+          "module %s :@\n@[<v 2>sig@,"
           service_module.InnerServiceModule.ocaml_name;
+
+      mapM_
+        (fun (id, m) ->
+           generate_service_module_signature file_lens m)
+        service_module.InnerServiceModule.inner_modules;
 
       lift_io $ render_enum_modules formatter enum_modules;
 
@@ -1081,8 +1102,7 @@ let generate_service_module_signature file_lens service_module =
         methods;
 
       (* Module end *)
-      lift_io $
-        Format.fprintf formatter "@]\nend@\n"
+      lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
 
 let build_service_module_interface =
   let render_scope formatter scopes =

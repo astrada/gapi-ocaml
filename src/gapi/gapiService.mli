@@ -127,6 +127,8 @@ sig
 
   val to_key_value_list : t -> (string * string) list
 
+  val merge_parameters : ?standard_parameters:t -> unit -> t option
+
 end
 
 module type ServiceConf =
