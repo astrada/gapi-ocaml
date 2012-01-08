@@ -9,6 +9,8 @@ open GapiPlusV1Service
 let get_first_activity_id session =
   let (activities, session) =
     ActivitiesResource.list
+      ~userId:"me"
+      ~collection:ActivitiesResource.Collection.Public
       session
   in
     if (List.length activities.ActivityFeed.items > 0) then
@@ -43,6 +45,8 @@ let test_list_activities () =
     (fun session ->
        let (activities, session) =
          ActivitiesResource.list
+           ~userId:"me"
+           ~collection:ActivitiesResource.Collection.Public
            session
        in
          assert_equal
@@ -55,6 +59,8 @@ let test_get_activity () =
     (fun session ->
        let (activities, session) =
          ActivitiesResource.list
+           ~userId:"me"
+           ~collection:ActivitiesResource.Collection.Public
            session in
        let (activity_id, _) = get_first_activity_id session in
          match activity_id with
@@ -72,7 +78,6 @@ let test_get_activity () =
                  assert_equal
                    activityId
                    activity.Activity.id)
-           
 
 let test_search_activities () =
   TestHelper.test_request
@@ -147,7 +152,7 @@ let test_list_people_by_activity () =
                let (plusoners, _) =
                  PeopleResource.listByActivity
                    ~activityId
-                   ~collection:"plusoners"
+                   ~collection:PeopleResource.Collection.Plusoners
                    session
                in
                  assert_equal

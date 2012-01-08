@@ -1,63 +1,63 @@
 {
-  "kind": "plus#person",
-  "objectType": "string",
-  "id": "string",
-  "displayName": "string",
-  "name": {
-    "formatted": "string",
-    "familyName": "string",
-    "givenName": "string",
-    "middleName": "string",
-    "honorificPrefix": "string",
-    "honorificSuffix": "string"
-  },
-  "nickname": "string",
-  "tagline": "string",
-  "birthday": "string",
-  "gender": "string",
   "aboutMe": "string",
+  "birthday": "string",
   "currentLocation": "string",
-  "relationshipStatus": "string",
-  "url": "string",
+  "displayName": "string",
+  "emails": [
+    {
+      "primary": true,
+      "type": "string",
+      "value": "string"
+    }
+  ],
+  "gender": "string",
+  "hasApp": true,
+  "id": "string",
   "image": {
     "url": "string"
   },
-  "emails": [
-    {
-      "value": "string",
-      "type": "string",
-      "primary": true
-    }
+  "kind": "plus#person",
+  "languagesSpoken": [
+    "string"
   ],
-  "urls": [
-    {
-      "value": "string",
-      "type": "string",
-      "primary": true
-    }
-  ],
+  "name": {
+    "familyName": "string",
+    "formatted": "string",
+    "givenName": "string",
+    "honorificPrefix": "string",
+    "honorificSuffix": "string",
+    "middleName": "string"
+  },
+  "nickname": "string",
+  "objectType": "string",
   "organizations": [
     {
-      "name": "string",
       "department": "string",
-      "title": "string",
-      "type": "string",
-      "startDate": "string",
+      "description": "string",
       "endDate": "string",
       "location": "string",
-      "description": "string",
-      "primary": true
+      "name": "string",
+      "primary": true,
+      "startDate": "string",
+      "title": "string",
+      "type": "string"
     }
   ],
   "placesLived": [
     {
-      "value": "string",
-      "primary": true
+      "primary": true,
+      "value": "string"
     }
   ],
-  "languagesSpoken": [
-    "string"
-  ],
-  "hasApp": true
+  "relationshipStatus": "string",
+  "tagline": "string",
+  "url": "string",
+  "urls": [
+    {
+      "primary": true,
+      "type": "string",
+      "value": "string"
+    }
+  ]
 }
 

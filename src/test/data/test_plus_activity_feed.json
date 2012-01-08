@@ -1,14 +1,14 @@
 {
-  "kind": "plus#activityFeed",
-  "nextPageToken": "string",
-  "selfLink": "string",
-  "nextLink": "string",
-  "title": "string",
-  "updated": "2011-12-01T00:00:00.000Z",
   "id": "string",
   "items": [
     {
       "kind": "plus#activity"
     }
-  ]
+  ],
+  "kind": "plus#activityFeed",
+  "nextLink": "string",
+  "nextPageToken": "string",
+  "selfLink": "string",
+  "title": "string",
+  "updated": "2011-12-01T00:00:00.000Z"
 }
