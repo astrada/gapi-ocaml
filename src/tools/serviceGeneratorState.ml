@@ -50,11 +50,9 @@ end
 
 let get_anonymous_type_module_name ids =
   let module_base_name =
-    List.fold_right
-      (fun id name ->
-         name ^ (OCamlName.get_ocaml_name ModuleName id))
-      ids
-      ""
+    List.rev_map
+      (fun id -> OCamlName.get_ocaml_name ModuleName id)
+      ids |> String.concat ""
   in
     module_base_name ^ "Data"
 
