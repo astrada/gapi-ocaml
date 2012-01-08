@@ -601,10 +601,12 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             print_path_list path_list;
 
         let request_parameter = methd.Method.request in
-        request_module <-- State.find_inner_schema_module
-                             rest_method.RestMethod.request.RefData._ref;
-        response_module <-- State.find_inner_schema_module
-                              rest_method.RestMethod.response.RefData._ref;
+        request_module <--
+          State.find_inner_schema_module
+            RestMethod.(rest_method.request.RequestData._ref);
+        response_module <--
+          State.find_inner_schema_module
+            RestMethod.(rest_method.response.ResponseData._ref);
 
         (* Get etag *)
         let is_etag_present =
@@ -736,8 +738,8 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       let methd = Method.create id
                     rest_method.RestMethod.parameters
                     rest_method.RestMethod.description
-                    rest_method.RestMethod.request.RefData._ref
-                    rest_method.RestMethod.response.RefData._ref
+                    RestMethod.(rest_method.request.RequestData._ref)
+                    RestMethod.(rest_method.response.ResponseData._ref)
                     type_table in
       method_lens ^=! methd;
 
@@ -888,7 +890,7 @@ let build_service_module =
         Format.fprintf formatter "let %s = \"%s\"@\n@\n" scope_id value;
       let scope_lens = State.get_service_module
         |-- ServiceModule.get_scope_lens scope_id in
-      scope_lens ^=! scope.ScopesData.description;
+      scope_lens ^=! scope.RestDescription.AuthData.Oauth2Data.ScopesData.description;
   in
 
   let generate_header file_lens =
@@ -902,9 +904,11 @@ let build_service_module =
         Format.fprintf formatter
         "open GapiUtils.Infix@\nopen %s@\n@\n" schema_module_name;
 
-      scopes <-- GapiLens.get_state (State.service
-                                       |-- RestDescription.auth
-                                       |-- Oauth2Data.scopes);
+      scopes <-- GapiLens.get_state
+                   RestDescription.(State.service
+                                      |-- auth
+                                      |-- AuthData.oauth2
+                                      |-- AuthData.Oauth2Data.scopes);
       mapM_ (generate_scope formatter) scopes;
   in
 
