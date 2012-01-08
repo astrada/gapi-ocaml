@@ -144,9 +144,14 @@ let build_schema_inner_module file_lens complex_type =
         "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
     else
       Format.fprintf formatter
-        "@,@[<v 2>let render_content x = @,@[<v 2> [@,";
+        "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
     List.iter
-      (fun { Field.ocaml_name; original_name; ocaml_type_module; field_type} ->
+      (fun { Field.ocaml_name;
+             original_name;
+             ocaml_type_module;
+             field_type;
+             is_recursive;
+             is_option; _ } ->
          let render_function scalar =
            match scalar.ScalarType.data_type with
                ScalarType.String ->
@@ -164,6 +169,12 @@ let build_schema_inner_module file_lens complex_type =
                  Format.fprintf formatter
                    "%s \"%s\" x.%s;@,"
                    (render_function scalar)
+                   original_name
+                   ocaml_name;
+             | ComplexType.Reference _
+             | ComplexType.AnonymousObject _ when is_option ->
+                 Format.fprintf formatter
+                   "Option.map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
                    original_name
                    ocaml_name;
              | ComplexType.Reference _
@@ -188,6 +199,15 @@ let build_schema_inner_module file_lens complex_type =
                    "GapiJson.render_collection \"%s\" GapiJson.Array (%s \"\") x.%s;@,"
                    original_name
                    (render_function scalar)
+                   ocaml_name;
+             | ComplexType.Dictionary
+                 { ComplexType.data_type = ComplexType.Reference _; _ }
+             | ComplexType.Dictionary
+                 { ComplexType.data_type = ComplexType.AnonymousObject _; _ }
+                   when is_recursive ->
+                 Format.fprintf formatter
+                   "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.%s;@,"
+                   original_name
                    ocaml_name;
              | ComplexType.Dictionary { ComplexType.data_type =
                                           ComplexType.Reference _; _ }
@@ -221,10 +241,14 @@ let build_schema_inner_module file_lens complex_type =
         is_recursive
         container_name
         module_name =
-    Format.fprintf formatter "@,@[<v 2>let %sparse x = function@,"
-      (if is_recursive then "rec " else "");
+    Format.fprintf formatter "@,@[<v 2>let rec parse x = function@,";
     List.iter
-      (fun { Field.ocaml_name; original_name; ocaml_type_module; field_type } ->
+      (fun { Field.ocaml_name;
+             original_name;
+             ocaml_type_module;
+             field_type;
+             is_recursive;
+             is_option; _ } ->
          match field_type.ComplexType.data_type with
              ComplexType.Scalar scalar ->
                Format.fprintf formatter
@@ -250,12 +274,29 @@ let build_schema_inner_module file_lens complex_type =
                  original_name
                  ocaml_name
            | ComplexType.Reference _
+           | ComplexType.AnonymousObject _ when is_option ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> { x with %s = Some v })@ cs@]@]@,"
+                 original_name
+                 ocaml_name
+           | ComplexType.Reference _
            | ComplexType.AnonymousObject _ ->
                Format.fprintf formatter
                  "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> { x with %s = v })@ cs@]@]@,"
                  original_name
                  ocaml_type_module
                  ocaml_type_module
+                 ocaml_name
+           | ComplexType.Dictionary { ComplexType.data_type =
+                                        ComplexType.Reference _; _ }
+           | ComplexType.Dictionary { ComplexType.data_type =
+                                        ComplexType.AnonymousObject _; _ }
+                 when is_recursive ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun _ -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e)@]@]@ (\"\", empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 container_name
+                 module_name
                  ocaml_name
            | ComplexType.Dictionary { ComplexType.data_type =
                                         ComplexType.Reference _; _ }
@@ -306,9 +347,9 @@ let build_schema_inner_module file_lens complex_type =
       | _ ->
         failwith ("Unexpected root (must be an Object): "
                   ^ complex_type.ComplexType.id) in
-  let record = Record.create properties in
   let module_name =
     OCamlName.get_ocaml_name ModuleName complex_type.ComplexType.id in
+  let record = Record.create module_name properties in
   let inner_module =
     { InnerSchemaModule.create complex_type.ComplexType.id module_name with
           InnerSchemaModule.record = Some record
@@ -350,12 +391,177 @@ let build_schema_inner_module file_lens complex_type =
 
 (* Generate service inner modules *)
 
+module FieldSet =
+struct
+  include Set.Make(struct
+                     type t = string * Field.t
+
+                     let compare (id1, _) (id2, _) = compare id1 id2
+                   end)
+
+  let add_parameters_list xs s =
+    List.fold_left
+      (fun s' (id, parameter) ->
+         let complex_type = ComplexType.create parameter in
+         let field = Field.create (id, complex_type) in
+           add (id, field) s')
+      s
+      xs
+
+end
+
+let generate_enum_module formatter
+      inner_module_lens (id, { Field.field_type; _ }) =
+  let enum_module_lens =
+    inner_module_lens |-- InnerServiceModule.get_enum_lens id in
+  let scalar =
+    match field_type.ComplexType.data_type with
+        ComplexType.Scalar s -> s
+      | _ -> failwith "Complex type not supported in generate_enum_module" in
+  let enum_module = EnumModule.create id
+                      scalar.ScalarType.enum
+                      scalar.ScalarType.enumDescriptions
+  in
+    perform
+      enum_module_lens ^=! enum_module;
+
+      lift_io (
+        Format.fprintf formatter
+          "module %s =@\n@[<v 2>struct@,@[<v 2>type t =@,| Default@,"
+          enum_module.EnumModule.ocaml_name;
+        List.iter
+          (fun (_, { EnumModule.constructor; _ }) ->
+             Format.fprintf formatter
+               "| %s@,"
+               constructor)
+          enum_module.EnumModule.values;
+        Format.fprintf formatter "@]@\n@[<v 2>let to_string = function@,| Default -> \"\"@,";
+        List.iter
+          (fun (_, { EnumModule.constructor; value; _ }) ->
+             Format.fprintf formatter
+               "| %s -> \"%s\"@,"
+               constructor value)
+          enum_module.EnumModule.values;
+        Format.fprintf formatter "@]@\n@[<v 2>let of_string = function@,| \"\" -> Default@,";
+        List.iter
+          (fun (_, { EnumModule.constructor; value; _ }) ->
+             Format.fprintf formatter
+               "| \"%s\" -> %s@,"
+               value constructor)
+          enum_module.EnumModule.values;
+        Format.fprintf formatter
+          "| s -> failwith (\"Unexpected value for %s:\" ^ s)@]@]@\n@\nend@\n@\n"
+          enum_module.EnumModule.ocaml_name)
+
+let filter_parameters resource cond =
+  let parameters =
+    let open GapiMonad.ListM in
+      perform
+        rest_method <-- resource
+          |. RestResource.methods |. GapiLens.list_map GapiLens.second;
+        parameter <-- rest_method |. RestMethod.parameters;
+        let json_schema = snd parameter in
+        guard (cond json_schema);
+        return parameter;
+  in
+    FieldSet.add_parameters_list parameters FieldSet.empty
+
+let generate_enum_modules formatter inner_module_lens resource =
+  let enum_parameters_set =
+    filter_parameters resource
+      (fun json_schema -> json_schema.JsonSchema.enum != [])
+  in
+    perform
+      mapM_
+        (fun parameter ->
+           generate_enum_module formatter inner_module_lens parameter)
+        (FieldSet.elements enum_parameters_set)
+
+let generate_parameters_module formatter
+      inner_module_lens (resource_id, resource) =
+  let render_type_t formatter parameters =
+    Format.fprintf formatter
+      "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
+      resource_id;
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "%s : %s;@,"
+           field.Field.ocaml_name
+           field.Field.ocaml_type)
+      parameters;
+    Format.fprintf formatter "@]@,}@,"
+  in
+
+  let render_default formatter parameters =
+    Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,key = \"\";@,";
+    FieldSet.iter
+      (fun (id, { Field.ocaml_name; default; _ }) ->
+         Format.fprintf formatter
+           "%s = %s;@,"
+           ocaml_name
+           default)
+      parameters;
+    Format.fprintf formatter "@]@,}@,"
+  in
+
+  let render_to_key_value_list formatter parameters =
+    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) (fun x -> x) \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) (fun x -> x) \"quotaUser\";@,param (fun p -> p.userIp) (fun x -> x) \"userIp\";@,param (fun p -> p.key) (fun x -> x) \"key\";@,";
+    FieldSet.iter
+      (fun (id, { Field.original_name; ocaml_name; to_string_function; _ }) ->
+         Format.fprintf formatter
+           "param (fun p -> p.%s) %s \"%s\";@,"
+           ocaml_name
+           to_string_function
+           original_name)
+      parameters;
+    Format.fprintf formatter "@]@,] |> List.concat@,"
+  in
+
+  let render_merge_parameters formatter parameters =
+    Format.fprintf formatter "@,@[<v 2>@[<hv 4>let merge_parameters@,?(standard_parameters = GapiService.StandardParameters.default)@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "?(%s = default.%s)@,"
+           field.Field.ocaml_name
+           field.Field.ocaml_name)
+      parameters;
+    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.StandardParameters.key;@,";
+    FieldSet.iter
+      (fun (id, field) ->
+         Format.fprintf formatter
+           "%s;@,"
+           field.Field.ocaml_name)
+      parameters;
+    Format.fprintf formatter "@]@,} in@,if parameters = default then None else Some parameters@]@,"
+  in
+
+  let module_name =
+    OCamlName.get_ocaml_name ModuleName (resource_id ^ "Parameters") in
+  let parameters =
+    filter_parameters resource
+      (fun json_schema -> json_schema.JsonSchema.location = "query")
+  in
+    perform
+      (inner_module_lens
+         |-- InnerServiceModule.parameters_module_name) ^=! module_name;
+
+      lift_io (
+        Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+        render_type_t formatter parameters;
+        render_default formatter parameters;
+        render_to_key_value_list formatter parameters;
+        render_merge_parameters formatter parameters;
+        Format.fprintf formatter "@]@\nend@\n@\n")
+
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body methd =
     let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
       perform
-        parameters_module_name <-- GapiLens.get_state
-                                     State.parameters_module_name;
+        parameters_module_name <--
+          GapiLens.get_state (inner_module_lens
+                                |-- InnerServiceModule.parameters_module_name);
 
         (* Build complete url *)
         let path = rest_method.RestMethod.path in
@@ -557,12 +763,20 @@ let build_service_inner_module file_lens (resource_id, resource) =
       file <-- GapiLens.get_state file_lens;
 
       let formatter = file.File.formatter in
+
       lift_io $
         Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+
+      generate_enum_modules formatter inner_module_lens resource;
+
+      generate_parameters_module formatter
+        inner_module_lens (resource_id, resource);
+
       mapM_
         (fun rest_method ->
            generate_rest_method formatter inner_module_lens rest_method)
         resource.RestResource.methods;
+
       lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
 
 (* END Generate service inner modules *)
@@ -631,189 +845,6 @@ let build_service_module =
       scope_lens ^=! scope.ScopesData.description;
   in
 
-  let module FieldSet =
-  struct
-    include Set.Make(struct
-                       type t = string * Field.t
-
-                       let compare (id1, _) (id2, _) = compare id1 id2
-                     end)
-
-    let add_parameters_list xs s =
-      List.fold_left
-        (fun s' (id, parameter) ->
-           let complex_type = ComplexType.create parameter in
-           let field = Field.create (id, complex_type) in
-             add (id, field) s')
-        s
-        xs
-
-  end in
-
-  let filter_parameters service cond =
-    List.fold_left
-      (fun qp (_, resource) ->
-         let parameters =
-           let open GapiMonad.ListM in
-             perform
-               rest_method <-- resource
-                 |. RestResource.methods |. GapiLens.list_map GapiLens.second;
-               parameter <-- rest_method
-                 |. RestMethod.parameters;
-               let json_schema = snd parameter in
-               guard (cond json_schema);
-               return parameter;
-         in
-           FieldSet.add_parameters_list parameters qp
-      )
-      FieldSet.empty
-      service.RestDescription.resources
-  in
-
-  let get_enum_parameters_set service =
-    filter_parameters service
-      (fun json_schema ->
-         json_schema.JsonSchema.enum != [])
-  in
-
-  let generate_enum_module formatter (id, { Field.field_type; _ }) =
-    let enum_module_lens =
-      State.get_service_module |-- ServiceModule.get_enum_lens id in
-    let scalar =
-      match field_type.ComplexType.data_type with
-          ComplexType.Scalar s -> s
-        | _ -> failwith "Complex type not supported in generate_enum_module" in
-    let enum_module = EnumModule.create id
-                        scalar.ScalarType.enum
-                        scalar.ScalarType.enumDescriptions
-    in
-      perform
-        enum_module_lens ^=! enum_module;
-
-        lift_io (
-          Format.fprintf formatter
-            "module %s =@\n@[<v 2>struct@,@[<v 2>type t =@,| Default@,"
-            enum_module.EnumModule.ocaml_name;
-          List.iter
-            (fun (_, { EnumModule.constructor; _ }) ->
-               Format.fprintf formatter
-                 "| %s@,"
-                 constructor)
-            enum_module.EnumModule.values;
-          Format.fprintf formatter "@]@\n@[<v 2>let to_string = function@,| Default -> \"\"@,";
-          List.iter
-            (fun (_, { EnumModule.constructor; value; _ }) ->
-               Format.fprintf formatter
-                 "| %s -> \"%s\"@,"
-                 constructor value)
-            enum_module.EnumModule.values;
-          Format.fprintf formatter "@]@\n@[<v 2>let of_string = function@,| \"\" -> Default@,";
-          List.iter
-            (fun (_, { EnumModule.constructor; value; _ }) ->
-               Format.fprintf formatter
-                 "| \"%s\" -> %s@,"
-                 value constructor)
-            enum_module.EnumModule.values;
-          Format.fprintf formatter
-            "| s -> failwith (\"Unexpected value for %s:\" ^ s)@]@]@\n@\nend@\n@\n"
-            enum_module.EnumModule.ocaml_name;
-        )
-
-  in
-
-  let generate_enum_modules formatter =
-    perform
-      service <-- GapiLens.get_state State.service;
-
-      let parameters = get_enum_parameters_set service in
-      mapM_
-        (fun parameter ->
-           generate_enum_module formatter parameter)
-        (FieldSet.elements parameters);
-  in
-
-  let get_query_parameters_set service =
-    filter_parameters service
-      (fun json_schema ->
-         json_schema.JsonSchema.location = "query")
-  in
-
-  let render_type_t formatter parameters service_name =
-    Format.fprintf formatter
-      "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
-      service_name;
-    FieldSet.iter
-      (fun (id, field) ->
-         Format.fprintf formatter
-           "%s : %s;@,"
-           field.Field.ocaml_name
-           field.Field.ocaml_type)
-      parameters;
-    Format.fprintf formatter "@]@,}@,"
-  in
-
-  let render_default formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,key = \"\";@,";
-    FieldSet.iter
-      (fun (id, { Field.ocaml_name; default; _ }) ->
-         Format.fprintf formatter
-           "%s = %s;@,"
-           ocaml_name
-           default)
-      parameters;
-    Format.fprintf formatter "@]@,}@,"
-  in
-
-  let render_to_key_value_list formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) (fun x -> x) \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) (fun x -> x) \"quotaUser\";@,param (fun p -> p.userIp) (fun x -> x) \"userIp\";@,param (fun p -> p.key) (fun x -> x) \"key\";@,";
-    FieldSet.iter
-      (fun (id, { Field.original_name; ocaml_name; to_string_function; _ }) ->
-         Format.fprintf formatter
-           "param (fun p -> p.%s) %s \"%s\";@,"
-           ocaml_name
-           to_string_function
-           original_name)
-      parameters;
-    Format.fprintf formatter "@]@,] |> List.concat@,"
-  in
-
-  let render_merge_parameters formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>@[<hv 4>let merge_parameters@,?(standard_parameters = GapiService.StandardParameters.default)@,";
-    FieldSet.iter
-      (fun (id, field) ->
-         Format.fprintf formatter
-           "?(%s = default.%s)@,"
-           field.Field.ocaml_name
-           field.Field.ocaml_name)
-      parameters;
-    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.StandardParameters.key;@,";
-    FieldSet.iter
-      (fun (id, field) ->
-         Format.fprintf formatter
-           "%s;@,"
-           field.Field.ocaml_name)
-      parameters;
-    Format.fprintf formatter "@]@,} in@,if parameters = default then None else Some parameters@]@,"
-
-  in
-
-  let generate_parameters_module formatter =
-    perform
-      service <-- GapiLens.get_state State.service;
-      let service_name = service.RestDescription.name in
-      let module_name =
-        OCamlName.get_ocaml_name ModuleName (service_name ^ "Parameters") in
-      State.parameters_module_name ^=! module_name;
-      lift_io (
-        Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
-        let parameters = get_query_parameters_set service in
-          render_type_t formatter parameters service_name;
-          render_default formatter parameters;
-          render_to_key_value_list formatter parameters;
-          render_merge_parameters formatter parameters;
-          Format.fprintf formatter "@]@\nend@\n@\n")
-  in
-
   let generate_header file_lens =
     perform
       formatter <-- GapiLens.get_state (file_lens |-- File.formatter);
@@ -829,10 +860,6 @@ let build_service_module =
                                        |-- RestDescription.auth
                                        |-- Oauth2Data.scopes);
       mapM_ (generate_scope formatter) scopes;
-
-      generate_enum_modules formatter;
-
-      generate_parameters_module formatter;
   in
 
   let generate_body file_lens =
@@ -937,7 +964,27 @@ let build_schema_module_interface =
 
 (* Generate service module interface *)
 
-let generate_service_module_signature formatter service_module =
+let generate_service_module_signature file_lens service_module =
+  let render_enum_module formatter enum_module =
+    Format.fprintf formatter
+      "@\nmodule %s :@\n@[<v 2>sig@,@[<v 2>type t =@,| Default@,"
+      enum_module.EnumModule.ocaml_name;
+    List.iter
+      (fun (_, { EnumModule.constructor; _ }) ->
+         Format.fprintf formatter
+           "| %s@,"
+           constructor)
+      enum_module.EnumModule.values;
+    Format.fprintf formatter "@]@,val to_string : t -> string@,@,val of_string : string -> t@,@]@\nend@\n";
+  in
+
+  let render_enum_modules formatter enum_modules =
+    List.iter
+      (fun (id, enum_module) ->
+         render_enum_module formatter enum_module)
+      enum_modules
+  in
+
   let render_method formatter methd =
     let request_ref =
       Option.map_default
@@ -1010,23 +1057,26 @@ let generate_service_module_signature formatter service_module =
           Format.fprintf formatter " * GapiConversation.Session.t@]@\n@\n")
   in
 
-  let methods =
-    List.rev (service_module |. InnerServiceModule.methods)
-  in
+  (* Methods are stored in reverse order *)
+  let methods = List.rev (service_module.InnerServiceModule.methods) in
+  let enum_modules = service_module.InnerServiceModule.enums in
     perform
-      (* TODO: replace this get that is used only to delay evaluating following
-       * expression*)
-      get;
+      formatter <-- GapiLens.get_state (file_lens
+                                          |-- File.formatter);
+
       (* Module declaration *)
       lift_io $
         Format.fprintf formatter
           "@\nmodule %s :@\n@[<v 2>sig@,"
           service_module.InnerServiceModule.ocaml_name;
+
+      lift_io $ render_enum_modules formatter enum_modules;
+
       mapM_
-        (fun (_, methd) ->
-           render_method formatter methd)
+        (fun (_, methd) -> render_method formatter methd)
         methods;
-      (* module end *)
+
+      (* Module end *)
       lift_io $
         Format.fprintf formatter "@]\nend@\n"
 
@@ -1038,26 +1088,6 @@ let build_service_module_interface =
            "(** %s *)@\nval %s : string@\n"
            scope id)
       scopes
-  in
-
-  let render_enum_module formatter enum_module =
-    Format.fprintf formatter
-      "@\nmodule %s :@\n@[<v 2>sig@,@[<v 2>type t =@,| Default@,"
-      enum_module.EnumModule.ocaml_name;
-    List.iter
-      (fun (_, { EnumModule.constructor; _ }) ->
-         Format.fprintf formatter
-           "| %s@,"
-           constructor)
-      enum_module.EnumModule.values;
-    Format.fprintf formatter "@]@,val to_string : t -> string@,@,val of_string : string -> t@,@]@\nend@\n";
-  in
-
-  let render_enum_modules formatter enum_modules =
-    List.iter
-      (fun (id, enum_module) ->
-         render_enum_module formatter enum_module)
-      enum_modules
   in
 
   let generate_body file_lens =
@@ -1079,17 +1109,13 @@ let build_service_module_interface =
                                        |-- ServiceModule.scopes);
       lift_io $ render_scope formatter (List.rev scopes);
 
-      enum_modules <-- GapiLens.get_state (State.get_service_module
-                                             |-- ServiceModule.enums);
-      lift_io $ render_enum_modules formatter enum_modules;
-
       (* Service modules are stored in reverse order *)
       service_modules <-- GapiLens.get_state
                             (State.get_service_module
                                |-- ServiceModule.inner_modules);
       mapM_
         (fun (_, service_module) ->
-           generate_service_module_signature formatter service_module)
+           generate_service_module_signature file_lens service_module)
         (List.rev service_modules);
 
   in
