@@ -38,7 +38,8 @@ let main () =
   let url = GapiOAuth2.authorization_code_url
               ~redirect_uri
               ~scope:[GapiCalendarV3Service.scope;
-                      GapiPlusV1Service.scope;
+                      GapiPlusV1Service.scope_me;
+                      GapiPlusV1Service.scope_email;
                       GapiTasksV1Service.scope;
                       GapiUrlshortenerV1Service.scope]
               ~response_type:"code"
