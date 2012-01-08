@@ -89,54 +89,33 @@ sig
   
 end
 
-module EventCreatorData :
+module AclRule :
 sig
-  type t = {
-    displayName : string;
-    (** The creator's name, if available. *)
-    email : string;
-    (** The creator's email address, if available. *)
-    
-  }
-  
-  val displayName : (t, string) GapiLens.t
-  val email : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-end
-
-module AclRuleScopeData :
-sig
-  type t = {
-    _type : string;
-    (** The type of the scope. Possible values are: 
+  module ScopeData :
+  sig
+    type t = {
+      _type : string;
+      (** The type of the scope. Possible values are: 
 - "default" - The public scope. This is the default value. 
 - "user" - Limits the scope to a single user. 
 - "group" - Limits the scope to a group. 
 - "domain" - Limits the scope to a domain. Note: The permissions granted to the "default", or public, scope apply to any user, authenticated or not. *)
-    value : string;
-    (** The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type "default". *)
+      value : string;
+      (** The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type "default". *)
+      
+    }
     
-  }
+    val _type : (t, string) GapiLens.t
+    val value : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
   
-  val _type : (t, string) GapiLens.t
-  val value : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-end
-
-module AclRule :
-sig
   type t = {
     etag : string;
     (** ETag of the resource. *)
@@ -151,7 +130,7 @@ sig
 - "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
 - "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
 - "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
-    scope : AclRuleScopeData.t;
+    scope : ScopeData.t;
     (** The scope of the rule. *)
     
   }
@@ -160,7 +139,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val role : (t, string) GapiLens.t
-  val scope : (t, AclRuleScopeData.t) GapiLens.t
+  val scope : (t, ScopeData.t) GapiLens.t
   
   val empty : t
   
@@ -215,47 +194,6 @@ sig
   
   val calendars : (t, string list) GapiLens.t
   val errors : (t, Error.t list) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-end
-
-module EventGadgetData :
-sig
-  type t = {
-    display : string;
-    (** The gadget's display mode. Optional. Possible values are: 
-- "icon" - The gadget displays next to the event's title in the calendar view. 
-- "chip" - The gadget displays when the event is clicked. *)
-    height : int;
-    (** The gadget's height in pixels. Optional. *)
-    iconLink : string;
-    (** The gadget's icon URL. *)
-    link : string;
-    (** The gadget's URL. *)
-    preferences : (string * string) list;
-    (** Preferences. *)
-    title : string;
-    (** The gadget's title. *)
-    _type : string;
-    (** The gadget's type. *)
-    width : int;
-    (** The gadget's width in pixels. Optional. *)
-    
-  }
-  
-  val display : (t, string) GapiLens.t
-  val height : (t, int) GapiLens.t
-  val iconLink : (t, string) GapiLens.t
-  val link : (t, string) GapiLens.t
-  val preferences : (t, (string * string) list) GapiLens.t
-  val title : (t, string) GapiLens.t
-  val _type : (t, string) GapiLens.t
-  val width : (t, int) GapiLens.t
   
   val empty : t
   
@@ -389,71 +327,133 @@ sig
   
 end
 
-module EventRemindersData :
-sig
-  type t = {
-    overrides : EventReminder.t list;
-    (** If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. *)
-    useDefault : bool;
-    (** Whether the default reminders of the calendar apply to the event. *)
-    
-  }
-  
-  val overrides : (t, EventReminder.t list) GapiLens.t
-  val useDefault : (t, bool) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-end
-
-module EventExtendedPropertiesData :
-sig
-  type t = {
-    _private : (string * string) list;
-    (** Properties that are private to the copy of the event that appears on this calendar. *)
-    shared : (string * string) list;
-    (** Properties that are shared between copies of the event on other attendees' calendars. *)
-    
-  }
-  
-  val _private : (t, (string * string) list) GapiLens.t
-  val shared : (t, (string * string) list) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-end
-
-module EventOrganizerData :
-sig
-  type t = {
-    displayName : string;
-    (** The organizer's name, if available. *)
-    email : string;
-    (** The organizer's email address, if available. *)
-    
-  }
-  
-  val displayName : (t, string) GapiLens.t
-  val email : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-end
-
 module Event :
 sig
+  module RemindersData :
+  sig
+    type t = {
+      overrides : EventReminder.t list;
+      (** If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. *)
+      useDefault : bool;
+      (** Whether the default reminders of the calendar apply to the event. *)
+      
+    }
+    
+    val overrides : (t, EventReminder.t list) GapiLens.t
+    val useDefault : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module OrganizerData :
+  sig
+    type t = {
+      displayName : string;
+      (** The organizer's name, if available. *)
+      email : string;
+      (** The organizer's email address, if available. *)
+      
+    }
+    
+    val displayName : (t, string) GapiLens.t
+    val email : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module GadgetData :
+  sig
+    type t = {
+      display : string;
+      (** The gadget's display mode. Optional. Possible values are: 
+- "icon" - The gadget displays next to the event's title in the calendar view. 
+- "chip" - The gadget displays when the event is clicked. *)
+      height : int;
+      (** The gadget's height in pixels. Optional. *)
+      iconLink : string;
+      (** The gadget's icon URL. *)
+      link : string;
+      (** The gadget's URL. *)
+      preferences : (string * string) list;
+      (** Preferences. *)
+      title : string;
+      (** The gadget's title. *)
+      _type : string;
+      (** The gadget's type. *)
+      width : int;
+      (** The gadget's width in pixels. Optional. *)
+      
+    }
+    
+    val display : (t, string) GapiLens.t
+    val height : (t, int) GapiLens.t
+    val iconLink : (t, string) GapiLens.t
+    val link : (t, string) GapiLens.t
+    val preferences : (t, (string * string) list) GapiLens.t
+    val title : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    val width : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ExtendedPropertiesData :
+  sig
+    type t = {
+      _private : (string * string) list;
+      (** Properties that are private to the copy of the event that appears on this calendar. *)
+      shared : (string * string) list;
+      (** Properties that are shared between copies of the event on other attendees' calendars. *)
+      
+    }
+    
+    val _private : (t, (string * string) list) GapiLens.t
+    val shared : (t, (string * string) list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module CreatorData :
+  sig
+    type t = {
+      displayName : string;
+      (** The creator's name, if available. *)
+      email : string;
+      (** The creator's email address, if available. *)
+      
+    }
+    
+    val displayName : (t, string) GapiLens.t
+    val email : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     anyoneCanAddSelf : bool;
     (** Whether anyone can invite themselves to the event. Optional. The default is False. *)
@@ -465,7 +465,7 @@ sig
     (** The color of the event. This is an ID referring to an entry in the "event" section of the colors definition (see the "colors" endpoint). Optional. *)
     created : GapiDate.t;
     (** Creation time of the event (as a RFC 3339 timestamp). Read-only. *)
-    creator : EventCreatorData.t;
+    creator : CreatorData.t;
     (** The creator of the event. Read-only. *)
     description : string;
     (** Description of the event. Optional. *)
@@ -473,9 +473,9 @@ sig
     (** The end time of the event. For a recurring event, this is the end time of the first instance. *)
     etag : string;
     (** ETag of the resource. *)
-    extendedProperties : EventExtendedPropertiesData.t;
+    extendedProperties : ExtendedPropertiesData.t;
     (** Extended properties of the event. *)
-    gadget : EventGadgetData.t;
+    gadget : GadgetData.t;
     (** A gadget that extends this event. *)
     guestsCanInviteOthers : bool;
     (** Whether attendees other than the organizer can invite others to the event. Optional. The default is False. *)
@@ -493,7 +493,7 @@ sig
     (** Type of the resource ("calendar#event"). *)
     location : string;
     (** Geographic location of the event as free-form text. Optional. *)
-    organizer : EventOrganizerData.t;
+    organizer : OrganizerData.t;
     (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. *)
     originalStartTime : EventDateTime.t;
     (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable. *)
@@ -503,7 +503,7 @@ sig
     (** List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event. This field is omitted for single events or instances of recurring events. *)
     recurringEventId : string;
     (** For an instance of a recurring event, this is the event ID of the recurring event itself. Immutable. *)
-    reminders : EventRemindersData.t;
+    reminders : RemindersData.t;
     (** Information about the event's reminders for the authenticated user. *)
     sequence : int;
     (** Sequence number as per iCalendar. *)
@@ -536,12 +536,12 @@ sig
   val attendeesOmitted : (t, bool) GapiLens.t
   val colorId : (t, string) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
-  val creator : (t, EventCreatorData.t) GapiLens.t
+  val creator : (t, CreatorData.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val _end : (t, EventDateTime.t) GapiLens.t
   val etag : (t, string) GapiLens.t
-  val extendedProperties : (t, EventExtendedPropertiesData.t) GapiLens.t
-  val gadget : (t, EventGadgetData.t) GapiLens.t
+  val extendedProperties : (t, ExtendedPropertiesData.t) GapiLens.t
+  val gadget : (t, GadgetData.t) GapiLens.t
   val guestsCanInviteOthers : (t, bool) GapiLens.t
   val guestsCanModify : (t, bool) GapiLens.t
   val guestsCanSeeOtherGuests : (t, bool) GapiLens.t
@@ -550,12 +550,12 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val location : (t, string) GapiLens.t
-  val organizer : (t, EventOrganizerData.t) GapiLens.t
+  val organizer : (t, OrganizerData.t) GapiLens.t
   val originalStartTime : (t, EventDateTime.t) GapiLens.t
   val privateCopy : (t, bool) GapiLens.t
   val recurrence : (t, string list) GapiLens.t
   val recurringEventId : (t, string) GapiLens.t
-  val reminders : (t, EventRemindersData.t) GapiLens.t
+  val reminders : (t, RemindersData.t) GapiLens.t
   val sequence : (t, int) GapiLens.t
   val start : (t, EventDateTime.t) GapiLens.t
   val status : (t, string) GapiLens.t

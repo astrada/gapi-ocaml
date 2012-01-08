@@ -154,6 +154,10 @@ struct
         ({ GapiJson.name = "shortUrlClicks"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with shortUrlClicks = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse" e
   
@@ -254,6 +258,10 @@ struct
         AnalyticsSnapshot.empty
         (fun v -> { x with week = v })
         cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSummary.parse" e
   

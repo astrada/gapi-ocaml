@@ -85,71 +85,70 @@ struct
   
 end
 
-module TaskLinksData =
-struct
-  type t = {
-    description : string;
-    link : string;
-    _type : string;
-    
-  }
-  
-  let description = {
-    GapiLens.get = (fun x -> x.description);
-    GapiLens.set = (fun v x -> { x with description = v });
-  }
-  let link = {
-    GapiLens.get = (fun x -> x.link);
-    GapiLens.set = (fun v x -> { x with link = v });
-  }
-  let _type = {
-    GapiLens.get = (fun x -> x._type);
-    GapiLens.set = (fun v x -> { x with _type = v });
-  }
-  
-  let empty = {
-    description = "";
-    link = "";
-    _type = "";
-    
-  }
-  
-  let render x = 
-    GapiJson.render_object "" [
-      GapiJson.render_string_value "description" x.description;
-      GapiJson.render_string_value "link" x.link;
-      GapiJson.render_string_value "type" x._type;
-      
-    ]
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
-      { x with description = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
-      { x with link = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
-      { x with _type = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiTasksV1Model.TaskLinksData.parse" e
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
 module Task =
 struct
+  module LinksData =
+  struct
+    type t = {
+      description : string;
+      link : string;
+      _type : string;
+      
+    }
+    
+    let description = {
+      GapiLens.get = (fun x -> x.description);
+      GapiLens.set = (fun v x -> { x with description = v });
+    }
+    let link = {
+      GapiLens.get = (fun x -> x.link);
+      GapiLens.set = (fun v x -> { x with link = v });
+    }
+    let _type = {
+      GapiLens.get = (fun x -> x._type);
+      GapiLens.set = (fun v x -> { x with _type = v });
+    }
+    
+    let empty = {
+      description = "";
+      link = "";
+      _type = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "description" x.description;
+        GapiJson.render_string_value "link" x.link;
+        GapiJson.render_string_value "type" x._type;
+        
+      ]
+    
+    let render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with description = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with link = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with _type = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiTasksV1Model.LinksData.parse" e
+    
+  end
+  
   type t = {
     completed : GapiDate.t;
     deleted : bool;
@@ -158,7 +157,7 @@ struct
     hidden : bool;
     id : string;
     kind : string;
-    links : TaskLinksData.t list;
+    links : LinksData.t list;
     notes : string;
     parent : string;
     position : string;
@@ -258,7 +257,7 @@ struct
       GapiJson.render_bool_value "hidden" x.hidden;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_array "links" TaskLinksData.render x.links;
+      GapiJson.render_array "links" LinksData.render x.links;
       GapiJson.render_string_value "notes" x.notes;
       GapiJson.render_string_value "parent" x.parent;
       GapiJson.render_string_value "position" x.position;
@@ -302,8 +301,8 @@ struct
         ({ GapiJson.name = "links"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        TaskLinksData.parse
-        TaskLinksData.empty
+        LinksData.parse
+        LinksData.empty
         (fun xs -> { x with links = xs })
         cs
     | GapiCore.AnnotatedTree.Leaf

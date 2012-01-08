@@ -40,36 +40,32 @@ sig
   
 end
 
-module TaskLinksData :
-sig
-  type t = {
-    description : string;
-    (** The description. In HTML speak: Everything between <a> and </a>. *)
-    link : string;
-    (** The URL. *)
-    _type : string;
-    (** Type of the link, e.g. "email". *)
-    
-  }
-  
-  val description : (t, string) GapiLens.t
-  val link : (t, string) GapiLens.t
-  val _type : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Task :
 sig
+  module LinksData :
+  sig
+    type t = {
+      description : string;
+      (** The description. In HTML speak: Everything between <a> and </a>. *)
+      link : string;
+      (** The URL. *)
+      _type : string;
+      (** Type of the link, e.g. "email". *)
+      
+    }
+    
+    val description : (t, string) GapiLens.t
+    val link : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     completed : GapiDate.t;
     (** Completion date of the task (as a RFC 3339 timestamp). This field is omitted if the task has not been completed. *)
@@ -85,7 +81,7 @@ sig
     (** Task identifier. *)
     kind : string;
     (** Type of the resource. This is always "tasks#task". *)
-    links : TaskLinksData.t list;
+    links : LinksData.t list;
     (** Collection of links. This collection is read-only. *)
     notes : string;
     (** Notes describing the task. Optional. *)
@@ -111,7 +107,7 @@ sig
   val hidden : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val links : (t, TaskLinksData.t list) GapiLens.t
+  val links : (t, LinksData.t list) GapiLens.t
   val notes : (t, string) GapiLens.t
   val parent : (t, string) GapiLens.t
   val position : (t, string) GapiLens.t
