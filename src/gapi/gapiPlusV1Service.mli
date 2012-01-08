@@ -12,7 +12,6 @@
 val scope_me : string
 (** View your email address *)
 val scope_email : string
-
 module ActivitiesResource :
 sig
   
@@ -229,3 +228,4 @@ sig
   
   
 end
+

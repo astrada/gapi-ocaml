@@ -9,54 +9,6 @@ let scope_readonly = "https://www.googleapis.com/auth/calendar.readonly"
 
 module AclResource =
 struct
-  module AclParameters =
-  struct
-    type t = {
-      (* Standard query parameters *)
-      fields : string;
-      prettyPrint : bool;
-      quotaUser : string;
-      userIp : string;
-      key : string;
-      (* acl-specific query parameters *)
-      
-    }
-    
-    let default = {
-      fields = "";
-      prettyPrint = true;
-      quotaUser = "";
-      userIp = "";
-      key = "";
-      
-    }
-    
-    let to_key_value_list qp =
-      let param get_value to_string name =
-        GapiService.build_param default qp get_value to_string name in [
-      param (fun p -> p.fields) (fun x -> x) "fields";
-      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
-      param (fun p -> p.userIp) (fun x -> x) "userIp";
-      param (fun p -> p.key) (fun x -> x) "key";
-      
-    ] |> List.concat
-    
-    let merge_parameters
-        ?(standard_parameters = GapiService.StandardParameters.default)
-        () =
-      let parameters = {
-        fields = standard_parameters.GapiService.StandardParameters.fields;
-        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
-        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
-        userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        key = standard_parameters.GapiService.StandardParameters.key;
-        
-      } in
-      if parameters = default then None else Some parameters
-    
-  end
-  
   let delete
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?parameters
@@ -65,10 +17,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
-    let params = AclParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
-      in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -80,10 +32,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
-    let params = AclParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
-      in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response AclRule.of_data_model) session 
     
@@ -96,10 +48,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
-    let params = AclParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
-      in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
       ~data:aclRule full_url
@@ -112,10 +64,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"] base_url in
-    let params = AclParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
-      in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Acl.of_data_model) session 
     
@@ -129,10 +81,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
-    let params = AclParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
-      in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
       ~data:aclRule full_url
@@ -148,10 +100,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
-    let params = AclParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
-      in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
       ~data:aclRule full_url
@@ -363,54 +315,6 @@ end
 
 module CalendarsResource =
 struct
-  module CalendarsParameters =
-  struct
-    type t = {
-      (* Standard query parameters *)
-      fields : string;
-      prettyPrint : bool;
-      quotaUser : string;
-      userIp : string;
-      key : string;
-      (* calendars-specific query parameters *)
-      
-    }
-    
-    let default = {
-      fields = "";
-      prettyPrint = true;
-      quotaUser = "";
-      userIp = "";
-      key = "";
-      
-    }
-    
-    let to_key_value_list qp =
-      let param get_value to_string name =
-        GapiService.build_param default qp get_value to_string name in [
-      param (fun p -> p.fields) (fun x -> x) "fields";
-      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
-      param (fun p -> p.userIp) (fun x -> x) "userIp";
-      param (fun p -> p.key) (fun x -> x) "key";
-      
-    ] |> List.concat
-    
-    let merge_parameters
-        ?(standard_parameters = GapiService.StandardParameters.default)
-        () =
-      let parameters = {
-        fields = standard_parameters.GapiService.StandardParameters.fields;
-        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
-        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
-        userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        key = standard_parameters.GapiService.StandardParameters.key;
-        
-      } in
-      if parameters = default then None else Some parameters
-    
-  end
-  
   let clear
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?parameters
@@ -418,10 +322,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "clear"] base_url in
-    let params = CalendarsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map CalendarsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ~data:() full_url
       GapiRequest.parse_empty_response session 
     
@@ -432,10 +336,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId)] base_url in
-    let params = CalendarsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map CalendarsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -446,10 +350,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId)] base_url in
-    let params = CalendarsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map CalendarsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Calendar.of_data_model) session 
     
@@ -460,10 +364,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars"] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
-    let params = CalendarsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map CalendarsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Calendar.to_data_model)
       ~data:calendar full_url
@@ -478,10 +382,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
-    let params = CalendarsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map CalendarsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Calendar.to_data_model)
       ~data:calendar full_url
@@ -496,10 +400,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
-    let params = CalendarsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map CalendarsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Calendar.to_data_model)
       ~data:calendar full_url
@@ -510,63 +414,15 @@ end
 
 module ColorsResource =
 struct
-  module ColorsParameters =
-  struct
-    type t = {
-      (* Standard query parameters *)
-      fields : string;
-      prettyPrint : bool;
-      quotaUser : string;
-      userIp : string;
-      key : string;
-      (* colors-specific query parameters *)
-      
-    }
-    
-    let default = {
-      fields = "";
-      prettyPrint = true;
-      quotaUser = "";
-      userIp = "";
-      key = "";
-      
-    }
-    
-    let to_key_value_list qp =
-      let param get_value to_string name =
-        GapiService.build_param default qp get_value to_string name in [
-      param (fun p -> p.fields) (fun x -> x) "fields";
-      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
-      param (fun p -> p.userIp) (fun x -> x) "userIp";
-      param (fun p -> p.key) (fun x -> x) "key";
-      
-    ] |> List.concat
-    
-    let merge_parameters
-        ?(standard_parameters = GapiService.StandardParameters.default)
-        () =
-      let parameters = {
-        fields = standard_parameters.GapiService.StandardParameters.fields;
-        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
-        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
-        userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        key = standard_parameters.GapiService.StandardParameters.key;
-        
-      } in
-      if parameters = default then None else Some parameters
-    
-  end
-  
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?parameters
         session =
     let full_url = GapiUtils.add_path_to_url ["colors"] base_url in
-    let params = ColorsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map ColorsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Colors.of_data_model) session 
     
@@ -946,64 +802,16 @@ end
 
 module FreebusyResource =
 struct
-  module FreebusyParameters =
-  struct
-    type t = {
-      (* Standard query parameters *)
-      fields : string;
-      prettyPrint : bool;
-      quotaUser : string;
-      userIp : string;
-      key : string;
-      (* freebusy-specific query parameters *)
-      
-    }
-    
-    let default = {
-      fields = "";
-      prettyPrint = true;
-      quotaUser = "";
-      userIp = "";
-      key = "";
-      
-    }
-    
-    let to_key_value_list qp =
-      let param get_value to_string name =
-        GapiService.build_param default qp get_value to_string name in [
-      param (fun p -> p.fields) (fun x -> x) "fields";
-      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
-      param (fun p -> p.userIp) (fun x -> x) "userIp";
-      param (fun p -> p.key) (fun x -> x) "key";
-      
-    ] |> List.concat
-    
-    let merge_parameters
-        ?(standard_parameters = GapiService.StandardParameters.default)
-        () =
-      let parameters = {
-        fields = standard_parameters.GapiService.StandardParameters.fields;
-        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
-        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
-        userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        key = standard_parameters.GapiService.StandardParameters.key;
-        
-      } in
-      if parameters = default then None else Some parameters
-    
-  end
-  
   let query
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?parameters
         freeBusyRequest
         session =
     let full_url = GapiUtils.add_path_to_url ["freeBusy"] base_url in
-    let params = FreebusyParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map FreebusyParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json FreeBusyRequest.to_data_model)
       ~data:freeBusyRequest full_url
@@ -1014,54 +822,6 @@ end
 
 module SettingsResource =
 struct
-  module SettingsParameters =
-  struct
-    type t = {
-      (* Standard query parameters *)
-      fields : string;
-      prettyPrint : bool;
-      quotaUser : string;
-      userIp : string;
-      key : string;
-      (* settings-specific query parameters *)
-      
-    }
-    
-    let default = {
-      fields = "";
-      prettyPrint = true;
-      quotaUser = "";
-      userIp = "";
-      key = "";
-      
-    }
-    
-    let to_key_value_list qp =
-      let param get_value to_string name =
-        GapiService.build_param default qp get_value to_string name in [
-      param (fun p -> p.fields) (fun x -> x) "fields";
-      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
-      param (fun p -> p.userIp) (fun x -> x) "userIp";
-      param (fun p -> p.key) (fun x -> x) "key";
-      
-    ] |> List.concat
-    
-    let merge_parameters
-        ?(standard_parameters = GapiService.StandardParameters.default)
-        () =
-      let parameters = {
-        fields = standard_parameters.GapiService.StandardParameters.fields;
-        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
-        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
-        userIp = standard_parameters.GapiService.StandardParameters.userIp;
-        key = standard_parameters.GapiService.StandardParameters.key;
-        
-      } in
-      if parameters = default then None else Some parameters
-    
-  end
-  
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?parameters
@@ -1069,10 +829,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings";
       ((fun x -> x) setting)] base_url in
-    let params = SettingsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map SettingsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Setting.of_data_model) session 
     
@@ -1082,10 +842,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings"]
       base_url in
-    let params = SettingsParameters.merge_parameters
+    let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:parameters () in
-    let query_parameters = Option.map SettingsParameters.to_key_value_list
-      params in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Settings.of_data_model) session 
     

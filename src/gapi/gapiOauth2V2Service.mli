@@ -44,3 +44,18 @@ sig
   
 end
 
+(** 
+  
+  @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
+  @param parameters Optional standard parameters.
+  @param access_token 
+  @param id_token 
+  *)
+val tokeninfo :
+  ?base_url:string ->
+  ?parameters:GapiService.StandardParameters.t ->
+  ?access_token:string ->
+  ?id_token:string ->
+  GapiConversation.Session.t ->
+  GapiOauth2V2Model.Tokeninfo.t * GapiConversation.Session.t
+

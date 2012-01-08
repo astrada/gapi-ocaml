@@ -1,0 +1,10 @@
+{
+  "access_type": "offline",
+  "audience": "client_id",
+  "email": "mail@example.com",
+  "expires_in": 3600,
+  "issued_to": "client_id",
+  "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me",
+  "user_id": "123456789012345678901",
+  "verified_email": true
+}
