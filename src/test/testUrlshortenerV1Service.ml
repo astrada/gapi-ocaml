@@ -2,6 +2,7 @@ open OUnit
 open GapiUtils.Infix
 open GapiLens.Infix
 open GapiUrlshortenerV1Model
+open GapiUrlshortenerV1Service
 
 let google_url_id = "http://goo.gl/fbsS"
 
@@ -10,8 +11,8 @@ let test_get_url () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (entry, _) =
-         GapiUrlshortenerV1Service.UrlResource.get
-           ~projection:GapiUrlshortenerV1Service.Projection.ANALYTICS_CLICKS
+         UrlResource.get
+           ~projection:UrlResource.Projection.ANALYTICS_CLICKS
            ~shortUrl:google_url_id
            session
        in
@@ -38,7 +39,7 @@ let test_insert_url () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (new_entry, session) =
-         GapiUrlshortenerV1Service.UrlResource.insert
+         UrlResource.insert
            new_url
            session
        in
@@ -51,7 +52,7 @@ let test_list_url () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (urls, _) =
-         GapiUrlshortenerV1Service.UrlResource.list
+         UrlResource.list
            session
        in
          assert_equal

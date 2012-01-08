@@ -99,7 +99,7 @@ struct
     
   }
   
-  let render_content x = 
+  let rec render_content x = 
      [
       GapiJson.render_array "browsers" StringCount.render x.browsers;
       GapiJson.render_array "countries" StringCount.render x.countries;
@@ -113,7 +113,7 @@ struct
   let render x = 
     GapiJson.render_object "" (render_content x)
   
-  let parse x = function
+  let rec parse x = function
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "browsers"; data_type = GapiJson.Array },
         cs) ->
@@ -200,7 +200,7 @@ struct
     
   }
   
-  let render_content x = 
+  let rec render_content x = 
      [
       GapiJson.render_object "allTime" (AnalyticsSnapshot.render_content x.allTime);
       GapiJson.render_object "day" (AnalyticsSnapshot.render_content x.day);
@@ -213,7 +213,7 @@ struct
   let render x = 
     GapiJson.render_object "" (render_content x)
   
-  let parse x = function
+  let rec parse x = function
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "allTime"; data_type = GapiJson.Object },
         cs) ->

@@ -13,34 +13,6 @@ val scope : string
 (** View your calendars *)
 val scope_readonly : string
 
-module OrderBy :
-sig
-  type t =
-    | Default
-    | StartTime
-    | Updated
-    
-  val to_string : t -> string
-  
-  val of_string : string -> t
-  
-end
-
-module MinAccessRole :
-sig
-  type t =
-    | Default
-    | FreeBusyReader
-    | Owner
-    | Reader
-    | Writer
-    
-  val to_string : t -> string
-  
-  val of_string : string -> t
-  
-end
-
 module AclResource :
 sig
   (** Deletes an access control rule.
@@ -137,6 +109,21 @@ end
 
 module CalendarListResource :
 sig
+  
+  module MinAccessRole :
+  sig
+    type t =
+      | Default
+      | FreeBusyReader
+      | Owner
+      | Reader
+      | Writer
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
   (** Deletes an entry on the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -327,6 +314,19 @@ end
 
 module EventsResource :
 sig
+  
+  module OrderBy :
+  sig
+    type t =
+      | Default
+      | StartTime
+      | Updated
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
   (** Deletes an event.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).

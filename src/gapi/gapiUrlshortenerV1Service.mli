@@ -11,22 +11,22 @@
 (** Manage your goo.gl short URLs *)
 val scope : string
 
-module Projection :
-sig
-  type t =
-    | Default
-    | ANALYTICS_CLICKS
-    | ANALYTICS_TOP_STRINGS
-    | FULL
-    
-  val to_string : t -> string
-  
-  val of_string : string -> t
-  
-end
-
 module UrlResource :
 sig
+  
+  module Projection :
+  sig
+    type t =
+      | Default
+      | ANALYTICS_CLICKS
+      | ANALYTICS_TOP_STRINGS
+      | FULL
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
   (** Expands a short URL or gets creation time and analytics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
