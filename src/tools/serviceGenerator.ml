@@ -235,12 +235,7 @@ let build_schema_inner_module file_lens complex_type =
     end
   in
 
-  let render_parse_function
-        formatter
-        fields
-        is_referenced
-        container_name
-        module_name =
+  let render_parse_function formatter fields container_name module_name =
     Format.fprintf formatter "@,@[<v 2>let rec parse x = function@,";
     List.iter
       (fun { Field.ocaml_name;
@@ -320,10 +315,8 @@ let build_schema_inner_module file_lens complex_type =
            | _ ->
                failwith "Unexpected complex type rendering parse function")
       fields;
-    if not is_referenced then begin
-      Format.fprintf formatter
-        "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,"
-    end;
+    Format.fprintf formatter
+      "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,";
     Format.fprintf formatter
       "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e@]@]"
       container_name
@@ -362,16 +355,17 @@ let build_schema_inner_module file_lens complex_type =
                                        |-- InnerSchemaModule.record
                                        |-- Record.field_list);
 
-      lift_io $ render_type_t formatter fields;
-      lift_io $ render_lenses formatter fields;
-      lift_io $ render_empty formatter fields;
+      lift_io (
+        render_type_t formatter fields;
+        render_lenses formatter fields;
+        render_empty formatter fields);
       is_type_referenced <-- State.is_type_referenced
                                complex_type.ComplexType.id;
       let is_referenced = is_type_referenced || is_nested in
-      lift_io $ render_render_function formatter fields is_referenced;
-      lift_io $ render_parse_function
-        formatter fields is_referenced container_name module_name;
-      lift_io $ render_footer formatter is_referenced
+      lift_io (
+        render_render_function formatter fields is_referenced;
+        render_parse_function formatter fields container_name module_name;
+        render_footer formatter is_referenced)
   in
 
   let module_name =
