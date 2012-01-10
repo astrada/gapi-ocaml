@@ -70,10 +70,10 @@ Document "gapi-ocaml"
   Title: API reference for Google APIs client library
   Type: ocamlbuild (0.2)
   Install: true
-  InstallDir: $htmldir
+  InstallDir: $htmldir/html
   DataFiles: doc/style.css
   BuildTools: ocamldoc
-  XOCamlbuildPath: .
+  XOCamlbuildPath: src
   XOCamlbuildLibraries: gapi, gdata
 
 # Executables
@@ -119,4 +119,11 @@ Test suite
   Command: $testSuite
   TestTools: testSuite
   WorkingDirectory : src
+
+# VCS
+SourceRepository head
+  Type: git
+  Location: https://github.com/astrada/gapi-ocaml.git
+  Browser: https://github.com/astrada/gapi-ocaml
+  Branch: master
 
