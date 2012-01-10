@@ -1001,12 +1001,16 @@ let build_schema_module_interface =
       service <-- GapiLens.get_state State.service;
 
       (* Generate opening comment *)
-      lift_io $
-        Format.fprintf formatter
-"@[<hov 2>(** Data definition for %s (%s).@\n@\nFor@ more@ information@ about@ this@ data@ model,@ see@ the@ {{:%s}API Documentation}.@\n*)@]@\n@\n"
+      lift_io (
+        Format.fprintf formatter "@[<hov 2>(** Data definition for %s (%s)."
           service.RestDescription.title
-          service.RestDescription.version
-          service.RestDescription.documentationLink;
+          service.RestDescription.version;
+        if service.RestDescription.documentationLink <> "" then begin
+          Format.fprintf formatter
+            "@\n@\nFor@ more@ information@ about@ this@ data@ model,@ see@ the@ {{:%s}API Documentation}."
+            service.RestDescription.documentationLink
+        end;
+        Format.fprintf formatter "@\n*)@]@\n@\n");
 
       (* Schema modules are stored in reverse order *)
       schema_modules <-- GapiLens.get_state
@@ -1072,12 +1076,13 @@ let rec generate_service_module_signature
           List.iter
             (fun id ->
                let { Field.ocaml_name; field_type; _ } =
-                 List.assoc id methd.Method.parameters
-               in
-                 Format.fprintf formatter
-                   "@@param %s %s@\n"
-                   ocaml_name
-                   (ComplexType.get_description field_type))
+                 List.assoc id methd.Method.parameters in
+               let description = ComplexType.get_description field_type in
+                 if description <> "" then begin
+                   Format.fprintf formatter "@@param %s %s@\n"
+                     ocaml_name
+                     description;
+                 end)
             methd.Method.parameter_order;
           Format.fprintf formatter "*)@]@\n";
           (* Declaration *)
@@ -1167,13 +1172,18 @@ let build_service_module_interface =
       service <-- GapiLens.get_state State.service;
 
       (* Generate opening comment *)
-      lift_io $
+      lift_io (
         Format.fprintf formatter
-          "@[<hov 2>(** Service definition for %s (%s).@\n@\n%s.@\n@\nFor@ more@ information@ about@ this@ service,@ see@ the@ {{:%s}API Documentation}.@\n*)@]@\n@\n"
+          "@[<hov 2>(** Service definition for %s (%s).@\n@\n%s."
           service.RestDescription.title
           service.RestDescription.version
-          service.RestDescription.description
-          service.RestDescription.documentationLink;
+          service.RestDescription.description;
+        if service.RestDescription.documentationLink <> "" then begin
+          Format.fprintf formatter
+            "@\n@\nFor@ more@ information@ about@ this@ service,@ see@ the@ {{:%s}API Documentation}."
+            service.RestDescription.documentationLink;
+        end;
+        Format.fprintf formatter"@\n*)@]@\n@\n");
 
       scopes <-- GapiLens.get_state (State.get_service_module
                                        |-- ServiceModule.scopes);
