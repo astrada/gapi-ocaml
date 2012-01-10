@@ -115,7 +115,7 @@ Executable testSuite
   MainIs: testSuite.ml
   BuildDepends: oUnit, gapi, gdata
 
-Test suite
+Test core
   Command: $testSuite
   TestTools: testSuite
   WorkingDirectory : src
