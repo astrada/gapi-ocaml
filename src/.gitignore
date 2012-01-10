@@ -1,6 +1,12 @@
 *.swp
+
 _build
 *.byte
 *.native
+
+gapi.mllib
+gdata.mllib
+
 gapi.docdir
 check.sh
+

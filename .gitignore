@@ -1,1 +1,11 @@
 *.swp
+*.bak
+
+_build
+*.byte
+*.native
+
+*.odocl
+setup.data
+setup.log
+

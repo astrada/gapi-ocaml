@@ -1,0 +1,117 @@
+# OASIS_START
+# DO NOT EDIT (digest: 78635227584e3efa539396f9656209c7)
+# Ignore VCS directories, you can use the same kind of rule outside 
+# OASIS_START/STOP if you want to exclude directories that contains 
+# useless stuff for the build process
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library gapi
+"src/gapi": include
+<src/gapi/*.ml{,i}>: pkg_xmlm
+<src/gapi/*.ml{,i}>: pkg_str
+<src/gapi/*.ml{,i}>: pkg_netstring
+<src/gapi/*.ml{,i}>: pkg_json-wheel
+<src/gapi/*.ml{,i}>: pkg_extlib
+<src/gapi/*.ml{,i}>: pkg_curl
+<src/gapi/*.ml{,i}>: pkg_cryptokit
+# Library gdata
+"src/gdata": include
+<src/gdata/*.ml{,i}>: use_gapi
+<src/gdata/*.ml{,i}>: pkg_xmlm
+<src/gdata/*.ml{,i}>: pkg_str
+<src/gdata/*.ml{,i}>: pkg_netstring
+<src/gdata/*.ml{,i}>: pkg_json-wheel
+<src/gdata/*.ml{,i}>: pkg_extlib
+<src/gdata/*.ml{,i}>: pkg_curl
+<src/gdata/*.ml{,i}>: pkg_cryptokit
+# Executable testSuite
+"src/test/testSuite.byte": use_gdata
+"src/test/testSuite.byte": use_gapi
+"src/test/testSuite.byte": pkg_xmlm
+"src/test/testSuite.byte": pkg_str
+"src/test/testSuite.byte": pkg_oUnit
+"src/test/testSuite.byte": pkg_netstring
+"src/test/testSuite.byte": pkg_json-wheel
+"src/test/testSuite.byte": pkg_extlib
+"src/test/testSuite.byte": pkg_curl
+"src/test/testSuite.byte": pkg_cryptokit
+<src/test/*.ml{,i}>: use_gdata
+<src/test/*.ml{,i}>: pkg_oUnit
+# Executable clientLoginFlow
+"src/examples/auth/clientLoginFlow.byte": use_gapi
+"src/examples/auth/clientLoginFlow.byte": pkg_xmlm
+"src/examples/auth/clientLoginFlow.byte": pkg_str
+"src/examples/auth/clientLoginFlow.byte": pkg_netstring
+"src/examples/auth/clientLoginFlow.byte": pkg_json-wheel
+"src/examples/auth/clientLoginFlow.byte": pkg_extlib
+"src/examples/auth/clientLoginFlow.byte": pkg_curl
+"src/examples/auth/clientLoginFlow.byte": pkg_cryptokit
+# Executable oauth2Flow
+"src/examples/auth/oauth2Flow.byte": use_gapi
+"src/examples/auth/oauth2Flow.byte": pkg_xmlm
+"src/examples/auth/oauth2Flow.byte": pkg_str
+"src/examples/auth/oauth2Flow.byte": pkg_netstring
+"src/examples/auth/oauth2Flow.byte": pkg_json-wheel
+"src/examples/auth/oauth2Flow.byte": pkg_extlib
+"src/examples/auth/oauth2Flow.byte": pkg_curl
+"src/examples/auth/oauth2Flow.byte": pkg_cryptokit
+# Executable serviceGenerator
+"src/tools/serviceGenerator.byte": use_gapi
+"src/tools/serviceGenerator.byte": pkg_xmlm
+"src/tools/serviceGenerator.byte": pkg_str
+"src/tools/serviceGenerator.byte": pkg_netstring
+"src/tools/serviceGenerator.byte": pkg_json-wheel
+"src/tools/serviceGenerator.byte": pkg_extlib
+"src/tools/serviceGenerator.byte": pkg_curl
+"src/tools/serviceGenerator.byte": pkg_cryptokit
+<src/tools/*.ml{,i}>: use_gapi
+<src/tools/*.ml{,i}>: pkg_xmlm
+<src/tools/*.ml{,i}>: pkg_str
+<src/tools/*.ml{,i}>: pkg_netstring
+<src/tools/*.ml{,i}>: pkg_json-wheel
+<src/tools/*.ml{,i}>: pkg_extlib
+<src/tools/*.ml{,i}>: pkg_curl
+<src/tools/*.ml{,i}>: pkg_cryptokit
+# Executable refreshOAuth2Token
+"src/test/refreshOAuth2Token.byte": use_gapi
+"src/test/refreshOAuth2Token.byte": pkg_xmlm
+"src/test/refreshOAuth2Token.byte": pkg_str
+"src/test/refreshOAuth2Token.byte": pkg_netstring
+"src/test/refreshOAuth2Token.byte": pkg_json-wheel
+"src/test/refreshOAuth2Token.byte": pkg_extlib
+"src/test/refreshOAuth2Token.byte": pkg_curl
+"src/test/refreshOAuth2Token.byte": pkg_cryptokit
+<src/test/*.ml{,i}>: use_gapi
+<src/test/*.ml{,i}>: pkg_xmlm
+<src/test/*.ml{,i}>: pkg_str
+<src/test/*.ml{,i}>: pkg_netstring
+<src/test/*.ml{,i}>: pkg_json-wheel
+<src/test/*.ml{,i}>: pkg_extlib
+<src/test/*.ml{,i}>: pkg_curl
+<src/test/*.ml{,i}>: pkg_cryptokit
+# Executable oauth1Flow
+"src/examples/auth/oauth1Flow.byte": use_gapi
+"src/examples/auth/oauth1Flow.byte": pkg_xmlm
+"src/examples/auth/oauth1Flow.byte": pkg_str
+"src/examples/auth/oauth1Flow.byte": pkg_netstring
+"src/examples/auth/oauth1Flow.byte": pkg_json-wheel
+"src/examples/auth/oauth1Flow.byte": pkg_extlib
+"src/examples/auth/oauth1Flow.byte": pkg_curl
+"src/examples/auth/oauth1Flow.byte": pkg_cryptokit
+<src/examples/auth/*.ml{,i}>: use_gapi
+<src/examples/auth/*.ml{,i}>: pkg_xmlm
+<src/examples/auth/*.ml{,i}>: pkg_str
+<src/examples/auth/*.ml{,i}>: pkg_netstring
+<src/examples/auth/*.ml{,i}>: pkg_json-wheel
+<src/examples/auth/*.ml{,i}>: pkg_extlib
+<src/examples/auth/*.ml{,i}>: pkg_curl
+<src/examples/auth/*.ml{,i}>: pkg_cryptokit
+# OASIS_STOP

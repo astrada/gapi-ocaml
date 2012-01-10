@@ -1,0 +1,132 @@
+OASISFormat: 0.2
+OCamlVersion: >= 3.12.0
+Name: gapi-ocaml
+Version: 0.1
+Synopsis: A simple OCaml client for Google Services.
+Authors: Alessandro Strada
+License: MIT
+LicenseFile: LICENSE
+Homepage: https://github.com/astrada/gapi-ocaml
+BuildTools: ocamlbuild
+Plugins: META (0.2)
+
+# Libraries
+Library gapi
+  Path: src/gapi
+  Modules:
+    GapiCore,
+    GapiCurl,
+    GapiPipe,
+    GapiConfig,
+    GapiConversation,
+    GapiAuthResponse,
+    GapiClientLogin,
+    GapiOAuth1,
+    GapiOAuth2,
+    GapiAuth,
+    GapiRequest,
+    GapiMonad,
+    GapiError,
+    GapiService,
+    GapiDate,
+    GapiJson,
+    GapiLens,
+    GapiCalendarV3Model,
+    GapiCalendarV3Service,
+    GapiPlusV1Model,
+    GapiPlusV1Service,
+    GapiTasksV1Model,
+    GapiTasksV1Service,
+    GapiDiscoveryV1Model,
+    GapiDiscoveryV1Service,
+    GapiUrlshortenerV1Model,
+    GapiUrlshortenerV1Service,
+    GapiOauth2V2Model,
+    GapiOauth2V2Service
+  InternalModules:
+    GapiUtils
+  BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm
+  XMETADescription: Google APIs client library
+
+Library gdata
+  Path: src/gdata
+  Modules:
+    GdataCore,
+    GdataBatch,
+    GdataAtom,
+    GdataACL,
+    GdataCalendar,
+    GdataComments,
+    GdataCalendarEvent,
+    GdataService,
+    GdataCalendarService
+  InternalModules:
+    GdataUtils
+  BuildDepends: gapi, xmlm, extlib, netstring, curl
+  XMETADescription: Google Data Protocol (GData) client library
+
+# Documentation
+Document "gapi"
+  Title: API reference for Google APIs client library (gapi)
+  Type: ocamlbuild (0.2)
+  Install: true
+  InstallDir: $htmldir/api
+  DataFiles: doc/style.css
+  BuildTools: ocamldoc
+  XOCamlbuildPath: .
+  XOCamlbuildLibraries: gapi
+
+Document "gdata"
+  Title: API reference for Google Data Protocol client library (gdata)
+  Type: ocamlbuild (0.2)
+  Install: true
+  InstallDir: $htmldir/api
+  DataFiles: doc/style.css
+  BuildTools: ocamldoc
+  XOCamlbuildPath: .
+  XOCamlbuildLibraries: gdata
+
+# Executables
+Executable serviceGenerator
+  Path: src/tools
+  Install: false
+  MainIs: serviceGenerator.ml
+  BuildDepends: gapi
+
+# Examples
+Executable oauth2Flow
+  Path: src/examples/auth
+  Install: false
+  MainIs: oauth2Flow.ml
+  BuildDepends: gapi
+
+Executable oauth1Flow
+  Path: src/examples/auth
+  Install: false
+  MainIs: oauth1Flow.ml
+  BuildDepends: gapi
+
+Executable clientLoginFlow
+  Path: src/examples/auth
+  Install: false
+  MainIs: clientLoginFlow.ml
+  BuildDepends: gapi
+
+# Tests
+Executable refreshOAuth2Token
+  Path: src/test
+  Install: false
+  MainIs: refreshOAuth2Token.ml
+  BuildDepends: gapi
+
+Executable testSuite
+  Path: src/test
+  Install: false
+  MainIs: testSuite.ml
+  BuildDepends: oUnit, gapi, gdata
+
+Test suite
+  Command: $testSuite
+  TestTools: testSuite
+  WorkingDirectory : src
+
