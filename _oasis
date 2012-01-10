@@ -66,25 +66,15 @@ Library gdata
   XMETADescription: Google Data Protocol (GData) client library
 
 # Documentation
-Document "gapi"
-  Title: API reference for Google APIs client library (gapi)
+Document "gapi-ocaml"
+  Title: API reference for Google APIs client library
   Type: ocamlbuild (0.2)
   Install: true
-  InstallDir: $htmldir/api
+  InstallDir: $htmldir
   DataFiles: doc/style.css
   BuildTools: ocamldoc
   XOCamlbuildPath: .
-  XOCamlbuildLibraries: gapi
-
-Document "gdata"
-  Title: API reference for Google Data Protocol client library (gdata)
-  Type: ocamlbuild (0.2)
-  Install: true
-  InstallDir: $htmldir/api
-  DataFiles: doc/style.css
-  BuildTools: ocamldoc
-  XOCamlbuildPath: .
-  XOCamlbuildLibraries: gdata
+  XOCamlbuildLibraries: gapi, gdata
 
 # Executables
 Executable serviceGenerator

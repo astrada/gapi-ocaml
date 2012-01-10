@@ -6,6 +6,7 @@ _build
 *.native
 
 *.odocl
+*.docdir
 setup.data
 setup.log
 
