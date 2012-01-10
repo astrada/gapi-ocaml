@@ -1,9 +1,6 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
 (** Data definition for  (v2).
-  
-  For more information about this data model, see the
-  {{:}API Documentation}.
   *)
 
 module Tokeninfo :

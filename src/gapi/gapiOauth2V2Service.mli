@@ -3,8 +3,6 @@
 (** Service definition for  (v2).
   
   OAuth2 API.
-  
-  For more information about this service, see the {{:}API Documentation}.
   *)
 
 module UserinfoResource :
@@ -48,8 +46,6 @@ end
   
   @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
   @param parameters Optional standard parameters.
-  @param access_token 
-  @param id_token 
   *)
 val tokeninfo :
   ?base_url:string ->
