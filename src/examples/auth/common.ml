@@ -23,7 +23,7 @@ let start_netplex callback =
       () in
   let cmdline_cfg =
     Netplex_main.create
-      ~config_filename:"examples/auth/netplex.config" 
+      ~config_filename:"config/netplex.config" 
       ~foreground:true () in
   let parallelizer = Netplex_mp.mp () in
     Netplex_main.startup
