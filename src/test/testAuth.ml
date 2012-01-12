@@ -3,7 +3,7 @@ open OUnit
 let test_client_login () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let email = get "cl_user" in
        let password = get "cl_pass" in
        let (auth_token, _) =
@@ -24,7 +24,7 @@ let test_client_login () =
 let test_oauth1_request_token () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let xoauth_displayname = get "oa1_displayname" in
        let consumer_secret = get "oa1_cons_secret" in
        let oauth_consumer_key = get "oa1_cons_key" in
@@ -63,7 +63,7 @@ let test_oauth1_authorize_url () =
 let test_invalid_oauth1_access_token () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let consumer_secret = get "oa1_cons_secret" in
        let oauth_consumer_key = get "oa1_cons_key" in
        assert_raises
@@ -80,7 +80,7 @@ let test_invalid_oauth1_access_token () =
 let test_oauth1_token_info () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let consumer_secret = get "oa1_cons_secret" in
        let oauth_consumer_key = get "oa1_cons_key" in
        let oauth_token = get "oa1_token" in
@@ -109,7 +109,7 @@ let test_oauth1_token_info () =
 let test_oauth1_revoke_invalid_token () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let consumer_secret = get "oa1_cons_secret" in
        let oauth_consumer_key = get "oa1_cons_key" in
          assert_raises
@@ -136,7 +136,7 @@ let test_oauth2_authorization_url () =
 let test_invalid_oauth2_access_token () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let client_id = get "oa2_id" in
        let client_secret = get "oa2_secret" in
        let redirect_uri = get "oa2_uri" in
@@ -153,7 +153,7 @@ let test_invalid_oauth2_access_token () =
 let test_oauth2_refresh_token () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let get = TestHelper.Config.get test_config in
+       let get = Config.get test_config in
        let client_id = get "oa2_id" in
        let client_secret = get "oa2_secret" in
        let refresh_token = get "oa2_refresh" in

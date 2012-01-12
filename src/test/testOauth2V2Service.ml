@@ -28,7 +28,7 @@ let test_get_me () =
 let test_tokeninfo () =
   TestHelper.test_request_noauth
     (fun config session ->
-       let access_token = TestHelper.Config.get config "oa2_token" in
+       let access_token = Config.get config "oa2_token" in
        let (info, session) =
          tokeninfo ~access_token session
        in

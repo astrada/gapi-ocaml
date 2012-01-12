@@ -145,7 +145,7 @@ let test_get_colors () =
        let parameters = {
          GapiService.StandardParameters.default with
              GapiService.StandardParameters.key =
-               TestHelper.Config.get test_config "key"
+               Config.get test_config "key"
        } in
        let (colors, session) =
          ColorsResource.get
