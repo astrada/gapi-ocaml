@@ -3,7 +3,7 @@ open GapiOauth2V2Model
 
 let test_parse_userinfo () =
   let userinfo_json =
-    Json_io.load_json "test/data/test_userinfo.json" in
+    Json_io.load_json "test_data/test_userinfo.json" in
   let tree = GapiJson.json_to_data_model userinfo_json in
   let userinfo = Userinfo.of_data_model tree in
   let tree' = Userinfo.to_data_model userinfo in
@@ -19,7 +19,7 @@ let test_parse_userinfo () =
 
 let test_parse_tokeninfo () =
   let tokeninfo_json =
-    Json_io.load_json "test/data/test_tokeninfo.json" in
+    Json_io.load_json "test_data/test_tokeninfo.json" in
   let tree = GapiJson.json_to_data_model tokeninfo_json in
   let tokeninfo = Tokeninfo.of_data_model tree in
   let tree' = Tokeninfo.to_data_model tokeninfo in

@@ -1,4 +1,4 @@
-let test_config = Config.parse "examples/auth/auth.config"
+let test_config = Config.parse "config/auth.config"
 let get = Config.get test_config
 let client_id = get "oa2_id"
 let client_secret = get "oa2_secret"

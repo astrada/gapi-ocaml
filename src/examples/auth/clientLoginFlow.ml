@@ -1,4 +1,4 @@
-let test_config = Config.parse "examples/auth/auth.config"
+let test_config = Config.parse "config/auth.config"
 let get = Config.get test_config
 let email = get "cl_user"
 let password = get "cl_pass"

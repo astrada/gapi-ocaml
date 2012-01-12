@@ -118,7 +118,6 @@ Executable testSuite
 Test core
   Command: $testSuite
   TestTools: testSuite
-  WorkingDirectory : src
 
 # VCS
 SourceRepository head

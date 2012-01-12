@@ -125,7 +125,7 @@ let do_request
   in
     try_request ()
 
-let config_file_name = "test/test.config"
+let config_file_name = "config/test.config"
 
 let test_request
       ?(configfile = config_file_name)

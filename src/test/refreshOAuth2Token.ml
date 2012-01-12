@@ -18,6 +18,6 @@ let _ =
                  test_config
                  "oa2_token"
                  token.GapiAuthResponse.OAuth2.access_token;
-               TestHelper.Config.save test_config "test/test.config"
+               TestHelper.Config.save test_config "config/test.config"
            | _ -> failwith "Not supported OAuth2 response")
 

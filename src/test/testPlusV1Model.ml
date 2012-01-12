@@ -5,7 +5,7 @@ open GapiUtils.Infix
 
 let test_parse_comment () =
   let comment_json =
-    Json_io.load_json "test/data/test_plus_comment.json" in
+    Json_io.load_json "test_data/test_plus_comment.json" in
   let tree = GapiJson.json_to_data_model comment_json in
   let comment = Comment.of_data_model tree in
   let tree' = Comment.to_data_model comment in
@@ -21,7 +21,7 @@ let test_parse_comment () =
 
 let test_parse_comment_feed () =
   let comment_feed_json =
-    Json_io.load_json "test/data/test_plus_comment_feed.json" in
+    Json_io.load_json "test_data/test_plus_comment_feed.json" in
   let tree = GapiJson.json_to_data_model comment_feed_json in
   let comment_feed = CommentFeed.of_data_model tree in
   let tree' = CommentFeed.to_data_model comment_feed in
@@ -37,7 +37,7 @@ let test_parse_comment_feed () =
 
 let test_parse_activity () =
   let activity_json =
-    Json_io.load_json "test/data/test_plus_activity.json" in
+    Json_io.load_json "test_data/test_plus_activity.json" in
   let tree = GapiJson.json_to_data_model activity_json in
   let activity = Activity.of_data_model tree in
   let tree' = Activity.to_data_model activity in
@@ -53,7 +53,7 @@ let test_parse_activity () =
 
 let test_parse_activity_feed () =
   let activity_feed_json =
-    Json_io.load_json "test/data/test_plus_activity_feed.json" in
+    Json_io.load_json "test_data/test_plus_activity_feed.json" in
   let tree = GapiJson.json_to_data_model activity_feed_json in
   let activity_feed = ActivityFeed.of_data_model tree in
   let tree' = ActivityFeed.to_data_model activity_feed in
@@ -69,7 +69,7 @@ let test_parse_activity_feed () =
 
 let test_parse_person () =
   let person_json =
-    Json_io.load_json "test/data/test_plus_person.json" in
+    Json_io.load_json "test_data/test_plus_person.json" in
   let tree = GapiJson.json_to_data_model person_json in
   let person = Person.of_data_model tree in
   let tree' = Person.to_data_model person in
@@ -85,7 +85,7 @@ let test_parse_person () =
 
 let test_parse_people_feed () =
   let people_feed_json =
-    Json_io.load_json "test/data/test_plus_people_feed.json" in
+    Json_io.load_json "test_data/test_plus_people_feed.json" in
   let tree = GapiJson.json_to_data_model people_feed_json in
   let people_feed = PeopleFeed.of_data_model tree in
   let tree' = PeopleFeed.to_data_model people_feed in
