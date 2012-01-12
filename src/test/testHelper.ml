@@ -59,14 +59,19 @@ let build_no_auth _ =
   (GapiConfig.NoAuth,
    GapiConversation.Session.NoAuth)
 
-(* val build_config : GapiConfig.auth_config -> GapiConfig.t *)
-let build_config auth_config =
-  { GapiConfig.default with
-        GapiConfig.auth = auth_config }
+let build_config debug_flag auth_config =
+  let base_config =
+    if debug_flag then GapiConfig.default_debug else GapiConfig.default
+  in
+    { base_config with
+          GapiConfig.auth = auth_config }
 
-(* val update_session :
-  GapiConversation.Session.auth_context ->
-  GapiConversation.Session.t -> GapiConversation.Session.t *)
+let get_debug_flag test_config =
+  try
+    let value = Config.get test_config "debug" in
+      bool_of_string value
+  with Not_found -> false
+
 let update_session auth_session session =
   { session with
         GapiConversation.Session.auth = auth_session }
@@ -134,7 +139,8 @@ let test_request
       interact =
   let test_config = Config.parse configfile in
   let (auth_conf, auth_session) = build_auth test_config in 
-  let config = build_config auth_conf in
+  let debug_flag = get_debug_flag test_config in
+  let config = build_config debug_flag auth_conf in
     do_request
       config
       auth_session
@@ -146,8 +152,10 @@ let test_request_noauth
       ?(handle_exception = raise)
       interact =
   let test_config = Config.parse configfile in
+  let debug_flag = get_debug_flag test_config in
+  let config = build_config debug_flag GapiConfig.NoAuth in
     do_request
-      GapiConfig.default
+      config
       GapiConversation.Session.NoAuth
       (interact test_config)
       handle_exception
