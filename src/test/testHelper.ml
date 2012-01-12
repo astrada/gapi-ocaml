@@ -101,14 +101,12 @@ let do_request
   in
     try_request ()
 
-let config_file_name = "config/test.config"
-
 let test_request
-      ?(configfile = config_file_name)
+      ?configfile
       ?(handle_exception = raise)
       build_auth
       interact =
-  let test_config = Config.parse configfile in
+  let test_config = Config.parse ?filename:configfile () in
   let (auth_conf, auth_session) = build_auth test_config in 
   let debug_flag = get_debug_flag test_config in
   let config = build_config debug_flag auth_conf in
@@ -119,10 +117,10 @@ let test_request
       handle_exception
 
 let test_request_noauth
-      ?(configfile = config_file_name)
+      ?configfile
       ?(handle_exception = raise)
       interact =
-  let test_config = Config.parse configfile in
+  let test_config = Config.parse ?filename:configfile () in
   let debug_flag = get_debug_flag test_config in
   let config = build_config debug_flag GapiConfig.NoAuth in
     do_request

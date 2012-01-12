@@ -1,6 +1,8 @@
+let default_config_file = "config/auth.config"
+
 type t = (string, string) Hashtbl.t
 
-let parse filename =
+let parse ?(filename = default_config_file) () =
   let sb = Scanf.Scanning.from_file filename in
   let table = Hashtbl.create 16 in
     while (not (Scanf.Scanning.end_of_input sb)) do
@@ -9,7 +11,7 @@ let parse filename =
     done;
     table
 
-let save table filename =
+let save ?(filename = default_config_file) table =
   let out_ch = open_out filename in
     Hashtbl.iter
       (fun key value ->

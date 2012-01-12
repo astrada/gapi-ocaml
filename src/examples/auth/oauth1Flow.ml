@@ -1,4 +1,4 @@
-let test_config = Config.parse "config/auth.config"
+let test_config = Config.parse ()
 let get = Config.get test_config
 let xoauth_displayname = get "oa1_displayname"
 let consumer_secret = get "oa1_cons_secret"

@@ -1,8 +1,8 @@
 type t = (string, string) Hashtbl.t
 
-val parse : string -> (string, string) Hashtbl.t
+val parse : ?filename:string -> unit -> (string, string) Hashtbl.t
 
-val save : (string, string) Hashtbl.t -> string -> unit
+val save : ?filename:string -> (string, string) Hashtbl.t -> unit
 
 val get : ('a, 'b) Hashtbl.t -> 'a -> 'b
 
