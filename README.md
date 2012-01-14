@@ -103,8 +103,10 @@ Google's authorization endpoints.
 See [monadic test](src/test/testMonadic.ml) for an example of how to use the
 monadic interface.
 
-See [calendar v3 test](src/test/testCalendarModelV3.ml) for an example of how
-to use functional lenses to read and modify calendar data.
+See [calendar v3 test](src/test/testCalendarV3Model.ml) for an example of how
+to use functional lenses to read and modify calendar data. See [service
+generator](src/tools/serviceGenerator.ml) for a complex example of how to use
+functional lenses within the state monad.
 
 See [tools README](src/tools/README.md) for the instructions of how to run the
 service generator utility.
