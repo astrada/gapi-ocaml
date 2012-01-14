@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiDate.html">
+<link rel="next" href="GapiLens.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiCore" rel="Chapter" href="GapiCore.html">
+<link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
+<link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
+<link title="GapiConfig" rel="Chapter" href="GapiConfig.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiAuthResponse" rel="Chapter" href="GapiAuthResponse.html">
+<link title="GapiClientLogin" rel="Chapter" href="GapiClientLogin.html">
+<link title="GapiOAuth1" rel="Chapter" href="GapiOAuth1.html">
+<link title="GapiOAuth2" rel="Chapter" href="GapiOAuth2.html">
+<link title="GapiAuth" rel="Chapter" href="GapiAuth.html">
+<link title="GapiRequest" rel="Chapter" href="GapiRequest.html">
+<link title="GapiMonad" rel="Chapter" href="GapiMonad.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiDate" rel="Chapter" href="GapiDate.html">
+<link title="GapiJson" rel="Chapter" href="GapiJson.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
+<link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
+<link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
+<link title="GapiPlusV1Service" rel="Chapter" href="GapiPlusV1Service.html">
+<link title="GapiTasksV1Model" rel="Chapter" href="GapiTasksV1Model.html">
+<link title="GapiTasksV1Service" rel="Chapter" href="GapiTasksV1Service.html">
+<link title="GapiDiscoveryV1Model" rel="Chapter" href="GapiDiscoveryV1Model.html">
+<link title="GapiDiscoveryV1Service" rel="Chapter" href="GapiDiscoveryV1Service.html">
+<link title="GapiUrlshortenerV1Model" rel="Chapter" href="GapiUrlshortenerV1Model.html">
+<link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
+<link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
+<link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GdataCore" rel="Chapter" href="GdataCore.html">
+<link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
+<link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataComments" rel="Chapter" href="GdataComments.html">
+<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
+<link title="GdataService" rel="Chapter" href="GdataService.html">
+<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiJson</title>
+</head>
+<body>
+<div class="navbar"><a href="GapiDate.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="GapiLens.html">Next</a>
+</div>
+<center><h1>Module <a href="type_GapiJson.html">GapiJson</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> GapiJson: <code class="code">sig</code> <a href="GapiJson.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<br><code><span id="TYPEjson_data_type"><span class="keyword">type</span> <code class="type"></code>json_data_type</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Object</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Array</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Scalar</span></code></td>
+
+</tr></table>
+
+
+<pre><span id="VALjson_data_type_to_string"><span class="keyword">val</span> json_data_type_to_string</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_type">json_data_type</a> -> string</code></pre><br><code><span id="TYPEjson_metadata"><span class="keyword">type</span> <code class="type"></code>json_metadata</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>name&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>data_type&nbsp;: <code class="type"><a href="GapiJson.html#TYPEjson_data_type">json_data_type</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+<pre><span id="VALmetadata_description"><span class="keyword">val</span> metadata_description</span> : <code class="type"><a href="GapiJson.html#TYPEjson_metadata">json_metadata</a> -> string</code></pre><pre><span id="TYPEjson_data_model"><span class="keyword">type</span> <code class="type"></code>json_data_model</span> = <code class="type">(<a href="GapiJson.html#TYPEjson_metadata">json_metadata</a>, Json_type.t) <a href="GapiCore.AnnotatedTree.html#TYPEt">GapiCore.AnnotatedTree.t</a></code> </pre>
+
+<pre><span id="VALunexpected"><span class="keyword">val</span> unexpected</span> : <code class="type">string -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> 'a</code></pre><pre><span id="VALrender_value"><span class="keyword">val</span> render_value</span> : <code class="type">string -> Json_type.t -> Json_type.t -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_string_value"><span class="keyword">val</span> render_string_value</span> : <code class="type">?default:string -> string -> string -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_int_value"><span class="keyword">val</span> render_int_value</span> : <code class="type">?default:int -> string -> int -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_bool_value"><span class="keyword">val</span> render_bool_value</span> : <code class="type">?default:bool -> string -> bool -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_date_value"><span class="keyword">val</span> render_date_value</span> : <code class="type">?time:bool -><br>       ?default:<a href="GapiDate.html#TYPEt">GapiDate.t</a> -> string -> <a href="GapiDate.html#TYPEt">GapiDate.t</a> -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_struct"><span class="keyword">val</span> render_struct</span> : <code class="type">string -><br>       <a href="GapiJson.html#TYPEjson_data_type">json_data_type</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list list -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_object"><span class="keyword">val</span> render_object</span> : <code class="type">string -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list list -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_collection"><span class="keyword">val</span> render_collection</span> : <code class="type">string -><br>       <a href="GapiJson.html#TYPEjson_data_type">json_data_type</a> -><br>       ('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list) -><br>       'a list -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_array"><span class="keyword">val</span> render_array</span> : <code class="type">string -><br>       ('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list) -><br>       'a list -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list</code></pre><pre><span id="VALrender_root"><span class="keyword">val</span> render_root</span> : <code class="type">('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list) -> 'a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a></code></pre><pre><span id="VALparse_children"><span class="keyword">val</span> parse_children</span> : <code class="type">('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> 'a) -><br>       'a -> ('a -> 'b) -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list -> 'b</code></pre><pre><span id="VALparse_collection"><span class="keyword">val</span> parse_collection</span> : <code class="type">('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> 'a) -><br>       'a -> ('a list -> 'b) -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> list -> 'b</code></pre><pre><span id="VALparse_root"><span class="keyword">val</span> parse_root</span> : <code class="type">('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> 'a) -><br>       'a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> 'a</code></pre><pre><span id="VALparse_string_element"><span class="keyword">val</span> parse_string_element</span> : <code class="type">'a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> string</code></pre><pre><span id="VALparse_dictionary_entry"><span class="keyword">val</span> parse_dictionary_entry</span> : <code class="type">'a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> string * string</code></pre><pre><span id="VALjson_to_data_model"><span class="keyword">val</span> json_to_data_model</span> : <code class="type">Json_type.json_type -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a></code></pre><pre><span id="VALdata_model_to_json"><span class="keyword">val</span> data_model_to_json</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> Json_type.json_type</code></pre><pre><span id="VALparse_json_response"><span class="keyword">val</span> parse_json_response</span> : <code class="type">(<a href="GapiJson.html#TYPEjson_data_model">json_data_model</a> -> 'a) -> GapiPipe.OcamlnetPipe.t -> 'a</code></pre><pre><span id="VALdefault_content_type"><span class="keyword">val</span> default_content_type</span> : <code class="type">string</code></pre><pre><span id="VALrender_json"><span class="keyword">val</span> render_json</span> : <code class="type">('a -> <a href="GapiJson.html#TYPEjson_data_model">json_data_model</a>) -> 'a -> <a href="GapiCore.PostData.html#TYPEt">GapiCore.PostData.t</a></code></pre></body></html>

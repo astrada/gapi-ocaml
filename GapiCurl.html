@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiCore.html">
+<link rel="next" href="GapiPipe.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiCore" rel="Chapter" href="GapiCore.html">
+<link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
+<link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
+<link title="GapiConfig" rel="Chapter" href="GapiConfig.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiAuthResponse" rel="Chapter" href="GapiAuthResponse.html">
+<link title="GapiClientLogin" rel="Chapter" href="GapiClientLogin.html">
+<link title="GapiOAuth1" rel="Chapter" href="GapiOAuth1.html">
+<link title="GapiOAuth2" rel="Chapter" href="GapiOAuth2.html">
+<link title="GapiAuth" rel="Chapter" href="GapiAuth.html">
+<link title="GapiRequest" rel="Chapter" href="GapiRequest.html">
+<link title="GapiMonad" rel="Chapter" href="GapiMonad.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiDate" rel="Chapter" href="GapiDate.html">
+<link title="GapiJson" rel="Chapter" href="GapiJson.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
+<link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
+<link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
+<link title="GapiPlusV1Service" rel="Chapter" href="GapiPlusV1Service.html">
+<link title="GapiTasksV1Model" rel="Chapter" href="GapiTasksV1Model.html">
+<link title="GapiTasksV1Service" rel="Chapter" href="GapiTasksV1Service.html">
+<link title="GapiDiscoveryV1Model" rel="Chapter" href="GapiDiscoveryV1Model.html">
+<link title="GapiDiscoveryV1Service" rel="Chapter" href="GapiDiscoveryV1Service.html">
+<link title="GapiUrlshortenerV1Model" rel="Chapter" href="GapiUrlshortenerV1Model.html">
+<link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
+<link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
+<link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GdataCore" rel="Chapter" href="GdataCore.html">
+<link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
+<link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataComments" rel="Chapter" href="GdataComments.html">
+<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
+<link title="GdataService" rel="Chapter" href="GdataService.html">
+<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiCurl</title>
+</head>
+<body>
+<div class="navbar"><a href="GapiCore.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="GapiPipe.html">Next</a>
+</div>
+<center><h1>Module <a href="type_GapiCurl.html">GapiCurl</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> GapiCurl: <code class="code">sig</code> <a href="GapiCurl.html">..</a> <code class="code">end</code></pre><hr width="100%">
+<pre><span id="TYPEcurl_context"><span class="keyword">type</span> <code class="type"></code>curl_context</span> </pre>
+
+<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">'a</code> t</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Initialized</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Created</span> <span class="keyword">of</span> <code class="type"><a href="GapiCurl.html#TYPEcurl_context">curl_context</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Destroyed</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Uninitialized</span></code></td>
+
+</tr></table>
+
+
+<pre><span id="VALglobal_init"><span class="keyword">val</span> global_init</span> : <code class="type">unit -> [ `Initialized ] <a href="GapiCurl.html#TYPEt">t</a></code></pre><pre><span id="VALinit"><span class="keyword">val</span> init</span> : <code class="type">?debug_function:(Curl.t -> Curl.curlDebugType -> string -> unit) -><br>       ?timeout:int -><br>       ?connect_timeout:int -><br>       ?follow_location:bool -><br>       ?compress:bool -><br>       ?options:Curl.curlOption list -><br>       [ `Initialized ] <a href="GapiCurl.html#TYPEt">t</a> -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a></code></pre><pre><span id="VALset_options"><span class="keyword">val</span> set_options</span> : <code class="type">Curl.curlOption list -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_writefunction"><span class="keyword">val</span> set_writefunction</span> : <code class="type">(string -> int) -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_headerfunction"><span class="keyword">val</span> set_headerfunction</span> : <code class="type">(string -> int) -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_httpheader"><span class="keyword">val</span> set_httpheader</span> : <code class="type"><a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_httpget"><span class="keyword">val</span> set_httpget</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_post"><span class="keyword">val</span> set_post</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_nobody"><span class="keyword">val</span> set_nobody</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_upload"><span class="keyword">val</span> set_upload</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_httpbody"><span class="keyword">val</span> set_httpbody</span> : <code class="type">string -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_customrequest"><span class="keyword">val</span> set_customrequest</span> : <code class="type">string -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_postfields"><span class="keyword">val</span> set_postfields</span> : <code class="type">(string * string) list -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALset_cookies"><span class="keyword">val</span> set_cookies</span> : <code class="type">string list -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALreset_all_cookies"><span class="keyword">val</span> reset_all_cookies</span> : <code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALreset_session_cookies"><span class="keyword">val</span> reset_session_cookies</span> : <code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALperform"><span class="keyword">val</span> perform</span> : <code class="type">string -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre><pre><span id="VALget_error_buffer"><span class="keyword">val</span> get_error_buffer</span> : <code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> string</code></pre><pre><span id="VALget_responsecode"><span class="keyword">val</span> get_responsecode</span> : <code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> int</code></pre><pre><span id="VALcleanup"><span class="keyword">val</span> cleanup</span> : <code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> [ `Destroyed ] <a href="GapiCurl.html#TYPEt">t</a></code></pre><pre><span id="VALglobal_cleanup"><span class="keyword">val</span> global_cleanup</span> : <code class="type">[ `Initialized ] <a href="GapiCurl.html#TYPEt">t</a> -> [ `Uninitialized ] <a href="GapiCurl.html#TYPEt">t</a></code></pre><pre><span id="VALstring_of_curl_info_type"><span class="keyword">val</span> string_of_curl_info_type</span> : <code class="type">Curl.curlDebugType -> string</code></pre></body></html>

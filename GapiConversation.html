@@ -4,34 +4,62 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiCalendar.html">
-<link rel="next" href="GapiError.html">
+<link rel="previous" href="GapiConfig.html">
+<link rel="next" href="GapiAuthResponse.html">
 <link rel="Up" href="index.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
 <link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
-<link title="GapiLens" rel="Chapter" href="GapiLens.html">
-<link title="GapiCalendar" rel="Chapter" href="GapiCalendar.html">
+<link title="GapiCore" rel="Chapter" href="GapiCore.html">
+<link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
+<link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
+<link title="GapiConfig" rel="Chapter" href="GapiConfig.html">
 <link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiAuthResponse" rel="Chapter" href="GapiAuthResponse.html">
+<link title="GapiClientLogin" rel="Chapter" href="GapiClientLogin.html">
+<link title="GapiOAuth1" rel="Chapter" href="GapiOAuth1.html">
+<link title="GapiOAuth2" rel="Chapter" href="GapiOAuth2.html">
+<link title="GapiAuth" rel="Chapter" href="GapiAuth.html">
+<link title="GapiRequest" rel="Chapter" href="GapiRequest.html">
+<link title="GapiMonad" rel="Chapter" href="GapiMonad.html">
 <link title="GapiError" rel="Chapter" href="GapiError.html">
 <link title="GapiService" rel="Chapter" href="GapiService.html">
-<link title="GapiCalendarService" rel="Chapter" href="GapiCalendarService.html">
-<link title="GapiPlus" rel="Chapter" href="GapiPlus.html">
-<link title="GapiPlusService" rel="Chapter" href="GapiPlusService.html">
-<link title="GapiTasks" rel="Chapter" href="GapiTasks.html">
-<link title="GapiTasksService" rel="Chapter" href="GapiTasksService.html"><title>GapiConversation</title>
+<link title="GapiDate" rel="Chapter" href="GapiDate.html">
+<link title="GapiJson" rel="Chapter" href="GapiJson.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
+<link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
+<link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
+<link title="GapiPlusV1Service" rel="Chapter" href="GapiPlusV1Service.html">
+<link title="GapiTasksV1Model" rel="Chapter" href="GapiTasksV1Model.html">
+<link title="GapiTasksV1Service" rel="Chapter" href="GapiTasksV1Service.html">
+<link title="GapiDiscoveryV1Model" rel="Chapter" href="GapiDiscoveryV1Model.html">
+<link title="GapiDiscoveryV1Service" rel="Chapter" href="GapiDiscoveryV1Service.html">
+<link title="GapiUrlshortenerV1Model" rel="Chapter" href="GapiUrlshortenerV1Model.html">
+<link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
+<link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
+<link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GdataCore" rel="Chapter" href="GdataCore.html">
+<link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
+<link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataComments" rel="Chapter" href="GdataComments.html">
+<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
+<link title="GdataService" rel="Chapter" href="GdataService.html">
+<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiConversation</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCalendar.html">Previous</a>
+<div class="navbar"><a href="GapiConfig.html">Previous</a>
 &nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiError.html">Next</a>
+&nbsp;<a href="GapiAuthResponse.html">Next</a>
 </div>
 <center><h1>Module <a href="type_GapiConversation.html">GapiConversation</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> GapiConversation: <code class="code">sig</code> <a href="GapiConversation.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiConversation.Session.html">Session</a>: <code class="code">sig</code> <a href="GapiConversation.Session.html">..</a> <code class="code">end</code></pre><pre><span id="VALrequest"><span class="keyword">val</span> request</span> : <code class="type">?header_list:GapiCore.Header.t list -><br>       ?post_data:GapiCore.PostData.t -><br>       GapiCore.HttpMethod.t -><br>       <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -><br>       string -><br>       (GapiPipe.OcamlnetPipe.t -><br>        int -> GapiCore.Header.t list -> <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -><br>       'a * <a href="GapiConversation.Session.html#TYPEt">Session.t</a></code></pre><pre><span id="VALwith_session"><span class="keyword">val</span> with_session</span> : <code class="type">?auth_context:<a href="GapiConversation.Session.html#TYPEauth_context">Session.auth_context</a> -><br>       GapiConfig.t -><br>       [ `Initialized ] GapiCurl.t -> (<a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -> 'a</code></pre><pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type">GapiPipe.OcamlnetPipe.t -> string</code></pre><pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type">GapiPipe.OcamlnetPipe.t -> int -> 'a</code></pre><pre><span id="EXCEPTIONConversationException"><span class="keyword">exception</span> ConversationException</span> <span class="keyword">of</span> <code class="type">string</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiConversation.Session.html">Session</a>: <code class="code">sig</code> <a href="GapiConversation.Session.html">..</a> <code class="code">end</code></pre><pre><span id="VALrequest"><span class="keyword">val</span> request</span> : <code class="type">?header_list:<a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -><br>       ?post_data:<a href="GapiCore.PostData.html#TYPEt">GapiCore.PostData.t</a> -><br>       <a href="GapiCore.HttpMethod.html#TYPEt">GapiCore.HttpMethod.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -><br>       string -><br>       (GapiPipe.OcamlnetPipe.t -><br>        int -> <a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -> <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -><br>       'a * <a href="GapiConversation.Session.html#TYPEt">Session.t</a></code></pre><pre><span id="VALwith_session"><span class="keyword">val</span> with_session</span> : <code class="type">?auth_context:<a href="GapiConversation.Session.html#TYPEauth_context">Session.auth_context</a> -><br>       <a href="GapiConfig.html#TYPEt">GapiConfig.t</a> -><br>       [ `Initialized ] <a href="GapiCurl.html#TYPEt">GapiCurl.t</a> -> (<a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -> 'a</code></pre><pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type">GapiPipe.OcamlnetPipe.t -> string</code></pre><pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type">GapiPipe.OcamlnetPipe.t -> int -> 'a</code></pre><pre><span id="EXCEPTIONConversationException"><span class="keyword">exception</span> ConversationException</span> <span class="keyword">of</span> <code class="type">string</code></pre>
 <br><code><span id="TYPEiter"><span class="keyword">type</span> <code class="type">('a, 'b)</code> iter</span> = </code><table class="typetable">
 <tr>
 <td align="left" valign="top" >

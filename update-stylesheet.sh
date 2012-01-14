@@ -3,7 +3,7 @@
 set -e
 
 for i in *.html; do
-  sed -e 's/href="\.\.\/\.\.\/doc/href="doc/' $i > $i.tmp
+  sed -e 's/href="style/href="doc\/style/' $i > $i.tmp
   mv $i.tmp $i
 done
 

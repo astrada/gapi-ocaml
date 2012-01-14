@@ -1,0 +1,78 @@
+<html><head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiCore" rel="Chapter" href="GapiCore.html">
+<link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
+<link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
+<link title="GapiConfig" rel="Chapter" href="GapiConfig.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiAuthResponse" rel="Chapter" href="GapiAuthResponse.html">
+<link title="GapiClientLogin" rel="Chapter" href="GapiClientLogin.html">
+<link title="GapiOAuth1" rel="Chapter" href="GapiOAuth1.html">
+<link title="GapiOAuth2" rel="Chapter" href="GapiOAuth2.html">
+<link title="GapiAuth" rel="Chapter" href="GapiAuth.html">
+<link title="GapiRequest" rel="Chapter" href="GapiRequest.html">
+<link title="GapiMonad" rel="Chapter" href="GapiMonad.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiDate" rel="Chapter" href="GapiDate.html">
+<link title="GapiJson" rel="Chapter" href="GapiJson.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
+<link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
+<link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
+<link title="GapiPlusV1Service" rel="Chapter" href="GapiPlusV1Service.html">
+<link title="GapiTasksV1Model" rel="Chapter" href="GapiTasksV1Model.html">
+<link title="GapiTasksV1Service" rel="Chapter" href="GapiTasksV1Service.html">
+<link title="GapiDiscoveryV1Model" rel="Chapter" href="GapiDiscoveryV1Model.html">
+<link title="GapiDiscoveryV1Service" rel="Chapter" href="GapiDiscoveryV1Service.html">
+<link title="GapiUrlshortenerV1Model" rel="Chapter" href="GapiUrlshortenerV1Model.html">
+<link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
+<link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
+<link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GdataCore" rel="Chapter" href="GdataCore.html">
+<link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
+<link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataComments" rel="Chapter" href="GdataComments.html">
+<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
+<link title="GdataService" rel="Chapter" href="GdataService.html">
+<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GdataACL.Feed</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;entry_t&nbsp;=&nbsp;<span class="constructor">Entry</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;link_t&nbsp;=&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Link</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;authors&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Author</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;categories&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Category</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contributors&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Contributor</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;generator&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Generator</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;icon&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_icon;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_id;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;updated&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_updated;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entries&nbsp;:&nbsp;entry_t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;links&nbsp;:&nbsp;link_t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;logo&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_logo;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rights&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Rights</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subtitle&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Subtitle</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Title</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;totalResults&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.opensearch_totalResults;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;itemsPerPage&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.opensearch_itemsPerPage;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startIndex&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.opensearch_startIndex;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse_feed&nbsp;:&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+<span class="keyword">end</span></code></body></html>

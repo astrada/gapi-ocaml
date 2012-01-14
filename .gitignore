@@ -1,2 +1,11 @@
 *.swp
+
+_build/
 src/
+config/
+gapi-ocaml.docdir
+generated/
+
+setup.data
+setup.log
+
