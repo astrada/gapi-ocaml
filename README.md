@@ -24,7 +24,7 @@ Old versions:
 * Monadic interface
 * [Functional lenses](src/gapi/gapiLens.mli) to access data structures
 * Service generator (experimental): a tool for generating client libraries for
-  APIs based on the Google API Discovery format.
+  APIs based on the Google API Discovery format
 
 Building gapi-ocaml
 ------------------
@@ -42,8 +42,8 @@ packages for Debian](http://ocaml.debian.net/debian/ocaml-3.12.1/)):
 * [ExtLib][] = 1.5.1
 * [json-wheel][] = 1.0.6
 * [Xmlm][] = 1.0.2
-* [pa_monad][] = 6.0 Syntax extension for Monads (optional)
-* [OUnit][] = 1.1.0 to build and run the tests (optional)
+* [pa_monad][] = 6.0 (syntax extension for Monads, optional)
+* [OUnit][] = 1.1.0 (to build and run the tests, optional)
 
 [OCaml]: http://caml.inria.fr/ocaml/release.en.html
 [Findlib]: http://projects.camlcity.org/projects/findlib.html/
@@ -60,18 +60,22 @@ packages for Debian](http://ocaml.debian.net/debian/ocaml-3.12.1/)):
 
 This project provides 2 libraries:
 
-* gapi: Google APIs client library
-* gdata: Google Data Protocol client library
+* `gapi`: Google APIs client library
+* `gdata`: Google Data Protocol client library
 
 and 1 executable:
 
-* serviceGenerator: Tool used to generate strongly typed client libraries for
+* `serviceGenerator`: Tool used to generate strongly typed client libraries for
   Discovery-based services
 
-To build and install the libraries and the executable, run
+To build the libraries and the executable, run
 
     $ ocaml setup.ml -configure
     $ ocaml setup.ml -build
+
+To install the libraries and the executable, run (as root, if your user
+doesn't have enough privileges)
+
     $ ocaml setup.ml -install
 
 To run the tests, execute
