@@ -26,7 +26,7 @@ See [ClientLogin for Installed Applications](http://code.google.com/apis/account
 ### OAuth 1.0
 
 If you don't have a registered Web Application, you can use the default
-consumer key/secret: "anonymous/anonymout". Otherwise, see [Registration for Web-Based Applications](http://code.google.com/apis/accounts/docs/RegistrationForWebAppsAuto.html)
+consumer key/secret: `anonymous/anonymous`. Otherwise, see [Registration for Web-Based Applications](http://code.google.com/apis/accounts/docs/RegistrationForWebAppsAuto.html)
 for details on how to obtain your pair of consumer key/secret.
 
 See [Auth examples](../examples/auth/README.md) for instructions on how to
@@ -49,7 +49,8 @@ See [OAuth 2.0 Playground](https://code.google.com/oauthplayground/) for an
 alternative way to obtain access tokens and to further experiment with the
 Google OAuth 2.0 endpoint.
 
-### Configuring tests
+Configuring tests
+-----------------
 
 To run the test suite you need to provide a configuration file based on
 [auth.config.template](../../config/auth.config.template) that contains the
@@ -107,7 +108,8 @@ Additional parameters:
     key=12121212121212121212121
     debug=false
 
-### Running the tests
+Running the tests
+-----------------
 
 By default, the test suite will run the tests that don't connect to Google
 services (and don't need the authorization configuration)
@@ -133,7 +135,7 @@ file `auth.config`
 
     $ ./refreshOAuth2Token.byte
 
-If there are errors in the tests, switching to true the `debug` value in the
+If there are errors in the tests, switching to `true` the `debug` value in the
 configuration file `auth.config` will activate the `ocurl` debug output, that
 will trace all the HTTP interactions with Google services.
 
