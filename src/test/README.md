@@ -8,7 +8,6 @@ gapi-ocaml tests
 if you want to run them, it is better to create a test account, and use it
 instead of your real Google account (to avoid unpleasant side effects).
 
-
 How to obtain credentials
 -------------------------
 
@@ -53,11 +52,11 @@ Google OAuth 2.0 endpoint.
 ### Configuring tests
 
 To run the test suite you need to provide a configuration file based on
-[test.config.template](test.config.template) that contains the credentials of
-the test account. So, create the configuration file `test.config` copying the
-template:
+[auth.config.template](../../config/auth.config.template) that contains the
+credentials of the test account. So, create the configuration file
+`auth.config` copying the template:
 
-    $ cp test.config.template test.config
+    $ cp auth.config.template auth.config
 
 Then edit this file, and fill in the following fields:
 
@@ -84,7 +83,12 @@ OAuth2:
     oa2_token=access token
     oa2_refresh=refresh token
 
-`test.config` example:
+Additional parameters:
+
+    key=API key (The API key is displayed in the Simple API Access section)
+    debug=enable/disable debugging output (true/false)
+
+`auth.config` example:
 
     cl_user=username@gmail.com
     cl_pass=password
@@ -100,4 +104,6 @@ OAuth2:
     oa2_uri=http://localhost:8091/oauth2callback
     oa2_token=bbbaaaddd
     oa2_refresh=000aaAADD
+    key=12121212121212121212121
+    debug=false
 

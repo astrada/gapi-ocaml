@@ -69,7 +69,6 @@ Library gdata
 Document "gapi-ocaml"
   Title: API reference for Google APIs client library
   Type: ocamlbuild (0.2)
-  Install: true
   InstallDir: $htmldir/html
   DataFiles: doc/style.css
   BuildTools: ocamldoc

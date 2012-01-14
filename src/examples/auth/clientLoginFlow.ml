@@ -16,6 +16,6 @@ let _ =
        in
          match auth_token with
              GapiAuthResponse.ClientLoginAuthToken token ->
-               Printf.printf "token=%s\n" token
+               Printf.printf "Client Login auth token:\n%s\n" token
            | _ -> failwith "Not supported auth response")
 

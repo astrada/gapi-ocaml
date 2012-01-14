@@ -14,24 +14,52 @@ let get_access_token code (cgi : Netcgi.cgi_activation) =
            ~code
            ~redirect_uri
            session in
-       let output =
+       let (access_token, token_type, expires_in, refresh_token) =
          match response with
              GapiAuthResponse.OAuth2AccessToken token ->
-               Printf.sprintf "access_token=%s; token_type=%s; expires_in=%d; refresh_token=%s\n"
-                 token.GapiAuthResponse.OAuth2.access_token
-                 token.GapiAuthResponse.OAuth2.token_type
-                 token.GapiAuthResponse.OAuth2.expires_in
-                 token.GapiAuthResponse.OAuth2.refresh_token
-           | _ -> failwith "Not supported OAuth2 response"
+               (token.GapiAuthResponse.OAuth2.access_token,
+                token.GapiAuthResponse.OAuth2.token_type,
+                token.GapiAuthResponse.OAuth2.expires_in,
+                token.GapiAuthResponse.OAuth2.refresh_token)
+           | _ -> failwith "Not supported OAuth2 response" in
+       let output =
+         Printf.sprintf
+           "<form method=\"post\" action=\"\">\
+              <fieldset>\
+                <legend>OAuth2 tokens:</legend>\
+                oa2_token: <input type=\"text\" name=\"oa2_token\" value=\"%s\" size=\"50\" /><br />\
+                oa2_refresh: <input type=\"text\" name=\"oa2_refresh\" value=\"%s\" size=\"50\" /><br />\
+                <input type=\"submit\" name=\"save\" value=\"Save\" />\
+              </fieldset>\
+            </form>\
+            <p>token_type: %s</p>\
+            <p>expires_in: %d</p>"
+           access_token refresh_token token_type expires_in
        in
          Common.output_page "OAuth2 Flow" "Success" output cgi)
 
-let oauth2_callback (cgi : Netcgi.cgi_activation) =
+let save (cgi : Netcgi.cgi_activation) =
+  let oa2_token = cgi#argument_value "oa2_token" in
+  let oa2_refresh = cgi#argument_value "oa2_refresh" in
+  let filename = "/tmp/auth.config" in
+    Config.set test_config "oa2_token" oa2_token;
+    Config.set test_config "oa2_refresh" oa2_refresh;
+    Config.save ~filename test_config;
+    Common.output_page "OAuth2 Flow" "Success"
+      ("<p>OAuth2 token saved to " ^ filename ^ "</p>")
+      cgi
+
+let error (cgi : Netcgi.cgi_activation) =
   let error = cgi#argument_value "error" in
-  let code = cgi#argument_value "code" in
-    if error <> "" then
-      Common.output_error_page "OAuth2 Flow" error cgi
-    else
+    Common.output_error_page "OAuth2 Flow" error cgi
+
+let oauth2_callback (cgi : Netcgi.cgi_activation) =
+  if cgi#argument_value "save" <> "" then
+    save cgi
+  else if cgi#argument_value "error" <> "" then
+    error cgi
+  else
+    let code = cgi#argument_value "code" in
       get_access_token code cgi
 
 let main () =

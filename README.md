@@ -22,7 +22,7 @@ Old versions:
 ### Features
 
 * Monadic interface
-* Functional lenses to access data structures
+* [Functional lenses](src/gapi/gapiLens.mli) to access data structures
 * Service generator (experimental): a tool for generating client libraries for
   APIs based on the Google API Discovery format.
 
@@ -56,27 +56,40 @@ packages for Debian](http://ocaml.debian.net/debian/ocaml-3.12.1/)):
 [pa_monad]: http://www.cas.mcmaster.ca/~carette/pa_monad/
 [OUnit]: http://ounit.forge.ocamlcore.org/
 
-### Building
+### Configuration and installation
 
-To build the library, execute
+This project provides 2 libraries:
 
-    $ cd src
-    $ ocamlbuild gdata/gdata.cma
+* gapi: Google APIs client library
+* gdata: Google Data Protocol client library
 
-To build the tests, execute
+and 1 executable:
 
-    $ cd src
-    $ ocamlbuild test/testSuite.byte
+* serviceGenerator: Tool used to generate strongly typed client libraries for
+  Discovery-based services
 
-To run the tests, see [tests README](src/test/README.md).
+To build and install the libraries and the executable, run
 
-To generate the documentation, execute
+    $ ocaml setup.ml -configure
+    $ ocaml setup.ml -build
+    $ ocaml setup.ml -install
 
-    $ cd src
-    $ ocamlbuild gapi/gapi.docdir/index.html
+To run the tests, execute
 
-Then you can access the HTML documentation starting from
-`src/gapi.docdir/index.html`.
+    $ ocaml setup.ml -test
+
+See [tests README](src/test/README.md) for further details regarding the tests.
+
+To generate the documentation, run
+
+    $ ocaml setup.ml -doc
+
+Then you can browse the HTML documentation starting from
+`gapi-ocaml.docdir/index.html`, but is not installed by default.
+
+To uninstall anything that was previously installed, execute
+
+    $ ocaml setup.ml -uninstall
 
 ### Usage
 
@@ -88,4 +101,7 @@ monadic interface.
 
 See [calendar v3 test](src/test/testCalendarModelV3.ml) for an example of how
 to use functional lenses to read and modify calendar data.
+
+See [tools README](src/tools/README.md) for the instructions of how to run the
+service generator utility.
 
