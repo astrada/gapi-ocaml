@@ -1,3 +1,6 @@
+(** Google Data Protocol batch operations.
+  *)
+
 module Operation :
 sig
   type t =

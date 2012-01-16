@@ -1,3 +1,6 @@
+(** Google Data Protocol data definitions of comments.
+  *)
+
 module type Comments =
 sig
   type link_t

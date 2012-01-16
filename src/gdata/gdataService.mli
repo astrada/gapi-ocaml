@@ -1,3 +1,6 @@
+(** Common operations for Google Data Protocol services.
+  *)
+
 val query :
   ?version:string ->
   ?etag:string ->

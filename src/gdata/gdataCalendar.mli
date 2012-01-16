@@ -1,3 +1,6 @@
+(** Calendar Data API (v2) data definitions.
+  *)
+
 val ns_gCal : string
 
 type calendar_accessLevelProperty = string

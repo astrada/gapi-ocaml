@@ -1,3 +1,6 @@
+(** Calendar Data API v2 service. 
+  *)
+
 module QueryParameters :
 sig
   type t = {

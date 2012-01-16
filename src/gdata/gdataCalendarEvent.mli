@@ -1,3 +1,6 @@
+(** Calendar events.
+  *)
+
 module RecurrenceExceptionEntry :
 sig
   type t = {

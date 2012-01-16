@@ -1,3 +1,6 @@
+(** Defines basic ATOM data structures (e.g., feed, author, title).
+  *)
+
 module type AtomData =
 sig
   type t

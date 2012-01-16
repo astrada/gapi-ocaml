@@ -1,3 +1,6 @@
+(** Defines the data model of XML documents.
+  *)
+
 module Metadata :
 sig
   type xml_node_type =

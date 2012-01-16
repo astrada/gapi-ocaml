@@ -1,3 +1,6 @@
+(** Google Data Protocol ACLs.
+  *)
+
 val ns_gAcl : string
 
 module Scope :
