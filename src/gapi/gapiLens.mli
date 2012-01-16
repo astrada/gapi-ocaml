@@ -1,4 +1,4 @@
-(** Functional lenses
+(** Functional lenses.
   
   Based on F# implementation in {{:https://github.com/fsharp/fsharpx}FSharpx}
   (see {{:https://github.com/fsharp/fsharpx/blob/master/src/FSharpx.Core/Lens.fs}src/FSharpx.Core/Lens.fs} for the original implementation)

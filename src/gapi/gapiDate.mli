@@ -1,3 +1,6 @@
+(** Datetime data type.
+  *)
+
 type t = Netdate.t
 
 val epoch : Netdate.t

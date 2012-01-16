@@ -1,3 +1,6 @@
+(** Client Login authorization API implementation.
+  *)
+
 module Error :
 sig
   type t =

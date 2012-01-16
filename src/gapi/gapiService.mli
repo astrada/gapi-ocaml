@@ -1,4 +1,4 @@
-(** Common operations for services *)
+(** Common operations for services. *)
 
 (** Wraps a server error *)
 exception ServiceError of GapiError.RequestError.t

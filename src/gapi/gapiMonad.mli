@@ -1,3 +1,6 @@
+(** Defines the monad interface and provides implementations of some monads.
+  *)
+
 module type Monad =
 sig
   type 'a t

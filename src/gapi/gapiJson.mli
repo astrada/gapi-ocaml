@@ -1,3 +1,6 @@
+(** Utilities to manipulate JSON documents.
+  *)
+
 type json_data_type =
     Object
   | Array

@@ -1,3 +1,6 @@
+(** Defines the session that stores the current state of a conversation.
+  *)
+
 module Session :
 sig
   type oauth1_context =

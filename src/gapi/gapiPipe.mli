@@ -1,3 +1,6 @@
+(** Defines a pipe, used to stream HTTP requests and responses.
+  *)
+
 module type Pipe =
 sig
   type t

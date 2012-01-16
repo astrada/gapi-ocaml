@@ -1,3 +1,6 @@
+(** Stores data from authorization responses.
+  *)
+
 module ClientLogin :
 sig
   type auth_token = string

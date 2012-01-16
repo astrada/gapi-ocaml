@@ -1,3 +1,8 @@
+(** Configuration module.
+
+  Configures Ocurl and authorization method.
+  *)
+
 type debug_function =
     Standard
   | Custom of (Curl.t -> Curl.curlDebugType -> string -> unit)

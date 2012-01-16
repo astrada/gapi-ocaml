@@ -1,3 +1,6 @@
+(** OAuth 2.0 authorization API implementation.
+  *)
+
 val authorization_code_url :
   ?base_url:string ->
   ?access_type:string ->

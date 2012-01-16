@@ -1,3 +1,6 @@
+(** Basic request to services.
+  *)
+
 exception NotModified of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 

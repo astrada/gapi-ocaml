@@ -1,3 +1,6 @@
+(** Ocurl wrapper module.
+  *)
+
 type curl_context
 
 type 'a t =
