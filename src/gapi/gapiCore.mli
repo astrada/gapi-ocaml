@@ -26,30 +26,6 @@ sig
 
 end
 
-module Value :
-sig
-  type t =
-      Int of int
-    | String of string
-    | List of t list
-    | Record of (string * t) list
-    | Variant of string * t list
-
-end
-
-module Type :
-sig
-  type t =
-      Int
-    | String
-    | List of t
-    | Tuple of t list
-    | Option of t
-    | Record of (string * t) list
-    | Variant of (string * t list) list
-
-end
-
 module HttpMethod :
 sig
   type t =
