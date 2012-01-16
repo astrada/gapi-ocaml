@@ -5,7 +5,6 @@ _build
 *.byte
 *.native
 
-*.odocl
 *.docdir
 setup.data
 setup.log

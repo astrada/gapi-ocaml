@@ -4,6 +4,5 @@ _build
 *.byte
 *.native
 
-gapi.docdir
 check.sh
 
