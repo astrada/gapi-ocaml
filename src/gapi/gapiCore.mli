@@ -1,4 +1,4 @@
-(** Common types used overall the library.
+(** Common types used throughout the library.
   
   This module defines the data types used to represent the data model of JSON and XML documents, and some utility types related to HTTP protocol.
   *)

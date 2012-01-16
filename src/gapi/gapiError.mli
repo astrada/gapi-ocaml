@@ -1,4 +1,5 @@
-(** Data definition for server errors *)
+(** Data definition of server errors.
+  *)
 
 (** A single server error *)
 module SingleError :
