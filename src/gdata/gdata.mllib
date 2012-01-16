@@ -1,0 +1,13 @@
+# OASIS_START
+# DO NOT EDIT (digest: cd723a64521ff6be90d8284633c79d06)
+GdataCore
+GdataBatch
+GdataAtom
+GdataACL
+GdataCalendar
+GdataComments
+GdataCalendarEvent
+GdataService
+GdataCalendarService
+GdataUtils
+# OASIS_STOP

@@ -1,0 +1,33 @@
+# OASIS_START
+# DO NOT EDIT (digest: 7a73746e3e4ed5ab7ecce4dc25a7116d)
+GapiCore
+GapiCurl
+GapiPipe
+GapiConfig
+GapiConversation
+GapiAuthResponse
+GapiClientLogin
+GapiOAuth1
+GapiOAuth2
+GapiAuth
+GapiRequest
+GapiMonad
+GapiError
+GapiService
+GapiDate
+GapiJson
+GapiLens
+GapiCalendarV3Model
+GapiCalendarV3Service
+GapiPlusV1Model
+GapiPlusV1Service
+GapiTasksV1Model
+GapiTasksV1Service
+GapiDiscoveryV1Model
+GapiDiscoveryV1Service
+GapiUrlshortenerV1Model
+GapiUrlshortenerV1Service
+GapiOauth2V2Model
+GapiOauth2V2Service
+GapiUtils
+# OASIS_STOP

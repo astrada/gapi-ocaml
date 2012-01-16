@@ -1,0 +1,10 @@
+# OASIS_START
+# DO NOT EDIT (digest: 63f7890de398e62f4cbabb85a1a222f4)
+version = "0.1"
+description = "Google APIs client library"
+requires = "extlib netstring curl str cryptokit json-wheel xmlm"
+archive(byte) = "gapi.cma"
+archive(native) = "gapi.cmxa"
+exists_if = "gapi.cma"
+# OASIS_STOP
+
