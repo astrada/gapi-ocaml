@@ -1,11 +1,24 @@
+(* do_request: (GapiConversation.Session.t -> 'a) -> unit
+
+ * Factors service interaction:
+ * [do_request interact] run [interact] function in the context of a request.
+ * [interact] receives the initial session state, the return value is ignored.
+ *)
 let do_request interact =
+  (* Initialize Ocurl wrapper *)
   let state = GapiCurl.global_init () in
+
+    (* Start the session using default configuration *)
     GapiConversation.with_session
       GapiConfig.default
       state
       interact;
+
+    (* Cleanup Ocurl wrapper *)
     ignore (GapiCurl.global_cleanup state)
 
+(* Initialize netplex nethttpd service using the configuration stored in
+ * config/netplex.cfg *)
 let start_netplex callback =
   let handler_data =
     { Nethttpd_services.dyn_handler =
@@ -33,6 +46,7 @@ let start_netplex callback =
       [nethttpd_factory]
       cmdline_cfg
 
+(* Generate a simple HTML page *)
 let output_page title h1 body (cgi : Netcgi.cgi_activation) =
   cgi#out_channel#output_string "<html><title>";
   cgi#out_channel#output_string title;
@@ -43,6 +57,7 @@ let output_page title h1 body (cgi : Netcgi.cgi_activation) =
   cgi#out_channel#output_string "</body></html>";
   cgi#out_channel#commit_work ()
 
+(* Generate a simple HTML page to print an error message *)
 let output_error_page title error (cgi : Netcgi.cgi_activation) =
   output_page title "Error" error cgi
 
