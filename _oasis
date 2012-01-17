@@ -77,42 +77,42 @@ Document "gapi-ocaml"
 
 # Executables
 Executable serviceGenerator
-  Path: src/tools
+  Path: tools
   Install: false
   MainIs: serviceGenerator.ml
   BuildDepends: gapi
 
 # Examples
 Executable oauth2Flow
-  Path: src/examples/auth
+  Path: examples/auth
   Install: false
   MainIs: oauth2Flow.ml
-  BuildDepends: gapi
+  BuildDepends: gapi, nethttpd
 
 Executable oauth1Flow
-  Path: src/examples/auth
+  Path: examples/auth
   Install: false
   MainIs: oauth1Flow.ml
-  BuildDepends: gapi
+  BuildDepends: gapi, nethttpd
 
 Executable clientLoginFlow
-  Path: src/examples/auth
+  Path: examples/auth
   Install: false
   MainIs: clientLoginFlow.ml
-  BuildDepends: gapi
+  BuildDepends: gapi, nethttpd
 
 # Tests
 Executable refreshOAuth2Token
   Path: src/test
   Install: false
   MainIs: refreshOAuth2Token.ml
-  BuildDepends: gapi
+  BuildDepends: gapi, oUnit
 
 Executable testSuite
   Path: src/test
   Install: false
   MainIs: testSuite.ml
-  BuildDepends: oUnit, gapi, gdata
+  BuildDepends: gapi, gdata, oUnit
 
 Test core
   Command: $testSuite
