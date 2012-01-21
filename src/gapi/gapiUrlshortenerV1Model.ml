@@ -23,7 +23,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "count" x.count;
       GapiJson.render_string_value "id" x.id;
@@ -44,7 +44,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerV1Model.StringCount.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Model.StringCount.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -159,7 +159,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse" e x
   
 end
 
@@ -263,7 +263,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSummary.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSummary.parse" e x
   
 end
 
@@ -314,7 +314,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_object "analytics" (AnalyticsSummary.render_content x.analytics);
       GapiJson.render_string_value "created" x.created;
@@ -359,7 +359,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerV1Model.Url.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Model.Url.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -408,7 +408,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_array "items" Url.render x.items;
       GapiJson.render_int_value "itemsPerPage" x.itemsPerPage;
@@ -448,7 +448,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiUrlshortenerV1Model.UrlHistory.parse" e
+      GapiJson.unexpected "GapiUrlshortenerV1Model.UrlHistory.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

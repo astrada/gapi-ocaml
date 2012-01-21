@@ -90,7 +90,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiService.SingleError.parse" e
+          unexpected "GapiService.SingleError.parse" e x
 
 end
 
@@ -163,7 +163,7 @@ struct
             Std.identity
             cs
       | e ->
-          unexpected "GapiService.RequestError.parse" e
+          unexpected "GapiService.RequestError.parse" e x
 
   let to_data_model = render_root render
 

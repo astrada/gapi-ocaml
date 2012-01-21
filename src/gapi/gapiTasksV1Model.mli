@@ -19,6 +19,8 @@ sig
     (** URL pointing to this task list. Used to retrieve, update, or delete this task list. *)
     title : string;
     (** Title of the task list. *)
+    updated : GapiDate.t;
+    (** Last modification time of the task list (as a RFC 3339 timestamp). *)
     
   }
   
@@ -27,6 +29,7 @@ sig
   val kind : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
   
   val empty : t
   

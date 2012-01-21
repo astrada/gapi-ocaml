@@ -21,16 +21,16 @@ let metadata_description { name = n; data_type = dt } =
 
 type json_data_model = (json_metadata, Json_type.t) AnnotatedTree.t
 
-let unexpected r e =
-  match e with
+let unexpected r e x =
+  begin match e with
       AnnotatedTree.Leaf (metadata, _) ->
-        failwith ("Unexpected leaf: "
-                  ^ (metadata_description metadata)
-                  ^ " in " ^ r)
+        Printf.eprintf "\nWarning: Unexpected leaf: %s in %s\n%!"
+          (metadata_description metadata) r
     | AnnotatedTree.Node (metadata, _) ->
-        failwith ("Unexpected node: "
-                  ^ (metadata_description metadata)
-                  ^ " in " ^ r)
+        Printf.eprintf "\nWarning: Unexpected node: %s in %s\n%!"
+          (metadata_description metadata) r
+  end;
+  x
 
 let render_value name default value =
   if value <> default then
@@ -103,23 +103,23 @@ let parse_root parse_object empty_object tree =
           Std.identity
           cs
     | e ->
-        unexpected "GapiJson.parse_root" e
+        unexpected "GapiJson.parse_root" e empty_object
 
-let parse_string_element _ = function
+let parse_string_element x = function
     AnnotatedTree.Leaf
       ({ name = ""; data_type = Scalar },
        Json_type.String v) ->
       v
   | e ->
-      unexpected "GapiJson.parse_string_element" e
+      unexpected "GapiJson.parse_string_element" e x
 
-let parse_dictionary_entry _ = function
+let parse_dictionary_entry x = function
    AnnotatedTree.Leaf
      ({ name = n; data_type = Scalar },
       Json_type.String v) ->
      (n, v)
  | e ->
-     unexpected "GapiJson.parse_property" e
+     unexpected "GapiJson.parse_property" e x
 
 let json_to_data_model json_value =
   let rec map (name, value) =

@@ -8,6 +8,7 @@ struct
     kind : string;
     selfLink : string;
     title : string;
+    updated : GapiDate.t;
     
   }
   
@@ -31,6 +32,10 @@ struct
     GapiLens.get = (fun x -> x.title);
     GapiLens.set = (fun v x -> { x with title = v });
   }
+  let updated = {
+    GapiLens.get = (fun x -> x.updated);
+    GapiLens.set = (fun v x -> { x with updated = v });
+  }
   
   let empty = {
     etag = "";
@@ -38,16 +43,18 @@ struct
     kind = "";
     selfLink = "";
     title = "";
+    updated = GapiDate.epoch;
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_string_value "title" x.title;
+      GapiJson.render_date_value "updated" x.updated;
       
     ]
   
@@ -72,12 +79,16 @@ struct
         ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with title = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "updated"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with updated = GapiDate.of_string v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiTasksV1Model.TaskList.parse" e
+      GapiJson.unexpected "GapiTasksV1Model.TaskList.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -145,7 +156,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiTasksV1Model.LinksData.parse" e
+        GapiJson.unexpected "GapiTasksV1Model.LinksData.parse" e x
     
   end
   
@@ -248,7 +259,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_date_value "completed" x.completed;
       GapiJson.render_bool_value "deleted" x.deleted;
@@ -338,7 +349,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiTasksV1Model.Task.parse" e
+      GapiJson.unexpected "GapiTasksV1Model.Task.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -381,7 +392,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" TaskList.render x.items;
@@ -416,7 +427,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse" e
+      GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -459,7 +470,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Task.render x.items;
@@ -494,7 +505,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiTasksV1Model.Tasks.parse" e
+      GapiJson.unexpected "GapiTasksV1Model.Tasks.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

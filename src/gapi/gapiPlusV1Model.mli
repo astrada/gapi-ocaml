@@ -824,6 +824,10 @@ sig
     type t = {
       displayName : string;
       (** The name of the actor, suitable for display. *)
+      familyName : string;
+      (** The family name of the actor. *)
+      givenName : string;
+      (** The given name of the actor. *)
       id : string;
       (** The ID of the actor's person resource. *)
       image : ImageData.t;
@@ -834,6 +838,8 @@ sig
     }
     
     val displayName : (t, string) GapiLens.t
+    val familyName : (t, string) GapiLens.t
+    val givenName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
     val image : (t, ImageData.t) GapiLens.t
     val url : (t, string) GapiLens.t

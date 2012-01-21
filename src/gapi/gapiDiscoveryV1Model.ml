@@ -211,13 +211,13 @@ struct
         ({ GapiJson.name = "properties"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children parse empty (fun v -> (n, v)) cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse.parse_dictionary" e x')
         ("", empty)
         (fun xs -> { x with properties = xs })
         cs
@@ -238,7 +238,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse" e
+      GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse" e x
   
 end
 
@@ -280,7 +280,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDiscoveryV1Model.ResponseData.parse" e
+        GapiJson.unexpected "GapiDiscoveryV1Model.ResponseData.parse" e x
     
   end
   
@@ -320,7 +320,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDiscoveryV1Model.RequestData.parse" e
+        GapiJson.unexpected "GapiDiscoveryV1Model.RequestData.parse" e x
     
   end
   
@@ -375,7 +375,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.SimpleData.parse" e
+            GapiJson.unexpected "GapiDiscoveryV1Model.SimpleData.parse" e x
         
       end
       
@@ -426,7 +426,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.ResumableData.parse" e
+            GapiJson.unexpected "GapiDiscoveryV1Model.ResumableData.parse" e x
         
       end
       
@@ -483,7 +483,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiDiscoveryV1Model.ProtocolsData.parse" e
+          GapiJson.unexpected "GapiDiscoveryV1Model.ProtocolsData.parse" e x
       
     end
     
@@ -551,7 +551,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDiscoveryV1Model.MediaUploadData.parse" e
+        GapiJson.unexpected "GapiDiscoveryV1Model.MediaUploadData.parse" e x
     
   end
   
@@ -675,7 +675,7 @@ struct
         ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -685,7 +685,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestMethod.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestMethod.parse.parse_dictionary" e x')
         ("", JsonSchema.empty)
         (fun xs -> { x with parameters = xs })
         cs
@@ -722,7 +722,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethod.parse" e
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestMethod.parse" e x
   
 end
 
@@ -764,7 +764,7 @@ struct
         ({ GapiJson.name = "methods"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -774,7 +774,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e x')
         ("", RestMethod.empty)
         (fun xs -> { x with methods = xs })
         cs
@@ -782,13 +782,13 @@ struct
         ({ GapiJson.name = "resources"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children parse empty (fun v -> (n, v)) cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e x')
         ("", empty)
         (fun xs -> { x with resources = xs })
         cs
@@ -797,7 +797,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse" e
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse" e x
   
 end
 
@@ -850,7 +850,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDiscoveryV1Model.IconsData.parse" e
+        GapiJson.unexpected "GapiDiscoveryV1Model.IconsData.parse" e x
     
   end
   
@@ -894,7 +894,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.ScopesData.parse" e
+            GapiJson.unexpected "GapiDiscoveryV1Model.ScopesData.parse" e x
         
       end
       
@@ -927,7 +927,7 @@ struct
             ({ GapiJson.name = "scopes"; data_type = GapiJson.Object },
             cs) ->
           GapiJson.parse_collection
-            (fun _ -> function
+            (fun x' -> function
               | GapiCore.AnnotatedTree.Node
                   ({ GapiJson.name = n; data_type = GapiJson.Object },
                   cs) ->
@@ -937,7 +937,7 @@ struct
                   (fun v -> (n, v))
                   cs
               | e ->
-                GapiJson.unexpected "GapiDiscoveryV1Model.Oauth2Data.parse.parse_dictionary" e)
+                GapiJson.unexpected "GapiDiscoveryV1Model.Oauth2Data.parse.parse_dictionary" e x')
             ("", ScopesData.empty)
             (fun xs -> { x with scopes = xs })
             cs
@@ -946,7 +946,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiDiscoveryV1Model.Oauth2Data.parse" e
+          GapiJson.unexpected "GapiDiscoveryV1Model.Oauth2Data.parse" e x
       
     end
     
@@ -988,13 +988,14 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDiscoveryV1Model.AuthData.parse" e
+        GapiJson.unexpected "GapiDiscoveryV1Model.AuthData.parse" e x
     
   end
   
   type t = {
     auth : AuthData.t;
     basePath : string;
+    baseUrl : string;
     description : string;
     documentationLink : string;
     features : string list;
@@ -1020,6 +1021,10 @@ struct
   let basePath = {
     GapiLens.get = (fun x -> x.basePath);
     GapiLens.set = (fun v x -> { x with basePath = v });
+  }
+  let baseUrl = {
+    GapiLens.get = (fun x -> x.baseUrl);
+    GapiLens.set = (fun v x -> { x with baseUrl = v });
   }
   let description = {
     GapiLens.get = (fun x -> x.description);
@@ -1085,6 +1090,7 @@ struct
   let empty = {
     auth = AuthData.empty;
     basePath = "";
+    baseUrl = "";
     description = "";
     documentationLink = "";
     features = [];
@@ -1103,10 +1109,11 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_object "auth" (AuthData.render_content x.auth);
       GapiJson.render_string_value "basePath" x.basePath;
+      GapiJson.render_string_value "baseUrl" x.baseUrl;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
       GapiJson.render_collection "features" GapiJson.Array (GapiJson.render_string_value "") x.features;
@@ -1138,6 +1145,10 @@ struct
         ({ GapiJson.name = "basePath"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with basePath = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "baseUrl"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with baseUrl = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -1182,7 +1193,7 @@ struct
         ({ GapiJson.name = "methods"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -1192,7 +1203,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e x')
         ("", RestMethod.empty)
         (fun xs -> { x with methods = xs })
         cs
@@ -1204,7 +1215,7 @@ struct
         ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -1214,7 +1225,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e x')
         ("", JsonSchema.empty)
         (fun xs -> { x with parameters = xs })
         cs
@@ -1226,7 +1237,7 @@ struct
         ({ GapiJson.name = "resources"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -1236,7 +1247,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e x')
         ("", RestResource.empty)
         (fun xs -> { x with resources = xs })
         cs
@@ -1244,7 +1255,7 @@ struct
         ({ GapiJson.name = "schemas"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -1254,7 +1265,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse.parse_dictionary" e x')
         ("", JsonSchema.empty)
         (fun xs -> { x with schemas = xs })
         cs
@@ -1271,7 +1282,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse" e
+      GapiJson.unexpected "GapiDiscoveryV1Model.RestDescription.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1330,13 +1341,14 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiDiscoveryV1Model.IconsData.parse" e
+          GapiJson.unexpected "GapiDiscoveryV1Model.IconsData.parse" e x
       
     end
     
     type t = {
       description : string;
       discoveryLink : string;
+      discoveryRestUrl : string;
       documentationLink : string;
       icons : IconsData.t;
       id : string;
@@ -1356,6 +1368,10 @@ struct
     let discoveryLink = {
       GapiLens.get = (fun x -> x.discoveryLink);
       GapiLens.set = (fun v x -> { x with discoveryLink = v });
+    }
+    let discoveryRestUrl = {
+      GapiLens.get = (fun x -> x.discoveryRestUrl);
+      GapiLens.set = (fun v x -> { x with discoveryRestUrl = v });
     }
     let documentationLink = {
       GapiLens.get = (fun x -> x.documentationLink);
@@ -1397,6 +1413,7 @@ struct
     let empty = {
       description = "";
       discoveryLink = "";
+      discoveryRestUrl = "";
       documentationLink = "";
       icons = IconsData.empty;
       id = "";
@@ -1413,6 +1430,7 @@ struct
        [
         GapiJson.render_string_value "description" x.description;
         GapiJson.render_string_value "discoveryLink" x.discoveryLink;
+        GapiJson.render_string_value "discoveryRestUrl" x.discoveryRestUrl;
         GapiJson.render_string_value "documentationLink" x.documentationLink;
         GapiJson.render_object "icons" (IconsData.render_content x.icons);
         GapiJson.render_string_value "id" x.id;
@@ -1437,6 +1455,10 @@ struct
           ({ GapiJson.name = "discoveryLink"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
         { x with discoveryLink = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "discoveryRestUrl"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with discoveryRestUrl = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "documentationLink"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
@@ -1486,7 +1508,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDiscoveryV1Model.ItemsData.parse" e
+        GapiJson.unexpected "GapiDiscoveryV1Model.ItemsData.parse" e x
     
   end
   
@@ -1511,7 +1533,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_array "items" ItemsData.render x.items;
       GapiJson.render_string_value "kind" x.kind;
@@ -1536,7 +1558,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiDiscoveryV1Model.DirectoryList.parse" e
+      GapiJson.unexpected "GapiDiscoveryV1Model.DirectoryList.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

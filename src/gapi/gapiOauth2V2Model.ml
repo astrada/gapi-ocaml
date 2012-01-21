@@ -59,7 +59,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "access_type" x.access_type;
       GapiJson.render_string_value "audience" x.audience;
@@ -110,7 +110,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiOauth2V2Model.Tokeninfo.parse" e
+      GapiJson.unexpected "GapiOauth2V2Model.Tokeninfo.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -201,7 +201,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "birthday" x.birthday;
       GapiJson.render_string_value "email" x.email;
@@ -272,7 +272,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiOauth2V2Model.Userinfo.parse" e
+      GapiJson.unexpected "GapiOauth2V2Model.Userinfo.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

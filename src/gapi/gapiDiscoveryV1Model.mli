@@ -342,7 +342,9 @@ sig
     auth : AuthData.t;
     (** Authentication information. *)
     basePath : string;
-    (** The base URI path for REST requests. *)
+    (** The base path for REST requests. *)
+    baseUrl : string;
+    (** The base URL for REST requests. *)
     description : string;
     (** The description of this API. *)
     documentationLink : string;
@@ -378,6 +380,7 @@ sig
   
   val auth : (t, AuthData.t) GapiLens.t
   val basePath : (t, string) GapiLens.t
+  val baseUrl : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
   val features : (t, string list) GapiLens.t
@@ -436,6 +439,8 @@ sig
       (** The description of this API. *)
       discoveryLink : string;
       (** A link to the discovery document. *)
+      discoveryRestUrl : string;
+      (** The url for the discovery REST document. *)
       documentationLink : string;
       (** A link to human readable documentation for the API. *)
       icons : IconsData.t;
@@ -459,6 +464,7 @@ sig
     
     val description : (t, string) GapiLens.t
     val discoveryLink : (t, string) GapiLens.t
+    val discoveryRestUrl : (t, string) GapiLens.t
     val documentationLink : (t, string) GapiLens.t
     val icons : (t, IconsData.t) GapiLens.t
     val id : (t, string) GapiLens.t

@@ -23,7 +23,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "type" x._type;
@@ -44,7 +44,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.PlusAclentryResource.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.PlusAclentryResource.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -101,7 +101,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse" e x
     
   end
   
@@ -152,7 +152,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.InReplyToData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.InReplyToData.parse" e x
     
   end
   
@@ -194,7 +194,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
       
     end
     
@@ -269,7 +269,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e x
     
   end
   
@@ -342,7 +342,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_object "actor" (ActorData.render_content x.actor);
       GapiJson.render_string_value "etag" x.etag;
@@ -415,7 +415,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.Comment.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.Comment.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -482,7 +482,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
@@ -537,7 +537,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.CommentFeed.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.CommentFeed.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -607,7 +607,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.Acl.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.Acl.parse" e x
   
 end
 
@@ -671,7 +671,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.UrlsData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.UrlsData.parse" e x
     
   end
   
@@ -722,7 +722,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.PlacesLivedData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.PlacesLivedData.parse" e x
     
   end
   
@@ -850,7 +850,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.OrganizationsData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.OrganizationsData.parse" e x
     
   end
   
@@ -945,7 +945,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.NameData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.NameData.parse" e x
     
   end
   
@@ -985,7 +985,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
     
   end
   
@@ -1047,7 +1047,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.EmailsData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.EmailsData.parse" e x
     
   end
   
@@ -1186,7 +1186,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "aboutMe" x.aboutMe;
       GapiJson.render_string_value "birthday" x.birthday;
@@ -1330,7 +1330,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.Person.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.Person.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1376,7 +1376,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ProviderData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.ProviderData.parse" e x
     
   end
   
@@ -1429,7 +1429,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ResharersData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.ResharersData.parse" e x
       
     end
     
@@ -1480,7 +1480,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.RepliesData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.RepliesData.parse" e x
       
     end
     
@@ -1531,7 +1531,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.PlusonersData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.PlusonersData.parse" e x
       
     end
     
@@ -1606,7 +1606,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e
+            GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
         
       end
       
@@ -1679,7 +1679,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.FullImageData.parse" e
+            GapiJson.unexpected "GapiPlusV1Model.FullImageData.parse" e x
         
       end
       
@@ -1730,7 +1730,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.EmbedData.parse" e
+            GapiJson.unexpected "GapiPlusV1Model.EmbedData.parse" e x
         
       end
       
@@ -1857,7 +1857,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.AttachmentsData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.AttachmentsData.parse" e x
       
     end
     
@@ -1899,7 +1899,7 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e
+            GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
         
       end
       
@@ -1974,7 +1974,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e x
       
     end
     
@@ -2131,7 +2131,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse" e x
     
   end
   
@@ -2173,12 +2173,14 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e
+          GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
       
     end
     
     type t = {
       displayName : string;
+      familyName : string;
+      givenName : string;
       id : string;
       image : ImageData.t;
       url : string;
@@ -2188,6 +2190,14 @@ struct
     let displayName = {
       GapiLens.get = (fun x -> x.displayName);
       GapiLens.set = (fun v x -> { x with displayName = v });
+    }
+    let familyName = {
+      GapiLens.get = (fun x -> x.familyName);
+      GapiLens.set = (fun v x -> { x with familyName = v });
+    }
+    let givenName = {
+      GapiLens.get = (fun x -> x.givenName);
+      GapiLens.set = (fun v x -> { x with givenName = v });
     }
     let id = {
       GapiLens.get = (fun x -> x.id);
@@ -2204,6 +2214,8 @@ struct
     
     let empty = {
       displayName = "";
+      familyName = "";
+      givenName = "";
       id = "";
       image = ImageData.empty;
       url = "";
@@ -2213,6 +2225,8 @@ struct
     let rec render_content x = 
        [
         GapiJson.render_string_value "displayName" x.displayName;
+        GapiJson.render_string_value "familyName" x.familyName;
+        GapiJson.render_string_value "givenName" x.givenName;
         GapiJson.render_string_value "id" x.id;
         GapiJson.render_object "image" (ImageData.render_content x.image);
         GapiJson.render_string_value "url" x.url;
@@ -2227,6 +2241,14 @@ struct
           ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
         { x with displayName = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "familyName"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with familyName = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "givenName"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with givenName = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
@@ -2248,7 +2270,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e
+        GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e x
     
   end
   
@@ -2381,7 +2403,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_object "access" (Acl.render_content x.access);
       GapiJson.render_object "actor" (ActorData.render_content x.actor);
@@ -2508,7 +2530,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.Activity.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.Activity.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2581,7 +2603,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
@@ -2641,7 +2663,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.ActivityFeed.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.ActivityFeed.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2696,7 +2718,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Person.render x.items;
@@ -2741,7 +2763,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiPlusV1Model.PeopleFeed.parse" e
+      GapiJson.unexpected "GapiPlusV1Model.PeopleFeed.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

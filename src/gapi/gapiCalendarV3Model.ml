@@ -47,7 +47,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.ColorDefinition.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.ColorDefinition.parse" e x
   
 end
 
@@ -86,7 +86,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_collection "calendar" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (ColorDefinition.render_content v)) x.calendar;
       GapiJson.render_collection "event" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (ColorDefinition.render_content v)) x.event;
@@ -100,7 +100,7 @@ struct
         ({ GapiJson.name = "calendar"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -110,7 +110,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiCalendarV3Model.Colors.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiCalendarV3Model.Colors.parse.parse_dictionary" e x')
         ("", ColorDefinition.empty)
         (fun xs -> { x with calendar = xs })
         cs
@@ -118,7 +118,7 @@ struct
         ({ GapiJson.name = "event"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -128,7 +128,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiCalendarV3Model.Colors.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiCalendarV3Model.Colors.parse.parse_dictionary" e x')
         ("", ColorDefinition.empty)
         (fun xs -> { x with event = xs })
         cs
@@ -145,7 +145,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Colors.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Colors.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -188,7 +188,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
@@ -219,7 +219,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Setting.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Setting.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -276,7 +276,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.ScopeData.parse" e
+        GapiJson.unexpected "GapiCalendarV3Model.ScopeData.parse" e x
     
   end
   
@@ -319,7 +319,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
@@ -359,7 +359,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.AclRule.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.AclRule.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -390,7 +390,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "domain" x.domain;
       GapiJson.render_string_value "reason" x.reason;
@@ -411,7 +411,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Error.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Error.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -474,7 +474,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyGroup.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyGroup.parse" e x
   
 end
 
@@ -495,7 +495,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "id" x.id;
       
@@ -511,7 +511,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyRequestItem.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyRequestItem.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -584,7 +584,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_int_value "additionalGuests" x.additionalGuests;
       GapiJson.render_string_value "comment" x.comment;
@@ -640,7 +640,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.EventAttendee.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.EventAttendee.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -706,7 +706,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.EventDateTime.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.EventDateTime.parse" e x
   
 end
 
@@ -733,7 +733,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "method" x._method;
       GapiJson.render_int_value "minutes" x.minutes;
@@ -754,7 +754,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.EventReminder.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.EventReminder.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -815,7 +815,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.RemindersData.parse" e
+        GapiJson.unexpected "GapiCalendarV3Model.RemindersData.parse" e x
     
   end
   
@@ -866,7 +866,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.OrganizerData.parse" e
+        GapiJson.unexpected "GapiCalendarV3Model.OrganizerData.parse" e x
     
   end
   
@@ -987,7 +987,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.GadgetData.parse" e
+        GapiJson.unexpected "GapiCalendarV3Model.GadgetData.parse" e x
     
   end
   
@@ -1046,7 +1046,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.ExtendedPropertiesData.parse" e
+        GapiJson.unexpected "GapiCalendarV3Model.ExtendedPropertiesData.parse" e x
     
   end
   
@@ -1097,7 +1097,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.CreatorData.parse" e
+        GapiJson.unexpected "GapiCalendarV3Model.CreatorData.parse" e x
     
   end
   
@@ -1302,7 +1302,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_bool_value "anyoneCanAddSelf" x.anyoneCanAddSelf;
       GapiJson.render_array "attendees" EventAttendee.render x.attendees;
@@ -1513,7 +1513,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Event.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Event.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1568,7 +1568,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_int_value "calendarExpansionMax" x.calendarExpansionMax;
       GapiJson.render_int_value "groupExpansionMax" x.groupExpansionMax;
@@ -1613,7 +1613,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyRequest.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyRequest.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1656,7 +1656,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" AclRule.render x.items;
@@ -1691,7 +1691,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Acl.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Acl.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1770,7 +1770,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "accessRole" x.accessRole;
       GapiJson.render_array "defaultReminders" EventReminder.render x.defaultReminders;
@@ -1839,7 +1839,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Events.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Events.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1876,7 +1876,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Setting.render x.items;
@@ -1906,7 +1906,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Settings.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Settings.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1967,7 +1967,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
@@ -2013,7 +2013,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.Calendar.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.Calendar.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2044,7 +2044,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_date_value "end" x._end;
       GapiJson.render_date_value "start" x.start;
@@ -2065,7 +2065,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.TimePeriod.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.TimePeriod.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2162,7 +2162,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "accessRole" x.accessRole;
       GapiJson.render_string_value "colorId" x.colorId;
@@ -2242,7 +2242,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.CalendarListEntry.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.CalendarListEntry.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2305,7 +2305,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyCalendar.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyCalendar.parse" e x
   
 end
 
@@ -2350,7 +2350,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_collection "calendars" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (FreeBusyCalendar.render_content v)) x.calendars;
       GapiJson.render_collection "groups" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (FreeBusyGroup.render_content v)) x.groups;
@@ -2365,7 +2365,7 @@ struct
         ({ GapiJson.name = "calendars"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -2375,7 +2375,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse.parse_dictionary" e x')
         ("", FreeBusyCalendar.empty)
         (fun xs -> { x with calendars = xs })
         cs
@@ -2383,7 +2383,7 @@ struct
         ({ GapiJson.name = "groups"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_collection
-        (fun _ -> function
+        (fun x' -> function
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = n; data_type = GapiJson.Object },
               cs) ->
@@ -2393,7 +2393,7 @@ struct
               (fun v -> (n, v))
               cs
           | e ->
-            GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse.parse_dictionary" e)
+            GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse.parse_dictionary" e x')
         ("", FreeBusyGroup.empty)
         (fun xs -> { x with groups = xs })
         cs
@@ -2414,7 +2414,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.FreeBusyResponse.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2457,7 +2457,7 @@ struct
     
   }
   
-  let render x = 
+  let rec render x = 
     GapiJson.render_object "" [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" CalendarListEntry.render x.items;
@@ -2492,7 +2492,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiCalendarV3Model.CalendarList.parse" e
+      GapiJson.unexpected "GapiCalendarV3Model.CalendarList.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

@@ -95,11 +95,11 @@ sig
   sig
     type t = {
       _type : string;
-      (** The type of the scope. Possible values are: 
+      (** The type of the scope. Possible values are:  
 - "default" - The public scope. This is the default value. 
 - "user" - Limits the scope to a single user. 
 - "group" - Limits the scope to a group. 
-- "domain" - Limits the scope to a domain. Note: The permissions granted to the "default", or public, scope apply to any user, authenticated or not. *)
+- "domain" - Limits the scope to a domain.  Note: The permissions granted to the "default", or public, scope apply to any user, authenticated or not. *)
       value : string;
       (** The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type "default". *)
       
@@ -124,7 +124,7 @@ sig
     kind : string;
     (** Type of the resource ("calendar#aclRule"). *)
     role : string;
-    (** The role assigned to the scope. Possible values are: 
+    (** The role assigned to the scope. Possible values are:  
 - "none" - Provides no access. 
 - "freeBusyReader" - Provides read access to free/busy information. 
 - "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
@@ -159,11 +159,11 @@ sig
     domain : string;
     (** Domain, or broad category, of the error. *)
     reason : string;
-    (** Specific reason for the error. Some of the possible values are: 
+    (** Specific reason for the error. Some of the possible values are:  
 - "groupTooBig" - The group of users requested is too large for a single query. 
 - "tooManyCalendarsRequested" - The number of calendars requested is too large for a single query. 
 - "notFound" - The requested resource was not found. 
-- "internalError" - The API service has encountered an internal error. Additional error types may be added in the future, so clients should gracefully handle additional error statuses not included in this list. *)
+- "internalError" - The API service has encountered an internal error.  Additional error types may be added in the future, so clients should gracefully handle additional error statuses not included in this list. *)
     
   }
   
@@ -243,7 +243,7 @@ sig
     resource : bool;
     (** Whether the attendee is a resource. Read-only. The default is False. *)
     responseStatus : string;
-    (** The attendee's response status. Possible values are: 
+    (** The attendee's response status. Possible values are:  
 - "needsAction" - The attendee has not responded to the invitation. 
 - "declined" - The attendee has declined the invitation. 
 - "tentative" - The attendee has tentatively accepted the invitation. 
@@ -303,7 +303,7 @@ module EventReminder :
 sig
   type t = {
     _method : string;
-    (** The method used by this reminder. Possible values are: 
+    (** The method used by this reminder. Possible values are:  
 - "email" - Reminders are sent via email. 
 - "sms" - Reminders are sent via SMS. 
 - "popup" - Reminders are sent via a UI popup. *)
@@ -375,7 +375,7 @@ sig
   sig
     type t = {
       display : string;
-      (** The gadget's display mode. Optional. Possible values are: 
+      (** The gadget's display mode. Optional. Possible values are:  
 - "icon" - The gadget displays next to the event's title in the calendar view. 
 - "chip" - The gadget displays when the event is clicked. *)
       height : int;
@@ -510,20 +510,20 @@ sig
     start : EventDateTime.t;
     (** The start time of the event. For a recurring event, this is the start time of the first instance. *)
     status : string;
-    (** Status of the event. Optional. Possible values are: 
+    (** Status of the event. Optional. Possible values are:  
 - "confirmed" - The event is confirmed. This is the default status. 
 - "tentative" - The event is tentatively confirmed. 
 - "cancelled" - The event is cancelled. *)
     summary : string;
     (** Title of the event. *)
     transparency : string;
-    (** Whether the event blocks time on the calendar. Optional. Possible values are: 
+    (** Whether the event blocks time on the calendar. Optional. Possible values are:  
 - "opaque" - The event blocks time on the calendar. This is the default value. 
 - "transparent" - The event does not block time on the calendar. *)
     updated : GapiDate.t;
     (** Last modification time of the event (as a RFC 3339 timestamp). Read-only. *)
     visibility : string;
-    (** Visibility of the event. Optional. Possible values are: 
+    (** Visibility of the event. Optional. Possible values are:  
 - "default" - Uses the default visibility for events on the calendar. This is the default value. 
 - "public" - The event is public and event details are visible to all readers of the calendar. 
 - "private" - The event is private and only event attendees may view event details. 
@@ -648,7 +648,7 @@ module Events :
 sig
   type t = {
     accessRole : string;
-    (** The user's access role for this calendar. Read-only. Possible values are: 
+    (** The user's access role for this calendar. Read-only. Possible values are:  
 - "none" - The user has no access. 
 - "freeBusyReader" - The user has read access to free/busy information. 
 - "reader" - The user has read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
@@ -795,7 +795,7 @@ module CalendarListEntry :
 sig
   type t = {
     accessRole : string;
-    (** The effective access role that the authenticated user has on the calendar. Read-only. Possible values are: 
+    (** The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  
 - "freeBusyReader" - Provides read access to free/busy information. 
 - "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
 - "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
