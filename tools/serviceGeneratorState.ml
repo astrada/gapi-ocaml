@@ -15,7 +15,7 @@ type name_type =
 
 module OCamlName =
 struct
-  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"]
+  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"; "open"]
 
   let replace_invalid_characters s =
     ExtString.String.map
@@ -65,6 +65,7 @@ struct
     | TimeFormat
     | Int32Format
     | Int64Format
+    | FloatFormat
     | OtherFormat of string
 
   let format_of_string = function
@@ -74,6 +75,7 @@ struct
     | "time" -> TimeFormat
     | "int32" -> Int32Format
     | "int64" -> Int64Format
+    | "float" -> FloatFormat
     | s -> OtherFormat s
 
   type location_t =
@@ -91,13 +93,16 @@ struct
     match json_schema.JsonSchema._type with
         "string"
       | "boolean"
-      | "integer" -> true
+      | "integer"
+      | "number"
+      | "any" -> true
       | _ -> false
 
   type data_t =
       String
     | Boolean
     | Integer
+    | Float
     | DateTime
     | Date
 
@@ -105,6 +110,7 @@ struct
       String -> "string"
     | Boolean -> "bool"
     | Integer -> "int"
+    | Float -> "float"
     | DateTime
     | Date -> "GapiDate.t"
 
@@ -186,6 +192,7 @@ struct
       String -> "\"\""
     | Boolean -> "false"
     | Integer -> "0"
+    | Float -> "0.0"
     | DateTime
     | Date -> "GapiDate.epoch"
 
@@ -194,12 +201,18 @@ struct
       match original_type with
           "boolean" -> Boolean
         | "integer" -> Integer
+        | "number" ->
+            begin match format with
+                FloatFormat -> Float
+              | _ -> String
+            end
         | "string" ->
             begin match format with
                 DateTimeFormat -> DateTime
               | DateFormat -> Date
               | _ -> String
             end
+        | "any" -> String
         | _ ->
             failwith ("Unexpected original type: " ^ original_type)
     in
@@ -232,13 +245,15 @@ struct
     | Date -> "String"
     | Boolean -> "Bool"
     | Integer -> "Int"
+    | Float -> "Float"
 
   let get_convert_function = function
     | DateTime
     | Date -> "GapiDate.of_string "
     | String
     | Boolean
-    | Integer -> ""
+    | Integer
+    | Float -> ""
 
   let get_default scalar =
     if scalar.default = "" then
@@ -249,6 +264,7 @@ struct
         | Boolean
         | Integer
         | DateTime
+        | Float
         | Date -> scalar.default
 
   let get_to_string_function scalar =
@@ -256,6 +272,7 @@ struct
         String -> "(fun x -> x)"
       | Boolean -> "string_of_bool"
       | Integer -> "string_of_int"
+      | Float -> "string_of_float"
       | DateTime
       | Date -> "GapiDate.to_string"
 

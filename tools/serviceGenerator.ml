@@ -159,6 +159,8 @@ let build_schema_inner_module file_lens complex_type =
                  "GapiJson.render_bool_value"
              | ScalarType.Integer ->
                  "GapiJson.render_int_value"
+             | ScalarType.Float ->
+                 "GapiJson.render_float_value"
              | ScalarType.DateTime
              | ScalarType.Date ->
                  "GapiJson.render_date_value"
@@ -361,9 +363,9 @@ let build_schema_inner_module file_lens complex_type =
       module_name;
   in
 
-  let render_footer formatter is_referenced =
+  let render_footer formatter is_nested =
     (* Render footer (to_data_model and of_data_model) *)
-    if not is_referenced then begin
+    if not is_nested then begin
       Format.fprintf formatter
         "@,@,let to_data_model = GapiJson.render_root render@,@,let of_data_model = GapiJson.parse_root parse empty";
     end;
@@ -403,7 +405,7 @@ let build_schema_inner_module file_lens complex_type =
       lift_io (
         render_render_function formatter fields is_referenced;
         render_parse_function formatter fields container_name module_name;
-        render_footer formatter is_referenced)
+        render_footer formatter is_nested)
   in
 
   let module_name =
@@ -980,12 +982,11 @@ let build_service_module =
 
 (* Generate schema module interface *)
 
-let rec generate_schema_module_signature formatter schema_module is_nested =
+let rec generate_schema_module_signature
+      formatter_lens schema_module is_nested =
   let fields = schema_module.InnerSchemaModule.record.Record.fields in
     perform
-      is_type_referenced <-- State.is_type_referenced
-                               schema_module.InnerSchemaModule.original_name;
-      let is_referenced = is_type_referenced || is_nested in
+      formatter <-- GapiLens.get_state formatter_lens;
 
       lift_io $
         Format.fprintf formatter
@@ -994,7 +995,7 @@ let rec generate_schema_module_signature formatter schema_module is_nested =
 
       mapM_
         (fun (_, inner_module) ->
-           generate_schema_module_signature formatter inner_module true)
+           generate_schema_module_signature formatter_lens inner_module true)
         schema_module.InnerSchemaModule.inner_modules;
 
       lift_io (
@@ -1024,7 +1025,7 @@ let rec generate_schema_module_signature formatter schema_module is_nested =
         Format.fprintf formatter
           "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
 
-        if not is_referenced then begin
+        if not is_nested then begin
           (* of_data_model, to_data_model *)
           Format.fprintf formatter
             "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
@@ -1035,8 +1036,8 @@ let rec generate_schema_module_signature formatter schema_module is_nested =
 let build_schema_module_interface =
   let generate_body file_lens =
     perform
-      formatter <-- GapiLens.get_state (file_lens
-                                          |-- File.formatter);
+      let formatter_lens = file_lens |-- File.formatter in
+      formatter <-- GapiLens.get_state formatter_lens;
       service <-- GapiLens.get_state State.service;
 
       (* Generate opening comment *)
@@ -1057,7 +1058,7 @@ let build_schema_module_interface =
                               |-- SchemaModule.inner_modules);
       mapM_
         (fun (_, schema_module) ->
-           generate_schema_module_signature formatter schema_module false)
+           generate_schema_module_signature formatter_lens schema_module false)
         (List.rev schema_modules);
 
   in

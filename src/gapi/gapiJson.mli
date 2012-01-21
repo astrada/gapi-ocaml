@@ -43,6 +43,12 @@ val render_bool_value :
   bool ->
   json_data_model list
 
+val render_float_value :
+  ?default:float ->
+  string ->
+  float ->
+  json_data_model list
+
 val render_date_value :
   ?time:bool ->
   ?default:GapiDate.t ->
