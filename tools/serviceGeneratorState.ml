@@ -551,6 +551,12 @@ struct
       | _ ->
         failwith "Unsupported type in ComplexType.get_properties"
 
+  let get_location complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> scalar.ScalarType.location
+      | _ ->
+        failwith "Unsupported type in ComplexType.get_location"
+
 end
 
 (* Field description *)

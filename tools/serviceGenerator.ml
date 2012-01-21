@@ -8,7 +8,6 @@ open ServiceGeneratorState
 
 let output_path = ref "generated/"
 let no_overwrite = ref false
-let google_endpoint = "https://www.googleapis.com"
 
 (* END Configuration *)
 
@@ -141,7 +140,7 @@ let build_schema_inner_module file_lens complex_type =
   let render_render_function formatter fields is_referenced =
     if not is_referenced then
       Format.fprintf formatter
-        "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
+        "@,@[<v 2>let rec render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
     else
       Format.fprintf formatter
         "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
@@ -187,6 +186,15 @@ let build_schema_inner_module file_lens complex_type =
              | ComplexType.Array { ComplexType.data_type =
                                      ComplexType.Reference _; _ }
              | ComplexType.Array { ComplexType.data_type =
+                                     ComplexType.AnonymousObject _; _ }
+                   when is_recursive ->
+                 Format.fprintf formatter
+                   "GapiJson.render_array \"%s\" render x.%s;@,"
+                   original_name
+                   ocaml_name;
+             | ComplexType.Array { ComplexType.data_type =
+                                     ComplexType.Reference _; _ }
+             | ComplexType.Array { ComplexType.data_type =
                                      ComplexType.AnonymousObject _; _ } ->
                  Format.fprintf formatter
                    "GapiJson.render_array \"%s\" %s.render x.%s;@,"
@@ -197,6 +205,16 @@ let build_schema_inner_module file_lens complex_type =
                                      ComplexType.Scalar scalar; _ } ->
                  Format.fprintf formatter
                    "GapiJson.render_collection \"%s\" GapiJson.Array (%s \"\") x.%s;@,"
+                   original_name
+                   (render_function scalar)
+                   ocaml_name;
+             | ComplexType.Array
+                 { ComplexType.data_type =
+                     ComplexType.Array { ComplexType.data_type =
+                                           ComplexType.Scalar scalar; _ }
+                 } ->
+                 Format.fprintf formatter
+                   "GapiJson.render_collection \"%s\" GapiJson.Array (GapiJson.render_collection \"\" GapiJson.Array (%s \"\")) x.%s;@,"
                    original_name
                    (render_function scalar)
                    ocaml_name;
@@ -255,6 +273,15 @@ let build_schema_inner_module file_lens complex_type =
            | ComplexType.Array { ComplexType.data_type =
                                    ComplexType.Reference _; _ }
            | ComplexType.Array { ComplexType.data_type =
+                                   ComplexType.AnonymousObject _; _ }
+                 when is_recursive ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ parse@ empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 ocaml_name
+           | ComplexType.Array { ComplexType.data_type =
+                                   ComplexType.Reference _; _ }
+           | ComplexType.Array { ComplexType.data_type =
                                    ComplexType.AnonymousObject _; _ } ->
                Format.fprintf formatter
                  "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
@@ -267,6 +294,17 @@ let build_schema_inner_module file_lens complex_type =
                Format.fprintf formatter
                  "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ GapiJson.parse_string_element@ \"\"@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
                  original_name
+                 ocaml_name
+           | ComplexType.Array
+               { ComplexType.data_type =
+                   ComplexType.Array { ComplexType.data_type =
+                                         ComplexType.Scalar scalar; _ }
+               } ->
+               Format.fprintf formatter
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"\"; data_type = GapiJson.Array },@ cs) ->@]@ @[<hv 2>GapiJson.parse_collection@ GapiJson.parse_string_element@ \"\"@ (fun x -> x)@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_collection\" e x')@]@]@ []@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 original_name
+                 container_name
+                 module_name
                  ocaml_name
            | ComplexType.Reference _
            | ComplexType.AnonymousObject _ when is_option ->
@@ -288,7 +326,7 @@ let build_schema_inner_module file_lens complex_type =
                                         ComplexType.AnonymousObject _; _ }
                  when is_recursive ->
                Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun _ -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e)@]@]@ (\"\", empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]@ (\"\", empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
                  original_name
                  container_name
                  module_name
@@ -298,7 +336,7 @@ let build_schema_inner_module file_lens complex_type =
            | ComplexType.Dictionary { ComplexType.data_type =
                                         ComplexType.AnonymousObject _; _ } ->
                Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun _ -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e)@]@]@ (\"\", %s.empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]@ (\"\", %s.empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
                  original_name
                  ocaml_type_module
                  ocaml_type_module
@@ -318,7 +356,7 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter
       "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,";
     Format.fprintf formatter
-      "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e@]@]"
+      "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
       container_name
       module_name;
   in
@@ -690,6 +728,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         in
           List.filter
             (fun (_, param) -> not param.JsonSchema.required &&
+                               param.JsonSchema.location = "query" &&
                                test_default param.JsonSchema.default)
             rest_method.RestMethod.parameters
       in
@@ -743,13 +782,13 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                     type_table in
       method_lens ^=! methd;
 
-      base_path <-- GapiLens.get_state
-                      (State.service |-- RestDescription.basePath);
+      base_url <-- GapiLens.get_state
+                     (State.service |-- RestDescription.baseUrl);
       lift_io $
         Format.fprintf formatter
           "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?parameters@ "
           methd.Method.ocaml_name
-          (google_endpoint ^ base_path);
+          base_url;
 
       render_parameters formatter method_lens;
 
@@ -1061,8 +1100,8 @@ let rec generate_service_module_signature
         "" methd.Method.response
     in
       perform
-        base_path <-- GapiLens.get_state
-                        (State.service |-- RestDescription.basePath);
+        base_url <-- GapiLens.get_state
+                       (State.service |-- RestDescription.baseUrl);
         schema_module <-- GapiLens.get_state State.get_schema_module_lens;
         request_module <-- State.find_inner_schema_module request_ref;
         response_module <-- State.find_inner_schema_module response_ref;
@@ -1072,7 +1111,7 @@ let rec generate_service_module_signature
           Format.fprintf formatter
             "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n@@param parameters Optional standard parameters.@\n"
             methd.Method.description
-            (google_endpoint ^ base_path);
+            base_url;
           List.iter
             (fun id ->
                let { Field.ocaml_name; field_type; _ } =
@@ -1097,7 +1136,9 @@ let rec generate_service_module_signature
                in
                  Format.fprintf formatter
                    "%s%s:%s ->@,"
-                   (if ComplexType.is_required field_type then "" else "?")
+                   (if ComplexType.is_required field_type ||
+                       ComplexType.get_location field_type = ScalarType.Path then
+                      "" else "?")
                    ocaml_name
                    ocaml_type)
             methd.Method.parameter_order);
