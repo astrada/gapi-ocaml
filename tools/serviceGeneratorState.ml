@@ -363,7 +363,7 @@ struct
     in
       loop complex_type []
 
-  let create json_schema =
+  let create type_id json_schema =
     let rec inner_create container_id schema =
       let is_anonymous = schema.JsonSchema.id = "" in
       let is_reference = schema.JsonSchema._ref <> "" in
@@ -422,9 +422,11 @@ struct
         else if is_complex then
           create_complex ()
         else
-          create_scalar ()
+          create_scalar () in
+      let id =
+        if schema.JsonSchema.id = "" then type_id else schema.JsonSchema.id
       in
-        { id = schema.JsonSchema.id;
+        { id;
           data_type;
           original_type = schema.JsonSchema._type;
           description = schema.JsonSchema.description;
@@ -774,7 +776,7 @@ struct
     let ocaml_name = OCamlName.get_ocaml_name ValueName original_name in
     let parameters = List.map
                        (fun (id, rest_parameter) ->
-                          let complex_type = ComplexType.create
+                          let complex_type = ComplexType.create id
                                                rest_parameter in
                             (id, Field.create (id, complex_type)))
                        rest_parameters in
@@ -804,10 +806,15 @@ end
 
 module InnerSchemaModule =
 struct
+  type type_t =
+      Record of Record.t
+    | List of type_t
+    | Alias of string
+
   type t = {
     original_name : string;
     ocaml_name : string;
-    record : Record.t;
+    type_t : type_t;
     inner_modules : (string * t) list;
   }
 
@@ -819,9 +826,9 @@ struct
 		GapiLens.get = (fun x -> x.ocaml_name);
 		GapiLens.set = (fun v x -> { x with ocaml_name = v })
 	}
-	let record = {
-		GapiLens.get = (fun x -> x.record);
-		GapiLens.set = (fun v x -> { x with record = v })
+	let type_t = {
+		GapiLens.get = (fun x -> x.type_t);
+		GapiLens.set = (fun v x -> { x with type_t = v })
 	}
 	let inner_modules = {
 		GapiLens.get = (fun x -> x.inner_modules);
@@ -833,19 +840,40 @@ struct
     inner_modules |-- inner_module id |-- GapiLens.option_get
 
   let rec create complex_type ocaml_name =
-    let properties = ComplexType.get_properties complex_type in
-    let record = Record.create ocaml_name properties in
-    let anonymous_types = ComplexType.get_anonymous_types complex_type in
-    let inner_modules =
-      List.map
-        (fun (id, anonymous_type) -> (id, create anonymous_type id))
-        anonymous_types
-    in
-      { original_name = complex_type.ComplexType.id;
-        ocaml_name;
-        record;
-        inner_modules;
-      }
+    match complex_type.ComplexType.data_type with
+        ComplexType.Object properties
+      | ComplexType.AnonymousObject (_, properties) ->
+          let record = Record.create ocaml_name properties in
+          let anonymous_types = ComplexType.get_anonymous_types complex_type in
+          let inner_modules =
+            List.map
+              (fun (id, anonymous_type) -> (id, create anonymous_type id))
+              anonymous_types
+          in
+            { original_name = complex_type.ComplexType.id;
+              ocaml_name;
+              type_t = Record record;
+              inner_modules;
+            }
+      | ComplexType.Array inner_type ->
+          let module_name = ComplexType.get_module_name ocaml_name inner_type in
+          let inner_type_t = create inner_type module_name in
+          let type_t = List inner_type_t.type_t in
+            { original_name = complex_type.ComplexType.id;
+              ocaml_name;
+              type_t;
+              inner_modules = [];
+            }
+      | ComplexType.Reference type_name ->
+          let module_name =
+            ComplexType.get_module_name ocaml_name complex_type in
+          let type_t = Alias module_name in
+            { original_name = complex_type.ComplexType.id;
+              ocaml_name;
+              type_t;
+              inner_modules = [];
+            }
+      | _ -> failwith "Unsupported complex_type in Record.create"
 
 end
 
@@ -1271,7 +1299,7 @@ struct
   let build_type_table state =
     let complex_types =
       List.map
-        (fun (_, s) -> ComplexType.create s)
+        (fun (id, s) -> ComplexType.create id s)
         state.service.RestDescription.schemas in
     let table = TypeTable.build complex_types in
       state |> type_table ^=! table

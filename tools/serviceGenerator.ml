@@ -376,12 +376,22 @@ let build_schema_inner_module file_lens complex_type =
   let rec render_inner_module
         formatter container_name module_name is_nested inner_module_lens =
     perform
+      type_t <-- GapiLens.get_state (inner_module_lens
+                                       |-- InnerSchemaModule.type_t);
+
       inner_module <-- GapiLens.get_state inner_module_lens;
 
-      lift_io $
-        Format.fprintf formatter
-          "module %s =@\n@[<v 2>struct@,"
-        inner_module.InnerSchemaModule.ocaml_name;
+      lift_io (
+        match type_t with
+            InnerSchemaModule.Alias alias_name ->
+              Format.fprintf formatter
+                "module %s = %s"
+                inner_module.InnerSchemaModule.ocaml_name
+                alias_name
+          | _ ->
+              Format.fprintf formatter
+                "module %s =@\n@[<v 2>struct@,"
+                inner_module.InnerSchemaModule.ocaml_name);
 
       let inner_modules = inner_module.InnerSchemaModule.inner_modules in
       mapM_
@@ -391,21 +401,24 @@ let build_schema_inner_module file_lens complex_type =
                 |-- InnerSchemaModule.get_inner_module_lens id))
         inner_modules;
 
-      fields <-- GapiLens.get_state (inner_module_lens
-                                       |-- InnerSchemaModule.record
-                                       |-- Record.field_list);
-
-      lift_io (
-        render_type_t formatter fields;
-        render_lenses formatter fields;
-        render_empty formatter fields);
       is_type_referenced <-- State.is_type_referenced
                                complex_type.ComplexType.id;
       let is_referenced = is_type_referenced || is_nested in
+
       lift_io (
-        render_render_function formatter fields is_referenced;
-        render_parse_function formatter fields container_name module_name;
-        render_footer formatter is_nested)
+        match type_t with
+            InnerSchemaModule.Record record ->
+              let fields = record |. Record.field_list in
+                render_type_t formatter fields;
+                render_lenses formatter fields;
+                render_empty formatter fields;
+                render_render_function formatter fields is_referenced;
+                render_parse_function formatter fields container_name module_name;
+                render_footer formatter is_nested
+          | InnerSchemaModule.List inner_type ->
+              assert false
+          | _ ->
+              ())
   in
 
   let module_name =
@@ -441,7 +454,7 @@ struct
   let add_parameters_list xs s =
     List.fold_left
       (fun s' (id, parameter) ->
-         let complex_type = ComplexType.create parameter in
+         let complex_type = ComplexType.create id parameter in
          let field = Field.create (id, complex_type) in
            add (id, field) s')
       s
@@ -656,8 +669,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                    ComplexType.Object properties ->
                      List.exists (fun (id, _) -> id = "etag") properties
                  | _ ->
-                     failwith "Only Objects are supported looking for etag field"
-            )
+                     false)
             false
             request_parameter in
 
@@ -984,54 +996,68 @@ let build_service_module =
 
 let rec generate_schema_module_signature
       formatter_lens schema_module is_nested =
-  let fields = schema_module.InnerSchemaModule.record.Record.fields in
-    perform
-      formatter <-- GapiLens.get_state formatter_lens;
+  let type_t = schema_module.InnerSchemaModule.type_t in
+    match type_t with
+        InnerSchemaModule.Record record ->
+          let fields = record.Record.fields in
+            perform
+              formatter <-- GapiLens.get_state formatter_lens;
 
-      lift_io $
-        Format.fprintf formatter
-          "module %s :@\n@[<v 2>sig@,"
-          schema_module.InnerSchemaModule.ocaml_name;
+              lift_io $
+                Format.fprintf formatter
+                  "module %s :@\n@[<v 2>sig@,"
+                  schema_module.InnerSchemaModule.ocaml_name;
 
-      mapM_
-        (fun (_, inner_module) ->
-           generate_schema_module_signature formatter_lens inner_module true)
-        schema_module.InnerSchemaModule.inner_modules;
+              mapM_
+                (fun (_, inner_module) ->
+                   generate_schema_module_signature formatter_lens inner_module true)
+                schema_module.InnerSchemaModule.inner_modules;
 
-      lift_io (
-        (* Type t *)
-        Format.fprintf formatter "@[<v 2>type t = {@,";
-        List.iter
-          (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-             Format.fprintf formatter
-               "%s : %s;@,(** %s *)@,"
-               ocaml_name
-               ocaml_type
-               (ComplexType.get_description field_type))
-          fields;
-        Format.fprintf formatter
-          "@]@,}@\n@\n";
+              lift_io (
+                (* Type t *)
+                Format.fprintf formatter "@[<v 2>type t = {@,";
+                List.iter
+                  (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
+                     Format.fprintf formatter
+                       "%s : %s;@,(** %s *)@,"
+                       ocaml_name
+                       ocaml_type
+                       (ComplexType.get_description field_type))
+                  fields;
+                Format.fprintf formatter
+                  "@]@,}@\n@\n";
 
-        (* Lenses *)
-        List.iter
-          (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-             Format.fprintf formatter
-               "val %s : (t, %s) GapiLens.t@,"
-               ocaml_name
-               ocaml_type)
-          fields;
+                (* Lenses *)
+                List.iter
+                  (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
+                     Format.fprintf formatter
+                       "val %s : (t, %s) GapiLens.t@,"
+                       ocaml_name
+                       ocaml_type)
+                  fields;
 
-        (* empty, render, parse *)
-        Format.fprintf formatter
-          "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
+                (* empty, render, parse *)
+                Format.fprintf formatter
+                  "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
 
-        if not is_nested then begin
-          (* of_data_model, to_data_model *)
-          Format.fprintf formatter
-            "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
-        end;
-        (* module end *)
-        Format.fprintf formatter "@]@,end@\n@\n")
+                if not is_nested then begin
+                  (* of_data_model, to_data_model *)
+                  Format.fprintf formatter
+                    "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
+                end;
+                (* module end *)
+                Format.fprintf formatter "@]@,end@\n@\n")
+      | InnerSchemaModule.List inner_type ->
+          assert false
+      | InnerSchemaModule.Alias alias_name ->
+          perform
+            formatter <-- GapiLens.get_state formatter_lens;
+
+            lift_io $
+              Format.fprintf formatter
+                "module %s : module type of %s"
+                schema_module.InnerSchemaModule.ocaml_name
+                alias_name
 
 let build_schema_module_interface =
   let generate_body file_lens =
