@@ -808,10 +808,9 @@ module InnerSchemaModule =
 struct
   type type_t =
       Record of Record.t
-    | List of type_t
+    | List of t
     | Alias of string
-
-  type t = {
+  and t = {
     original_name : string;
     ocaml_name : string;
     type_t : type_t;
@@ -856,13 +855,17 @@ struct
               inner_modules;
             }
       | ComplexType.Array inner_type ->
-          let module_name = ComplexType.get_module_name ocaml_name inner_type in
-          let inner_type_t = create inner_type module_name in
-          let type_t = List inner_type_t.type_t in
+          let anonymous_types = ComplexType.get_anonymous_types inner_type in
+          let inner_modules =
+            List.map
+              (fun (id, anonymous_type) -> (id, create anonymous_type id))
+              anonymous_types in
+          let inner_module = inner_modules |> List.hd |> snd in
+          let type_t = List inner_module in
             { original_name = complex_type.ComplexType.id;
               ocaml_name;
               type_t;
-              inner_modules = [];
+              inner_modules;
             }
       | ComplexType.Reference type_name ->
           let module_name =

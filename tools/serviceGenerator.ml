@@ -415,10 +415,34 @@ let build_schema_inner_module file_lens complex_type =
                 render_render_function formatter fields is_referenced;
                 render_parse_function formatter fields container_name module_name;
                 render_footer formatter is_nested
-          | InnerSchemaModule.List inner_type ->
-              assert false
-          | _ ->
-              ())
+          | InnerSchemaModule.List inner_module ->
+              (* type t *)
+              Format.fprintf formatter "type t = %s.t list@\n@\n"
+                inner_module.InnerSchemaModule.ocaml_name;
+
+              (* empty *)
+              Format.fprintf formatter "let empty = []@\n@\n";
+
+              (* render *)
+              Format.fprintf formatter
+                "@[<v 2>let rec render x = @,GapiJson.render_array \"\" %s.render x@]@\n@\n"
+                inner_module.InnerSchemaModule.ocaml_name;
+
+              (* parse *)
+              Format.fprintf formatter "@[<v 2>let rec parse x = function@,";
+              Format.fprintf formatter
+                "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> xs )@ cs@]@]@,"
+                inner_module.InnerSchemaModule.ocaml_name
+                inner_module.InnerSchemaModule.ocaml_name;
+              Format.fprintf formatter
+                "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
+                container_name
+                module_name;
+
+              (* footer *)
+              render_footer formatter false
+          | _ -> ());
+
   in
 
   let module_name =
@@ -1047,8 +1071,35 @@ let rec generate_schema_module_signature
                 end;
                 (* module end *)
                 Format.fprintf formatter "@]@,end@\n@\n")
-      | InnerSchemaModule.List inner_type ->
-          assert false
+      | InnerSchemaModule.List inner_module ->
+          perform
+            formatter <-- GapiLens.get_state formatter_lens;
+
+            lift_io $
+              Format.fprintf formatter
+                "module %s :@\n@[<v 2>sig@,"
+                schema_module.InnerSchemaModule.ocaml_name;
+
+            mapM_
+              (fun (_, inner_module) ->
+                 generate_schema_module_signature formatter_lens inner_module true)
+              schema_module.InnerSchemaModule.inner_modules;
+
+            lift_io (
+              (* Type t *)
+              Format.fprintf formatter "type t = %s.t list@\n"
+                inner_module.InnerSchemaModule.original_name;
+
+              (* empty, render, parse *)
+              Format.fprintf formatter
+                "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
+
+              (* of_data_model, to_data_model *)
+              Format.fprintf formatter
+                "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
+
+              (* module end *)
+              Format.fprintf formatter "@]@,end@\n@\n")
       | InnerSchemaModule.Alias alias_name ->
           perform
             formatter <-- GapiLens.get_state formatter_lens;
