@@ -138,124 +138,212 @@ let build_schema_inner_module file_lens complex_type =
   in
 
   let render_render_function formatter fields is_referenced =
-    if not is_referenced then
-      Format.fprintf formatter
-        "@,@[<v 2>let rec render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
-    else
-      Format.fprintf formatter
-        "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
-    List.iter
-      (fun { Field.ocaml_name;
-             original_name;
-             ocaml_type_module;
-             field_type;
-             is_recursive;
-             is_option; _ } ->
-         let render_function scalar =
-           match scalar.ScalarType.data_type with
-               ScalarType.String ->
-                 "GapiJson.render_string_value"
-             | ScalarType.Boolean ->
-                 "GapiJson.render_bool_value"
-             | ScalarType.Integer ->
-                 "GapiJson.render_int_value"
-             | ScalarType.Float ->
-                 "GapiJson.render_float_value"
-             | ScalarType.DateTime
-             | ScalarType.Date ->
-                 "GapiJson.render_date_value"
-         in
-           match field_type.ComplexType.data_type with
-               ComplexType.Scalar scalar ->
-                 Format.fprintf formatter
-                   "%s \"%s\" x.%s;@,"
-                   (render_function scalar)
-                   original_name
-                   ocaml_name;
-             | ComplexType.Reference _
-             | ComplexType.AnonymousObject _ when is_option ->
-                 Format.fprintf formatter
-                   "Option.map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
-                   original_name
-                   ocaml_name;
-             | ComplexType.Reference _
-             | ComplexType.AnonymousObject _ ->
-                 Format.fprintf formatter
-                   "GapiJson.render_object \"%s\" (%s.render_content x.%s);@,"
-                   original_name
-                   ocaml_type_module
-                   ocaml_name;
-             | ComplexType.Array { ComplexType.data_type =
-                                     ComplexType.Reference _; _ }
-             | ComplexType.Array { ComplexType.data_type =
-                                     ComplexType.AnonymousObject _; _ }
-                   when is_recursive ->
-                 Format.fprintf formatter
-                   "GapiJson.render_array \"%s\" render x.%s;@,"
-                   original_name
-                   ocaml_name;
-             | ComplexType.Array { ComplexType.data_type =
-                                     ComplexType.Reference _; _ }
-             | ComplexType.Array { ComplexType.data_type =
-                                     ComplexType.AnonymousObject _; _ } ->
-                 Format.fprintf formatter
-                   "GapiJson.render_array \"%s\" %s.render x.%s;@,"
-                   original_name
-                   ocaml_type_module
-                   ocaml_name;
-             | ComplexType.Array { ComplexType.data_type =
-                                     ComplexType.Scalar scalar; _ } ->
-                 Format.fprintf formatter
-                   "GapiJson.render_collection \"%s\" GapiJson.Array (%s \"\") x.%s;@,"
-                   original_name
-                   (render_function scalar)
-                   ocaml_name;
-             | ComplexType.Array
-                 { ComplexType.data_type =
-                     ComplexType.Array { ComplexType.data_type =
-                                           ComplexType.Scalar scalar; _ }
-                 } ->
-                 Format.fprintf formatter
-                   "GapiJson.render_collection \"%s\" GapiJson.Array (GapiJson.render_collection \"\" GapiJson.Array (%s \"\")) x.%s;@,"
-                   original_name
-                   (render_function scalar)
-                   ocaml_name;
-             | ComplexType.Dictionary
-                 { ComplexType.data_type = ComplexType.Reference _; _ }
-             | ComplexType.Dictionary
-                 { ComplexType.data_type = ComplexType.AnonymousObject _; _ }
-                   when is_recursive ->
-                 Format.fprintf formatter
-                   "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.%s;@,"
-                   original_name
-                   ocaml_name;
-             | ComplexType.Dictionary { ComplexType.data_type =
-                                          ComplexType.Reference _; _ }
-             | ComplexType.Dictionary { ComplexType.data_type =
-                                          ComplexType.AnonymousObject _; _ } ->
-                 Format.fprintf formatter
-                   "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (%s.render_content v)) x.%s;@,"
-                   original_name
-                   ocaml_type_module
-                   ocaml_name;
-             | ComplexType.Dictionary { ComplexType.data_type =
-                                          ComplexType.Scalar scalar; _ } ->
-                 Format.fprintf formatter
-                   "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id [%s id v]) x.%s;@,"
-                   original_name
-                   (render_function scalar)
-                   ocaml_name;
-             | _ ->
-                 failwith "Unexpected complex type rendering render function")
-      fields;
-    Format.fprintf formatter "@]@,@]]@,";
-    if is_referenced then begin
-      Format.fprintf formatter
-        "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" (render_content x)@]@]@,"
-    end
+    let rec render_curried_function formatter
+          (name, prefix, field_type) =
+      match field_type.ComplexType.data_type with
+          ComplexType.Scalar scalar ->
+            begin match scalar.ScalarType.data_type with
+                ScalarType.String ->
+                  Format.fprintf formatter
+                    "GapiJson.render_string_value"
+              | ScalarType.Boolean ->
+                  Format.fprintf formatter
+                    "GapiJson.render_bool_value"
+              | ScalarType.Integer ->
+                  Format.fprintf formatter
+                    "GapiJson.render_int_value"
+              | ScalarType.Float ->
+                  Format.fprintf formatter
+                    "GapiJson.render_float_value"
+              | ScalarType.DateTime
+              | ScalarType.Date ->
+                  Format.fprintf formatter
+                    "GapiJson.render_date_value"
+            end;
+            Format.fprintf formatter " %s" name
+        | ComplexType.Array { ComplexType.data_type =
+                                ComplexType.Reference _; _ }
+        | ComplexType.Array { ComplexType.data_type =
+                                ComplexType.AnonymousObject _; _ } ->
+            Format.fprintf formatter
+              "GapiJson.render_array %s %srender"
+              name prefix;
+        | ComplexType.Array inner_type ->
+            Format.fprintf formatter
+              "GapiJson.render_array %s (%a)"
+              name
+              render_curried_function ("\"\"", prefix, inner_type)
+        | ComplexType.Dictionary inner_type ->
+            Format.fprintf formatter
+              "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> GapiJson.render_object id [%a v])"
+              name
+              render_curried_function ("id", prefix, inner_type)
+        | _ ->
+            failwith "Unexpected complex type in render_curried_function"
+    in
+      if not is_referenced then
+        Format.fprintf formatter
+          "@,@[<v 2>let rec render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
+      else
+        Format.fprintf formatter
+          "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
+      List.iter
+        (fun { Field.ocaml_name;
+               original_name;
+               ocaml_type_module;
+               field_type;
+               is_recursive;
+               is_option; _ } ->
+             match field_type.ComplexType.data_type with
+                 ComplexType.Reference _
+               | ComplexType.AnonymousObject _ when is_option ->
+                   Format.fprintf formatter
+                     "Option.map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
+                     original_name
+                     ocaml_name;
+               | ComplexType.Reference _
+               | ComplexType.AnonymousObject _ ->
+                   Format.fprintf formatter
+                     "GapiJson.render_object \"%s\" (%s.render_content x.%s);@,"
+                     original_name
+                     ocaml_type_module
+                     ocaml_name;
+               | ComplexType.Array { ComplexType.data_type =
+                                       ComplexType.Reference _; _ }
+               | ComplexType.Array { ComplexType.data_type =
+                                       ComplexType.AnonymousObject _; _ }
+                     when is_recursive ->
+                   Format.fprintf formatter
+                     "GapiJson.render_array \"%s\" render x.%s;@,"
+                     original_name
+                     ocaml_name;
+               | ComplexType.Dictionary
+                   { ComplexType.data_type = ComplexType.Reference _; _ }
+               | ComplexType.Dictionary
+                   { ComplexType.data_type = ComplexType.AnonymousObject _; _ }
+                     when is_recursive ->
+                   Format.fprintf formatter
+                     "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.%s;@,"
+                     original_name
+                     ocaml_name;
+               | ComplexType.Dictionary { ComplexType.data_type =
+                                            ComplexType.Reference _; _ }
+               | ComplexType.Dictionary { ComplexType.data_type =
+                                            ComplexType.AnonymousObject _; _ } ->
+                   Format.fprintf formatter
+                     "GapiJson.render_collection \"%s\" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (%s.render_content v)) x.%s;@,"
+                     original_name
+                     ocaml_type_module
+                     ocaml_name;
+               | _ ->
+                   Format.fprintf formatter
+                     "%a x.%s;@,"
+                     render_curried_function ("\"" ^ original_name ^ "\"",
+                                              ocaml_type_module ^ ".",
+                                              field_type)
+                     ocaml_name)
+        fields;
+      Format.fprintf formatter "@]@,@]]@,";
+      if is_referenced then begin
+        Format.fprintf formatter
+          "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" (render_content x)@]@]@,"
+      end
   in
 
   let render_parse_function formatter fields container_name module_name =
+    let render_pattern formatter (name, field_type) =
+      match field_type.ComplexType.data_type with
+          ComplexType.Scalar scalar ->
+            Format.fprintf formatter
+              "| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = %s; data_type = GapiJson.Scalar },@ Json_type.%s v) ->@]@,"
+              name (ScalarType.get_json_type scalar.ScalarType.data_type)
+        | ComplexType.Array _ ->
+            Format.fprintf formatter
+              "| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = %s; data_type = GapiJson.Array },@ cs) ->@]@,"
+              name
+        | ComplexType.Reference _
+        | ComplexType.AnonymousObject _
+        | ComplexType.Dictionary _ ->
+            Format.fprintf formatter
+              "| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = %s; data_type = GapiJson.Object },@ cs) ->@]@,"
+              name
+        | _ ->
+            failwith "Unexpected complex type in render_pattern"
+    in
+
+    let render_empty formatter (prefix, field_type) =
+      match field_type.ComplexType.data_type with
+          ComplexType.Reference _
+        | ComplexType.AnonymousObject _ ->
+            Format.fprintf formatter "%sempty" prefix
+        | ComplexType.Array _
+        | ComplexType.Dictionary _ ->
+            Format.fprintf formatter "[]"
+        | ComplexType.Scalar scalar ->
+            Format.fprintf formatter "%s" scalar.ScalarType.empty_value
+        | _ ->
+            assert false
+    in
+
+    let rec render_nested_parse formatter (name, prefix, field_type) =
+      match field_type.ComplexType.data_type with
+          ComplexType.Reference _
+        | ComplexType.AnonymousObject _ ->
+            Format.fprintf formatter "%sparse" prefix
+        | ComplexType.Array inner_type ->
+            Format.fprintf formatter
+              "@[<hv 2>(fun x' -> function@,%a@[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_collection\" e x')@]@]"
+              render_parse_element (name, prefix, inner_type, "v")
+              container_name
+              module_name
+        | ComplexType.Dictionary inner_type ->
+            Format.fprintf formatter
+              "@[<hv 2>(fun x' -> function@,%a@[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]"
+              render_parse_element ("n", prefix, inner_type, "(n, v)")
+              container_name
+              module_name
+        | ComplexType.Scalar scalar ->
+            Format.fprintf formatter
+              "@[<hv 2>(fun x' -> function@,%a@[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_scalar\" e x')@]@]"
+              render_parse_element (name, prefix, field_type, "v")
+              container_name
+              module_name
+        | _ ->
+            assert false
+
+    and render_parse_element formatter (name, prefix, field_type, cont) =
+      match field_type.ComplexType.data_type with
+          ComplexType.Scalar scalar ->
+            Format.fprintf formatter
+              "@[<v 2>%a%s@]@,"
+              render_pattern (name, field_type)
+              cont
+        | ComplexType.Array inner_type ->
+            Format.fprintf formatter
+              "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ %a@ %a@ (fun v -> %s)@ cs@]@]@,"
+              render_pattern (name, field_type)
+              render_nested_parse ("\"\"", prefix, field_type)
+              render_empty (prefix, inner_type)
+              cont
+        | ComplexType.Dictionary inner_type ->
+            Format.fprintf formatter
+              "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ %a@ (\"\", %a)@ (fun v -> %s)@ cs@]@]@,"
+              render_pattern (name, field_type)
+              render_nested_parse (name, prefix, field_type)
+              render_empty (prefix, inner_type)
+              cont
+        | ComplexType.Reference _
+        | ComplexType.AnonymousObject _ ->
+            Format.fprintf formatter
+              "@[<v 2>%a@[<hv 2>GapiJson.parse_children@ %sparse@ %sempty@ (fun v -> %s)@ cs@]@]@,"
+              render_pattern (name, field_type)
+              prefix
+              prefix
+              cont
+        | _ ->
+            assert false
+    in
+
     Format.fprintf formatter "@,@[<v 2>let rec parse x = function@,";
     List.iter
       (fun { Field.ocaml_name;
@@ -266,61 +354,27 @@ let build_schema_inner_module file_lens complex_type =
              is_option; _ } ->
          match field_type.ComplexType.data_type with
              ComplexType.Scalar scalar ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Scalar },@ Json_type.%s v) ->@]@,{ x with %s = %sv }@]@,"
-                 original_name
-                 (ScalarType.get_json_type scalar.ScalarType.data_type)
-                 ocaml_name
-                 (ScalarType.get_convert_function scalar.ScalarType.data_type)
+               render_parse_element formatter
+                 ("\"" ^ original_name ^ "\"",
+                  ocaml_type_module ^ ".",
+                  field_type,
+                  "{ x with " ^ ocaml_name ^ " = " ^ (ScalarType.get_convert_function scalar.ScalarType.data_type) ^ "v }")
            | ComplexType.Array { ComplexType.data_type =
                                    ComplexType.Reference _; _ }
            | ComplexType.Array { ComplexType.data_type =
                                    ComplexType.AnonymousObject _; _ }
                  when is_recursive ->
                Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ parse@ empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
-                 ocaml_name
-           | ComplexType.Array { ComplexType.data_type =
-                                   ComplexType.Reference _; _ }
-           | ComplexType.Array { ComplexType.data_type =
-                                   ComplexType.AnonymousObject _; _ } ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
-                 ocaml_type_module
-                 ocaml_type_module
-                 ocaml_name
-           | ComplexType.Array { ComplexType.data_type =
-                                   ComplexType.Scalar scalar; _ } ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ GapiJson.parse_string_element@ \"\"@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
-                 ocaml_name
-           | ComplexType.Array
-               { ComplexType.data_type =
-                   ComplexType.Array { ComplexType.data_type =
-                                         ComplexType.Scalar scalar; _ }
-               } ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"\"; data_type = GapiJson.Array },@ cs) ->@]@ @[<hv 2>GapiJson.parse_collection@ GapiJson.parse_string_element@ \"\"@ (fun x -> x)@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_collection\" e x')@]@]@ []@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
-                 container_name
-                 module_name
+                 "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ parse@ empty@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 render_pattern ("\"" ^ original_name ^ "\"",
+                                 field_type)
                  ocaml_name
            | ComplexType.Reference _
            | ComplexType.AnonymousObject _ when is_option ->
                Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> { x with %s = Some v })@ cs@]@]@,"
-                 original_name
-                 ocaml_name
-           | ComplexType.Reference _
-           | ComplexType.AnonymousObject _ ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> { x with %s = v })@ cs@]@]@,"
-                 original_name
-                 ocaml_type_module
-                 ocaml_type_module
+                 "@[<v 2>%a@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> { x with %s = Some v })@ cs@]@]@,"
+                 render_pattern ("\"" ^ original_name ^ "\"",
+                                 field_type)
                  ocaml_name
            | ComplexType.Dictionary { ComplexType.data_type =
                                         ComplexType.Reference _; _ }
@@ -328,30 +382,21 @@ let build_schema_inner_module file_lens complex_type =
                                         ComplexType.AnonymousObject _; _ }
                  when is_recursive ->
                Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]@ (\"\", empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
+                 "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]@ (\"\", empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
+                 render_pattern ("\"" ^ original_name ^ "\"",
+                                 field_type)
                  container_name
                  module_name
                  ocaml_name
-           | ComplexType.Dictionary { ComplexType.data_type =
-                                        ComplexType.Reference _; _ }
-           | ComplexType.Dictionary { ComplexType.data_type =
-                                        ComplexType.AnonymousObject _; _ } ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ @[<hv 2>(fun x' -> function@ @[<hv 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = n; data_type = GapiJson.Object },@ cs) ->@]@ @[<hv 2>GapiJson.parse_children@ %s.parse@ %s.empty@ (fun v -> (n, v))@ cs@]@]@ @[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]@ (\"\", %s.empty)@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
-                 ocaml_type_module
-                 ocaml_type_module
-                 container_name
-                 module_name
-                 ocaml_type_module
-                 ocaml_name
-           | ComplexType.Dictionary { ComplexType.data_type =
-                                        ComplexType.Scalar scalar; _ } ->
-               Format.fprintf formatter
-                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"%s\"; data_type = GapiJson.Object },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ GapiJson.parse_dictionary_entry@ (\"\", \"\")@ (fun xs -> { x with %s = xs })@ cs@]@]@,"
-                 original_name
-                 ocaml_name
+           | ComplexType.Reference _
+           | ComplexType.AnonymousObject _
+           | ComplexType.Array _
+           | ComplexType.Dictionary _ ->
+               render_parse_element formatter
+                 ("\"" ^ original_name ^ "\"",
+                  ocaml_type_module ^ ".",
+                  field_type,
+                  "{ x with " ^ ocaml_name ^ " = v }")
            | _ ->
                failwith "Unexpected complex type rendering parse function")
       fields;
