@@ -118,17 +118,37 @@ struct
         ({ GapiJson.name = "browsers"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        StringCount.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              StringCount.parse
+              StringCount.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse.parse_collection" e x')
         StringCount.empty
-        (fun xs -> { x with browsers = xs })
+        (fun v -> { x with browsers = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "countries"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        StringCount.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              StringCount.parse
+              StringCount.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse.parse_collection" e x')
         StringCount.empty
-        (fun xs -> { x with countries = xs })
+        (fun v -> { x with countries = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "longUrlClicks"; data_type = GapiJson.Scalar },
@@ -138,17 +158,37 @@ struct
         ({ GapiJson.name = "platforms"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        StringCount.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              StringCount.parse
+              StringCount.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse.parse_collection" e x')
         StringCount.empty
-        (fun xs -> { x with platforms = xs })
+        (fun v -> { x with platforms = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "referrers"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        StringCount.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              StringCount.parse
+              StringCount.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse.parse_collection" e x')
         StringCount.empty
-        (fun xs -> { x with referrers = xs })
+        (fun v -> { x with referrers = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "shortUrlClicks"; data_type = GapiJson.Scalar },
@@ -160,6 +200,10 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSnapshot.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
   
 end
 
@@ -264,6 +308,10 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiUrlshortenerV1Model.AnalyticsSummary.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
   
 end
 
@@ -423,9 +471,15 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        Url.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children Url.parse Url.empty (fun v -> v) cs
+          | e ->
+            GapiJson.unexpected "GapiUrlshortenerV1Model.UrlHistory.parse.parse_collection" e x')
         Url.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "itemsPerPage"; data_type = GapiJson.Scalar },

@@ -312,9 +312,19 @@ struct
         ({ GapiJson.name = "links"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        LinksData.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              LinksData.parse
+              LinksData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiTasksV1Model.Task.parse.parse_collection" e x')
         LinksData.empty
-        (fun xs -> { x with links = xs })
+        (fun v -> { x with links = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "notes"; data_type = GapiJson.Scalar },
@@ -410,9 +420,19 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        TaskList.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              TaskList.parse
+              TaskList.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse.parse_collection" e x')
         TaskList.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
@@ -488,9 +508,15 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        Task.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children Task.parse Task.empty (fun v -> v) cs
+          | e ->
+            GapiJson.unexpected "GapiTasksV1Model.Tasks.parse.parse_collection" e x')
         Task.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },

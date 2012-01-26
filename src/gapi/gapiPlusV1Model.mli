@@ -239,6 +239,10 @@ sig
   
   val parse : t -> GapiJson.json_data_model -> t
   
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
 end
 
 module Person :

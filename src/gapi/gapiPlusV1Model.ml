@@ -378,9 +378,19 @@ struct
         ({ GapiJson.name = "inReplyTo"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        InReplyToData.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              InReplyToData.parse
+              InReplyToData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Comment.parse.parse_collection" e x')
         InReplyToData.empty
-        (fun xs -> { x with inReplyTo = xs })
+        (fun v -> { x with inReplyTo = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
@@ -508,9 +518,19 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        Comment.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              Comment.parse
+              Comment.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.CommentFeed.parse.parse_collection" e x')
         Comment.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
@@ -594,9 +614,19 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        PlusAclentryResource.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              PlusAclentryResource.parse
+              PlusAclentryResource.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Acl.parse.parse_collection" e x')
         PlusAclentryResource.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
@@ -608,6 +638,10 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiPlusV1Model.Acl.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
   
 end
 
@@ -1199,7 +1233,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_object "image" (ImageData.render_content x.image);
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_collection "languagesSpoken" GapiJson.Array (GapiJson.render_string_value "") x.languagesSpoken;
+      GapiJson.render_array "languagesSpoken" (GapiJson.render_string_value "") x.languagesSpoken;
       GapiJson.render_object "name" (NameData.render_content x.name);
       GapiJson.render_string_value "nickname" x.nickname;
       GapiJson.render_string_value "objectType" x.objectType;
@@ -1233,9 +1267,19 @@ struct
         ({ GapiJson.name = "emails"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        EmailsData.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              EmailsData.parse
+              EmailsData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
         EmailsData.empty
-        (fun xs -> { x with emails = xs })
+        (fun v -> { x with emails = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
@@ -1269,9 +1313,15 @@ struct
         ({ GapiJson.name = "languagesSpoken"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        GapiJson.parse_string_element
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              Json_type.String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
         ""
-        (fun xs -> { x with languagesSpoken = xs })
+        (fun v -> { x with languagesSpoken = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "name"; data_type = GapiJson.Object },
@@ -1293,17 +1343,37 @@ struct
         ({ GapiJson.name = "organizations"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        OrganizationsData.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              OrganizationsData.parse
+              OrganizationsData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
         OrganizationsData.empty
-        (fun xs -> { x with organizations = xs })
+        (fun v -> { x with organizations = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "placesLived"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        PlacesLivedData.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              PlacesLivedData.parse
+              PlacesLivedData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
         PlacesLivedData.empty
-        (fun xs -> { x with placesLived = xs })
+        (fun v -> { x with placesLived = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "relationshipStatus"; data_type = GapiJson.Scalar },
@@ -1321,9 +1391,19 @@ struct
         ({ GapiJson.name = "urls"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        UrlsData.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              UrlsData.parse
+              UrlsData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
         UrlsData.empty
-        (fun xs -> { x with urls = xs })
+        (fun v -> { x with urls = v })
         cs
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -2078,9 +2158,19 @@ struct
           ({ GapiJson.name = "attachments"; data_type = GapiJson.Array },
           cs) ->
         GapiJson.parse_collection
-          AttachmentsData.parse
+          (fun x' -> function
+            | GapiCore.AnnotatedTree.Node
+                ({ GapiJson.name = ""; data_type = GapiJson.Object },
+                cs) ->
+              GapiJson.parse_children
+                AttachmentsData.parse
+                AttachmentsData.empty
+                (fun v -> v)
+                cs
+            | e ->
+              GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse.parse_collection" e x')
           AttachmentsData.empty
-          (fun xs -> { x with attachments = xs })
+          (fun v -> { x with attachments = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "content"; data_type = GapiJson.Scalar },
@@ -2630,9 +2720,19 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        Activity.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              Activity.parse
+              Activity.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.ActivityFeed.parse.parse_collection" e x')
         Activity.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
@@ -2738,9 +2838,15 @@ struct
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
-        Person.parse
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children Person.parse Person.empty (fun v -> v) cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.PeopleFeed.parse.parse_collection" e x')
         Person.empty
-        (fun xs -> { x with items = xs })
+        (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
