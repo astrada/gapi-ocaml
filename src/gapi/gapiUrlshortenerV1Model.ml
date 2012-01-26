@@ -250,11 +250,11 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_object "allTime" (AnalyticsSnapshot.render_content x.allTime);
-      GapiJson.render_object "day" (AnalyticsSnapshot.render_content x.day);
-      GapiJson.render_object "month" (AnalyticsSnapshot.render_content x.month);
-      GapiJson.render_object "twoHours" (AnalyticsSnapshot.render_content x.twoHours);
-      GapiJson.render_object "week" (AnalyticsSnapshot.render_content x.week);
+      (fun v -> GapiJson.render_object "allTime" (AnalyticsSnapshot.render_content v)) x.allTime;
+      (fun v -> GapiJson.render_object "day" (AnalyticsSnapshot.render_content v)) x.day;
+      (fun v -> GapiJson.render_object "month" (AnalyticsSnapshot.render_content v)) x.month;
+      (fun v -> GapiJson.render_object "twoHours" (AnalyticsSnapshot.render_content v)) x.twoHours;
+      (fun v -> GapiJson.render_object "week" (AnalyticsSnapshot.render_content v)) x.week;
       
     ]
   
@@ -364,7 +364,7 @@ struct
   
   let rec render x = 
     GapiJson.render_object "" [
-      GapiJson.render_object "analytics" (AnalyticsSummary.render_content x.analytics);
+      (fun v -> GapiJson.render_object "analytics" (AnalyticsSummary.render_content v)) x.analytics;
       GapiJson.render_string_value "created" x.created;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;

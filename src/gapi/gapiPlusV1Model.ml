@@ -235,7 +235,7 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
-        GapiJson.render_object "image" (ImageData.render_content x.image);
+        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -344,12 +344,12 @@ struct
   
   let rec render x = 
     GapiJson.render_object "" [
-      GapiJson.render_object "actor" (ActorData.render_content x.actor);
+      (fun v -> GapiJson.render_object "actor" (ActorData.render_content v)) x.actor;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_array "inReplyTo" InReplyToData.render x.inReplyTo;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_object "object" (ObjectData.render_content x._object);
+      (fun v -> GapiJson.render_object "object" (ObjectData.render_content v)) x._object;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "updated" x.updated;
@@ -1231,10 +1231,10 @@ struct
       GapiJson.render_string_value "gender" x.gender;
       GapiJson.render_bool_value "hasApp" x.hasApp;
       GapiJson.render_string_value "id" x.id;
-      GapiJson.render_object "image" (ImageData.render_content x.image);
+      (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "languagesSpoken" (GapiJson.render_string_value "") x.languagesSpoken;
-      GapiJson.render_object "name" (NameData.render_content x.name);
+      (fun v -> GapiJson.render_object "name" (NameData.render_content v)) x.name;
       GapiJson.render_string_value "nickname" x.nickname;
       GapiJson.render_string_value "objectType" x.objectType;
       GapiJson.render_array "organizations" OrganizationsData.render x.organizations;
@@ -1875,10 +1875,10 @@ struct
          [
           GapiJson.render_string_value "content" x.content;
           GapiJson.render_string_value "displayName" x.displayName;
-          GapiJson.render_object "embed" (EmbedData.render_content x.embed);
-          GapiJson.render_object "fullImage" (FullImageData.render_content x.fullImage);
+          (fun v -> GapiJson.render_object "embed" (EmbedData.render_content v)) x.embed;
+          (fun v -> GapiJson.render_object "fullImage" (FullImageData.render_content v)) x.fullImage;
           GapiJson.render_string_value "id" x.id;
-          GapiJson.render_object "image" (ImageData.render_content x.image);
+          (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
           GapiJson.render_string_value "objectType" x.objectType;
           GapiJson.render_string_value "url" x.url;
           
@@ -2020,7 +2020,7 @@ struct
          [
           GapiJson.render_string_value "displayName" x.displayName;
           GapiJson.render_string_value "id" x.id;
-          GapiJson.render_object "image" (ImageData.render_content x.image);
+          (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
           GapiJson.render_string_value "url" x.url;
           
         ]
@@ -2129,15 +2129,15 @@ struct
     
     let rec render_content x = 
        [
-        GapiJson.render_object "actor" (ActorData.render_content x.actor);
+        (fun v -> GapiJson.render_object "actor" (ActorData.render_content v)) x.actor;
         GapiJson.render_array "attachments" AttachmentsData.render x.attachments;
         GapiJson.render_string_value "content" x.content;
         GapiJson.render_string_value "id" x.id;
         GapiJson.render_string_value "objectType" x.objectType;
         GapiJson.render_string_value "originalContent" x.originalContent;
-        GapiJson.render_object "plusoners" (PlusonersData.render_content x.plusoners);
-        GapiJson.render_object "replies" (RepliesData.render_content x.replies);
-        GapiJson.render_object "resharers" (ResharersData.render_content x.resharers);
+        (fun v -> GapiJson.render_object "plusoners" (PlusonersData.render_content v)) x.plusoners;
+        (fun v -> GapiJson.render_object "replies" (RepliesData.render_content v)) x.replies;
+        (fun v -> GapiJson.render_object "resharers" (ResharersData.render_content v)) x.resharers;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -2318,7 +2318,7 @@ struct
         GapiJson.render_string_value "familyName" x.familyName;
         GapiJson.render_string_value "givenName" x.givenName;
         GapiJson.render_string_value "id" x.id;
-        GapiJson.render_object "image" (ImageData.render_content x.image);
+        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -2495,8 +2495,8 @@ struct
   
   let rec render x = 
     GapiJson.render_object "" [
-      GapiJson.render_object "access" (Acl.render_content x.access);
-      GapiJson.render_object "actor" (ActorData.render_content x.actor);
+      (fun v -> GapiJson.render_object "access" (Acl.render_content v)) x.access;
+      (fun v -> GapiJson.render_object "actor" (ActorData.render_content v)) x.actor;
       GapiJson.render_string_value "address" x.address;
       GapiJson.render_string_value "annotation" x.annotation;
       GapiJson.render_string_value "crosspostSource" x.crosspostSource;
@@ -2504,11 +2504,11 @@ struct
       GapiJson.render_string_value "geocode" x.geocode;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_object "object" (ObjectData.render_content x._object);
+      (fun v -> GapiJson.render_object "object" (ObjectData.render_content v)) x._object;
       GapiJson.render_string_value "placeId" x.placeId;
       GapiJson.render_string_value "placeName" x.placeName;
       GapiJson.render_bool_value "placeholder" x.placeholder;
-      GapiJson.render_object "provider" (ProviderData.render_content x.provider);
+      (fun v -> GapiJson.render_object "provider" (ProviderData.render_content v)) x.provider;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "radius" x.radius;
       GapiJson.render_string_value "title" x.title;

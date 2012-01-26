@@ -92,8 +92,8 @@ struct
   
   let rec render x = 
     GapiJson.render_object "" [
-      GapiJson.render_collection "calendar" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (ColorDefinition.render_content v)) x.calendar;
-      GapiJson.render_collection "event" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (ColorDefinition.render_content v)) x.event;
+      GapiJson.render_collection "calendar" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ColorDefinition.render_content v)) v) x.calendar;
+      GapiJson.render_collection "event" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ColorDefinition.render_content v)) v) x.event;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_date_value "updated" x.updated;
       
@@ -329,7 +329,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "role" x.role;
-      GapiJson.render_object "scope" (ScopeData.render_content x.scope);
+      (fun v -> GapiJson.render_object "scope" (ScopeData.render_content v)) x.scope;
       
     ]
   
@@ -1361,12 +1361,12 @@ struct
       GapiJson.render_bool_value "attendeesOmitted" x.attendeesOmitted;
       GapiJson.render_string_value "colorId" x.colorId;
       GapiJson.render_date_value "created" x.created;
-      GapiJson.render_object "creator" (CreatorData.render_content x.creator);
+      (fun v -> GapiJson.render_object "creator" (CreatorData.render_content v)) x.creator;
       GapiJson.render_string_value "description" x.description;
-      GapiJson.render_object "end" (EventDateTime.render_content x._end);
+      (fun v -> GapiJson.render_object "end" (EventDateTime.render_content v)) x._end;
       GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_object "extendedProperties" (ExtendedPropertiesData.render_content x.extendedProperties);
-      GapiJson.render_object "gadget" (GadgetData.render_content x.gadget);
+      (fun v -> GapiJson.render_object "extendedProperties" (ExtendedPropertiesData.render_content v)) x.extendedProperties;
+      (fun v -> GapiJson.render_object "gadget" (GadgetData.render_content v)) x.gadget;
       GapiJson.render_bool_value "guestsCanInviteOthers" x.guestsCanInviteOthers;
       GapiJson.render_bool_value "guestsCanModify" x.guestsCanModify;
       GapiJson.render_bool_value "guestsCanSeeOtherGuests" x.guestsCanSeeOtherGuests;
@@ -1375,14 +1375,14 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "location" x.location;
-      GapiJson.render_object "organizer" (OrganizerData.render_content x.organizer);
-      GapiJson.render_object "originalStartTime" (EventDateTime.render_content x.originalStartTime);
+      (fun v -> GapiJson.render_object "organizer" (OrganizerData.render_content v)) x.organizer;
+      (fun v -> GapiJson.render_object "originalStartTime" (EventDateTime.render_content v)) x.originalStartTime;
       GapiJson.render_bool_value "privateCopy" x.privateCopy;
       GapiJson.render_array "recurrence" (GapiJson.render_string_value "") x.recurrence;
       GapiJson.render_string_value "recurringEventId" x.recurringEventId;
-      GapiJson.render_object "reminders" (RemindersData.render_content x.reminders);
+      (fun v -> GapiJson.render_object "reminders" (RemindersData.render_content v)) x.reminders;
       GapiJson.render_int_value "sequence" x.sequence;
-      GapiJson.render_object "start" (EventDateTime.render_content x.start);
+      (fun v -> GapiJson.render_object "start" (EventDateTime.render_content v)) x.start;
       GapiJson.render_string_value "status" x.status;
       GapiJson.render_string_value "summary" x.summary;
       GapiJson.render_string_value "transparency" x.transparency;
@@ -2496,8 +2496,8 @@ struct
   
   let rec render x = 
     GapiJson.render_object "" [
-      GapiJson.render_collection "calendars" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (FreeBusyCalendar.render_content v)) x.calendars;
-      GapiJson.render_collection "groups" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (FreeBusyGroup.render_content v)) x.groups;
+      GapiJson.render_collection "calendars" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (FreeBusyCalendar.render_content v)) v) x.calendars;
+      GapiJson.render_collection "groups" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (FreeBusyGroup.render_content v)) v) x.groups;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_date_value "timeMax" x.timeMax;
       GapiJson.render_date_value "timeMin" x.timeMin;

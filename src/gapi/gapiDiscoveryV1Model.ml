@@ -128,7 +128,7 @@ struct
       GapiJson.render_string_value "maximum" x.maximum;
       GapiJson.render_string_value "minimum" x.minimum;
       GapiJson.render_string_value "pattern" x.pattern;
-      GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.properties;
+      GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (render_content v)) v) x.properties;
       GapiJson.render_bool_value "repeated" x.repeated;
       GapiJson.render_bool_value "required" x.required;
       GapiJson.render_string_value "type" x._type;
@@ -231,7 +231,7 @@ struct
           | e ->
             GapiJson.unexpected "GapiDiscoveryV1Model.JsonSchema.parse.parse_dictionary" e x')
         ("", empty)
-        (fun xs -> { x with properties = xs })
+        (fun v -> { x with properties = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "repeated"; data_type = GapiJson.Scalar },
@@ -469,8 +469,8 @@ struct
       
       let rec render_content x = 
          [
-          GapiJson.render_object "resumable" (ResumableData.render_content x.resumable);
-          GapiJson.render_object "simple" (SimpleData.render_content x.simple);
+          (fun v -> GapiJson.render_object "resumable" (ResumableData.render_content v)) x.resumable;
+          (fun v -> GapiJson.render_object "simple" (SimpleData.render_content v)) x.simple;
           
         ]
       
@@ -534,7 +534,7 @@ struct
        [
         GapiJson.render_array "accept" (GapiJson.render_string_value "") x.accept;
         GapiJson.render_string_value "maxSize" x.maxSize;
-        GapiJson.render_object "protocols" (ProtocolsData.render_content x.protocols);
+        (fun v -> GapiJson.render_object "protocols" (ProtocolsData.render_content v)) x.protocols;
         
       ]
     
@@ -651,12 +651,12 @@ struct
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "httpMethod" x.httpMethod;
       GapiJson.render_string_value "id" x.id;
-      GapiJson.render_object "mediaUpload" (MediaUploadData.render_content x.mediaUpload);
+      (fun v -> GapiJson.render_object "mediaUpload" (MediaUploadData.render_content v)) x.mediaUpload;
       GapiJson.render_array "parameterOrder" (GapiJson.render_string_value "") x.parameterOrder;
-      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (JsonSchema.render_content v)) x.parameters;
+      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.parameters;
       GapiJson.render_string_value "path" x.path;
-      GapiJson.render_object "request" (RequestData.render_content x.request);
-      GapiJson.render_object "response" (ResponseData.render_content x.response);
+      (fun v -> GapiJson.render_object "request" (RequestData.render_content v)) x.request;
+      (fun v -> GapiJson.render_object "response" (ResponseData.render_content v)) x.response;
       GapiJson.render_array "scopes" (GapiJson.render_string_value "") x.scopes;
       
     ]
@@ -789,8 +789,8 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestMethod.render_content v)) x.methods;
-      GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (render_content v)) x.resources;
+      GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestMethod.render_content v)) v) x.methods;
+      GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (render_content v)) v) x.resources;
       
     ]
   
@@ -828,7 +828,7 @@ struct
           | e ->
             GapiJson.unexpected "GapiDiscoveryV1Model.RestResource.parse.parse_dictionary" e x')
         ("", empty)
-        (fun xs -> { x with resources = xs })
+        (fun v -> { x with resources = v })
         cs
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -957,7 +957,7 @@ struct
       
       let rec render_content x = 
          [
-          GapiJson.render_collection "scopes" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (ScopesData.render_content v)) x.scopes;
+          GapiJson.render_collection "scopes" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ScopesData.render_content v)) v) x.scopes;
           
         ]
       
@@ -1009,7 +1009,7 @@ struct
     
     let rec render_content x = 
        [
-        GapiJson.render_object "oauth2" (Oauth2Data.render_content x.oauth2);
+        (fun v -> GapiJson.render_object "oauth2" (Oauth2Data.render_content v)) x.oauth2;
         
       ]
     
@@ -1153,22 +1153,22 @@ struct
   
   let rec render x = 
     GapiJson.render_object "" [
-      GapiJson.render_object "auth" (AuthData.render_content x.auth);
+      (fun v -> GapiJson.render_object "auth" (AuthData.render_content v)) x.auth;
       GapiJson.render_string_value "basePath" x.basePath;
       GapiJson.render_string_value "baseUrl" x.baseUrl;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
       GapiJson.render_array "features" (GapiJson.render_string_value "") x.features;
-      GapiJson.render_object "icons" (IconsData.render_content x.icons);
+      (fun v -> GapiJson.render_object "icons" (IconsData.render_content v)) x.icons;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "labels" (GapiJson.render_string_value "") x.labels;
-      GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestMethod.render_content v)) x.methods;
+      GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestMethod.render_content v)) v) x.methods;
       GapiJson.render_string_value "name" x.name;
-      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (JsonSchema.render_content v)) x.parameters;
+      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.parameters;
       GapiJson.render_string_value "protocol" x.protocol;
-      GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (RestResource.render_content v)) x.resources;
-      GapiJson.render_collection "schemas" GapiJson.Object (fun (id, v) -> GapiJson.render_object id (JsonSchema.render_content v)) x.schemas;
+      GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestResource.render_content v)) v) x.resources;
+      GapiJson.render_collection "schemas" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.schemas;
       GapiJson.render_string_value "title" x.title;
       GapiJson.render_string_value "version" x.version;
       
@@ -1486,7 +1486,7 @@ struct
         GapiJson.render_string_value "discoveryLink" x.discoveryLink;
         GapiJson.render_string_value "discoveryRestUrl" x.discoveryRestUrl;
         GapiJson.render_string_value "documentationLink" x.documentationLink;
-        GapiJson.render_object "icons" (IconsData.render_content x.icons);
+        (fun v -> GapiJson.render_object "icons" (IconsData.render_content v)) x.icons;
         GapiJson.render_string_value "id" x.id;
         GapiJson.render_string_value "kind" x.kind;
         GapiJson.render_array "labels" (GapiJson.render_string_value "") x.labels;
