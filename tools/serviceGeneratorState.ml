@@ -17,6 +17,13 @@ module OCamlName =
 struct
   let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"; "open"]
 
+  let is_first_character_valid s =
+    match s.[0] with
+        'a'..'z'
+      | 'A'..'Z'
+      | '_' -> true
+      | _ -> false
+
   let replace_invalid_characters s =
     ExtString.String.map
       (fun c ->
@@ -30,16 +37,30 @@ struct
 
   let get_ocaml_name name_type name =
     let name_without_invalid_characters = replace_invalid_characters name in
+    let name_with_valid_first_character =
+      if is_first_character_valid name_without_invalid_characters then
+        name_without_invalid_characters
+      else
+        match name_type with
+            ModuleName ->
+              "M" ^ name_without_invalid_characters
+          | ConstructorName ->
+              "V" ^ name_without_invalid_characters
+          | TypeName
+          | ValueName
+          | ParameterName
+          | FieldName ->
+              "_" ^ name_without_invalid_characters in
     let name_with_proper_first_letter_case =
       match name_type with
           ModuleName
         | ConstructorName ->
-            String.capitalize name_without_invalid_characters
+            String.capitalize name_with_valid_first_character
         | TypeName
         | ValueName
         | ParameterName
         | FieldName ->
-            String.uncapitalize name_without_invalid_characters
+            String.uncapitalize name_with_valid_first_character
     in
       if List.mem name_with_proper_first_letter_case keywords then
         "_" ^ name_with_proper_first_letter_case
@@ -337,27 +358,6 @@ struct
                    merge a refs)
               accu
               properties
-        | _ ->
-            accu
-    in
-      loop complex_type []
-
-  let get_direct_references complex_type =
-    let rec loop complex_type' accu =
-      match complex_type'.data_type with
-        | Reference type_name
-        | AnonymousObject (type_name, _) when complex_type'.id <> type_name ->
-            type_name :: accu
-        | Object properties
-        | AnonymousObject (_, properties) ->
-            List.fold_left
-              (fun a (_, prop) ->
-                 let refs = loop prop accu in
-                   merge a refs)
-              accu
-              properties
-        | Dictionary inner_type ->
-            loop inner_type accu
         | _ ->
             accu
     in
@@ -1247,7 +1247,6 @@ struct
     service_module : ServiceModule.t option;
     type_table : TypeTable.t;
     sorted_types : ComplexType.t list;
-    referenced_types : StringSet.t;
   }
 
   let service = {
@@ -1274,10 +1273,6 @@ struct
 		GapiLens.get = (fun x -> x.sorted_types);
 		GapiLens.set = (fun v x -> { x with sorted_types = v })
 	}
-	let referenced_types = {
-		GapiLens.get = (fun x -> x.referenced_types);
-		GapiLens.set = (fun v x -> { x with referenced_types = v })
-	}
   let file file_type = GapiLens.for_hash file_type
 
   let get_schema_module_lens =
@@ -1296,7 +1291,6 @@ struct
     service_module = None;
     type_table = TypeTable.create ();
     sorted_types = [];
-    referenced_types = StringSet.empty;
   }
 
   let build_type_table state =
@@ -1310,20 +1304,6 @@ struct
   let build_sorted_types state =
     let sorted = TypeTable.sort state.type_table in
       state |> sorted_types ^=! sorted
-
-  let build_referenced_types state =
-    let referenced =
-      TypeTable.fold
-        (fun _ complex_type referenced ->
-           let references = ComplexType.get_direct_references complex_type in
-             StringSet.add_list references referenced)
-        state.referenced_types
-        state.type_table
-    in
-      state |> referenced_types ^=! referenced
-
-  let is_type_referenced type_id state =
-    (StringSet.mem type_id state.referenced_types, state)
 
   let find_inner_schema_module id state =
     if id = "" then

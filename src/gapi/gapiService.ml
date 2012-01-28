@@ -151,6 +151,24 @@ let put
     parse_response
     session
 
+let put'
+      ?etag
+      ?query_parameters
+      ~data_to_post
+      ~data
+      url
+      parse_response
+      session =
+  let post_data = data_to_post data in
+    service_request
+      ~post_data
+      ?etag
+      ?query_parameters
+      ~request_type:GapiRequest.Update
+      url
+      parse_response
+      session
+
 let patch
       ?etag
       ?query_parameters
@@ -167,6 +185,24 @@ let patch
     url
     parse_response
     session
+
+let patch'
+      ?etag
+      ?query_parameters
+      ~data_to_post
+      ~data
+      url
+      parse_response
+      session =
+  let post_data = data_to_post data in
+    service_request
+      ~post_data
+      ?etag
+      ?query_parameters
+      ~request_type:GapiRequest.Patch
+      url
+      parse_response
+      session
 
 let delete
       ?etag

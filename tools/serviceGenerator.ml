@@ -137,7 +137,7 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@]@,}@,"
   in
 
-  let render_render_function formatter fields is_referenced =
+  let render_render_function formatter fields =
     let rec render_curried_function formatter
           (name, prefix, field_type) =
       match field_type.ComplexType.data_type with
@@ -196,12 +196,8 @@ let build_schema_inner_module file_lens complex_type =
         | _ ->
             failwith "Unexpected complex type in render_curried_function"
     in
-      if not is_referenced then
-        Format.fprintf formatter
-          "@,@[<v 2>let rec render x = @,@[<v 2>GapiJson.render_object \"\" [@,"
-      else
-        Format.fprintf formatter
-          "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
+      Format.fprintf formatter
+        "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
       List.iter
         (fun { Field.ocaml_name;
                original_name;
@@ -228,10 +224,8 @@ let build_schema_inner_module file_lens complex_type =
                      ocaml_name)
         fields;
       Format.fprintf formatter "@]@,@]]@,";
-      if is_referenced then begin
-        Format.fprintf formatter
-          "@,@[<v 2>let render x = @,@[<v 2>GapiJson.render_object \"\" (render_content x)@]@]@,"
-      end
+      Format.fprintf formatter
+        "@[<v 2>and render x = @,@[<v 2>GapiJson.render_object \"\" (render_content x)@]@]@,"
   in
 
   let render_parse_function formatter fields container_name module_name =
@@ -414,10 +408,6 @@ let build_schema_inner_module file_lens complex_type =
                 |-- InnerSchemaModule.get_inner_module_lens id))
         inner_modules;
 
-      is_type_referenced <-- State.is_type_referenced
-                               complex_type.ComplexType.id;
-      let is_referenced = is_type_referenced || is_nested in
-
       lift_io (
         match type_t with
             InnerSchemaModule.Record record ->
@@ -425,7 +415,7 @@ let build_schema_inner_module file_lens complex_type =
                 render_type_t formatter fields;
                 render_lenses formatter fields;
                 render_empty formatter fields;
-                render_render_function formatter fields is_referenced;
+                render_render_function formatter fields;
                 render_parse_function formatter fields container_name module_name;
                 render_footer formatter is_nested
           | InnerSchemaModule.List inner_module ->
@@ -655,7 +645,6 @@ let generate_parameters_module filter_parameters formatter
 
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body methd =
-    let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
       perform
         parameters_module_name <--
           GapiLens.get_state (inner_module_lens
@@ -718,7 +707,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
           end;
           (* Build query parameters *)
           Format.fprintf formatter
-            "@[<hov 2>let params =@ %s.merge_parameters@ ?standard_parameters:parameters@ "
+            "@[<hov 2>let params =@ %s.merge_parameters@ ?standard_parameters:std_params@ "
             parameters_module_name;
           List.iter
             (fun (id, json_schema) ->
@@ -735,10 +724,20 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             parameters_module_name);
 
         (* Invoke service function *)
+        let function_to_call =
+          String.lowercase rest_method.RestMethod.httpMethod in
+
+        (* Use put' or patch' if request type is different from response type *)
+        let apostrophe =
+          if (rest_method.RestMethod.httpMethod = "PUT"
+                || rest_method.RestMethod.httpMethod = "PATCH") &&
+             request_module <> response_module then "'"
+          else "" in
+
         lift_io (
           Format.fprintf formatter
-            "@[<hov 2>GapiService.%s@ ?query_parameters@ "
-            function_to_call;
+            "@[<hov 2>GapiService.%s%s@ ?query_parameters@ "
+            function_to_call apostrophe;
           if is_etag_present then begin
             Format.fprintf formatter "?etag@ ";
           end;
@@ -837,7 +836,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                      (State.service |-- RestDescription.baseUrl);
       lift_io $
         Format.fprintf formatter
-          "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?parameters@ "
+          "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?std_params@ "
           methd.Method.ocaml_name
           base_url;
 
@@ -1200,7 +1199,7 @@ let rec generate_service_module_signature
         lift_io (
           (* Documentation *)
           Format.fprintf formatter
-            "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n@@param parameters Optional standard parameters.@\n"
+            "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n@@param std_params Optional standard parameters.@\n"
             methd.Method.description
             base_url;
           List.iter
@@ -1217,7 +1216,7 @@ let rec generate_service_module_signature
           Format.fprintf formatter "*)@]@\n";
           (* Declaration *)
           Format.fprintf formatter
-            "@[<hv 2>val %s :@ ?base_url:string ->@ ?parameters:GapiService.StandardParameters.t ->@ "
+            "@[<hv 2>val %s :@ ?base_url:string ->@ ?std_params:GapiService.StandardParameters.t ->@ "
             methd.Method.ocaml_name;
           (* Parameters *)
           List.iter
@@ -1347,7 +1346,6 @@ let generate_code service =
     perform
       State.build_type_table;
       State.build_sorted_types;
-      State.build_referenced_types;
       build_schema_module;
       build_service_module;
       build_schema_module_interface;
