@@ -1,5 +1,8 @@
+(* Tasks service samples (http://code.google.com/apis/tasks/v1/using.html) *)
+
 (*** Setup ***)
 
+open GapiUtils.Infix
 open GapiTasksV1Model
 open GapiTasksV1Service
 
@@ -16,13 +19,15 @@ let configuration =
 let do_request interact =
   (* Initialize Ocurl wrapper *)
   let state = GapiCurl.global_init () in
-    (* Start the session using default configuration *)
+  (* Start the session using default configuration *)
+  let result =
     GapiConversation.with_session
       configuration
       state
-      interact;
+      interact in
     (* Cleanup Ocurl wrapper *)
-    ignore (GapiCurl.global_cleanup state)
+    GapiCurl.global_cleanup state |> ignore;
+    result
 
 (* The clientId and clientSecret are copied from the API Access tab on
  * the Google APIs Console *)

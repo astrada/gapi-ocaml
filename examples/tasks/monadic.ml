@@ -1,5 +1,11 @@
+(* Tasks service samples (http://code.google.com/apis/tasks/v1/using.html)
+ * using monad and functional lenses *)
+
 (*** Setup ***)
 
+open GapiUtils.Infix
+open GapiLens.Infix
+open GapiLens.StateInfix
 open GapiMonad.SessionM
 open GapiTasksV1Model
 open GapiTasksV1Service
@@ -9,9 +15,8 @@ open GapiTasksV1Service
 
 let application_name = "YOUR_APPLICATION_NAME"
 
-let configuration =
-  { GapiConfig.default with
-        GapiConfig.application_name = application_name }
+let configuration = GapiConfig.default
+    |> GapiConfig.application_name ^= application_name
 
 (* Service interaction *)
 let do_request interact =
@@ -25,8 +30,8 @@ let do_request interact =
       interact
   in
     (* Cleanup Ocurl wrapper *)
-    ignore (GapiCurl.global_cleanup state);
-    (fst result)
+    GapiCurl.global_cleanup state |> ignore;
+    result |> fst
 
 (* The clientId and clientSecret are copied from the API Access tab on
  * the Google APIs Console *)
@@ -73,14 +78,11 @@ let batch =
     (* End of Step 2 <-- *)
 
     (* Update session with OAuth2 tokens *)
-    session <-- get;
-    put { session with
-              GapiConversation.Session.auth =
-                GapiConversation.Session.OAuth2 {
-                  GapiConversation.Session.oauth2_token = access_token;
-                  refresh_token
-                }
-    };
+    GapiConversation.Session.auth ^=!
+      GapiConversation.Session.OAuth2 {
+        GapiConversation.Session.oauth2_token = access_token;
+        refresh_token
+      };
 
     (*** Working with task lists ***)
 
@@ -99,10 +101,8 @@ let batch =
     let () = print_endline task_list.TaskList.title in
 
     (* Creating a task list *)
-    let task_list = {
-      TaskList.empty with
-          TaskList.title = "New Task List"
-    } in
+    let task_list = TaskList.empty
+      |> TaskList.title ^= "New Task List" in
 
     result <-- TasklistsResource.insert task_list;
 
@@ -113,10 +113,8 @@ let batch =
     (* First retrieve the tasklist to update. *)
     task_list <-- TasklistsResource.get ~tasklist:"taskListID";
 
-    let task_list = {
-      task_list with
-          TaskList.title = "New Task List Name"
-    } in
+    let task_list = task_list
+      |> TaskList.title ^= "New Task List Name" in
 
     result <-- TasklistsResource.update
                  ~tasklist:task_list.TaskList.id
@@ -159,10 +157,7 @@ let batch =
     (* First retrieve the task to update. *)
     task <-- TasksResource.get ~tasklist:"@default" ~task:"taskID";
 
-    let task = {
-      task with
-          Task.status = "completed";
-    } in
+    let task = task |> Task.status ^= "completed" in
 
     result <-- TasksResource.update
                  ~tasklist:"@default"
