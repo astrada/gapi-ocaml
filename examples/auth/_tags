@@ -1,4 +1,0 @@
-<common.*> : pkg_nethttpd
-<oauth1Flow.*> : pkg_nethttpd
-<oauth2Flow.*> : pkg_nethttpd
-
