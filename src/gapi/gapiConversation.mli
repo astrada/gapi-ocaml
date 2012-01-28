@@ -3,13 +3,21 @@
 
 module Session :
 sig
-  type oauth1_context =
-      { token : string;
-        secret : string }
+  type oauth1_context = {
+    token : string;
+    secret : string;
+  }
 
-  type oauth2_context =
-      { oauth2_token : string;
-        refresh_token : string }
+  val token : (oauth1_context, string) GapiLens.t
+  val secret : (oauth1_context, string) GapiLens.t
+
+  type oauth2_context = {
+    oauth2_token : string;
+    refresh_token : string;
+  }
+
+  val oauth2_token : (oauth2_context, string) GapiLens.t
+  val refresh_token : (oauth2_context, string) GapiLens.t
 
   type auth_context =
       NoAuth
@@ -17,12 +25,19 @@ sig
     | OAuth1 of oauth1_context
     | OAuth2 of oauth2_context
 
-  type t =
-      { curl : [ `Created ] GapiCurl.t;
-        config : GapiConfig.t;
-        auth : auth_context;
-        cookies : string list;
-        etag : string }
+  type t = {
+    curl : [ `Created ] GapiCurl.t;
+    config : GapiConfig.t;
+    auth : auth_context;
+    cookies : string list;
+    etag : string;
+  }
+
+  val curl : (t, [ `Created ] GapiCurl.t) GapiLens.t
+  val config : (t, GapiConfig.t) GapiLens.t
+  val auth : (t, auth_context) GapiLens.t
+  val cookies : (t, string list) GapiLens.t
+  val etag : (t, string) GapiLens.t
 
 end
 

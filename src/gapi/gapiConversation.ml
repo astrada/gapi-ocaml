@@ -12,11 +12,33 @@ let debug_print start_time curl info_type info =
 
 module Session =
 struct
-  type oauth1_context = { token : string;
-                          secret : string }
+  type oauth1_context = {
+    token : string;
+    secret : string;
+  }
 
-  type oauth2_context = { oauth2_token: string;
-                          refresh_token : string }
+	let token = {
+		GapiLens.get = (fun x -> x.token);
+		GapiLens.set = (fun v x -> { x with token = v })
+	}
+	let secret = {
+		GapiLens.get = (fun x -> x.secret);
+		GapiLens.set = (fun v x -> { x with secret = v })
+	}
+
+  type oauth2_context = {
+    oauth2_token: string;
+    refresh_token : string;
+  }
+
+  let oauth2_token = {
+		GapiLens.get = (fun x -> x.oauth2_token);
+		GapiLens.set = (fun v x -> { x with oauth2_token = v })
+	}
+	let refresh_token = {
+		GapiLens.get = (fun x -> x.refresh_token);
+		GapiLens.set = (fun v x -> { x with refresh_token = v })
+	}
 
   type auth_context =
       NoAuth
@@ -24,13 +46,34 @@ struct
     | OAuth1 of oauth1_context
     | OAuth2 of oauth2_context
 
-  type t =
-      { curl : [`Created] GapiCurl.t;
-        config : GapiConfig.t;
-        auth : auth_context;
-        cookies : string list;
-        etag : string
-      }
+  type t = {
+    curl : [`Created] GapiCurl.t;
+    config : GapiConfig.t;
+    auth : auth_context;
+    cookies : string list;
+    etag : string;
+  }
+
+	let curl = {
+		GapiLens.get = (fun x -> x.curl);
+		GapiLens.set = (fun v x -> { x with curl = v })
+	}
+	let config = {
+		GapiLens.get = (fun x -> x.config);
+		GapiLens.set = (fun v x -> { x with config = v })
+	}
+	let auth = {
+		GapiLens.get = (fun x -> x.auth);
+		GapiLens.set = (fun v x -> { x with auth = v })
+	}
+	let cookies = {
+		GapiLens.get = (fun x -> x.cookies);
+		GapiLens.set = (fun v x -> { x with cookies = v })
+	}
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
+	}
 
 end
 
