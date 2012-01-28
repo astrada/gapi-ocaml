@@ -26,12 +26,14 @@ type auth_config =
   | OAuth1 of oauth1_config
   | OAuth2 of oauth2_config
 
-type t =
-    { debug : debug_function option;
-      timeout : int option;
-      connect_timeout : int option;
-      compress : bool;
-      auth : auth_config }
+type t = {
+  application_name : string;
+  debug : debug_function option;
+  timeout : int option;
+  connect_timeout : int option;
+  compress : bool;
+  auth : auth_config;
+}
 
 val default : t
 
