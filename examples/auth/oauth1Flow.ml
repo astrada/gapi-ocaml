@@ -1,3 +1,5 @@
+open GapiLens.Infix
+
 (* Load the configuration file and read the OAuth1 values *)
 let test_config = Config.parse ()
 let get = Config.get test_config
@@ -28,12 +30,10 @@ let get_access_token
              session in
 
          (* Read the response *)
-         let (access_token, access_token_secret) =
-           match response with
-               GapiAuthResponse.OAuth1GetAccessToken token ->
-                 (token.GapiAuthResponse.OAuth1.access_token,
-                  token.GapiAuthResponse.OAuth1.access_token_secret)
-             | _ -> failwith "Not supported OAuth1 response" in
+         let { GapiAuthResponse.OAuth1.access_token;
+               access_token_secret } = response
+           |. GapiAuthResponse.oauth1_get_access_token
+           |. GapiLens.option_get in
 
          (* Generate the HTML output page *)
          let output =
@@ -99,22 +99,20 @@ let get_request_token () =
            session in
 
        (* Read the response *)
-       let (token, secret) =
-         match response with
-             GapiAuthResponse.OAuth1RequestToken token ->
-               (token.GapiAuthResponse.OAuth1.request_token,
-                token.GapiAuthResponse.OAuth1.request_token_secret)
-           | _ -> failwith "Not supported OAuth1 response" in
+       let { GapiAuthResponse.OAuth1.request_token;
+             request_token_secret } = response
+         |. GapiAuthResponse.oauth1_request_token
+         |. GapiLens.option_get in
 
        (* Generate and print out the URL used to authorize the token *)
        let url = GapiOAuth1.authorize_token_url
                    ~hd:"default"
                    ~hl:"en"
-                   token in
+                   request_token in
          print_endline ("Open this URL in a web browser:\n" ^ url);
 
          (* Start the web server and wait for the Google callback *)
-         Common.start_netplex (oauth1_callback secret))
+         Common.start_netplex (oauth1_callback request_token_secret))
 
 let _ =
   (* Ignore SIGPIPE (required by nethttpd) *)

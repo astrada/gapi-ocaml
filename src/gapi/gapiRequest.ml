@@ -1,4 +1,5 @@
 open GapiUtils.Infix
+open GapiLens.Infix
 
 exception Redirect of string * GapiConversation.Session.t
 exception Unauthorized of GapiConversation.Session.t
@@ -51,40 +52,38 @@ let build_auth_data session =
       GapiConfig.NoAuth ->
         GapiAuth.NoAuth
     | GapiConfig.ClientLogin _ ->
-        begin match session.GapiConversation.Session.auth with
-            GapiConversation.Session.ClientLogin token ->
-              GapiAuth.ClientLogin token
-          | _ ->
-              failwith "Unexpected auth context for Client Login"
-        end
+        let token = session
+          |. GapiConversation.Session.auth
+          |. GapiConversation.Session.client_login
+          |. GapiLens.option_get
+        in
+          GapiAuth.ClientLogin token
     | GapiConfig.OAuth1 { GapiConfig.signature_method;
                           consumer_key;
                           consumer_secret } ->
-        begin match session.GapiConversation.Session.auth with
-            GapiConversation.Session.OAuth1
-              { GapiConversation.Session.token;
-                secret } ->
-              GapiAuth.OAuth1 { GapiAuth.signature_method;
-                                consumer_key;
-                                consumer_secret;
-                                token;
-                                secret }
-          | _ ->
-              failwith "Unexpected auth context for OAuth1"
-        end
+        let { GapiConversation.Session.token;
+                secret } = session
+          |. GapiConversation.Session.auth
+          |. GapiConversation.Session.oauth1
+          |. GapiLens.option_get
+        in
+          GapiAuth.OAuth1 { GapiAuth.signature_method;
+                            consumer_key;
+                            consumer_secret;
+                            token;
+                            secret }
     | GapiConfig.OAuth2 { GapiConfig.client_id;
                           client_secret } ->
-        begin match session.GapiConversation.Session.auth with
-            GapiConversation.Session.OAuth2
-              { GapiConversation.Session.oauth2_token;
-                refresh_token } ->
-              GapiAuth.OAuth2 { GapiAuth.client_id;
-                                client_secret;
-                                oauth2_token;
-                                refresh_token }
-          | _ ->
-              failwith "Unexpected auth context for OAuth2"
-        end
+        let { GapiConversation.Session.oauth2_token;
+                refresh_token } = session
+          |. GapiConversation.Session.auth
+          |. GapiConversation.Session.oauth2
+          |. GapiLens.option_get
+        in
+          GapiAuth.OAuth2 { GapiAuth.client_id;
+                            client_secret;
+                            oauth2_token;
+                            refresh_token }
 
 let single_request
       ?post_data
@@ -172,17 +171,11 @@ let refresh_oauth2_token session =
                 GapiAuthResponse.OAuth2AccessToken token ->
                   token.GapiAuthResponse.OAuth2.access_token
               | _ -> failwith "Not supported OAuth2 response" in
-          let new_auth_context =
-            match new_session.GapiConversation.Session.auth with
-                GapiConversation.Session.OAuth2 data ->
-                  { data with
-                        GapiConversation.Session.oauth2_token = access_token }
-              | _ ->
-                  failwith "Unexptected OAuth2 auth context"
-          in
-            { new_session with
-                  GapiConversation.Session.auth = GapiConversation.Session.OAuth2
-                                                     new_auth_context }
+            new_session
+              |> GapiConversation.Session.auth
+              ^%= GapiConversation.Session.oauth2
+              ^%= GapiLens.option_get
+              ^%= GapiConversation.Session.oauth2_token ^= access_token
       | _ ->
           failwith "Unauthorized" (* TODO: better error handling *)
 

@@ -1,3 +1,5 @@
+open GapiLens.Infix
+
 (* Load the configuration file and read the OAuth2 values *)
 let test_config = Config.parse ()
 let get = Config.get test_config
@@ -21,14 +23,12 @@ let get_access_token code (cgi : Netcgi.cgi_activation) =
            session in
 
        (* Read the response *)
-       let (access_token, token_type, expires_in, refresh_token) =
-         match response with
-             GapiAuthResponse.OAuth2AccessToken token ->
-               (token.GapiAuthResponse.OAuth2.access_token,
-                token.GapiAuthResponse.OAuth2.token_type,
-                token.GapiAuthResponse.OAuth2.expires_in,
-                token.GapiAuthResponse.OAuth2.refresh_token)
-           | _ -> failwith "Not supported OAuth2 response" in
+       let { GapiAuthResponse.OAuth2.access_token;
+             token_type;
+             expires_in;
+             refresh_token } = response
+         |. GapiAuthResponse.oauth2_access_token
+         |. GapiLens.option_get in
 
        (* Generate the HTML output page *)
        let output =
