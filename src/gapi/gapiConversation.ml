@@ -46,6 +46,23 @@ struct
     | OAuth1 of oauth1_context
     | OAuth2 of oauth2_context
 
+  let no_auth = {
+		GapiLens.get = (function NoAuth -> Some () | _ -> None);
+		GapiLens.set = (fun _ _ -> NoAuth)
+  }
+  let client_login = {
+		GapiLens.get = (function ClientLogin v -> Some v | _ -> None);
+		GapiLens.set = (fun v _ -> ClientLogin (Option.get v))
+  }
+  let oauth1 = {
+		GapiLens.get = (function OAuth1 v -> Some v | _ -> None);
+		GapiLens.set = (fun v _ -> OAuth1 (Option.get v))
+  }
+  let oauth2 = {
+		GapiLens.get = (function OAuth2 v -> Some v | _ -> None);
+		GapiLens.set = (fun v _ -> OAuth2 (Option.get v))
+  }
+
   type t = {
     curl : [`Created] GapiCurl.t;
     config : GapiConfig.t;
@@ -143,10 +160,12 @@ let request
     begin match http_method with
         GapiCore.HttpMethod.PATCH
       | GapiCore.HttpMethod.DELETE ->
-          GapiCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+          GapiCurl.set_customrequest
+            (GapiCore.HttpMethod.to_string http_method) session.Session.curl
       | _ ->
           (* FIXME: reset curl custom request *)
-          GapiCurl.set_customrequest (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+          GapiCurl.set_customrequest
+            (GapiCore.HttpMethod.to_string http_method) session.Session.curl
     end;
     begin match post_data with
         Some (GapiCore.PostData.Fields key_value_list) ->
@@ -172,7 +191,8 @@ let request
                                   []
                                   header_queue) in
       let new_session = update_session response_headers session in
-      let result = parse_response pipe response_code response_headers new_session in
+      let result = parse_response
+                     pipe response_code response_headers new_session in
         GapiPipe.OcamlnetPipe.end_reading pipe;
         (result, new_session)
     with
@@ -180,7 +200,8 @@ let request
           GapiPipe.OcamlnetPipe.end_reading pipe;
           failwith (Printf.sprintf
                       "Code: %d, Description: %s, ErrorBuffer: %s\n"
-                      code desc (GapiCurl.get_error_buffer session.Session.curl))
+                      code desc
+                      (GapiCurl.get_error_buffer session.Session.curl))
       | e ->
           GapiPipe.OcamlnetPipe.end_reading pipe;
           raise e

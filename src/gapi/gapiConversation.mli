@@ -25,6 +25,11 @@ sig
     | OAuth1 of oauth1_context
     | OAuth2 of oauth2_context
 
+  val no_auth : (auth_context, unit option) GapiLens.t
+  val client_login : (auth_context, string option) GapiLens.t
+  val oauth1 : (auth_context, oauth1_context option) GapiLens.t
+  val oauth2 : (auth_context, oauth2_context option) GapiLens.t
+
   type t = {
     curl : [ `Created ] GapiCurl.t;
     config : GapiConfig.t;
