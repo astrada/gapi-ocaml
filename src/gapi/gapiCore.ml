@@ -1,3 +1,5 @@
+let library_version = "0.1"
+
 module AnnotatedTree = struct
   type ('a, 'b) t =
       Leaf of 'a * 'b

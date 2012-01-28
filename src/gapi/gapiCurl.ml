@@ -168,6 +168,11 @@ let set_postfields key_value_list (state : [`Created] t) =
     )
     state
 
+let set_useragent value (state : [`Created] t) =
+  with_curl
+    (fun curl -> Curl.set_useragent curl value)
+    state
+
 let set_cookies cookies (state : [`Created] t) =
   with_curl
     (fun curl ->

@@ -71,6 +71,11 @@ let request
   let writer data =
     GapiPipe.OcamlnetPipe.write_string pipe data;
     String.length data in
+  let user_agent_header =
+    Printf.sprintf "%s gapi-ocaml/%s/%s"
+      session.Session.config.GapiConfig.application_name
+      GapiCore.library_version
+      Sys.os_type in
   let request_headers =
     let hl = Option.default [] header_list in
       match post_data with
@@ -111,6 +116,7 @@ let request
                 GapiCurl.set_postfields [] session.Session.curl
             | _ -> ()
     end;
+    GapiCurl.set_useragent user_agent_header session.Session.curl;
     GapiCurl.set_httpheader request_headers session.Session.curl;
     GapiCurl.set_cookies session.Session.cookies session.Session.curl;
     try

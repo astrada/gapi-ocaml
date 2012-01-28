@@ -3,6 +3,8 @@
   This module defines the data types used to represent the data model of JSON and XML documents, and some utility types related to HTTP protocol.
   *)
 
+val library_version : string
+
 module AnnotatedTree :
 sig
   type ('a, 'b) t =

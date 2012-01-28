@@ -43,6 +43,8 @@ val set_customrequest : string -> [ `Created ] t -> unit
 
 val set_postfields : (string * string) list -> [ `Created ] t -> unit
 
+val set_useragent : string -> [ `Created ] t -> unit
+
 val set_cookies : string list -> [ `Created ] t -> unit
 
 val reset_all_cookies : [ `Created ] t -> unit
