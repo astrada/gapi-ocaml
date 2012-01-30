@@ -143,14 +143,14 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ?(alt = Alt.Default)
         ~activityId
         session =
     let full_url = GapiUtils.add_path_to_url ["activities";
       ((fun x -> x) activityId)] base_url in
     let params = ActivitiesParameters.merge_parameters
-      ?standard_parameters:parameters ~alt () in
+      ?standard_parameters:std_params ~alt () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -158,7 +158,7 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ?(alt = Alt.Default)
         ?(maxResults = 20)
         ?pageToken
@@ -169,7 +169,7 @@ struct
       ((fun x -> x) userId); "activities"; (Collection.to_string collection)]
       base_url in
     let params = ActivitiesParameters.merge_parameters
-      ?standard_parameters:parameters ~alt ~maxResults ?pageToken () in
+      ?standard_parameters:std_params ~alt ~maxResults ?pageToken () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -177,7 +177,7 @@ struct
     
   let search
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ?(maxResults = 10)
         ?(orderBy = OrderBy.Default)
         ?language
@@ -186,7 +186,7 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["activities"] base_url in
     let params = ActivitiesParameters.merge_parameters
-      ?standard_parameters:parameters ?language ~maxResults ~orderBy
+      ?standard_parameters:std_params ?language ~maxResults ~orderBy
       ?pageToken ~query () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
@@ -280,13 +280,13 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ~commentId
         session =
     let full_url = GapiUtils.add_path_to_url ["comments";
       ((fun x -> x) commentId)] base_url in
     let params = CommentsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -294,7 +294,7 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ?(alt = Alt.Default)
         ?(maxResults = 20)
         ?pageToken
@@ -303,7 +303,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["activities";
       ((fun x -> x) activityId); "comments"] base_url in
     let params = CommentsParameters.merge_parameters
-      ?standard_parameters:parameters ~alt ~maxResults ?pageToken () in
+      ?standard_parameters:std_params ~alt ~maxResults ?pageToken () in
     let query_parameters = Option.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -404,13 +404,13 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ~userId
         session =
     let full_url = GapiUtils.add_path_to_url ["people";
       ((fun x -> x) userId)] base_url in
     let params = PeopleParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map PeopleParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -418,7 +418,7 @@ struct
     
   let listByActivity
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ?(maxResults = 20)
         ?pageToken
         ~activityId
@@ -428,7 +428,7 @@ struct
       ((fun x -> x) activityId); "people"; (Collection.to_string collection)]
       base_url in
     let params = PeopleParameters.merge_parameters
-      ?standard_parameters:parameters ~maxResults ?pageToken () in
+      ?standard_parameters:std_params ~maxResults ?pageToken () in
     let query_parameters = Option.map PeopleParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -436,7 +436,7 @@ struct
     
   let search
         ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?parameters
+        ?std_params
         ?(maxResults = 10)
         ?language
         ?pageToken
@@ -444,7 +444,7 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["people"] base_url in
     let params = PeopleParameters.merge_parameters
-      ?standard_parameters:parameters ?language ~maxResults ?pageToken ~query
+      ?standard_parameters:std_params ?language ~maxResults ?pageToken ~query
       () in
     let query_parameters = Option.map PeopleParameters.to_key_value_list
       params in

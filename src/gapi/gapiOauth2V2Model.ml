@@ -59,8 +59,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "access_type" x.access_type;
       GapiJson.render_string_value "audience" x.audience;
       GapiJson.render_string_value "email" x.email;
@@ -71,6 +71,8 @@ struct
       GapiJson.render_bool_value "verified_email" x.verified_email;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -201,8 +203,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "birthday" x.birthday;
       GapiJson.render_string_value "email" x.email;
       GapiJson.render_string_value "family_name" x.family_name;
@@ -217,6 +219,8 @@ struct
       GapiJson.render_bool_value "verified_email" x.verified_email;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf

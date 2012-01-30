@@ -93,14 +93,14 @@ struct
   
   let getRest
         ?(base_url = "https://www.googleapis.com/discovery/v1/")
-        ?parameters
+        ?std_params
         ~api
         ~version
         session =
     let full_url = GapiUtils.add_path_to_url ["apis"; ((fun x -> x) api);
       ((fun x -> x) version); "rest"] base_url in
     let params = ApisParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map ApisParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
@@ -108,14 +108,14 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/discovery/v1/")
-        ?parameters
+        ?std_params
         ?(preferred = false)
         ?label
         ?name
         session =
     let full_url = GapiUtils.add_path_to_url ["apis"] base_url in
     let params = ApisParameters.merge_parameters
-      ?standard_parameters:parameters ?label ?name ~preferred () in
+      ?standard_parameters:std_params ?label ?name ~preferred () in
     let query_parameters = Option.map ApisParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url

@@ -47,8 +47,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
@@ -57,6 +57,8 @@ struct
       GapiJson.render_date_value "updated" x.updated;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -134,8 +136,7 @@ struct
         GapiJson.render_string_value "type" x._type;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -259,8 +260,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_date_value "completed" x.completed;
       GapiJson.render_bool_value "deleted" x.deleted;
       GapiJson.render_date_value "due" x.due;
@@ -278,6 +279,8 @@ struct
       GapiJson.render_date_value "updated" x.updated;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -402,14 +405,16 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" TaskList.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -490,14 +495,16 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Task.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf

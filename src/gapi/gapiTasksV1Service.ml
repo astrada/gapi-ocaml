@@ -69,13 +69,13 @@ struct
   
   let delete
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists";
       ((fun x -> x) tasklist)] base_url in
     let params = TasklistsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
@@ -83,13 +83,13 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists";
       ((fun x -> x) tasklist)] base_url in
     let params = TasklistsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -97,14 +97,14 @@ struct
     
   let insert
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         taskList
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists"]
       base_url in
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasklistsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -114,14 +114,14 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ?maxResults
         ?pageToken
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "@me"; "lists"]
       base_url in
     let params = TasklistsParameters.merge_parameters
-      ?standard_parameters:parameters ?maxResults ?pageToken () in
+      ?standard_parameters:std_params ?maxResults ?pageToken () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -129,7 +129,7 @@ struct
     
   let patch
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         taskList
         session =
@@ -137,7 +137,7 @@ struct
       ((fun x -> x) tasklist)] base_url in
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasklistsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -147,7 +147,7 @@ struct
     
   let update
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         taskList
         session =
@@ -155,7 +155,7 @@ struct
       ((fun x -> x) tasklist)] base_url in
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasklistsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
@@ -278,13 +278,13 @@ struct
   
   let clear
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         session =
     let full_url = GapiUtils.add_path_to_url ["lists";
       ((fun x -> x) tasklist); "clear"] base_url in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:() full_url
@@ -292,14 +292,14 @@ struct
     
   let delete
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         ~task
         session =
     let full_url = GapiUtils.add_path_to_url ["lists";
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
@@ -307,14 +307,14 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         ~task
         session =
     let full_url = GapiUtils.add_path_to_url ["lists";
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -322,7 +322,7 @@ struct
     
   let insert
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ?parent
         ?previous
         ~tasklist
@@ -332,7 +332,7 @@ struct
       ((fun x -> x) tasklist); "tasks"] base_url in
     let etag = GapiUtils.etag_option task.Task.etag in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters ?parent ?previous () in
+      ?standard_parameters:std_params ?parent ?previous () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -341,7 +341,7 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ?completedMax
         ?completedMin
         ?dueMax
@@ -357,7 +357,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["lists";
       ((fun x -> x) tasklist); "tasks"] base_url in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters ?completedMax ?completedMin ?dueMax
+      ?standard_parameters:std_params ?completedMax ?completedMin ?dueMax
       ?dueMin ?maxResults ?pageToken ?showCompleted ?showDeleted ?showHidden
       ?updatedMin () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
@@ -367,7 +367,7 @@ struct
     
   let move
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ?parent
         ?previous
         ~tasklist
@@ -377,7 +377,7 @@ struct
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task); "move"] base_url
       in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters ?parent ?previous () in
+      ?standard_parameters:std_params ?parent ?previous () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Task.empty full_url
@@ -385,7 +385,7 @@ struct
     
   let patch
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         ~task
         task'
@@ -394,7 +394,7 @@ struct
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let etag = GapiUtils.etag_option task'.Task.etag in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -403,7 +403,7 @@ struct
     
   let update
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
-        ?parameters
+        ?std_params
         ~tasklist
         ~task
         task'
@@ -412,7 +412,7 @@ struct
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let etag = GapiUtils.etag_option task'.Task.etag in
     let params = TasksParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag

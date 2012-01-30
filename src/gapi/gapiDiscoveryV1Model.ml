@@ -134,8 +134,7 @@ struct
       GapiJson.render_string_value "type" x._type;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -282,8 +281,7 @@ struct
         GapiJson.render_string_value "$ref" x._ref;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -322,8 +320,7 @@ struct
         GapiJson.render_string_value "$ref" x._ref;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -373,8 +370,7 @@ struct
             GapiJson.render_string_value "path" x.path;
             
           ]
-        
-        let render x = 
+        and render x = 
           GapiJson.render_object "" (render_content x)
         
         let rec parse x = function
@@ -424,8 +420,7 @@ struct
             GapiJson.render_string_value "path" x.path;
             
           ]
-        
-        let render x = 
+        and render x = 
           GapiJson.render_object "" (render_content x)
         
         let rec parse x = function
@@ -473,8 +468,7 @@ struct
           (fun v -> GapiJson.render_object "simple" (SimpleData.render_content v)) x.simple;
           
         ]
-      
-      let render x = 
+      and render x = 
         GapiJson.render_object "" (render_content x)
       
       let rec parse x = function
@@ -537,8 +531,7 @@ struct
         (fun v -> GapiJson.render_object "protocols" (ProtocolsData.render_content v)) x.protocols;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -660,8 +653,7 @@ struct
       GapiJson.render_array "scopes" (GapiJson.render_string_value "") x.scopes;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -793,8 +785,7 @@ struct
       GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (render_content v)) v) x.resources;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -874,8 +865,7 @@ struct
         GapiJson.render_string_value "x32" x.x32;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -922,8 +912,7 @@ struct
             GapiJson.render_string_value "description" x.description;
             
           ]
-        
-        let render x = 
+        and render x = 
           GapiJson.render_object "" (render_content x)
         
         let rec parse x = function
@@ -960,8 +949,7 @@ struct
           GapiJson.render_collection "scopes" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ScopesData.render_content v)) v) x.scopes;
           
         ]
-      
-      let render x = 
+      and render x = 
         GapiJson.render_object "" (render_content x)
       
       let rec parse x = function
@@ -1012,8 +1000,7 @@ struct
         (fun v -> GapiJson.render_object "oauth2" (Oauth2Data.render_content v)) x.oauth2;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -1151,8 +1138,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       (fun v -> GapiJson.render_object "auth" (AuthData.render_content v)) x.auth;
       GapiJson.render_string_value "basePath" x.basePath;
       GapiJson.render_string_value "baseUrl" x.baseUrl;
@@ -1173,6 +1160,8 @@ struct
       GapiJson.render_string_value "version" x.version;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Node
@@ -1377,8 +1366,7 @@ struct
           GapiJson.render_string_value "x32" x.x32;
           
         ]
-      
-      let render x = 
+      and render x = 
         GapiJson.render_object "" (render_content x)
       
       let rec parse x = function
@@ -1496,8 +1484,7 @@ struct
         GapiJson.render_string_value "version" x.version;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -1593,12 +1580,14 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_array "items" ItemsData.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Node

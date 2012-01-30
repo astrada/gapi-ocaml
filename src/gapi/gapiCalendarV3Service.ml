@@ -11,14 +11,14 @@ module AclResource =
 struct
   let delete
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         ~ruleId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
@@ -26,14 +26,14 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         ~ruleId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -41,7 +41,7 @@ struct
     
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         aclRule
         session =
@@ -49,7 +49,7 @@ struct
       ((fun x -> x) calendarId); "acl"] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
@@ -59,13 +59,13 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -73,7 +73,7 @@ struct
     
   let patch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         ~ruleId
         aclRule
@@ -82,7 +82,7 @@ struct
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
@@ -92,7 +92,7 @@ struct
     
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         ~ruleId
         aclRule
@@ -101,7 +101,7 @@ struct
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
@@ -210,13 +210,13 @@ struct
   
   let delete
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
       ((fun x -> x) calendarId)] base_url in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
@@ -224,13 +224,13 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
       ((fun x -> x) calendarId)] base_url in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -238,7 +238,7 @@ struct
     
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         calendarListEntry
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList"]
@@ -246,7 +246,7 @@ struct
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
@@ -256,7 +256,7 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?maxResults
         ?minAccessRole
         ?pageToken
@@ -265,7 +265,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList"]
       base_url in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:parameters ?maxResults ?minAccessRole ?pageToken
+      ?standard_parameters:std_params ?maxResults ?minAccessRole ?pageToken
       ?showHidden () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
@@ -274,7 +274,7 @@ struct
     
   let patch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         calendarListEntry
         session =
@@ -283,7 +283,7 @@ struct
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
@@ -293,7 +293,7 @@ struct
     
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         calendarListEntry
         session =
@@ -302,7 +302,7 @@ struct
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
@@ -317,13 +317,13 @@ module CalendarsResource =
 struct
   let clear
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "clear"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ~data:() full_url
@@ -331,13 +331,13 @@ struct
     
   let delete
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
@@ -345,13 +345,13 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -359,13 +359,13 @@ struct
     
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         calendar
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars"] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
@@ -375,7 +375,7 @@ struct
     
   let patch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         calendar
         session =
@@ -383,7 +383,7 @@ struct
       ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
@@ -393,7 +393,7 @@ struct
     
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         calendar
         session =
@@ -401,7 +401,7 @@ struct
       ((fun x -> x) calendarId)] base_url in
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
@@ -416,11 +416,11 @@ module ColorsResource =
 struct
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         session =
     let full_url = GapiUtils.add_path_to_url ["colors"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -586,7 +586,7 @@ struct
   
   let delete
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -595,7 +595,7 @@ struct
       ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId)] base_url
       in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?sendNotifications () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
@@ -603,7 +603,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?maxAttendees
         ?timeZone
         ~calendarId
@@ -613,7 +613,7 @@ struct
       ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId)] base_url
       in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?maxAttendees ?timeZone () in
+      ?standard_parameters:std_params ?maxAttendees ?timeZone () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -621,7 +621,7 @@ struct
     
   let import
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~calendarId
         event
         session =
@@ -629,7 +629,7 @@ struct
       ((fun x -> x) calendarId); "events"; "import"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -638,7 +638,7 @@ struct
     
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         event
@@ -647,7 +647,7 @@ struct
       ((fun x -> x) calendarId); "events"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?sendNotifications () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -656,7 +656,7 @@ struct
     
   let instances
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?maxAttendees
         ?maxResults
         ?originalStart
@@ -670,7 +670,7 @@ struct
       ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId);
       "instances"] base_url in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?maxAttendees ?maxResults
+      ?standard_parameters:std_params ?maxAttendees ?maxResults
       ?originalStart ?pageToken ?showDeleted ?timeZone () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
@@ -679,7 +679,7 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?iCalUID
         ?maxAttendees
         ?maxResults
@@ -698,7 +698,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "events"] base_url in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?iCalUID ?maxAttendees ?maxResults
+      ?standard_parameters:std_params ?iCalUID ?maxAttendees ?maxResults
       ?orderBy ?pageToken ?q ?showDeleted ?showHiddenInvitations
       ?singleEvents ?timeMax ?timeMin ?timeZone ?updatedMin () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
@@ -708,7 +708,7 @@ struct
     
   let move
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -718,7 +718,7 @@ struct
       ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId); "move"]
       base_url in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ~destination ?sendNotifications () in
+      ?standard_parameters:std_params ~destination ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Event.empty full_url
@@ -726,7 +726,7 @@ struct
     
   let patch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -737,7 +737,7 @@ struct
       in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?sendNotifications () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -746,7 +746,7 @@ struct
     
   let quickAdd
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         ~text
@@ -754,7 +754,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "events"; "quickAdd"] base_url in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?sendNotifications ~text () in
+      ?standard_parameters:std_params ?sendNotifications ~text () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Event.empty full_url
@@ -762,7 +762,7 @@ struct
     
   let reset
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -771,7 +771,7 @@ struct
       ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId); "reset"]
       base_url in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?sendNotifications () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Event.empty full_url
@@ -779,7 +779,7 @@ struct
     
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -790,7 +790,7 @@ struct
       in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:parameters ?sendNotifications () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
@@ -804,12 +804,12 @@ module FreebusyResource =
 struct
   let query
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         freeBusyRequest
         session =
     let full_url = GapiUtils.add_path_to_url ["freeBusy"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters
@@ -824,13 +824,13 @@ module SettingsResource =
 struct
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         ~setting
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings";
       ((fun x -> x) setting)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -838,12 +838,12 @@ struct
     
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?parameters
+        ?std_params
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings"]
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url

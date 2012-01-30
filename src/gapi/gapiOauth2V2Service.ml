@@ -11,12 +11,12 @@ struct
     struct
       let get
             ?(base_url = "https://www.googleapis.com/")
-            ?parameters
+            ?std_params
             session =
         let full_url = GapiUtils.add_path_to_url ["userinfo"; "v2"; "me"]
           base_url in
         let params = GapiService.StandardParameters.merge_parameters
-          ?standard_parameters:parameters () in
+          ?standard_parameters:std_params () in
         let query_parameters = Option.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters full_url
@@ -28,11 +28,11 @@ struct
     
   end
   
-  let get ?(base_url = "https://www.googleapis.com/") ?parameters session =
+  let get ?(base_url = "https://www.googleapis.com/") ?std_params session =
     let full_url = GapiUtils.add_path_to_url ["oauth2"; "v2"; "userinfo"]
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:parameters () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -101,14 +101,14 @@ end
 
 let tokeninfo
       ?(base_url = "https://www.googleapis.com/")
-      ?parameters
+      ?std_params
       ?access_token
       ?id_token
       session =
   let full_url = GapiUtils.add_path_to_url ["oauth2"; "v2"; "tokeninfo"]
     base_url in
   let params = Oauth2Parameters.merge_parameters
-    ?standard_parameters:parameters ?access_token ?id_token () in
+    ?standard_parameters:std_params ?access_token ?id_token () in
   let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
     in
   GapiService.get ?query_parameters full_url

@@ -23,12 +23,14 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "count" x.count;
       GapiJson.render_string_value "id" x.id;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -109,8 +111,7 @@ struct
       GapiJson.render_string_value "shortUrlClicks" x.shortUrlClicks;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -257,8 +258,7 @@ struct
       (fun v -> GapiJson.render_object "week" (AnalyticsSnapshot.render_content v)) x.week;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -362,8 +362,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       (fun v -> GapiJson.render_object "analytics" (AnalyticsSummary.render_content v)) x.analytics;
       GapiJson.render_string_value "created" x.created;
       GapiJson.render_string_value "id" x.id;
@@ -372,6 +372,8 @@ struct
       GapiJson.render_string_value "status" x.status;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Node
@@ -456,8 +458,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_array "items" Url.render x.items;
       GapiJson.render_int_value "itemsPerPage" x.itemsPerPage;
       GapiJson.render_string_value "kind" x.kind;
@@ -465,6 +467,8 @@ struct
       GapiJson.render_int_value "totalItems" x.totalItems;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Node

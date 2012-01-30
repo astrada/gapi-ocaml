@@ -29,13 +29,13 @@ sig
   (** Expands a short URL or gets creation time and analytics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
-    @param parameters Optional standard parameters.
+    @param std_params Optional standard parameters.
     @param projection Additional information to return.
     @param shortUrl The short URL, including the protocol.
     *)
   val get :
     ?base_url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
+    ?std_params:GapiService.StandardParameters.t ->
     ?projection:Projection.t ->
     shortUrl:string ->
     GapiConversation.Session.t ->
@@ -44,11 +44,11 @@ sig
   (** Creates a new short URL.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
-    @param parameters Optional standard parameters.
+    @param std_params Optional standard parameters.
     *)
   val insert :
     ?base_url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
+    ?std_params:GapiService.StandardParameters.t ->
     GapiUrlshortenerV1Model.Url.t ->
     GapiConversation.Session.t ->
     GapiUrlshortenerV1Model.Url.t * GapiConversation.Session.t
@@ -56,13 +56,13 @@ sig
   (** Retrieves a list of URLs shortened by a user.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
-    @param parameters Optional standard parameters.
+    @param std_params Optional standard parameters.
     @param projection Additional information to return.
     @param start_token Token for requesting successive pages of results.
     *)
   val list :
     ?base_url:string ->
-    ?parameters:GapiService.StandardParameters.t ->
+    ?std_params:GapiService.StandardParameters.t ->
     ?projection:Projection.t ->
     ?start_token:string ->
     GapiConversation.Session.t ->

@@ -29,8 +29,7 @@ struct
       GapiJson.render_string_value "foreground" x.foreground;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -90,14 +89,16 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_collection "calendar" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ColorDefinition.render_content v)) v) x.calendar;
       GapiJson.render_collection "event" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ColorDefinition.render_content v)) v) x.event;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_date_value "updated" x.updated;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Node
@@ -192,14 +193,16 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "value" x.value;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -262,8 +265,7 @@ struct
         GapiJson.render_string_value "value" x.value;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -323,8 +325,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
@@ -332,6 +334,8 @@ struct
       (fun v -> GapiJson.render_object "scope" (ScopeData.render_content v)) x.scope;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -394,12 +398,14 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "domain" x.domain;
       GapiJson.render_string_value "reason" x.reason;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -452,8 +458,7 @@ struct
       GapiJson.render_array "errors" Error.render x.errors;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -515,11 +520,13 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "id" x.id;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -604,8 +611,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_int_value "additionalGuests" x.additionalGuests;
       GapiJson.render_string_value "comment" x.comment;
       GapiJson.render_string_value "displayName" x.displayName;
@@ -617,6 +624,8 @@ struct
       GapiJson.render_bool_value "self" x.self;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -704,8 +713,7 @@ struct
       GapiJson.render_string_value "timeZone" x.timeZone;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -757,12 +765,14 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "method" x._method;
       GapiJson.render_int_value "minutes" x.minutes;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -817,8 +827,7 @@ struct
         GapiJson.render_bool_value "useDefault" x.useDefault;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -882,8 +891,7 @@ struct
         GapiJson.render_string_value "email" x.email;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -975,8 +983,7 @@ struct
         GapiJson.render_int_value "width" x.width;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -1060,8 +1067,7 @@ struct
         GapiJson.render_collection "shared" GapiJson.Object (fun (id, v) -> GapiJson.render_object id [GapiJson.render_string_value id v]) x.shared;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -1131,8 +1137,7 @@ struct
         GapiJson.render_string_value "email" x.email;
         
       ]
-    
-    let render x = 
+    and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
@@ -1354,8 +1359,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_bool_value "anyoneCanAddSelf" x.anyoneCanAddSelf;
       GapiJson.render_array "attendees" EventAttendee.render x.attendees;
       GapiJson.render_bool_value "attendeesOmitted" x.attendeesOmitted;
@@ -1390,6 +1395,8 @@ struct
       GapiJson.render_string_value "visibility" x.visibility;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -1636,8 +1643,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_int_value "calendarExpansionMax" x.calendarExpansionMax;
       GapiJson.render_int_value "groupExpansionMax" x.groupExpansionMax;
       GapiJson.render_array "items" FreeBusyRequestItem.render x.items;
@@ -1646,6 +1653,8 @@ struct
       GapiJson.render_string_value "timeZone" x.timeZone;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -1734,14 +1743,16 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" AclRule.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -1858,8 +1869,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "accessRole" x.accessRole;
       GapiJson.render_array "defaultReminders" EventReminder.render x.defaultReminders;
       GapiJson.render_string_value "description" x.description;
@@ -1872,6 +1883,8 @@ struct
       GapiJson.render_date_value "updated" x.updated;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -1980,13 +1993,15 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Setting.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -2081,8 +2096,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
@@ -2092,6 +2107,8 @@ struct
       GapiJson.render_string_value "timeZone" x.timeZone;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -2158,12 +2175,14 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_date_value "end" x._end;
       GapiJson.render_date_value "start" x.start;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -2276,8 +2295,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "accessRole" x.accessRole;
       GapiJson.render_string_value "colorId" x.colorId;
       GapiJson.render_array "defaultReminders" EventReminder.render x.defaultReminders;
@@ -2293,6 +2312,8 @@ struct
       GapiJson.render_string_value "timeZone" x.timeZone;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
@@ -2403,8 +2424,7 @@ struct
       GapiJson.render_array "errors" Error.render x.errors;
       
     ]
-  
-  let render x = 
+  and render x = 
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
@@ -2494,8 +2514,8 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_collection "calendars" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (FreeBusyCalendar.render_content v)) v) x.calendars;
       GapiJson.render_collection "groups" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (FreeBusyGroup.render_content v)) v) x.groups;
       GapiJson.render_string_value "kind" x.kind;
@@ -2503,6 +2523,8 @@ struct
       GapiJson.render_date_value "timeMin" x.timeMin;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Node
@@ -2601,14 +2623,16 @@ struct
     
   }
   
-  let rec render x = 
-    GapiJson.render_object "" [
+  let rec render_content x = 
+     [
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" CalendarListEntry.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
     ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf

@@ -142,14 +142,14 @@ let test_delete_acl () =
 let test_get_colors () =
   TestHelper.test_request_noauth
     (fun test_config session ->
-       let parameters = {
+       let std_params = {
          GapiService.StandardParameters.default with
              GapiService.StandardParameters.key =
                Config.get test_config "key"
        } in
        let (colors, session) =
          ColorsResource.get
-           ~parameters
+           ~std_params
            session
        in
          assert_equal
@@ -245,13 +245,13 @@ let test_get_calendar_partial_response () =
          CalendarsResource.insert
            new_calendar
            session in
-       let parameters =
+       let std_params =
          { GapiService.StandardParameters.default with
                GapiService.StandardParameters.fields = "kind,id,summary"
          } in
        let (entry', session) =
          CalendarsResource.get
-           ~parameters
+           ~std_params
            ~calendarId:entry.Calendar.id
            session in
        let _ = TestHelper.delay () in
@@ -729,13 +729,13 @@ let test_list_calendar_list_with_max_results () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let parameters = {
+       let std_params = {
          GapiService.StandardParameters.default with
              GapiService.StandardParameters.prettyPrint = false
        } in
        let (calendars, session) =
          CalendarListResource.list
-           ~parameters
+           ~std_params
            ~maxResults:1
            session
        in
