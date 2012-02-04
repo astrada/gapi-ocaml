@@ -1,2 +1,3 @@
-<*/monadic.*> : pkg_monad, syntax_camlp4o
+<calendar/*.ml> : pkg_netstring
+<*/monadic.ml> : pkg_monad, syntax_camlp4o
 
