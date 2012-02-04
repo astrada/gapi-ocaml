@@ -18,7 +18,7 @@ obtain a long lived token. This method should be used only for testing
 purposes because leaking a token may give full read/write access to a
 maliciuos user.
 
-See [Auth examples](../examples/auth/README.md) for instructions on how to
+See [Auth examples](../../examples/auth/README.md) for instructions on how to
 obtain an authorization token.
 
 See [ClientLogin for Installed Applications](http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html) for all the details.
@@ -29,7 +29,7 @@ If you don't have a registered Web Application, you can use the default
 consumer key/secret: `anonymous/anonymous`. Otherwise, see [Registration for Web-Based Applications](http://code.google.com/apis/accounts/docs/RegistrationForWebAppsAuto.html)
 for details on how to obtain your pair of consumer key/secret.
 
-See [Auth examples](../examples/auth/README.md) for instructions on how to
+See [Auth examples](../../examples/auth/README.md) for instructions on how to
 obtain an access token.
 
 See [OAuth 1.0 for Web Applications](http://code.google.com/apis/accounts/docs/OAuth.html) for all the details.
@@ -40,7 +40,7 @@ Google OAuth 1.0 endpoint.
 
 ### OAuth 2.0
 
-See [Auth examples](../examples/auth/README.md) for instructions on how to
+See [Auth examples](../../examples/auth/README.md) for instructions on how to
 obtain a refresh token.
 
 See [Using OAuth 2.0 for Web Server Applications](http://code.google.com/apis/accounts/docs/OAuth2WebServer.html) for all the details.

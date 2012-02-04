@@ -10,11 +10,11 @@ How to obtain credentials
 The preferred authorization mechanism to access Google services is OAuth 2.0,
 the other authorization methods are useful for development purposes only.
 
-All the utilities use a file named `auth.conf` in the [config](../../../config)
+All the utilities use a file named `auth.conf` in the [config](../../config)
 directory to read authentication credentials.
 
 You can start from the
-[auth.config.template](../../../config/auth.config.template):
+[auth.config.template](../../config/auth.config.template):
 
     $ cp auth.config.template auth.config
 
