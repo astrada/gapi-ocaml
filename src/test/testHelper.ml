@@ -43,10 +43,6 @@ let get_debug_flag test_config =
       bool_of_string value
   with Not_found -> false
 
-let update_session auth_session session =
-  { session with
-        GapiConversation.Session.auth = auth_session }
-
 let string_of_json_data_model tree =
   let join _ = String.concat "," in
     GapiCore.AnnotatedTree.fold
@@ -73,33 +69,37 @@ let do_request
       auth_session
       interact
       handle_exception =
+  let state = GapiCurl.global_init () in
+  let cleanup () = ignore (GapiCurl.global_cleanup state) in
   let rec try_request () =
-    let state = GapiCurl.global_init () in
-      begin
-        try
-          GapiConversation.with_session
-            config
-            state
-            (fun session ->
-               let session' = update_session auth_session session in
-                 interact session')
-        with
-            Failure message as e ->
-              if ExtString.String.exists message "CURLE_OPERATION_TIMEOUTED" then
-                try_request ()
-              else
-                handle_exception e
-          | GapiService.ServiceError e ->
-              let e' = Failure (
-                e |> GapiError.RequestError.to_data_model
-                  |> string_of_json_data_model)
-              in
-                handle_exception e'
-          | e -> handle_exception e
-      end;
-      ignore (GapiCurl.global_cleanup state)
+    try
+      GapiConversation.with_session
+        ~auth_context:auth_session
+        config
+        state
+        interact
+    with
+        Failure message as e ->
+          if ExtString.String.exists
+               message "CURLE_OPERATION_TIMEOUTED" then
+            try_request ()
+          else
+            handle_exception e
+      | GapiService.ServiceError e ->
+          let e' = Failure (
+            e |> GapiError.RequestError.to_data_model
+              |> string_of_json_data_model)
+          in
+            handle_exception e'
+      | e ->
+          handle_exception e
   in
-    try_request ()
+    try
+      try_request ();
+      cleanup ()
+    with e ->
+      cleanup ();
+      raise e
 
 let test_request
       ?configfile

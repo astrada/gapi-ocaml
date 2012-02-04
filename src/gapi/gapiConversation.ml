@@ -227,6 +227,7 @@ let with_session
                        ?connect_timeout
                        ~compress
                        curl_state in
+  let cleanup () = ignore (GapiCurl.cleanup curl_session) in
   let session =
     { Session.curl = curl_session;
       config = config;
@@ -236,10 +237,28 @@ let with_session
   in
     try
       let result = interact session in
-        ignore (GapiCurl.cleanup curl_session);
+        cleanup ();
         result
     with e ->
-      ignore (GapiCurl.cleanup curl_session);
+      cleanup ();
+      raise e
+
+let with_curl
+      ?auth_context
+      config
+      interact =
+  let curl_state = GapiCurl.global_init () in
+  let cleanup () = ignore (GapiCurl.global_cleanup curl_state) in
+    try
+      let result =
+        with_session
+          config
+          curl_state
+          interact in
+        cleanup ();
+        result
+    with e ->
+      cleanup ();
       raise e
 
 let read_all pipe =

@@ -63,6 +63,10 @@ val with_session :
   ?auth_context:Session.auth_context ->
   GapiConfig.t -> [ `Initialized ] GapiCurl.t -> (Session.t -> 'a) -> 'a
 
+val with_curl :
+  ?auth_context:Session.auth_context ->
+  GapiConfig.t -> (Session.t -> 'a) -> 'a
+
 val read_all : GapiPipe.OcamlnetPipe.t -> string
 
 val parse_error : GapiPipe.OcamlnetPipe.t -> int -> 'a

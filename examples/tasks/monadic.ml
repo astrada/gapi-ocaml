@@ -18,21 +18,6 @@ let application_name = "YOUR_APPLICATION_NAME"
 let configuration = GapiConfig.default
     |> GapiConfig.application_name ^= application_name
 
-(* Service interaction *)
-let do_request interact =
-  (* Initialize Ocurl wrapper *)
-  let state = GapiCurl.global_init () in
-  let result =
-    (* Start the session *)
-    GapiConversation.with_session
-      configuration
-      state
-      interact
-  in
-    (* Cleanup Ocurl wrapper *)
-    GapiCurl.global_cleanup state |> ignore;
-    result |> fst
-
 (* The clientId and clientSecret are copied from the API Access tab on
  * the Google APIs Console *)
 let client_id = "YOUR_CLIENT_ID"
@@ -189,6 +174,6 @@ let batch =
     return ()
 
 (* Start a new session *)
-let () =
-  do_request batch
+let _ =
+  GapiConversation.with_curl configuration batch
 
