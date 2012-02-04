@@ -47,4 +47,9 @@
 <link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiAuthResponse.AuthSub</title>
 </head>
 <body>
-<code class="code"><span class="keyword">sig</span>&nbsp;<span class="keyword">type</span>&nbsp;token_info&nbsp;=&nbsp;{&nbsp;target&nbsp;:&nbsp;string;&nbsp;scope&nbsp;:&nbsp;string;&nbsp;secure&nbsp;:&nbsp;bool;&nbsp;}&nbsp;<span class="keyword">end</span></code></body></html>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;token_info&nbsp;=&nbsp;{&nbsp;target&nbsp;:&nbsp;string;&nbsp;scope&nbsp;:&nbsp;string;&nbsp;secure&nbsp;:&nbsp;bool;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;target&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">AuthSub</span>.token_info,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;scope&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">AuthSub</span>.token_info,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;secure&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">AuthSub</span>.token_info,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+<span class="keyword">end</span></code></body></html>

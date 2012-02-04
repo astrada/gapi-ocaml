@@ -64,11 +64,15 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;displayName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;familyName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;givenName&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">ActorData</span>.<span class="constructor">ImageData</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;displayName&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">ActorData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;familyName&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">ActorData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;givenName&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">ActorData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">ActorData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">ActorData</span>.t,<br>

@@ -59,39 +59,39 @@
 <center><h1>Module <a href="type_GapiCalendarV3Service.CalendarsResource.html">GapiCalendarV3Service.CalendarsResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> CalendarsResource: <code class="code">sig</code> <a href="GapiCalendarV3Service.CalendarsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALclear"><span class="keyword">val</span> clear</span> : <code class="type">?base_url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALclear"><span class="keyword">val</span> clear</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
-<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Deletes a secondary calendar.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns metadata for a calendar.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Creates a secondary calendar.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
-<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Updates metadata for a calendar. This method supports patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
-<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?parameters:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Updates metadata for a calendar.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">parameters</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 </body></html>

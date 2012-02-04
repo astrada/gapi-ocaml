@@ -52,24 +52,39 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Standard</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Custom</span>&nbsp;<span class="keyword">of</span>&nbsp;(<span class="constructor">Curl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Curl</span>.curlDebugType&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;client_login_config&nbsp;=&nbsp;{&nbsp;username&nbsp;:&nbsp;string;&nbsp;password&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;username&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.client_login_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;password&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.client_login_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;oauth1_config&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;signature_method&nbsp;:&nbsp;<span class="constructor">GapiCore</span>.<span class="constructor">SignatureMethod</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;consumer_key&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;consumer_secret&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;signature_method&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConfig</span>.oauth1_config,&nbsp;<span class="constructor">GapiCore</span>.<span class="constructor">SignatureMethod</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;consumer_key&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth1_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;consumer_secret&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth1_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;oauth2_config&nbsp;=&nbsp;{&nbsp;client_id&nbsp;:&nbsp;string;&nbsp;client_secret&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;client_id&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth2_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;client_secret&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth2_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;auth_config&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">NoAuth</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">ClientLogin</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConfig</span>.client_login_config<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">OAuth1</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConfig</span>.oauth1_config<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">OAuth2</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConfig</span>.oauth2_config<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;application_name&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;debug&nbsp;:&nbsp;<span class="constructor">GapiConfig</span>.debug_function&nbsp;option;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout&nbsp;:&nbsp;int&nbsp;option;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;connect_timeout&nbsp;:&nbsp;int&nbsp;option;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;compress&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;auth&nbsp;:&nbsp;<span class="constructor">GapiConfig</span>.auth_config;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;application_name&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;debug&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.t,&nbsp;<span class="constructor">GapiConfig</span>.debug_function&nbsp;option)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;timeout&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.t,&nbsp;int&nbsp;option)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;connect_timeout&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.t,&nbsp;int&nbsp;option)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compress&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;auth&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.t,&nbsp;<span class="constructor">GapiConfig</span>.auth_config)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;default&nbsp;:&nbsp;<span class="constructor">GapiConfig</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;default_debug&nbsp;:&nbsp;<span class="constructor">GapiConfig</span>.t<br>
 <span class="keyword">end</span></code></body></html>

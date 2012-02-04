@@ -50,4 +50,6 @@
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;auth_token&nbsp;=&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;captcha&nbsp;=&nbsp;{&nbsp;url&nbsp;:&nbsp;string;&nbsp;token&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;url&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">ClientLogin</span>.captcha,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;token&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">ClientLogin</span>.captcha,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 <span class="keyword">end</span></code></body></html>

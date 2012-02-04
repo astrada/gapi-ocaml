@@ -53,9 +53,21 @@
 &nbsp;&nbsp;&nbsp;&nbsp;request_token_secret&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;callback_confirmed&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;request_token&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.request_token,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;request_token_secret&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.request_token,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;callback_confirmed&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.request_token,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;auth_token&nbsp;=&nbsp;{&nbsp;auth_token&nbsp;:&nbsp;string;&nbsp;verifier&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;auth_token&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.auth_token,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;verifier&nbsp;:&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.auth_token,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;access_token&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;access_token&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;access_token_secret&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;access_token&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.access_token,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;access_token_secret&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAuthResponse</span>.<span class="constructor">OAuth1</span>.access_token,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 <span class="keyword">end</span></code></body></html>

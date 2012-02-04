@@ -126,6 +126,7 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;auth&nbsp;:&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.<span class="constructor">AuthData</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;basePath&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;baseUrl&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;documentationLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;features&nbsp;:&nbsp;string&nbsp;list;<br>
@@ -147,6 +148,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.<span class="constructor">AuthData</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;basePath&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;baseUrl&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;documentationLink&nbsp;:<br>

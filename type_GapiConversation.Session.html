@@ -49,12 +49,30 @@
 <body>
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;oauth1_context&nbsp;=&nbsp;{&nbsp;token&nbsp;:&nbsp;string;&nbsp;secret&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;token&nbsp;:&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth1_context,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;secret&nbsp;:&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth1_context,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;oauth2_context&nbsp;=&nbsp;{&nbsp;oauth2_token&nbsp;:&nbsp;string;&nbsp;refresh_token&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;oauth2_token&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth2_context,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;refresh_token&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth2_context,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;auth_context&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">NoAuth</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">ClientLogin</span>&nbsp;<span class="keyword">of</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">OAuth1</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth1_context<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">OAuth2</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth2_context<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;no_auth&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.auth_context,&nbsp;unit&nbsp;option)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;client_login&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.auth_context,&nbsp;string&nbsp;option)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;oauth1&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.auth_context,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth1_context&nbsp;option)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;oauth2&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.auth_context,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.oauth2_context&nbsp;option)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;curl&nbsp;:&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;:&nbsp;<span class="constructor">GapiConfig</span>.t;<br>
@@ -62,4 +80,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;cookies&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;curl&nbsp;:&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t,&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;config&nbsp;:&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t,&nbsp;<span class="constructor">GapiConfig</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;auth&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t,&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.auth_context)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cookies&nbsp;:&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 <span class="keyword">end</span></code></body></html>

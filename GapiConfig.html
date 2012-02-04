@@ -98,7 +98,7 @@
 }
 
 
-<br><code><span id="TYPEoauth1_config"><span class="keyword">type</span> <code class="type"></code>oauth1_config</span> = {</code><table class="typetable">
+<pre><span id="VALusername"><span class="keyword">val</span> username</span> : <code class="type">(<a href="GapiConfig.html#TYPEclient_login_config">client_login_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpassword"><span class="keyword">val</span> password</span> : <code class="type">(<a href="GapiConfig.html#TYPEclient_login_config">client_login_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEoauth1_config"><span class="keyword">type</span> <code class="type"></code>oauth1_config</span> = {</code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
@@ -123,7 +123,7 @@
 }
 
 
-<br><code><span id="TYPEoauth2_config"><span class="keyword">type</span> <code class="type"></code>oauth2_config</span> = {</code><table class="typetable">
+<pre><span id="VALsignature_method"><span class="keyword">val</span> signature_method</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth1_config">oauth1_config</a>, <a href="GapiCore.SignatureMethod.html#TYPEt">GapiCore.SignatureMethod.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALconsumer_key"><span class="keyword">val</span> consumer_key</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth1_config">oauth1_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALconsumer_secret"><span class="keyword">val</span> consumer_secret</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth1_config">oauth1_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEoauth2_config"><span class="keyword">type</span> <code class="type"></code>oauth2_config</span> = {</code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
@@ -141,7 +141,7 @@
 }
 
 
-<br><code><span id="TYPEauth_config"><span class="keyword">type</span> <code class="type"></code>auth_config</span> = </code><table class="typetable">
+<pre><span id="VALclient_id"><span class="keyword">val</span> client_id</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth2_config">oauth2_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALclient_secret"><span class="keyword">val</span> client_secret</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth2_config">oauth2_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEauth_config"><span class="keyword">type</span> <code class="type"></code>auth_config</span> = </code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
@@ -173,6 +173,13 @@
 
 
 <br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>application_name&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
@@ -211,4 +218,4 @@
 }
 
 
-<pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type"><a href="GapiConfig.html#TYPEt">t</a></code></pre><pre><span id="VALdefault_debug"><span class="keyword">val</span> default_debug</span> : <code class="type"><a href="GapiConfig.html#TYPEt">t</a></code></pre></body></html>
+<pre><span id="VALapplication_name"><span class="keyword">val</span> application_name</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdebug"><span class="keyword">val</span> debug</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, <a href="GapiConfig.html#TYPEdebug_function">debug_function</a> option) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtimeout"><span class="keyword">val</span> timeout</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, int option) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALconnect_timeout"><span class="keyword">val</span> connect_timeout</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, int option) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcompress"><span class="keyword">val</span> compress</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALauth"><span class="keyword">val</span> auth</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, <a href="GapiConfig.html#TYPEauth_config">auth_config</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type"><a href="GapiConfig.html#TYPEt">t</a></code></pre><pre><span id="VALdefault_debug"><span class="keyword">val</span> default_debug</span> : <code class="type"><a href="GapiConfig.html#TYPEt">t</a></code></pre></body></html>

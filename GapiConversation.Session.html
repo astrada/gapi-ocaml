@@ -73,7 +73,7 @@
 }
 
 
-<br><code><span id="TYPEoauth2_context"><span class="keyword">type</span> <code class="type"></code>oauth2_context</span> = {</code><table class="typetable">
+<pre><span id="VALtoken"><span class="keyword">val</span> token</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEoauth1_context">oauth1_context</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsecret"><span class="keyword">val</span> secret</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEoauth1_context">oauth1_context</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEoauth2_context"><span class="keyword">type</span> <code class="type"></code>oauth2_context</span> = {</code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
@@ -91,7 +91,7 @@
 }
 
 
-<br><code><span id="TYPEauth_context"><span class="keyword">type</span> <code class="type"></code>auth_context</span> = </code><table class="typetable">
+<pre><span id="VALoauth2_token"><span class="keyword">val</span> oauth2_token</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrefresh_token"><span class="keyword">val</span> refresh_token</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEauth_context"><span class="keyword">type</span> <code class="type"></code>auth_context</span> = </code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
@@ -122,7 +122,7 @@
 </tr></table>
 
 
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span id="VALno_auth"><span class="keyword">val</span> no_auth</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a>, unit option) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALclient_login"><span class="keyword">val</span> client_login</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a>, string option) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALoauth1"><span class="keyword">val</span> oauth1</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a>,<br>        <a href="GapiConversation.Session.html#TYPEoauth1_context">oauth1_context</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALoauth2"><span class="keyword">val</span> oauth2</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a>,<br>        <a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
@@ -161,4 +161,4 @@
 }
 
 
-</body></html>
+<pre><span id="VALcurl"><span class="keyword">val</span> curl</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEt">t</a>, [ `Created ] <a href="GapiCurl.html#TYPEt">GapiCurl.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALconfig"><span class="keyword">val</span> config</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEt">t</a>, <a href="GapiConfig.html#TYPEt">GapiConfig.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALauth"><span class="keyword">val</span> auth</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEt">t</a>, <a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcookies"><span class="keyword">val</span> cookies</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre></body></html>
