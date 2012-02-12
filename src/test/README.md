@@ -112,7 +112,7 @@ Running the tests
 -----------------
 
 To build the tests you will need to install
-[pa_monad](http://www.cas.mcmaster.ca/~carette/pa_monad/)). By default, the
+[pa_monad](http://www.cas.mcmaster.ca/~carette/pa_monad/). By default, the
 test suite will run the tests that don't connect to Google services (and don't
 need the authorization configuration)
 
