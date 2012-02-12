@@ -19,6 +19,15 @@ files:
 These files should be linked with the `gapi` library that provides the basic
 functionalities to query the Google RESTful services.
 
+### Compiling
+
+To build the generator you will need
+[pa_monad](http://www.cas.mcmaster.ca/~carette/pa_monad/)). After installing
+it, execute
+
+    $ ocaml setup.ml -configure --enable-generator
+    $ ocaml setup.ml -build
+
 ### Example
 
 This command will generate the source code of the client for the URL shortener

@@ -1,8 +1,3 @@
 # Packages deps
-<testHelper.*> : pkg_extlib, pkg_json-wheel
 <testMonadic.*> : pkg_monad, syntax_camlp4o
-<testDate.*> : pkg_netstring
-<test*Model.*> : pkg_extlib, pkg_json-wheel
-<test*Service.*> : pkg_extlib, pkg_json-wheel
-<test*.*> : pkg_oUnit
 

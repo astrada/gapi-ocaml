@@ -10,6 +10,16 @@ Homepage: https://github.com/astrada/gapi-ocaml
 BuildTools: ocamlbuild
 Plugins: META (0.2)
 
+# Flags
+Flag tests
+  Description: Build and run tests
+  Default: false
+
+# Flags
+Flag generator
+  Description: Build service generator
+  Default: false
+
 # Libraries
 Library gapi
   Path: src/gapi
@@ -70,6 +80,7 @@ Document "gapi-ocaml"
   Title: API reference for Google APIs client library
   Type: ocamlbuild (0.2)
   InstallDir: $htmldir/html
+  Install: false
   DataFiles: doc/style.css
   BuildTools: ocamldoc
   XOCamlbuildPath: src
@@ -77,6 +88,7 @@ Document "gapi-ocaml"
 
 # Executables
 Executable serviceGenerator
+  Build$: flag(generator)
   Path: tools
   Install: false
   MainIs: serviceGenerator.ml
@@ -103,18 +115,21 @@ Executable clientLoginFlow
 
 # Tests
 Executable refreshOAuth2Token
+  Build$: flag(tests)
   Path: src/test
   Install: false
   MainIs: refreshOAuth2Token.ml
   BuildDepends: gapi, oUnit
 
 Executable testSuite
+  Build$: flag(tests)
   Path: src/test
   Install: false
   MainIs: testSuite.ml
   BuildDepends: gapi, gdata, oUnit
 
 Test core
+  Run$: flag(tests)
   Command: $testSuite
   TestTools: testSuite
 

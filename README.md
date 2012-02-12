@@ -78,8 +78,11 @@ doesn't have enough privileges)
 
     $ ocaml setup.ml -install
 
-To run the tests, execute
+To build and run the tests (you will need
+[pa_monad](http://www.cas.mcmaster.ca/~carette/pa_monad/)), execute
 
+    $ ocaml setup.ml -configure --enable-tests
+    $ ocaml setup.ml -build
     $ ocaml setup.ml -test
 
 See [tests README](src/test/README.md) for further details regarding the tests.
