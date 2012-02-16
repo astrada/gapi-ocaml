@@ -14,6 +14,7 @@ Supported RESTful APIs:
 * APIs Discovery Service v1
 * URL Shortener API v1
 * OAuth2 API v2
+* Custom Search API v1
 
 Old versions:
 
