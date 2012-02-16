@@ -51,6 +51,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Get an activity.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
@@ -138,6 +139,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Get a comment.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
@@ -190,6 +192,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Get a person's profile.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
@@ -243,4 +246,5 @@ sig
   
   
 end
+
 

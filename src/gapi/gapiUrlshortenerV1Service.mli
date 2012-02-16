@@ -26,6 +26,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Expands a short URL or gets creation time and analytics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
@@ -70,4 +71,5 @@ sig
   
   
 end
+
 

@@ -14,6 +14,7 @@ val scope : string
 val scope_readonly : string
 module AclResource :
 sig
+  
   (** Deletes an access control rule.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -123,6 +124,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Deletes an entry on the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -213,6 +215,7 @@ end
 
 module CalendarsResource :
 sig
+  
   (** Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -297,6 +300,7 @@ end
 
 module ColorsResource :
 sig
+  
   (** Returns the color definitions for calendars and events.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -326,6 +330,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Deletes an event.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -552,6 +557,7 @@ end
 
 module FreebusyResource :
 sig
+  
   (** Returns free/busy information for a set of calendars.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -569,6 +575,7 @@ end
 
 module SettingsResource :
 sig
+  
   (** Returns a single user setting.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
@@ -595,4 +602,5 @@ sig
   
   
 end
+
 

@@ -14,6 +14,7 @@ val scope : string
 val scope_readonly : string
 module TasklistsResource :
 sig
+  
   (** Deletes the authenticated user's specified task list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/tasks/v1/"]).
@@ -100,6 +101,7 @@ end
 
 module TasksResource :
 sig
+  
   (** Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/tasks/v1/"]).
@@ -247,4 +249,5 @@ sig
   
   
 end
+
 

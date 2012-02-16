@@ -24,6 +24,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Retrieve the description of a particular version of an api.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/discovery/v1/"]).
@@ -58,4 +59,5 @@ sig
   
   
 end
+
 

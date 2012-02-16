@@ -1274,7 +1274,9 @@ let rec generate_service_module_signature
            generate_service_module_signature false file_lens m)
         service_module.InnerServiceModule.inner_modules;
 
-      lift_io $ render_enum_modules formatter enum_modules;
+      lift_io (
+        render_enum_modules formatter enum_modules;
+        Format.fprintf formatter "@\n");
 
       mapM_
         (fun (_, methd) -> render_method formatter methd)

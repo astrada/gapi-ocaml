@@ -83,6 +83,7 @@ sig
     val of_string : string -> t
     
   end
+  
   (** Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/customsearch/"]).
@@ -120,4 +121,5 @@ sig
   
   
 end
+
 
