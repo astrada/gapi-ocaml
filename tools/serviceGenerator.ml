@@ -185,7 +185,7 @@ let build_schema_inner_module file_lens complex_type =
               render_curried_function ("id", prefix, inner_type)
         | ComplexType.Dictionary inner_type ->
             Format.fprintf formatter
-              "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> GapiJson.render_object id [%a v])"
+              "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
               name
               render_curried_function ("id", prefix, inner_type)
         | ComplexType.Reference _

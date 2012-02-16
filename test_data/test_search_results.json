@@ -1,0 +1,71 @@
+{
+ "context": {
+  "title": "Custom Search"
+ },
+ "items": [
+ {
+   "displayLink": "en.wikipedia.org",
+   "htmlSnippet": "A \u003cb\u003eflower\u003c/b\u003e, sometimes known as a bloom or blossom, is the reproductive structure \u003cbr\u003e  found in flowering plants (plants of the division Magnoliophyta, \u003cb\u003e... \u003c/b\u003e",
+   "htmlTitle": "\u003cb\u003eFlower\u003c/b\u003e - Wikipedia, the free encyclopedia",
+   "kind": "customsearch#result",
+   "link": "http://en.wikipedia.org/wiki/Flower",
+   "pagemap": {
+    "RTO": [
+     {
+      "format": "image",
+      "group_impression_tag": "prbx_kr_rto_term_enc",
+      "Opt::max_rank_top": "0",
+      "Opt::threshold_override": "3",
+      "Opt::disallow_same_domain": "1",
+      "Output::title": "\u003cb\u003eFlower\u003c/b\u003e",
+      "Output::want_title_on_right": "true",
+      "Output::num_lines1": "3",
+      "Output::text1": "꽃은 식물 에서 씨 를 만들어 번식 기능을 수행하는 생식 기관 을 말한다. 꽃을 형태학적으로 관찰하여 최초로 총괄한 사람은 식물계를 24강으로 분류한 린네 였다. 그 후 꽃은 식물분류학상중요한 기준이 되었다.",
+      "Output::gray1b": "- 위키백과",
+      "Output::no_clip1b": "true",
+      "UrlOutput::url2": "http://en.wikipedia.org/wiki/Flower",
+      "Output::link2": "위키백과 (영문)",
+      "Output::text2b": "   ",
+      "UrlOutput::url2c": "http://ko.wikipedia.org/wiki/꽃",
+      "Output::link2c": "위키백과",
+      "result_group_header": "백과사전",
+      "Output::image_url": "http://www.gstatic.com/richsnippets/b/fcb6ee50e488743f.jpg",
+      "image_size": "80x80",
+      "Output::inline_image_width": "80",
+      "Output::inline_image_height": "80",
+      "Output::image_border": "1"
+     }
+    ]
+   },
+   "snippet": "A flower, sometimes known as a bloom or blossom, is the reproductive structure found in flowering plants (plants of the division Magnoliophyta, ...",
+   "title": "Flower - Wikipedia, the free encyclopedia"
+  }
+ ],
+ "kind": "customsearch#search",
+ "queries": {
+  "nextPage": [
+   {
+    "count": 10,
+    "cx": "013036536707430787589:_pqjad5hr1a",
+    "inputEncoding": "utf8",
+    "outputEncoding": "utf8",
+    "searchTerms": "flowers",
+    "startIndex": 11,
+    "title": "Google Custom Search - flowers",
+    "totalResults": "10300000"
+   }
+  ],
+  "request": [
+   {
+    "count": 10,
+    "cx": "013036536707430787589:_pqjad5hr1a",
+    "inputEncoding": "utf8",
+    "outputEncoding": "utf8",
+    "searchTerms": "flowers",
+    "startIndex": 1,
+    "title": "Google Custom Search - flowers",
+    "totalResults": "10300000"
+   }
+  ]
+ }
+}
