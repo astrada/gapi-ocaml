@@ -41,6 +41,8 @@
 <link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
 <link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
 <link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -59,16 +61,20 @@
 <center><h1>Module <a href="type_GapiPlusV1Service.CommentsResource.html">GapiPlusV1Service.CommentsResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> CommentsResource: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.CommentsResource.Alt.html">Alt</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.Alt.html">..</a> <code class="code">end</code></pre><div class="info">
-Get a comment.
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.CommentsResource.SortOrder.html">SortOrder</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.SortOrder.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Service.CommentsResource.Alt.html">Alt</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.Alt.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Get a comment.<br>
 </div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?alt:<a href="GapiPlusV1Service.CommentsResource.Alt.html#TYPEt">Alt.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       activityId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">GapiPlusV1Model.CommentFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">commentId</code> : The ID of the comment to get.</div>
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?alt:<a href="GapiPlusV1Service.CommentsResource.Alt.html#TYPEt">Alt.t</a> -><br>       ?maxResults:int -><br>       ?sortOrder:<a href="GapiPlusV1Service.CommentsResource.SortOrder.html#TYPEt">SortOrder.t</a> -><br>       ?pageToken:string -><br>       activityId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">GapiPlusV1Model.CommentFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 List all of the comments for an activity.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">alt</code> : Specifies an alternative representation type.</div>
 <div class="param_info"><code class="code">maxResults</code> : The maximum number of comments to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.</div>
+<div class="param_info"><code class="code">sortOrder</code> : The order in which to sort the list of comments.</div>
 <div class="param_info"><code class="code">pageToken</code> : The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.</div>
 <div class="param_info"><code class="code">activityId</code> : The ID of the activity to get comments for.</div>
 </body></html>

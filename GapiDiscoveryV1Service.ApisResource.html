@@ -39,6 +39,8 @@
 <link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
 <link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
 <link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -55,10 +57,14 @@
 <center><h1>Module <a href="type_GapiDiscoveryV1Service.ApisResource.html">GapiDiscoveryV1Service.ApisResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> ApisResource: <code class="code">sig</code> <a href="GapiDiscoveryV1Service.ApisResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Service.ApisResource.Label.html">Label</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Service.ApisResource.Label.html">..</a> <code class="code">end</code></pre><div class="info">
-Retrieve the description of a particular version of an api.
+<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Service.ApisResource.Label.html">Label</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Service.ApisResource.Label.html">..</a> <code class="code">end</code></pre><pre><span id="VALgetRest"><span class="keyword">val</span> getRest</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       api:string -><br>       version:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDiscoveryV1Model.RestDescription.html#TYPEt">GapiDiscoveryV1Model.RestDescription.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Retrieve the description of a particular version of an api.<br>
 </div>
-<pre><span id="VALgetRest"><span class="keyword">val</span> getRest</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       api:string -><br>       version:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDiscoveryV1Model.RestDescription.html#TYPEt">GapiDiscoveryV1Model.RestDescription.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?preferred:bool -><br>       ?label:<a href="GapiDiscoveryV1Service.ApisResource.Label.html#TYPEt">Label.t</a> -><br>       ?name:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDiscoveryV1Model.DirectoryList.html#TYPEt">GapiDiscoveryV1Model.DirectoryList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/discovery/v1/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">api</code> : The name of the API.</div>
+<div class="param_info"><code class="code">version</code> : The version of the API.</div>
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?preferred:bool -><br>       ?label:<a href="GapiDiscoveryV1Service.ApisResource.Label.html#TYPEt">Label.t</a> -><br>       ?name:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDiscoveryV1Model.DirectoryList.html#TYPEt">GapiDiscoveryV1Model.DirectoryList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Retrieve the list of APIs supported at this endpoint.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/discovery/v1/"</code>).</div>

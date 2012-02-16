@@ -41,6 +41,8 @@
 <link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
 <link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
 <link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -59,10 +61,15 @@
 <center><h1>Module <a href="type_GapiCalendarV3Service.EventsResource.html">GapiCalendarV3Service.EventsResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> EventsResource: <code class="code">sig</code> <a href="GapiCalendarV3Service.EventsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiCalendarV3Service.EventsResource.OrderBy.html">OrderBy</a>: <code class="code">sig</code> <a href="GapiCalendarV3Service.EventsResource.OrderBy.html">..</a> <code class="code">end</code></pre><div class="info">
-Deletes an event.
+<pre><span class="keyword">module</span> <a href="GapiCalendarV3Service.EventsResource.OrderBy.html">OrderBy</a>: <code class="code">sig</code> <a href="GapiCalendarV3Service.EventsResource.OrderBy.html">..</a> <code class="code">end</code></pre><pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?sendNotifications:bool -><br>       calendarId:string -><br>       eventId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Deletes an event.<br>
 </div>
-<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?sendNotifications:bool -><br>       calendarId:string -><br>       eventId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxAttendees:int -><br>       ?timeZone:string -><br>       calendarId:string -><br>       eventId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">sendNotifications</code> : Whether to send notifications about the deletion of the event. Optional. The default is False.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">eventId</code> : Event identifier.</div>
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxAttendees:int -><br>       ?timeZone:string -><br>       calendarId:string -><br>       eventId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns an event.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>

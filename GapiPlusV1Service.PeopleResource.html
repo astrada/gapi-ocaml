@@ -40,6 +40,8 @@
 <link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
 <link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
 <link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -57,10 +59,13 @@
 <center><h1>Module <a href="type_GapiPlusV1Service.PeopleResource.html">GapiPlusV1Service.PeopleResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> PeopleResource: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.PeopleResource.Collection.html">Collection</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.Collection.html">..</a> <code class="code">end</code></pre><div class="info">
-Get a person's profile.
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.PeopleResource.Collection.html">Collection</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.Collection.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Person.html#TYPEt">GapiPlusV1Model.Person.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Get a person's profile.<br>
 </div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Person.html#TYPEt">GapiPlusV1Model.Person.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALlistByActivity"><span class="keyword">val</span> listByActivity</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       activityId:string -><br>       collection:<a href="GapiPlusV1Service.PeopleResource.Collection.html#TYPEt">Collection.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.PeopleFeed.html#TYPEt">GapiPlusV1Model.PeopleFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">userId</code> : The ID of the person to get the profile for. The special value "me" can be used to indicate the authenticated user.</div>
+<pre><span id="VALlistByActivity"><span class="keyword">val</span> listByActivity</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       activityId:string -><br>       collection:<a href="GapiPlusV1Service.PeopleResource.Collection.html#TYPEt">Collection.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.PeopleFeed.html#TYPEt">GapiPlusV1Model.PeopleFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 List all of the people in the specified collection for a particular activity.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>

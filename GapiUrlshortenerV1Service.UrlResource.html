@@ -39,6 +39,8 @@
 <link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
 <link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
 <link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -55,10 +57,14 @@
 <center><h1>Module <a href="type_GapiUrlshortenerV1Service.UrlResource.html">GapiUrlshortenerV1Service.UrlResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> UrlResource: <code class="code">sig</code> <a href="GapiUrlshortenerV1Service.UrlResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiUrlshortenerV1Service.UrlResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiUrlshortenerV1Service.UrlResource.Projection.html">..</a> <code class="code">end</code></pre><div class="info">
-Expands a short URL or gets creation time and analytics.
+<pre><span class="keyword">module</span> <a href="GapiUrlshortenerV1Service.UrlResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiUrlshortenerV1Service.UrlResource.Projection.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?projection:<a href="GapiUrlshortenerV1Service.UrlResource.Projection.html#TYPEt">Projection.t</a> -><br>       shortUrl:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Expands a short URL or gets creation time and analytics.<br>
 </div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?projection:<a href="GapiUrlshortenerV1Service.UrlResource.Projection.html#TYPEt">Projection.t</a> -><br>       shortUrl:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/urlshortener/v1/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">projection</code> : Additional information to return.</div>
+<div class="param_info"><code class="code">shortUrl</code> : The short URL, including the protocol.</div>
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Creates a new short URL.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/urlshortener/v1/"</code>).</div>
