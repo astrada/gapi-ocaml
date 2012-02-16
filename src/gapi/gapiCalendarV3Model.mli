@@ -482,7 +482,7 @@ sig
     description : string;
     (** Description of the event. Optional. *)
     _end : EventDateTime.t;
-    (** The end time of the event. For a recurring event, this is the end time of the first instance. *)
+    (** The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance. *)
     etag : string;
     (** ETag of the resource. *)
     extendedProperties : ExtendedPropertiesData.t;
@@ -506,7 +506,7 @@ sig
     location : string;
     (** Geographic location of the event as free-form text. Optional. *)
     organizer : OrganizerData.t;
-    (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. *)
+    (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the "move" operation. Read-only, except when importing an event. *)
     originalStartTime : EventDateTime.t;
     (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable. *)
     privateCopy : bool;
@@ -520,7 +520,7 @@ sig
     sequence : int;
     (** Sequence number as per iCalendar. *)
     start : EventDateTime.t;
-    (** The start time of the event. For a recurring event, this is the start time of the first instance. *)
+    (** The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance. *)
     status : string;
     (** Status of the event. Optional. Possible values are:  
 - "confirmed" - The event is confirmed. This is the default status. 
@@ -782,9 +782,9 @@ module TimePeriod :
 sig
   type t = {
     _end : GapiDate.t;
-    (** The end of the time period. *)
+    (** The (exclusive) end of the time period. *)
     start : GapiDate.t;
-    (** The start of the time period. *)
+    (** The (inclusive) start of the time period. *)
     
   }
   

@@ -111,6 +111,6 @@ let tokeninfo
     ?standard_parameters:std_params ?access_token ?id_token () in
   let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
     in
-  GapiService.get ?query_parameters full_url
+  GapiService.post ?query_parameters ~data:Tokeninfo.empty full_url
     (GapiJson.parse_json_response Tokeninfo.of_data_model) session 
   

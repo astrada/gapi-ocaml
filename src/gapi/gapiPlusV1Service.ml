@@ -215,6 +215,26 @@ struct
   
   end
   
+  module SortOrder =
+  struct
+    type t =
+      | Default
+      | Ascending
+      | Descending
+      
+    let to_string = function
+      | Default -> ""
+      | Ascending -> "ascending"
+      | Descending -> "descending"
+      
+    let of_string = function
+      | "" -> Default
+      | "ascending" -> Ascending
+      | "descending" -> Descending
+      | s -> failwith ("Unexpected value for SortOrder:" ^ s)
+  
+  end
+  
   module CommentsParameters =
   struct
     type t = {
@@ -228,6 +248,7 @@ struct
       alt : Alt.t;
       maxResults : int;
       pageToken : string;
+      sortOrder : SortOrder.t;
       
     }
     
@@ -240,6 +261,7 @@ struct
       alt = Alt.Default;
       maxResults = 20;
       pageToken = "";
+      sortOrder = SortOrder.Default;
       
     }
     
@@ -254,6 +276,7 @@ struct
       param (fun p -> p.alt) Alt.to_string "alt";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.sortOrder) SortOrder.to_string "sortOrder";
       
     ] |> List.concat
     
@@ -262,6 +285,7 @@ struct
         ?(alt = default.alt)
         ?(maxResults = default.maxResults)
         ?(pageToken = default.pageToken)
+        ?(sortOrder = default.sortOrder)
         () =
       let parameters = {
         fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -272,6 +296,7 @@ struct
         alt;
         maxResults;
         pageToken;
+        sortOrder;
         
       } in
       if parameters = default then None else Some parameters
@@ -297,13 +322,15 @@ struct
         ?std_params
         ?(alt = Alt.Default)
         ?(maxResults = 20)
+        ?(sortOrder = SortOrder.Default)
         ?pageToken
         ~activityId
         session =
     let full_url = GapiUtils.add_path_to_url ["activities";
       ((fun x -> x) activityId); "comments"] base_url in
     let params = CommentsParameters.merge_parameters
-      ?standard_parameters:std_params ~alt ~maxResults ?pageToken () in
+      ?standard_parameters:std_params ~alt ~maxResults ?pageToken ~sortOrder
+      () in
     let query_parameters = Option.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url

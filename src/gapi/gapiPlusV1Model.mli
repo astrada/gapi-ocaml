@@ -807,6 +807,27 @@ sig
   
   module ActorData :
   sig
+    module NameData :
+    sig
+      type t = {
+        familyName : string;
+        (** The family name (last name) of the actor. *)
+        givenName : string;
+        (** The given name (first name) of the actor. *)
+        
+      }
+      
+      val familyName : (t, string) GapiLens.t
+      val givenName : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
     module ImageData :
     sig
       type t = {
@@ -828,24 +849,21 @@ sig
     type t = {
       displayName : string;
       (** The name of the actor, suitable for display. *)
-      familyName : string;
-      (** The family name of the actor. *)
-      givenName : string;
-      (** The given name of the actor. *)
       id : string;
       (** The ID of the actor's person resource. *)
       image : ImageData.t;
       (** The image representation of the actor. *)
+      name : NameData.t;
+      (** An object representation of the individual components of name. *)
       url : string;
       (** The link to the actor's Google profile. *)
       
     }
     
     val displayName : (t, string) GapiLens.t
-    val familyName : (t, string) GapiLens.t
-    val givenName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
     val image : (t, ImageData.t) GapiLens.t
+    val name : (t, NameData.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t

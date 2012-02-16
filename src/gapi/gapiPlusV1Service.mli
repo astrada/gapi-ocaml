@@ -114,6 +114,19 @@ end
 module CommentsResource :
 sig
   
+  module SortOrder :
+  sig
+    type t =
+      | Default
+      | Ascending
+      | Descending
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
+  
   module Alt :
   sig
     type t =
@@ -144,6 +157,7 @@ sig
     @param std_params Optional standard parameters.
     @param alt Specifies an alternative representation type.
     @param maxResults The maximum number of comments to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.
+    @param sortOrder The order in which to sort the list of comments.
     @param pageToken The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.
     @param activityId The ID of the activity to get comments for.
     *)
@@ -152,6 +166,7 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?alt:Alt.t ->
     ?maxResults:int ->
+    ?sortOrder:SortOrder.t ->
     ?pageToken:string ->
     activityId:string ->
     GapiConversation.Session.t ->
