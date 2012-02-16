@@ -11,14 +11,17 @@ BuildTools: ocamlbuild
 Plugins: META (0.2)
 
 # Flags
-Flag tests
-  Description: Build and run tests
+Flag all
+  Description: Build all
   Default: false
 
-# Flags
+Flag tests
+  Description: Build and run tests
+  Default$: flag(all)
+
 Flag generator
   Description: Build service generator
-  Default: false
+  Default$: flag(all)
 
 # Libraries
 Library gapi
@@ -88,7 +91,7 @@ Document "gapi-ocaml"
 
 # Executables
 Executable serviceGenerator
-  Build$: flag(generator)
+  Build$: flag(generator) || flag(all)
   Path: tools
   Install: false
   MainIs: serviceGenerator.ml
@@ -115,21 +118,21 @@ Executable clientLoginFlow
 
 # Tests
 Executable refreshOAuth2Token
-  Build$: flag(tests)
+  Build$: flag(tests) || flag(all)
   Path: src/test
   Install: false
   MainIs: refreshOAuth2Token.ml
   BuildDepends: gapi, oUnit
 
 Executable testSuite
-  Build$: flag(tests)
+  Build$: flag(tests) || flag(all)
   Path: src/test
   Install: false
   MainIs: testSuite.ml
   BuildDepends: gapi, gdata, oUnit
 
 Test core
-  Run$: flag(tests)
+  Run$: flag(tests) || flag(all)
   Command: $testSuite
   TestTools: testSuite
 
