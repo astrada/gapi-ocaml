@@ -977,7 +977,7 @@ struct
         GapiJson.render_int_value "height" x.height;
         GapiJson.render_string_value "iconLink" x.iconLink;
         GapiJson.render_string_value "link" x.link;
-        GapiJson.render_collection "preferences" GapiJson.Object (fun (id, v) -> GapiJson.render_object id [GapiJson.render_string_value id v]) x.preferences;
+        GapiJson.render_collection "preferences" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.preferences;
         GapiJson.render_string_value "title" x.title;
         GapiJson.render_string_value "type" x._type;
         GapiJson.render_int_value "width" x.width;
@@ -1063,8 +1063,8 @@ struct
     
     let rec render_content x = 
        [
-        GapiJson.render_collection "private" GapiJson.Object (fun (id, v) -> GapiJson.render_object id [GapiJson.render_string_value id v]) x._private;
-        GapiJson.render_collection "shared" GapiJson.Object (fun (id, v) -> GapiJson.render_object id [GapiJson.render_string_value id v]) x.shared;
+        GapiJson.render_collection "private" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x._private;
+        GapiJson.render_collection "shared" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.shared;
         
       ]
     and render x = 
