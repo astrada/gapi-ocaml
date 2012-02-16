@@ -55,7 +55,9 @@ Library gapi
     GapiUrlshortenerV1Model,
     GapiUrlshortenerV1Service,
     GapiOauth2V2Model,
-    GapiOauth2V2Service
+    GapiOauth2V2Service,
+    GapiCustomsearchV1Model,
+    GapiCustomsearchV1Service
   InternalModules:
     GapiUtils
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm
