@@ -135,7 +135,7 @@ struct
 
   let (^=) l v = fun a -> _set v a l
 
-  let (^%=) l f = _modify f l
+  let (^%=) = modify
 
   let (|--) l1 l2 = compose l2 l1
 
