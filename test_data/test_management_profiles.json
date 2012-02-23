@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "accountId": "12345678",
+      "childLink": {
+        "href": "https://www.googleapis.com/analytics/v3/management/accounts/12345678/webproperties/UA-12345678-1/profiles/22222222/goals",
+        "type": "analytics#goals"
+      },
+      "created": "2012-02-20T21:23:44.000Z",
+      "currency": "USD",
+      "defaultPage": "index.html",
+      "id": "22222222",
+      "internalWebPropertyId": "87654321",
+      "kind": "analytics#profile",
+      "name": "test-site",
+      "parentLink": {
+        "href": "https://www.googleapis.com/analytics/v3/management/accounts/12345678/webproperties/UA-12345678-1",
+        "type": "analytics#webproperty"
+      },
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/accounts/12345678/webproperties/UA-12345678-1/profiles/22222222",
+      "timezone": "America/Los_Angeles",
+      "updated": "2012-02-20T21:39:19.000Z",
+      "webPropertyId": "UA-12345678-1"
+    }
+  ],
+  "itemsPerPage": 1000,
+  "kind": "analytics#profiles",
+  "startIndex": 1,
+  "totalResults": 1,
+  "username": "test.user@gmail.com"
+}

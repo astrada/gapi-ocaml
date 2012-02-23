@@ -10,6 +10,7 @@ let model_tests =
    TestUrlshortenerV1Model.suite;
    TestOauth2V2Model.suite;
    TestCustomsearchV1Model.suite;
+   TestAnalyticsV3Model.suite;
   ]
 
 let service_tests = 

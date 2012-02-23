@@ -1,0 +1,104 @@
+{
+  "items": [
+    {
+      "id": "-1",
+      "kind": "analytics#segment",
+      "name": "All Visits",
+      "segmentId": "gaid::-1",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-1"
+    },
+    {
+      "definition": "ga:visitorType==New Visitor",
+      "id": "-2",
+      "kind": "analytics#segment",
+      "name": "New Visitors",
+      "segmentId": "gaid::-2",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-2"
+    },
+    {
+      "definition": "ga:visitorType==Returning Visitor",
+      "id": "-3",
+      "kind": "analytics#segment",
+      "name": "Returning Visitors",
+      "segmentId": "gaid::-3",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-3"
+    },
+    {
+      "definition": "ga:medium==cpa,ga:medium==cpc,ga:medium==cpm,ga:medium==cpp,ga:medium==cpv,ga:medium==ppc",
+      "id": "-4",
+      "kind": "analytics#segment",
+      "name": "Paid Search Traffic",
+      "segmentId": "gaid::-4",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-4"
+    },
+    {
+      "definition": "ga:medium==organic",
+      "id": "-5",
+      "kind": "analytics#segment",
+      "name": "Non-paid Search Traffic",
+      "segmentId": "gaid::-5",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-5"
+    },
+    {
+      "definition": "ga:medium==cpa,ga:medium==cpc,ga:medium==cpm,ga:medium==cpp,ga:medium==cpv,ga:medium==organic,ga:medium==ppc",
+      "id": "-6",
+      "kind": "analytics#segment",
+      "name": "Search Traffic",
+      "segmentId": "gaid::-6",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-6"
+    },
+    {
+      "definition": "ga:medium==(none)",
+      "id": "-7",
+      "kind": "analytics#segment",
+      "name": "Direct Traffic",
+      "segmentId": "gaid::-7",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-7"
+    },
+    {
+      "definition": "ga:medium==referral",
+      "id": "-8",
+      "kind": "analytics#segment",
+      "name": "Referral Traffic",
+      "segmentId": "gaid::-8",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-8"
+    },
+    {
+      "definition": "ga:goalCompletionsAll>0",
+      "id": "-9",
+      "kind": "analytics#segment",
+      "name": "Visits with Conversions",
+      "segmentId": "gaid::-9",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-9"
+    },
+    {
+      "definition": "ga:transactions>0",
+      "id": "-10",
+      "kind": "analytics#segment",
+      "name": "Visits with Transactions",
+      "segmentId": "gaid::-10",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-10"
+    },
+    {
+      "definition": "ga:isMobile==Yes",
+      "id": "-11",
+      "kind": "analytics#segment",
+      "name": "Mobile Traffic",
+      "segmentId": "gaid::-11",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-11"
+    },
+    {
+      "definition": "ga:bounces==0",
+      "id": "-12",
+      "kind": "analytics#segment",
+      "name": "Non-bounce Visits",
+      "segmentId": "gaid::-12",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/segments/gaid::-12"
+    }
+  ],
+  "itemsPerPage": 1000,
+  "kind": "analytics#segments",
+  "startIndex": 1,
+  "totalResults": 12,
+  "username": "test.user@gmail.com"
+}

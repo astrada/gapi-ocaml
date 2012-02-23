@@ -1,0 +1,60 @@
+{
+ "items": [
+  {
+   "accountId": "30481",
+   "active": true,
+   "created": "2005-06-24T01:08:01.000Z",
+   "eventDetails": {
+     "eventConditions": [
+      {
+       "expression": "product_page",
+       "matchType": "EXACT",
+       "type": "CATEGORY"
+      },
+      {
+       "expression": "^/Size.*",
+       "matchType": "REGEXP",
+       "type": "ACTION"
+      }
+     ]
+    },
+   "id": "1",
+   "internalWebPropertyId": "50530",
+   "kind": "analytics#goal",
+   "name": "Completing Order",
+   "parentLink": {
+    "href": "https://www.googleapis.com/analytics/v3/management/accounts/30481/webproperties/UA-30481-1/profiles/1174",
+    "type": "analytics#profile"
+   },
+   "profileId": "1174",
+   "selfLink": "https://www.googleapis.com/analytics/v3/management/accounts/30481/webproperties/UA-30481-1/profiles/1174/goals/1",
+   "type": "URL_DESTINATION",
+   "updated": "2010-03-02T16:10:03.000Z",
+   "urlDestinationDetails": {
+    "matchType": "REGEX",
+    "steps": [
+     {
+      "name": "View Product Categories",
+      "number": 1,
+      "url": "/Apps|Accessories|Fun|Kid\\+s|Office|Wearables|Doodles|You\\+Tube|TopSellers|Eco"
+     }
+    ],
+    "url": "/purchaseComplete.html"
+   },
+   "value": 10.0,
+   "visitNumPagesDetails": {
+    "comparisonType": "GREATER_THAN",
+    "comparisonValue": "4"
+   },
+   "visitTimeOnSiteDetails": {
+     "comparisonType": "GREATER_THAN",
+     "comparisonValue": "1000"
+   },
+   "webPropertyId": "UA-30481-1"
+  }
+ ],
+ "itemsPerPage": 1000,
+ "kind": "analytics#goals",
+ "startIndex": 1,
+ "totalResults": 1
+}

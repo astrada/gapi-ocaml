@@ -1,0 +1,67 @@
+{
+ "columnHeaders": [
+  {
+   "columnType": "DIMENSION",
+   "dataType": "STRING",
+   "name": "ga:country"
+  },
+  {
+   "columnType": "METRIC",
+   "dataType": "INTEGER",
+   "name": "ga:visits"
+  }
+ ],
+ "id": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:1174&dimensions=ga:country&metrics=ga:visits&sort=-ga:visits&start-date=2010-04-01&end-date=2010-04-20&max-results=5",
+ "itemsPerPage": 5,
+ "kind": "analytics#gaData",
+ "nextLink": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:1174&dimensions=ga:country&metrics=ga:visits&sort=-ga:visits&start-date=2010-04-01&end-date=2010-04-20&start-index=6&max-results=5",
+ "profileInfo": {
+  "accountId": "30481",
+  "internalWebPropertyId": "3516338",
+  "profileId": "1174",
+  "profileName": "www.googlestore.com - goals & ecomm",
+  "tableId": "ga:1174",
+  "webPropertyId": "UA-30481-1"
+ },
+ "query": {
+  "dimensions": "ga:country",
+  "end-date": "2010-04-20",
+  "ids": "ga:1174",
+  "max-results": 5,
+  "metrics": [
+   "ga:visits"
+  ],
+  "sort": [
+   "-ga:visits"
+  ],
+  "start-date": "2010-04-01",
+  "start-index": 1
+ },
+ "rows": [
+  [
+   "United States",
+   "94351"
+  ],
+  [
+   "Brazil",
+   "15826"
+  ],
+  [
+   "Spain",
+   "13967"
+  ],
+  [
+   "United Kingdom",
+   "13234"
+  ],
+  [
+   "Germany",
+   "11347"
+  ]
+ ],
+ "selfLink": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:1174&dimensions=ga:country&metrics=ga:visits&sort=-ga:visits&start-date=2010-04-01&end-date=2010-04-20&max-results=5",
+ "totalResults": 201,
+ "totalsForAllResults": {
+  "ga:visits": "241543"
+ }
+}

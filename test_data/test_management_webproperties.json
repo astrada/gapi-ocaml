@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "accountId": "12345678",
+      "childLink": {
+        "href": "https://www.googleapis.com/analytics/v3/management/accounts/12345678/webproperties/UA-12345678-1/profiles",
+        "type": "analytics#profiles"
+      },
+      "created": "2012-02-20T21:23:44.000Z",
+      "id": "UA-12345678-1",
+      "internalWebPropertyId": "87654321",
+      "kind": "analytics#webproperty",
+      "name": "test-site",
+      "parentLink": {
+        "href": "https://www.googleapis.com/analytics/v3/management/accounts/12345678",
+        "type": "analytics#account"
+      },
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/accounts/12345678/webproperties/UA-12345678-1",
+      "updated": "2012-02-20T21:40:32.000Z",
+      "websiteUrl": "http://www.example.com"
+    }
+  ],
+  "itemsPerPage": 1000,
+  "kind": "analytics#webproperties",
+  "startIndex": 1,
+  "totalResults": 1,
+  "username": "test.user@gmail.com"
+}

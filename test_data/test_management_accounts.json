@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "childLink": {
+        "href": "https://www.googleapis.com/analytics/v3/management/accounts/12345678/webproperties",
+        "type": "analytics#webproperties"
+      },
+      "created": "2012-02-20T21:23:44.000Z",
+      "id": "12345678",
+      "kind": "analytics#account",
+      "name": "test-site",
+      "selfLink": "https://www.googleapis.com/analytics/v3/management/accounts/12345678",
+      "updated": "2012-02-20T21:23:44.000Z"
+    }
+  ],
+  "itemsPerPage": 1000,
+  "kind": "analytics#accounts",
+  "startIndex": 1,
+  "totalResults": 1,
+  "username": "test.user@gmail.com"
+}
