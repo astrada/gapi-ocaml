@@ -15,6 +15,7 @@ Supported RESTful APIs:
 * URL Shortener API v1
 * OAuth2 API v2
 * Custom Search API v1
+* Google Analytics API v3
 
 Old versions:
 

@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: c418a3f2bf64b5bc36a3e28cdbce8f37)
+# DO NOT EDIT (digest: 30d2c96825c05fc3fa92b9045cfac00a)
 GapiCore
 GapiCurl
 GapiPipe
@@ -31,5 +31,7 @@ GapiOauth2V2Model
 GapiOauth2V2Service
 GapiCustomsearchV1Model
 GapiCustomsearchV1Service
+GapiAnalyticsV3Model
+GapiAnalyticsV3Service
 GapiUtils
 # OASIS_STOP
