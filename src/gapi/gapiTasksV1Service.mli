@@ -10,8 +10,10 @@
 
 (** Manage your tasks *)
 val scope : string
+
 (** View your tasks *)
 val scope_readonly : string
+
 module TasklistsResource :
 sig
   

@@ -1293,7 +1293,7 @@ let build_service_module_interface =
     List.iter
       (fun (id, scope) ->
          Format.fprintf formatter
-           "(** %s *)@\nval %s : string@\n"
+           "(** %s *)@\nval %s : string@\n@\n"
            scope id)
       scopes
   in

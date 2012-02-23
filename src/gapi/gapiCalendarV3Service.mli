@@ -10,8 +10,10 @@
 
 (** Manage your calendars *)
 val scope : string
+
 (** View your calendars *)
 val scope_readonly : string
+
 module AclResource :
 sig
   

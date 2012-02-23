@@ -10,6 +10,7 @@
 
 (** View your Google Analytics data *)
 val scope_readonly : string
+
 module DataResource :
 sig
   module Ga :

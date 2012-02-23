@@ -10,8 +10,10 @@
 
 (** Know who you are on Google *)
 val scope_me : string
+
 (** View your email address *)
 val scope_email : string
+
 module ActivitiesResource :
 sig
   
