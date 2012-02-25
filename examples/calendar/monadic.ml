@@ -1,5 +1,5 @@
 (* Calendar service samples (http://code.google.com/apis/calendar/v3/using.html)
- * using monad and functional lenses *)
+ * using state monad and functional lenses *)
 
 (*** Setup ***)
 

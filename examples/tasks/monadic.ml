@@ -1,5 +1,5 @@
 (* Tasks service samples (http://code.google.com/apis/tasks/v1/using.html)
- * using monad and functional lenses *)
+ * using state monad and functional lenses *)
 
 (*** Setup ***)
 
