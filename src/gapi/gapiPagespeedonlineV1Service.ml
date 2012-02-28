@@ -36,7 +36,7 @@ struct
       key : string;
       (* pagespeedapi-specific query parameters *)
       locale : string;
-      rule : string;
+      rule : string list;
       strategy : Strategy.t;
       url : string;
       
@@ -49,7 +49,7 @@ struct
       userIp = "";
       key = "";
       locale = "";
-      rule = "";
+      rule = [];
       strategy = Strategy.Default;
       url = "";
       
@@ -64,7 +64,7 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.locale) (fun x -> x) "locale";
-      param (fun p -> p.rule) (fun x -> x) "rule";
+      GapiService.build_params qp (fun p -> p.rule) (fun x -> x) "rule";
       param (fun p -> p.strategy) Strategy.to_string "strategy";
       param (fun p -> p.url) (fun x -> x) "url";
       

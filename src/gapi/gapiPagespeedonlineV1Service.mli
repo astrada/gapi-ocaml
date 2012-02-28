@@ -37,7 +37,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?locale:string ->
-    ?rule:string ->
+    ?rule:string list ->
     ?strategy:Strategy.t ->
     url:string ->
     GapiConversation.Session.t ->
