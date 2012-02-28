@@ -581,11 +581,18 @@ let generate_parameters_module filter_parameters formatter
       "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
       resource_id;
     FieldSet.iter
-      (fun (id, field) ->
-         Format.fprintf formatter
-           "%s : %s;@,"
-           field.Field.ocaml_name
-           field.Field.ocaml_type)
+      (fun (id, { Field.ocaml_name;
+                  ocaml_type;
+                  field_type; _ }) ->
+         let list_type =
+           if ComplexType.is_repeated field_type then " list"
+           else ""
+         in
+           Format.fprintf formatter
+             "%s : %s%s;@,"
+             ocaml_name
+             ocaml_type
+             list_type)
       parameters;
     Format.fprintf formatter "@]@,}@,"
   in
@@ -593,11 +600,19 @@ let generate_parameters_module filter_parameters formatter
   let render_default formatter parameters =
     Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,key = \"\";@,";
     FieldSet.iter
-      (fun (id, { Field.ocaml_name; default; _ }) ->
-         Format.fprintf formatter
-           "%s = %s;@,"
-           ocaml_name
-           default)
+      (fun (id, { Field.ocaml_name;
+                  default;
+                  field_type; _ }) ->
+         if ComplexType.is_repeated field_type then begin
+           Format.fprintf formatter
+             "%s = [];@,"
+             ocaml_name
+         end else begin
+           Format.fprintf formatter
+             "%s = %s;@,"
+             ocaml_name
+             default
+         end)
       parameters;
     Format.fprintf formatter "@]@,}@,"
   in
@@ -605,12 +620,21 @@ let generate_parameters_module filter_parameters formatter
   let render_to_key_value_list formatter parameters =
     Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) (fun x -> x) \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) (fun x -> x) \"quotaUser\";@,param (fun p -> p.userIp) (fun x -> x) \"userIp\";@,param (fun p -> p.key) (fun x -> x) \"key\";@,";
     FieldSet.iter
-      (fun (id, { Field.original_name; ocaml_name; to_string_function; _ }) ->
-         Format.fprintf formatter
-           "param (fun p -> p.%s) %s \"%s\";@,"
-           ocaml_name
-           to_string_function
-           original_name)
+      (fun (id, { Field.original_name;
+                  ocaml_name;
+                  to_string_function;
+                  field_type; _ }) ->
+         let build_param_fun =
+           if ComplexType.is_repeated field_type then
+             "GapiService.build_params qp"
+           else "param"
+         in
+           Format.fprintf formatter
+             "%s (fun p -> p.%s) %s \"%s\";@,"
+             build_param_fun
+             ocaml_name
+             to_string_function
+             original_name)
       parameters;
     Format.fprintf formatter "@]@,] |> List.concat@,"
   in
@@ -1239,12 +1263,13 @@ let rec generate_service_module_signature
                  List.assoc id methd.Method.parameters
                in
                  Format.fprintf formatter
-                   "%s%s:%s ->@,"
+                   "%s%s:%s%s ->@,"
                    (if ComplexType.is_required field_type ||
                        ComplexType.get_location field_type = ScalarType.Path then
                       "" else "?")
                    ocaml_name
-                   ocaml_type)
+                   ocaml_type
+                   (if ComplexType.is_repeated field_type then " list" else ""))
             methd.Method.parameter_order);
 
         lift_io (

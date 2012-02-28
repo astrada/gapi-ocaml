@@ -447,6 +447,12 @@ struct
       | _ ->
           failwith "Unsupported type in ComplexType.is_required"
 
+  let is_repeated complex_type =
+    match complex_type.data_type with
+        Scalar scalar -> scalar.ScalarType.repeated
+      | _ ->
+          failwith "Unsupported type in ComplexType.is_repeated"
+
   let is_enum complex_type =
     match complex_type.data_type with
         Scalar scalar -> scalar.ScalarType.enum != []
