@@ -672,6 +672,10 @@ struct
         ({ GapiJson.name = "value"; data_type = GapiJson.Scalar },
         Json_type.Float v) ->
       { x with value = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "value"; data_type = GapiJson.Scalar },
+        Json_type.Int v) ->
+      { x with value = float_of_int v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "visitNumPagesDetails"; data_type = GapiJson.Object },
         cs) ->
