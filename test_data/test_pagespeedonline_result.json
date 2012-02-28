@@ -1,0 +1,503 @@
+{
+   "formattedResults":{
+      "locale":"en_US",
+      "ruleResults":{
+         "AvoidBadRequests":{
+            "localizedRuleName":"Avoid bad requests",
+            "ruleScore":100
+         },
+         "AvoidCharsetInMetaTag":{
+            "localizedRuleName":"Avoid a character set in the meta tag",
+            "ruleScore":100
+         },
+         "AvoidCssImport":{
+            "localizedRuleName":"Avoid CSS @import",
+            "ruleScore":100
+         },
+         "AvoidExcessSerialization":{
+            "localizedRuleName":"Reduce request serialization",
+            "ruleImpact":3.01,
+            "ruleScore":55,
+            "urlBlocks":[
+               {
+                  "header":{
+                     "format":"The following requests are serialized. Try to break up the dependencies to make them load in parallel."
+                  },
+                  "urls":[
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.com/textinputassistant/tia.png"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     },
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4ACwrMDw4ACwrMFE4ACwrMFk4ACwrMAo4AJoCAmNjLCswmAE4ACwrMBY4ACwrMBk4ACwrMCs4AJoCC2pzX3JlZGlyZWN0LCswQTgALCswTTgALCswTjgALCswUzgALCswVDgALCswaTgALCswkAE4ACwrMJIBOAAsKzCXATgALCswowE4ACwrMKcBOAAsKzDVATgALCsw2AE4ACwrMB04ACwrMFw4ACwrMBg4ACwrMCY4ACyAAmeQAmc/-zM6KO6izB4.js"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     },
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     }
+                  ]
+               },
+               {
+                  "header":{
+                     "format":"The following requests are serialized. Try to break up the dependencies to make them load in parallel."
+                  },
+                  "urls":[
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/csi?v=3&s=webhp&action=&e=30316,33551,34324,34904,35055,35091,36604,36651,36683,36716,36933,36946,37017,37055&ei=NjhNT8CjAqK62gX4v7l_&imc=1&imn=1&imp=1&rt=xjsls.0,prt.0,ol.0,iml.0,xjses.1,xjsee.1,xjs.2"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     },
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4ACwrMDw4ACwrMFE4ACwrMFk4ACwrMAo4AJoCAmNjLCswmAE4ACwrMBY4ACwrMBk4ACwrMCs4AJoCC2pzX3JlZGlyZWN0LCswQTgALCswTTgALCswTjgALCswUzgALCswVDgALCswaTgALCswkAE4ACwrMJIBOAAsKzCXATgALCswowE4ACwrMKcBOAAsKzDVATgALCsw2AE4ACwrMB04ACwrMFw4ACwrMBg4ACwrMCY4ACyAAmeQAmc/-zM6KO6izB4.js"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     },
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     }
+                  ]
+               },
+               {
+                  "header":{
+                     "format":"The following requests are serialized. Try to break up the dependencies to make them load in parallel."
+                  },
+                  "urls":[
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_chrome/ec071ec5d6becad.js"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     },
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4ACwrMDw4ACwrMFE4ACwrMFk4ACwrMAo4AJoCAmNjLCswmAE4ACwrMBY4ACwrMBk4ACwrMCs4AJoCC2pzX3JlZGlyZWN0LCswQTgALCswTTgALCswTjgALCswUzgALCswVDgALCswaTgALCswkAE4ACwrMJIBOAAsKzCXATgALCswowE4ACwrMKcBOAAsKzDVATgALCsw2AE4ACwrMB04ACwrMFw4ACwrMBg4ACwrMCY4ACyAAmeQAmc/-zM6KO6izB4.js"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     },
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL"
+                              }
+                           ],
+                           "format":"$1"
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "AvoidLongRunningScripts":{
+            "localizedRuleName":"Avoid long-running scripts",
+            "ruleScore":100,
+            "urlBlocks":[
+               {
+                  "header":{
+                     "format":"The following URLs run JavaScript that blocks the UI for a long time. To improve browser responsiveness, optimize the JavaScript or split it up using callbacks."
+                  },
+                  "urls":[
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4ACwrMDw4ACwrMFE4ACwrMFk4ACwrMAo4AJoCAmNjLCswmAE4ACwrMBY4ACwrMBk4ACwrMCs4AJoCC2pzX3JlZGlyZWN0LCswQTgALCswTTgALCswTjgALCswUzgALCswVDgALCswaTgALCswkAE4ACwrMJIBOAAsKzCXATgALCswowE4ACwrMKcBOAAsKzDVATgALCsw2AE4ACwrMB04ACwrMFw4ACwrMBg4ACwrMCY4ACyAAmeQAmc/-zM6KO6izB4.js"
+                              },
+                              {
+                                 "type":"INT_LITERAL",
+                                 "value":"1"
+                              },
+                              {
+                                 "type":"DURATION",
+                                 "value":"0.1 seconds"
+                              }
+                           ],
+                           "format":"$1 line $2 ($3)"
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "DeferParsingJavaScript":{
+            "localizedRuleName":"Defer parsing of JavaScript",
+            "ruleScore":100
+         },
+         "EliminateUnnecessaryReflows":{
+            "localizedRuleName":"Eliminate unnecessary reflows",
+            "ruleImpact":0.008,
+            "ruleScore":60,
+            "urlBlocks":[
+               {
+                  "header":{
+                     "format":"JavaScript that executed in the following resources caused unnecessary reflows. To reduce page render time, modify the JavaScript so it does not cause a reflow:"
+                  },
+                  "urls":[
+                     {
+                        "details":[
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"2"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" m @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:144:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:286:0\n g @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:274:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:4:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:5:0\n @ http://www.google.it/:38:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:649:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:1:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           },
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"1"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:188:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:76:0\n ac @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:73:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:285:0\n g @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:274:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:4:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:5:0\n @ http://www.google.it/:38:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:649:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:1:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           },
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"1"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" i @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:143:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:180:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:76:0\n ac @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:73:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:285:0\n g @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:274:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:4:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:5:0\n @ http://www.google.it/:38:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:649:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:1:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           },
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"1"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" da @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:149:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:150:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:76:0\n ac @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:73:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:285:0\n g @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:274:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:4:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:5:0\n @ http://www.google.it/:38:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:649:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:1:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           },
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"1"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" i @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:143:0\n I @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:145:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:150:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:76:0\n ac @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:73:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:285:0\n g @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:274:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:4:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:5:0\n @ http://www.google.it/:38:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:649:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:1:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           },
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"1"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" c @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:144:0\n L @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:116:0\n k @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:161:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:163:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:76:0\n ac @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:73:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:285:0\n g @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:274:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:640:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:4:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:5:0\n @ http://www.google.it/:38:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:649:0\n @ http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4AC:1:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           }
+                        ],
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4ACwrMDw4ACwrMFE4ACwrMFk4ACwrMAo4AJoCAmNjLCswmAE4ACwrMBY4ACwrMBk4ACwrMCs4AJoCC2pzX3JlZGlyZWN0LCswQTgALCswTTgALCswTjgALCswUzgALCswVDgALCswaTgALCswkAE4ACwrMJIBOAAsKzCXATgALCswowE4ACwrMKcBOAAsKzDVATgALCsw2AE4ACwrMB04ACwrMFw4ACwrMBg4ACwrMCY4ACyAAmeQAmc/-zM6KO6izB4.js"
+                              },
+                              {
+                                 "type":"INT_LITERAL",
+                                 "value":"6"
+                              }
+                           ],
+                           "format":"$1 ($2 reflows)"
+                        }
+                     },
+                     {
+                        "details":[
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"2"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" @ http://www.google.it/:30:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           },
+                           {
+                              "args":[
+                                 {
+                                    "type":"INT_LITERAL",
+                                    "value":"2"
+                                 },
+                                 {
+                                    "type":"VERBATIM_STRING",
+                                    "value":" h @ http://www.google.it/:35:0\n j @ http://www.google.it/:35:0\n @ http://www.google.it/:34:0\n @ http://www.google.it/:30:0"
+                                 }
+                              ],
+                              "format":"The following JavaScript call stack caused a reflow that took $1 milliseconds: $2"
+                           }
+                        ],
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/"
+                              },
+                              {
+                                 "type":"INT_LITERAL",
+                                 "value":"2"
+                              }
+                           ],
+                           "format":"$1 ($2 reflows)"
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "EnableGzipCompression":{
+            "localizedRuleName":"Enable compression",
+            "ruleScore":100
+         },
+         "InlineSmallCss":{
+            "localizedRuleName":"Inline Small CSS",
+            "ruleScore":100
+         },
+         "InlineSmallJavaScript":{
+            "localizedRuleName":"Inline Small JavaScript",
+            "ruleScore":100
+         },
+         "LeverageBrowserCaching":{
+            "localizedRuleName":"Leverage browser caching",
+            "ruleScore":100
+         },
+         "MakeLandingPageRedirectsCacheable":{
+            "localizedRuleName":"Make landing page redirects cacheable",
+            "ruleImpact":1.01,
+            "ruleScore":54,
+            "urlBlocks":[
+               {
+                  "header":{
+                     "format":"The following landing page redirects are not cacheable. Make them cacheable to speed up page load times for repeat visitors to your site."
+                  },
+                  "urls":[
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.com/"
+                              },
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/"
+                              }
+                           ],
+                           "format":"$1 is an uncacheable redirect to $2"
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "MinifyCss":{
+            "localizedRuleName":"Minify CSS",
+            "ruleScore":100
+         },
+         "MinifyHTML":{
+            "localizedRuleName":"Minify HTML",
+            "ruleScore":100
+         },
+         "MinifyJavaScript":{
+            "localizedRuleName":"Minify JavaScript",
+            "ruleImpact":0.09780000000000001,
+            "ruleScore":99,
+            "urlBlocks":[
+               {
+                  "header":{
+                     "args":[
+                        {
+                           "type":"BYTES",
+                           "value":"900B"
+                        },
+                        {
+                           "type":"PERCENTAGE",
+                           "value":"1%"
+                        }
+                     ],
+                     "format":"Minifying the following JavaScript resources could reduce their size by $1 ($2 reduction)."
+                  },
+                  "urls":[
+                     {
+                        "result":{
+                           "args":[
+                              {
+                                 "type":"URL",
+                                 "value":"http://www.google.it/extern_js/f/CgJpdBICaXQrMEU4ACwrMFo4ACwrMA44ACwrMBc4ACwrMDw4ACwrMFE4ACwrMFk4ACwrMAo4AJoCAmNjLCswmAE4ACwrMBY4ACwrMBk4ACwrMCs4AJoCC2pzX3JlZGlyZWN0LCswQTgALCswTTgALCswTjgALCswUzgALCswVDgALCswaTgALCswkAE4ACwrMJIBOAAsKzCXATgALCswowE4ACwrMKcBOAAsKzDVATgALCsw2AE4ACwrMB04ACwrMFw4ACwrMBg4ACwrMCY4ACyAAmeQAmc/-zM6KO6izB4.js"
+                              },
+                              {
+                                 "type":"BYTES",
+                                 "value":"900B"
+                              },
+                              {
+                                 "type":"PERCENTAGE",
+                                 "value":"1%"
+                              }
+                           ],
+                           "format":"Minifying $1 could save $2 ($3 reduction) after compression."
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         "MinimizeRedirects":{
+            "localizedRuleName":"Minimize redirects",
+            "ruleScore":100
+         },
+         "MinimizeRequestSize":{
+            "localizedRuleName":"Minimize request size",
+            "ruleScore":100
+         },
+         "OptimizeImages":{
+            "localizedRuleName":"Optimize images",
+            "ruleScore":100
+         },
+         "OptimizeTheOrderOfStylesAndScripts":{
+            "localizedRuleName":"Optimize the order of styles and scripts",
+            "ruleScore":100
+         },
+         "PreferAsyncResources":{
+            "localizedRuleName":"Prefer asynchronous resources",
+            "ruleScore":100
+         },
+         "PutCssInTheDocumentHead":{
+            "localizedRuleName":"Put CSS in the document head",
+            "ruleScore":100
+         },
+         "RemoveQueryStringsFromStaticResources":{
+            "localizedRuleName":"Remove query strings from static resources",
+            "ruleScore":100
+         },
+         "ServeResourcesFromAConsistentUrl":{
+            "localizedRuleName":"Serve resources from a consistent URL",
+            "ruleScore":100
+         },
+         "ServeScaledImages":{
+            "localizedRuleName":"Serve scaled images",
+            "ruleScore":100
+         },
+         "SpecifyACacheValidator":{
+            "localizedRuleName":"Specify a cache validator",
+            "ruleScore":100
+         },
+         "SpecifyAVaryAcceptEncodingHeader":{
+            "localizedRuleName":"Specify a Vary: Accept-Encoding header",
+            "ruleScore":100
+         },
+         "SpecifyCharsetEarly":{
+            "localizedRuleName":"Specify a character set",
+            "ruleScore":100
+         },
+         "SpecifyImageDimensions":{
+            "localizedRuleName":"Specify image dimensions",
+            "ruleScore":100
+         },
+         "SpriteImages":{
+            "localizedRuleName":"Combine images into CSS sprites",
+            "ruleScore":100
+         }
+      }
+   },
+   "id":"http://www.google.it/",
+   "kind":"pagespeedonline#result",
+   "pageStats":{
+      "htmlResponseBytes":"50645",
+      "imageResponseBytes":"48156",
+      "javascriptResponseBytes":"393374",
+      "numberHosts":3,
+      "numberJsResources":3,
+      "numberResources":11,
+      "numberStaticResources":6,
+      "otherResponseBytes":"907",
+      "totalRequestBytes":"1602"
+   },
+   "responseCode":200,
+   "score":98,
+   "title":"Google",
+   "version":{
+      "major":1,
+      "minor":12
+   }
+}

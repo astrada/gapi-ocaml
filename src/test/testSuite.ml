@@ -11,6 +11,7 @@ let model_tests =
    TestOauth2V2Model.suite;
    TestCustomsearchV1Model.suite;
    TestAnalyticsV3Model.suite;
+   TestPagespeedonlineV1Model.suite;
   ]
 
 let service_tests = 
