@@ -30,6 +30,10 @@ val build_param :
   'a -> 'a -> ('a -> 'b) -> ('b -> string) -> string ->
   (string * string) list
 
+val build_params :
+  'a -> ('a -> 'b list) -> ('b -> string) -> string ->
+  (string * string) list
+
 module StandardParameters :
 sig
   type t = {

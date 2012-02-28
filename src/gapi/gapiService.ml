@@ -68,6 +68,10 @@ let build_param default_params params get_value to_string name =
     else
       []
 
+let build_params params get_value to_string name =
+  let values = get_value params in
+    List.map (fun value -> (name, to_string value)) values
+
 module StandardParameters =
 struct
   type t = {
