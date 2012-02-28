@@ -336,14 +336,28 @@ let build_schema_inner_module file_lens complex_type =
            else ocaml_type_module ^ "."
          in
            match field_type.ComplexType.data_type with
-               ComplexType.Scalar scalar ->
+             | ComplexType.Scalar scalar ->
                  render_parse_element formatter
                    (name,
                     prefix,
                     field_type,
                     "{ x with " ^ ocaml_name ^ " = "
                     ^ (ScalarType.get_convert_function
-                         scalar.ScalarType.data_type) ^ "v }")
+                         scalar.ScalarType.data_type) ^ "v }");
+                 if scalar.ScalarType.data_type = ScalarType.Float then begin
+                   (* Float type includes integral literals *)
+                   (* TODO: remove when upgrading to Yojson *)
+                   render_parse_element formatter
+                     (name,
+                      prefix,
+                      field_type
+                        |> ComplexType.data_type
+                        ^= ComplexType.Scalar (
+                          scalar
+                            |> ScalarType.data_type
+                            ^= ScalarType.Integer),
+                      "{ x with " ^ ocaml_name ^ " = float_of_int v }");
+                 end;
              | _ when is_option ->
                  render_parse_element formatter
                    (name,

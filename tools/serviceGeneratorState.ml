@@ -87,6 +87,7 @@ struct
     | Int32Format
     | Int64Format
     | FloatFormat
+    | DoubleFormat
     | OtherFormat of string
 
   let format_of_string = function
@@ -97,6 +98,7 @@ struct
     | "int32" -> Int32Format
     | "int64" -> Int64Format
     | "float" -> FloatFormat
+    | "double" -> DoubleFormat
     | s -> OtherFormat s
 
   type location_t =
@@ -224,7 +226,8 @@ struct
         | "integer" -> Integer
         | "number" ->
             begin match format with
-                FloatFormat -> Float
+                FloatFormat
+              | DoubleFormat -> Float
               | _ -> String
             end
         | "string" ->
