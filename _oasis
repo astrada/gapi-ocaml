@@ -59,7 +59,9 @@ Library gapi
     GapiCustomsearchV1Model,
     GapiCustomsearchV1Service,
     GapiAnalyticsV3Model,
-    GapiAnalyticsV3Service
+    GapiAnalyticsV3Service,
+    GapiPagespeedonlineV1Model,
+    GapiPagespeedonlineV1Service
   InternalModules:
     GapiUtils
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm
