@@ -1,0 +1,8 @@
+{
+  "blogs": {
+    "selfLink": "https://www.googleapis.com/blogger/v2/users/901569848744/blogs"
+  },
+  "id": "901569848744",
+  "kind": "blogger#user",
+  "selfLink": "https://www.googleapis.com/blogger/v2/users/901569848744"
+}

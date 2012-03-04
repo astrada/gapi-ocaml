@@ -131,6 +131,22 @@ let test_parse_page () =
       page_json
       json
 
+let test_parse_user () =
+  let user_json =
+    Json_io.load_json "test_data/test_blogger_user.json" in
+  let tree = GapiJson.json_to_data_model user_json in
+  let user = User.of_data_model tree in
+  let tree' = User.to_data_model user in
+  let json = GapiJson.data_model_to_json tree' in
+    assert_equal
+      ~printer:TestHelper.string_of_json_data_model
+      tree
+      tree';
+    assert_equal
+      ~printer:Json_io.string_of_json
+      user_json
+      json
+
 let suite = "Blogger Model test" >:::
   ["test_parse_blog" >:: test_parse_blog;
    "test_parse_blog_list" >:: test_parse_blog_list;
@@ -139,5 +155,6 @@ let suite = "Blogger Model test" >:::
    "test_parse_comment_list" >:: test_parse_comment_list;
    "test_parse_comment" >:: test_parse_comment;
    "test_parse_page_list" >:: test_parse_page_list;
-   "test_parse_page" >:: test_parse_page]
+   "test_parse_page" >:: test_parse_page;
+   "test_parse_user" >:: test_parse_user]
 
