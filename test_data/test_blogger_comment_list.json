@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+       "author": {
+         "displayName": "elided",
+         "id": "530579030283",
+         "image": {
+           "url": "elided"
+         },
+         "url": "elided"
+       },
+       "blog": {
+         "id": "2399953"
+       },
+       "content": "elided",
+       "id": "9200761938824362519",
+       "kind": "blogger#comment",
+       "post": {
+         "id": "6069922188027612413"
+       },
+       "published": "2011-07-28T19:19:57.000Z",
+       "selfLink": "https://www.googleapis.com/blogger/v2/blogs/2399953/posts/6069922188027612413/comments/9200761938824362519",
+       "updated": "2011-07-28T21:29:42.000Z"
+    }
+  ],
+  "kind": "blogger#commentList",
+  "nextPageToken": "CgkIFBDwjvDXlyYQ0b2SARj9mZe9n8KsnlQ",
+  "prevPageToken": "CgkIFBisvMGRlyYQ0b2SARj9mZe9n8KsnlQ"
+}

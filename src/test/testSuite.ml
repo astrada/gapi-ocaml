@@ -12,6 +12,7 @@ let model_tests =
    TestCustomsearchV1Model.suite;
    TestAnalyticsV3Model.suite;
    TestPagespeedonlineV1Model.suite;
+   TestBloggerV2Model.suite;
   ]
 
 let service_tests = 

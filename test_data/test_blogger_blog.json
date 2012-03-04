@@ -1,0 +1,21 @@
+{
+  "description": "The Official Buzz from Blogger at Google",
+  "id": "2399953",
+  "kind": "blogger#blog",
+  "locale": {
+    "language": "en"
+  },
+  "name": "Blogger Buzz",
+  "pages": {
+    "selfLink": "https://www.googleapis.com/blogger/v2/blogs/2399953/pages",
+    "totalItems": 2
+  },
+  "posts": {
+    "selfLink": "https://www.googleapis.com/blogger/v2/blogs/2399953/posts",
+    "totalItems": 494
+  },
+  "published": "2007-04-23T22:17:29.000Z",
+  "selfLink": "https://www.googleapis.com/blogger/v2/blogs/2399953",
+  "updated": "2011-08-02T06:01:15.000Z",
+  "url": "http://buzz.blogger.com/"
+}

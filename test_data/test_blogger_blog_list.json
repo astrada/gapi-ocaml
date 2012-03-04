@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": "4967929378133675647",
+      "kind": "blogger#blog",
+      "locale": {
+        "language": "en"
+      },
+      "name": "Brett's Test Blawg",
+      "pages": {
+        "selfLink": "https://www.googleapis.com/blogger/v2/blogs/4967929378133675647/pages",
+        "totalItems": 1
+      },
+      "posts": {
+        "selfLink": "https://www.googleapis.com/blogger/v2/blogs/4967929378133675647/posts",
+        "totalItems": 13
+      },
+      "published": "2010-10-06T23:33:31.000Z",
+      "selfLink": "https://www.googleapis.com/blogger/v2/blogs/4967929378133675647",
+      "updated": "2011-08-08T06:50:02.000Z",
+      "url": "http://brettmorgan-test-blawg.blogspot.com/"
+    }
+  ],
+  "kind": "blogger#blogList"
+}
+
