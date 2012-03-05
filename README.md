@@ -67,18 +67,13 @@ This project provides 2 libraries:
 * `gapi`: Google APIs client library
 * `gdata`: Google Data Protocol client library
 
-and 1 executable:
-
-* `serviceGenerator`: Tool used to generate strongly typed client libraries for
-  Discovery-based services
-
-To build the libraries and the executable, run
+To build the libraries, run
 
     $ ocaml setup.ml -configure
     $ ocaml setup.ml -build
 
-To install the libraries and the executable, run (as root, if your user
-doesn't have enough privileges)
+To install the libraries, run (as root, if your user doesn't have enough
+privileges)
 
     $ ocaml setup.ml -install
 
@@ -113,6 +108,6 @@ of some services.
 See [service generator](tools/serviceGenerator.ml) for a complex example of
 how to use functional lenses within the state monad.
 
-See [tools README](tools/README.md) for the instructions of how to run the
-service generator utility.
+See [tools README](tools/README.md) for the instructions of how to build and
+run the service generator utility.
 
