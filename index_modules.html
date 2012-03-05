@@ -43,6 +43,8 @@
 <link title="GapiAnalyticsV3Service" rel="Chapter" href="GapiAnalyticsV3Service.html">
 <link title="GapiPagespeedonlineV1Model" rel="Chapter" href="GapiPagespeedonlineV1Model.html">
 <link title="GapiPagespeedonlineV1Service" rel="Chapter" href="GapiPagespeedonlineV1Service.html">
+<link title="GapiBloggerV2Model" rel="Chapter" href="GapiBloggerV2Model.html">
+<link title="GapiBloggerV2Service" rel="Chapter" href="GapiBloggerV2Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -109,7 +111,29 @@
 <td></td></tr>
 <tr><td><a href="GdataAtom.Author.html">Author</a> [<a href="GdataAtom.html">GdataAtom</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Page.AuthorData.html">AuthorData</a> [<a href="GapiBloggerV2Model.Page.html">GapiBloggerV2Model.Page</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Comment.AuthorData.html">AuthorData</a> [<a href="GapiBloggerV2Model.Comment.html">GapiBloggerV2Model.Comment</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Post.AuthorData.html">AuthorData</a> [<a href="GapiBloggerV2Model.Post.html">GapiBloggerV2Model.Post</a>]</td>
+<td></td></tr>
 <tr><td align="left"><br>B</td></tr>
+<tr><td><a href="GapiBloggerV2Model.Blog.html">Blog</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Page.BlogData.html">BlogData</a> [<a href="GapiBloggerV2Model.Page.html">GapiBloggerV2Model.Page</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Comment.BlogData.html">BlogData</a> [<a href="GapiBloggerV2Model.Comment.html">GapiBloggerV2Model.Comment</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Post.BlogData.html">BlogData</a> [<a href="GapiBloggerV2Model.Post.html">GapiBloggerV2Model.Post</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.BlogList.html">BlogList</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Service.UsersResource.Blogs.html">Blogs</a> [<a href="GapiBloggerV2Service.UsersResource.html">GapiBloggerV2Service.UsersResource</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.User.BlogsData.html">BlogsData</a> [<a href="GapiBloggerV2Model.User.html">GapiBloggerV2Model.User</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Service.BlogsResource.html">BlogsResource</a> [<a href="GapiBloggerV2Service.html">GapiBloggerV2Service</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiCustomsearchV1Model.Promotion.BodyLinesData.html">BodyLinesData</a> [<a href="GapiCustomsearchV1Model.Promotion.html">GapiCustomsearchV1Model.Promotion</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>C</td></tr>
@@ -145,11 +169,17 @@
 <td></td></tr>
 <tr><td><a href="GapiAnalyticsV3Model.GaData.ColumnHeadersData.html">ColumnHeadersData</a> [<a href="GapiAnalyticsV3Model.GaData.html">GapiAnalyticsV3Model.GaData</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Comment.html">Comment</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Comment.html">Comment</a> [<a href="GapiPlusV1Model.html">GapiPlusV1Model</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.CommentFeed.html">CommentFeed</a> [<a href="GapiPlusV1Model.html">GapiPlusV1Model</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.CommentList.html">CommentList</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
 <tr><td><a href="GdataCalendar.Comments.html">Comments</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Service.CommentsResource.html">CommentsResource</a> [<a href="GapiBloggerV2Service.html">GapiBloggerV2Service</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Service.CommentsResource.html">CommentsResource</a> [<a href="GapiPlusV1Service.html">GapiPlusV1Service</a>]</td>
 <td></td></tr>
@@ -261,6 +291,16 @@ Stores data used to authorize requests.
 <tr><td><a href="GapiAuthResponse.html">GapiAuthResponse</a> </td>
 <td><div class="info">
 Stores data from authorization responses.
+</div>
+</td></tr>
+<tr><td><a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a> </td>
+<td><div class="info">
+Data definition for Blogger API (v2).
+</div>
+</td></tr>
+<tr><td><a href="GapiBloggerV2Service.html">GapiBloggerV2Service</a> </td>
+<td><div class="info">
+Service definition for Blogger API (v2).
 </div>
 </td></tr>
 <tr><td><a href="GapiCalendarV3Model.html">GapiCalendarV3Model</a> </td>
@@ -483,6 +523,12 @@ Common operations for Google Data Protocol services.
 <td></td></tr>
 <tr><td><a href="GapiDiscoveryV1Model.RestDescription.IconsData.html">IconsData</a> [<a href="GapiDiscoveryV1Model.RestDescription.html">GapiDiscoveryV1Model.RestDescription</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Page.AuthorData.ImageData.html">ImageData</a> [<a href="GapiBloggerV2Model.Page.AuthorData.html">GapiBloggerV2Model.Page.AuthorData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Comment.AuthorData.ImageData.html">ImageData</a> [<a href="GapiBloggerV2Model.Comment.AuthorData.html">GapiBloggerV2Model.Comment.AuthorData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Post.AuthorData.ImageData.html">ImageData</a> [<a href="GapiBloggerV2Model.Post.AuthorData.html">GapiBloggerV2Model.Post.AuthorData</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiCustomsearchV1Model.Promotion.ImageData.html">ImageData</a> [<a href="GapiCustomsearchV1Model.Promotion.html">GapiCustomsearchV1Model.Promotion</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Activity.ActorData.ImageData.html">ImageData</a> [<a href="GapiPlusV1Model.Activity.ActorData.html">GapiPlusV1Model.Activity.ActorData</a>]</td>
@@ -494,6 +540,8 @@ Common operations for Google Data Protocol services.
 <tr><td><a href="GapiPlusV1Model.Person.ImageData.html">ImageData</a> [<a href="GapiPlusV1Model.Person.html">GapiPlusV1Model.Person</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Comment.ActorData.ImageData.html">ImageData</a> [<a href="GapiPlusV1Model.Comment.ActorData.html">GapiPlusV1Model.Comment.ActorData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Comment.InReplyToData.html">InReplyToData</a> [<a href="GapiBloggerV2Model.Comment.html">GapiBloggerV2Model.Comment</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Comment.InReplyToData.html">InReplyToData</a> [<a href="GapiPlusV1Model.Comment.html">GapiPlusV1Model.Comment</a>]</td>
 <td></td></tr>
@@ -519,6 +567,10 @@ Infix operators
 <tr><td><a href="GapiTasksV1Model.Task.LinksData.html">LinksData</a> [<a href="GapiTasksV1Model.Task.html">GapiTasksV1Model.Task</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiMonad.ListM.html">ListM</a> [<a href="GapiMonad.html">GapiMonad</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.User.LocaleData.html">LocaleData</a> [<a href="GapiBloggerV2Model.User.html">GapiBloggerV2Model.User</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Blog.LocaleData.html">LocaleData</a> [<a href="GapiBloggerV2Model.Blog.html">GapiBloggerV2Model.Blog</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiCustomsearchV1Service.CseResource.Lr.html">Lr</a> [<a href="GapiCustomsearchV1Service.CseResource.html">GapiCustomsearchV1Service.CseResource</a>]</td>
 <td></td></tr>
@@ -576,7 +628,15 @@ Infix operators
 <tr><td><a href="GdataCalendar.OriginalEvent.html">OriginalEvent</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>P</td></tr>
+<tr><td><a href="GapiBloggerV2Model.Page.html">Page</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.PageList.html">PageList</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiPagespeedonlineV1Model.Result.PageStatsData.html">PageStatsData</a> [<a href="GapiPagespeedonlineV1Model.Result.html">GapiPagespeedonlineV1Model.Result</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Blog.PagesData.html">PagesData</a> [<a href="GapiBloggerV2Model.Blog.html">GapiBloggerV2Model.Blog</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Service.PagesResource.html">PagesResource</a> [<a href="GapiBloggerV2Service.html">GapiBloggerV2Service</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPagespeedonlineV1Service.PagespeedapiResource.html">PagespeedapiResource</a> [<a href="GapiPagespeedonlineV1Service.html">GapiPagespeedonlineV1Service</a>]</td>
 <td></td></tr>
@@ -598,7 +658,17 @@ Infix operators
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Activity.ObjectData.PlusonersData.html">PlusonersData</a> [<a href="GapiPlusV1Model.Activity.ObjectData.html">GapiPlusV1Model.Activity.ObjectData</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Post.html">Post</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Comment.PostData.html">PostData</a> [<a href="GapiBloggerV2Model.Comment.html">GapiBloggerV2Model.Comment</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiCore.PostData.html">PostData</a> [<a href="GapiCore.html">GapiCore</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.PostList.html">PostList</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Blog.PostsData.html">PostsData</a> [<a href="GapiBloggerV2Model.Blog.html">GapiBloggerV2Model.Blog</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Service.PostsResource.html">PostsResource</a> [<a href="GapiBloggerV2Service.html">GapiBloggerV2Service</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiAnalyticsV3Model.Profile.html">Profile</a> [<a href="GapiAnalyticsV3Model.html">GapiAnalyticsV3Model</a>]</td>
 <td></td></tr>
@@ -637,6 +707,8 @@ Infix operators
 <tr><td><a href="GdataCalendar.Reminder.html">Reminder</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiCalendarV3Model.Event.RemindersData.html">RemindersData</a> [<a href="GapiCalendarV3Model.Event.html">GapiCalendarV3Model.Event</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.Post.RepliesData.html">RepliesData</a> [<a href="GapiBloggerV2Model.Post.html">GapiBloggerV2Model.Post</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Activity.ObjectData.RepliesData.html">RepliesData</a> [<a href="GapiPlusV1Model.Activity.ObjectData.html">GapiPlusV1Model.Activity.ObjectData</a>]</td>
 <td></td></tr>
@@ -769,9 +841,13 @@ Infix operators for the state monad
 <td></td></tr>
 <tr><td><a href="GapiPlusV1Model.Person.UrlsData.html">UrlsData</a> [<a href="GapiPlusV1Model.Person.html">GapiPlusV1Model.Person</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiBloggerV2Model.User.html">User</a> [<a href="GapiBloggerV2Model.html">GapiBloggerV2Model</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiOauth2V2Model.Userinfo.html">Userinfo</a> [<a href="GapiOauth2V2Model.html">GapiOauth2V2Model</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiOauth2V2Service.UserinfoResource.html">UserinfoResource</a> [<a href="GapiOauth2V2Service.html">GapiOauth2V2Service</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiBloggerV2Service.UsersResource.html">UsersResource</a> [<a href="GapiBloggerV2Service.html">GapiBloggerV2Service</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>V</td></tr>
 <tr><td><a href="GapiOauth2V2Service.UserinfoResource.V2.html">V2</a> [<a href="GapiOauth2V2Service.UserinfoResource.html">GapiOauth2V2Service.UserinfoResource</a>]</td>
