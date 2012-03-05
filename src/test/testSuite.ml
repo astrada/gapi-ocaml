@@ -28,6 +28,7 @@ let service_tests =
    TestCustomsearchV1Service.suite;
    TestAnalyticsV3Service.suite;
    TestPagespeedonlineV1Service.suite;
+   TestBloggerV2Service.suite;
   ]
 
 let build_service_test_list service =
@@ -44,6 +45,7 @@ let build_service_test_list service =
       | "customsearch" -> [TestCustomsearchV1Service.suite]
       | "analytics" -> [TestAnalyticsV3Service.suite]
       | "pagespeedonline" -> [TestPagespeedonlineV1Service.suite]
+      | "blogger" -> [TestBloggerV2Service.suite]
       | _ -> failwith ("Service not supported: " ^ service)
   in
     model_tests @ service_suite
@@ -69,7 +71,7 @@ let _ =
       ["-service",
          Arg.String (fun service ->
                        test_list := build_service_test_list service),
-         "svc Google service to test (calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline)";
+         "svc Google service to test (calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline, blogger)";
        "-all",
          Arg.Unit (fun () -> test_list := model_tests @ service_tests),
          " Run all tests"]) in

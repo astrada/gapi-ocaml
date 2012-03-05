@@ -90,7 +90,8 @@ let main () =
                       GapiPlusV1Service.scope_email;
                       GapiTasksV1Service.scope;
                       GapiUrlshortenerV1Service.scope;
-                      GapiAnalyticsV3Service.scope_readonly]
+                      GapiAnalyticsV3Service.scope_readonly;
+                      GapiBloggerV2Service.scope]
               ~response_type:"code"
               client_id in
     print_endline ("Open this URL in a web browser:\n" ^ url);
