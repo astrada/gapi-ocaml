@@ -17,6 +17,7 @@ Supported RESTful APIs:
 * Custom Search API v1
 * Google Analytics API v3
 * Page Speed Online API v1
+* Blogger API v2
 
 Old versions:
 

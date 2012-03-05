@@ -61,7 +61,9 @@ Library gapi
     GapiAnalyticsV3Model,
     GapiAnalyticsV3Service,
     GapiPagespeedonlineV1Model,
-    GapiPagespeedonlineV1Service
+    GapiPagespeedonlineV1Service,
+    GapiBloggerV2Model,
+    GapiBloggerV2Service
   InternalModules:
     GapiUtils
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm

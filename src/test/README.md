@@ -143,3 +143,7 @@ If there are errors in the tests, switching to `true` the `debug` value in the
 configuration file `auth.config` will activate the `ocurl` debug output, that
 will trace all the HTTP interactions with Google services.
 
+**Note:** At the moment, the Blogger API is in Public Preview, so if you plan
+to use it (or if you just want to run tests against it) you will have to
+explicitly request access filling the form linked in the API Console.
+

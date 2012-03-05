@@ -4,7 +4,7 @@ Google APIs Service Generator
 **Warning**: this program is still experimental, it has not yet been tested to
 generate correctly all the API bindings. At the moment, the services generated
 by this tool are: calendar v3, plus v1, tasks v1, discovery v1, urlshortener
-v1, oauth v2, customsearch v1, analytics v3, pagespeedonline v1
+v1, oauth v2, customsearch v1, analytics v3, pagespeedonline v1, blogger v2
 
 The `serviceGenerator` is used to produce OCaml source files that are used to
 add a service client to the `gapi` library. This tool will generate 4 OCaml
