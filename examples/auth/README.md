@@ -1,6 +1,3 @@
-Note: **Click on `README.md` in the directory view to have working relative
-links.**
-
 gapi-ocaml examples
 ===================
 
@@ -10,11 +7,10 @@ How to obtain credentials
 The preferred authorization mechanism to access Google services is OAuth 2.0,
 the other authorization methods are useful for development purposes only.
 
-All the utilities use a file named `auth.conf` in the [config](../../config)
-directory to read authentication credentials.
+All the utilities use a file named `auth.conf` that must be placed in
+`../../config` to read authentication credentials.
 
-You can start from the
-[auth.config.template](../../config/auth.config.template):
+You can start from the `auth.config.template` you can find in `../../config`:
 
     $ cp auth.config.template auth.config
 
@@ -86,7 +82,7 @@ https://code.google.com/apis/console/ to register your application:
    "localhost:8091" for the domain name
  - Click "Create client ID"
  - Click on "Services" in the left column
- - Turn on "Calendar API"
+ - Turn on all the APIs you want to use
 
 Then
 

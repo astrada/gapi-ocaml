@@ -1,6 +1,3 @@
-Note: **Click on `README.md` in the directory view to have working relative
-links.**
-
 Google APIs Client library for OCaml
 ====================================
 
@@ -26,7 +23,8 @@ Old versions:
 ### Features
 
 * Monadic interface
-* [Functional lenses](src/gapi/gapiLens.mli) to access data structures
+* [Functional lenses](http://astrada.github.com/gapi-ocaml/GapiLens.html) to
+  access data structures
 * Service generator (experimental): a tool for generating client libraries for
   APIs based on the Google API Discovery format
 
@@ -84,7 +82,7 @@ To build and run the tests (you will need
     $ ocaml setup.ml -build
     $ ocaml setup.ml -test
 
-See [tests README](src/test/README.md) for further details regarding the tests.
+See `src/test/README.md` for further details regarding the tests.
 
 To generate the documentation, run
 
@@ -99,15 +97,15 @@ To uninstall anything that was previously installed, execute
 
 ### Usage
 
-See [auth examples](examples/auth) for some examples of how to use
-Google's authorization endpoints.
+See auth examples in `examples/auth` for some examples of how to use Google's
+authorization endpoints.
 
-See [examples](examples) directory to find simple code samples that show usage
-of some services.
+See `examples` directory to find code samples that show usage of some
+services.
 
-See [service generator](tools/serviceGenerator.ml) for a complex example of
-how to use functional lenses within the state monad.
+See service generator source code (`tools/serviceGenerator.ml`) for a complex
+example of how to use functional lenses within the state monad.
 
-See [tools README](tools/README.md) for the instructions of how to build and
-run the service generator utility.
+See `tools/README.md` for the instructions of how to build and run the service
+generator utility.
 
