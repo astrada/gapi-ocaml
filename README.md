@@ -103,8 +103,8 @@ authorization endpoints.
 See `examples` directory to find code samples that show usage of some
 services.
 
-See service generator source code (`tools/serviceGenerator.ml`) for a complex
-example of how to use functional lenses within the state monad.
+See `tools/serviceGenerator.ml` for a complex example of how to use functional
+lenses within the state monad.
 
 See `tools/README.md` for the instructions of how to build and run the service
 generator utility.
