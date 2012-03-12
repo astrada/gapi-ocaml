@@ -26,7 +26,7 @@ Old versions:
 ### Features
 
 * Monadic interface
-* [Functional lenses](src/gapi/gapiLens.mli) to access data structures
+* [Functional lenses](blob/master/src/gapi/gapiLens.mli) to access data structures
 * Service generator (experimental): a tool for generating client libraries for
   APIs based on the Google API Discovery format
 
