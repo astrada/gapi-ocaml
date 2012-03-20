@@ -359,6 +359,8 @@ sig
     (** The base URL for REST requests. *)
     description : string;
     (** The description of this API. *)
+    discoveryVersion : string;
+    (** Indicate the version of the Discovery API used to generate this doc. *)
     documentationLink : string;
     (** A link to human readable documentation for the API. *)
     features : string list;
@@ -381,6 +383,8 @@ sig
     (** The protocol described by this document. *)
     resources : (string * RestResource.t) list;
     (** The resources in this API. *)
+    revision : string;
+    (** The version of this API. *)
     schemas : (string * JsonSchema.t) list;
     (** The schemas for this API. *)
     title : string;
@@ -394,6 +398,7 @@ sig
   val basePath : (t, string) GapiLens.t
   val baseUrl : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
+  val discoveryVersion : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
   val features : (t, string list) GapiLens.t
   val icons : (t, IconsData.t) GapiLens.t
@@ -405,6 +410,7 @@ sig
   val parameters : (t, (string * JsonSchema.t) list) GapiLens.t
   val protocol : (t, string) GapiLens.t
   val resources : (t, (string * RestResource.t) list) GapiLens.t
+  val revision : (t, string) GapiLens.t
   val schemas : (t, (string * JsonSchema.t) list) GapiLens.t
   val title : (t, string) GapiLens.t
   val version : (t, string) GapiLens.t
@@ -496,6 +502,8 @@ sig
   end
   
   type t = {
+    discoveryVersion : string;
+    (** Indicate the version of the Discovery API used to generate this doc. *)
     items : ItemsData.t list;
     (** The individual directory entries. One entry per api/version pair. *)
     kind : string;
@@ -503,6 +511,7 @@ sig
     
   }
   
+  val discoveryVersion : (t, string) GapiLens.t
   val items : (t, ItemsData.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   

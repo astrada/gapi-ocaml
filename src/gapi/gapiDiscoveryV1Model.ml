@@ -1026,6 +1026,7 @@ struct
     basePath : string;
     baseUrl : string;
     description : string;
+    discoveryVersion : string;
     documentationLink : string;
     features : string list;
     icons : IconsData.t;
@@ -1037,6 +1038,7 @@ struct
     parameters : (string * JsonSchema.t) list;
     protocol : string;
     resources : (string * RestResource.t) list;
+    revision : string;
     schemas : (string * JsonSchema.t) list;
     title : string;
     version : string;
@@ -1058,6 +1060,10 @@ struct
   let description = {
     GapiLens.get = (fun x -> x.description);
     GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let discoveryVersion = {
+    GapiLens.get = (fun x -> x.discoveryVersion);
+    GapiLens.set = (fun v x -> { x with discoveryVersion = v });
   }
   let documentationLink = {
     GapiLens.get = (fun x -> x.documentationLink);
@@ -1103,6 +1109,10 @@ struct
     GapiLens.get = (fun x -> x.resources);
     GapiLens.set = (fun v x -> { x with resources = v });
   }
+  let revision = {
+    GapiLens.get = (fun x -> x.revision);
+    GapiLens.set = (fun v x -> { x with revision = v });
+  }
   let schemas = {
     GapiLens.get = (fun x -> x.schemas);
     GapiLens.set = (fun v x -> { x with schemas = v });
@@ -1121,6 +1131,7 @@ struct
     basePath = "";
     baseUrl = "";
     description = "";
+    discoveryVersion = "";
     documentationLink = "";
     features = [];
     icons = IconsData.empty;
@@ -1132,6 +1143,7 @@ struct
     parameters = [];
     protocol = "";
     resources = [];
+    revision = "";
     schemas = [];
     title = "";
     version = "";
@@ -1144,6 +1156,7 @@ struct
       GapiJson.render_string_value "basePath" x.basePath;
       GapiJson.render_string_value "baseUrl" x.baseUrl;
       GapiJson.render_string_value "description" x.description;
+      GapiJson.render_string_value "discoveryVersion" x.discoveryVersion;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
       GapiJson.render_array "features" (GapiJson.render_string_value "") x.features;
       (fun v -> GapiJson.render_object "icons" (IconsData.render_content v)) x.icons;
@@ -1155,6 +1168,7 @@ struct
       GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.parameters;
       GapiJson.render_string_value "protocol" x.protocol;
       GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestResource.render_content v)) v) x.resources;
+      GapiJson.render_string_value "revision" x.revision;
       GapiJson.render_collection "schemas" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.schemas;
       GapiJson.render_string_value "title" x.title;
       GapiJson.render_string_value "version" x.version;
@@ -1184,6 +1198,10 @@ struct
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "discoveryVersion"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with discoveryVersion = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "documentationLink"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -1294,6 +1312,10 @@ struct
         ("", RestResource.empty)
         (fun v -> { x with resources = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "revision"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with revision = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "schemas"; data_type = GapiJson.Object },
         cs) ->
@@ -1560,11 +1582,16 @@ struct
   end
   
   type t = {
+    discoveryVersion : string;
     items : ItemsData.t list;
     kind : string;
     
   }
   
+  let discoveryVersion = {
+    GapiLens.get = (fun x -> x.discoveryVersion);
+    GapiLens.set = (fun v x -> { x with discoveryVersion = v });
+  }
   let items = {
     GapiLens.get = (fun x -> x.items);
     GapiLens.set = (fun v x -> { x with items = v });
@@ -1575,6 +1602,7 @@ struct
   }
   
   let empty = {
+    discoveryVersion = "";
     items = [];
     kind = "";
     
@@ -1582,6 +1610,7 @@ struct
   
   let rec render_content x = 
      [
+      GapiJson.render_string_value "discoveryVersion" x.discoveryVersion;
       GapiJson.render_array "items" ItemsData.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       
@@ -1590,6 +1619,10 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "discoveryVersion"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with discoveryVersion = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "items"; data_type = GapiJson.Array },
         cs) ->
