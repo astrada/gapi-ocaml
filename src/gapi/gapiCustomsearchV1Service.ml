@@ -25,6 +25,137 @@ struct
   
   end
   
+  module ImgColorType =
+  struct
+    type t =
+      | Default
+      | Color
+      | Gray
+      | Mono
+      
+    let to_string = function
+      | Default -> ""
+      | Color -> "color"
+      | Gray -> "gray"
+      | Mono -> "mono"
+      
+    let of_string = function
+      | "" -> Default
+      | "color" -> Color
+      | "gray" -> Gray
+      | "mono" -> Mono
+      | s -> failwith ("Unexpected value for ImgColorType:" ^ s)
+  
+  end
+  
+  module ImgDominantColor =
+  struct
+    type t =
+      | Default
+      | Black
+      | Blue
+      | Brown
+      | Gray
+      | Green
+      | Pink
+      | Purple
+      | Teal
+      | White
+      | Yellow
+      
+    let to_string = function
+      | Default -> ""
+      | Black -> "black"
+      | Blue -> "blue"
+      | Brown -> "brown"
+      | Gray -> "gray"
+      | Green -> "green"
+      | Pink -> "pink"
+      | Purple -> "purple"
+      | Teal -> "teal"
+      | White -> "white"
+      | Yellow -> "yellow"
+      
+    let of_string = function
+      | "" -> Default
+      | "black" -> Black
+      | "blue" -> Blue
+      | "brown" -> Brown
+      | "gray" -> Gray
+      | "green" -> Green
+      | "pink" -> Pink
+      | "purple" -> Purple
+      | "teal" -> Teal
+      | "white" -> White
+      | "yellow" -> Yellow
+      | s -> failwith ("Unexpected value for ImgDominantColor:" ^ s)
+  
+  end
+  
+  module ImgSize =
+  struct
+    type t =
+      | Default
+      | Huge
+      | Icon
+      | Large
+      | Medium
+      | Small
+      | Xlarge
+      | Xxlarge
+      
+    let to_string = function
+      | Default -> ""
+      | Huge -> "huge"
+      | Icon -> "icon"
+      | Large -> "large"
+      | Medium -> "medium"
+      | Small -> "small"
+      | Xlarge -> "xlarge"
+      | Xxlarge -> "xxlarge"
+      
+    let of_string = function
+      | "" -> Default
+      | "huge" -> Huge
+      | "icon" -> Icon
+      | "large" -> Large
+      | "medium" -> Medium
+      | "small" -> Small
+      | "xlarge" -> Xlarge
+      | "xxlarge" -> Xxlarge
+      | s -> failwith ("Unexpected value for ImgSize:" ^ s)
+  
+  end
+  
+  module ImgType =
+  struct
+    type t =
+      | Default
+      | Clipart
+      | Face
+      | Lineart
+      | News
+      | Photo
+      
+    let to_string = function
+      | Default -> ""
+      | Clipart -> "clipart"
+      | Face -> "face"
+      | Lineart -> "lineart"
+      | News -> "news"
+      | Photo -> "photo"
+      
+    let of_string = function
+      | "" -> Default
+      | "clipart" -> Clipart
+      | "face" -> Face
+      | "lineart" -> Lineart
+      | "news" -> News
+      | "photo" -> Photo
+      | s -> failwith ("Unexpected value for ImgType:" ^ s)
+  
+  end
+  
   module Lr =
   struct
     type t =
@@ -167,6 +298,43 @@ struct
   
   end
   
+  module SearchType =
+  struct
+    type t =
+      | Default
+      | Image
+      
+    let to_string = function
+      | Default -> ""
+      | Image -> "image"
+      
+    let of_string = function
+      | "" -> Default
+      | "image" -> Image
+      | s -> failwith ("Unexpected value for SearchType:" ^ s)
+  
+  end
+  
+  module SiteSearchFilter =
+  struct
+    type t =
+      | Default
+      | E
+      | I
+      
+    let to_string = function
+      | Default -> ""
+      | E -> "e"
+      | I -> "i"
+      
+    let of_string = function
+      | "" -> Default
+      | "e" -> E
+      | "i" -> I
+      | s -> failwith ("Unexpected value for SiteSearchFilter:" ^ s)
+  
+  end
+  
   module CseParameters =
   struct
     type t = {
@@ -177,18 +345,38 @@ struct
       userIp : string;
       key : string;
       (* cse-specific query parameters *)
+      c2coff : string;
       cr : string;
       cref : string;
       cx : string;
+      dateRestrict : string;
+      exactTerms : string;
+      excludeTerms : string;
+      fileType : string;
       filter : Filter.t;
       gl : string;
       googlehost : string;
+      highRange : string;
+      hl : string;
+      hq : string;
+      imgColorType : ImgColorType.t;
+      imgDominantColor : ImgDominantColor.t;
+      imgSize : ImgSize.t;
+      imgType : ImgType.t;
+      linkSite : string;
+      lowRange : string;
       lr : Lr.t;
-      num : string;
+      num : int;
+      orTerms : string;
       q : string;
+      relatedSite : string;
+      rights : string;
       safe : Safe.t;
+      searchType : SearchType.t;
+      siteSearch : string;
+      siteSearchFilter : SiteSearchFilter.t;
       sort : string;
-      start : string;
+      start : int;
       
     }
     
@@ -198,18 +386,38 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      c2coff = "";
       cr = "";
       cref = "";
       cx = "";
+      dateRestrict = "";
+      exactTerms = "";
+      excludeTerms = "";
+      fileType = "";
       filter = Filter.Default;
       gl = "";
       googlehost = "";
+      highRange = "";
+      hl = "";
+      hq = "";
+      imgColorType = ImgColorType.Default;
+      imgDominantColor = ImgDominantColor.Default;
+      imgSize = ImgSize.Default;
+      imgType = ImgType.Default;
+      linkSite = "";
+      lowRange = "";
       lr = Lr.Default;
-      num = "10";
+      num = 10;
+      orTerms = "";
       q = "";
+      relatedSite = "";
+      rights = "";
       safe = Safe.Default;
+      searchType = SearchType.Default;
+      siteSearch = "";
+      siteSearchFilter = SiteSearchFilter.Default;
       sort = "";
-      start = "";
+      start = 0;
       
     }
     
@@ -221,33 +429,73 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.c2coff) (fun x -> x) "c2coff";
       param (fun p -> p.cr) (fun x -> x) "cr";
       param (fun p -> p.cref) (fun x -> x) "cref";
       param (fun p -> p.cx) (fun x -> x) "cx";
+      param (fun p -> p.dateRestrict) (fun x -> x) "dateRestrict";
+      param (fun p -> p.exactTerms) (fun x -> x) "exactTerms";
+      param (fun p -> p.excludeTerms) (fun x -> x) "excludeTerms";
+      param (fun p -> p.fileType) (fun x -> x) "fileType";
       param (fun p -> p.filter) Filter.to_string "filter";
       param (fun p -> p.gl) (fun x -> x) "gl";
       param (fun p -> p.googlehost) (fun x -> x) "googlehost";
+      param (fun p -> p.highRange) (fun x -> x) "highRange";
+      param (fun p -> p.hl) (fun x -> x) "hl";
+      param (fun p -> p.hq) (fun x -> x) "hq";
+      param (fun p -> p.imgColorType) ImgColorType.to_string "imgColorType";
+      param (fun p -> p.imgDominantColor) ImgDominantColor.to_string "imgDominantColor";
+      param (fun p -> p.imgSize) ImgSize.to_string "imgSize";
+      param (fun p -> p.imgType) ImgType.to_string "imgType";
+      param (fun p -> p.linkSite) (fun x -> x) "linkSite";
+      param (fun p -> p.lowRange) (fun x -> x) "lowRange";
       param (fun p -> p.lr) Lr.to_string "lr";
-      param (fun p -> p.num) (fun x -> x) "num";
+      param (fun p -> p.num) string_of_int "num";
+      param (fun p -> p.orTerms) (fun x -> x) "orTerms";
       param (fun p -> p.q) (fun x -> x) "q";
+      param (fun p -> p.relatedSite) (fun x -> x) "relatedSite";
+      param (fun p -> p.rights) (fun x -> x) "rights";
       param (fun p -> p.safe) Safe.to_string "safe";
+      param (fun p -> p.searchType) SearchType.to_string "searchType";
+      param (fun p -> p.siteSearch) (fun x -> x) "siteSearch";
+      param (fun p -> p.siteSearchFilter) SiteSearchFilter.to_string "siteSearchFilter";
       param (fun p -> p.sort) (fun x -> x) "sort";
-      param (fun p -> p.start) (fun x -> x) "start";
+      param (fun p -> p.start) string_of_int "start";
       
     ] |> List.concat
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(c2coff = default.c2coff)
         ?(cr = default.cr)
         ?(cref = default.cref)
         ?(cx = default.cx)
+        ?(dateRestrict = default.dateRestrict)
+        ?(exactTerms = default.exactTerms)
+        ?(excludeTerms = default.excludeTerms)
+        ?(fileType = default.fileType)
         ?(filter = default.filter)
         ?(gl = default.gl)
         ?(googlehost = default.googlehost)
+        ?(highRange = default.highRange)
+        ?(hl = default.hl)
+        ?(hq = default.hq)
+        ?(imgColorType = default.imgColorType)
+        ?(imgDominantColor = default.imgDominantColor)
+        ?(imgSize = default.imgSize)
+        ?(imgType = default.imgType)
+        ?(linkSite = default.linkSite)
+        ?(lowRange = default.lowRange)
         ?(lr = default.lr)
         ?(num = default.num)
+        ?(orTerms = default.orTerms)
         ?(q = default.q)
+        ?(relatedSite = default.relatedSite)
+        ?(rights = default.rights)
         ?(safe = default.safe)
+        ?(searchType = default.searchType)
+        ?(siteSearch = default.siteSearch)
+        ?(siteSearchFilter = default.siteSearchFilter)
         ?(sort = default.sort)
         ?(start = default.start)
         () =
@@ -257,16 +505,36 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        c2coff;
         cr;
         cref;
         cx;
+        dateRestrict;
+        exactTerms;
+        excludeTerms;
+        fileType;
         filter;
         gl;
         googlehost;
+        highRange;
+        hl;
+        hq;
+        imgColorType;
+        imgDominantColor;
+        imgSize;
+        imgType;
+        linkSite;
+        lowRange;
         lr;
         num;
+        orTerms;
         q;
+        relatedSite;
+        rights;
         safe;
+        searchType;
+        siteSearch;
+        siteSearchFilter;
         sort;
         start;
         
@@ -278,23 +546,46 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/customsearch/")
         ?std_params
-        ?(num = "10")
+        ?(num = 10)
         ?(safe = Safe.Default)
+        ?c2coff
         ?cr
         ?cref
         ?cx
+        ?dateRestrict
+        ?exactTerms
+        ?excludeTerms
+        ?fileType
         ?filter
         ?gl
         ?googlehost
+        ?highRange
+        ?hl
+        ?hq
+        ?imgColorType
+        ?imgDominantColor
+        ?imgSize
+        ?imgType
+        ?linkSite
+        ?lowRange
         ?lr
+        ?orTerms
+        ?relatedSite
+        ?rights
+        ?searchType
+        ?siteSearch
+        ?siteSearchFilter
         ?sort
         ?start
         ~q
         session =
     let full_url = GapiUtils.add_path_to_url ["v1"] base_url in
     let params = CseParameters.merge_parameters
-      ?standard_parameters:std_params ?cr ?cref ?cx ?filter ?gl ?googlehost
-      ?lr ~num ~q ~safe ?sort ?start () in
+      ?standard_parameters:std_params ?c2coff ?cr ?cref ?cx ?dateRestrict
+      ?exactTerms ?excludeTerms ?fileType ?filter ?gl ?googlehost ?highRange
+      ?hl ?hq ?imgColorType ?imgDominantColor ?imgSize ?imgType ?linkSite
+      ?lowRange ?lr ~num ?orTerms ~q ?relatedSite ?rights ~safe ?searchType
+      ?siteSearch ?siteSearchFilter ?sort ?start () in
     let query_parameters = Option.map CseParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url

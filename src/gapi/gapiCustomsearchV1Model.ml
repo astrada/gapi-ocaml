@@ -234,14 +234,34 @@ struct
     cr : string;
     cref : string;
     cx : string;
+    dateRestrict : string;
+    disableCnTwTranslation : string;
+    exactTerms : string;
+    excludeTerms : string;
+    fileType : string;
     filter : string;
     gl : string;
     googleHost : string;
+    highRange : string;
+    hl : string;
+    hq : string;
+    imgColorType : string;
+    imgDominantColor : string;
+    imgSize : string;
+    imgType : string;
     inputEncoding : string;
     language : string;
+    linkSite : string;
+    lowRange : string;
+    orTerms : string;
     outputEncoding : string;
+    relatedSite : string;
+    rights : string;
     safe : string;
     searchTerms : string;
+    searchType : string;
+    siteSearch : string;
+    siteSearchFilter : string;
     sort : string;
     startIndex : int;
     startPage : int;
@@ -266,6 +286,26 @@ struct
     GapiLens.get = (fun x -> x.cx);
     GapiLens.set = (fun v x -> { x with cx = v });
   }
+  let dateRestrict = {
+    GapiLens.get = (fun x -> x.dateRestrict);
+    GapiLens.set = (fun v x -> { x with dateRestrict = v });
+  }
+  let disableCnTwTranslation = {
+    GapiLens.get = (fun x -> x.disableCnTwTranslation);
+    GapiLens.set = (fun v x -> { x with disableCnTwTranslation = v });
+  }
+  let exactTerms = {
+    GapiLens.get = (fun x -> x.exactTerms);
+    GapiLens.set = (fun v x -> { x with exactTerms = v });
+  }
+  let excludeTerms = {
+    GapiLens.get = (fun x -> x.excludeTerms);
+    GapiLens.set = (fun v x -> { x with excludeTerms = v });
+  }
+  let fileType = {
+    GapiLens.get = (fun x -> x.fileType);
+    GapiLens.set = (fun v x -> { x with fileType = v });
+  }
   let filter = {
     GapiLens.get = (fun x -> x.filter);
     GapiLens.set = (fun v x -> { x with filter = v });
@@ -278,6 +318,34 @@ struct
     GapiLens.get = (fun x -> x.googleHost);
     GapiLens.set = (fun v x -> { x with googleHost = v });
   }
+  let highRange = {
+    GapiLens.get = (fun x -> x.highRange);
+    GapiLens.set = (fun v x -> { x with highRange = v });
+  }
+  let hl = {
+    GapiLens.get = (fun x -> x.hl);
+    GapiLens.set = (fun v x -> { x with hl = v });
+  }
+  let hq = {
+    GapiLens.get = (fun x -> x.hq);
+    GapiLens.set = (fun v x -> { x with hq = v });
+  }
+  let imgColorType = {
+    GapiLens.get = (fun x -> x.imgColorType);
+    GapiLens.set = (fun v x -> { x with imgColorType = v });
+  }
+  let imgDominantColor = {
+    GapiLens.get = (fun x -> x.imgDominantColor);
+    GapiLens.set = (fun v x -> { x with imgDominantColor = v });
+  }
+  let imgSize = {
+    GapiLens.get = (fun x -> x.imgSize);
+    GapiLens.set = (fun v x -> { x with imgSize = v });
+  }
+  let imgType = {
+    GapiLens.get = (fun x -> x.imgType);
+    GapiLens.set = (fun v x -> { x with imgType = v });
+  }
   let inputEncoding = {
     GapiLens.get = (fun x -> x.inputEncoding);
     GapiLens.set = (fun v x -> { x with inputEncoding = v });
@@ -286,9 +354,29 @@ struct
     GapiLens.get = (fun x -> x.language);
     GapiLens.set = (fun v x -> { x with language = v });
   }
+  let linkSite = {
+    GapiLens.get = (fun x -> x.linkSite);
+    GapiLens.set = (fun v x -> { x with linkSite = v });
+  }
+  let lowRange = {
+    GapiLens.get = (fun x -> x.lowRange);
+    GapiLens.set = (fun v x -> { x with lowRange = v });
+  }
+  let orTerms = {
+    GapiLens.get = (fun x -> x.orTerms);
+    GapiLens.set = (fun v x -> { x with orTerms = v });
+  }
   let outputEncoding = {
     GapiLens.get = (fun x -> x.outputEncoding);
     GapiLens.set = (fun v x -> { x with outputEncoding = v });
+  }
+  let relatedSite = {
+    GapiLens.get = (fun x -> x.relatedSite);
+    GapiLens.set = (fun v x -> { x with relatedSite = v });
+  }
+  let rights = {
+    GapiLens.get = (fun x -> x.rights);
+    GapiLens.set = (fun v x -> { x with rights = v });
   }
   let safe = {
     GapiLens.get = (fun x -> x.safe);
@@ -297,6 +385,18 @@ struct
   let searchTerms = {
     GapiLens.get = (fun x -> x.searchTerms);
     GapiLens.set = (fun v x -> { x with searchTerms = v });
+  }
+  let searchType = {
+    GapiLens.get = (fun x -> x.searchType);
+    GapiLens.set = (fun v x -> { x with searchType = v });
+  }
+  let siteSearch = {
+    GapiLens.get = (fun x -> x.siteSearch);
+    GapiLens.set = (fun v x -> { x with siteSearch = v });
+  }
+  let siteSearchFilter = {
+    GapiLens.get = (fun x -> x.siteSearchFilter);
+    GapiLens.set = (fun v x -> { x with siteSearchFilter = v });
   }
   let sort = {
     GapiLens.get = (fun x -> x.sort);
@@ -324,14 +424,34 @@ struct
     cr = "";
     cref = "";
     cx = "";
+    dateRestrict = "";
+    disableCnTwTranslation = "";
+    exactTerms = "";
+    excludeTerms = "";
+    fileType = "";
     filter = "";
     gl = "";
     googleHost = "";
+    highRange = "";
+    hl = "";
+    hq = "";
+    imgColorType = "";
+    imgDominantColor = "";
+    imgSize = "";
+    imgType = "";
     inputEncoding = "";
     language = "";
+    linkSite = "";
+    lowRange = "";
+    orTerms = "";
     outputEncoding = "";
+    relatedSite = "";
+    rights = "";
     safe = "";
     searchTerms = "";
+    searchType = "";
+    siteSearch = "";
+    siteSearchFilter = "";
     sort = "";
     startIndex = 0;
     startPage = 0;
@@ -346,14 +466,34 @@ struct
       GapiJson.render_string_value "cr" x.cr;
       GapiJson.render_string_value "cref" x.cref;
       GapiJson.render_string_value "cx" x.cx;
+      GapiJson.render_string_value "dateRestrict" x.dateRestrict;
+      GapiJson.render_string_value "disableCnTwTranslation" x.disableCnTwTranslation;
+      GapiJson.render_string_value "exactTerms" x.exactTerms;
+      GapiJson.render_string_value "excludeTerms" x.excludeTerms;
+      GapiJson.render_string_value "fileType" x.fileType;
       GapiJson.render_string_value "filter" x.filter;
       GapiJson.render_string_value "gl" x.gl;
       GapiJson.render_string_value "googleHost" x.googleHost;
+      GapiJson.render_string_value "highRange" x.highRange;
+      GapiJson.render_string_value "hl" x.hl;
+      GapiJson.render_string_value "hq" x.hq;
+      GapiJson.render_string_value "imgColorType" x.imgColorType;
+      GapiJson.render_string_value "imgDominantColor" x.imgDominantColor;
+      GapiJson.render_string_value "imgSize" x.imgSize;
+      GapiJson.render_string_value "imgType" x.imgType;
       GapiJson.render_string_value "inputEncoding" x.inputEncoding;
       GapiJson.render_string_value "language" x.language;
+      GapiJson.render_string_value "linkSite" x.linkSite;
+      GapiJson.render_string_value "lowRange" x.lowRange;
+      GapiJson.render_string_value "orTerms" x.orTerms;
       GapiJson.render_string_value "outputEncoding" x.outputEncoding;
+      GapiJson.render_string_value "relatedSite" x.relatedSite;
+      GapiJson.render_string_value "rights" x.rights;
       GapiJson.render_string_value "safe" x.safe;
       GapiJson.render_string_value "searchTerms" x.searchTerms;
+      GapiJson.render_string_value "searchType" x.searchType;
+      GapiJson.render_string_value "siteSearch" x.siteSearch;
+      GapiJson.render_string_value "siteSearchFilter" x.siteSearchFilter;
       GapiJson.render_string_value "sort" x.sort;
       GapiJson.render_int_value "startIndex" x.startIndex;
       GapiJson.render_int_value "startPage" x.startPage;
@@ -382,6 +522,26 @@ struct
         Json_type.String v) ->
       { x with cx = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "dateRestrict"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with dateRestrict = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "disableCnTwTranslation"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with disableCnTwTranslation = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "exactTerms"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with exactTerms = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "excludeTerms"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with excludeTerms = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "fileType"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with fileType = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "filter"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with filter = v }
@@ -394,6 +554,34 @@ struct
         Json_type.String v) ->
       { x with googleHost = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "highRange"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with highRange = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hl"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with hl = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hq"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with hq = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "imgColorType"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with imgColorType = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "imgDominantColor"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with imgDominantColor = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "imgSize"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with imgSize = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "imgType"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with imgType = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "inputEncoding"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with inputEncoding = v }
@@ -402,9 +590,29 @@ struct
         Json_type.String v) ->
       { x with language = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "linkSite"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with linkSite = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "lowRange"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with lowRange = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "orTerms"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with orTerms = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "outputEncoding"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with outputEncoding = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "relatedSite"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with relatedSite = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "rights"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with rights = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "safe"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -413,6 +621,18 @@ struct
         ({ GapiJson.name = "searchTerms"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with searchTerms = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "searchType"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with searchType = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "siteSearch"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with siteSearch = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "siteSearchFilter"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with siteSearchFilter = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "sort"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -576,13 +796,174 @@ end
 
 module Result =
 struct
+  module LabelsData =
+  struct
+    type t = {
+      displayName : string;
+      name : string;
+      
+    }
+    
+    let displayName = {
+      GapiLens.get = (fun x -> x.displayName);
+      GapiLens.set = (fun v x -> { x with displayName = v });
+    }
+    let name = {
+      GapiLens.get = (fun x -> x.name);
+      GapiLens.set = (fun v x -> { x with name = v });
+    }
+    
+    let empty = {
+      displayName = "";
+      name = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "displayName" x.displayName;
+        GapiJson.render_string_value "name" x.name;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with displayName = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with name = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCustomsearchV1Model.LabelsData.parse" e x
+    
+  end
+  
+  module ImageData =
+  struct
+    type t = {
+      byteSize : int;
+      contextLink : string;
+      height : int;
+      thumbnailHeight : int;
+      thumbnailLink : string;
+      thumbnailWidth : int;
+      width : int;
+      
+    }
+    
+    let byteSize = {
+      GapiLens.get = (fun x -> x.byteSize);
+      GapiLens.set = (fun v x -> { x with byteSize = v });
+    }
+    let contextLink = {
+      GapiLens.get = (fun x -> x.contextLink);
+      GapiLens.set = (fun v x -> { x with contextLink = v });
+    }
+    let height = {
+      GapiLens.get = (fun x -> x.height);
+      GapiLens.set = (fun v x -> { x with height = v });
+    }
+    let thumbnailHeight = {
+      GapiLens.get = (fun x -> x.thumbnailHeight);
+      GapiLens.set = (fun v x -> { x with thumbnailHeight = v });
+    }
+    let thumbnailLink = {
+      GapiLens.get = (fun x -> x.thumbnailLink);
+      GapiLens.set = (fun v x -> { x with thumbnailLink = v });
+    }
+    let thumbnailWidth = {
+      GapiLens.get = (fun x -> x.thumbnailWidth);
+      GapiLens.set = (fun v x -> { x with thumbnailWidth = v });
+    }
+    let width = {
+      GapiLens.get = (fun x -> x.width);
+      GapiLens.set = (fun v x -> { x with width = v });
+    }
+    
+    let empty = {
+      byteSize = 0;
+      contextLink = "";
+      height = 0;
+      thumbnailHeight = 0;
+      thumbnailLink = "";
+      thumbnailWidth = 0;
+      width = 0;
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_int_value "byteSize" x.byteSize;
+        GapiJson.render_string_value "contextLink" x.contextLink;
+        GapiJson.render_int_value "height" x.height;
+        GapiJson.render_int_value "thumbnailHeight" x.thumbnailHeight;
+        GapiJson.render_string_value "thumbnailLink" x.thumbnailLink;
+        GapiJson.render_int_value "thumbnailWidth" x.thumbnailWidth;
+        GapiJson.render_int_value "width" x.width;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "byteSize"; data_type = GapiJson.Scalar },
+          Json_type.Int v) ->
+        { x with byteSize = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "contextLink"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with contextLink = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "height"; data_type = GapiJson.Scalar },
+          Json_type.Int v) ->
+        { x with height = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "thumbnailHeight"; data_type = GapiJson.Scalar },
+          Json_type.Int v) ->
+        { x with thumbnailHeight = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "thumbnailLink"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with thumbnailLink = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "thumbnailWidth"; data_type = GapiJson.Scalar },
+          Json_type.Int v) ->
+        { x with thumbnailWidth = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "width"; data_type = GapiJson.Scalar },
+          Json_type.Int v) ->
+        { x with width = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCustomsearchV1Model.ImageData.parse" e x
+    
+  end
+  
   type t = {
     cacheId : string;
     displayLink : string;
+    fileFormat : string;
+    formattedUrl : string;
+    htmlFormattedUrl : string;
     htmlSnippet : string;
     htmlTitle : string;
+    image : ImageData.t;
     kind : string;
+    labels : LabelsData.t list;
     link : string;
+    mime : string;
     pagemap : (string * (string * string) list list) list;
     snippet : string;
     title : string;
@@ -597,6 +978,18 @@ struct
     GapiLens.get = (fun x -> x.displayLink);
     GapiLens.set = (fun v x -> { x with displayLink = v });
   }
+  let fileFormat = {
+    GapiLens.get = (fun x -> x.fileFormat);
+    GapiLens.set = (fun v x -> { x with fileFormat = v });
+  }
+  let formattedUrl = {
+    GapiLens.get = (fun x -> x.formattedUrl);
+    GapiLens.set = (fun v x -> { x with formattedUrl = v });
+  }
+  let htmlFormattedUrl = {
+    GapiLens.get = (fun x -> x.htmlFormattedUrl);
+    GapiLens.set = (fun v x -> { x with htmlFormattedUrl = v });
+  }
   let htmlSnippet = {
     GapiLens.get = (fun x -> x.htmlSnippet);
     GapiLens.set = (fun v x -> { x with htmlSnippet = v });
@@ -605,13 +998,25 @@ struct
     GapiLens.get = (fun x -> x.htmlTitle);
     GapiLens.set = (fun v x -> { x with htmlTitle = v });
   }
+  let image = {
+    GapiLens.get = (fun x -> x.image);
+    GapiLens.set = (fun v x -> { x with image = v });
+  }
   let kind = {
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
   }
+  let labels = {
+    GapiLens.get = (fun x -> x.labels);
+    GapiLens.set = (fun v x -> { x with labels = v });
+  }
   let link = {
     GapiLens.get = (fun x -> x.link);
     GapiLens.set = (fun v x -> { x with link = v });
+  }
+  let mime = {
+    GapiLens.get = (fun x -> x.mime);
+    GapiLens.set = (fun v x -> { x with mime = v });
   }
   let pagemap = {
     GapiLens.get = (fun x -> x.pagemap);
@@ -629,10 +1034,16 @@ struct
   let empty = {
     cacheId = "";
     displayLink = "";
+    fileFormat = "";
+    formattedUrl = "";
+    htmlFormattedUrl = "";
     htmlSnippet = "";
     htmlTitle = "";
+    image = ImageData.empty;
     kind = "";
+    labels = [];
     link = "";
+    mime = "";
     pagemap = [];
     snippet = "";
     title = "";
@@ -643,10 +1054,16 @@ struct
      [
       GapiJson.render_string_value "cacheId" x.cacheId;
       GapiJson.render_string_value "displayLink" x.displayLink;
+      GapiJson.render_string_value "fileFormat" x.fileFormat;
+      GapiJson.render_string_value "formattedUrl" x.formattedUrl;
+      GapiJson.render_string_value "htmlFormattedUrl" x.htmlFormattedUrl;
       GapiJson.render_string_value "htmlSnippet" x.htmlSnippet;
       GapiJson.render_string_value "htmlTitle" x.htmlTitle;
+      (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
       GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_array "labels" LabelsData.render x.labels;
       GapiJson.render_string_value "link" x.link;
+      GapiJson.render_string_value "mime" x.mime;
       GapiJson.render_collection "pagemap" GapiJson.Object (fun (id, v) -> GapiJson.render_array id (GapiJson.render_collection "" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v)) v) x.pagemap;
       GapiJson.render_string_value "snippet" x.snippet;
       GapiJson.render_string_value "title" x.title;
@@ -665,6 +1082,18 @@ struct
         Json_type.String v) ->
       { x with displayLink = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "fileFormat"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with fileFormat = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "formattedUrl"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with formattedUrl = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "htmlFormattedUrl"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with htmlFormattedUrl = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "htmlSnippet"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with htmlSnippet = v }
@@ -672,14 +1101,44 @@ struct
         ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with htmlTitle = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "image"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ImageData.parse
+        ImageData.empty
+        (fun v -> { x with image = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "labels"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              LabelsData.parse
+              LabelsData.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiCustomsearchV1Model.Result.parse.parse_collection" e x')
+        LabelsData.empty
+        (fun v -> { x with labels = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with link = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "mime"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with mime = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "pagemap"; data_type = GapiJson.Object },
         cs) ->
@@ -787,12 +1246,140 @@ struct
     
   end
   
+  module SpellingData =
+  struct
+    type t = {
+      correctedQuery : string;
+      htmlCorrectedQuery : string;
+      
+    }
+    
+    let correctedQuery = {
+      GapiLens.get = (fun x -> x.correctedQuery);
+      GapiLens.set = (fun v x -> { x with correctedQuery = v });
+    }
+    let htmlCorrectedQuery = {
+      GapiLens.get = (fun x -> x.htmlCorrectedQuery);
+      GapiLens.set = (fun v x -> { x with htmlCorrectedQuery = v });
+    }
+    
+    let empty = {
+      correctedQuery = "";
+      htmlCorrectedQuery = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "correctedQuery" x.correctedQuery;
+        GapiJson.render_string_value "htmlCorrectedQuery" x.htmlCorrectedQuery;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "correctedQuery"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with correctedQuery = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "htmlCorrectedQuery"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with htmlCorrectedQuery = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCustomsearchV1Model.SpellingData.parse" e x
+    
+  end
+  
+  module SearchInformationData =
+  struct
+    type t = {
+      formattedSearchTime : string;
+      formattedTotalResults : string;
+      searchTime : float;
+      totalResults : string;
+      
+    }
+    
+    let formattedSearchTime = {
+      GapiLens.get = (fun x -> x.formattedSearchTime);
+      GapiLens.set = (fun v x -> { x with formattedSearchTime = v });
+    }
+    let formattedTotalResults = {
+      GapiLens.get = (fun x -> x.formattedTotalResults);
+      GapiLens.set = (fun v x -> { x with formattedTotalResults = v });
+    }
+    let searchTime = {
+      GapiLens.get = (fun x -> x.searchTime);
+      GapiLens.set = (fun v x -> { x with searchTime = v });
+    }
+    let totalResults = {
+      GapiLens.get = (fun x -> x.totalResults);
+      GapiLens.set = (fun v x -> { x with totalResults = v });
+    }
+    
+    let empty = {
+      formattedSearchTime = "";
+      formattedTotalResults = "";
+      searchTime = 0.0;
+      totalResults = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "formattedSearchTime" x.formattedSearchTime;
+        GapiJson.render_string_value "formattedTotalResults" x.formattedTotalResults;
+        GapiJson.render_float_value "searchTime" x.searchTime;
+        GapiJson.render_string_value "totalResults" x.totalResults;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "formattedSearchTime"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with formattedSearchTime = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "formattedTotalResults"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with formattedTotalResults = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "searchTime"; data_type = GapiJson.Scalar },
+          Json_type.Float v) ->
+        { x with searchTime = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "searchTime"; data_type = GapiJson.Scalar },
+          Json_type.Int v) ->
+        { x with searchTime = float_of_int v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "totalResults"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with totalResults = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCustomsearchV1Model.SearchInformationData.parse" e x
+    
+  end
+  
   type t = {
     context : Context.t;
     items : Result.t list;
     kind : string;
     promotions : Promotion.t list;
     queries : (string * Query.t list) list;
+    searchInformation : SearchInformationData.t;
+    spelling : SpellingData.t;
     url : UrlData.t;
     
   }
@@ -817,6 +1404,14 @@ struct
     GapiLens.get = (fun x -> x.queries);
     GapiLens.set = (fun v x -> { x with queries = v });
   }
+  let searchInformation = {
+    GapiLens.get = (fun x -> x.searchInformation);
+    GapiLens.set = (fun v x -> { x with searchInformation = v });
+  }
+  let spelling = {
+    GapiLens.get = (fun x -> x.spelling);
+    GapiLens.set = (fun v x -> { x with spelling = v });
+  }
   let url = {
     GapiLens.get = (fun x -> x.url);
     GapiLens.set = (fun v x -> { x with url = v });
@@ -828,6 +1423,8 @@ struct
     kind = "";
     promotions = [];
     queries = [];
+    searchInformation = SearchInformationData.empty;
+    spelling = SpellingData.empty;
     url = UrlData.empty;
     
   }
@@ -839,6 +1436,8 @@ struct
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "promotions" Promotion.render x.promotions;
       GapiJson.render_collection "queries" GapiJson.Object (fun (id, v) -> GapiJson.render_array id Query.render v) x.queries;
+      (fun v -> GapiJson.render_object "searchInformation" (SearchInformationData.render_content v)) x.searchInformation;
+      (fun v -> GapiJson.render_object "spelling" (SpellingData.render_content v)) x.spelling;
       (fun v -> GapiJson.render_object "url" (UrlData.render_content v)) x.url;
       
     ]
@@ -917,6 +1516,22 @@ struct
             GapiJson.unexpected "GapiCustomsearchV1Model.Search.parse.parse_dictionary" e x')
         ("", [])
         (fun v -> { x with queries = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "searchInformation"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        SearchInformationData.parse
+        SearchInformationData.empty
+        (fun v -> { x with searchInformation = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "spelling"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        SpellingData.parse
+        SpellingData.empty
+        (fun v -> { x with spelling = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "url"; data_type = GapiJson.Object },
