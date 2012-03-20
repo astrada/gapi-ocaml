@@ -760,23 +760,6 @@ struct
     GapiService.post ?query_parameters ~data:Event.empty full_url
       (GapiJson.parse_json_response Event.of_data_model) session 
     
-  let reset
-        ?(base_url = "https://www.googleapis.com/calendar/v3/")
-        ?std_params
-        ?sendNotifications
-        ~calendarId
-        ~eventId
-        session =
-    let full_url = GapiUtils.add_path_to_url ["calendars";
-      ((fun x -> x) calendarId); "events"; ((fun x -> x) eventId); "reset"]
-      base_url in
-    let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?sendNotifications () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
-      params in
-    GapiService.post ?query_parameters ~data:Event.empty full_url
-      (GapiJson.parse_json_response Event.of_data_model) session 
-    
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params

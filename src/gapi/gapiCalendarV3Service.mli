@@ -519,23 +519,6 @@ sig
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Event.t * GapiConversation.Session.t
   
-  (** Resets a specialized instance of a recurring event to its original state.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
-    @param std_params Optional standard parameters.
-    @param sendNotifications Whether to send notifications about the event update. Optional. The default is False.
-    @param calendarId Calendar identifier.
-    @param eventId Event identifier.
-    *)
-  val reset :
-    ?base_url:string ->
-    ?std_params:GapiService.StandardParameters.t ->
-    ?sendNotifications:bool ->
-    calendarId:string ->
-    eventId:string ->
-    GapiConversation.Session.t ->
-    GapiCalendarV3Model.Event.t * GapiConversation.Session.t
-  
   (** Updates an event.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).

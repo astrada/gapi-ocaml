@@ -653,50 +653,6 @@ let test_recurring_event_instances () =
            3
            (List.length events.Events.items))
 
-let test_recurring_event_instance_reset () =
-  TestHelper.test_request
-    TestHelper.build_oauth2_auth
-    (fun session ->
-       let (event, session) =
-         EventsResource.insert
-           ~calendarId:"primary"
-           new_recurring_event
-           session in
-       let _ = TestHelper.delay () in
-       let (events, session) =
-         EventsResource.instances
-           ~calendarId:"primary"
-           ~eventId:event.Event.id
-           session in
-       let second_instance = events
-         |. Events.items
-         |. GapiLens.tail
-         |. GapiLens.head in
-       let canceled_instance = second_instance
-         |> Event.status ^= "cancelled" in
-       let (updated_instance, session) =
-         EventsResource.update
-           ~calendarId:"primary"
-           ~eventId:canceled_instance.Event.id
-           canceled_instance
-           session in
-       let (restored_instance, session) =
-         EventsResource.reset
-           ~calendarId:"primary"
-           ~eventId:updated_instance.Event.id
-           session
-       in
-         ignore (EventsResource.delete
-                   ~calendarId:"primary"
-                   ~eventId:event.Event.id
-                   session);
-         assert_equal
-           "cancelled"
-           updated_instance.Event.status;
-         assert_equal
-           "confirmed"
-           restored_instance.Event.status)
-
 (* Calendar List *)
 
 let australian_calendar_id =
@@ -928,8 +884,6 @@ let suite = "Calendar services (v3) test" >:::
    "test_import_event" >:: test_import_event;
    "test_move_event" >:: test_move_event;
    "test_recurring_event_instances" >:: test_recurring_event_instances;
-   "test_recurring_event_instance_reset"
-     >:: test_recurring_event_instance_reset;
    "test_list_calendar_list" >:: test_list_calendar_list;
    "test_list_calendar_list_with_max_results"
      >:: test_list_calendar_list_with_max_results;

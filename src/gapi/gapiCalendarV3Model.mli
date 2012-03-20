@@ -829,7 +829,7 @@ sig
     location : string;
     (** Geographic location of the calendar as free-form text. Optional. Read-only. *)
     selected : bool;
-    (** Whether the calendar content shows up in the calendar UI. Optional. The default is True. *)
+    (** Whether the calendar content shows up in the calendar UI. Optional. The default is False. *)
     summary : string;
     (** Title of the calendar. Read-only. *)
     summaryOverride : string;
