@@ -1,0 +1,11 @@
+{
+  "id": "http%3A%2F%2Fwww.example.com%2F",
+  "owners": [
+    "myself@example.com"
+  ],
+  "site": {
+    "identifier": "http://www.example.com/",
+    "type": "SITE"
+  }
+}
+

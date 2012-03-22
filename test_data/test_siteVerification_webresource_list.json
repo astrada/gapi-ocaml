@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": "http%3A%2F%2Fwww.example.com%2F",
+      "owners": [
+        "owner@gmail.com"
+      ],
+      "site": {
+        "identifier": "http://www.example.com/",
+        "type": "SITE"
+      }
+    }
+  ]
+}
+

@@ -42,9 +42,12 @@ let add_path_to_url ?(encoded = true) path_to_add url =
     List.map
       (fun p ->
          (* In some services: e.g. tasks default list (@default), the '@' should
-          * not be encoded, but if the string contains '#', the resulting URL
-          * will be invalid for Neturl *)
-         if String.contains p '#' then Netencoding.Url.encode p else p)
+          * not be encoded, but if the string contains '#' or '/', the resulting
+          * URL will be invalid for Neturl *)
+         if encoded &&
+            (String.contains p '#' || String.contains p '/') then
+           Netencoding.Url.encode p
+         else p)
       path_to_add in
   let new_path = "" :: (path @ path_to_add_encoded) in
   let new_neturl = Neturl.modify_url
