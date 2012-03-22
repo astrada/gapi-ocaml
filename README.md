@@ -15,6 +15,7 @@ Supported RESTful APIs:
 * Google Analytics API v3
 * Page Speed Online API v1
 * Blogger API v2
+* Site Verification API v1
 
 Old versions:
 
