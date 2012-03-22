@@ -44,6 +44,8 @@
 <link title="GapiPagespeedonlineV1Service" rel="Chapter" href="GapiPagespeedonlineV1Service.html">
 <link title="GapiBloggerV2Model" rel="Chapter" href="GapiBloggerV2Model.html">
 <link title="GapiBloggerV2Service" rel="Chapter" href="GapiBloggerV2Service.html">
+<link title="GapiSiteVerificationV1Model" rel="Chapter" href="GapiSiteVerificationV1Model.html">
+<link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -61,14 +63,34 @@
 &nbsp;&nbsp;&nbsp;&nbsp;cr&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cref&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cx&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dateRestrict&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disableCnTwTranslation&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exactTerms&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;excludeTerms&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fileType&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;filter&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gl&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;googleHost&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;highRange&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hl&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hq&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;imgColorType&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;imgDominantColor&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;imgSize&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;imgType&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inputEncoding&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;language&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linkSite&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lowRange&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;orTerms&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;outputEncoding&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;relatedSite&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rights&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;safe&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;searchTerms&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;searchType&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;siteSearch&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;siteSearchFilter&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startIndex&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;startPage&nbsp;:&nbsp;int;<br>
@@ -79,14 +101,35 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cr&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cref&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cx&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;dateRestrict&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;disableCnTwTranslation&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exactTerms&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;excludeTerms&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fileType&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;filter&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;gl&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;googleHost&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;highRange&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;hl&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;hq&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;imgColorType&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;imgDominantColor&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;imgSize&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;imgType&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;inputEncoding&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;language&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;linkSite&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lowRange&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;orTerms&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;outputEncoding&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;relatedSite&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rights&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;safe&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;searchTerms&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;searchType&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;siteSearch&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;siteSearchFilter&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sort&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;startIndex&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;startPage&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Query</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>

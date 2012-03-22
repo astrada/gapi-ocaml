@@ -49,6 +49,8 @@
 <link title="GapiPagespeedonlineV1Service" rel="Chapter" href="GapiPagespeedonlineV1Service.html">
 <link title="GapiBloggerV2Model" rel="Chapter" href="GapiBloggerV2Model.html">
 <link title="GapiBloggerV2Service" rel="Chapter" href="GapiBloggerV2Service.html">
+<link title="GapiSiteVerificationV1Model" rel="Chapter" href="GapiSiteVerificationV1Model.html">
+<link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -154,14 +156,6 @@ Creates an event based on a simple text string.<br>
 <div class="param_info"><code class="code">sendNotifications</code> : Whether to send notifications about the creation of the event. Optional. The default is False.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 <div class="param_info"><code class="code">text</code> : The text describing the event to be created.</div>
-<pre><span id="VALreset"><span class="keyword">val</span> reset</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?sendNotifications:bool -><br>       calendarId:string -><br>       eventId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
-Resets a specialized instance of a recurring event to its original state.<br>
-</div>
-<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
-<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">sendNotifications</code> : Whether to send notifications about the event update. Optional. The default is False.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
-<div class="param_info"><code class="code">eventId</code> : Event identifier.</div>
 <pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?sendNotifications:bool -><br>       calendarId:string -><br>       eventId:string -><br>       <a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Updates an event.<br>
 </div>

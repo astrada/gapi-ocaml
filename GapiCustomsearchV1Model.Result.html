@@ -49,6 +49,8 @@
 <link title="GapiPagespeedonlineV1Service" rel="Chapter" href="GapiPagespeedonlineV1Service.html">
 <link title="GapiBloggerV2Model" rel="Chapter" href="GapiBloggerV2Model.html">
 <link title="GapiBloggerV2Service" rel="Chapter" href="GapiBloggerV2Service.html">
+<link title="GapiSiteVerificationV1Model" rel="Chapter" href="GapiSiteVerificationV1Model.html">
+<link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -67,7 +69,7 @@
 <center><h1>Module <a href="type_GapiCustomsearchV1Model.Result.html">GapiCustomsearchV1Model.Result</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> Result: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Result.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Result.LabelsData.html">LabelsData</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Result.LabelsData.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Result.ImageData.html">ImageData</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Result.ImageData.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
@@ -80,6 +82,27 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code>displayLink&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>fileFormat&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>formattedUrl&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>htmlFormattedUrl&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
@@ -100,6 +123,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code>image&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Result.ImageData.html#TYPEt">ImageData.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code>kind&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
@@ -107,7 +137,21 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code>labels&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Result.LabelsData.html#TYPEt">LabelsData.t</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code>link&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>mime&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
@@ -134,4 +178,4 @@
 }
 
 
-<pre><span id="VALcacheId"><span class="keyword">val</span> cacheId</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdisplayLink"><span class="keyword">val</span> displayLink</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhtmlSnippet"><span class="keyword">val</span> htmlSnippet</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhtmlTitle"><span class="keyword">val</span> htmlTitle</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlink"><span class="keyword">val</span> link</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpagemap"><span class="keyword">val</span> pagemap</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>,<br>        (string * (string * string) list list) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsnippet"><span class="keyword">val</span> snippet</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a></code></pre></body></html>
+<pre><span id="VALcacheId"><span class="keyword">val</span> cacheId</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdisplayLink"><span class="keyword">val</span> displayLink</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALfileFormat"><span class="keyword">val</span> fileFormat</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALformattedUrl"><span class="keyword">val</span> formattedUrl</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhtmlFormattedUrl"><span class="keyword">val</span> htmlFormattedUrl</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhtmlSnippet"><span class="keyword">val</span> htmlSnippet</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhtmlTitle"><span class="keyword">val</span> htmlTitle</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALimage"><span class="keyword">val</span> image</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>,<br>        <a href="GapiCustomsearchV1Model.Result.ImageData.html#TYPEt">ImageData.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlabels"><span class="keyword">val</span> labels</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>,<br>        <a href="GapiCustomsearchV1Model.Result.LabelsData.html#TYPEt">LabelsData.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlink"><span class="keyword">val</span> link</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmime"><span class="keyword">val</span> mime</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpagemap"><span class="keyword">val</span> pagemap</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>,<br>        (string * (string * string) list list) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsnippet"><span class="keyword">val</span> snippet</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCustomsearchV1Model.Result.html#TYPEt">t</a></code></pre></body></html>
