@@ -1,0 +1,32 @@
+{
+  "averages": [
+    "string"
+  ],
+  "headers": [
+    {
+      "currency": "string",
+      "name": "string",
+      "type": "string"
+    }
+  ],
+  "kind": "adsense#report",
+  "rows": [
+    [
+      "EUR",
+      "test",
+      "type"
+    ],
+    [
+      "USD",
+      "www",
+      "aaa"
+    ]
+  ],
+  "totalMatchedRows": "10",
+  "totals": [
+    "string"
+  ],
+  "warnings": [
+    "string"
+  ]
+}

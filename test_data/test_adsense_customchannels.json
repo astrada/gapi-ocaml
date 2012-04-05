@@ -1,0 +1,19 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "code": "string",
+      "id": "string",
+      "kind": "adsense#customChannel",
+      "name": "string",
+      "targetingInfo": {
+        "adsAppearOn": "string",
+        "description": "string",
+        "location": "string",
+        "siteLanguage": "string"
+      }
+    }
+  ],
+  "kind": "adsense#customChannels",
+  "nextPageToken": "string"
+}

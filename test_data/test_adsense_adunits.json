@@ -1,0 +1,14 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "code": "string",
+      "id": "string",
+      "kind": "adsense#adUnit",
+      "name": "string",
+      "status": "string"
+    }
+  ],
+  "kind": "adsense#adUnits",
+  "nextPageToken": "string"
+}

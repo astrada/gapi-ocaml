@@ -1,0 +1,18 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "id": "string",
+      "kind": "adsense#adClient",
+      "productCode": "string",
+      "supportsReporting": true
+    },
+    {
+      "id": "string",
+      "kind": "adsense#adClient",
+      "productCode": "string"
+    }
+  ],
+  "kind": "adsense#adClients",
+  "nextPageToken": "string"
+}

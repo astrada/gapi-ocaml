@@ -1,0 +1,19 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "id": "string",
+      "kind": "adsense#account",
+      "name": "string",
+      "subAccounts": [
+        {
+          "id": "string",
+          "kind": "adsense#account",
+          "name": "string"
+        }
+      ]
+    }
+  ],
+  "kind": "adsense#accounts",
+  "nextPageToken": "string"
+}

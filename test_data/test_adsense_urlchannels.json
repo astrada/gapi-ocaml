@@ -1,0 +1,12 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "id": "string",
+      "kind": "adsense#urlChannel",
+      "urlPattern": "string"
+    }
+  ],
+  "kind": "adsense#urlChannels",
+  "nextPageToken": "string"
+}
