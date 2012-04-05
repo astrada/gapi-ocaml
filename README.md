@@ -16,6 +16,7 @@ Supported RESTful APIs:
 * Page Speed Online API v1
 * Blogger API v2
 * Site Verification API v1
+* AdSense Management API v1.1
 
 Old versions:
 
