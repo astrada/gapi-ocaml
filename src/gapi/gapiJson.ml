@@ -171,3 +171,29 @@ let render_json render_data_model data =
   let json_string = Json_io.string_of_json ~compact:true json in
     GapiCore.PostData.Body (json_string, default_content_type)
 
+module StringDictionary =
+struct
+  type t = (string * string) list
+  
+  let empty = []
+  
+  let rec render_content x = 
+    List.map (fun (id, v) -> render_string_value id v) x
+  
+  and render x = 
+    render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ name = n; data_type = Scalar },
+        Json_type.String v) ->
+      x @ [(n, v)]
+    | e ->
+      unexpected "GapiJson.StringDictionary.parse" e x
+  
+  let to_data_model = render_root render
+  
+  let of_data_model = parse_root parse empty
+  
+end
+

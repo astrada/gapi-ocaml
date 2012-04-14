@@ -135,3 +135,21 @@ val render_json :
   'a ->
   GapiCore.PostData.t
 
+module StringDictionary :
+sig
+  type t = (string * string) list
+  
+  val empty : t
+  
+  val render : t -> json_data_model list
+  
+  val render_content : t -> json_data_model list list
+
+  val parse : t -> json_data_model -> t
+  
+  val to_data_model : t -> json_data_model
+  
+  val of_data_model : json_data_model -> t
+  
+end
+
