@@ -137,65 +137,66 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@]@,}@,"
   in
 
+  let rec render_curried_function formatter
+        (name, prefix, field_type) =
+    match field_type.ComplexType.data_type with
+        ComplexType.Scalar scalar ->
+          begin match scalar.ScalarType.data_type with
+              ScalarType.String ->
+                Format.fprintf formatter
+                  "GapiJson.render_string_value"
+            | ScalarType.Boolean ->
+                Format.fprintf formatter
+                  "GapiJson.render_bool_value"
+            | ScalarType.Integer ->
+                Format.fprintf formatter
+                  "GapiJson.render_int_value"
+            | ScalarType.Float ->
+                Format.fprintf formatter
+                  "GapiJson.render_float_value"
+            | ScalarType.DateTime
+            | ScalarType.Date ->
+                Format.fprintf formatter
+                  "GapiJson.render_date_value"
+          end;
+          Format.fprintf formatter " %s" name
+      | ComplexType.Array { ComplexType.data_type =
+                              ComplexType.Reference _; _ }
+      | ComplexType.Array { ComplexType.data_type =
+                              ComplexType.AnonymousObject _; _ } ->
+          Format.fprintf formatter
+            "GapiJson.render_array %s %srender"
+            name prefix
+      | ComplexType.Array inner_type ->
+          Format.fprintf formatter
+            "GapiJson.render_array %s (%a)"
+            name
+            render_curried_function ("\"\"", prefix, inner_type)
+      | ComplexType.Dictionary
+          ({ ComplexType.data_type = ComplexType.Reference _; _ }
+             as inner_type)
+      | ComplexType.Dictionary
+          ({ ComplexType.data_type = ComplexType.AnonymousObject _; _ }
+             as inner_type) ->
+          Format.fprintf formatter
+            "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
+            name
+            render_curried_function ("id", prefix, inner_type)
+      | ComplexType.Dictionary inner_type ->
+          Format.fprintf formatter
+            "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
+            name
+            render_curried_function ("id", prefix, inner_type)
+      | ComplexType.Reference _
+      | ComplexType.AnonymousObject _ ->
+          Format.fprintf formatter
+            "(fun v -> GapiJson.render_object %s (%srender_content v))"
+            name prefix
+      | _ ->
+          failwith "Unexpected complex type in render_curried_function"
+  in
+
   let render_render_function formatter fields =
-    let rec render_curried_function formatter
-          (name, prefix, field_type) =
-      match field_type.ComplexType.data_type with
-          ComplexType.Scalar scalar ->
-            begin match scalar.ScalarType.data_type with
-                ScalarType.String ->
-                  Format.fprintf formatter
-                    "GapiJson.render_string_value"
-              | ScalarType.Boolean ->
-                  Format.fprintf formatter
-                    "GapiJson.render_bool_value"
-              | ScalarType.Integer ->
-                  Format.fprintf formatter
-                    "GapiJson.render_int_value"
-              | ScalarType.Float ->
-                  Format.fprintf formatter
-                    "GapiJson.render_float_value"
-              | ScalarType.DateTime
-              | ScalarType.Date ->
-                  Format.fprintf formatter
-                    "GapiJson.render_date_value"
-            end;
-            Format.fprintf formatter " %s" name
-        | ComplexType.Array { ComplexType.data_type =
-                                ComplexType.Reference _; _ }
-        | ComplexType.Array { ComplexType.data_type =
-                                ComplexType.AnonymousObject _; _ } ->
-            Format.fprintf formatter
-              "GapiJson.render_array %s %srender"
-              name prefix
-        | ComplexType.Array inner_type ->
-            Format.fprintf formatter
-              "GapiJson.render_array %s (%a)"
-              name
-              render_curried_function ("\"\"", prefix, inner_type)
-        | ComplexType.Dictionary
-            ({ ComplexType.data_type = ComplexType.Reference _; _ }
-               as inner_type)
-        | ComplexType.Dictionary
-            ({ ComplexType.data_type = ComplexType.AnonymousObject _; _ }
-               as inner_type) ->
-            Format.fprintf formatter
-              "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
-              name
-              render_curried_function ("id", prefix, inner_type)
-        | ComplexType.Dictionary inner_type ->
-            Format.fprintf formatter
-              "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
-              name
-              render_curried_function ("id", prefix, inner_type)
-        | ComplexType.Reference _
-        | ComplexType.AnonymousObject _ ->
-            Format.fprintf formatter
-              "(fun v -> GapiJson.render_object %s (%srender_content v))"
-              name prefix
-        | _ ->
-            failwith "Unexpected complex type in render_curried_function"
-    in
       Format.fprintf formatter
         "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
       List.iter
@@ -228,7 +229,9 @@ let build_schema_inner_module file_lens complex_type =
         "@[<v 2>and render x = @,@[<v 2>GapiJson.render_object \"\" (render_content x)@]@]@,"
   in
 
-  let render_parse_function formatter fields container_name module_name =
+  let render_parse_element formatter
+        (name, prefix, field_type, cont)
+        container_name module_name =
     let render_pattern formatter (name, field_type) =
       match field_type.ComplexType.data_type with
           ComplexType.Scalar scalar ->
@@ -321,7 +324,10 @@ let build_schema_inner_module file_lens complex_type =
         | _ ->
             failwith "Unexpected complex type in render_parse_element"
     in
+      render_parse_element formatter (name, prefix, field_type, cont)
+  in
 
+  let render_parse_function formatter fields container_name module_name =
     Format.fprintf formatter "@,@[<v 2>let rec parse x = function@,";
     List.iter
       (fun { Field.ocaml_name;
@@ -343,7 +349,9 @@ let build_schema_inner_module file_lens complex_type =
                     field_type,
                     "{ x with " ^ ocaml_name ^ " = "
                     ^ (ScalarType.get_convert_function
-                         scalar.ScalarType.data_type) ^ "v }");
+                         scalar.ScalarType.data_type) ^ "v }")
+                   container_name
+                   module_name;
                  if scalar.ScalarType.data_type = ScalarType.Float then begin
                    (* Float type includes integral literals *)
                    (* TODO: remove when upgrading to Yojson *)
@@ -356,7 +364,9 @@ let build_schema_inner_module file_lens complex_type =
                           scalar
                             |> ScalarType.data_type
                             ^= ScalarType.Integer),
-                      "{ x with " ^ ocaml_name ^ " = float_of_int v }");
+                      "{ x with " ^ ocaml_name ^ " = float_of_int v }")
+                     container_name
+                     module_name
                  end;
              | _ when is_option ->
                  render_parse_element formatter
@@ -364,6 +374,8 @@ let build_schema_inner_module file_lens complex_type =
                     prefix,
                     field_type,
                     "{ x with " ^ ocaml_name ^ " = Some v }")
+                   container_name
+                   module_name
              | ComplexType.Reference _
              | ComplexType.AnonymousObject _
              | ComplexType.Array _
@@ -373,15 +385,17 @@ let build_schema_inner_module file_lens complex_type =
                     prefix,
                     field_type,
                     "{ x with " ^ ocaml_name ^ " = v }")
+                   container_name
+                   module_name
              | _ ->
                  failwith "Unexpected complex type rendering parse function")
-        fields;
-      Format.fprintf formatter
-        "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,";
-      Format.fprintf formatter
-        "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
-        container_name
-        module_name;
+      fields;
+    Format.fprintf formatter
+      "@[<v 2>| GapiCore.AnnotatedTree.Node@,({ GapiJson.name = \"\"; data_type = GapiJson.Object },@,cs) ->@,@[<hv 2>GapiJson.parse_children@ parse@ empty@ (fun x -> x)@ cs@]@]@,";
+    Format.fprintf formatter
+      "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
+      container_name
+      module_name;
   in
 
   let render_footer formatter is_nested =
@@ -451,6 +465,33 @@ let build_schema_inner_module file_lens complex_type =
                 "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \"\"; data_type = GapiJson.Array },@ cs) ->@]@,@[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> xs )@ cs@]@]@,"
                 inner_module.InnerSchemaModule.ocaml_name
                 inner_module.InnerSchemaModule.ocaml_name;
+              Format.fprintf formatter
+                "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
+                container_name
+                module_name;
+
+              (* footer *)
+              render_footer formatter false
+          | InnerSchemaModule.Field { Field.ocaml_type;
+                                      empty_value;
+                                      field_type; _ } ->
+              (* type t *)
+              Format.fprintf formatter "type t = %s@\n@\n" ocaml_type;
+
+              (* empty *)
+              Format.fprintf formatter "let empty = %s@\n@\n" empty_value;
+
+              (* render *)
+              Format.fprintf formatter
+                "@[<v 2>let rec render x = @,%a x@]@\n@\n"
+                render_curried_function ("\"\"", "", field_type);
+
+              (* parse *)
+              Format.fprintf formatter "@[<v 2>let rec parse x = function@,";
+              render_parse_element formatter
+                ("\"\"", "", field_type, "v")
+                container_name
+                module_name;
               Format.fprintf formatter
                 "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
                 container_name
@@ -1159,6 +1200,31 @@ let rec generate_schema_module_signature
                 "module %s : module type of %s"
                 schema_module.InnerSchemaModule.ocaml_name
                 alias_name
+      | InnerSchemaModule.Field { Field.ocaml_type;
+                                  empty_value;
+                                  field_type; _ } ->
+          perform
+            formatter <-- GapiLens.get_state formatter_lens;
+
+            lift_io $
+              Format.fprintf formatter
+                "module %s :@\n@[<v 2>sig@,"
+                schema_module.InnerSchemaModule.ocaml_name;
+
+            lift_io (
+              (* Type t *)
+              Format.fprintf formatter "type t = %s@\n" ocaml_type;
+
+              (* empty, render, parse *)
+              Format.fprintf formatter
+                "@,val empty : t@,@,val render : t -> GapiJson.json_data_model list@,@,val parse : t -> GapiJson.json_data_model -> t@,";
+
+              (* of_data_model, to_data_model *)
+              Format.fprintf formatter
+                "@,val to_data_model : t -> GapiJson.json_data_model@,@,val of_data_model : GapiJson.json_data_model -> t@,";
+
+              (* module end *)
+              Format.fprintf formatter "@]@,end@\n@\n")
 
 let build_schema_module_interface =
   let generate_body file_lens =

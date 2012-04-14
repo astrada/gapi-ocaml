@@ -819,6 +819,7 @@ struct
       Record of Record.t
     | List of t
     | Alias of string
+    | Field of Field.t
   and t = {
     original_name : string;
     ocaml_name : string;
@@ -863,6 +864,26 @@ struct
               type_t = Record record;
               inner_modules;
             }
+      | ComplexType.Reference type_name ->
+          let module_name =
+            ComplexType.get_module_name ocaml_name complex_type in
+          let type_t = Alias module_name in
+            { original_name = complex_type.ComplexType.id;
+              ocaml_name;
+              type_t;
+              inner_modules = [];
+            }
+      | ComplexType.Array inner_type
+      | ComplexType.Dictionary inner_type
+            when ComplexType.is_scalar inner_type ->
+          let field =
+            Field.create (complex_type.ComplexType.id, complex_type) in
+          let type_t = Field field in
+            { original_name = complex_type.ComplexType.id;
+              ocaml_name;
+              type_t;
+              inner_modules = [];
+            }
       | ComplexType.Array inner_type ->
           let anonymous_types = ComplexType.get_anonymous_types inner_type in
           let inner_modules =
@@ -876,16 +897,9 @@ struct
               type_t;
               inner_modules;
             }
-      | ComplexType.Reference type_name ->
-          let module_name =
-            ComplexType.get_module_name ocaml_name complex_type in
-          let type_t = Alias module_name in
-            { original_name = complex_type.ComplexType.id;
-              ocaml_name;
-              type_t;
-              inner_modules = [];
-            }
-      | _ -> failwith "Unsupported complex_type in Record.create"
+      | _ ->
+          failwith ("Unsupported complex_type in Record.create ocaml_name=" ^
+                    ocaml_name)
 
 end
 
