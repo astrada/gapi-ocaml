@@ -1,0 +1,28 @@
+{
+  "configuration": {
+    "load": {
+      "destinationTable": {
+        "datasetId": "datasetId",
+        "projectId": "projectId",
+        "tableId": "tableId"
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "f1",
+            "type": "STRING"
+          },
+          {
+            "name": "f2",
+            "type": "INTEGER"
+          }
+        ]
+      }
+    },
+    "properties": {
+      "k1": "v1",
+      "k2": "v2",
+      "k3": "v3"
+    }
+  }
+}

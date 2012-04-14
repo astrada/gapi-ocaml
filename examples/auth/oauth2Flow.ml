@@ -93,7 +93,8 @@ let main () =
                       GapiAnalyticsV3Service.scope_readonly;
                       GapiBloggerV2Service.scope;
                       GapiSiteVerificationV1Service.scope;
-                      GapiAdsenseV1_1Service.scope]
+                      GapiAdsenseV1_1Service.scope;
+                      GapiBigqueryV2Service.scope]
               ~response_type:"code"
               client_id in
     print_endline ("Open this URL in a web browser:\n" ^ url);
