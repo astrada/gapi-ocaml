@@ -17,6 +17,7 @@ Supported RESTful APIs:
 * Blogger API v2
 * Site Verification API v1
 * AdSense Management API v1.1
+* BigQuery API v2
 
 Old versions:
 

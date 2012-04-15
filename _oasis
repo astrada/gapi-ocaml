@@ -67,7 +67,9 @@ Library gapi
     GapiSiteVerificationV1Model,
     GapiSiteVerificationV1Service,
     GapiAdsenseV1_1Model,
-    GapiAdsenseV1_1Service
+    GapiAdsenseV1_1Service,
+    GapiBigqueryV2Model,
+    GapiBigqueryV2Service
   InternalModules:
     GapiUtils
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm

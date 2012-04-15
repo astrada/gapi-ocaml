@@ -140,7 +140,14 @@ If there are errors in the tests, switching to `true` the `debug` value in the
 configuration file `auth.config` will activate the `ocurl` debug output, that
 will trace all the HTTP interactions with Google services.
 
-**Note:** At the moment, the Blogger API is in Public Preview, so if you plan
-to use it (or if you just want to run tests against it) you will have to
-explicitly request access filling the form linked in the API Console.
+**Note:** At the moment, some of the API are not activable directly from the
+API Console, so if are going to use these APIs (or to run test against them),
+you will need to follow specific instructions to activate them. In particuar:
+
+* Blogger API is in Public Preview. To activate it, you will have to
+  explicitly request access filling the form linked in the API Console (under
+  Services).
+* BigQuery is available by invitation only. If you are interested in signing
+  up, follow the instructions you can find
+  [here](https://developers.google.com/bigquery/docs/getting-started)
 

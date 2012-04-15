@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 2488d86973221af83fc36d6c695715e4)
+# DO NOT EDIT (digest: ca0e552e6e8f00f9913b01c43d3e8505)
 gapi/GapiCore
 gapi/GapiCurl
 gapi/GapiPipe
@@ -41,6 +41,8 @@ gapi/GapiSiteVerificationV1Model
 gapi/GapiSiteVerificationV1Service
 gapi/GapiAdsenseV1_1Model
 gapi/GapiAdsenseV1_1Service
+gapi/GapiBigqueryV2Model
+gapi/GapiBigqueryV2Service
 gdata/GdataCore
 gdata/GdataBatch
 gdata/GdataAtom
