@@ -1,0 +1,16 @@
+{
+  "datasets": [
+    {
+      "datasetReference": {
+        "datasetId": "string",
+        "projectId": "string"
+      },
+      "friendlyName": "string",
+      "id": "string",
+      "kind": "bigquery#dataset"
+    }
+  ],
+  "etag": "etag",
+  "kind": "bigquery#datasetList",
+  "nextPageToken": "string"
+}

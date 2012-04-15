@@ -1,0 +1,26 @@
+{
+  "creationTime": "long",
+  "description": "string",
+  "etag": "etag",
+  "friendlyName": "string",
+  "id": "string",
+  "kind": "bigquery#table",
+  "lastModifiedTime": "long",
+  "numBytes": "long",
+  "numRows": "unsigned long",
+  "schema": {
+    "fields": [
+      {
+        "mode": "string",
+        "name": "string",
+        "type": "string"
+      }
+    ]
+  },
+  "selfLink": "string",
+  "tableReference": {
+    "datasetId": "string",
+    "projectId": "string",
+    "tableId": "string"
+  }
+}

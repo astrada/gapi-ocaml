@@ -1,0 +1,16 @@
+{
+  "etag": "etag",
+  "kind": "bigquery#projectList",
+  "nextPageToken": "string",
+  "projects": [
+    {
+      "friendlyName": "string",
+      "id": "string",
+      "kind": "bigquery#project",
+      "projectReference": {
+        "projectId": "string"
+      }
+    }
+  ],
+  "totalItems": 100
+}

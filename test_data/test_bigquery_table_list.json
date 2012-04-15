@@ -1,0 +1,18 @@
+{
+  "etag": "etag",
+  "kind": "bigquery#tableList",
+  "nextPageToken": "string",
+  "tables": [
+    {
+      "friendlyName": "string",
+      "id": "string",
+      "kind": "bigquery#table",
+      "tableReference": {
+        "datasetId": "string",
+        "projectId": "string",
+        "tableId": "string"
+      }
+    }
+  ],
+  "totalItems": 100
+}

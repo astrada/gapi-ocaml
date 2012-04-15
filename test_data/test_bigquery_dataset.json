@@ -1,0 +1,23 @@
+{
+  "access": [
+    {
+      "domain": "string",
+      "groupByEmail": "string",
+      "role": "string",
+      "specialGroup": "string",
+      "userByEmail": "string"
+    }
+  ],
+  "creationTime": "1234567",
+  "datasetReference": {
+    "datasetId": "string",
+    "projectId": "string"
+  },
+  "description": "string",
+  "etag": "etag",
+  "friendlyName": "string",
+  "id": "string",
+  "kind": "bigquery#dataset",
+  "lastModifiedTime": "7654321",
+  "selfLink": "string"
+}

@@ -1,0 +1,104 @@
+{
+  "etag": "etag",
+  "jobs": [
+    {
+      "configuration": {
+        "copy": {
+          "createDisposition": "string",
+          "destinationTable": {
+            "datasetId": "string",
+            "projectId": "string",
+            "tableId": "string"
+          },
+          "sourceTable": {
+            "datasetId": "string",
+            "projectId": "string",
+            "tableId": "string"
+          },
+          "writeDisposition": "string"
+        },
+        "extract": {
+          "destinationUri": "string",
+          "sourceTable": {
+            "datasetId": "string",
+            "projectId": "string",
+            "tableId": "string"
+          }
+        },
+        "load": {
+          "createDisposition": "string",
+          "destinationTable": {
+            "datasetId": "string",
+            "projectId": "string",
+            "tableId": "string"
+          },
+          "encoding": "string",
+          "fieldDelimiter": "string",
+          "maxBadRecords": 10,
+          "schema": {
+            "fields": [
+              {
+                "mode": "string",
+                "name": "string",
+                "type": "string"
+              }
+            ]
+          },
+          "skipLeadingRows": 1,
+          "sourceUris": [
+            "string"
+          ],
+          "writeDisposition": "string"
+        },
+        "query": {
+          "createDisposition": "string",
+          "defaultDataset": {
+            "datasetId": "string",
+            "projectId": "string"
+          },
+          "destinationTable": {
+            "datasetId": "string",
+            "projectId": "string",
+            "tableId": "string"
+          },
+          "query": "string",
+          "writeDisposition": "string"
+        }
+      },
+      "errorResult": {
+        "location": "string",
+        "message": "string",
+        "reason": "string"
+      },
+      "id": "string",
+      "jobReference": {
+        "jobId": "string",
+        "projectId": "string"
+      },
+      "kind": "bigquery#job",
+      "state": "string",
+      "statistics": {
+        "endTime": "long",
+        "startTime": "long",
+        "totalBytesProcessed": "long"
+      },
+      "status": {
+        "errorResult": {
+          "location": "string",
+          "reason": "string"
+        },
+        "errors": [
+          {
+            "location": "string",
+            "message": "string",
+            "reason": "string"
+          }
+        ],
+        "state": "string"
+      }
+    }
+  ],
+  "kind": "bigquery#jobList",
+  "nextPageToken": "string",
+  "totalItems": 12345
+}

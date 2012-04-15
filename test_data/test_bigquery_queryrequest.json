@@ -1,0 +1,10 @@
+{
+  "defaultDataset": {
+    "datasetId": "string",
+    "projectId": "string"
+  },
+  "kind": "bigquery#queryRequest",
+  "maxResults": 200,
+  "query": "string",
+  "timeoutMs": 10000
+}

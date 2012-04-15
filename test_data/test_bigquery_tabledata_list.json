@@ -1,0 +1,14 @@
+{
+  "etag": "etag",
+  "kind": "bigquery#tableDataList",
+  "rows": [
+    {
+      "f": [
+        {
+          "v": "string"
+        }
+      ]
+    }
+  ],
+  "totalRows": "100"
+}

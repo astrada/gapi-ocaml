@@ -1,0 +1,41 @@
+{
+  "etag": "etag",
+  "jobComplete": true,
+  "jobReference": {
+    "jobId": "string",
+    "projectId": "string"
+  },
+  "kind": "bigquery#getQueryResultsResponse",
+  "rows": [
+    {
+      "f": [
+        {
+          "v": "string"
+        }
+      ]
+    }
+  ],
+  "schema": {
+    "fields": [
+      {
+        "fields": [
+          {
+            "mode": "string",
+            "name": "f1",
+            "type": "STRING"
+          },
+          {
+            "mode": "string",
+            "name": "f2",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "string",
+        "name": "string",
+        "type": "string"
+      }
+    ]
+  },
+  "totalRows": "12345"
+}
+
