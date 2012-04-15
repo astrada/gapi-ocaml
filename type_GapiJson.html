@@ -48,6 +48,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
+<link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -121,4 +123,20 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;default_content_type&nbsp;:&nbsp;string<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render_json&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiCore</span>.<span class="constructor">PostData</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">StringDictionary</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render_content&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.<span class="constructor">StringDictionary</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 <span class="keyword">end</span></code></body></html>

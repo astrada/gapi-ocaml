@@ -1,0 +1,1056 @@
+<html><head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiCore" rel="Chapter" href="GapiCore.html">
+<link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
+<link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
+<link title="GapiConfig" rel="Chapter" href="GapiConfig.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiAuthResponse" rel="Chapter" href="GapiAuthResponse.html">
+<link title="GapiClientLogin" rel="Chapter" href="GapiClientLogin.html">
+<link title="GapiOAuth1" rel="Chapter" href="GapiOAuth1.html">
+<link title="GapiOAuth2" rel="Chapter" href="GapiOAuth2.html">
+<link title="GapiAuth" rel="Chapter" href="GapiAuth.html">
+<link title="GapiRequest" rel="Chapter" href="GapiRequest.html">
+<link title="GapiMonad" rel="Chapter" href="GapiMonad.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiDate" rel="Chapter" href="GapiDate.html">
+<link title="GapiJson" rel="Chapter" href="GapiJson.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
+<link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
+<link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
+<link title="GapiPlusV1Service" rel="Chapter" href="GapiPlusV1Service.html">
+<link title="GapiTasksV1Model" rel="Chapter" href="GapiTasksV1Model.html">
+<link title="GapiTasksV1Service" rel="Chapter" href="GapiTasksV1Service.html">
+<link title="GapiDiscoveryV1Model" rel="Chapter" href="GapiDiscoveryV1Model.html">
+<link title="GapiDiscoveryV1Service" rel="Chapter" href="GapiDiscoveryV1Service.html">
+<link title="GapiUrlshortenerV1Model" rel="Chapter" href="GapiUrlshortenerV1Model.html">
+<link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
+<link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
+<link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
+<link title="GapiAnalyticsV3Model" rel="Chapter" href="GapiAnalyticsV3Model.html">
+<link title="GapiAnalyticsV3Service" rel="Chapter" href="GapiAnalyticsV3Service.html">
+<link title="GapiPagespeedonlineV1Model" rel="Chapter" href="GapiPagespeedonlineV1Model.html">
+<link title="GapiPagespeedonlineV1Service" rel="Chapter" href="GapiPagespeedonlineV1Service.html">
+<link title="GapiBloggerV2Model" rel="Chapter" href="GapiBloggerV2Model.html">
+<link title="GapiBloggerV2Service" rel="Chapter" href="GapiBloggerV2Service.html">
+<link title="GapiSiteVerificationV1Model" rel="Chapter" href="GapiSiteVerificationV1Model.html">
+<link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
+<link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
+<link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
+<link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GdataCore" rel="Chapter" href="GdataCore.html">
+<link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
+<link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataComments" rel="Chapter" href="GdataComments.html">
+<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
+<link title="GdataService" rel="Chapter" href="GdataService.html">
+<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiBigqueryV2Model</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TableReference</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;datasetId&nbsp;:&nbsp;string;&nbsp;projectId&nbsp;:&nbsp;string;&nbsp;tableId&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;datasetId&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;projectId&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tableId&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfigurationLink</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destinationTable&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourceUri&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;destinationTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sourceUri&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ErrorProto</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debugInfo&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reason&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;debugInfo&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;location&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;message&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;reason&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobStatus</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errorResult&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errors&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;errorResult&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;errors&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;state&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TableRow</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">FData</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;v&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;f&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t&nbsp;list;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;f&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.<span class="constructor">FData</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TableDataList</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalRows&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalRows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobStatistics</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalBytesProcessed&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;endTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;startTime&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalBytesProcessed&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfigurationProperties</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render_content&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfigurationTableCopy</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destinationTable&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourceTable&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;destinationTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sourceTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;writeDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfigurationExtract</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destinationUri&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourceTable&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;destinationUri&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sourceTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TableFieldSchema</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_type&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fields&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mode&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;name&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;_type&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TableSchema</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;fields&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;list;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fields&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableFieldSchema</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfigurationLoad</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destinationTable&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encoding&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fieldDelimiter&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxBadRecords&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skipLeadingRows&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourceUris&nbsp;:&nbsp;string&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;destinationTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;encoding&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fieldDelimiter&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;maxBadRecords&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;schema&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;skipLeadingRows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sourceUris&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;writeDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DatasetReference</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;datasetId&nbsp;:&nbsp;string;&nbsp;projectId&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;datasetId&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;projectId&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfigurationQuery</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultDataset&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destinationTable&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeDisposition&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;defaultDataset&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;destinationTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;query&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;writeDisposition&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobConfiguration</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copy&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extract&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationProperties</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;copy&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationTableCopy</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;extract&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationExtract</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;link&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLink</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;load&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationLoad</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;properties&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationProperties</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;query&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfigurationQuery</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobReference</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;jobId&nbsp;:&nbsp;string;&nbsp;projectId&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobId&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;projectId&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Job</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statistics&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;configuration&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;statistics&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;status&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Job</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ProjectReference</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;projectId&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;projectId&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ProjectList</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ProjectsData</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friendlyName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;projectReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;friendlyName&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;projectReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nextPageToken&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;projects&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalItems&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;nextPageToken&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;projects&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.<span class="constructor">ProjectsData</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ProjectList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobList</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">JobsData</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errorResult&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statistics&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;configuration&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobConfiguration</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;errorResult&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;state&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;statistics&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;status&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobs&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nextPageToken&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalItems&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobs&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">JobsData</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;nextPageToken&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Table</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creationTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friendlyName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lastModifiedTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numBytes&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numRows&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tableReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;creationTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;friendlyName&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lastModifiedTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;numBytes&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;numRows&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;schema&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tableReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DatasetList</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DatasetsData</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datasetReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friendlyName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;datasetReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;friendlyName&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datasets&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nextPageToken&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;datasets&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.<span class="constructor">DatasetsData</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;nextPageToken&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">GetQueryResultsResponse</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobComplete&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalRows&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobComplete&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;schema&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalRows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">QueryRequest</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultDataset&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxResults&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeoutMs&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;defaultDataset&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;maxResults&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;query&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;timeoutMs&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TableList</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">TablesData</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friendlyName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tableReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;friendlyName&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tableReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nextPageToken&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tables&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalItems&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;nextPageToken&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tables&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.<span class="constructor">TablesData</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableList</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Dataset</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">AccessData</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;domain&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;groupByEmail&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specialGroup&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;userByEmail&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;domain&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;groupByEmail&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;role&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;specialGroup&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;userByEmail&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;access&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creationTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datasetReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friendlyName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lastModifiedTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;access&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.<span class="constructor">AccessData</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;creationTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;datasetReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;friendlyName&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lastModifiedTime&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Dataset</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">QueryResponse</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobComplete&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jobReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalRows&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobComplete&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobReference&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;schema&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalRows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryResponse</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+<span class="keyword">end</span></code></body></html>
