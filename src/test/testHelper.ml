@@ -205,8 +205,8 @@ let string_of_xml_data_model tree =
 (* We should add a delay to let Google persist the new entry, after a write
  * operation, otherwise DELETE will return a 503 HTTP error (Service
  * Unavailable) *)
-let delay () =
-  Unix.sleep 5
+let delay ?(seconds = 5) () =
+  Unix.sleep seconds
 
 let assert_false msg b =
   OUnit.assert_bool msg (not b)

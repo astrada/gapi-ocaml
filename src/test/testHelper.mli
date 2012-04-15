@@ -43,7 +43,7 @@ val string_of_json_data_model :
   GapiJson.json_data_model ->
   string
 
-val delay : unit -> unit
+val delay : ?seconds:int -> unit -> unit
 
 val assert_false : string -> bool -> unit
 
