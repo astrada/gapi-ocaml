@@ -130,6 +130,9 @@ let test_update_dataset () =
                 } :: dataset.Dataset.access in
               let dataset_to_update = dataset
                 |> Dataset.access ^= access in
+              (* Warninig: at this moment (2012-04-16) there is a bug on the
+               * server side, that allow only update to the access property,
+               * every other field cannot be updated. *)
               let (updated_dataset, session) =
                 DatasetsResource.update
                   ~projectId
@@ -394,6 +397,11 @@ let test_insert_table () =
                   (List.length table.Table.schema.TableSchema.fields))
            project_id)
 
+(* Warninig: at this moment (2012-04-16) there is a bug on the server side, that
+ * does not allow updates a table resource that contains creationTime or
+ * lastModifiedTime properties, or a table resource that contains a schema
+ * property (since the table schema is currently immutable).
+
 let test_update_table () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
@@ -442,6 +450,7 @@ let test_update_table () =
                   "updated description"
                   updated_table.Table.description)
            project_id)
+*)
 
 let suite = "BigQuery service test" >:::
   ["test_list_datasets" >:: test_list_datasets;
@@ -457,5 +466,5 @@ let suite = "BigQuery service test" >:::
    "test_get_table" >:: test_get_table;
    "test_insert_table" >:: test_insert_table;
    (* Doesn't work
-   "test_update_table" >:: test_update_table;*)]
+   "test_update_table" >:: test_update_table*)]
 
