@@ -284,3 +284,273 @@ struct
   
 end
 
+module Oauth2IssueTokenV2Response =
+struct
+  module ConsentData =
+  struct
+    module ScopesData =
+    struct
+      type t = {
+        description : string;
+        detail : string;
+        
+      }
+      
+      let description = {
+        GapiLens.get = (fun x -> x.description);
+        GapiLens.set = (fun v x -> { x with description = v });
+      }
+      let detail = {
+        GapiLens.get = (fun x -> x.detail);
+        GapiLens.set = (fun v x -> { x with detail = v });
+      }
+      
+      let empty = {
+        description = "";
+        detail = "";
+        
+      }
+      
+      let rec render_content x = 
+         [
+          GapiJson.render_string_value "description" x.description;
+          GapiJson.render_string_value "detail" x.detail;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+            Json_type.String v) ->
+          { x with description = v }
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "detail"; data_type = GapiJson.Scalar },
+            Json_type.String v) ->
+          { x with detail = v }
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiOauth2V2Model.ScopesData.parse" e x
+      
+    end
+    
+    module OauthClientData =
+    struct
+      type t = {
+        developerEmail : string;
+        iconUri : string;
+        name : string;
+        
+      }
+      
+      let developerEmail = {
+        GapiLens.get = (fun x -> x.developerEmail);
+        GapiLens.set = (fun v x -> { x with developerEmail = v });
+      }
+      let iconUri = {
+        GapiLens.get = (fun x -> x.iconUri);
+        GapiLens.set = (fun v x -> { x with iconUri = v });
+      }
+      let name = {
+        GapiLens.get = (fun x -> x.name);
+        GapiLens.set = (fun v x -> { x with name = v });
+      }
+      
+      let empty = {
+        developerEmail = "";
+        iconUri = "";
+        name = "";
+        
+      }
+      
+      let rec render_content x = 
+         [
+          GapiJson.render_string_value "developerEmail" x.developerEmail;
+          GapiJson.render_string_value "iconUri" x.iconUri;
+          GapiJson.render_string_value "name" x.name;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "developerEmail"; data_type = GapiJson.Scalar },
+            Json_type.String v) ->
+          { x with developerEmail = v }
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "iconUri"; data_type = GapiJson.Scalar },
+            Json_type.String v) ->
+          { x with iconUri = v }
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+            Json_type.String v) ->
+          { x with name = v }
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiOauth2V2Model.OauthClientData.parse" e x
+      
+    end
+    
+    type t = {
+      oauthClient : OauthClientData.t;
+      scopes : ScopesData.t list;
+      
+    }
+    
+    let oauthClient = {
+      GapiLens.get = (fun x -> x.oauthClient);
+      GapiLens.set = (fun v x -> { x with oauthClient = v });
+    }
+    let scopes = {
+      GapiLens.get = (fun x -> x.scopes);
+      GapiLens.set = (fun v x -> { x with scopes = v });
+    }
+    
+    let empty = {
+      oauthClient = OauthClientData.empty;
+      scopes = [];
+      
+    }
+    
+    let rec render_content x = 
+       [
+        (fun v -> GapiJson.render_object "oauthClient" (OauthClientData.render_content v)) x.oauthClient;
+        GapiJson.render_array "scopes" ScopesData.render x.scopes;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "oauthClient"; data_type = GapiJson.Object },
+          cs) ->
+        GapiJson.parse_children
+          OauthClientData.parse
+          OauthClientData.empty
+          (fun v -> { x with oauthClient = v })
+          cs
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "scopes"; data_type = GapiJson.Array },
+          cs) ->
+        GapiJson.parse_collection
+          (fun x' -> function
+            | GapiCore.AnnotatedTree.Node
+                ({ GapiJson.name = ""; data_type = GapiJson.Object },
+                cs) ->
+              GapiJson.parse_children
+                ScopesData.parse
+                ScopesData.empty
+                (fun v -> v)
+                cs
+            | e ->
+              GapiJson.unexpected "GapiOauth2V2Model.ConsentData.parse.parse_collection" e x')
+          ScopesData.empty
+          (fun v -> { x with scopes = v })
+          cs
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiOauth2V2Model.ConsentData.parse" e x
+    
+  end
+  
+  type t = {
+    code : string;
+    consent : ConsentData.t;
+    idToken : string;
+    issueAdvice : string;
+    token : string;
+    
+  }
+  
+  let code = {
+    GapiLens.get = (fun x -> x.code);
+    GapiLens.set = (fun v x -> { x with code = v });
+  }
+  let consent = {
+    GapiLens.get = (fun x -> x.consent);
+    GapiLens.set = (fun v x -> { x with consent = v });
+  }
+  let idToken = {
+    GapiLens.get = (fun x -> x.idToken);
+    GapiLens.set = (fun v x -> { x with idToken = v });
+  }
+  let issueAdvice = {
+    GapiLens.get = (fun x -> x.issueAdvice);
+    GapiLens.set = (fun v x -> { x with issueAdvice = v });
+  }
+  let token = {
+    GapiLens.get = (fun x -> x.token);
+    GapiLens.set = (fun v x -> { x with token = v });
+  }
+  
+  let empty = {
+    code = "";
+    consent = ConsentData.empty;
+    idToken = "";
+    issueAdvice = "";
+    token = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "code" x.code;
+      (fun v -> GapiJson.render_object "consent" (ConsentData.render_content v)) x.consent;
+      GapiJson.render_string_value "idToken" x.idToken;
+      GapiJson.render_string_value "issueAdvice" x.issueAdvice;
+      GapiJson.render_string_value "token" x.token;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "code"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with code = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "consent"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConsentData.parse
+        ConsentData.empty
+        (fun v -> { x with consent = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "idToken"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with idToken = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "issueAdvice"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with issueAdvice = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "token"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with token = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiOauth2V2Model.Oauth2IssueTokenV2Response.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+

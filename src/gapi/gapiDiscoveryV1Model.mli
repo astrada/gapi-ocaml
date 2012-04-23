@@ -8,11 +8,31 @@
 
 module JsonSchema :
 sig
+  module AnnotationsData :
+  sig
+    type t = {
+      required : string list;
+      (** A list of methods for which this property is required on requests. *)
+      
+    }
+    
+    val required : (t, string list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     _ref : string;
     (** A reference to another schema. The value of this property is the "id" of another schema. *)
     additionalProperties : t option;
     (** If this is a schema for an object, this property is the schema for any additional properties with dynamic keys on this object. *)
+    annotations : AnnotationsData.t;
+    (** Additional information about this property. *)
     default : string;
     (** The default value of this property (if one exists). *)
     description : string;
@@ -48,6 +68,7 @@ sig
   
   val _ref : (t, string) GapiLens.t
   val additionalProperties : (t, t option) GapiLens.t
+  val annotations : (t, AnnotationsData.t) GapiLens.t
   val default : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val enum : (t, string list) GapiLens.t
@@ -354,9 +375,11 @@ sig
     auth : AuthData.t;
     (** Authentication information. *)
     basePath : string;
-    (** The base path for REST requests. *)
+    (** [DEPRECATED] The base path for REST requests. *)
     baseUrl : string;
-    (** The base URL for REST requests. *)
+    (** [DEPRECATED] The base URL for REST requests. *)
+    batchPath : string;
+    (** The path for REST batch requests. *)
     description : string;
     (** The description of this API. *)
     discoveryVersion : string;
@@ -385,8 +408,12 @@ sig
     (** The resources in this API. *)
     revision : string;
     (** The version of this API. *)
+    rootUrl : string;
+    (** The root url under which all API services live. *)
     schemas : (string * JsonSchema.t) list;
     (** The schemas for this API. *)
+    servicePath : string;
+    (** The base path for all REST requests. *)
     title : string;
     (** The title of this API. *)
     version : string;
@@ -397,6 +424,7 @@ sig
   val auth : (t, AuthData.t) GapiLens.t
   val basePath : (t, string) GapiLens.t
   val baseUrl : (t, string) GapiLens.t
+  val batchPath : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val discoveryVersion : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
@@ -411,7 +439,9 @@ sig
   val protocol : (t, string) GapiLens.t
   val resources : (t, (string * RestResource.t) list) GapiLens.t
   val revision : (t, string) GapiLens.t
+  val rootUrl : (t, string) GapiLens.t
   val schemas : (t, (string * JsonSchema.t) list) GapiLens.t
+  val servicePath : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val version : (t, string) GapiLens.t
   

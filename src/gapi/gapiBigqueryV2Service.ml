@@ -308,21 +308,6 @@ struct
     
   end
   
-  let delete
-        ?(base_url = "https://www.googleapis.com/bigquery/v2/")
-        ?std_params
-        ~projectId
-        ~jobId
-        session =
-    let full_url = GapiUtils.add_path_to_url ["projects";
-      ((fun x -> x) projectId); "jobs"; ((fun x -> x) jobId)] base_url in
-    let params = JobsParameters.merge_parameters
-      ?standard_parameters:std_params () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
-      in
-    GapiService.delete ?query_parameters full_url
-      GapiRequest.parse_empty_response session 
-    
   let get
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?std_params

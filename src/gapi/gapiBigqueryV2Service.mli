@@ -142,21 +142,6 @@ sig
     
   end
   
-  (** Deletes a completed job specified by job ID.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
-    @param std_params Optional standard parameters.
-    @param projectId Project ID of the job to delete
-    @param jobId Job ID of the job to delete
-    *)
-  val delete :
-    ?base_url:string ->
-    ?std_params:GapiService.StandardParameters.t ->
-    projectId:string ->
-    jobId:string ->
-    GapiConversation.Session.t ->
-    unit * GapiConversation.Session.t
-  
   (** Retrieves the specified job by ID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).

@@ -2,9 +2,59 @@
 
 module JsonSchema =
 struct
+  module AnnotationsData =
+  struct
+    type t = {
+      required : string list;
+      
+    }
+    
+    let required = {
+      GapiLens.get = (fun x -> x.required);
+      GapiLens.set = (fun v x -> { x with required = v });
+    }
+    
+    let empty = {
+      required = [];
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_array "required" (GapiJson.render_string_value "") x.required;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "required"; data_type = GapiJson.Array },
+          cs) ->
+        GapiJson.parse_collection
+          (fun x' -> function
+            | GapiCore.AnnotatedTree.Leaf
+                ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+                Json_type.String v) ->
+              v
+            | e ->
+              GapiJson.unexpected "GapiDiscoveryV1Model.AnnotationsData.parse.parse_collection" e x')
+          ""
+          (fun v -> { x with required = v })
+          cs
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDiscoveryV1Model.AnnotationsData.parse" e x
+    
+  end
+  
   type t = {
     _ref : string;
     additionalProperties : t option;
+    annotations : AnnotationsData.t;
     default : string;
     description : string;
     enum : string list;
@@ -30,6 +80,10 @@ struct
   let additionalProperties = {
     GapiLens.get = (fun x -> x.additionalProperties);
     GapiLens.set = (fun v x -> { x with additionalProperties = v });
+  }
+  let annotations = {
+    GapiLens.get = (fun x -> x.annotations);
+    GapiLens.set = (fun v x -> { x with annotations = v });
   }
   let default = {
     GapiLens.get = (fun x -> x.default);
@@ -95,6 +149,7 @@ struct
   let empty = {
     _ref = "";
     additionalProperties = None;
+    annotations = AnnotationsData.empty;
     default = "";
     description = "";
     enum = [];
@@ -117,6 +172,7 @@ struct
      [
       GapiJson.render_string_value "$ref" x._ref;
       Option.map_default (fun v -> GapiJson.render_object "additionalProperties" (render_content v)) [] x.additionalProperties;
+      (fun v -> GapiJson.render_object "annotations" (AnnotationsData.render_content v)) x.annotations;
       GapiJson.render_string_value "default" x.default;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_array "enum" (GapiJson.render_string_value "") x.enum;
@@ -149,6 +205,14 @@ struct
         parse
         empty
         (fun v -> { x with additionalProperties = Some v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "annotations"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        AnnotationsData.parse
+        AnnotationsData.empty
+        (fun v -> { x with annotations = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "default"; data_type = GapiJson.Scalar },
@@ -1025,6 +1089,7 @@ struct
     auth : AuthData.t;
     basePath : string;
     baseUrl : string;
+    batchPath : string;
     description : string;
     discoveryVersion : string;
     documentationLink : string;
@@ -1039,7 +1104,9 @@ struct
     protocol : string;
     resources : (string * RestResource.t) list;
     revision : string;
+    rootUrl : string;
     schemas : (string * JsonSchema.t) list;
+    servicePath : string;
     title : string;
     version : string;
     
@@ -1056,6 +1123,10 @@ struct
   let baseUrl = {
     GapiLens.get = (fun x -> x.baseUrl);
     GapiLens.set = (fun v x -> { x with baseUrl = v });
+  }
+  let batchPath = {
+    GapiLens.get = (fun x -> x.batchPath);
+    GapiLens.set = (fun v x -> { x with batchPath = v });
   }
   let description = {
     GapiLens.get = (fun x -> x.description);
@@ -1113,9 +1184,17 @@ struct
     GapiLens.get = (fun x -> x.revision);
     GapiLens.set = (fun v x -> { x with revision = v });
   }
+  let rootUrl = {
+    GapiLens.get = (fun x -> x.rootUrl);
+    GapiLens.set = (fun v x -> { x with rootUrl = v });
+  }
   let schemas = {
     GapiLens.get = (fun x -> x.schemas);
     GapiLens.set = (fun v x -> { x with schemas = v });
+  }
+  let servicePath = {
+    GapiLens.get = (fun x -> x.servicePath);
+    GapiLens.set = (fun v x -> { x with servicePath = v });
   }
   let title = {
     GapiLens.get = (fun x -> x.title);
@@ -1130,6 +1209,7 @@ struct
     auth = AuthData.empty;
     basePath = "";
     baseUrl = "";
+    batchPath = "";
     description = "";
     discoveryVersion = "";
     documentationLink = "";
@@ -1144,7 +1224,9 @@ struct
     protocol = "";
     resources = [];
     revision = "";
+    rootUrl = "";
     schemas = [];
+    servicePath = "";
     title = "";
     version = "";
     
@@ -1155,6 +1237,7 @@ struct
       (fun v -> GapiJson.render_object "auth" (AuthData.render_content v)) x.auth;
       GapiJson.render_string_value "basePath" x.basePath;
       GapiJson.render_string_value "baseUrl" x.baseUrl;
+      GapiJson.render_string_value "batchPath" x.batchPath;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "discoveryVersion" x.discoveryVersion;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
@@ -1169,7 +1252,9 @@ struct
       GapiJson.render_string_value "protocol" x.protocol;
       GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestResource.render_content v)) v) x.resources;
       GapiJson.render_string_value "revision" x.revision;
+      GapiJson.render_string_value "rootUrl" x.rootUrl;
       GapiJson.render_collection "schemas" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.schemas;
+      GapiJson.render_string_value "servicePath" x.servicePath;
       GapiJson.render_string_value "title" x.title;
       GapiJson.render_string_value "version" x.version;
       
@@ -1194,6 +1279,10 @@ struct
         ({ GapiJson.name = "baseUrl"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with baseUrl = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "batchPath"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with batchPath = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -1316,6 +1405,10 @@ struct
         ({ GapiJson.name = "revision"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with revision = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "rootUrl"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with rootUrl = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "schemas"; data_type = GapiJson.Object },
         cs) ->
@@ -1334,6 +1427,10 @@ struct
         ("", JsonSchema.empty)
         (fun v -> { x with schemas = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "servicePath"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with servicePath = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
         Json_type.String v) ->

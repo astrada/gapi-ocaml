@@ -51,6 +51,27 @@ end
   @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
   @param std_params Optional standard parameters.
   *)
+val issueTokenGet :
+  ?base_url:string ->
+  ?std_params:GapiService.StandardParameters.t ->
+  ?alg:string ->
+  ?android_device_id:string ->
+  ?app_id:string ->
+  ?audience:string ->
+  ?force:bool ->
+  ?hl:string ->
+  ?origin:string ->
+  client_id:string ->
+  response_type:string ->
+  scope:string ->
+  GapiConversation.Session.t ->
+  GapiOauth2V2Model.Oauth2IssueTokenV2Response.t * GapiConversation.Session.t
+
+(** 
+  
+  @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
+  @param std_params Optional standard parameters.
+  *)
 val tokeninfo :
   ?base_url:string ->
   ?std_params:GapiService.StandardParameters.t ->

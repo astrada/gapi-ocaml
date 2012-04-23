@@ -217,11 +217,6 @@ let test_async_query () =
                   ~jobId
                   session
               in
-                ignore (
-                  JobsResource.delete
-                    ~projectId
-                    ~jobId
-                    session);
                 assert_equal
                   "bigquery#job"
                   job.Job.kind;
@@ -249,15 +244,8 @@ let test_sync_query () =
                 JobsResource.query
                   ~projectId
                   query_request
-                  session in
-              let jobId =
-                query_response.QueryResponse.jobReference.JobReference.jobId
+                  session
               in
-                ignore (
-                  JobsResource.delete
-                    ~projectId
-                    ~jobId
-                    session);
                 assert_equal
                   "bigquery#queryResponse"
                   query_response.QueryResponse.kind;

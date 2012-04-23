@@ -101,3 +101,103 @@ sig
   
 end
 
+module Oauth2IssueTokenV2Response :
+sig
+  module ConsentData :
+  sig
+    module ScopesData :
+    sig
+      type t = {
+        description : string;
+        (**  *)
+        detail : string;
+        (**  *)
+        
+      }
+      
+      val description : (t, string) GapiLens.t
+      val detail : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    module OauthClientData :
+    sig
+      type t = {
+        developerEmail : string;
+        (**  *)
+        iconUri : string;
+        (**  *)
+        name : string;
+        (**  *)
+        
+      }
+      
+      val developerEmail : (t, string) GapiLens.t
+      val iconUri : (t, string) GapiLens.t
+      val name : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      oauthClient : OauthClientData.t;
+      (**  *)
+      scopes : ScopesData.t list;
+      (**  *)
+      
+    }
+    
+    val oauthClient : (t, OauthClientData.t) GapiLens.t
+    val scopes : (t, ScopesData.t list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    code : string;
+    (**  *)
+    consent : ConsentData.t;
+    (**  *)
+    idToken : string;
+    (**  *)
+    issueAdvice : string;
+    (**  *)
+    token : string;
+    (**  *)
+    
+  }
+  
+  val code : (t, string) GapiLens.t
+  val consent : (t, ConsentData.t) GapiLens.t
+  val idToken : (t, string) GapiLens.t
+  val issueAdvice : (t, string) GapiLens.t
+  val token : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
