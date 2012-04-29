@@ -226,7 +226,7 @@ let gapi_request
               ?etag
               request_type
               (succ request_number)
-              url
+              target
               parse_output
               parse_error
               new_session
