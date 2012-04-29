@@ -196,7 +196,7 @@ sig
 end
 
 module MakePersonConstruct
-  (M : sig val element_name : string end) =
+  (M : sig val element_ns : string val element_name : string end) =
 struct
   type t = {
     lang : string;
@@ -213,7 +213,7 @@ struct
   }
 
   let to_xml_data_model person =
-    render_element ns_atom M.element_name
+    render_element M.element_ns M.element_name
       [render_attribute Xmlm.ns_xml "lang" person.lang;
        render_text_element ns_atom "email" person.email;
        render_text_element ns_atom "name" person.name;
@@ -246,10 +246,16 @@ struct
 end
 
 module Author =
-  MakePersonConstruct(struct let element_name = "author" end)
+  MakePersonConstruct(struct
+                        let element_ns = ns_atom
+                        let element_name = "author"
+                      end)
 
 module Contributor =
-  MakePersonConstruct(struct let element_name = "contributor" end)
+  MakePersonConstruct(struct
+                        let element_ns = ns_atom
+                        let element_name = "contributor"
+                      end)
 
 module Category =
 struct
@@ -467,6 +473,12 @@ struct
           GdataUtils.unexpected e
 
 end
+
+module LastModifiedBy =
+  MakePersonConstruct(struct
+                        let element_ns = ns_gd
+                        let element_name = "lastModifiedBy"
+                      end)
 
 module type Feed =
 sig
@@ -732,18 +744,24 @@ struct
     [ `Self
     | `Alternate
     | `Edit
+    | `EditMedia
     | `Feed
     | `Post
-    | `Batch ]
+    | `Batch
+    | `ResumableCreateMedia
+    | `ResumableEditMedia ]
 
   let to_string l  =
     match l with
         `Self -> "self"
       | `Alternate -> "alternate"
       | `Edit -> "edit"
+      | `EditMedia -> "edit-media"
       | `Feed -> ns_gd ^ "#feed"
       | `Post -> ns_gd ^ "#post"
       | `Batch -> ns_gd ^ "#batch"
+      | `ResumableCreateMedia -> ns_gd ^ "#resumable-create-media"
+      | `ResumableEditMedia -> ns_gd ^ "#resumable-edit-media"
       | _ -> failwith "BUG: Unexpected Rel value (GdataAtom)"
 
 end

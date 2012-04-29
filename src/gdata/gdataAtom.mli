@@ -167,7 +167,7 @@ sig
 end
 
 module MakePersonConstruct :
-  functor (M : sig val element_name : string end) ->
+  functor (M : sig val element_ns : string val element_name : string end) ->
   PersonConstruct
 
 module Author : PersonConstruct
@@ -255,6 +255,8 @@ sig
 
 end
 
+module LastModifiedBy : PersonConstruct
+
 module type Feed =
 sig
   type entry_t
@@ -307,9 +309,12 @@ sig
     [ `Self
     | `Alternate
     | `Edit
+    | `EditMedia
     | `Feed
     | `Post
-    | `Batch ]
+    | `Batch
+    | `ResumableCreateMedia
+    | `ResumableEditMedia ]
 
   val to_string : [> t] -> string
 
