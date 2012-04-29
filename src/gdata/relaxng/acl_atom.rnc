@@ -1,0 +1,93 @@
+# RELAX NG Compact Syntax Grammar
+# Description: Google Documents List: acl
+
+namespace atom = "http://www.w3.org/2005/Atom"
+namespace gAcl = "http://schemas.google.com/acl/2007"
+namespace gd = "http://schemas.google.com/g/2005"
+namespace openSearch = "http://a9.com/-/spec/opensearch/1.1/"
+
+start = docs_aclFeed | docs_aclEntry
+
+
+# Describes an ACL entry
+
+docs_aclEntry = element atom:entry { attribute gd:etag { xsd:string }?, (
+    acl_aclKind &
+    atom_id &
+    atom_link* &
+    atom_updated &
+    docs_aclRole &
+    docs_aclScope &
+    element atom:title { atom_textConstruct } ) }
+
+
+# Describes an ACL feed
+
+docs_aclFeed = element atom:feed { attribute gd:etag { xsd:string }?, (
+    acl_aclKind &
+    atom_id &
+    atom_link+ &
+    atom_updated &
+    docs_aclEntry* &
+    element atom:title { atom_textConstruct } &
+    opensearch_startIndex? &
+    opensearch_totalResults? ) }
+
+
+# Describes an access control list kind
+
+acl_aclKind = element atom:category {
+    attribute scheme { "http://schemas.google.com/g/2005#kind" },
+    attribute term { "http://schemas.google.com/acl/2007#accessRule" } }
+
+
+# Describes an ACL role
+
+docs_aclRole = element gAcl:role { attribute value { xsd:string } }
+
+
+# Describes an ACL scope
+
+docs_aclScope = element gAcl:scope {
+    attribute type { "user" },
+    attribute value { xsd:string }? }
+
+
+# Describes a unique identifier
+
+atom_id = element atom:id { xsd:string }
+
+
+# Describes an external link type
+
+atom_link = element atom:link {
+    attribute href { xsd:string },
+    attribute hreflang { xsd:string }?,
+    attribute length { xsd:long }?,
+    attribute rel { xsd:string }?,
+    attribute title { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }? }
+
+
+# Describes the starting index of the contained entries for paged feeds
+
+opensearch_startIndex = element openSearch:startIndex { xsd:int }
+
+
+# Describes a text construct containing either plain text, HTML, or XHTML
+
+atom_textConstruct = attribute src { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }?,
+    xsd:string?
+
+
+# Describes the total number of results associated with this feed
+
+opensearch_totalResults = element openSearch:totalResults { xsd:int }
+
+
+# Describes a last updated timestamp
+
+atom_updated = element atom:updated { (xsd:date | xsd:dateTime) }

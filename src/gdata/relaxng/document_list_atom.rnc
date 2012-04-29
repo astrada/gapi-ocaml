@@ -1,0 +1,207 @@
+# RELAX NG Compact Syntax Grammar
+# Description: Google Documents List: documentList
+
+namespace app = "http://www.w3.org/2007/app"
+namespace atom = "http://www.w3.org/2005/Atom"
+namespace gAcl = "http://schemas.google.com/acl/2007"
+namespace gd = "http://schemas.google.com/g/2005"
+namespace openSearch = "http://a9.com/-/spec/opensearch/1.1/"
+
+start = docs_documentListFeed | docs_documentListEntry
+
+
+# Describes an ACL entry
+
+docs_aclEntry = element atom:entry { attribute gd:etag { xsd:string }?, (
+    acl_aclKind &
+    atom_id &
+    atom_link* &
+    atom_updated &
+    docs_aclRole &
+    docs_aclScope &
+    element atom:title { atom_textConstruct } ) }
+
+
+# Describes an ACL feed
+
+docs_aclFeed = element atom:feed { attribute gd:etag { xsd:string }?, (
+    acl_aclKind &
+    atom_id &
+    atom_link+ &
+    atom_updated &
+    docs_aclEntry* &
+    element atom:title { atom_textConstruct } &
+    opensearch_startIndex? &
+    opensearch_totalResults? ) }
+
+
+# Describes an access control list kind
+
+acl_aclKind = element atom:category {
+    attribute scheme { "http://schemas.google.com/g/2005#kind" },
+    attribute term { "http://schemas.google.com/acl/2007#accessRule" } }
+
+
+# Describes an ACL role
+
+docs_aclRole = element gAcl:role { attribute value { xsd:string } }
+
+
+# Describes an ACL scope
+
+docs_aclScope = element gAcl:scope {
+    attribute type { "user" },
+    attribute value { xsd:string }? }
+
+
+# Describes an author
+
+atom_author = element atom:author { attribute xml:lang { xsd:string }?, (
+    atom_email? &
+    atom_name &
+    atom_uri? ) }
+
+
+# Describes a category
+
+atom_category = element atom:category {
+    attribute label { xsd:string }?,
+    attribute scheme { xsd:string }?,
+    attribute term { xsd:string },
+    attribute xml:lang { xsd:string }? }
+
+
+# Denotes an entry has been deleted
+
+gdata_deleted = element gd:deleted { empty }
+
+
+# Describes a document list ACL feed link
+
+docs_documentListAclFeedLink = element gd:feedLink {
+    attribute href { xsd:string },
+    attribute rel { "http://schemas.google.com/acl/2007#accessControlList" },
+    docs_aclFeed? }
+
+
+# Describes an entry representing a single document of any type
+
+docs_documentListEntry = element atom:entry {
+    attribute gd:etag { xsd:string }?,
+    ( app_edited? &
+    atom_author+ &
+    atom_category+ &
+    atom_id &
+    atom_outOfLineContent &
+    atom_published? &
+    atom_updated &
+    docs_documentListAclFeedLink &
+    docs_documentListLink+ &
+    element atom:title { atom_textConstruct } &
+    gdata_deleted? ) }
+
+
+# Describes a feed for managing a list of documents
+
+docs_documentListFeed = element atom:feed { attribute gd:etag { xsd:string }?, (
+    atom_author* &
+    atom_id &
+    atom_updated &
+    docs_documentListEntry* &
+    docs_documentListLink+ &
+    element atom:title { atom_textConstruct } &
+    opensearch_itemsPerPage? &
+    opensearch_startIndex &
+    opensearch_totalResults ) }
+
+
+# Describes a document list link
+
+docs_documentListLink = element atom:link {
+    attribute href { xsd:string },
+    attribute length { xsd:long }?,
+    attribute rel { "alternate" | "edit" | "edit-media" |
+    "http://schemas.google.com/docs/2007#parent" |
+    "http://schemas.google.com/g/2005#feed" |
+    "http://schemas.google.com/g/2005#post" |
+    "http://schemas.google.com/spreadsheets/2006#worksheetsfeed" | "next" |
+    "previous" | "self" },
+    attribute title { xsd:string }?,
+    attribute type { "application/atom+xml" | "text/html" } }
+
+
+# Value of the app:edited tag
+
+app_edited = element app:edited { (xsd:date | xsd:dateTime) }
+
+
+# Describes an author's email address
+
+atom_email = element atom:email { xsd:string }
+
+
+# Describes a unique identifier
+
+atom_id = element atom:id { xsd:string }
+
+
+# Describes the number of items that will be returned per page for paged feeds
+
+opensearch_itemsPerPage = element openSearch:itemsPerPage { xsd:int }
+
+
+# Describes an external link type
+
+atom_link = element atom:link {
+    attribute href { xsd:string },
+    attribute hreflang { xsd:string }?,
+    attribute length { xsd:long }?,
+    attribute rel { xsd:string }?,
+    attribute title { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }? }
+
+
+# Describes an author's human-readable name
+
+atom_name = element atom:name { xsd:string }
+
+
+# Describes an out of line content
+
+atom_outOfLineContent = element atom:content {
+    attribute src { xsd:string },
+    attribute type { xsd:string }? }
+
+
+# Describes a creation timestamp
+
+atom_published = element atom:published { (xsd:date | xsd:dateTime) }
+
+
+# Describes the starting index of the contained entries for paged feeds
+
+opensearch_startIndex = element openSearch:startIndex { xsd:int }
+
+
+# Describes a text construct containing either plain text, HTML, or XHTML
+
+atom_textConstruct = attribute src { xsd:string }?,
+    attribute type { xsd:string }?,
+    attribute xml:lang { xsd:string }?,
+    xsd:string?
+
+
+# Describes the total number of results associated with this feed
+
+opensearch_totalResults = element openSearch:totalResults { xsd:int }
+
+
+# Describes a last updated timestamp
+
+atom_updated = element atom:updated { (xsd:date | xsd:dateTime) }
+
+
+# Describes the URI associated with an author
+
+atom_uri = element atom:uri { xsd:string }
