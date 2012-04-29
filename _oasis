@@ -89,7 +89,7 @@ Library gdata
     GdataCalendarService
   InternalModules:
     GdataUtils
-  BuildDepends: gapi, xmlm, extlib, netstring, curl
+  BuildDepends: xmlm, extlib, netstring, curl
   XMETADescription: Google Data Protocol (GData) client library
 
 # Documentation
@@ -109,26 +109,25 @@ Executable serviceGenerator
   Path: tools
   Install: false
   MainIs: serviceGenerator.ml
-  BuildDepends: gapi
 
 # Examples
 Executable oauth2Flow
   Path: examples/auth
   Install: false
   MainIs: oauth2Flow.ml
-  BuildDepends: gapi, nethttpd
+  BuildDepends: nethttpd, extlib, curl, str, cryptokit, json-wheel, xmlm
 
 Executable oauth1Flow
   Path: examples/auth
   Install: false
   MainIs: oauth1Flow.ml
-  BuildDepends: gapi, nethttpd
+  BuildDepends: nethttpd, extlib, curl, str, cryptokit, json-wheel
 
 Executable clientLoginFlow
   Path: examples/auth
   Install: false
   MainIs: clientLoginFlow.ml
-  BuildDepends: gapi, nethttpd
+  BuildDepends: nethttpd, extlib, curl, str, cryptokit, json-wheel
 
 # Tests
 Executable refreshOAuth2Token
@@ -136,14 +135,14 @@ Executable refreshOAuth2Token
   Path: src/test
   Install: false
   MainIs: refreshOAuth2Token.ml
-  BuildDepends: gapi, oUnit
+  BuildDepends: oUnit, extlib, curl, str, cryptokit, json-wheel
 
 Executable testSuite
   Build$: flag(tests) || flag(all)
   Path: src/test
   Install: false
   MainIs: testSuite.ml
-  BuildDepends: gapi, gdata, oUnit
+  BuildDepends: oUnit, extlib, curl, str, cryptokit, json-wheel, xmlm
 
 Test core
   Run$: flag(tests) || flag(all)
