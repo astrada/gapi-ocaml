@@ -65,8 +65,10 @@ end
 module PostData =
 struct
   type t =
-      Fields of (string * string) list    (* field list (key/value pair) *)
-    | Body of string * string             (* body and content type *)
+      (* field list (key/value pair) *)
+      Fields of (string * string) list
+      (* body, and content type *)
+    | Body of string * string
 
   let empty = Fields []
 
@@ -82,6 +84,11 @@ struct
     | IfNoneMatch of string
     | IfMatch of string
     | GdataVersion of string
+    | ContentRange of string
+    | Range of string
+    | UploadContentType of string
+    | UploadContentLength of string
+    | Slug of string
     | KeyValueHeader of string * string
     | OtherHeader of string
 
@@ -101,6 +108,16 @@ struct
         "If-Match: " ^ value
     | GdataVersion value ->
         "GData-Version: " ^ value
+    | ContentRange value ->
+        "Content-Range: " ^ value
+    | Range value ->
+        "Range: " ^ value
+    | UploadContentType value ->
+        "X-Upload-Content-Type: " ^ value
+    | UploadContentLength value ->
+        "X-Upload-Content-Length: " ^ value
+    | Slug value ->
+        "Slug: " ^ value
     | KeyValueHeader (name, value) ->
         name ^ ": " ^ value
     | OtherHeader header ->
@@ -111,10 +128,10 @@ struct
       let (key, v) = ExtString.String.split full_header ":" in
       let value = ExtString.String.strip v in
         match key with
-            "Location" ->
-              Location value
-          | "Content-Type" ->
+            "Content-Type" ->
               ContentType value
+          | "Location" ->
+              Location value
           | "Authorization" ->
               Authorization value
           | "ETag" ->
@@ -125,6 +142,16 @@ struct
               IfMatch value
           | "GData-Version" ->
               GdataVersion value
+          | "Content-Range" ->
+              ContentRange value
+          | "Range" ->
+              Range value
+          | "X-Upload-Content-Type" ->
+              UploadContentType value
+          | "X-Upload-Content-Length" ->
+              UploadContentLength value
+          | "Slug" ->
+              Slug value
           | _ ->
               KeyValueHeader (key, value)
     else

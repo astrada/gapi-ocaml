@@ -66,6 +66,11 @@ sig
     | IfNoneMatch of string
     | IfMatch of string
     | GdataVersion of string
+    | ContentRange of string
+    | Range of string
+    | UploadContentType of string
+    | UploadContentLength of string
+    | Slug of string
     | KeyValueHeader of string * string
     | OtherHeader of string
 
