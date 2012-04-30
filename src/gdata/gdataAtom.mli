@@ -107,6 +107,12 @@ val render_int_element :
   int ->
   GdataCore.xml_data_model list
 
+val render_int64_element :
+  string ->
+  string ->
+  int64 ->
+  GdataCore.xml_data_model list
+
 val render_date_element :
   string ->
   string ->

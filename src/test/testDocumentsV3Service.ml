@@ -20,9 +20,6 @@ let test_resumable_upload () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let session = session
-         |> GapiConversation.Session.config
-         ^%= GapiConfig.upload_chunk_size ^= 262144 in
        let media_source =
          GapiMediaResource.create_file_resource "test_data/test.pdf" in
        let (response, session) =

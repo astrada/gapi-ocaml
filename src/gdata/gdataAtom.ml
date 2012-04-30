@@ -140,6 +140,13 @@ let render_int_element namespace name value =
     name
     (string_of_int value)
 
+let render_int64_element namespace name value =
+  render_text_element
+    ~default:"0"
+    namespace
+    name
+    (Int64.to_string value)
+
 let render_date_element namespace name value =
   render_text_element
     ~default:(GapiDate.to_string GapiDate.epoch)
