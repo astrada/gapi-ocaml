@@ -24,7 +24,7 @@ let test_resumable_upload () =
          |> GapiConversation.Session.config
          ^%= GapiConfig.upload_chunk_size ^= 262144 in
        let media_source =
-         GapiMediaResource.create_file_resource "test_data/test2.pdf" in
+         GapiMediaResource.create_file_resource "test_data/test.pdf" in
        let (response, session) =
          GapiService.service_request
            ~media_source
@@ -37,7 +37,7 @@ let test_resumable_upload () =
          print_endline response)
 
 let suite = "Documents List v3 Service test" >:::
-  ["test_all_documents" >:: test_all_documents;
+  [(*"test_all_documents" >:: test_all_documents;*)
    "test_resumable_upload" >:: test_resumable_upload;
   ]
 
