@@ -20,3 +20,7 @@ val add_path_to_url :
   ?encoded:bool ->
   string list -> string -> string
 
+val string_after_char : char -> string -> string
+
+val wait_exponential_backoff : int -> unit
+

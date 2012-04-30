@@ -56,3 +56,17 @@ let add_path_to_url ?(encoded = true) path_to_add url =
                      neturl in
     Neturl.string_of_url new_neturl
 
+let string_after_char c s =
+  let last_position = String.rindex s c in
+    Str.string_after s (last_position + 1)
+
+let wait_exponential_backoff n =
+  (* TODO: add random milliseconds fraction, use a sleep function that accepts
+   * milliseconds *)
+  let seconds = 1 lsl n in
+    Unix.sleep seconds
+
+(* Initialize the random number generator *)
+let () =
+  Random.self_init ()
+
