@@ -3,8 +3,12 @@ open GapiUtils.Infix
 let debug_print start_time curl info_type info =
   let time = Unix.gettimeofday () in
   let timestamp = time -. start_time in
-  let nl = if info.[String.length info - 1] = '\n' then "" else "\n" in
-    Printf.printf "[%f] curl: %s: %s%s"
+  let nl =
+    if String.length info > 0 &&
+       info.[String.length info - 1] = '\n' then ""
+    else "\n"
+  in
+    Printf.printf "[%f] curl: %s: %s%s%!"
       timestamp
       (GapiCurl.string_of_curl_info_type info_type)
       info
@@ -175,6 +179,10 @@ let request
       | None ->
           match http_method with
               GapiCore.HttpMethod.POST ->
+                GapiCurl.set_postfields [] session.Session.curl
+            | GapiCore.HttpMethod.PUT ->
+                GapiCurl.set_upload false session.Session.curl;
+                GapiCurl.set_post true session.Session.curl;
                 GapiCurl.set_postfields [] session.Session.curl
             | _ -> ()
     end;
