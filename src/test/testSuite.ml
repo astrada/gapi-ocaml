@@ -17,6 +17,7 @@ let model_tests =
    TestAdsenseV1_1Model.suite;
    TestBigqueryV2Model.suite;
    TestDocumentsV3Model.suite;
+   TestMediaResource.suite;
   ]
 
 let service_tests = 
