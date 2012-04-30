@@ -17,6 +17,7 @@ val gapi_request :
   ?post_data:GapiCore.PostData.t ->
   ?version:string ->
   ?etag:string ->
+  ?media_source:GapiMediaResource.t ->
   ?parse_error:(GapiPipe.OcamlnetPipe.t -> int -> 'a) ->
   request_type ->
   string ->

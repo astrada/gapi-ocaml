@@ -25,7 +25,10 @@ let reader netchannel bytes =
   let result = String.create bytes in
     try
       let len = netchannel#input result 0 bytes in
-        String.sub result 0 len
+        if len = bytes then
+          result
+        else
+          String.sub result 0 len
     with End_of_file ->
       netchannel#close_in ();
       ""

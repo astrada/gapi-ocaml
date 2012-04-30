@@ -57,6 +57,7 @@ type t = {
   connect_timeout : int option;
   compress : bool;
   auth : auth_config;
+  upload_chunk_size : int;
 }
 
 let application_name = {
@@ -83,6 +84,10 @@ let auth = {
   GapiLens.get = (fun x -> x.auth);
   GapiLens.set = (fun v x -> { x with auth = v })
 }
+let upload_chunk_size = {
+  GapiLens.get = (fun x -> x.upload_chunk_size);
+  GapiLens.set = (fun v x -> { x with upload_chunk_size = v })
+}
 
 let default = {
   application_name = "gapi-ocaml";
@@ -91,6 +96,7 @@ let default = {
   connect_timeout = None;
   compress = true;
   auth = NoAuth;
+  upload_chunk_size = 524288;
 }
 
 let default_debug = {
@@ -100,5 +106,6 @@ let default_debug = {
   connect_timeout = None;
   compress = false;
   auth = NoAuth;
+  upload_chunk_size = 524288;
 }
 

@@ -8,6 +8,7 @@ val service_request :
   ?version:string ->
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   ?request_type:GapiRequest.request_type ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -20,6 +21,7 @@ val service_request_with_data :
   ?version:string ->
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -68,6 +70,7 @@ val get :
 val post :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   ?data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -78,6 +81,7 @@ val post :
 val put :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -88,6 +92,7 @@ val put :
 val put' :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -98,6 +103,7 @@ val put' :
 val patch :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -108,6 +114,7 @@ val patch :
 val patch' :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_source:GapiMediaResource.t ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->

@@ -5,6 +5,9 @@ exception Redirect of string * GapiConversation.Session.t
 exception Unauthorized of GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
+exception ResumeIncomplete of string * string * GapiConversation.Session.t
+exception StartUpload of string * GapiConversation.Session.t
+exception ServiceUnavailable of GapiConversation.Session.t
 
 type request_type =
     Query
@@ -23,29 +26,50 @@ let parse_response
       response_code
       headers
       session =
-  match response_code with
-      200 (* OK *)
-    | 201 (* Created *)
-    | 204 (* No Content *) ->
-        parse_output pipe
-    | 302 (* Found *) ->
-        let url = List.fold_left
-                    (fun u h ->
-                       match h with
-                           GapiCore.Header.Location value -> value
-                         | _ -> u)
-                    ""
-                    headers
-        in
-          raise (Redirect (url, session))
-    | 401 (* Unauthorized *) ->
-        raise (Unauthorized session)
-    | 304 (* Not modified *) ->
-        raise (NotModified session)
-    | 412 (* Precondition failed *) ->
-        raise (PreconditionFailed session)
-    | _ ->
-        parse_error pipe response_code
+  let get_location () =
+    List.fold_left
+      (fun u h ->
+         match h with
+             GapiCore.Header.Location value -> value
+           | _ -> u)
+      ""
+      headers
+  in
+    match response_code with
+        200 (* OK *) ->
+          let location = get_location () in
+            if location = "" then
+              parse_output pipe
+            else
+              raise (StartUpload (location, session))
+      | 201 (* Created *)
+      | 204 (* No Content *) ->
+          parse_output pipe
+      | 302 (* Found *) ->
+          let url = get_location () in
+            raise (Redirect (url, session))
+      | 308 (* Resume Incomplete *) ->
+          let (range, url) =
+            List.fold_left
+              (fun ((r, u) as accu) h ->
+                 match h with
+                     GapiCore.Header.Location value -> (r, value)
+                   | GapiCore.Header.Range value -> (value, u)
+                   | _ -> accu)
+              ("", "")
+              headers
+          in
+            raise (ResumeIncomplete (range, url, session))
+      | 401 (* Unauthorized *) ->
+          raise (Unauthorized session)
+      | 304 (* Not Modified *) ->
+          raise (NotModified session)
+      | 412 (* Precondition Failed *) ->
+          raise (PreconditionFailed session)
+      | 503 (* Service Unavailable *) ->
+          raise (ServiceUnavailable session)
+      | _ ->
+          parse_error pipe response_code
 
 let build_auth_data session =
   match session.GapiConversation.Session.config.GapiConfig.auth with
@@ -89,6 +113,7 @@ let single_request
       ?post_data
       ?version
       ?etag
+      ?upload_state
       request_type
       url
       parse_output
@@ -142,9 +167,16 @@ let single_request
                         None
     ) etag
       |> Option.default None in
-  let header_list = [authorization_header; version_header; etag_header]
+  let headers = [authorization_header; version_header; etag_header]
     |> List.filter Option.is_some
-    |> List.map Option.get
+    |> List.map Option.get in
+  let upload_headers =
+    Option.map_default
+      (GapiMediaResource.generate_upload_headers http_method)
+      []
+      upload_state in
+  let header_list =
+    headers @ upload_headers
   in
     GapiConversation.request
       ~header_list
@@ -183,6 +215,7 @@ let gapi_request
       ?post_data
       ?version
       ?etag
+      ?media_source
       ?(parse_error = GapiConversation.parse_error)
       request_type
       url
@@ -192,6 +225,7 @@ let gapi_request
         ?post_data
         ?version
         ?etag
+        ?current_upload_state
         request_type
         request_number
         url
@@ -212,6 +246,7 @@ let gapi_request
           ?post_data
           ?version
           ?etag
+          ?upload_state:current_upload_state
           request_type
           url
           parse_output
@@ -241,17 +276,96 @@ let gapi_request
                 ?post_data
                 ?version
                 ?etag
+                ?current_upload_state
                 request_type
                 (succ request_number)
                 url
                 parse_output
                 parse_error
                 refreshed_session
+      | ResumeIncomplete (range, location, new_session) ->
+          let target = if location = "" then url else location in
+          let upload_state = Option.get current_upload_state in
+          let new_upload_state = GapiMediaResource.update_upload_state
+                                   range
+                                   upload_state in
+          let new_post_data =
+            GapiMediaResource.get_post_data new_upload_state
+          in
+            request_loop
+              ~post_data:new_post_data
+              ?version
+              ?etag
+              ~current_upload_state:new_upload_state
+              Update
+              0
+              target
+              parse_output
+              parse_error
+              new_session
+      | StartUpload (location, new_session) ->
+          let target = if location = "" then url else location in
+          let upload_state = Option.get current_upload_state in
+          let new_upload_state = upload_state
+            |> GapiMediaResource.state ^= GapiMediaResource.Uploading in
+          let new_post_data =
+            GapiMediaResource.get_post_data upload_state
+          in
+            request_loop
+              ~post_data:new_post_data
+              ?version
+              ?etag
+              ~current_upload_state:new_upload_state
+              Update
+              0
+              target
+              parse_output
+              parse_error
+              new_session
+      | (ServiceUnavailable new_session) as e->
+          if request_number > 4 then
+            raise e
+          else
+            let new_upload_state =
+              Option.map
+                (fun upload_state -> upload_state
+                   |> GapiMediaResource.state ^= GapiMediaResource.Error)
+                current_upload_state in
+            let new_post_data =
+              if Option.is_some new_upload_state then None
+              else post_data
+            in
+              GapiUtils.wait_exponential_backoff request_number;
+              request_loop
+                ?post_data:new_post_data
+                ?version
+                ?etag
+                ?current_upload_state:new_upload_state
+                request_type
+                (succ request_number)
+                url
+                parse_output
+                parse_error
+                new_session
+  in
+
+  let current_upload_state =
+    Option.map
+      (fun resource ->
+         let chunk_size = session
+           |. GapiConversation.Session.config
+           |. GapiConfig.upload_chunk_size
+         in
+           GapiMediaResource.setup_upload
+             ~chunk_size
+           resource)
+      media_source
   in
     request_loop
       ?post_data
       ?version
       ?etag
+      ?current_upload_state
       request_type
       0
       url

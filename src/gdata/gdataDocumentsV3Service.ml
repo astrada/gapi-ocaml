@@ -3,7 +3,7 @@ open GdataDocumentsV3Model
 
 (* TODO: query parameters *)
 
-let version = "3"
+let version = "3.0"
 
 let feed_scope = "https://docs.google.com/feeds/"
 let docs_scope = "https://docs.googleusercontent.com/"

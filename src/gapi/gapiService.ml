@@ -17,6 +17,7 @@ let service_request
       ?version
       ?etag
       ?query_parameters
+      ?media_source
       ?(request_type = GapiRequest.Query)
       url
       parse_response
@@ -31,6 +32,7 @@ let service_request
       ?post_data
       ?version
       ?etag
+      ?media_source
       ~parse_error
       request_type
       query_url
@@ -43,6 +45,7 @@ let service_request_with_data
       ?version
       ?etag
       ?query_parameters
+      ?media_source
       data
       url
       parse_response
@@ -54,6 +57,7 @@ let service_request_with_data
         ?version
         ?etag
         ?query_parameters
+        ?media_source
         ~request_type
         url
         parse_response
@@ -123,6 +127,7 @@ let get
 let post
       ?etag
       ?query_parameters
+      ?media_source
       ?(data_to_post = (fun _ -> GapiCore.PostData.empty))
       ~data
       url
@@ -133,6 +138,7 @@ let post
       ~post_data
       ?etag
       ?query_parameters
+      ?media_source
       ~request_type:GapiRequest.Create
       url
       parse_response
@@ -141,6 +147,7 @@ let post
 let put
       ?etag
       ?query_parameters
+      ?media_source
       ~data_to_post
       ~data
       url
@@ -150,6 +157,7 @@ let put
     GapiRequest.Update
     data_to_post
     ?query_parameters
+    ?media_source
     data
     url
     parse_response
@@ -158,6 +166,7 @@ let put
 let put'
       ?etag
       ?query_parameters
+      ?media_source
       ~data_to_post
       ~data
       url
@@ -168,6 +177,7 @@ let put'
       ~post_data
       ?etag
       ?query_parameters
+      ?media_source
       ~request_type:GapiRequest.Update
       url
       parse_response
@@ -176,6 +186,7 @@ let put'
 let patch
       ?etag
       ?query_parameters
+      ?media_source
       ~data_to_post
       ~data
       url
@@ -185,6 +196,7 @@ let patch
     GapiRequest.Patch
     data_to_post
     ?query_parameters
+    ?media_source
     data
     url
     parse_response
@@ -193,6 +205,7 @@ let patch
 let patch'
       ?etag
       ?query_parameters
+      ?media_source
       ~data_to_post
       ~data
       url
@@ -203,6 +216,7 @@ let patch'
       ~post_data
       ?etag
       ?query_parameters
+      ?media_source
       ~request_type:GapiRequest.Patch
       url
       parse_response

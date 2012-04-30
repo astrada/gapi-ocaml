@@ -79,6 +79,8 @@ type t = {
   (** Compress requests. (Not yet supported) *)
   auth : auth_config;
   (** Authorization configuration. *)
+  upload_chunk_size : int;
+  (** Chunk default size (in bytes) used by resumable upload. Should be a multiple of 512KB. *)
 }
 
 val application_name : (t, string) GapiLens.t
@@ -93,6 +95,8 @@ val compress : (t, bool) GapiLens.t
 (** Compression flag lens. *)
 val auth : (t, auth_config) GapiLens.t
 (** Authorization configuration lens. *)
+val upload_chunk_size : (t, int) GapiLens.t
+(** Upload chunk size lens. *)
 
 val default : t
 (** Default configuration.
@@ -104,6 +108,7 @@ val default : t
   connect_timeout = None;
   compress = true;
   auth = NoAuth;
+  upload_chunk_size = 524288; (* 512KB *)
  }]}
 
 *)
@@ -118,6 +123,7 @@ val default_debug : t
   connect_timeout = None;
   compress = false;
   auth = NoAuth;
+  upload_chunk_size = 524288; (* 512KB *)
  }]}
 
 *)
