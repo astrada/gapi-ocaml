@@ -61,12 +61,12 @@ let string_after_char c s =
     Str.string_after s (last_position + 1)
 
 let wait_exponential_backoff n =
-  (* TODO: add random milliseconds fraction, use a sleep function that accepts
-   * milliseconds *)
   let seconds = 1 lsl n in
-    Unix.sleep seconds
+  let milliseconds = Random.float 1.0 in
+  let wait_time = float_of_int seconds +. milliseconds in
+    Unix.select [] [] [] wait_time |> ignore
 
-(* Initialize the random number generator *)
+(* Initialize random number generator *)
 let () =
   Random.self_init ()
 
