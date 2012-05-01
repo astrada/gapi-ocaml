@@ -16,8 +16,33 @@ let parse_documents_feed =
 let parse_document_entry =
   GdataUtils.parse_xml_response Document.parse_document_entry
 
+let parse_metadata_entry =
+  GdataUtils.parse_xml_response Metadata.parse_metadata_entry
+
 let all_documents
       ?(url = "https://docs.google.com/feeds/default/private/full")
+      ?etag
+      session =
+  GdataService.query
+    ~version
+    ?etag
+    url
+    parse_documents_feed
+    session
+
+let get_user_metadata
+      ?(url = "https://docs.google.com/feeds/metadata/default")
+      ?etag
+      session =
+  GdataService.query
+    ~version
+    ?etag
+    url
+    parse_metadata_entry
+    session
+
+let all_changes
+      ?(url = "https://docs.google.com/feeds/default/private/changes")
       ?etag
       session =
   GdataService.query

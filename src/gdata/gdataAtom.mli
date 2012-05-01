@@ -119,6 +119,17 @@ val render_date_element :
   GapiDate.t ->
   GdataCore.xml_data_model list
 
+val render_bool_empty_element :
+  string ->
+  string ->
+  bool ->
+  GdataCore.xml_data_model list
+
+val render_empty_element :
+  string ->
+  string ->
+  GdataCore.xml_data_model list
+
 val render_element :
   string ->
   string ->

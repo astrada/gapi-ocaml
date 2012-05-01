@@ -3,20 +3,9 @@ open GapiUtils.Infix
 (* Document data types *)
 let ns_docs = "http://schemas.google.com/docs/2007"
 
-(*
- * TODO:
- * add metadata attributes to document entry
+(* TODO:
  * fix GdataExtensions.FeedLink
  * move to GdataExtensions all elements not in atom namespace
- *
-
-type gdata_deleted = bool
-
-type docs_removed = bool
-
-type gdata_quotaBytesUsed = int
-
-type docs_changestamp = int
  *)
 
 module Document =
@@ -45,6 +34,12 @@ struct
       md5Checksum : string;
       filename : string;
       suggestedFilename : string;
+
+      (* change entry data *)
+      deleted : bool;
+      removed : bool;
+      changestamp : string;
+
       extensions : GdataCore.xml_data_model list
     }
 
@@ -69,6 +64,9 @@ struct
       md5Checksum = "";
       filename = "";
       suggestedFilename = "";
+      removed = false;
+      deleted = false;
+      changestamp = "";
       extensions = []
     }
 
@@ -94,6 +92,9 @@ struct
          GdataAtom.render_text_element ns_docs "md5Checksum" entry.md5Checksum;
          GdataAtom.render_text_element ns_docs "filename" entry.filename;
          GdataAtom.render_text_element ns_docs "suggestedFilename" entry.suggestedFilename;
+         GdataAtom.render_bool_empty_element ns_docs "removed" entry.removed;
+         GdataAtom.render_bool_empty_element ns_docs "deleted" entry.deleted;
+         GdataAtom.render_value ns_docs "changestamp" entry.changestamp;
          entry.extensions]
 
     let of_xml_data_model entry tree =
@@ -219,6 +220,20 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = ns_docs ->
             { entry with suggestedFilename = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "removed"; `Namespace ns],
+             []) when ns = ns_docs ->
+            { entry with removed = true }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "deleted"; `Namespace ns],
+             []) when ns = GdataAtom.ns_gd ->
+            { entry with deleted = true }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "changestamp"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { entry with changestamp = v }
         | GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name _; `Namespace ns],
              _) when ns = Xmlm.ns_xmlns ->
@@ -230,6 +245,21 @@ struct
   end
 
   module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
+
+  let get_largest_changestamp feed =
+    List.fold_left
+      (fun r e ->
+         match e with
+           | GapiCore.AnnotatedTree.Node
+               ([`Element; `Name "largestChangestamp"; `Namespace ns],
+                [GapiCore.AnnotatedTree.Leaf
+                   ([`Attribute; `Name "value"; `Namespace ""],
+                    v)]) when ns = ns_docs ->
+               v
+           | _ -> r
+      )
+      ""
+      feed.Feed.extensions
 
   let get_documents_prefix namespace =
     if namespace = ns_docs then "docs"
@@ -247,6 +277,7 @@ struct
 end
 (* END Documents data types *)
 
+(* Metadata data types *)
 module type DocumentFormat =
 sig
   type t = {
@@ -449,7 +480,6 @@ struct
 
 end
 
-(* Metadata data types *)
 module Metadata =
 struct
 
@@ -463,10 +493,12 @@ struct
       title : GdataAtom.Title.t;
       links : GdataAtom.Link.t list;
       authors : GdataAtom.Author.t list;
+      largestChangestamp : string;
+      remainingChangestamps : string;
       quotaBytesTotal : int64;
       quotaBytesUsed : int64;
       quotaBytesUsedInTrash : int64;
-      largestChangestamp : string;
+      domainSharingPolicy : string;
       importFormats : ImportFormat.t list;
       exportFormats : ExportFormat.t list;
       features : Feature.t list;
@@ -483,10 +515,12 @@ struct
       title = GdataAtom.Title.empty;
       links = [];
       authors = [];
+      largestChangestamp = "";
+      remainingChangestamps = "";
       quotaBytesTotal = 0L;
       quotaBytesUsed = 0L;
       quotaBytesUsedInTrash = 0L;
-      largestChangestamp = "";
+      domainSharingPolicy = "";
       importFormats = [];
       exportFormats = [];
       features = [];
@@ -504,10 +538,12 @@ struct
          GdataAtom.Title.to_xml_data_model entry.title;
          GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
          GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
+         GdataAtom.render_text_element ns_docs "largestChangestamp" entry.largestChangestamp;
+         GdataAtom.render_text_element ns_docs "remainingChangestamps" entry.remainingChangestamps;
          GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesTotal" entry.quotaBytesTotal;
          GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesUsed" entry.quotaBytesUsed;
          GdataAtom.render_int64_element ns_docs "quotaBytesUsedInTrash" entry.quotaBytesUsedInTrash;
-         GdataAtom.render_text_element ns_docs "largestChangestamp" entry.largestChangestamp;
+         GdataAtom.render_text_element ns_docs "domainSharingPolicy" entry.domainSharingPolicy;
          GdataAtom.render_element_list ImportFormat.to_xml_data_model entry.importFormats;
          GdataAtom.render_element_list ExportFormat.to_xml_data_model entry.exportFormats;
          GdataAtom.render_element_list Feature.to_xml_data_model entry.features;
@@ -564,14 +600,26 @@ struct
               (fun author -> { entry with authors = author :: entry.authors })
               cs
         | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "largestChangestamp"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { entry with largestChangestamp = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "remainingChangestamps"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { entry with remainingChangestamps = v }
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "quotaBytesTotal"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = ns_docs ->
+                ([`Text], v)]) when ns = GdataAtom.ns_gd ->
             { entry with quotaBytesTotal = Int64.of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "quotaBytesUsed"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = ns_docs ->
+                ([`Text], v)]) when ns = GdataAtom.ns_gd ->
             { entry with quotaBytesUsed = Int64.of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "quotaBytesUsedInTrash"; `Namespace ns],
@@ -579,10 +627,10 @@ struct
                 ([`Text], v)]) when ns = ns_docs ->
             { entry with quotaBytesUsedInTrash = Int64.of_string v }
         | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "largestChangestamp"; `Namespace ns],
+            ([`Element; `Name "domainSharingPolicy"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = ns_docs ->
-            { entry with largestChangestamp = v }
+            { entry with domainSharingPolicy = v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "importFormat"; `Namespace ns],
              cs) when ns = ns_docs ->

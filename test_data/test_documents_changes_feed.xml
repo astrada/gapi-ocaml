@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/"
+    xmlns:docs="http://schemas.google.com/docs/2007" xmlns:gd="http://schemas.google.com/g/2005"
+    xmlns:app="http://www.w3.org/2007/app" gd:etag="W/&quot;DEEMQ3w8eyt7ImA9WhZUGUo.&quot;">
+  <id>https://docs.google.com/feeds/default/private/changes</id>
+  <updated>2011-06-13T14:51:22.000Z</updated>
+  <category scheme="http://schemas.google.com/g/2005#kind"
+      term="http://schemas.google.com/docs/2007#change" label="change"/>
+  <title>Changed Documents - joe.smith@example.com</title>
+
+  <!-- Largest changestamp for the currently authorized user. -->
+  <!-- This value is also given in the Metadata feed. -->
+  <docs:largestChangestamp value="5635"/>
+
+  <!-- Follow this to get the next set of changes. -->
+  <!-- If this is not provided, there are no additional changes at the current time. -->
+  <link rel="next" type="application/atom+xml"
+      href="https://docs.google.com/feeds/default/private/changes?start-index=5636"/>
+
+  <link rel="http://schemas.google.com/g/2005#feed" type="application/atom+xml"
+      href="https://docs.google.com/feeds/default/private/changes"/>
+  <link rel="self" type="application/atom+xml"
+      href="https://docs.google.com/feeds/default/private/changes?start-index=5620"/>
+  <author>
+    <name>joe.smith</name>
+    <email>joe.smith@example.com</email>
+  </author>
+  <openSearch:totalResults>5635</openSearch:totalResults>
+  <openSearch:startIndex>5620</openSearch:startIndex>
+
+  <!-- This change represents a document being permanently deleted. -->
+  <entry gd:etag="W/&quot;DUcMRHg5cCt7ImA9WhZUGUo.&quot;">
+    <id>https://docs.google.com/feeds/id/unknown%3A1H38bELcnXOWXL8eRZYAP4XvfR_EpEu_AJ1GZNJb9-N-4</id>
+    <updated>2011-06-13T14:58:05.628Z</updated>
+
+    <!-- Label representing that this is a change entry. -->
+    <category scheme="http://schemas.google.com/g/2005#kind"
+    term="http://schemas.google.com/docs/2007#change" label="change"/>
+
+    <!-- docs:removed means this is change is a permanent deletion.  Use this to detect deletes. -->
+    <!-- This field does NOT mean this resource was trashed.  To identify trashed resources, use the gd:deleted tag. -->
+    <docs:removed/>
+
+    <!-- Title is unknown because this change is a deletion. -->
+    <title>Unknown</title>
+
+    <!-- Content link is empty because this change is a deletion. -->
+    <content/>
+
+    <link rel="self" type="application/atom+xml"
+        href="https://docs.google.com/feeds/default/private/changes/5623"/>
+
+    <!-- Author is unknown because this change is a deletion. -->
+    <author>
+      <name>Unknown</name>
+    </author>
+
+    <!-- Resource type is unknown because this change is a deletion. -->
+    <gd:resourceId>unknown:1H38bELcnXOWXL8eRZYAP4XvfR_EpEu_AJ1GZNJb9-N-4</gd:resourceId>
+
+    <!-- Unique identifier for this change.  Store this to query again in the future. -->
+    <docs:changestamp value="5623"/>
+  </entry>
+
+  <!-- This change represents a document being permanently deleted. -->
+  <entry gd:etag="W/&quot;DUYEQH85cCt7ImA9WhZUGUo.&quot;">
+    <id>https://docs.google.com/feeds/id/unknown%3A17vRlM9HeTv_V03nxDXXnl9QvY-sL53e4tbiE0-5xD7e4</id>
+    <updated>2011-06-13T14:58:21.128Z</updated>
+    <category scheme="http://schemas.google.com/g/2005#kind"
+        term="http://schemas.google.com/docs/2007#change" label="change"/>
+    <title>Unknown</title>
+    <content/>
+    <link rel="self" type="application/atom+xml"
+        href="https://docs.google.com/feeds/default/private/changes/5630"/>
+    <author>
+      <name>Unknown</name>
+    </author>
+    <gd:resourceId>unknown:17vRlM9HeTv_V03nxDXXnl9QvY-sL53e4tbiE0-5xD7e4</gd:resourceId>
+    <docs:removed/>
+    <docs:changestamp value="5630"/>
+  </entry>
+
+  <!-- This change represents a document being created. -->
+  <entry gd:etag="&quot;BlAIEQdOHCt7ImBr&quot;">
+    <id>https://docs.google.com/feeds/id/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk</id>
+    <published>2011-06-13T15:05:37.544Z</published>
+    <updated>2011-06-13T15:05:38.108Z</updated>
+    <app:edited>2011-06-13T15:05:38.456Z</app:edited>
+    <category scheme="http://schemas.google.com/g/2005#kind"
+        term="http://schemas.google.com/docs/2007#document" label="document"/>
+    <category scheme="http://schemas.google.com/g/2005/labels"
+        term="http://schemas.google.com/g/2005/labels#viewed" label="viewed"/>
+    <title>Meeting Notes</title>
+    <content type="text/html"
+        src="https://docs.google.com/feeds/download/documents/export/Export?id=1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk"/>
+    <link rel="alternate" type="text/html"
+        href="https://docs.google.com/a/example.com/document/d/1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk/edit?hl=en_US"/>
+    <link rel="http://schemas.google.com/g/2005#resumable-edit-media" type="application/atom+xml"
+        href="https://docs.google.com/feeds/upload/create-session/default/private/full/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk"/>
+    <link rel="http://schemas.google.com/docs/2007/thumbnail" type="image/jpeg"
+        href="https://lh5.googleusercontent.com/u7NNUBIcKwb74epx_cb5ff_UoJDo5wm5M9zVRZq33qDfTnJyYo98uvP1CYI6hkEGFzEzG_QwqnLOabNkAg=s220"/>
+    <link rel="edit" type="application/atom+xml"
+        href="https://docs.google.com/feeds/default/private/full/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk"/>
+    <link rel="edit-media" type="text/html"
+        href="https://docs.google.com/feeds/default/media/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk"/>
+    <link rel="self" type="application/atom+xml"
+        href="https://docs.google.com/feeds/default/private/changes/5635"/>
+    <author>
+      <name>joe.smith</name>
+      <email>joe.smith@example.com</email>
+    </author>
+    <gd:resourceId>document:1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk</gd:resourceId>
+    <gd:lastModifiedBy>
+      <name>joe.smith</name>
+      <email>joe.smith@example.com</email>
+    </gd:lastModifiedBy>
+    <gd:lastViewed>2011-06-13T15:05:38.108Z</gd:lastViewed>
+    <gd:quotaBytesUsed>0</gd:quotaBytesUsed>
+    <docs:writersCanInvite value="true"/>
+    <docs:changestamp value="5635"/>
+    <gd:feedLink rel="http://schemas.google.com/acl/2007#accessControlList"
+        href="https://docs.google.com/feeds/default/private/full/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk/acl"/>
+    <gd:feedLink rel="http://schemas.google.com/docs/2007/revisions"
+        href="https://docs.google.com/feeds/default/private/full/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk/revisions"/>
+  </entry>
+
+</feed>
+

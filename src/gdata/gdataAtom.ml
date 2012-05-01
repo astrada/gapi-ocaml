@@ -154,6 +154,17 @@ let render_date_element namespace name value =
     name
     (GapiDate.to_string value)
 
+let render_empty_element namespace name =
+  [GapiCore.AnnotatedTree.Node (
+    [`Element; `Name name; `Namespace namespace],
+    [])]
+
+let render_bool_empty_element namespace name value =
+  if value then
+    render_empty_element namespace name
+  else
+    []
+
 let render_element namespace name children_list =
   let children = List.concat children_list in
     if children <> [] then

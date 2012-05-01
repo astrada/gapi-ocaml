@@ -4,7 +4,7 @@
   xmlns:gd="http://schemas.google.com/g/2005"
   gd:etag="W/&quot;CkcMQH0zcSt7ImA9WhdQF0w.&quot;">
   <id>https://docs.google.com/feeds/metadata/user%40example.com</id>
-  <updated>2011-08-18T23:28:01.389Z</updated>
+  <updated>2011-08-18T23:28:01.000Z</updated>
   <category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/docs/2007#metadata" label="metadata"/>
   <title>Document List User Metadata</title>
   <link rel="self" type="application/atom+xml" href="https://docs.google.com/feeds/metadata/user%40example.com"/>
@@ -12,10 +12,11 @@
     <name>Some User</name>
     <email>user@example.com</email>
   </author>
+  <docs:largestChangestamp value="101019"/>
   <gd:quotaBytesTotal>1073741824</gd:quotaBytesTotal>
   <gd:quotaBytesUsed>17936436</gd:quotaBytesUsed>
-  <docs:quotaBytesUsedInTrash>0</docs:quotaBytesUsedInTrash>
-  <docs:largestChangestamp value="101019"/>
+  <docs:quotaBytesUsedInTrash>1000</docs:quotaBytesUsedInTrash>
+  <docs:domainSharingPolicy>allowed</docs:domainSharingPolicy>
   <docs:importFormat source="application/vnd.openxmlformats-officedocument.presentationml.presentation" target="presentation"/>
   <docs:importFormat source="application/vnd.ms-powerpoint" target="presentation"/>
   <docs:importFormat source="text/tab-separated-values" target="spreadsheet"/>
@@ -75,6 +76,16 @@
     <docs:additionalRoleSet primaryRole="reader">
       <!-- Readers of text document resources are also able to comment on said
       resources if the relevant additionalRole is provided in an ACL entry. -->
+      <gAcl:additionalRole value="commenter"/>
+    </docs:additionalRoleSet>
+  </docs:additionalRoleInfo>
+  <docs:additionalRoleInfo kind="drawing">
+    <docs:additionalRoleSet primaryRole="reader">
+      <gAcl:additionalRole value="commenter"/>
+    </docs:additionalRoleSet>
+  </docs:additionalRoleInfo>
+  <docs:additionalRoleInfo kind="presentation">
+    <docs:additionalRoleSet primaryRole="reader">
       <gAcl:additionalRole value="commenter"/>
     </docs:additionalRoleSet>
   </docs:additionalRoleInfo>
