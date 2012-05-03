@@ -8,9 +8,144 @@ let ns_docs = "http://schemas.google.com/docs/2007"
  * move to GdataExtensions all elements not in atom namespace
  *)
 
+module AclFeedLink = GdataExtensions.MakeFeedLink(GdataACL.Feed)
+
+module Revision =
+struct
+  module Entry =
+  struct
+    type t = {
+      id : GdataAtom.atom_id;
+      updated : GdataAtom.atom_updated;
+      edited : GdataAtom.app_edited;
+      title : GdataAtom.Title.t;
+      content : GdataAtom.Content.t;
+      links : GdataAtom.Link.t list;
+      authors : GdataAtom.Author.t list;
+      publish : bool;
+      publishAuto : bool;
+      publishOutsideDomain : bool;
+      extensions : GdataCore.xml_data_model list
+    }
+
+    let empty = {
+      id = "";
+      updated = GapiDate.epoch;
+      edited = GapiDate.epoch;
+      title = GdataAtom.Title.empty;
+      content = GdataAtom.Content.empty;
+      links = [];
+      authors = [];
+      publish = false;
+      publishAuto = false;
+      publishOutsideDomain = false;
+      extensions = []
+    }
+
+    let to_xml_data_model entry =
+      GdataAtom.render_element GdataAtom.ns_atom "entry"
+        [GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
+         GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
+         GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.edited;
+         GdataAtom.Title.to_xml_data_model entry.title;
+         GdataAtom.Content.to_xml_data_model entry.content;
+         GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
+         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
+         GdataAtom.render_bool_value ns_docs "publish" entry.publish;
+         GdataAtom.render_bool_value ns_docs "publishAuto" entry.publishAuto;
+         GdataAtom.render_bool_value ns_docs "publishOutsideDomain" entry.publishOutsideDomain;
+         entry.extensions]
+
+    let of_xml_data_model entry tree =
+      match tree with
+          GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "id"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
+            { entry with id = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "updated"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
+            { entry with updated = GapiDate.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "edited"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)])
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "edited"; `Namespace ns],
+             [_; GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_app ->
+            (* parse <app:edited xmlns:app="...">...</app:edited> *)
+            { entry with edited = GapiDate.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "title"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_atom ->
+            GdataAtom.parse_children
+              GdataAtom.Title.of_xml_data_model
+              GdataAtom.Title.empty
+              (fun title -> { entry with title })
+              cs
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "content"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_atom ->
+            GdataAtom.parse_children
+              GdataAtom.Content.of_xml_data_model
+              GdataAtom.Content.empty
+              (fun content -> { entry with content })
+              cs
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "link"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_atom ->
+            GdataAtom.parse_children
+              GdataAtom.Link.of_xml_data_model
+              GdataAtom.Link.empty
+              (fun link -> { entry with links = link :: entry.links })
+              cs
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "author"; `Namespace ns],
+             cs) when ns = GdataAtom.ns_atom ->
+            GdataAtom.parse_children
+              GdataAtom.Author.of_xml_data_model
+              GdataAtom.Author.empty
+              (fun author -> { entry with authors = author :: entry.authors })
+              cs
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "publish"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { entry with publish = bool_of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "publishAuto"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { entry with publishAuto = bool_of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "publishOutsideDomain"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { entry with publishOutsideDomain = bool_of_string v }
+        | GapiCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name _; `Namespace ns],
+             _) when ns = Xmlm.ns_xmlns ->
+            entry
+        | extension ->
+            let extensions = extension :: entry.extensions in
+              { entry with extensions }
+
+  end
+
+  module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
+
+end
+
+module RevisionsFeedLink = GdataExtensions.MakeFeedLink(Revision.Feed)
+
 module Document =
 struct
-
   module Entry =
   struct
     type t = {
@@ -28,7 +163,8 @@ struct
       categories : GdataAtom.Category.t list;
       content : GdataAtom.Content.t;
       links : GdataAtom.Link.t list;
-      feedLinks : GdataExtensions.FeedLink.t list;
+      aclFeedLink : AclFeedLink.t;
+      revisionsFeedLink : RevisionsFeedLink.t; 
       quotaBytesUsed : int;
       writersCanInvite : bool;
       md5Checksum : string;
@@ -58,7 +194,8 @@ struct
       categories = [];
       content = GdataAtom.Content.empty;
       links = [];
-      feedLinks = [];
+      aclFeedLink = AclFeedLink.empty;
+      revisionsFeedLink = RevisionsFeedLink.empty;
       quotaBytesUsed = 0;
       writersCanInvite = false;
       md5Checksum = "";
@@ -86,7 +223,8 @@ struct
          GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.categories;
          GdataAtom.Content.to_xml_data_model entry.content;
          GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
-         GdataAtom.render_element_list GdataExtensions.FeedLink.to_xml_data_model entry.feedLinks;
+         AclFeedLink.to_xml_data_model entry.aclFeedLink;
+         RevisionsFeedLink.to_xml_data_model entry.revisionsFeedLink;
          GdataAtom.render_int_element GdataAtom.ns_gd "quotaBytesUsed" entry.quotaBytesUsed;
          GdataAtom.render_bool_value ns_docs "writersCanInvite" entry.writersCanInvite;
          GdataAtom.render_text_element ns_docs "md5Checksum" entry.md5Checksum;
@@ -194,11 +332,25 @@ struct
               cs
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "feedLink"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_gd ->
+             (GapiCore.AnnotatedTree.Leaf
+              ([`Attribute; `Name "rel"; `Namespace ""],
+               "http://schemas.google.com/acl/2007#accessControlList")
+              :: _ as cs)) when ns = GdataAtom.ns_gd ->
             GdataAtom.parse_children
-              GdataExtensions.FeedLink.of_xml_data_model
-              GdataExtensions.FeedLink.empty
-              (fun link -> { entry with feedLinks = link :: entry.feedLinks })
+              AclFeedLink.of_xml_data_model
+              AclFeedLink.empty
+              (fun link -> { entry with aclFeedLink = link })
+              cs
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "feedLink"; `Namespace ns],
+             (GapiCore.AnnotatedTree.Leaf
+              ([`Attribute; `Name "rel"; `Namespace ""],
+               "http://schemas.google.com/docs/2007/revisions")
+              :: _ as cs)) when ns = GdataAtom.ns_gd ->
+            GdataAtom.parse_children
+              RevisionsFeedLink.of_xml_data_model
+              RevisionsFeedLink.empty
+              (fun link -> { entry with revisionsFeedLink = link })
               cs
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "quotaBytesUsed"; `Namespace ns],
@@ -720,12 +872,12 @@ struct
 
 end
 
-let find_url rel feedLinks =
+let find_url rel links =
   let link = List.find
                (fun link ->
-                  link.GdataExtensions.FeedLink.rel = Rel.to_string rel)
-               feedLinks
+                  link.GdataAtom.Link.rel = Rel.to_string rel)
+               links
   in
-    link.GdataExtensions.FeedLink.href
+    link.GdataAtom.Link.href
 (* END Utilities *)
 

@@ -19,6 +19,9 @@ let parse_document_entry =
 let parse_metadata_entry =
   GdataUtils.parse_xml_response Metadata.parse_metadata_entry
 
+let parse_revisions_feed =
+  GdataUtils.parse_xml_response Revision.Feed.parse_feed
+
 let all_documents
       ?(url = "https://docs.google.com/feeds/default/private/full")
       ?etag
@@ -51,4 +54,16 @@ let all_changes
     url
     parse_documents_feed
     session
+
+let get_revisions
+      ?etag
+      entry
+      session =
+  let url = entry.Document.Entry.revisionsFeedLink.RevisionsFeedLink.href in
+    GdataService.query
+      ~version
+      ?etag
+      url
+      parse_revisions_feed
+      session
 
