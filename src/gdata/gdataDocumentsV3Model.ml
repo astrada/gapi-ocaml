@@ -150,6 +150,12 @@ struct
                 ([`Text], v)]) when ns = GdataAtom.ns_app ->
             { entry with edited = GapiDate.of_string v }
         | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "edited"; `Namespace ns],
+             [_; GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_app ->
+            (* parse <app:edited xmlns:app="...">...</app:edited> *)
+            { entry with edited = GapiDate.of_string v }
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "lastModifiedBy"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
             GdataAtom.parse_children
