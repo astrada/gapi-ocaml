@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/"
     xmlns:docs="http://schemas.google.com/docs/2007" xmlns:gd="http://schemas.google.com/g/2005"
-    xmlns:app="http://www.w3.org/2007/app" gd:etag="W/&quot;DEEMQ3w8eyt7ImA9WhZUGUo.&quot;">
+    gd:etag="W/&quot;DEEMQ3w8eyt7ImA9WhZUGUo.&quot;">
   <id>https://docs.google.com/feeds/default/private/changes</id>
   <updated>2011-06-13T14:51:22.000Z</updated>
   <category scheme="http://schemas.google.com/g/2005#kind"
@@ -85,7 +85,7 @@
     <id>https://docs.google.com/feeds/id/document%3A1DJ1Qrt_N41aX1nDxxo0QHs5XIM90zTT-seYG2FYxrRk</id>
     <published>2011-06-13T15:05:37.544Z</published>
     <updated>2011-06-13T15:05:38.108Z</updated>
-    <app:edited>2011-06-13T15:05:38.456Z</app:edited>
+    <app:edited xmlns:app="http://www.w3.org/2007/app">2011-06-13T15:05:38.456Z</app:edited>
     <category scheme="http://schemas.google.com/g/2005#kind"
         term="http://schemas.google.com/docs/2007#document" label="document"/>
     <category scheme="http://schemas.google.com/g/2005/labels"

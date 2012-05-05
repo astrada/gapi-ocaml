@@ -31,7 +31,7 @@ let test_parse_changes_feed () =
       "test_data/test_parse_changes_feed.xml"
       (GdataUtils.data_to_xml_string tree);
     assert_equal
-      "5635"
+      5635
       (Document.get_largest_changestamp feed)
 
 let test_parse_revisions_feed () =

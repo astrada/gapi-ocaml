@@ -52,9 +52,9 @@ let test_get_remaining_changestamps () =
        let (entry, session) = get_user_metadata
                                 ~url:"https://docs.google.com/feeds/metadata/default?remaining-changestamps-first=1&remaining-changestamps-limit=100"
                                 session in
-         TestHelper.assert_not_empty
-           "docs:remainingChangestamps should not be empty"
-           entry.Metadata.Entry.remainingChangestamps;
+         assert_bool
+           "docs:remainingChangestamps should be greater than 0"
+           (entry.Metadata.Entry.remainingChangestamps > 0);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)
@@ -94,9 +94,9 @@ let suite = "Documents List v3 Service test" >:::
   [(*"test_all_documents" >:: test_all_documents;
    "test_resumable_upload" >:: test_resumable_upload;
    "test_get_user_metadata" >:: test_get_user_metadata;
-   "test_get_remaining_changestamps" >:: test_get_remaining_changestamps;
-   "test_all_changes" >:: test_all_changes;*)
-   "test_get_revisions" >:: test_get_revisions;
+   "test_get_remaining_changestamps" >:: test_get_remaining_changestamps;*)
+   "test_all_changes" >:: test_all_changes;
+   (*"test_get_revisions" >:: test_get_revisions;*)
 
   ]
 

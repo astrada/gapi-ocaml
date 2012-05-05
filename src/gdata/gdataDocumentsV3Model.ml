@@ -3,11 +3,6 @@ open GapiUtils.Infix
 (* Document data types *)
 let ns_docs = "http://schemas.google.com/docs/2007"
 
-(* TODO:
- * fix GdataExtensions.FeedLink
- * move to GdataExtensions all elements not in atom namespace
- *)
-
 module AclFeedLink = GdataExtensions.MakeFeedLink(GdataACL.Feed)
 
 module Revision =
@@ -25,7 +20,7 @@ struct
       publish : bool;
       publishAuto : bool;
       publishOutsideDomain : bool;
-      extensions : GdataCore.xml_data_model list
+      extensions : GdataAtom.GenericExtensions.t
     }
 
     let empty = {
@@ -39,7 +34,7 @@ struct
       publish = false;
       publishAuto = false;
       publishOutsideDomain = false;
-      extensions = []
+      extensions = GdataAtom.GenericExtensions.empty
     }
 
     let to_xml_data_model entry =
@@ -54,7 +49,7 @@ struct
          GdataAtom.render_bool_value ns_docs "publish" entry.publish;
          GdataAtom.render_bool_value ns_docs "publishAuto" entry.publishAuto;
          GdataAtom.render_bool_value ns_docs "publishOutsideDomain" entry.publishOutsideDomain;
-         entry.extensions]
+         GdataAtom.GenericExtensions.to_xml_data_model entry.extensions]
 
     let of_xml_data_model entry tree =
       match tree with
@@ -133,7 +128,11 @@ struct
              _) when ns = Xmlm.ns_xmlns ->
             entry
         | extension ->
-            let extensions = extension :: entry.extensions in
+            let extensions =
+              GdataAtom.GenericExtensions.of_xml_data_model
+                entry.extensions
+                extension
+            in
               { entry with extensions }
 
   end
@@ -175,9 +174,9 @@ struct
       (* change entry data *)
       deleted : bool;
       removed : bool;
-      changestamp : string;
+      changestamp : int;
 
-      extensions : GdataCore.xml_data_model list
+      extensions : GdataAtom.GenericExtensions.t 
     }
 
     let empty = {
@@ -204,8 +203,8 @@ struct
       suggestedFilename = "";
       removed = false;
       deleted = false;
-      changestamp = "";
-      extensions = []
+      changestamp = 0;
+      extensions = GdataAtom.GenericExtensions.empty
     }
 
     let to_xml_data_model entry =
@@ -233,8 +232,8 @@ struct
          GdataAtom.render_text_element ns_docs "suggestedFilename" entry.suggestedFilename;
          GdataAtom.render_bool_empty_element ns_docs "removed" entry.removed;
          GdataAtom.render_bool_empty_element ns_docs "deleted" entry.deleted;
-         GdataAtom.render_value ns_docs "changestamp" entry.changestamp;
-         entry.extensions]
+         GdataAtom.render_int_value ns_docs "changestamp" entry.changestamp;
+         GdataAtom.GenericExtensions.to_xml_data_model entry.extensions]
 
     let of_xml_data_model entry tree =
       match tree with
@@ -392,13 +391,17 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Attribute; `Name "value"; `Namespace ""],
                  v)]) when ns = ns_docs ->
-            { entry with changestamp = v }
+            { entry with changestamp = int_of_string v }
         | GapiCore.AnnotatedTree.Leaf
             ([`Attribute; `Name _; `Namespace ns],
              _) when ns = Xmlm.ns_xmlns ->
             entry
         | extension ->
-            let extensions = extension :: entry.extensions in
+            let extensions =
+              GdataAtom.GenericExtensions.of_xml_data_model
+                entry.extensions
+                extension
+            in
               { entry with extensions }
 
   end
@@ -406,29 +409,58 @@ struct
   module DocumentFeedExtensions =
   struct
     type t = {
-      largestChangestamp : string;
-      extensions : GdataCore.xml_data_model list;
+      quotaBytesTotal : int64;
+      quotaBytesUsed : int64;
+      quotaBytesUsedInTrash : int64;
+      largestChangestamp : int;
+      extensions : GdataAtom.GenericExtensions.t;
     }
 
     let empty = {
-      largestChangestamp = "";
-      extensions = [];
+      quotaBytesTotal = 0L;
+      quotaBytesUsed = 0L;
+      quotaBytesUsedInTrash = 0L;
+      largestChangestamp = 0;
+      extensions = GdataAtom.GenericExtensions.empty;
     }
 
     let to_xml_data_model ext =
-      GdataAtom.render_value ns_docs "largestChangestamp" ext.largestChangestamp @
-       ext.extensions
+      List.concat
+        [GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesTotal" ext.quotaBytesTotal;
+         GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesUsed" ext.quotaBytesUsed;
+         GdataAtom.render_int64_element ns_docs "quotaBytesUsedInTrash" ext.quotaBytesUsedInTrash;
+         GdataAtom.render_int_value ns_docs "largestChangestamp" ext.largestChangestamp;
+         GdataAtom.GenericExtensions.to_xml_data_model ext.extensions]
 
     let of_xml_data_model ext tree =
       match tree with
           GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "quotaBytesTotal"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_gd ->
+            { ext with quotaBytesTotal = Int64.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "quotaBytesUsed"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_gd ->
+            { ext with quotaBytesUsed = Int64.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "quotaBytesUsedInTrash"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { ext with quotaBytesUsedInTrash = Int64.of_string v }
+        | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "largestChangestamp"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
                 ([`Attribute; `Name "value"; `Namespace ""],
                  v)]) when ns = ns_docs ->
-            { ext with largestChangestamp = v }
+            { ext with largestChangestamp = int_of_string v }
         | extension ->
-            let extensions = extension :: ext.extensions in
+            let extensions =
+              GdataAtom.GenericExtensions.of_xml_data_model
+                ext.extensions
+                extension
+            in
               { ext with extensions }
 
   end
@@ -671,8 +703,8 @@ struct
       title : GdataAtom.Title.t;
       links : GdataAtom.Link.t list;
       authors : GdataAtom.Author.t list;
-      largestChangestamp : string;
-      remainingChangestamps : string;
+      largestChangestamp : int;
+      remainingChangestamps : int;
       quotaBytesTotal : int64;
       quotaBytesUsed : int64;
       quotaBytesUsedInTrash : int64;
@@ -682,7 +714,7 @@ struct
       features : Feature.t list;
       maxUploadSizes : MaxUploadSize.t list;
       additionalRoleInfos : AdditionalRoleInfo.t list;
-      extensions : GdataCore.xml_data_model list
+      extensions : GdataAtom.GenericExtensions.t
     }
 
     let empty = {
@@ -693,8 +725,8 @@ struct
       title = GdataAtom.Title.empty;
       links = [];
       authors = [];
-      largestChangestamp = "";
-      remainingChangestamps = "";
+      largestChangestamp = 0;
+      remainingChangestamps = 0;
       quotaBytesTotal = 0L;
       quotaBytesUsed = 0L;
       quotaBytesUsedInTrash = 0L;
@@ -704,7 +736,7 @@ struct
       features = [];
       maxUploadSizes = [];
       additionalRoleInfos = [];
-      extensions = []
+      extensions = GdataAtom.GenericExtensions.empty
     }
 
     let to_xml_data_model entry =
@@ -716,8 +748,8 @@ struct
          GdataAtom.Title.to_xml_data_model entry.title;
          GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
          GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
-         GdataAtom.render_text_element ns_docs "largestChangestamp" entry.largestChangestamp;
-         GdataAtom.render_text_element ns_docs "remainingChangestamps" entry.remainingChangestamps;
+         GdataAtom.render_int_element ns_docs "largestChangestamp" entry.largestChangestamp;
+         GdataAtom.render_int_element ns_docs "remainingChangestamps" entry.remainingChangestamps;
          GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesTotal" entry.quotaBytesTotal;
          GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesUsed" entry.quotaBytesUsed;
          GdataAtom.render_int64_element ns_docs "quotaBytesUsedInTrash" entry.quotaBytesUsedInTrash;
@@ -727,7 +759,7 @@ struct
          GdataAtom.render_element_list Feature.to_xml_data_model entry.features;
          GdataAtom.render_element_list MaxUploadSize.to_xml_data_model entry.maxUploadSizes;
          GdataAtom.render_element_list AdditionalRoleInfo.to_xml_data_model entry.additionalRoleInfos;
-         entry.extensions]
+         GdataAtom.GenericExtensions.to_xml_data_model entry.extensions]
 
     let of_xml_data_model entry tree =
       match tree with
@@ -782,13 +814,13 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Attribute; `Name "value"; `Namespace ""],
                  v)]) when ns = ns_docs ->
-            { entry with largestChangestamp = v }
+            { entry with largestChangestamp = int_of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "remainingChangestamps"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
                 ([`Attribute; `Name "value"; `Namespace ""],
                  v)]) when ns = ns_docs ->
-            { entry with remainingChangestamps = v }
+            { entry with remainingChangestamps = int_of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "quotaBytesTotal"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
@@ -854,7 +886,11 @@ struct
              _) when ns = Xmlm.ns_xmlns ->
             entry
         | extension ->
-            let extensions = extension :: entry.extensions in
+            let extensions =
+              GdataAtom.GenericExtensions.of_xml_data_model
+                entry.extensions
+                extension
+            in
               { entry with extensions }
 
   end
