@@ -373,8 +373,8 @@ struct
     GdataAtom.render_element GdataAtom.ns_atom "entry"
       [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.etag;
        GdataAtom.render_attribute GdataAtom.ns_gd "kind" entry.kind;
-       GdataAtom.render_text_element GdataAtom.ns_batch "id" entry.batch_id;
-       GdataAtom.render_text_element GdataAtom.ns_batch "operation" (GdataBatch.Operation.to_string entry.batch_operation);
+       GdataAtom.render_text_element GdataExtensions.ns_batch "id" entry.batch_id;
+       GdataAtom.render_text_element GdataExtensions.ns_batch "operation" (GdataBatch.Operation.to_string entry.batch_operation);
        GdataBatch.Status.to_xml_data_model entry.batch_status;
        GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
        GdataAtom.Content.to_xml_data_model entry.content;
@@ -422,16 +422,16 @@ struct
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "id"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
-              ([`Text], v)]) when ns = GdataAtom.ns_batch ->
+              ([`Text], v)]) when ns = GdataExtensions.ns_batch ->
           { entry with batch_id = v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "operation"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
-              ([`Text], v)]) when ns = GdataAtom.ns_batch ->
+              ([`Text], v)]) when ns = GdataExtensions.ns_batch ->
           { entry with batch_operation = GdataBatch.Operation.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "status"; `Namespace ns],
-           cs) when ns = GdataAtom.ns_batch ->
+           cs) when ns = GdataExtensions.ns_batch ->
           GdataAtom.parse_children
             GdataBatch.Status.of_xml_data_model
             GdataBatch.Status.empty
@@ -665,7 +665,8 @@ struct
 
 end
 
-module Feed = GdataAtom.MakeFeed(Entry)(GdataCalendar.Link)
+module Feed =
+  GdataAtom.MakeFeed(Entry)(GdataCalendar.Link)(GdataAtom.GenericExtensions)
 (* END Calendar event data types *)
 
 

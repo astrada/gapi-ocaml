@@ -720,7 +720,8 @@ struct
 
 end
 
-module Feed = GdataAtom.MakeFeed(Entry)(Link)
+module Feed =
+  GdataAtom.MakeFeed(Entry)(Link)(GdataAtom.GenericExtensions)
 
 module Comments = GdataComments.Make(Link)
 (* END Calendar data types *)

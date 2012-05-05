@@ -17,7 +17,6 @@ val ns_atom : string
 val ns_app : string
 val ns_openSearch : string
 val ns_gd : string
-val ns_batch : string
 
 type atom_email = string
 
@@ -272,13 +271,13 @@ sig
 
 end
 
-module LastModifiedBy : PersonConstruct
-
 module type Feed =
 sig
   type entry_t
 
   type link_t
+
+  type extensions_t
 
   type t = {
     etag : string;
@@ -299,7 +298,7 @@ sig
     totalResults : opensearch_totalResults;
     itemsPerPage : opensearch_itemsPerPage;
     startIndex : opensearch_startIndex;
-    extensions : GdataCore.xml_data_model list
+    extensions : extensions_t;
   }
 
   val empty : t
@@ -315,10 +314,23 @@ end
 module MakeFeed :
   functor (Entry : AtomData) ->
   functor (Link : AtomData) ->
+  functor (Extensions : AtomData) ->
   Feed
     with type entry_t = Entry.t
       and type link_t = Link.t
+      and type extensions_t = Extensions.t
 
+module GenericExtensions :
+sig
+  type t = GdataCore.xml_data_model list
+
+  val empty : t
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+end
 
 module Rel :
 sig
@@ -326,12 +338,7 @@ sig
     [ `Self
     | `Alternate
     | `Edit
-    | `EditMedia
-    | `Feed
-    | `Post
-    | `Batch
-    | `ResumableCreateMedia
-    | `ResumableEditMedia ]
+    | `EditMedia ]
 
   val to_string : [> t] -> string
 

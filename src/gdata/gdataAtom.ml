@@ -17,7 +17,6 @@ let ns_atom = "http://www.w3.org/2005/Atom"
 let ns_app = "http://www.w3.org/2007/app"
 let ns_openSearch = "http://a9.com/-/spec/opensearch/1.1/"
 let ns_gd = "http://schemas.google.com/g/2005"
-let ns_batch = "http://schemas.google.com/gdata/batch"
 
 type atom_email = string
 
@@ -492,17 +491,13 @@ struct
 
 end
 
-module LastModifiedBy =
-  MakePersonConstruct(struct
-                        let element_ns = ns_gd
-                        let element_name = "lastModifiedBy"
-                      end)
-
 module type Feed =
 sig
   type entry_t
 
   type link_t
+
+  type extensions_t
 
   type t = {
     etag : string;
@@ -523,7 +518,7 @@ sig
     totalResults : opensearch_totalResults;
     itemsPerPage : opensearch_itemsPerPage;
     startIndex : opensearch_startIndex;
-    extensions : GdataCore.xml_data_model list
+    extensions : extensions_t;
   }
 
   val empty : t
@@ -538,11 +533,14 @@ end
 
 module MakeFeed
   (Entry : AtomData)
-  (Link : AtomData) =
+  (Link : AtomData)
+  (Extensions : AtomData) =
 struct
   type entry_t = Entry.t
 
   type link_t = Link.t
+
+  type extensions_t = Extensions.t
 
   type t = {
     etag : string;
@@ -563,7 +561,7 @@ struct
     totalResults : opensearch_totalResults;
     itemsPerPage : opensearch_itemsPerPage;
     startIndex : opensearch_startIndex;
-    extensions : GdataCore.xml_data_model list
+    extensions : extensions_t;
   }
 
   let empty = {
@@ -585,7 +583,7 @@ struct
     totalResults = 0;
     itemsPerPage = 0;
     startIndex = 0;
-    extensions = []
+    extensions = Extensions.empty;
   }
 
   let of_xml_data_model feed tree =
@@ -711,7 +709,11 @@ struct
            _) when ns = Xmlm.ns_xmlns ->
           feed
       | extension ->
-          let extensions = extension :: feed.extensions in
+          let extensions =
+            Extensions.of_xml_data_model
+              feed.extensions
+              extension
+          in
             { feed with extensions }
 
   let to_xml_data_model feed =
@@ -734,7 +736,7 @@ struct
        render_int_element ns_openSearch "totalResults" feed.totalResults;
        render_int_element ns_openSearch "itemsPerPage" feed.itemsPerPage;
        render_int_element ns_openSearch "startIndex" feed.startIndex;
-       feed.extensions]
+       Extensions.to_xml_data_model feed.extensions]
 
   let parse_feed tree =
     let parse_root tree =
@@ -753,6 +755,18 @@ struct
       parse_root tree
 
 end
+
+module GenericExtensions =
+struct
+  type t = GdataCore.xml_data_model list
+
+  let empty = []
+
+  let of_xml_data_model extensions tree = tree :: extensions
+
+  let to_xml_data_model = Std.identity
+
+end
 (* END Atom complex types *)
 
 (* Utilities *)
@@ -762,12 +776,7 @@ struct
     [ `Self
     | `Alternate
     | `Edit
-    | `EditMedia
-    | `Feed
-    | `Post
-    | `Batch
-    | `ResumableCreateMedia
-    | `ResumableEditMedia ]
+    | `EditMedia ]
 
   let to_string l  =
     match l with
@@ -775,11 +784,6 @@ struct
       | `Alternate -> "alternate"
       | `Edit -> "edit"
       | `EditMedia -> "edit-media"
-      | `Feed -> ns_gd ^ "#feed"
-      | `Post -> ns_gd ^ "#post"
-      | `Batch -> ns_gd ^ "#batch"
-      | `ResumableCreateMedia -> ns_gd ^ "#resumable-create-media"
-      | `ResumableEditMedia -> ns_gd ^ "#resumable-edit-media"
       | _ -> failwith "BUG: Unexpected Rel value (GdataAtom)"
 
 end
@@ -801,8 +805,6 @@ let get_standard_prefix namespace =
   if namespace = ns_atom then "xmlns"
   else if namespace = ns_app then "app"
   else if namespace = ns_openSearch then "openSearch"
-  else if namespace = ns_gd then "gd"
-  else if namespace = ns_batch then "batch"
   else ""
 (* END Utilities *)
 

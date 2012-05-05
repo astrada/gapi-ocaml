@@ -59,7 +59,7 @@ module Rel :
 sig
   type t =
     [ `Acl
-    | GdataAtom.Rel.t ]
+    | GdataExtensions.Rel.t ]
 
   val to_string : [> t] -> string
 

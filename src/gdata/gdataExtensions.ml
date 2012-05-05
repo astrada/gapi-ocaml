@@ -1,6 +1,14 @@
 open GapiUtils.Infix
 open GdataAtom
 
+let ns_batch = "http://schemas.google.com/gdata/batch"
+
+module LastModifiedBy =
+  GdataAtom.MakePersonConstruct(struct
+                                  let element_ns = GdataAtom.ns_gd
+                                  let element_name = "lastModifiedBy"
+                                end)
+
 module type FeedLink =
 sig
   type feed_t
@@ -43,7 +51,7 @@ struct
   }
 
   let to_xml_data_model link =
-    render_element ns_gd "feedLink"
+    render_element GdataAtom.ns_gd "feedLink"
       [render_int_attribute "" "countHint" link.countHint;
        render_attribute "" "href" link.href;
        render_bool_attribute "" "readOnly" link.readOnly;
@@ -80,4 +88,31 @@ struct
           GdataUtils.unexpected e
 
 end
+
+module Rel =
+struct
+  type t =
+    [ `Feed
+    | `Post
+    | `Batch
+    | `ResumableCreateMedia
+    | `ResumableEditMedia
+    | GdataAtom.Rel.t ]
+
+  let to_string l  =
+    match l with
+        `Feed -> GdataAtom.ns_gd ^ "#feed"
+      | `Post -> GdataAtom.ns_gd ^ "#post"
+      | `Batch -> GdataAtom.ns_gd ^ "#batch"
+      | `ResumableCreateMedia -> GdataAtom.ns_gd ^ "#resumable-create-media"
+      | `ResumableEditMedia -> GdataAtom.ns_gd ^ "#resumable-edit-media"
+      | #GdataAtom.Rel.t -> GdataAtom.Rel.to_string l
+      | _ -> failwith "BUG: Unexpected Rel value (GdataExtensions)"
+
+end
+
+let get_extensions_prefix namespace =
+  if namespace = GdataAtom.ns_gd then "gd"
+  else if namespace = ns_batch then "batch"
+  else GdataAtom.get_standard_prefix namespace
 

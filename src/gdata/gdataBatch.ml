@@ -43,7 +43,7 @@ struct
   }
 
   let to_xml_data_model status =
-    GdataAtom.render_element GdataAtom.ns_batch "status"
+    GdataAtom.render_element GdataExtensions.ns_batch "status"
       [GdataAtom.render_int_attribute "" "code" status.code;
        GdataAtom.render_attribute "" "reason" status.reason;
        GdataAtom.render_attribute "" "content-type" status.content_type;

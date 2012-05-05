@@ -138,7 +138,8 @@ struct
 
   end
 
-  module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
+  module Feed =
+    GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(GdataAtom.GenericExtensions)
 
 end
 
@@ -158,7 +159,7 @@ struct
       authors : GdataAtom.Author.t list;
       updated : GdataAtom.atom_updated;
       edited : GdataAtom.app_edited;
-      lastModifiedBy : GdataAtom.LastModifiedBy.t;
+      lastModifiedBy : GdataExtensions.LastModifiedBy.t;
       lastViewed : GapiDate.t;
       categories : GdataAtom.Category.t list;
       content : GdataAtom.Content.t;
@@ -189,7 +190,7 @@ struct
       authors = [];
       updated = GapiDate.epoch;
       edited = GapiDate.epoch;
-      lastModifiedBy = GdataAtom.LastModifiedBy.empty;
+      lastModifiedBy = GdataExtensions.LastModifiedBy.empty;
       lastViewed = GapiDate.epoch;
       categories = [];
       content = GdataAtom.Content.empty;
@@ -218,7 +219,7 @@ struct
          GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
          GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
          GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.edited;
-         GdataAtom.LastModifiedBy.to_xml_data_model entry.lastModifiedBy;
+         GdataExtensions.LastModifiedBy.to_xml_data_model entry.lastModifiedBy;
          GdataAtom.render_date_element GdataAtom.ns_gd "lastViewed" entry.lastViewed;
          GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.categories;
          GdataAtom.Content.to_xml_data_model entry.content;
@@ -297,8 +298,8 @@ struct
             ([`Element; `Name "lastModifiedBy"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
             GdataAtom.parse_children
-              GdataAtom.LastModifiedBy.of_xml_data_model
-              GdataAtom.LastModifiedBy.empty
+              GdataExtensions.LastModifiedBy.of_xml_data_model
+              GdataExtensions.LastModifiedBy.empty
               (fun lastModifiedBy -> { entry with lastModifiedBy })
               cs
         | GapiCore.AnnotatedTree.Node
@@ -402,22 +403,41 @@ struct
 
   end
 
-  module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
+  module DocumentFeedExtensions =
+  struct
+    type t = {
+      largestChangestamp : string;
+      extensions : GdataCore.xml_data_model list;
+    }
+
+    let empty = {
+      largestChangestamp = "";
+      extensions = [];
+    }
+
+    let to_xml_data_model ext =
+      GdataAtom.render_value ns_docs "largestChangestamp" ext.largestChangestamp @
+       ext.extensions
+
+    let of_xml_data_model ext tree =
+      match tree with
+          GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "largestChangestamp"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Attribute; `Name "value"; `Namespace ""],
+                 v)]) when ns = ns_docs ->
+            { ext with largestChangestamp = v }
+        | extension ->
+            let extensions = extension :: ext.extensions in
+              { ext with extensions }
+
+  end
+
+  module Feed =
+    GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(DocumentFeedExtensions)
 
   let get_largest_changestamp feed =
-    List.fold_left
-      (fun r e ->
-         match e with
-           | GapiCore.AnnotatedTree.Node
-               ([`Element; `Name "largestChangestamp"; `Namespace ns],
-                [GapiCore.AnnotatedTree.Leaf
-                   ([`Attribute; `Name "value"; `Namespace ""],
-                    v)]) when ns = ns_docs ->
-               v
-           | _ -> r
-      )
-      ""
-      feed.Feed.extensions
+    feed.Feed.extensions.DocumentFeedExtensions.largestChangestamp
 
   let get_documents_prefix namespace =
     if namespace = ns_docs then "docs"

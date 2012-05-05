@@ -191,7 +191,7 @@ end
 
 let get_acl_prefix namespace =
   if namespace = ns_gAcl then "gAcl"
-  else GdataAtom.get_standard_prefix namespace
+  else GdataExtensions.get_extensions_prefix namespace
 
 let parse_acl_entry =
   GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
@@ -199,19 +199,20 @@ let parse_acl_entry =
 let acl_entry_to_data_model =
   GdataAtom.element_to_data_model get_acl_prefix Entry.to_xml_data_model
 
-module Feed = GdataAtom.MakeFeed(Entry)(GdataAtom.Link)
+module Feed =
+  GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(GdataAtom.GenericExtensions)
 
 (* Utilities *)
 module Rel =
 struct
   type t =
     [ `Acl
-    | GdataAtom.Rel.t ]
+    | GdataExtensions.Rel.t ]
 
   let to_string l  =
     match l with
         `Acl -> ns_gAcl ^ "#accessControlList"
-      | #GdataAtom.Rel.t -> GdataAtom.Rel.to_string l
+      | #GdataExtensions.Rel.t -> GdataExtensions.Rel.to_string l
       | _ -> failwith "BUG: Unexpected Rel value (GdataACL)"
 
 end

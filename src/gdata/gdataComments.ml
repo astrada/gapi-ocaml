@@ -203,7 +203,8 @@ struct
 
   end
 
-  module Feed = GdataAtom.MakeFeed(Entry)(Link)
+  module Feed =
+    GdataAtom.MakeFeed(Entry)(Link)(GdataAtom.GenericExtensions)
 
   type t = {
     countHint : int;
