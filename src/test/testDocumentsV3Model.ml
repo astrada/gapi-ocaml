@@ -44,10 +44,21 @@ let test_parse_revisions_feed () =
       "test_data/test_parse_revisions_feed.xml"
       (GdataUtils.data_to_xml_string tree)
 
+let test_parse_acl_feed () =
+  let ch = open_in "test_data/test_documents_acl_feed.xml" in
+  let feed = GdataUtils.parse_xml
+                (fun () -> input_byte ch)
+                GdataACL.Feed.parse_feed in
+  let tree = GdataACL.acl_feed_to_data_model feed in
+    TestHelper.assert_equal_file
+      "test_data/test_parse_acl_feed.xml"
+      (GdataUtils.data_to_xml_string tree)
+
 let suite = "Documents List v3 Model test" >:::
   ["test_parse_documents_feed" >:: test_parse_documents_feed;
    "test_parse_user_metadata_entry" >:: test_parse_user_metadata_entry;
    "test_parse_changes_feed" >:: test_parse_changes_feed;
    "test_parse_revisions_feed" >:: test_parse_revisions_feed;
+   "test_parse_acl_feed" >:: test_parse_acl_feed;
   ]
 

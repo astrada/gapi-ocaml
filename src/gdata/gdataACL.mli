@@ -3,6 +3,21 @@
 
 val ns_gAcl : string
 
+module RoleWithKey :
+sig
+  type t = {
+    key : string;
+    role : string
+  }
+
+  val empty : t
+
+  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+
+  val to_xml_data_model : t -> GdataCore.xml_data_model list
+
+end
+
 module Scope :
 sig
   type t = {
@@ -17,8 +32,6 @@ sig
   val to_xml_data_model : t -> GdataCore.xml_data_model list
 
 end
-
-type acl_role = string
 
 module Entry :
 sig
@@ -36,7 +49,9 @@ sig
     links : GdataAtom.Link.t list;
     title : GdataAtom.Title.t;
     scope : Scope.t;
-    role : acl_role
+    role : string;
+    additionalRole : string;
+    withKey : RoleWithKey.t;
   }
 
   val empty : t
@@ -54,6 +69,8 @@ val acl_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
 module Feed : GdataAtom.Feed
   with type entry_t = Entry.t
     and type link_t = GdataAtom.Link.t
+
+val acl_feed_to_data_model : Feed.t -> GdataCore.xml_data_model
 
 module Rel :
 sig

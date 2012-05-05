@@ -2,6 +2,40 @@ open GapiUtils.Infix
 
 let ns_gAcl = "http://schemas.google.com/acl/2007"
 
+module RoleWithKey =
+struct
+  type t = {
+    key : string;
+    role : string;
+  }
+
+  let empty = {
+    key = "";
+    role = "";
+  }
+
+  let to_xml_data_model role =
+    GdataAtom.render_element ns_gAcl "withKey"
+      [GdataAtom.render_attribute "" "key" role.key;
+       GdataAtom.render_value "" "role" role.role]
+
+  let of_xml_data_model role tree =
+    match tree with
+        GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "key"; `Namespace ns],
+           v) when ns = "" ->
+          { role with key = v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "role"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Attribute; `Name "value"; `Namespace ""],
+               v)]) when ns = ns_gAcl ->
+          { role with role = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
+
 module Scope =
 struct
   type t = {
@@ -34,8 +68,6 @@ struct
 
 end
 
-type acl_role = string
-
 module Entry =
 struct
   type t = {
@@ -52,7 +84,9 @@ struct
     links : GdataAtom.Link.t list;
     title : GdataAtom.Title.t;
     scope : Scope.t;
-    role : acl_role
+    role : string;
+    additionalRole : string;
+    withKey : RoleWithKey.t;
   }
 
   let empty = {
@@ -69,7 +103,9 @@ struct
     links = [];
     title = GdataAtom.Title.empty;
     scope = Scope.empty;
-    role = ""
+    role = "";
+    additionalRole = "";
+    withKey = RoleWithKey.empty;
   }
 
   let to_xml_data_model entry =
@@ -83,9 +119,11 @@ struct
        GdataAtom.Content.to_xml_data_model entry.content;
        GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
        GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
-       GdataAtom.render_value ns_gAcl "role" entry.role;
+       GdataAtom.Title.to_xml_data_model entry.title;
        Scope.to_xml_data_model entry.scope;
-       GdataAtom.Title.to_xml_data_model entry.title]
+       GdataAtom.render_value ns_gAcl "role" entry.role;
+       GdataAtom.render_value ns_gAcl "additionalRole" entry.additionalRole;
+       RoleWithKey.to_xml_data_model entry.withKey]
 
   let of_xml_data_model entry tree =
     match tree with
@@ -151,6 +189,12 @@ struct
               ([`Text], v)]) when ns = GdataAtom.ns_app ->
           { entry with edited = GapiDate.of_string v }
       | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "edited"; `Namespace ns],
+           [_; GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = GdataAtom.ns_app ->
+          (* parse <app:edited xmlns:app="...">...</app:edited> *)
+          { entry with edited = GapiDate.of_string v }
+      | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "link"; `Namespace ns],
            cs) when ns = GdataAtom.ns_atom ->
           GdataAtom.parse_children
@@ -180,6 +224,20 @@ struct
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = ns_gAcl ->
           { entry with role = v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "additionalRole"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Attribute; `Name "value"; `Namespace ""],
+               v)]) when ns = ns_gAcl ->
+          { entry with additionalRole = v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "withKey"; `Namespace ns],
+           cs) when ns = ns_gAcl ->
+          GdataAtom.parse_children
+            RoleWithKey.of_xml_data_model
+            RoleWithKey.empty
+            (fun withKey -> { entry with withKey })
+            cs
       | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
@@ -201,6 +259,9 @@ let acl_entry_to_data_model =
 
 module Feed =
   GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(GdataAtom.GenericExtensions)
+
+let acl_feed_to_data_model =
+  GdataAtom.element_to_data_model get_acl_prefix Feed.to_xml_data_model
 
 (* Utilities *)
 module Rel =

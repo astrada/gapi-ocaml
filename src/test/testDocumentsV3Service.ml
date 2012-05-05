@@ -90,13 +90,32 @@ let test_get_revisions () =
                session.GapiConversation.Session.etag
          with Not_found -> ())
 
+let test_get_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (feed, session) = all_documents session in
+         try
+           let entry = List.find
+                         (fun e ->
+                            e.Document.Entry.aclFeedLink.AclFeedLink.href <> "")
+                         feed.Document.Feed.entries in
+           let (acl, session) = get_acl entry session in
+             assert_equal
+               "Document Permissions"
+               acl.GdataACL.Feed.title.GdataAtom.Title.value;
+             TestHelper.assert_not_empty
+               "ETag should not be empty"
+               session.GapiConversation.Session.etag
+         with Not_found -> ())
+
 let suite = "Documents List v3 Service test" >:::
   [(*"test_all_documents" >:: test_all_documents;
    "test_resumable_upload" >:: test_resumable_upload;
    "test_get_user_metadata" >:: test_get_user_metadata;
-   "test_get_remaining_changestamps" >:: test_get_remaining_changestamps;*)
+   "test_get_remaining_changestamps" >:: test_get_remaining_changestamps;
    "test_all_changes" >:: test_all_changes;
-   (*"test_get_revisions" >:: test_get_revisions;*)
-
+   "test_get_revisions" >:: test_get_revisions;*)
+   "test_get_acl" >:: test_get_acl;
   ]
 
