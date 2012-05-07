@@ -229,11 +229,8 @@ struct
 end
 
 let find_url rel links =
-  let link = List.find
-               (fun link ->
-                  link.GdataAtom.Link.rel = Rel.to_string rel)
-               links
-  in
-    link.GdataAtom.Link.href
+  GdataAtom.find_url_generic
+    (module Rel : GdataAtom.LinkRelation with type t = Rel.t) rel links
+
 (* END Utilities *)
 

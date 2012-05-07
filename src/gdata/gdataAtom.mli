@@ -377,6 +377,17 @@ end
 module GenericExtensions :
   AtomData with type t = GdataCore.xml_data_model list
 
+module type LinkRelation =
+sig
+  type t
+
+  val to_string : t -> string
+
+end
+
+val find_url_generic :
+  (module LinkRelation with type t = 'a) -> 'a -> Link.t list -> string
+
 module Rel :
 sig
   type t =

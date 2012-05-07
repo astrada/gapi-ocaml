@@ -1122,6 +1122,28 @@ struct
 end
 
 (* Utilities *)
+module type LinkRelation =
+sig
+  type t
+
+  val to_string : t -> string
+
+end
+
+let find_url_generic (type s) rel_module rel links =
+  let module LinkRel = (val rel_module : LinkRelation with type t = s) in
+  let rel_string = LinkRel.to_string rel in
+  let link =
+    try
+      List.find
+        (fun link ->
+           link.Link.rel = rel_string)
+        links
+    with Not_found ->
+      failwith ("Link relation " ^ rel_string ^ " not found")
+  in
+    link.Link.href
+
 module Rel =
 struct
   type t =
@@ -1141,17 +1163,7 @@ struct
 end
 
 let find_url rel links =
-  let rel_string = Rel.to_string rel in
-  let link =
-    try
-      List.find
-        (fun link ->
-           link.Link.rel = rel_string)
-        links
-    with Not_found ->
-      failwith ("Link relation " ^ rel_string ^ " not found")
-  in
-    link.Link.href
+  find_url_generic (module Rel : LinkRelation with type t = Rel.t) rel links
 
 let get_standard_prefix namespace =
   if namespace = ns_atom then "xmlns"
