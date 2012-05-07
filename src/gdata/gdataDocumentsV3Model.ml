@@ -933,6 +933,7 @@ struct
       | `Icon -> ns_docs ^ "#icon"
       | `AltEditMedia -> ns_docs ^ "#alt-edit-media"
       | #GdataACL.Rel.t -> GdataACL.Rel.to_string l
+      | _ -> failwith "BUG: Unexpected Rel value (GdataDocumentsV3Model)"
 
 end
 
