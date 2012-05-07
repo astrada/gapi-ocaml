@@ -18,14 +18,16 @@ sig
     href : string;
     readOnly : bool;
     rel : string;
-    feed : feed_t
+    feed : feed_t;
   }
 
-  val empty : t
+  val countHint : (t, int) GapiLens.t
+  val href : (t, string) GapiLens.t
+  val readOnly : (t, bool) GapiLens.t
+  val rel : (t, string) GapiLens.t
+  val feed : (t, feed_t) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  include GdataAtom.AtomData with type t := t
 
 end
 
@@ -39,15 +41,36 @@ struct
     href : string;
     readOnly : bool;
     rel : string;
-    feed : feed_t
+    feed : feed_t;
   }
+
+	let countHint = {
+		GapiLens.get = (fun x -> x.countHint);
+		GapiLens.set = (fun v x -> { x with countHint = v })
+	}
+	let href = {
+		GapiLens.get = (fun x -> x.href);
+		GapiLens.set = (fun v x -> { x with href = v })
+	}
+	let readOnly = {
+		GapiLens.get = (fun x -> x.readOnly);
+		GapiLens.set = (fun v x -> { x with readOnly = v })
+	}
+	let rel = {
+		GapiLens.get = (fun x -> x.rel);
+		GapiLens.set = (fun v x -> { x with rel = v })
+	}
+	let feed = {
+		GapiLens.get = (fun x -> x.feed);
+		GapiLens.set = (fun v x -> { x with feed = v })
+	}
 
   let empty = {
     countHint = 0;
     href = "";
     readOnly = false;
     rel = "";
-    feed = Feed.empty
+    feed = Feed.empty;
   }
 
   let to_xml_data_model link =
@@ -61,20 +84,20 @@ struct
   let of_xml_data_model link tree =
     match tree with
         GapiCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "countHint"; `Namespace ns],
-           v) when ns = "" ->
+          ([`Attribute; `Name "countHint"; `Namespace ""],
+           v) ->
           { link with countHint = int_of_string v }
       | GapiCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "href"; `Namespace ns],
-           v) when ns = "" ->
+          ([`Attribute; `Name "href"; `Namespace ""],
+           v) ->
           { link with href = v }
       | GapiCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "readOnly"; `Namespace ns],
-           v) when ns = "" ->
+          ([`Attribute; `Name "readOnly"; `Namespace ""],
+           v) ->
           { link with readOnly = bool_of_string v }
       | GapiCore.AnnotatedTree.Leaf
-          ([`Attribute; `Name "rel"; `Namespace ns],
-           v) when ns = "" ->
+          ([`Attribute; `Name "rel"; `Namespace ""],
+           v) ->
           { link with rel = v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "feed"; `Namespace ns],

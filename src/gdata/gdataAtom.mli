@@ -42,7 +42,8 @@ type opensearch_totalResults = int
 
 type app_edited = GapiDate.t
 
-val parse_children : ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
+val parse_children :
+  ('a -> 'b -> 'a) -> 'a -> ('a -> 'c) -> 'b list -> 'c
 
 val data_model_to_entry :
   ?element_name:string ->
@@ -171,14 +172,15 @@ sig
     lang : string;
     email : atom_email;
     name : atom_name;
-    uri : atom_uri
+    uri : atom_uri;
   }
 
-  val empty : t
+  val lang : (t, string) GapiLens.t
+  val email : (t, atom_email) GapiLens.t
+  val name : (t, atom_name) GapiLens.t
+  val uri : (t, atom_uri) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -196,14 +198,15 @@ sig
     label : string;
     scheme : string;
     term : string;
-    lang : string
+    lang : string;
   }
 
-  val empty : t
+  val label : (t, string) GapiLens.t
+  val scheme : (t, string) GapiLens.t
+  val term : (t, string) GapiLens.t
+  val lang : (t, string) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -212,14 +215,14 @@ sig
   type t = {
     uri : string;
     version : string;
-    value : string
+    value : string;
   }
 
-  val empty : t
+  val uri : (t, string) GapiLens.t
+  val version : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -229,14 +232,15 @@ sig
     src : string;
     _type : string;
     lang : string;
-    value : string
+    value : string;
   }
 
-  val empty : t
+  val src : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val lang : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -260,14 +264,16 @@ sig
     length : Int64.t;
     rel : string;
     title : string;
-    _type : string
+    _type : string;
   }
 
-  val empty : t
+  val href : (t, string) GapiLens.t
+  val length : (t, Int64.t) GapiLens.t
+  val rel : (t, string) GapiLens.t
+  val title : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -301,11 +307,27 @@ sig
     extensions : extensions_t;
   }
 
-  val empty : t
+  val etag : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val authors : (t, Author.t list) GapiLens.t
+  val categories : (t, Category.t list) GapiLens.t
+  val contributors : (t, Contributor.t list) GapiLens.t
+  val generator : (t, Generator.t) GapiLens.t
+  val icon : (t, atom_icon) GapiLens.t
+  val id : (t, atom_id) GapiLens.t
+  val updated : (t, atom_updated) GapiLens.t
+  val entries : (t, entry_t list) GapiLens.t
+  val links : (t, link_t list) GapiLens.t
+  val logo : (t, atom_logo) GapiLens.t
+  val rights : (t, Rights.t) GapiLens.t
+  val subtitle : (t, Subtitle.t) GapiLens.t
+  val title : (t, Title.t) GapiLens.t
+  val totalResults : (t, opensearch_totalResults) GapiLens.t
+  val itemsPerPage : (t, opensearch_itemsPerPage) GapiLens.t
+  val startIndex : (t, opensearch_startIndex) GapiLens.t
+  val extensions : (t, extensions_t) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  include AtomData with type t := t
 
   val parse_feed : GdataCore.xml_data_model -> t
 
@@ -320,17 +342,40 @@ module MakeFeed :
       and type link_t = Link.t
       and type extensions_t = Extensions.t
 
-module GenericExtensions :
+module BasicEntry :
 sig
-  type t = GdataCore.xml_data_model list
+  type t = {
+    etag : string;
+    id : atom_id;
+    title : Title.t;
+    published : atom_published;
+    authors : Author.t list;
+    updated : atom_updated;
+    edited : app_edited;
+    categories : Category.t list;
+    content : Content.t;
+    links : Link.t list;
+  }
 
-  val empty : t
+  val etag : (t, string) GapiLens.t
+  val id : (t, atom_id) GapiLens.t
+  val title : (t, Title.t) GapiLens.t
+  val published : (t, atom_published) GapiLens.t
+  val authors : (t, Author.t list) GapiLens.t
+  val updated : (t, atom_updated) GapiLens.t
+  val edited : (t, app_edited) GapiLens.t
+  val categories : (t, Category.t list) GapiLens.t
+  val content : (t, Content.t) GapiLens.t
+  val links : (t, Link.t list) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  val node_matches : (string * string) -> bool
 
 end
+
+module GenericExtensions :
+  AtomData with type t = GdataCore.xml_data_model list
 
 module Rel :
 sig

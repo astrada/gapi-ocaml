@@ -35,6 +35,23 @@ struct
     content : string
   }
 
+	let code = {
+		GapiLens.get = (fun x -> x.code);
+		GapiLens.set = (fun v x -> { x with code = v })
+	}
+	let reason = {
+		GapiLens.get = (fun x -> x.reason);
+		GapiLens.set = (fun v x -> { x with reason = v })
+	}
+	let content_type = {
+		GapiLens.get = (fun x -> x.content_type);
+		GapiLens.set = (fun v x -> { x with content_type = v })
+	}
+	let content = {
+		GapiLens.get = (fun x -> x.content);
+		GapiLens.set = (fun v x -> { x with content = v })
+	}
+
   let empty =  {
     code = 0;
     reason = "";
@@ -67,6 +84,64 @@ struct
           ([`Text],
            v) ->
           { status with content = v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
+
+module BatchExtensions =
+struct
+  type t = {
+    id : string;
+    operation : Operation.t;
+    status : Status.t;
+  }
+
+	let id = {
+		GapiLens.get = (fun x -> x.id);
+		GapiLens.set = (fun v x -> { x with id = v })
+	}
+	let operation = {
+		GapiLens.get = (fun x -> x.operation);
+		GapiLens.set = (fun v x -> { x with operation = v })
+	}
+	let status = {
+		GapiLens.get = (fun x -> x.status);
+		GapiLens.set = (fun v x -> { x with status = v })
+	}
+
+  let empty = {
+    id = "";
+    operation = Operation.None;
+    status = Status.empty;
+  }
+
+  let to_xml_data_model ext =
+    List.concat
+      [GdataAtom.render_text_element GdataExtensions.ns_batch "id" ext.id;
+       GdataAtom.render_text_element GdataExtensions.ns_batch "operation" (Operation.to_string ext.operation);
+       Status.to_xml_data_model ext.status]
+
+  let of_xml_data_model ext tree =
+    match tree with
+        GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "id"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = GdataExtensions.ns_batch ->
+          { ext with id = v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "operation"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = GdataExtensions.ns_batch ->
+          { ext with operation = Operation.of_string v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "status"; `Namespace ns],
+           cs) when ns = GdataExtensions.ns_batch ->
+          GdataAtom.parse_children
+            Status.of_xml_data_model
+            Status.empty
+            (fun status -> { ext with status })
+            cs
       | e ->
           GdataUtils.unexpected e
 

@@ -1,4 +1,5 @@
 open OUnit
+open GapiLens.Infix
 
 let new_calendar_entry title =
   { GdataCalendar.Entry.empty with
@@ -11,21 +12,24 @@ let new_calendar_entry title =
                 GdataAtom.Summary._type = "text";
                 value = "This calendar contains the practice schedule and game times.";
           };
-        GdataCalendar.Entry.title =
-                  { GdataAtom.Title.empty with
-                        GdataAtom.Title._type = "text";
-                        value = title;
-                  };
+        title =
+          { GdataAtom.Title.empty with
+                GdataAtom.Title._type = "text";
+                value = title;
+          };
   }
 
 let acl_entry =
   { GdataACL.Entry.empty with
-        GdataACL.Entry.categories = [
-          { GdataAtom.Category.empty with
-                GdataAtom.Category.scheme =
-                  "http://schemas.google.com/g/2005#kind";
-                term =
-                  "http://schemas.google.com/acl/2007#accessRule" } ];
+        GdataACL.Entry.common = {
+          GdataAtom.BasicEntry.empty with
+            GdataAtom.BasicEntry.categories = [
+              { GdataAtom.Category.empty with
+                    GdataAtom.Category.scheme =
+                      "http://schemas.google.com/g/2005#kind";
+                    term =
+                      "http://schemas.google.com/acl/2007#accessRule" } ];
+        };
         GdataACL.Entry.scope =
           { GdataACL.Scope._type = "user";
             value = "darcy@gmail.com" };
@@ -305,7 +309,7 @@ let test_create_acl () =
        let calendar_entry = List.hd own.GdataCalendar.Feed.entries in
        let (new_entry, session) =
          GdataCalendarService.create_acl acl_entry calendar_entry session in
-       let id = new_entry.GdataACL.Entry.id in
+       let id = new_entry |. GdataACL.Entry.id in
        let (feed, session) = GdataCalendarService.retrieve_acl
                                  calendar_entry
                                  session in
@@ -315,7 +319,7 @@ let test_create_acl () =
          assert_bool
            "Created entry id not found in acl feed"
            (List.exists
-              (fun e -> e.GdataACL.Entry.id = id)
+              (fun e -> e |. GdataACL.Entry.id = id)
               feed.GdataACL.Feed.entries)) 
 
 let test_update_acl () =

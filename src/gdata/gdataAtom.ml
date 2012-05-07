@@ -201,14 +201,15 @@ sig
     lang : string;
     email : atom_email;
     name : atom_name;
-    uri : atom_uri
+    uri : atom_uri;
   }
 
-  val empty : t
+  val lang : (t, string) GapiLens.t
+  val email : (t, atom_email) GapiLens.t
+  val name : (t, atom_name) GapiLens.t
+  val uri : (t, atom_uri) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -219,14 +220,31 @@ struct
     lang : string;
     email : atom_email;
     name : atom_name;
-    uri : atom_uri
+    uri : atom_uri;
   }
+
+	let lang = {
+		GapiLens.get = (fun x -> x.lang);
+		GapiLens.set = (fun v x -> { x with lang = v })
+	}
+	let email = {
+		GapiLens.get = (fun x -> x.email);
+		GapiLens.set = (fun v x -> { x with email = v })
+	}
+	let name = {
+		GapiLens.get = (fun x -> x.name);
+		GapiLens.set = (fun v x -> { x with name = v })
+	}
+	let uri = {
+		GapiLens.get = (fun x -> x.uri);
+		GapiLens.set = (fun v x -> { x with uri = v })
+	}
 
   let empty = {
     lang = "";
     email = "";
     name = "";
-    uri = ""
+    uri = "";
   }
 
   let to_xml_data_model person =
@@ -283,11 +301,28 @@ struct
     lang : string;
   }
 
+	let label = {
+		GapiLens.get = (fun x -> x.label);
+		GapiLens.set = (fun v x -> { x with label = v })
+	}
+	let scheme = {
+		GapiLens.get = (fun x -> x.scheme);
+		GapiLens.set = (fun v x -> { x with scheme = v })
+	}
+	let term = {
+		GapiLens.get = (fun x -> x.term);
+		GapiLens.set = (fun v x -> { x with term = v })
+	}
+	let lang = {
+		GapiLens.get = (fun x -> x.lang);
+		GapiLens.set = (fun v x -> { x with lang = v })
+	}
+
   let empty = {
     label = "";
     scheme = "";
     term = "";
-    lang = ""
+    lang = "";
   }
 
   let to_xml_data_model category =
@@ -325,13 +360,26 @@ struct
   type t = {
     uri : string;
     version : string;
-    value : string
+    value : string;
   }
+
+	let uri = {
+		GapiLens.get = (fun x -> x.uri);
+		GapiLens.set = (fun v x -> { x with uri = v })
+	}
+	let version = {
+		GapiLens.get = (fun x -> x.version);
+		GapiLens.set = (fun v x -> { x with version = v })
+	}
+	let value = {
+		GapiLens.get = (fun x -> x.value);
+		GapiLens.set = (fun v x -> { x with value = v })
+	}
 
   let empty = {
     uri = "";
     version = "";
-    value = ""
+    value = "";
   }
 
   let to_xml_data_model generator =
@@ -365,14 +413,15 @@ sig
     src : string;
     _type : string;
     lang : string;
-    value : string
+    value : string;
   }
 
-  val empty : t
+  val src : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val lang : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
-
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include AtomData with type t := t
 
 end
 
@@ -383,14 +432,31 @@ struct
     src : string;
     _type : string;
     lang : string;
-    value : string
+    value : string;
   }
+
+	let src = {
+		GapiLens.get = (fun x -> x.src);
+		GapiLens.set = (fun v x -> { x with src = v })
+	}
+	let _type = {
+		GapiLens.get = (fun x -> x._type);
+		GapiLens.set = (fun v x -> { x with _type = v })
+	}
+	let lang = {
+		GapiLens.get = (fun x -> x.lang);
+		GapiLens.set = (fun v x -> { x with lang = v })
+	}
+	let value = {
+		GapiLens.get = (fun x -> x.value);
+		GapiLens.set = (fun v x -> { x with value = v })
+	}
 
   let empty = {
     src = "";
     _type = "";
     lang = "";
-    value = ""
+    value = "";
   }
 
   let to_xml_data_model text_construct =
@@ -445,15 +511,36 @@ struct
     length : Int64.t;
     rel : string;
     title : string;
-    _type : string
+    _type : string;
   }
+
+	let href = {
+		GapiLens.get = (fun x -> x.href);
+		GapiLens.set = (fun v x -> { x with href = v })
+	}
+	let length = {
+		GapiLens.get = (fun x -> x.length);
+		GapiLens.set = (fun v x -> { x with length = v })
+	}
+	let rel = {
+		GapiLens.get = (fun x -> x.rel);
+		GapiLens.set = (fun v x -> { x with rel = v })
+	}
+	let title = {
+		GapiLens.get = (fun x -> x.title);
+		GapiLens.set = (fun v x -> { x with title = v })
+	}
+	let _type = {
+		GapiLens.get = (fun x -> x._type);
+		GapiLens.set = (fun v x -> { x with _type = v })
+	}
 
   let empty = {
     href = "";
     length = 0L;
     rel = "";
     title = "";
-    _type = ""
+    _type = "";
   }
 
   let to_xml_data_model link =
@@ -521,11 +608,27 @@ sig
     extensions : extensions_t;
   }
 
-  val empty : t
+  val etag : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val authors : (t, Author.t list) GapiLens.t
+  val categories : (t, Category.t list) GapiLens.t
+  val contributors : (t, Contributor.t list) GapiLens.t
+  val generator : (t, Generator.t) GapiLens.t
+  val icon : (t, atom_icon) GapiLens.t
+  val id : (t, atom_id) GapiLens.t
+  val updated : (t, atom_updated) GapiLens.t
+  val entries : (t, entry_t list) GapiLens.t
+  val links : (t, link_t list) GapiLens.t
+  val logo : (t, atom_logo) GapiLens.t
+  val rights : (t, Rights.t) GapiLens.t
+  val subtitle : (t, Subtitle.t) GapiLens.t
+  val title : (t, Title.t) GapiLens.t
+  val totalResults : (t, opensearch_totalResults) GapiLens.t
+  val itemsPerPage : (t, opensearch_itemsPerPage) GapiLens.t
+  val startIndex : (t, opensearch_startIndex) GapiLens.t
+  val extensions : (t, extensions_t) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  include AtomData with type t := t
 
   val parse_feed : GdataCore.xml_data_model -> t
 
@@ -564,6 +667,83 @@ struct
     extensions : extensions_t;
   }
 
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
+	}
+	let kind = {
+		GapiLens.get = (fun x -> x.kind);
+		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let authors = {
+		GapiLens.get = (fun x -> x.authors);
+		GapiLens.set = (fun v x -> { x with authors = v })
+	}
+	let categories = {
+		GapiLens.get = (fun x -> x.categories);
+		GapiLens.set = (fun v x -> { x with categories = v })
+	}
+	let contributors = {
+		GapiLens.get = (fun x -> x.contributors);
+		GapiLens.set = (fun v x -> { x with contributors = v })
+	}
+	let generator = {
+		GapiLens.get = (fun x -> x.generator);
+		GapiLens.set = (fun v x -> { x with generator = v })
+	}
+	let icon = {
+		GapiLens.get = (fun x -> x.icon);
+		GapiLens.set = (fun v x -> { x with icon = v })
+	}
+	let id = {
+		GapiLens.get = (fun x -> x.id);
+		GapiLens.set = (fun v x -> { x with id = v })
+	}
+	let updated = {
+		GapiLens.get = (fun x -> x.updated);
+		GapiLens.set = (fun v x -> { x with updated = v })
+	}
+	let entries = {
+		GapiLens.get = (fun x -> x.entries);
+		GapiLens.set = (fun v x -> { x with entries = v })
+	}
+	let links = {
+		GapiLens.get = (fun x -> x.links);
+		GapiLens.set = (fun v x -> { x with links = v })
+	}
+	let logo = {
+		GapiLens.get = (fun x -> x.logo);
+		GapiLens.set = (fun v x -> { x with logo = v })
+	}
+	let rights = {
+		GapiLens.get = (fun x -> x.rights);
+		GapiLens.set = (fun v x -> { x with rights = v })
+	}
+	let subtitle = {
+		GapiLens.get = (fun x -> x.subtitle);
+		GapiLens.set = (fun v x -> { x with subtitle = v })
+	}
+	let title = {
+		GapiLens.get = (fun x -> x.title);
+		GapiLens.set = (fun v x -> { x with title = v })
+	}
+	let totalResults = {
+		GapiLens.get = (fun x -> x.totalResults);
+		GapiLens.set = (fun v x -> { x with totalResults = v })
+	}
+	let itemsPerPage = {
+		GapiLens.get = (fun x -> x.itemsPerPage);
+		GapiLens.set = (fun v x -> { x with itemsPerPage = v })
+	}
+	let startIndex = {
+		GapiLens.get = (fun x -> x.startIndex);
+		GapiLens.set = (fun v x -> { x with startIndex = v })
+	}
+	let extensions = {
+		GapiLens.get = (fun x -> x.extensions);
+		GapiLens.set = (fun v x -> { x with extensions = v })
+	}
+
   let empty = {
     etag = "";
     kind = "";
@@ -585,6 +765,28 @@ struct
     startIndex = 0;
     extensions = Extensions.empty;
   }
+
+  let to_xml_data_model feed =
+    render_element ns_atom "feed"
+      [render_attribute ns_gd "etag" feed.etag;
+       render_attribute ns_gd "kind" feed.kind;
+       render_element_list Author.to_xml_data_model feed.authors;
+       render_element_list Category.to_xml_data_model feed.categories;
+       render_element_list Contributor.to_xml_data_model feed.contributors;
+       Generator.to_xml_data_model feed.generator;
+       render_text_element ns_atom "icon" feed.icon;
+       render_text_element ns_atom "id" feed.id;
+       render_date_element ns_atom "updated" feed.updated;
+       render_element_list Entry.to_xml_data_model feed.entries;
+       render_element_list Link.to_xml_data_model feed.links;
+       render_text_element ns_atom "logo" feed.logo;
+       Rights.to_xml_data_model feed.rights;
+       Title.to_xml_data_model feed.title;
+       Subtitle.to_xml_data_model feed.subtitle;
+       render_int_element ns_openSearch "totalResults" feed.totalResults;
+       render_int_element ns_openSearch "itemsPerPage" feed.itemsPerPage;
+       render_int_element ns_openSearch "startIndex" feed.startIndex;
+       Extensions.to_xml_data_model feed.extensions]
 
   let of_xml_data_model feed tree =
     match tree with
@@ -716,28 +918,6 @@ struct
           in
             { feed with extensions }
 
-  let to_xml_data_model feed =
-    render_element ns_atom "feed"
-      [render_attribute ns_gd "etag" feed.etag;
-       render_attribute ns_gd "kind" feed.kind;
-       render_element_list Author.to_xml_data_model feed.authors;
-       render_element_list Category.to_xml_data_model feed.categories;
-       render_element_list Contributor.to_xml_data_model feed.contributors;
-       Generator.to_xml_data_model feed.generator;
-       render_text_element ns_atom "icon" feed.icon;
-       render_text_element ns_atom "id" feed.id;
-       render_date_element ns_atom "updated" feed.updated;
-       render_element_list Entry.to_xml_data_model feed.entries;
-       render_element_list Link.to_xml_data_model feed.links;
-       render_text_element ns_atom "logo" feed.logo;
-       Rights.to_xml_data_model feed.rights;
-       Title.to_xml_data_model feed.title;
-       Subtitle.to_xml_data_model feed.subtitle;
-       render_int_element ns_openSearch "totalResults" feed.totalResults;
-       render_int_element ns_openSearch "itemsPerPage" feed.itemsPerPage;
-       render_int_element ns_openSearch "startIndex" feed.startIndex;
-       Extensions.to_xml_data_model feed.extensions]
-
   let parse_feed tree =
     let parse_root tree =
       match tree with
@@ -756,6 +936,179 @@ struct
 
 end
 
+module BasicEntry =
+struct
+  type t = {
+      etag : string;
+      id : atom_id;
+      title : Title.t;
+      published : atom_published;
+      authors : Author.t list;
+      updated : atom_updated;
+      edited : app_edited;
+      categories : Category.t list;
+      content : Content.t;
+      links : Link.t list;
+  }
+
+	let etag = {
+		GapiLens.get = (fun x -> x.etag);
+		GapiLens.set = (fun v x -> { x with etag = v })
+	}
+	let id = {
+		GapiLens.get = (fun x -> x.id);
+		GapiLens.set = (fun v x -> { x with id = v })
+	}
+	let title = {
+		GapiLens.get = (fun x -> x.title);
+		GapiLens.set = (fun v x -> { x with title = v })
+	}
+	let published = {
+		GapiLens.get = (fun x -> x.published);
+		GapiLens.set = (fun v x -> { x with published = v })
+	}
+	let authors = {
+		GapiLens.get = (fun x -> x.authors);
+		GapiLens.set = (fun v x -> { x with authors = v })
+	}
+	let updated = {
+		GapiLens.get = (fun x -> x.updated);
+		GapiLens.set = (fun v x -> { x with updated = v })
+	}
+	let edited = {
+		GapiLens.get = (fun x -> x.edited);
+		GapiLens.set = (fun v x -> { x with edited = v })
+	}
+	let categories = {
+		GapiLens.get = (fun x -> x.categories);
+		GapiLens.set = (fun v x -> { x with categories = v })
+	}
+	let content = {
+		GapiLens.get = (fun x -> x.content);
+		GapiLens.set = (fun v x -> { x with content = v })
+	}
+	let links = {
+		GapiLens.get = (fun x -> x.links);
+		GapiLens.set = (fun v x -> { x with links = v })
+	}
+
+  let empty = {
+    etag = "";
+    id = "";
+    title = Title.empty;
+    published = GapiDate.epoch;
+    authors = [];
+    updated = GapiDate.epoch;
+    edited = GapiDate.epoch;
+    categories = [];
+    content = Content.empty;
+    links = [];
+  }
+
+  let to_xml_data_model entry =
+    List.concat
+      [render_attribute ns_gd "etag" entry.etag;
+       render_text_element ns_atom "id" entry.id;
+       Title.to_xml_data_model entry.title;
+       render_date_element ns_atom "published" entry.published;
+       render_element_list Author.to_xml_data_model entry.authors;
+       render_date_element ns_atom "updated" entry.updated;
+       render_date_element ns_app "edited" entry.edited;
+       render_element_list Category.to_xml_data_model entry.categories;
+       Content.to_xml_data_model entry.content;
+       render_element_list Link.to_xml_data_model entry.links]
+
+  let of_xml_data_model entry tree =
+    match tree with
+        GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "etag"; `Namespace ns],
+           v) when ns = ns_gd ->
+          { entry with etag = v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "id"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = ns_atom ->
+          { entry with id = v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "title"; `Namespace ns],
+           cs) when ns = ns_atom ->
+          parse_children
+            Title.of_xml_data_model
+            Title.empty
+            (fun title -> { entry with title })
+            cs
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "published"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = ns_atom ->
+          { entry with published = GapiDate.of_string v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "author"; `Namespace ns],
+           cs) when ns = ns_atom ->
+          parse_children
+            Author.of_xml_data_model
+            Author.empty
+            (fun author -> { entry with authors = author :: entry.authors })
+            cs
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "updated"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = ns_atom ->
+          { entry with updated = GapiDate.of_string v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "edited"; `Namespace ns],
+           [GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = ns_app ->
+          { entry with edited = GapiDate.of_string v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "edited"; `Namespace ns],
+           [_; GapiCore.AnnotatedTree.Leaf
+              ([`Text], v)]) when ns = ns_app ->
+          (* parse <app:edited xmlns:app="...">...</app:edited> *)
+          { entry with edited = GapiDate.of_string v }
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "category"; `Namespace ns],
+           cs) when ns = ns_atom ->
+          parse_children
+            Category.of_xml_data_model
+            Category.empty
+            (fun category -> { entry with categories = category :: entry.categories })
+            cs
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "content"; `Namespace ns],
+           cs) when ns = ns_atom ->
+          parse_children
+            Content.of_xml_data_model
+            Content.empty
+            (fun content -> { entry with content })
+            cs
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "link"; `Namespace ns],
+           cs) when ns = ns_atom ->
+          parse_children
+            Link.of_xml_data_model
+            Link.empty
+            (fun link -> { entry with links = link :: entry.links })
+            cs
+      | e ->
+          GdataUtils.unexpected e
+
+  let node_matches = function
+      ("etag", ns) when ns = ns_gd -> true
+    | ("id", ns)
+    | ("title", ns)
+    | ("published", ns)
+    | ("author", ns)
+    | ("updated", ns)
+    | ("category", ns)
+    | ("content", ns)
+    | ("link", ns) when ns = ns_atom -> true
+    | ("edited", ns) when ns = ns_app -> true
+    | _ -> false
+
+end
+(* END Atom complex types *)
+
 module GenericExtensions =
 struct
   type t = GdataCore.xml_data_model list
@@ -767,7 +1120,6 @@ struct
   let to_xml_data_model = Std.identity
 
 end
-(* END Atom complex types *)
 
 (* Utilities *)
 module Rel =

@@ -10,11 +10,10 @@ sig
     role : string
   }
 
-  val empty : t
+  val key : (t, string) GapiLens.t
+  val role : (t, string) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  include GdataAtom.AtomData with type t := t
 
 end
 
@@ -25,40 +24,36 @@ sig
     value : string
   }
 
-  val empty : t
+  val _type : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
-
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  include GdataAtom.AtomData with type t := t
 
 end
 
 module Entry :
 sig
   type t = {
-    etag : string;
-    kind : string;
-    authors : GdataAtom.Author.t list;
-    categories : GdataAtom.Category.t list;
-    contributors : GdataAtom.Contributor.t list;
-    id : GdataAtom.atom_id;
-    content : GdataAtom.Content.t;
-    published : GdataAtom.atom_published;
-    updated : GdataAtom.atom_updated;
-    edited : GdataAtom.app_edited;
-    links : GdataAtom.Link.t list;
-    title : GdataAtom.Title.t;
+    common : GdataAtom.BasicEntry.t;
     scope : Scope.t;
     role : string;
     additionalRole : string;
     withKey : RoleWithKey.t;
+    batch : GdataBatch.BatchExtensions.t;
   }
 
-  val empty : t
+  val common : (t, GdataAtom.BasicEntry.t) GapiLens.t
+  val scope : (t, Scope.t) GapiLens.t
+  val role : (t, string) GapiLens.t
+  val additionalRole : (t, string) GapiLens.t
+  val withKey : (t, RoleWithKey.t) GapiLens.t
+  val batch : (t, GdataBatch.BatchExtensions.t) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  val etag : (t, string) GapiLens.t
+  val id : (t, GdataAtom.atom_id) GapiLens.t
+  val links : (t, GdataAtom.Link.t list) GapiLens.t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+  include GdataAtom.AtomData with type t := t
 
 end
 

@@ -25,11 +25,28 @@ sig
     content : string
   }
 
-  val empty : t
+  val code : (t, int) GapiLens.t
+  val reason : (t, string) GapiLens.t
+  val content_type : (t, string) GapiLens.t
+  val content : (t, string) GapiLens.t
 
-  val to_xml_data_model : t -> GdataCore.xml_data_model list
+  include GdataAtom.AtomData with type t := t
 
-  val of_xml_data_model : t -> GdataCore.xml_data_model -> t
+end
+
+module BatchExtensions :
+sig
+  type t = {
+    id : string;
+    operation : Operation.t;
+    status : Status.t;
+  }
+
+  val id : (t, string) GapiLens.t
+  val operation : (t, Operation.t) GapiLens.t
+  val status : (t, Status.t) GapiLens.t
+
+  include GdataAtom.AtomData with type t := t
 
 end
 

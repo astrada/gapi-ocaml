@@ -1,4 +1,5 @@
 open GapiUtils.Infix
+open GapiLens.Infix
 
 module QueryParameters =
 struct
@@ -127,12 +128,12 @@ let get_url_etag_event entry =
     entry.GdataCalendarEvent.Entry.etag
 
 let get_url_etag_acl entry =
-  let url = GdataAtom.find_url `Edit entry.GdataACL.Entry.links in
+  let url = GdataAtom.find_url `Edit (entry |. GdataACL.Entry.links) in
   let etag =
-    if entry.GdataACL.Entry.etag = "" then
+    if (entry |. GdataACL.Entry.etag) = "" then
       None
     else
-      Some entry.GdataACL.Entry.etag
+      Some (entry |. GdataACL.Entry.etag)
   in
     (url, etag)
 
