@@ -1,4 +1,5 @@
 open GapiUtils.Infix
+open GapiLens.Infix
 
 (* Document data types *)
 let ns_docs = "http://schemas.google.com/docs/2007"
@@ -10,27 +11,36 @@ struct
   module Entry =
   struct
     type t = {
-      id : GdataAtom.atom_id;
-      updated : GdataAtom.atom_updated;
-      edited : GdataAtom.app_edited;
-      title : GdataAtom.Title.t;
-      content : GdataAtom.Content.t;
-      links : GdataAtom.Link.t list;
-      authors : GdataAtom.Author.t list;
+      common : GdataAtom.BasicEntry.t;
       publish : bool;
       publishAuto : bool;
       publishOutsideDomain : bool;
       extensions : GdataAtom.GenericExtensions.t
     }
 
+    let common = {
+      GapiLens.get = (fun x -> x.common);
+      GapiLens.set = (fun v x -> { x with common = v })
+    }
+    let publish = {
+      GapiLens.get = (fun x -> x.publish);
+      GapiLens.set = (fun v x -> { x with publish = v })
+    }
+    let publishAuto = {
+      GapiLens.get = (fun x -> x.publishAuto);
+      GapiLens.set = (fun v x -> { x with publishAuto = v })
+    }
+    let publishOutsideDomain = {
+      GapiLens.get = (fun x -> x.publishOutsideDomain);
+      GapiLens.set = (fun v x -> { x with publishOutsideDomain = v })
+    }
+    let extensions = {
+      GapiLens.get = (fun x -> x.extensions);
+      GapiLens.set = (fun v x -> { x with extensions = v })
+    }
+
     let empty = {
-      id = "";
-      updated = GapiDate.epoch;
-      edited = GapiDate.epoch;
-      title = GdataAtom.Title.empty;
-      content = GdataAtom.Content.empty;
-      links = [];
-      authors = [];
+      common = GdataAtom.BasicEntry.empty;
       publish = false;
       publishAuto = false;
       publishOutsideDomain = false;
@@ -39,13 +49,7 @@ struct
 
     let to_xml_data_model entry =
       GdataAtom.render_element GdataAtom.ns_atom "entry"
-        [GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
-         GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
-         GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.edited;
-         GdataAtom.Title.to_xml_data_model entry.title;
-         GdataAtom.Content.to_xml_data_model entry.content;
-         GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
-         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
+        [GdataAtom.BasicEntry.to_xml_data_model entry.common;
          GdataAtom.render_bool_value ns_docs "publish" entry.publish;
          GdataAtom.render_bool_value ns_docs "publishAuto" entry.publishAuto;
          GdataAtom.render_bool_value ns_docs "publishOutsideDomain" entry.publishOutsideDomain;
@@ -54,57 +58,15 @@ struct
     let of_xml_data_model entry tree =
       match tree with
           GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "id"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with id = v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "updated"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with updated = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "edited"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)])
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "edited"; `Namespace ns],
-             [_; GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_app ->
-            (* parse <app:edited xmlns:app="...">...</app:edited> *)
-            { entry with edited = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "title"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Title.of_xml_data_model
-              GdataAtom.Title.empty
-              (fun title -> { entry with title })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "content"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Content.of_xml_data_model
-              GdataAtom.Content.empty
-              (fun content -> { entry with content })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "link"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Link.of_xml_data_model
-              GdataAtom.Link.empty
-              (fun link -> { entry with links = link :: entry.links })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "author"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Author.of_xml_data_model
-              GdataAtom.Author.empty
-              (fun author -> { entry with authors = author :: entry.authors })
-              cs
+            ([_; `Name n; `Namespace ns],
+             _)
+        | GapiCore.AnnotatedTree.Leaf
+            ([_; `Name n; `Namespace ns],
+             _) when GdataAtom.BasicEntry.node_matches (n, ns) ->
+            let common =
+              GdataAtom.BasicEntry.of_xml_data_model entry.common tree
+            in
+              { entry with common }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "publish"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
@@ -149,20 +111,11 @@ struct
   module Entry =
   struct
     type t = {
-      etag : string;
-      id : GdataAtom.atom_id;
-      title : GdataAtom.Title.t;
+      common : GdataAtom.BasicEntry.t;
       description : string;
       resourceId : string;
-      published : GdataAtom.atom_published;
-      authors : GdataAtom.Author.t list;
-      updated : GdataAtom.atom_updated;
-      edited : GdataAtom.app_edited;
       lastModifiedBy : GdataExtensions.LastModifiedBy.t;
       lastViewed : GapiDate.t;
-      categories : GdataAtom.Category.t list;
-      content : GdataAtom.Content.t;
-      links : GdataAtom.Link.t list;
       aclFeedLink : AclFeedLink.t;
       revisionsFeedLink : RevisionsFeedLink.t; 
       quotaBytesUsed : int;
@@ -179,21 +132,77 @@ struct
       extensions : GdataAtom.GenericExtensions.t 
     }
 
+    let common = {
+      GapiLens.get = (fun x -> x.common);
+      GapiLens.set = (fun v x -> { x with common = v })
+    }
+    let description = {
+      GapiLens.get = (fun x -> x.description);
+      GapiLens.set = (fun v x -> { x with description = v })
+    }
+    let resourceId = {
+      GapiLens.get = (fun x -> x.resourceId);
+      GapiLens.set = (fun v x -> { x with resourceId = v })
+    }
+    let lastModifiedBy = {
+      GapiLens.get = (fun x -> x.lastModifiedBy);
+      GapiLens.set = (fun v x -> { x with lastModifiedBy = v })
+    }
+    let lastViewed = {
+      GapiLens.get = (fun x -> x.lastViewed);
+      GapiLens.set = (fun v x -> { x with lastViewed = v })
+    }
+    let aclFeedLink = {
+      GapiLens.get = (fun x -> x.aclFeedLink);
+      GapiLens.set = (fun v x -> { x with aclFeedLink = v })
+    }
+    let revisionsFeedLink = {
+      GapiLens.get = (fun x -> x.revisionsFeedLink);
+      GapiLens.set = (fun v x -> { x with revisionsFeedLink = v })
+    }
+    let quotaBytesUsed = {
+      GapiLens.get = (fun x -> x.quotaBytesUsed);
+      GapiLens.set = (fun v x -> { x with quotaBytesUsed = v })
+    }
+    let writersCanInvite = {
+      GapiLens.get = (fun x -> x.writersCanInvite);
+      GapiLens.set = (fun v x -> { x with writersCanInvite = v })
+    }
+    let md5Checksum = {
+      GapiLens.get = (fun x -> x.md5Checksum);
+      GapiLens.set = (fun v x -> { x with md5Checksum = v })
+    }
+    let filename = {
+      GapiLens.get = (fun x -> x.filename);
+      GapiLens.set = (fun v x -> { x with filename = v })
+    }
+    let suggestedFilename = {
+      GapiLens.get = (fun x -> x.suggestedFilename);
+      GapiLens.set = (fun v x -> { x with suggestedFilename = v })
+    }
+    let deleted = {
+      GapiLens.get = (fun x -> x.deleted);
+      GapiLens.set = (fun v x -> { x with deleted = v })
+    }
+    let removed = {
+      GapiLens.get = (fun x -> x.removed);
+      GapiLens.set = (fun v x -> { x with removed = v })
+    }
+    let changestamp = {
+      GapiLens.get = (fun x -> x.changestamp);
+      GapiLens.set = (fun v x -> { x with changestamp = v })
+    }
+    let extensions = {
+      GapiLens.get = (fun x -> x.extensions);
+      GapiLens.set = (fun v x -> { x with extensions = v })
+    }
+
     let empty = {
-      etag = "";
-      id = "";
-      title = GdataAtom.Title.empty;
+      common = GdataAtom.BasicEntry.empty;
       description = "";
       resourceId = "";
-      published = GapiDate.epoch;
-      authors = [];
-      updated = GapiDate.epoch;
-      edited = GapiDate.epoch;
       lastModifiedBy = GdataExtensions.LastModifiedBy.empty;
       lastViewed = GapiDate.epoch;
-      categories = [];
-      content = GdataAtom.Content.empty;
-      links = [];
       aclFeedLink = AclFeedLink.empty;
       revisionsFeedLink = RevisionsFeedLink.empty;
       quotaBytesUsed = 0;
@@ -209,20 +218,11 @@ struct
 
     let to_xml_data_model entry =
       GdataAtom.render_element GdataAtom.ns_atom "entry"
-        [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.etag;
-         GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
-         GdataAtom.Title.to_xml_data_model entry.title;
+        [GdataAtom.BasicEntry.to_xml_data_model entry.common;
          GdataAtom.render_text_element ns_docs "description" entry.description;
          GdataAtom.render_text_element GdataAtom.ns_gd "resourceId" entry.resourceId;
-         GdataAtom.render_date_element GdataAtom.ns_atom "published" entry.published;
-         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
-         GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
-         GdataAtom.render_date_element GdataAtom.ns_app "edited" entry.edited;
          GdataExtensions.LastModifiedBy.to_xml_data_model entry.lastModifiedBy;
          GdataAtom.render_date_element GdataAtom.ns_gd "lastViewed" entry.lastViewed;
-         GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.categories;
-         GdataAtom.Content.to_xml_data_model entry.content;
-         GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
          AclFeedLink.to_xml_data_model entry.aclFeedLink;
          RevisionsFeedLink.to_xml_data_model entry.revisionsFeedLink;
          GdataAtom.render_int_element GdataAtom.ns_gd "quotaBytesUsed" entry.quotaBytesUsed;
@@ -237,23 +237,16 @@ struct
 
     let of_xml_data_model entry tree =
       match tree with
-          GapiCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "etag"; `Namespace ns],
-             v) when ns = GdataAtom.ns_gd ->
-            { entry with etag = v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "id"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with id = v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "title"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Title.of_xml_data_model
-              GdataAtom.Title.empty
-              (fun title -> { entry with title })
-              cs
+          GapiCore.AnnotatedTree.Node
+            ([_; `Name n; `Namespace ns],
+             _)
+        | GapiCore.AnnotatedTree.Leaf
+            ([_; `Name n; `Namespace ns],
+             _) when GdataAtom.BasicEntry.node_matches (n, ns) ->
+            let common =
+              GdataAtom.BasicEntry.of_xml_data_model entry.common tree
+            in
+              { entry with common }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "description"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
@@ -264,35 +257,6 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_gd ->
             { entry with resourceId = v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "published"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with published = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "author"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Author.of_xml_data_model
-              GdataAtom.Author.empty
-              (fun author -> { entry with authors = author :: entry.authors })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "updated"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with updated = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "edited"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_app ->
-            { entry with edited = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "edited"; `Namespace ns],
-             [_; GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_app ->
-            (* parse <app:edited xmlns:app="...">...</app:edited> *)
-            { entry with edited = GapiDate.of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "lastModifiedBy"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
@@ -306,30 +270,6 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_gd ->
             { entry with lastViewed = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "category"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Category.of_xml_data_model
-              GdataAtom.Category.empty
-              (fun category -> { entry with categories = category :: entry.categories })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "content"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Content.of_xml_data_model
-              GdataAtom.Content.empty
-              (fun content -> { entry with content })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "link"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Link.of_xml_data_model
-              GdataAtom.Link.empty
-              (fun link -> { entry with links = link :: entry.links })
-              cs
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "feedLink"; `Namespace ns],
              (GapiCore.AnnotatedTree.Leaf
@@ -416,6 +356,27 @@ struct
       extensions : GdataAtom.GenericExtensions.t;
     }
 
+    let quotaBytesTotal = {
+      GapiLens.get = (fun x -> x.quotaBytesTotal);
+      GapiLens.set = (fun v x -> { x with quotaBytesTotal = v })
+    }
+    let quotaBytesUsed = {
+      GapiLens.get = (fun x -> x.quotaBytesUsed);
+      GapiLens.set = (fun v x -> { x with quotaBytesUsed = v })
+    }
+    let quotaBytesUsedInTrash = {
+      GapiLens.get = (fun x -> x.quotaBytesUsedInTrash);
+      GapiLens.set = (fun v x -> { x with quotaBytesUsedInTrash = v })
+    }
+    let largestChangestamp = {
+      GapiLens.get = (fun x -> x.largestChangestamp);
+      GapiLens.set = (fun v x -> { x with largestChangestamp = v })
+    }
+    let extensions = {
+      GapiLens.get = (fun x -> x.extensions);
+      GapiLens.set = (fun v x -> { x with extensions = v })
+    }
+
     let empty = {
       quotaBytesTotal = 0L;
       quotaBytesUsed = 0L;
@@ -468,8 +429,8 @@ struct
   module Feed =
     GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(DocumentFeedExtensions)
 
-  let get_largest_changestamp feed =
-    feed.Feed.extensions.DocumentFeedExtensions.largestChangestamp
+  let largestChangestamp =
+    Feed.extensions |-- DocumentFeedExtensions.largestChangestamp
 
   let get_documents_prefix namespace =
     if namespace = ns_docs then "docs"
@@ -495,6 +456,9 @@ sig
     target : string;
   }
 
+  val source : (t, string) GapiLens.t
+  val target : (t, string) GapiLens.t
+
   val empty : t
 
   val to_xml_data_model : t -> GdataCore.xml_data_model list
@@ -510,6 +474,15 @@ struct
     source : string;
     target : string;
   }
+
+	let source = {
+		GapiLens.get = (fun x -> x.source);
+		GapiLens.set = (fun v x -> { x with source = v })
+	}
+	let target = {
+		GapiLens.get = (fun x -> x.target);
+		GapiLens.set = (fun v x -> { x with target = v })
+	}
 
   let empty = {
     source = "";
@@ -549,6 +522,15 @@ struct
     featureRate : string;
   }
 
+	let featureName = {
+		GapiLens.get = (fun x -> x.featureName);
+		GapiLens.set = (fun v x -> { x with featureName = v })
+	}
+	let featureRate = {
+		GapiLens.get = (fun x -> x.featureRate);
+		GapiLens.set = (fun v x -> { x with featureRate = v })
+	}
+
   let empty = {
     featureName = "";
     featureRate = "";
@@ -583,6 +565,15 @@ struct
     value : int64;
   }
 
+	let kind = {
+		GapiLens.get = (fun x -> x.kind);
+		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let value = {
+		GapiLens.get = (fun x -> x.value);
+		GapiLens.set = (fun v x -> { x with value = v })
+	}
+
   let empty = {
     kind = "";
     value = 0L;
@@ -614,6 +605,15 @@ struct
     primaryRole : string;
     additionalRoles : string list;
   }
+
+	let primaryRole = {
+		GapiLens.get = (fun x -> x.primaryRole);
+		GapiLens.set = (fun v x -> { x with primaryRole = v })
+	}
+	let additionalRoles = {
+		GapiLens.get = (fun x -> x.additionalRoles);
+		GapiLens.set = (fun v x -> { x with additionalRoles = v })
+	}
 
   let empty = {
     primaryRole = "";
@@ -661,6 +661,15 @@ struct
     additionalRoleSets : AdditionalRoleSet.t list
   }
 
+	let kind = {
+		GapiLens.get = (fun x -> x.kind);
+		GapiLens.set = (fun v x -> { x with kind = v })
+	}
+	let additionalRoleSets = {
+		GapiLens.get = (fun x -> x.additionalRoleSets);
+		GapiLens.set = (fun v x -> { x with additionalRoleSets = v })
+	}
+
   let empty = {
     kind = "";
     additionalRoleSets = []
@@ -696,13 +705,7 @@ struct
   module Entry =
   struct
     type t = {
-      etag : string;
-      id : GdataAtom.atom_id;
-      updated : GdataAtom.atom_updated;
-      categories : GdataAtom.Category.t list;
-      title : GdataAtom.Title.t;
-      links : GdataAtom.Link.t list;
-      authors : GdataAtom.Author.t list;
+      common : GdataAtom.BasicEntry.t;
       largestChangestamp : int;
       remainingChangestamps : int;
       quotaBytesTotal : int64;
@@ -717,14 +720,61 @@ struct
       extensions : GdataAtom.GenericExtensions.t
     }
 
+    let common = {
+      GapiLens.get = (fun x -> x.common);
+      GapiLens.set = (fun v x -> { x with common = v })
+    }
+    let largestChangestamp = {
+      GapiLens.get = (fun x -> x.largestChangestamp);
+      GapiLens.set = (fun v x -> { x with largestChangestamp = v })
+    }
+    let remainingChangestamps = {
+      GapiLens.get = (fun x -> x.remainingChangestamps);
+      GapiLens.set = (fun v x -> { x with remainingChangestamps = v })
+    }
+    let quotaBytesTotal = {
+      GapiLens.get = (fun x -> x.quotaBytesTotal);
+      GapiLens.set = (fun v x -> { x with quotaBytesTotal = v })
+    }
+    let quotaBytesUsed = {
+      GapiLens.get = (fun x -> x.quotaBytesUsed);
+      GapiLens.set = (fun v x -> { x with quotaBytesUsed = v })
+    }
+    let quotaBytesUsedInTrash = {
+      GapiLens.get = (fun x -> x.quotaBytesUsedInTrash);
+      GapiLens.set = (fun v x -> { x with quotaBytesUsedInTrash = v })
+    }
+    let domainSharingPolicy = {
+      GapiLens.get = (fun x -> x.domainSharingPolicy);
+      GapiLens.set = (fun v x -> { x with domainSharingPolicy = v })
+    }
+    let importFormats = {
+      GapiLens.get = (fun x -> x.importFormats);
+      GapiLens.set = (fun v x -> { x with importFormats = v })
+    }
+    let exportFormats = {
+      GapiLens.get = (fun x -> x.exportFormats);
+      GapiLens.set = (fun v x -> { x with exportFormats = v })
+    }
+    let features = {
+      GapiLens.get = (fun x -> x.features);
+      GapiLens.set = (fun v x -> { x with features = v })
+    }
+    let maxUploadSizes = {
+      GapiLens.get = (fun x -> x.maxUploadSizes);
+      GapiLens.set = (fun v x -> { x with maxUploadSizes = v })
+    }
+    let additionalRoleInfos = {
+      GapiLens.get = (fun x -> x.additionalRoleInfos);
+      GapiLens.set = (fun v x -> { x with additionalRoleInfos = v })
+    }
+    let extensions = {
+      GapiLens.get = (fun x -> x.extensions);
+      GapiLens.set = (fun v x -> { x with extensions = v })
+    }
+
     let empty = {
-      etag = "";
-      id = "";
-      updated = GapiDate.epoch;
-      categories = [];
-      title = GdataAtom.Title.empty;
-      links = [];
-      authors = [];
+      common = GdataAtom.BasicEntry.empty;
       largestChangestamp = 0;
       remainingChangestamps = 0;
       quotaBytesTotal = 0L;
@@ -741,13 +791,7 @@ struct
 
     let to_xml_data_model entry =
       GdataAtom.render_element GdataAtom.ns_atom "entry"
-        [GdataAtom.render_attribute GdataAtom.ns_gd "etag" entry.etag;
-         GdataAtom.render_text_element GdataAtom.ns_atom "id" entry.id;
-         GdataAtom.render_date_element GdataAtom.ns_atom "updated" entry.updated;
-         GdataAtom.render_element_list GdataAtom.Category.to_xml_data_model entry.categories;
-         GdataAtom.Title.to_xml_data_model entry.title;
-         GdataAtom.render_element_list GdataAtom.Link.to_xml_data_model entry.links;
-         GdataAtom.render_element_list GdataAtom.Author.to_xml_data_model entry.authors;
+        [GdataAtom.BasicEntry.to_xml_data_model entry.common;
          GdataAtom.render_int_element ns_docs "largestChangestamp" entry.largestChangestamp;
          GdataAtom.render_int_element ns_docs "remainingChangestamps" entry.remainingChangestamps;
          GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesTotal" entry.quotaBytesTotal;
@@ -763,52 +807,16 @@ struct
 
     let of_xml_data_model entry tree =
       match tree with
-          GapiCore.AnnotatedTree.Leaf
-            ([`Attribute; `Name "etag"; `Namespace ns],
-             v) when ns = GdataAtom.ns_gd ->
-            { entry with etag = v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "id"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with id = v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "updated"; `Namespace ns],
-             [GapiCore.AnnotatedTree.Leaf
-                ([`Text], v)]) when ns = GdataAtom.ns_atom ->
-            { entry with updated = GapiDate.of_string v }
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "category"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Category.of_xml_data_model
-              GdataAtom.Category.empty
-              (fun category -> { entry with categories = category :: entry.categories })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "title"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Title.of_xml_data_model
-              GdataAtom.Title.empty
-              (fun title -> { entry with title })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "link"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Link.of_xml_data_model
-              GdataAtom.Link.empty
-              (fun link -> { entry with links = link :: entry.links })
-              cs
-        | GapiCore.AnnotatedTree.Node
-            ([`Element; `Name "author"; `Namespace ns],
-             cs) when ns = GdataAtom.ns_atom ->
-            GdataAtom.parse_children
-              GdataAtom.Author.of_xml_data_model
-              GdataAtom.Author.empty
-              (fun author -> { entry with authors = author :: entry.authors })
-              cs
+          GapiCore.AnnotatedTree.Node
+            ([_; `Name n; `Namespace ns],
+             _)
+        | GapiCore.AnnotatedTree.Leaf
+            ([_; `Name n; `Namespace ns],
+             _) when GdataAtom.BasicEntry.node_matches (n, ns) ->
+            let common =
+              GdataAtom.BasicEntry.of_xml_data_model entry.common tree
+            in
+              { entry with common }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "largestChangestamp"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf

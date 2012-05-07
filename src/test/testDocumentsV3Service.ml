@@ -40,7 +40,10 @@ let test_get_user_metadata () =
        let (entry, session) = get_user_metadata session in
          assert_equal
            "Document List User Metadata"
-           entry.Metadata.Entry.title.GdataAtom.Title.value;
+           (entry
+              |. Metadata.Entry.common
+              |. GdataAtom.BasicEntry.title
+              |. GdataAtom.Title.value);
          TestHelper.assert_not_empty
            "ETag should not be empty"
            session.GapiConversation.Session.etag)

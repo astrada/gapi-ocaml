@@ -1,4 +1,6 @@
 open OUnit
+open GapiUtils.Infix
+open GapiLens.Infix
 open GdataDocumentsV3Model
 
 let test_parse_documents_feed () =
@@ -32,7 +34,7 @@ let test_parse_changes_feed () =
       (GdataUtils.data_to_xml_string tree);
     assert_equal
       5635
-      (Document.get_largest_changestamp feed)
+      (feed |. Document.largestChangestamp)
 
 let test_parse_revisions_feed () =
   let ch = open_in "test_data/test_documents_revisions_feed.xml" in
