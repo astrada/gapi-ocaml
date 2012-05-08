@@ -240,6 +240,50 @@ sig
 
 end
 
+module Archive :
+sig
+  module Conversion : DocumentFormat
+
+  module Entry :
+  sig
+    type t = {
+      common : GdataAtom.BasicEntry.t;
+      archiveNotify : string;
+      archiveStatus : string;
+      quotaBytesUsed : int64;
+      archiveNotifyStatus : string;
+      archiveComplete : GapiDate.t;
+      archiveTotal : int;
+      archiveTotalComplete : int;
+      archiveTotalFailure : int;
+      archiveResourceIds : string list;
+      archiveConversions : Conversion.t list;
+      extensions : GdataAtom.GenericExtensions.t;
+    }
+
+    val common : (t, GdataAtom.BasicEntry.t) GapiLens.t
+    val archiveNotify : (t, string) GapiLens.t
+    val archiveStatus : (t, string) GapiLens.t
+    val quotaBytesUsed : (t, int64) GapiLens.t
+    val archiveNotifyStatus : (t, string) GapiLens.t
+    val archiveComplete : (t, GapiDate.t) GapiLens.t
+    val archiveTotal : (t, int) GapiLens.t
+    val archiveTotalComplete : (t, int) GapiLens.t
+    val archiveTotalFailure : (t, int) GapiLens.t
+    val archiveResourceIds : (t, string list) GapiLens.t
+    val archiveConversions : (t, Conversion.t list) GapiLens.t
+    val extensions : (t, GdataAtom.GenericExtensions.t) GapiLens.t
+
+    include GdataAtom.AtomData with type t := t
+
+  end
+
+  val parse_entry : GdataCore.xml_data_model -> Entry.t
+
+  val archive_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+
+end
+
 module Rel :
 sig
   type t =

@@ -1,7 +1,6 @@
 open GapiUtils.Infix
 open GapiLens.Infix
 
-(* Document data types *)
 let ns_docs = "http://schemas.google.com/docs/2007"
 
 module AclFeedLink = GdataExtensions.MakeFeedLink(GdataACL.Feed)
@@ -10,6 +9,7 @@ let get_documents_prefix namespace =
   if namespace = ns_docs then "docs"
   else GdataACL.get_acl_prefix namespace
 
+(* Revision data type *)
 module Revision =
 struct
   module Entry =
@@ -110,9 +110,11 @@ struct
     GdataAtom.element_to_data_model get_documents_prefix Feed.to_xml_data_model
 
 end
+(* END Revision data type *)
 
 module RevisionsFeedLink = GdataExtensions.MakeFeedLink(Revision.Feed)
 
+(* Document data type *)
 module Document =
 struct
   module Entry =
@@ -447,9 +449,9 @@ struct
     GdataAtom.element_to_data_model get_documents_prefix Feed.to_xml_data_model
 
 end
-(* END Documents data types *)
+(* END Documents data type *)
 
-(* Metadata data types *)
+(* Metadata data type *)
 module type DocumentFormat =
 sig
   type t = {
@@ -911,7 +913,199 @@ struct
     GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
 
 end
-(* END Metadata data types *)
+(* END Metadata data type *)
+
+(* Archive data type *)
+module Archive =
+struct
+  module Conversion =
+    MakeDocumentFormat(struct let element_name = "archiveConversion" end)
+
+  module Entry =
+  struct
+    type t = {
+      common : GdataAtom.BasicEntry.t;
+      archiveNotify : string;
+      archiveStatus : string;
+      quotaBytesUsed : int64;
+      archiveNotifyStatus : string;
+      archiveComplete : GapiDate.t;
+      archiveTotal : int;
+      archiveTotalComplete : int;
+      archiveTotalFailure : int;
+      archiveResourceIds : string list;
+      archiveConversions : Conversion.t list;
+      extensions : GdataAtom.GenericExtensions.t
+    }
+
+    let common = {
+      GapiLens.get = (fun x -> x.common);
+      GapiLens.set = (fun v x -> { x with common = v })
+    }
+    let archiveNotify = {
+      GapiLens.get = (fun x -> x.archiveNotify);
+      GapiLens.set = (fun v x -> { x with archiveNotify = v })
+    }
+    let archiveStatus = {
+      GapiLens.get = (fun x -> x.archiveStatus);
+      GapiLens.set = (fun v x -> { x with archiveStatus = v })
+    }
+    let quotaBytesUsed = {
+      GapiLens.get = (fun x -> x.quotaBytesUsed);
+      GapiLens.set = (fun v x -> { x with quotaBytesUsed = v })
+    }
+    let archiveNotifyStatus = {
+      GapiLens.get = (fun x -> x.archiveNotifyStatus);
+      GapiLens.set = (fun v x -> { x with archiveNotifyStatus = v })
+    }
+    let archiveComplete = {
+      GapiLens.get = (fun x -> x.archiveComplete);
+      GapiLens.set = (fun v x -> { x with archiveComplete = v })
+    }
+    let archiveTotal = {
+      GapiLens.get = (fun x -> x.archiveTotal);
+      GapiLens.set = (fun v x -> { x with archiveTotal = v })
+    }
+    let archiveTotalComplete = {
+      GapiLens.get = (fun x -> x.archiveTotalComplete);
+      GapiLens.set = (fun v x -> { x with archiveTotalComplete = v })
+    }
+    let archiveTotalFailure = {
+      GapiLens.get = (fun x -> x.archiveTotalFailure);
+      GapiLens.set = (fun v x -> { x with archiveTotalFailure = v })
+    }
+    let archiveResourceIds = {
+      GapiLens.get = (fun x -> x.archiveResourceIds);
+      GapiLens.set = (fun v x -> { x with archiveResourceIds = v })
+    }
+    let archiveConversions = {
+      GapiLens.get = (fun x -> x.archiveConversions);
+      GapiLens.set = (fun v x -> { x with archiveConversions = v })
+    }
+    let extensions = {
+      GapiLens.get = (fun x -> x.extensions);
+      GapiLens.set = (fun v x -> { x with extensions = v })
+    }
+
+    let empty = {
+      common = GdataAtom.BasicEntry.empty;
+      archiveNotify = "";
+      archiveStatus = "";
+      quotaBytesUsed = 0L;
+      archiveNotifyStatus = "";
+      archiveComplete = GapiDate.epoch;
+      archiveTotal = 0;
+      archiveTotalComplete = 0;
+      archiveTotalFailure = 0;
+      archiveResourceIds = [];
+      archiveConversions = [];
+      extensions = GdataAtom.GenericExtensions.empty
+    }
+
+    let to_xml_data_model entry =
+      GdataAtom.render_element GdataAtom.ns_atom "entry"
+        [GdataAtom.BasicEntry.to_xml_data_model entry.common;
+         GdataAtom.render_text_element ns_docs "archiveNotify" entry.archiveNotify;
+         GdataAtom.render_text_element ns_docs "archiveStatus" entry.archiveStatus;
+         GdataAtom.render_int64_element GdataAtom.ns_gd "quotaBytesUsed" entry.quotaBytesUsed;
+         GdataAtom.render_text_element ns_docs "archiveNotifyStatus" entry.archiveNotifyStatus;
+         GdataAtom.render_date_element ns_docs "archiveComplete" entry.archiveComplete;
+         GdataAtom.render_int_element ns_docs "archiveTotal" entry.archiveTotal;
+         GdataAtom.render_int_element ns_docs "archiveTotalComplete" entry.archiveTotalComplete;
+         GdataAtom.render_int_element ns_docs "archiveTotalFailure" entry.archiveTotalFailure;
+         GdataAtom.render_element_list (GdataAtom.render_text_element ns_docs "archiveResourceId") entry.archiveResourceIds;
+         GdataAtom.render_element_list Conversion.to_xml_data_model entry.archiveConversions;
+         GdataAtom.GenericExtensions.to_xml_data_model entry.extensions]
+
+    let of_xml_data_model entry tree =
+      match tree with
+          GapiCore.AnnotatedTree.Node
+            ([_; `Name n; `Namespace ns],
+             _)
+        | GapiCore.AnnotatedTree.Leaf
+            ([_; `Name n; `Namespace ns],
+             _) when GdataAtom.BasicEntry.node_matches (n, ns) ->
+            let common =
+              GdataAtom.BasicEntry.of_xml_data_model entry.common tree
+            in
+              { entry with common }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveNotify"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveNotify = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveStatus"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveStatus = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "quotaBytesUsed"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = GdataAtom.ns_gd ->
+            { entry with quotaBytesUsed = Int64.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveNotifyStatus"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveNotifyStatus = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveComplete"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveComplete = GapiDate.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveTotal"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveTotal = int_of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveTotalComplete"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveTotalComplete = int_of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveTotalFailure"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveTotalFailure = int_of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveResourceId"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with archiveResourceIds =
+                v :: entry.archiveResourceIds }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "archiveConversion"; `Namespace ns],
+             cs) when ns = ns_docs ->
+          GdataAtom.parse_children
+            Conversion.of_xml_data_model
+            Conversion.empty
+            (fun conv -> { entry with archiveConversions =
+                             conv :: entry.archiveConversions })
+            cs
+        | GapiCore.AnnotatedTree.Leaf
+            ([`Attribute; `Name _; `Namespace ns],
+             _) when ns = Xmlm.ns_xmlns ->
+            entry
+        | extension ->
+            let extensions =
+              GdataAtom.GenericExtensions.of_xml_data_model
+                entry.extensions
+                extension
+            in
+              { entry with extensions }
+
+  end
+
+  let parse_entry =
+    GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
+
+  let archive_entry_to_data_model =
+    GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
+
+end
+(* END Archive data type *)
 
 (* Utilities *)
 module Rel =
