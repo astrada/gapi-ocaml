@@ -33,6 +33,8 @@ sig
       and type link_t = GdataAtom.Link.t
       and type extensions_t = GdataAtom.GenericExtensions.t
 
+  val revisions_feed_to_data_model : Feed.t -> GdataCore.xml_data_model
+
 end
 
 module RevisionsFeedLink : GdataExtensions.FeedLink
@@ -58,7 +60,7 @@ sig
       deleted : bool;
       removed : bool;
       changestamp : int;
-      extensions : GdataAtom.GenericExtensions.t;
+      batch : GdataBatch.BatchExtensions.t;
     }
 
     val common : (t, GdataAtom.BasicEntry.t) GapiLens.t
@@ -76,7 +78,7 @@ sig
     val deleted : (t, bool) GapiLens.t
     val removed : (t, bool) GapiLens.t
     val changestamp : (t, int) GapiLens.t
-    val extensions : (t, GdataAtom.GenericExtensions.t) GapiLens.t
+    val batch : (t, GdataBatch.BatchExtensions.t) GapiLens.t
 
     include GdataAtom.AtomData with type t := t
 
@@ -108,8 +110,6 @@ sig
       and type extensions_t = DocumentFeedExtensions.t
 
   val largestChangestamp : (Feed.t, int) GapiLens.t
-
-  val get_documents_prefix : string -> string
 
   val parse_document_entry : GdataCore.xml_data_model -> Entry.t
 

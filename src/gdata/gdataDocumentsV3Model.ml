@@ -6,6 +6,10 @@ let ns_docs = "http://schemas.google.com/docs/2007"
 
 module AclFeedLink = GdataExtensions.MakeFeedLink(GdataACL.Feed)
 
+let get_documents_prefix namespace =
+  if namespace = ns_docs then "docs"
+  else GdataACL.get_acl_prefix namespace
+
 module Revision =
 struct
   module Entry =
@@ -102,6 +106,9 @@ struct
   module Feed =
     GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(GdataAtom.GenericExtensions)
 
+  let revisions_feed_to_data_model =
+    GdataAtom.element_to_data_model get_documents_prefix Feed.to_xml_data_model
+
 end
 
 module RevisionsFeedLink = GdataExtensions.MakeFeedLink(Revision.Feed)
@@ -129,7 +136,7 @@ struct
       removed : bool;
       changestamp : int;
 
-      extensions : GdataAtom.GenericExtensions.t 
+      batch : GdataBatch.BatchExtensions.t;
     }
 
     let common = {
@@ -192,9 +199,9 @@ struct
       GapiLens.get = (fun x -> x.changestamp);
       GapiLens.set = (fun v x -> { x with changestamp = v })
     }
-    let extensions = {
-      GapiLens.get = (fun x -> x.extensions);
-      GapiLens.set = (fun v x -> { x with extensions = v })
+    let batch = {
+      GapiLens.get = (fun x -> x.batch);
+      GapiLens.set = (fun v x -> { x with batch = v })
     }
 
     let empty = {
@@ -213,7 +220,7 @@ struct
       removed = false;
       deleted = false;
       changestamp = 0;
-      extensions = GdataAtom.GenericExtensions.empty
+      batch = GdataBatch.BatchExtensions.empty;
     }
 
     let to_xml_data_model entry =
@@ -233,7 +240,7 @@ struct
          GdataAtom.render_bool_empty_element ns_docs "removed" entry.removed;
          GdataAtom.render_bool_empty_element ns_docs "deleted" entry.deleted;
          GdataAtom.render_int_value ns_docs "changestamp" entry.changestamp;
-         GdataAtom.GenericExtensions.to_xml_data_model entry.extensions]
+         GdataBatch.BatchExtensions.to_xml_data_model entry.batch]
 
     let of_xml_data_model entry tree =
       match tree with
@@ -336,13 +343,11 @@ struct
             ([`Attribute; `Name _; `Namespace ns],
              _) when ns = Xmlm.ns_xmlns ->
             entry
-        | extension ->
-            let extensions =
-              GdataAtom.GenericExtensions.of_xml_data_model
-                entry.extensions
-                extension
+        | e ->
+            let batch =
+              GdataBatch.BatchExtensions.of_xml_data_model entry.batch e
             in
-              { entry with extensions }
+              { entry with batch }
 
   end
 
@@ -431,10 +436,6 @@ struct
 
   let largestChangestamp =
     Feed.extensions |-- DocumentFeedExtensions.largestChangestamp
-
-  let get_documents_prefix namespace =
-    if namespace = ns_docs then "docs"
-    else GdataACL.get_acl_prefix namespace
 
   let parse_document_entry =
     GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
@@ -907,7 +908,7 @@ struct
     GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
   let metadata_entry_to_data_model =
-    GdataAtom.element_to_data_model Document.get_documents_prefix Entry.to_xml_data_model
+    GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
 
 end
 (* END Metadata data types *)
