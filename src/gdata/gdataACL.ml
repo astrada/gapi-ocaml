@@ -41,6 +41,10 @@ struct
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = ns_gAcl ->
           { role with role = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name _; `Namespace ns],
+           _) when ns = Xmlm.ns_xmlns ->
+          role
       | e ->
           GdataUtils.unexpected e
 
@@ -82,6 +86,10 @@ struct
           ([`Attribute; `Name "value"; `Namespace ""],
            v) ->
           { scope with value = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name _; `Namespace ns],
+           _) when ns = Xmlm.ns_xmlns ->
+          scope
       | e ->
           GdataUtils.unexpected e
 
@@ -168,6 +176,11 @@ struct
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "role"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
+              ([`Attribute; `Name "value"; `Namespace ""],
+               v)])
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "role"; `Namespace ns],
+           [_; GapiCore.AnnotatedTree.Leaf
               ([`Attribute; `Name "value"; `Namespace ""],
                v)]) when ns = ns_gAcl ->
           { entry with role = v }
