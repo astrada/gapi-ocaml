@@ -48,6 +48,7 @@ sig
       common : GdataAtom.BasicEntry.t;
       description : string;
       resourceId : string;
+      modifiedByMeDate : GapiDate.t;
       lastModifiedBy : GdataExtensions.LastModifiedBy.t;
       lastViewed : GapiDate.t;
       aclFeedLink : AclFeedLink.t;
@@ -59,6 +60,7 @@ sig
       suggestedFilename : string;
       deleted : bool;
       removed : bool;
+      size : int64;
       changestamp : int;
       batch : GdataBatch.BatchExtensions.t;
     }
@@ -66,6 +68,7 @@ sig
     val common : (t, GdataAtom.BasicEntry.t) GapiLens.t
     val description : (t, string) GapiLens.t
     val resourceId : (t, string) GapiLens.t
+    val modifiedByMeDate : (t, GapiDate.t) GapiLens.t
     val lastModifiedBy : (t, GdataExtensions.LastModifiedBy.t) GapiLens.t
     val lastViewed : (t, GapiDate.t) GapiLens.t
     val aclFeedLink : (t, AclFeedLink.t) GapiLens.t
@@ -77,6 +80,7 @@ sig
     val suggestedFilename : (t, string) GapiLens.t
     val deleted : (t, bool) GapiLens.t
     val removed : (t, bool) GapiLens.t
+    val size : (t, int64) GapiLens.t
     val changestamp : (t, int) GapiLens.t
     val batch : (t, GdataBatch.BatchExtensions.t) GapiLens.t
 

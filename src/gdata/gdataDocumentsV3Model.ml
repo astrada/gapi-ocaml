@@ -123,6 +123,7 @@ struct
       common : GdataAtom.BasicEntry.t;
       description : string;
       resourceId : string;
+      modifiedByMeDate : GapiDate.t;
       lastModifiedBy : GdataExtensions.LastModifiedBy.t;
       lastViewed : GapiDate.t;
       aclFeedLink : AclFeedLink.t;
@@ -136,6 +137,7 @@ struct
       (* change entry data *)
       deleted : bool;
       removed : bool;
+      size : int64;
       changestamp : int;
 
       batch : GdataBatch.BatchExtensions.t;
@@ -152,6 +154,10 @@ struct
     let resourceId = {
       GapiLens.get = (fun x -> x.resourceId);
       GapiLens.set = (fun v x -> { x with resourceId = v })
+    }
+    let modifiedByMeDate = {
+      GapiLens.get = (fun x -> x.modifiedByMeDate);
+      GapiLens.set = (fun v x -> { x with modifiedByMeDate = v })
     }
     let lastModifiedBy = {
       GapiLens.get = (fun x -> x.lastModifiedBy);
@@ -197,6 +203,10 @@ struct
       GapiLens.get = (fun x -> x.removed);
       GapiLens.set = (fun v x -> { x with removed = v })
     }
+    let size = {
+      GapiLens.get = (fun x -> x.size);
+      GapiLens.set = (fun v x -> { x with size = v })
+    }
     let changestamp = {
       GapiLens.get = (fun x -> x.changestamp);
       GapiLens.set = (fun v x -> { x with changestamp = v })
@@ -210,6 +220,7 @@ struct
       common = GdataAtom.BasicEntry.empty;
       description = "";
       resourceId = "";
+      modifiedByMeDate = GapiDate.epoch;
       lastModifiedBy = GdataExtensions.LastModifiedBy.empty;
       lastViewed = GapiDate.epoch;
       aclFeedLink = AclFeedLink.empty;
@@ -221,6 +232,7 @@ struct
       suggestedFilename = "";
       removed = false;
       deleted = false;
+      size = 0L;
       changestamp = 0;
       batch = GdataBatch.BatchExtensions.empty;
     }
@@ -230,6 +242,7 @@ struct
         [GdataAtom.BasicEntry.to_xml_data_model entry.common;
          GdataAtom.render_text_element ns_docs "description" entry.description;
          GdataAtom.render_text_element GdataAtom.ns_gd "resourceId" entry.resourceId;
+         GdataAtom.render_date_element GdataAtom.ns_gd "modifiedByMeDate" entry.modifiedByMeDate;
          GdataExtensions.LastModifiedBy.to_xml_data_model entry.lastModifiedBy;
          GdataAtom.render_date_element GdataAtom.ns_gd "lastViewed" entry.lastViewed;
          AclFeedLink.to_xml_data_model entry.aclFeedLink;
@@ -241,6 +254,7 @@ struct
          GdataAtom.render_text_element ns_docs "suggestedFilename" entry.suggestedFilename;
          GdataAtom.render_bool_empty_element ns_docs "removed" entry.removed;
          GdataAtom.render_bool_empty_element ns_docs "deleted" entry.deleted;
+         GdataAtom.render_int64_element ns_docs "size" entry.size;
          GdataAtom.render_int_value ns_docs "changestamp" entry.changestamp;
          GdataBatch.BatchExtensions.to_xml_data_model entry.batch]
 
@@ -266,6 +280,11 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = GdataAtom.ns_gd ->
             { entry with resourceId = v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "modifiedByMeDate"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with modifiedByMeDate = GapiDate.of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "lastModifiedBy"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
@@ -335,6 +354,11 @@ struct
             ([`Element; `Name "deleted"; `Namespace ns],
              []) when ns = GdataAtom.ns_gd ->
             { entry with deleted = true }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "size"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with size = Int64.of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "changestamp"; `Namespace ns],
              [GapiCore.AnnotatedTree.Leaf
