@@ -108,7 +108,7 @@ val default : t
   connect_timeout = None;
   compress = true;
   auth = NoAuth;
-  upload_chunk_size = 524288; (* 512KB *)
+  upload_chunk_size = 10485760; (* 10MB *)
  }]}
 
 *)
@@ -123,7 +123,7 @@ val default_debug : t
   connect_timeout = None;
   compress = false;
   auth = NoAuth;
-  upload_chunk_size = 524288; (* 512KB *)
+  upload_chunk_size = 10485760; (* 10MB *)
  }]}
 
 *)

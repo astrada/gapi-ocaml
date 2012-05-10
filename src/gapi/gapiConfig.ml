@@ -96,7 +96,7 @@ let default = {
   connect_timeout = None;
   compress = true;
   auth = NoAuth;
-  upload_chunk_size = 524288;
+  upload_chunk_size = 10485760;
 }
 
 let default_debug = {
@@ -106,6 +106,6 @@ let default_debug = {
   connect_timeout = None;
   compress = false;
   auth = NoAuth;
-  upload_chunk_size = 524288;
+  upload_chunk_size = 10485760;
 }
 
