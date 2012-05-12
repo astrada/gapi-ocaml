@@ -123,6 +123,7 @@ let update_session headers session =
 let request
       ?header_list
       ?post_data
+      ?media_download
       http_method
       session
       url
@@ -131,7 +132,9 @@ let request
   let parse_header data =
     Queue.add data header_queue;
     String.length data in
-  let pipe = GapiPipe.OcamlnetPipe.create () in
+  let out_channel =
+    Option.map GapiMediaResource.create_out_channel media_download in
+  let pipe = GapiPipe.OcamlnetPipe.create ?out_channel () in
   let writer data =
     GapiPipe.OcamlnetPipe.write_string pipe data;
     String.length data in
@@ -219,7 +222,7 @@ let with_session
       config
       curl_state
       interact =
-  let debug_function = 
+  let debug_function =
     Option.map
       (fun df ->
          match df with

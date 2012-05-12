@@ -43,7 +43,8 @@ let parse_response
             else
               raise (StartUpload (location, session))
       | 201 (* Created *)
-      | 204 (* No Content *) ->
+      | 204 (* No Content *)
+      | 206 (* Partial Content *) ->
           parse_output pipe
       | 302 (* Found *) ->
           let url = get_location () in
@@ -114,6 +115,7 @@ let single_request
       ?version
       ?etag
       ?upload_state
+      ?media_download
       request_type
       url
       parse_output
@@ -175,12 +177,18 @@ let single_request
       (GapiMediaResource.generate_upload_headers http_method)
       []
       upload_state in
+  let download_headers =
+    Option.map_default
+      GapiMediaResource.generate_download_headers
+      []
+      media_download in
   let header_list =
-    headers @ upload_headers
+    headers @ upload_headers @ download_headers
   in
     GapiConversation.request
       ~header_list
       ?post_data
+      ?media_download
       http_method
       session
       url
@@ -216,6 +224,7 @@ let gapi_request
       ?version
       ?etag
       ?media_source
+      ?media_download
       ?(parse_error = GapiConversation.parse_error)
       request_type
       url
@@ -223,14 +232,10 @@ let gapi_request
       session =
   let rec request_loop
         ?post_data
-        ?version
-        ?etag
         ?current_upload_state
         request_type
         request_number
         url
-        parse_output
-        parse_error
         session =
     try
       let verified_session =
@@ -247,6 +252,7 @@ let gapi_request
           ?version
           ?etag
           ?upload_state:current_upload_state
+          ?media_download
           request_type
           url
           parse_output
@@ -257,13 +263,9 @@ let gapi_request
           if url <> target then
             request_loop
               ?post_data
-              ?version
-              ?etag
               request_type
               (succ request_number)
               target
-              parse_output
-              parse_error
               new_session
           else
             failwith ("Redirection loop detected: url=" ^ url)
@@ -274,14 +276,10 @@ let gapi_request
             let refreshed_session = refresh_oauth2_token new_session in
               request_loop
                 ?post_data
-                ?version
-                ?etag
                 ?current_upload_state
                 request_type
                 (succ request_number)
                 url
-                parse_output
-                parse_error
                 refreshed_session
       | ResumeIncomplete (range, location, new_session) ->
           let target = if location = "" then url else location in
@@ -294,14 +292,10 @@ let gapi_request
           in
             request_loop
               ~post_data:new_post_data
-              ?version
-              ?etag
               ~current_upload_state:new_upload_state
               Update
               0
               target
-              parse_output
-              parse_error
               new_session
       | StartUpload (location, new_session) ->
           let target = if location = "" then url else location in
@@ -313,14 +307,10 @@ let gapi_request
           in
             request_loop
               ~post_data:new_post_data
-              ?version
-              ?etag
               ~current_upload_state:new_upload_state
               Update
               0
               target
-              parse_output
-              parse_error
               new_session
       | (ServiceUnavailable new_session) as e->
           if request_number > 4 then
@@ -338,14 +328,10 @@ let gapi_request
               GapiUtils.wait_exponential_backoff request_number;
               request_loop
                 ?post_data:new_post_data
-                ?version
-                ?etag
                 ?current_upload_state:new_upload_state
                 request_type
                 (succ request_number)
                 url
-                parse_output
-                parse_error
                 new_session
   in
 
@@ -363,13 +349,9 @@ let gapi_request
   in
     request_loop
       ?post_data
-      ?version
-      ?etag
       ?current_upload_state
       request_type
       0
       url
-      parse_output
-      parse_error
       session
 

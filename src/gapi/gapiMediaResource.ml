@@ -1,5 +1,57 @@
 open GapiUtils.Infix
 
+type destination =
+    TargetFile of string
+  | StringBuffer of Buffer.t
+  | ArrayBuffer of (char,
+                    Bigarray.int8_unsigned_elt,
+                    Bigarray.c_layout) Bigarray.Array1.t
+
+type download = {
+  destination : destination;
+  range_spec : string;
+}
+
+let destination = {
+  GapiLens.get = (fun x -> x.destination);
+  GapiLens.set = (fun v x -> { x with destination = v })
+}
+let range_spec = {
+  GapiLens.get = (fun x -> x.range_spec);
+  GapiLens.set = (fun v x -> { x with range_spec = v })
+}
+
+let create_out_channel download =
+  match download.destination with
+    TargetFile filename ->
+      new Netchannels.output_channel (open_out filename)
+  | StringBuffer buf ->
+      new Netchannels.output_buffer buf
+  | ArrayBuffer arr ->
+      let n = Bigarray.Array1.dim arr in
+      let netbuffer = Netbuffer.create n in
+      let onclose () =
+        Netbuffer.blit_to_memory netbuffer 0 arr 0 n
+      in
+        new Netchannels.output_netbuffer ~onclose netbuffer
+
+let generate_download_headers download =
+  match download.range_spec with
+      "" ->
+        []
+    | spec ->
+        [GapiCore.Header.Range spec]
+
+let generate_range_spec ranges =
+  let n_to_s = Option.map_default Int64.to_string "" in
+  let range_strings =
+    List.map
+      (fun (range_start, range_end) ->
+         (n_to_s range_start) ^ "-" ^ (n_to_s range_end))
+      ranges in
+  let range_string = String.concat "," range_strings in
+    "bytes=" ^ range_string
+
 type source =
     File of string
   | String of string

@@ -462,16 +462,36 @@ let resumable_upload
   let query_parameters =
     QueryParameters.merge_parameters ~convert:false ?ocr ?ocr_language
       ?sourceLanguage ?targetLanguage ()
-    |> Option.map QueryParameters.to_key_value_list
+      |> Option.map QueryParameters.to_key_value_list
   in
-     GapiService.service_request
-       ~media_source
-       ~version
-       ~request_type:GapiRequest.Create
-       ?query_parameters
-       url
-       parse_document_entry
-       session
+    GapiService.service_request
+      ~media_source
+      ~version
+      ~request_type:GapiRequest.Create
+      ?query_parameters
+      url
+      parse_document_entry
+      session
+
+let partial_download
+      ?ranges
+      url
+      media_destination
+      session =
+  let range_spec =
+    Option.map_default GapiMediaResource.generate_range_spec "" ranges in
+  let media_download = {
+    GapiMediaResource.destination = media_destination;
+    range_spec;
+  }
+  in
+    GapiService.service_request
+      ~media_download
+      ~version
+      ~request_type:GapiRequest.Query
+      url
+      GapiRequest.parse_empty_response
+      session
 
 let get_revisions
       ?etag

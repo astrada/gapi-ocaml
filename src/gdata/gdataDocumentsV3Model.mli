@@ -84,6 +84,9 @@ sig
     val changestamp : (t, int) GapiLens.t
     val batch : (t, GdataBatch.BatchExtensions.t) GapiLens.t
 
+    val id : (t , string) GapiLens.t
+    val content : (t , GdataAtom.Content.t) GapiLens.t
+
     include GdataAtom.AtomData with type t := t
 
   end

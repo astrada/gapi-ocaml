@@ -1,48 +1,54 @@
-module type Pipe =
-sig
-  type t
-
-  val create : unit -> t
-
-  val read_byte : t -> int
-  val read_string : t -> int -> string
-  val read_line : t -> string
-
-  val write_byte : t -> int -> unit
-  val write_string : t -> string -> unit
-
-  val end_reading : t -> unit
-  val end_writing : t -> unit
-end
-
 module OcamlnetPipe =
 struct
-  type t = Netchannels.pipe
+  type t = {
+    netpipe : Netchannels.pipe;
+    outfilter : Netchannels.output_filter option;
+  }
 
-  let create () =
-    new Netchannels.pipe ()
+  let create ?out_channel () =
+    let netpipe = new Netchannels.pipe () in
+    let outfilter =
+      Option.map
+        (fun ch ->
+           new Netchannels.output_filter 
+             netpipe
+             ch)
+        out_channel
+    in
+      { netpipe;
+        outfilter;
+      }
 
   let read_byte p =
-    p#input_byte ()
+    p.netpipe#input_byte ()
 
   let read_string p len =
     let result = String.create len in
-      p#input result 0 len;
+      ignore (p.netpipe#input result 0 len);
       result
 
   let read_line p =
-    p#input_line ()
+    p.netpipe#input_line ()
+
+  let out_ch p =
+    Option.default
+      (p.netpipe :> Netchannels.out_obj_channel)
+      p.outfilter
 
   let write_byte p b =
-    p#output_byte b
+    let ch = out_ch p in
+      ch#output_byte b
 
   let write_string p s =
-    p#output_string s
+    let ch = out_ch p in
+      ch#output_string s
 
   let end_reading p =
-    p#close_in ()
+    p.netpipe#close_in ()
 
   let end_writing p =
-    p#close_out ()
+    p.netpipe#close_out ();
+    Option.may (fun ch -> ch#close_out ()) p.outfilter
+
 end
 

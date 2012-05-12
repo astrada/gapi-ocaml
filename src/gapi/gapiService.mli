@@ -9,6 +9,7 @@ val service_request :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?media_download:GapiMediaResource.download ->
   ?request_type:GapiRequest.request_type ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -22,6 +23,7 @@ val service_request_with_data :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?media_download:GapiMediaResource.download ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
@@ -62,6 +64,7 @@ end
 val get :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?media_download:GapiMediaResource.download ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GapiConversation.Session.t ->

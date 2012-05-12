@@ -147,6 +147,39 @@ let test_resumable_upload () =
            "Resource ID should not be empty"
            entry.Document.Entry.resourceId)
 
+let test_partial_download () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.category ^= "pdf"
+         |> QueryParameters.max_results ^= 1 in
+       let (feed, session) =
+         query_documents_list ~parameters session in
+         if List.length feed.Document.Feed.entries > 0 then
+           let entry = feed |. Document.Feed.entries |. GapiLens.head in
+           let download_link = entry
+             |. Document.Entry.content
+             |. GdataAtom.Content.src in
+           let filename = Filename.temp_file "gdatatest" "part" in
+           let media_destination =
+             GapiMediaResource.TargetFile filename in
+           let ((), _) =
+             partial_download
+               ~ranges:[(Some 0L, Some 99L)]
+               download_link
+               media_destination
+               session
+           in
+             assert_bool
+               ("File " ^ filename ^ " should exists")
+               (Sys.file_exists filename);
+             assert_equal
+               ~msg:("File " ^ filename ^ " should be 100 byte-long")
+               100
+               ((Unix.stat filename).Unix.st_size);
+             Sys.remove filename)
+
 let test_get_revisions () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
@@ -192,8 +225,9 @@ let suite = "Documents List v3 Service test" >:::
    "test_query_changes" >:: test_query_changes;
    "test_query_changes_expand_acl" >:: test_query_changes_expand_acl;
    "test_query_documents_list" >:: test_query_documents_list;
-   "test_query_text_documents" >:: test_query_text_documents;*)
-   "test_resumable_upload" >:: test_resumable_upload;
+   "test_query_text_documents" >:: test_query_text_documents;
+   "test_resumable_upload" >:: test_resumable_upload;*)
+   "test_partial_download" >:: test_partial_download;
    (*"test_get_user_metadata" >:: test_get_user_metadata;
    "test_get_remaining_changestamps" >:: test_get_remaining_changestamps;
    "test_all_changes" >:: test_all_changes;

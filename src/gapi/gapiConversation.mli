@@ -80,6 +80,7 @@ end
 val request :
   ?header_list:GapiCore.Header.t list ->
   ?post_data:GapiCore.PostData.t ->
+  ?media_download:GapiMediaResource.download ->
   GapiCore.HttpMethod.t ->
   Session.t ->
   string ->

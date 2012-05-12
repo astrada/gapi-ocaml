@@ -1,3 +1,27 @@
+type destination =
+    TargetFile of string
+  | StringBuffer of Buffer.t
+  | ArrayBuffer of (char,
+                    Bigarray.int8_unsigned_elt,
+                    Bigarray.c_layout) Bigarray.Array1.t
+
+type download = {
+  destination : destination;
+  range_spec : string;
+}
+
+val destination : (download, destination) GapiLens.t
+val range_spec : (download, string) GapiLens.t
+
+val create_out_channel :
+  download -> Netchannels.out_obj_channel
+
+val generate_download_headers :
+  download -> GapiCore.Header.t list
+
+val generate_range_spec :
+  (int64 option * int64 option) list -> string
+
 type source =
     File of string
   | String of string

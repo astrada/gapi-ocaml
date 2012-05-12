@@ -216,6 +216,9 @@ struct
       GapiLens.set = (fun v x -> { x with batch = v })
     }
 
+    let id = common |-- GdataAtom.BasicEntry.id
+    let content = common |-- GdataAtom.BasicEntry.content
+
     let empty = {
       common = GdataAtom.BasicEntry.empty;
       description = "";

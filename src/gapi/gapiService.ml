@@ -18,6 +18,7 @@ let service_request
       ?etag
       ?query_parameters
       ?media_source
+      ?media_download
       ?(request_type = GapiRequest.Query)
       url
       parse_response
@@ -33,6 +34,7 @@ let service_request
       ?version
       ?etag
       ?media_source
+      ?media_download
       ~parse_error
       request_type
       query_url
@@ -46,6 +48,7 @@ let service_request_with_data
       ?etag
       ?query_parameters
       ?media_source
+      ?media_download
       data
       url
       parse_response
@@ -58,6 +61,7 @@ let service_request_with_data
         ?etag
         ?query_parameters
         ?media_source
+        ?media_download
         ~request_type
         url
         parse_response
@@ -113,12 +117,14 @@ end
 let get
       ?etag
       ?query_parameters
+      ?media_download
       url
       parse_response
       session =
   service_request
     ?etag
     ?query_parameters
+    ?media_download
     ~request_type:GapiRequest.Query
     url
     parse_response
