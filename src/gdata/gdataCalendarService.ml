@@ -102,10 +102,10 @@ let parse_event_entry =
   GdataUtils.parse_xml_response GdataCalendarEvent.parse_calendar_event_entry
 
 let parse_acl_feed =
-  GdataUtils.parse_xml_response GdataACL.Feed.parse_feed
+  GdataUtils.parse_xml_response GdataACL.parse_feed
 
 let parse_acl_entry =
-  GdataUtils.parse_xml_response GdataACL.parse_acl_entry
+  GdataUtils.parse_xml_response GdataACL.parse_entry
 
 let get_url_etag links etag =
   let url = GdataCalendar.find_url `Edit links in
@@ -322,7 +322,7 @@ let create_acl
       session =
   let url = GdataCalendar.find_url `Acl calendar_entry.GdataCalendar.Entry.links in
     GdataService.create
-      GdataACL.acl_entry_to_data_model 
+      GdataACL.entry_to_data_model 
       ~version
       acl_entry
       url
@@ -334,7 +334,7 @@ let update_acl
       session =
   let (url, etag) = get_url_etag_acl entry in
     GdataService.update
-      GdataACL.acl_entry_to_data_model 
+      GdataACL.entry_to_data_model 
       ~version
       ?etag
       entry
