@@ -43,6 +43,10 @@ struct
       GapiLens.set = (fun v x -> { x with extensions = v })
     }
 
+    let id = common |-- GdataAtom.BasicEntry.id
+    let content = common |-- GdataAtom.BasicEntry.content
+    let links = common |-- GdataAtom.BasicEntry.links
+
     let empty = {
       common = GdataAtom.BasicEntry.empty;
       publish = false;
@@ -217,7 +221,9 @@ struct
     }
 
     let id = common |-- GdataAtom.BasicEntry.id
+    let etag = common |-- GdataAtom.BasicEntry.id
     let content = common |-- GdataAtom.BasicEntry.content
+    let links = common |-- GdataAtom.BasicEntry.links
 
     let empty = {
       common = GdataAtom.BasicEntry.empty;
@@ -1149,8 +1155,8 @@ struct
   let to_string l  =
     match l with
         `Parent -> ns_docs ^ "#parent"
-      | `Thumbnail -> ns_docs ^ "#thumbnail"
-      | `Revisions -> ns_docs ^ "#revisions"
+      | `Thumbnail -> ns_docs ^ "/thumbnail"
+      | `Revisions -> ns_docs ^ "/revisions"
       | `AltPost -> ns_docs ^ "#alt-post"
       | `Icon -> ns_docs ^ "#icon"
       | `AltEditMedia -> ns_docs ^ "#alt-edit-media"

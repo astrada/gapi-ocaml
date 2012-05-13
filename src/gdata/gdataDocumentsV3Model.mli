@@ -24,6 +24,10 @@ sig
     val publishOutsideDomain : (t, bool) GapiLens.t
     val extensions : (t, GdataAtom.GenericExtensions.t) GapiLens.t
 
+    val id : (t, string) GapiLens.t
+    val content : (t, GdataAtom.Content.t) GapiLens.t
+    val links : (t, GdataAtom.Link.t list) GapiLens.t
+
     include GdataAtom.AtomData with type t := t
 
   end
@@ -85,7 +89,9 @@ sig
     val batch : (t, GdataBatch.BatchExtensions.t) GapiLens.t
 
     val id : (t , string) GapiLens.t
+    val etag : (t, string) GapiLens.t
     val content : (t , GdataAtom.Content.t) GapiLens.t
+    val links : (t, GdataAtom.Link.t list) GapiLens.t
 
     include GdataAtom.AtomData with type t := t
 
