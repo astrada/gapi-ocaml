@@ -5,6 +5,7 @@ val authorization_code_url :
   ?base_url:string ->
   ?access_type:string ->
   ?approval_prompt:string ->
+  ?state:string ->
   redirect_uri:string ->
   scope:string list ->
   response_type:string ->

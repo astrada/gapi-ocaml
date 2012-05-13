@@ -113,7 +113,7 @@ let test_oauth1_revoke_invalid_token () =
        let consumer_secret = get "oa1_cons_secret" in
        let oauth_consumer_key = get "oa1_cons_key" in
          assert_raises
-           (Failure "Error: <HTML><HEAD><TITLE>Invalid AuthSub token.</TITLE></HEAD><BODY BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\"><H1>Invalid AuthSub token.</H1><H2>Error 403</H2></BODY></HTML> (HTTP response code: 403)")
+           (Failure "Error: <HTML><HEAD><TITLE>Invalid token: Cannot parse AuthSub token: dummy token</TITLE></HEAD><BODY BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\"><H1>Invalid token: Cannot parse AuthSub token: dummy token</H1><H2>Error 403</H2></BODY></HTML> (HTTP response code: 403)")
            (fun () ->
               GapiOAuth1.revoke_token
                 ~consumer_secret
@@ -126,11 +126,12 @@ let test_oauth2_authorization_url () =
   let url = GapiOAuth2.authorization_code_url
               ~redirect_uri:"urn:ietf:wg:oauth:2.0:oob"
               ~scope:[GapiCalendarV3Service.scope]
+              ~state:"abcde12345"
               ~response_type:"code"
               "dummy key" in
     assert_equal
       ~printer:(fun x -> x)
-      "https://accounts.google.com/o/oauth2/auth?client_id=dummy+key&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&access_type=offline&approval_prompt=force"
+      "https://accounts.google.com/o/oauth2/auth?client_id=dummy+key&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&access_type=offline&approval_prompt=force&state=abcde12345"
       url
 
 let test_invalid_oauth2_access_token () =

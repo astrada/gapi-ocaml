@@ -43,7 +43,8 @@ let service_tests =
 let build_service_test_list service =
   let service_suite =
     match service with
-        "calendar" -> [TestCalendarService.suite;
+        "auth" -> [TestAuth.suite]
+      | "calendar" -> [TestCalendarService.suite;
                        TestMonadic.suite]
       | "calendar-v3" -> [TestCalendarV3Service.suite]
       | "plus" -> [TestPlusV1Service.suite]
@@ -84,7 +85,7 @@ let _ =
       ["-service",
          Arg.String (fun service ->
                        test_list := build_service_test_list service),
-         "svc Google service to test (calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline, blogger, siteVerification, adsense, bigquery, documents)";
+         "svc Google service to test (auth, calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline, blogger, siteVerification, adsense, bigquery, documents)";
        "-all",
          Arg.Unit (fun () -> test_list := model_tests @ service_tests),
          " Run all tests"]) in

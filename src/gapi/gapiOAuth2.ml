@@ -2,10 +2,13 @@ let authorization_code_url
       ?(base_url = "https://accounts.google.com/o/oauth2/auth")
       ?(access_type = "offline")
       ?(approval_prompt = "force")
+      ?state
       ~redirect_uri
       ~scope
       ~response_type
       client_id =
+  let scope_param =
+    Option.map_default (fun s -> [("state", s)]) [] state in
   let scope_string = String.concat " " scope in
   let fields =
     [("client_id", client_id);
@@ -13,7 +16,8 @@ let authorization_code_url
      ("scope", scope_string);
      ("response_type", response_type);
      ("access_type", access_type);
-     ("approval_prompt", approval_prompt)] in
+     ("approval_prompt", approval_prompt)]
+    @ scope_param in
   let query_string = Netencoding.Url.mk_url_encoded_parameters fields in
     base_url ^ "?" ^ query_string
 
