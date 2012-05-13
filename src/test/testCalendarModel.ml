@@ -213,7 +213,7 @@ let test_acl_entry_to_data_model () =
                (fun () -> input_byte ch)
                GdataACL.Feed.parse_feed in
   let entry = List.nth feed.GdataACL.Feed.entries 1 in
-  let tree = GdataACL.acl_entry_to_data_model entry in
+  let tree = GdataACL.entry_to_data_model entry in
     TestHelper.assert_equal_file
       "test_data/test_acl_entry_to_data_model.xml"
       (GdataUtils.data_to_xml_string tree)

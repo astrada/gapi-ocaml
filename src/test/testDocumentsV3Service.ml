@@ -161,7 +161,7 @@ let test_partial_download () =
            let download_link = entry
              |. Document.Entry.content
              |. GdataAtom.Content.src in
-           let filename = Filename.temp_file "gdatatest" "part" in
+           let filename = Filename.temp_file "gdata" "part" in
            let media_destination =
              GapiMediaResource.TargetFile filename in
            let ((), _) =
@@ -172,7 +172,7 @@ let test_partial_download () =
                session
            in
              assert_bool
-               ("File " ^ filename ^ " should exists")
+               ("File " ^ filename ^ " should exist")
                (Sys.file_exists filename);
              assert_equal
                ~msg:("File " ^ filename ^ " should be 100 byte-long")
@@ -180,7 +180,33 @@ let test_partial_download () =
                ((Unix.stat filename).Unix.st_size);
              Sys.remove filename)
 
-let test_get_revisions () =
+let test_download_document () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.category ^= "document"
+         |> QueryParameters.max_results ^= 1 in
+       let (feed, session) =
+         query_documents_list ~parameters session in
+         if List.length feed.Document.Feed.entries > 0 then
+           let entry = feed |. Document.Feed.entries |. GapiLens.head in
+           let filename = Filename.temp_file "gdata" "document.odt" in
+           let media_destination =
+             GapiMediaResource.TargetFile filename in
+           let ((), _) =
+             download_document
+               ~format:"odt"
+               entry
+               media_destination
+               session
+           in
+             assert_bool
+               ("File " ^ filename ^ " should exist")
+               (Sys.file_exists filename);
+             Sys.remove filename)
+
+let test_query_revisions () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
@@ -190,13 +216,47 @@ let test_get_revisions () =
                          (fun e ->
                             e.Document.Entry.revisionsFeedLink.RevisionsFeedLink.href <> "")
                          feed.Document.Feed.entries in
-           let (revisions, session) = get_revisions entry session in
+           let (revisions, session) = query_revisions entry session in
              assert_equal
                "Document Revisions"
                revisions.Revision.Feed.title.GdataAtom.Title.value;
              TestHelper.assert_not_empty
                "ETag should not be empty"
                session.GapiConversation.Session.etag
+         with Not_found -> ())
+
+let test_download_revision () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.category ^= "document"
+         |> QueryParameters.max_results ^= 1 in
+       let (feed, session) =
+         query_documents_list ~parameters session in
+         try
+           let entry = List.find
+                         (fun e ->
+                            e.Document.Entry.revisionsFeedLink.RevisionsFeedLink.href <> "")
+                         feed.Document.Feed.entries in
+           let (revisions, session) = query_revisions entry session in
+           let revision = revisions |. Revision.Feed.entries |. GapiLens.head in
+           let filename = Filename.temp_file "gdata" "revision.odt" in
+           let media_destination =
+             GapiMediaResource.TargetFile filename in
+           let ((), _) =
+             download_revision
+               ~format:"odt"
+               revision
+               media_destination
+               session
+           in
+             assert_bool
+               ("File " ^ filename ^ " should exist")
+               (Sys.file_exists filename);
+             (*
+             Sys.remove filename
+              *)
          with Not_found -> ())
 
 let test_get_acl () =
@@ -226,12 +286,11 @@ let suite = "Documents List v3 Service test" >:::
    "test_query_changes_expand_acl" >:: test_query_changes_expand_acl;
    "test_query_documents_list" >:: test_query_documents_list;
    "test_query_text_documents" >:: test_query_text_documents;
-   "test_resumable_upload" >:: test_resumable_upload;*)
+   "test_resumable_upload" >:: test_resumable_upload;
    "test_partial_download" >:: test_partial_download;
-   (*"test_get_user_metadata" >:: test_get_user_metadata;
-   "test_get_remaining_changestamps" >:: test_get_remaining_changestamps;
-   "test_all_changes" >:: test_all_changes;
-   "test_get_revisions" >:: test_get_revisions;
-   "test_get_acl" >:: test_get_acl;*)
+   "test_download_document" >:: test_download_document;
+   "test_query_revisions" >:: test_query_revisions;
+   "test_download_revision" >:: test_download_revision;*)
+   "test_get_acl" >:: test_get_acl;
   ]
 

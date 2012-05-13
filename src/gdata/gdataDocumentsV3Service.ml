@@ -245,7 +245,7 @@ struct
     exportFormat = "";
     gid = "";
     new_revision = false;
-    send_notification_emails = false;
+    send_notification_emails = true;
     include_profile_info = false;
   }
 
@@ -394,21 +394,105 @@ let docs_scope = "https://docs.googleusercontent.com/"
 let spreadsheets_scope = "https://spreadsheets.google.com/feeds/"
 let all_scopes = feed_scope ^ " " ^ docs_scope ^ " " ^ spreadsheets_scope
 
+let get_url ?(rel = `Edit) links_lens entry =
+  entry |. links_lens |> GdataAtom.find_url rel
+
+let get_etag etag_lens entry =
+  entry |. etag_lens |> GdataUtils.string_to_option
+
+let get_url_etag_document ?rel entry =
+  let url = get_url Document.Entry.links ?rel entry in
+  let etag = get_etag Document.Entry.etag entry in
+    (url, etag)
+
 let parse_documents_feed =
-  GdataUtils.parse_xml_response Document.Feed.parse_feed
+  GdataUtils.parse_xml_response Document.parse_feed
 
 let parse_document_entry =
-  GdataUtils.parse_xml_response Document.parse_document_entry
+  GdataUtils.parse_xml_response Document.parse_entry
 
 let parse_metadata_entry =
-  GdataUtils.parse_xml_response Metadata.parse_metadata_entry
+  GdataUtils.parse_xml_response Metadata.parse_entry
 
 let parse_revisions_feed =
-  GdataUtils.parse_xml_response Revision.Feed.parse_feed
+  GdataUtils.parse_xml_response Revision.parse_feed
 
-let parse_acl_feed =
-  GdataUtils.parse_xml_response GdataACL.Feed.parse_feed
+(* Upload *)
+let resumable_upload
+      ?(convert = false)
+      ?ocr
+      ?ocr_language
+      ?sourceLanguage
+      ?targetLanguage
+      ?new_revision
+      url
+      media_source
+      session =
+  let query_parameters =
+    QueryParameters.merge_parameters ~convert ?ocr ?ocr_language
+        ?sourceLanguage ?targetLanguage ?new_revision ()
+      |> Option.map QueryParameters.to_key_value_list
+  in
+    GapiService.service_request
+      ~media_source
+      ~version
+      ~request_type:GapiRequest.Create
+      ?query_parameters
+      url
+      parse_document_entry
+      session
 
+(* Download *)
+let download_resource
+      ?query_parameters
+      ?ranges
+      url
+      media_destination
+      session =
+  let range_spec =
+    Option.map_default GapiMediaResource.generate_range_spec "" ranges in
+  let media_download = {
+    GapiMediaResource.destination = media_destination;
+    range_spec;
+  } in
+    GapiService.service_request
+      ?query_parameters
+      ~media_download
+      ~version
+      ~request_type:GapiRequest.Query
+      url
+      GapiRequest.parse_empty_response
+      session
+
+let partial_download
+      ?ranges
+      url
+      media_destination
+      session =
+  download_resource
+    ?ranges
+    url
+    media_destination
+    session
+
+let download_content
+      ?format
+      ?gid
+      content
+      media_destination
+      session =
+  let url = content |. GdataAtom.Content.src in
+  let query_parameters =
+    QueryParameters.merge_parameters ?format ?exportFormat:format ?gid ()
+      |> Option.map QueryParameters.to_key_value_list
+  in
+    download_resource
+      ?query_parameters
+      url
+      media_destination
+      session
+
+(* Metadata *)
 let query_metadata
       ?(url = "https://docs.google.com/feeds/metadata/default")
       ?etag
@@ -423,6 +507,7 @@ let query_metadata
       parse_metadata_entry
       session
 
+(* Changes *)
 let query_changes
       ?(url = "https://docs.google.com/feeds/default/private/changes")
       ?etag
@@ -437,8 +522,11 @@ let query_changes
       parse_documents_feed
       session
 
+(* Documents *)
+let documents_base_url = "https://docs.google.com/feeds/default/private/full"
+
 let query_documents_list
-      ?(url = "https://docs.google.com/feeds/default/private/full")
+      ?(url = documents_base_url)
       ?etag
       ?parameters
       session =
@@ -451,69 +539,308 @@ let query_documents_list
       parse_documents_feed
       session
 
-let resumable_upload
-      ?ocr
-      ?ocr_language
-      ?sourceLanguage
-      ?targetLanguage
-      url
-      media_source
+let refresh_document
+      entry
       session =
-  let query_parameters =
-    QueryParameters.merge_parameters ~convert:false ?ocr ?ocr_language
-      ?sourceLanguage ?targetLanguage ()
-      |> Option.map QueryParameters.to_key_value_list
-  in
-    GapiService.service_request
-      ~media_source
+  let (url, etag) = get_url_etag_document ~rel:`Self entry in
+    GdataService.read
       ~version
-      ~request_type:GapiRequest.Create
-      ?query_parameters
+      ?etag
+      entry
       url
       parse_document_entry
       session
 
-let partial_download
-      ?ranges
-      url
-      media_destination
+let create_document
+      ?parameters
+      ?media_source
+      feed
+      entry
       session =
-  let range_spec =
-    Option.map_default GapiMediaResource.generate_range_spec "" ranges in
-  let media_download = {
-    GapiMediaResource.destination = media_destination;
-    range_spec;
-  }
+  let query_parameters = QueryParameters.to_query_parameters parameters in
+  let url =
+    feed |. Document.Feed.links |> find_url `ResumableCreateMedia
   in
-    GapiService.service_request
-      ~media_download
+    GdataService.create
+      Document.entry_to_data_model 
       ~version
-      ~request_type:GapiRequest.Query
+      ?query_parameters
+      ?media_source
+      entry
       url
-      GapiRequest.parse_empty_response
+      parse_document_entry
       session
 
-let get_revisions
+let copy_document
+      ?(url = documents_base_url)
+      entry
+      session =
+  let id = entry |. Document.Entry.id in
+  let resourceId = entry |. Document.Entry.resourceId in
+  let entry' = entry
+    |> Document.Entry.id ^= id
+    |> Document.Entry.resourceId ^= resourceId
+  in
+    GdataService.create
+      Document.entry_to_data_model 
+      ~version
+      entry'
+      url
+      parse_document_entry
+      session
+
+let update_document
+      entry
+      session =
+  let (url, etag) = get_url_etag_document entry in
+    GdataService.update
+      Document.entry_to_data_model
+      ~version
       ?etag
+      entry
+      url
+      parse_document_entry
+      session
+
+let patch_document
+      entry
+      session =
+  let (url, etag) = get_url_etag_document entry in
+    GdataService.patch
+      Document.entry_to_data_model
+      ~version
+      ?etag
+      entry
+      url
+      parse_document_entry
+      session
+
+let download_document
+      ?format
+      ?gid
+      entry
+      media_destination
+      session =
+  let content = entry
+    |. Document.Entry.content
+  in
+    download_content
+      ?format
+      ?gid
+      content
+      media_destination
+      session
+
+let delete_document
+      ?delete
+      entry
+      session =
+  let (url, etag) = get_url_etag_document entry in
+  let query_parameters =
+    QueryParameters.merge_parameters ?delete ()
+      |> Option.map QueryParameters.to_key_value_list
+  in
+    GdataService.delete
+      ~version
+      ?etag
+      ?query_parameters
+      url
+      session
+
+let documents_batch_request
+      target_feed
+      batch_feed
+      session =
+  let url = target_feed |. Document.Feed.links |> find_url `Batch in
+    GdataService.batch_request
+      Document.feed_to_data_model
+      ~version
+      batch_feed
+      url
+      parse_documents_feed
+      session
+
+(* Revisions *)
+let query_revisions
+      ?etag
+      ?parameters
       entry
       session =
   let url = entry.Document.Entry.revisionsFeedLink.RevisionsFeedLink.href in
+  let query_parameters = QueryParameters.to_query_parameters parameters in
     GdataService.query
       ~version
       ?etag
+      ?query_parameters
       url
       parse_revisions_feed
       session
 
+let download_revision
+      ?format
+      ?gid
+      entry
+      media_destination
+      session =
+  let content = entry |. Revision.Entry.content in
+    download_content
+      ?format
+      ?gid
+      content
+      media_destination
+      session
+
+      (*
+let update_revision
+      entry
+      session =
+  let url = get_url Revision.Entry.links entry in
+    GdataService.update
+      Revision.revisions_entry_to_data_model
+      ~version
+      ?etag
+      entry
+      url
+      parse_revision_entry
+      session
+
+let patch_revision
+      entry
+      session =
+  let url = get_url Revision.Entry.links entry in
+    GdataService.patch
+      Revision.revisions_entry_to_data_model
+      ~version
+      ?etag
+      entry
+      url
+      parse_revision_entry
+      session
+       *)
+
+let delete_revision
+      entry
+      session =
+  let url = get_url Revision.Entry.links entry in
+    GdataService.delete
+      ~version
+      url
+      session
+
+(* Folders *)
+let root_folder_id = "folder:root"
+
+let build_folder_contents_url
+      ?(base_url = documents_base_url)
+      folder_id =
+  GapiUtils.add_path_to_url ~encoded:false [folder_id; "contents"] base_url
+
+let query_folder_contents
+      ?base_url
+      ?etag
+      ?parameters
+      folder_id
+      session =
+  let url = build_folder_contents_url ?base_url folder_id in
+  let query_parameters = QueryParameters.to_query_parameters parameters in
+    GdataService.query
+      ~version
+      ?etag
+      ?query_parameters
+      url
+      parse_documents_feed
+      session
+
+let create_subfolder
+      ?base_url
+      ?etag
+      parent_folder_id
+      entry
+      session =
+  let url = build_folder_contents_url ?base_url parent_folder_id in
+    GdataService.create
+      Document.entry_to_data_model 
+      ~version
+      entry
+      url
+      parse_document_entry
+      session
+
+let add_to_folder
+      ?base_url
+      ?etag
+      parent_folder_id
+      entry
+      session =
+  let url = build_folder_contents_url ?base_url parent_folder_id in
+    GdataService.create
+      Document.entry_to_data_model 
+      ~version
+      entry
+      url
+      parse_document_entry
+      session
+
+(* ACL *)
 let get_acl
       ?etag
       entry
       session =
   let url = entry.Document.Entry.aclFeedLink.AclFeedLink.href in
-    GdataService.query
+    GdataACLService.get_acl
       ~version
       ?etag
       url
-      parse_acl_feed
       session
+
+let refresh_acl
+      entry
+      session =
+  GdataACLService.refresh_acl
+    ~version
+    entry
+    session
+
+let create_acl
+      ~send_notification_emails
+      acl_entry
+      document_entry
+      session =
+  let url = document_entry |. Document.Entry.links |> find_url `Acl in
+  let query_parameters =
+    QueryParameters.merge_parameters ~send_notification_emails ()
+      |> Option.map QueryParameters.to_key_value_list
+  in
+    GdataACLService.create_acl
+      ~version
+      ?query_parameters
+      acl_entry
+      url
+      session
+
+let update_acl
+      entry
+      session =
+  GdataACLService.update_acl
+    ~version
+    entry
+    session
+
+let delete_acl
+      entry
+      session =
+  GdataACLService.delete_acl
+    ~version
+    entry
+    session
+
+let acl_batch_request
+      target_feed
+      batch_feed
+      session =
+  GdataACLService.acl_batch_request
+    ~version
+    target_feed
+    batch_feed
+    session
 
