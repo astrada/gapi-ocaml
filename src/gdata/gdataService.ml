@@ -22,6 +22,8 @@ let query
 let create
       data_to_tree
       ?version
+      ?query_parameters
+      ?media_source
       data
       url
       parse_response
@@ -30,6 +32,8 @@ let create
     GapiRequest.Create
     (data_to_post data_to_tree)
     ?version
+    ?query_parameters
+    ?media_source
     data
     url
     parse_response
@@ -56,6 +60,7 @@ let update
       data_to_tree
       ?version
       ?etag
+      ?media_source
       data
       url
       parse_response
@@ -65,6 +70,7 @@ let update
     (data_to_post data_to_tree)
     ?version
     ?etag
+    ?media_source
     data
     url
     parse_response
@@ -74,6 +80,7 @@ let patch
       data_to_tree
       ?version
       ?etag
+      ?media_source
       data
       url
       parse_response
@@ -83,6 +90,7 @@ let patch
     (data_to_post data_to_tree)
     ?version
     ?etag
+    ?media_source
     data
     url
     parse_response
@@ -91,11 +99,13 @@ let patch
 let delete
       ?version
       ?etag
+      ?query_parameters
       url
       session =
   GapiService.service_request
     ?version
     ?etag
+    ?query_parameters
     ~request_type:GapiRequest.Delete
     url
     GapiRequest.parse_empty_response
