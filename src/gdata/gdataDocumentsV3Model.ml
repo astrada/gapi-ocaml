@@ -110,7 +110,15 @@ struct
   module Feed =
     GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(GdataAtom.GenericExtensions)
 
-  let revisions_feed_to_data_model =
+  let parse_entry =
+    GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
+
+  let parse_feed = Feed.parse_feed
+
+  let entry_to_data_model =
+    GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
+
+  let feed_to_data_model =
     GdataAtom.element_to_data_model get_documents_prefix Feed.to_xml_data_model
 
 end
@@ -472,13 +480,15 @@ struct
   let largestChangestamp =
     Feed.extensions |-- DocumentFeedExtensions.largestChangestamp
 
-  let parse_document_entry =
+  let parse_entry =
     GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
-  let document_entry_to_data_model =
+  let parse_feed = Feed.parse_feed
+
+  let entry_to_data_model =
     GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
 
-  let document_feed_to_data_model =
+  let feed_to_data_model =
     GdataAtom.element_to_data_model get_documents_prefix Feed.to_xml_data_model
 
 end
@@ -939,10 +949,10 @@ struct
 
   end
 
-  let parse_metadata_entry =
+  let parse_entry =
     GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
-  let metadata_entry_to_data_model =
+  let entry_to_data_model =
     GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
 
 end
@@ -1134,7 +1144,7 @@ struct
   let parse_entry =
     GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
-  let archive_entry_to_data_model =
+  let entry_to_data_model =
     GdataAtom.element_to_data_model get_documents_prefix Entry.to_xml_data_model
 
 end

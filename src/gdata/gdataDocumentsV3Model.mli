@@ -37,7 +37,13 @@ sig
       and type link_t = GdataAtom.Link.t
       and type extensions_t = GdataAtom.GenericExtensions.t
 
-  val revisions_feed_to_data_model : Feed.t -> GdataCore.xml_data_model
+  val parse_entry : GdataCore.xml_data_model -> Entry.t
+
+  val parse_feed : GdataCore.xml_data_model -> Feed.t
+
+  val entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+
+  val feed_to_data_model : Feed.t -> GdataCore.xml_data_model
 
 end
 
@@ -124,11 +130,13 @@ sig
 
   val largestChangestamp : (Feed.t, int) GapiLens.t
 
-  val parse_document_entry : GdataCore.xml_data_model -> Entry.t
+  val parse_entry : GdataCore.xml_data_model -> Entry.t
 
-  val document_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+  val parse_feed : GdataCore.xml_data_model -> Feed.t
 
-  val document_feed_to_data_model : Feed.t -> GdataCore.xml_data_model
+  val entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+
+  val feed_to_data_model : Feed.t -> GdataCore.xml_data_model
 
 end
 
@@ -247,9 +255,9 @@ sig
 
   end
 
-  val parse_metadata_entry : GdataCore.xml_data_model -> Entry.t
+  val parse_entry : GdataCore.xml_data_model -> Entry.t
 
-  val metadata_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+  val entry_to_data_model : Entry.t -> GdataCore.xml_data_model
 
 end
 
@@ -293,7 +301,7 @@ sig
 
   val parse_entry : GdataCore.xml_data_model -> Entry.t
 
-  val archive_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+  val entry_to_data_model : Entry.t -> GdataCore.xml_data_model
 
 end
 

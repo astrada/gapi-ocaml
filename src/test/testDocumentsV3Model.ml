@@ -7,8 +7,8 @@ let test_parse_documents_feed () =
   let ch = open_in "test_data/test_documents_feed.xml" in
   let feed = GdataUtils.parse_xml
                (fun () -> input_byte ch)
-               Document.Feed.parse_feed in
-  let tree = Document.document_feed_to_data_model feed in
+               Document.parse_feed in
+  let tree = Document.feed_to_data_model feed in
     TestHelper.assert_equal_file
       "test_data/test_parse_documents_feed.xml"
       (GdataUtils.data_to_xml_string tree)
@@ -17,8 +17,8 @@ let test_parse_user_metadata_entry () =
   let ch = open_in "test_data/test_documents_user_metadata.xml" in
   let entry = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
-                Metadata.parse_metadata_entry in
-  let tree = Metadata.metadata_entry_to_data_model entry in
+                Metadata.parse_entry in
+  let tree = Metadata.entry_to_data_model entry in
     TestHelper.assert_equal_file
       "test_data/test_parse_user_metadata_entry.xml"
       (GdataUtils.data_to_xml_string tree)
@@ -27,8 +27,8 @@ let test_parse_changes_feed () =
   let ch = open_in "test_data/test_documents_changes_feed.xml" in
   let feed = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
-                Document.Feed.parse_feed in
-  let tree = Document.document_feed_to_data_model feed in
+                Document.parse_feed in
+  let tree = Document.feed_to_data_model feed in
     TestHelper.assert_equal_file
       "test_data/test_parse_changes_feed.xml"
       (GdataUtils.data_to_xml_string tree);
@@ -40,8 +40,8 @@ let test_parse_revisions_feed () =
   let ch = open_in "test_data/test_documents_revisions_feed.xml" in
   let feed = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
-                Revision.Feed.parse_feed in
-  let tree = Revision.revisions_feed_to_data_model feed in
+                Revision.parse_feed in
+  let tree = Revision.feed_to_data_model feed in
     TestHelper.assert_equal_file
       "test_data/test_parse_revisions_feed.xml"
       (GdataUtils.data_to_xml_string tree)
@@ -50,8 +50,8 @@ let test_parse_acl_feed () =
   let ch = open_in "test_data/test_documents_acl_feed.xml" in
   let feed = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
-                GdataACL.Feed.parse_feed in
-  let tree = GdataACL.acl_feed_to_data_model feed in
+                GdataACL.parse_feed in
+  let tree = GdataACL.feed_to_data_model feed in
     TestHelper.assert_equal_file
       "test_data/test_parse_acl_feed.xml"
       (GdataUtils.data_to_xml_string tree)
@@ -61,7 +61,7 @@ let test_parse_archive_entry () =
   let feed = GdataUtils.parse_xml
                 (fun () -> input_byte ch)
                 Archive.parse_entry in
-  let tree = Archive.archive_entry_to_data_model feed in
+  let tree = Archive.entry_to_data_model feed in
     TestHelper.assert_equal_file
       "test_data/test_parse_archive_entry.xml"
       (GdataUtils.data_to_xml_string tree)
