@@ -1,3 +1,7 @@
+let string_to_option = function
+    "" -> None
+  | s -> Some s
+
 let unexpected e =
   match e with
       GapiCore.AnnotatedTree.Leaf (metadata, _) ->

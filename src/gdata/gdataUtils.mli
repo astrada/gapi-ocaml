@@ -1,3 +1,6 @@
+val string_to_option :
+  string -> string option
+
 val unexpected : GdataCore.xml_data_model -> 'a
 
 val build_namespace_table :
