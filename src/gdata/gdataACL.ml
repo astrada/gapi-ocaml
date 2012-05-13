@@ -214,16 +214,18 @@ let get_acl_prefix namespace =
   if namespace = ns_gAcl then "gAcl"
   else GdataExtensions.get_extensions_prefix namespace
 
-let parse_acl_entry =
+let parse_entry =
   GdataAtom.data_model_to_entry Entry.of_xml_data_model Entry.empty
 
-let acl_entry_to_data_model =
+let entry_to_data_model =
   GdataAtom.element_to_data_model get_acl_prefix Entry.to_xml_data_model
 
 module Feed =
   GdataAtom.MakeFeed(Entry)(GdataAtom.Link)(GdataAtom.GenericExtensions)
 
-let acl_feed_to_data_model =
+let parse_feed = Feed.parse_feed
+
+let feed_to_data_model =
   GdataAtom.element_to_data_model get_acl_prefix Feed.to_xml_data_model
 
 (* Utilities *)

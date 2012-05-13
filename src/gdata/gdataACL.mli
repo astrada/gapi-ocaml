@@ -1,4 +1,4 @@
-(** Google Data Protocol ACLs.
+(** Google Data Protocol ACLs data model.
   *)
 
 val ns_gAcl : string
@@ -57,15 +57,17 @@ sig
 
 end
 
-val parse_acl_entry : GdataCore.xml_data_model -> Entry.t
+val parse_entry : GdataCore.xml_data_model -> Entry.t
 
-val acl_entry_to_data_model : Entry.t -> GdataCore.xml_data_model
+val entry_to_data_model : Entry.t -> GdataCore.xml_data_model
 
 module Feed : GdataAtom.Feed
   with type entry_t = Entry.t
     and type link_t = GdataAtom.Link.t
 
-val acl_feed_to_data_model : Feed.t -> GdataCore.xml_data_model
+val parse_feed : GdataCore.xml_data_model -> Feed.t
+
+val feed_to_data_model : Feed.t -> GdataCore.xml_data_model
 
 module Rel :
 sig
