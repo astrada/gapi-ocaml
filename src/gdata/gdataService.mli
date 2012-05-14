@@ -34,6 +34,7 @@ val update :
   ('a -> GdataCore.xml_data_model) ->
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
   'a ->
   string ->
@@ -45,6 +46,7 @@ val patch :
   ('a -> GdataCore.xml_data_model) ->
   ?version:string ->
   ?etag:string ->
+  ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
   'a ->
   string ->

@@ -60,6 +60,7 @@ let update
       data_to_tree
       ?version
       ?etag
+      ?query_parameters
       ?media_source
       data
       url
@@ -70,6 +71,7 @@ let update
     (data_to_post data_to_tree)
     ?version
     ?etag
+    ?query_parameters
     ?media_source
     data
     url
@@ -80,6 +82,7 @@ let patch
       data_to_tree
       ?version
       ?etag
+      ?query_parameters
       ?media_source
       data
       url
@@ -90,6 +93,7 @@ let patch
     (data_to_post data_to_tree)
     ?version
     ?etag
+    ?query_parameters
     ?media_source
     data
     url
