@@ -157,7 +157,8 @@ val partial_download :
   ?ranges:(int64 option * int64 option) list ->
   string ->
   GapiMediaResource.destination ->
-  GapiConversation.Session.t -> unit * GapiConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
 val query_metadata :
   ?url:string ->
@@ -180,15 +181,19 @@ val query_documents_list :
   GapiConversation.Session.t ->
   GdataDocumentsV3Model.Document.Feed.t * GapiConversation.Session.t
 
+val get_resumable_create_media_link :
+  GapiConversation.Session.t ->
+  string * GapiConversation.Session.t
+
 val refresh_document :
   GdataDocumentsV3Model.Document.Entry.t ->
   GapiConversation.Session.t ->
   GdataDocumentsV3Model.Document.Entry.t * GapiConversation.Session.t
 
 val create_document :
+  ?url:string ->
   ?parameters:QueryParameters.t ->
   ?media_source:GapiMediaResource.t ->
-  GdataDocumentsV3Model.Document.Feed.t ->
   GdataDocumentsV3Model.Document.Entry.t ->
   GapiConversation.Session.t ->
   GdataDocumentsV3Model.Document.Entry.t * GapiConversation.Session.t
@@ -200,11 +205,8 @@ val copy_document :
   GdataDocumentsV3Model.Document.Entry.t * GapiConversation.Session.t
 
 val update_document :
-  GdataDocumentsV3Model.Document.Entry.t ->
-  GapiConversation.Session.t ->
-  GdataDocumentsV3Model.Document.Entry.t * GapiConversation.Session.t
-
-val patch_document :
+  ?new_revision:bool ->
+  ?media_source:GapiMediaResource.t ->
   GdataDocumentsV3Model.Document.Entry.t ->
   GapiConversation.Session.t ->
   GdataDocumentsV3Model.Document.Entry.t * GapiConversation.Session.t
@@ -236,16 +238,28 @@ val query_revisions :
   GapiConversation.Session.t ->
   GdataDocumentsV3Model.Revision.Feed.t * GapiConversation.Session.t
 
+val refresh_revision :
+  GdataDocumentsV3Model.Revision.Entry.t ->
+  GapiConversation.Session.t ->
+  GdataDocumentsV3Model.Revision.Entry.t * GapiConversation.Session.t
+
 val download_revision :
   ?format:string ->
   ?gid:string ->
   GdataDocumentsV3Model.Revision.Entry.t ->
   GapiMediaResource.destination ->
-  GapiConversation.Session.t -> unit * GapiConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
+
+val update_revision :
+  GdataDocumentsV3Model.Revision.Entry.t ->
+  GapiConversation.Session.t ->
+  GdataDocumentsV3Model.Revision.Entry.t * GapiConversation.Session.t
 
 val delete_revision :
   GdataDocumentsV3Model.Revision.Entry.t ->
-  GapiConversation.Session.t -> unit * GapiConversation.Session.t
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
 val root_folder_id : string
 

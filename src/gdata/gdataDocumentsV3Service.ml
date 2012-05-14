@@ -395,7 +395,7 @@ let spreadsheets_scope = "https://spreadsheets.google.com/feeds/"
 let all_scopes = feed_scope ^ " " ^ docs_scope ^ " " ^ spreadsheets_scope
 
 let get_url ?(rel = `Edit) links_lens entry =
-  entry |. links_lens |> GdataAtom.find_url rel
+  entry |. links_lens |> find_url rel
 
 let get_etag etag_lens entry =
   entry |. etag_lens |> GdataUtils.string_to_option
@@ -416,6 +416,9 @@ let parse_metadata_entry =
 
 let parse_revisions_feed =
   GdataUtils.parse_xml_response Revision.parse_feed
+
+let parse_revision_entry =
+  GdataUtils.parse_xml_response Revision.parse_entry
 
 (* Upload *)
 let resumable_upload
@@ -539,6 +542,16 @@ let query_documents_list
       parse_documents_feed
       session
 
+let get_resumable_create_media_link session =
+  let parameters = QueryParameters.default
+    |> QueryParameters.max_results ^= 1 in
+  let (feed, session) =
+    query_documents_list ~parameters session in
+  let url =
+    feed |. Document.Feed.links |> find_url `ResumableCreateMedia
+  in
+    (url, session)
+
 let refresh_document
       entry
       session =
@@ -552,15 +565,12 @@ let refresh_document
       session
 
 let create_document
+      ?(url = documents_base_url)
       ?parameters
       ?media_source
-      feed
       entry
       session =
   let query_parameters = QueryParameters.to_query_parameters parameters in
-  let url =
-    feed |. Document.Feed.links |> find_url `ResumableCreateMedia
-  in
     GdataService.create
       Document.entry_to_data_model 
       ~version
@@ -590,26 +600,23 @@ let copy_document
       session
 
 let update_document
+      ?new_revision
+      ?media_source
       entry
       session =
-  let (url, etag) = get_url_etag_document entry in
+  let rel =
+    Option.map (fun _ -> `ResumableEditMedia) media_source in
+  let (url, etag) = get_url_etag_document ?rel entry in
+  let query_parameters =
+    QueryParameters.merge_parameters ?new_revision ()
+      |> Option.map QueryParameters.to_key_value_list
+  in
     GdataService.update
       Document.entry_to_data_model
       ~version
       ?etag
-      entry
-      url
-      parse_document_entry
-      session
-
-let patch_document
-      entry
-      session =
-  let (url, etag) = get_url_etag_document entry in
-    GdataService.patch
-      Document.entry_to_data_model
-      ~version
-      ?etag
+      ?query_parameters
+      ?media_source
       entry
       url
       parse_document_entry
@@ -676,6 +683,17 @@ let query_revisions
       parse_revisions_feed
       session
 
+let refresh_revision
+      entry
+      session =
+  let url = get_url ~rel:`Self Revision.Entry.links entry in
+    GdataService.read
+      ~version
+      entry
+      url
+      parse_revision_entry
+      session
+
 let download_revision
       ?format
       ?gid
@@ -690,33 +708,17 @@ let download_revision
       media_destination
       session
 
-      (*
 let update_revision
       entry
       session =
   let url = get_url Revision.Entry.links entry in
     GdataService.update
-      Revision.revisions_entry_to_data_model
+      Revision.entry_to_data_model
       ~version
-      ?etag
       entry
       url
       parse_revision_entry
       session
-
-let patch_revision
-      entry
-      session =
-  let url = get_url Revision.Entry.links entry in
-    GdataService.patch
-      Revision.revisions_entry_to_data_model
-      ~version
-      ?etag
-      entry
-      url
-      parse_revision_entry
-      session
-       *)
 
 let delete_revision
       entry

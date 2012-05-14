@@ -130,19 +130,24 @@ let test_resumable_upload () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let parameters = QueryParameters.default
-         |> QueryParameters.max_results ^= 1 in
-       let (feed, session) =
-         query_documents_list ~parameters session in
-       let upload_link = find_url `ResumableCreateMedia feed.Document.Feed.links in
+       let (upload_link, session) = get_resumable_create_media_link session in
        let media_source =
          GapiMediaResource.create_file_resource "test_data/test.pdf" in
        let (entry, session) =
          resumable_upload
            upload_link
            media_source
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
            session
        in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
          TestHelper.assert_not_empty
            "Resource ID should not be empty"
            entry.Document.Entry.resourceId)
@@ -278,6 +283,295 @@ let test_get_acl () =
                session.GapiConversation.Session.etag
          with Not_found -> ())
 
+let new_empty_document = Document.Entry.empty
+  |> Document.Entry.title
+    ^%= GdataAtom.Title.value ^= "Legal Contract"
+  |> Document.Entry.categories ^= [Document.document_category]
+
+let test_insert_empty_document () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (entry, session) =
+         create_document
+           new_empty_document
+           session in
+       let id = entry |. Document.Entry.id in
+       let resourceId = entry |. Document.Entry.resourceId in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         TestHelper.assert_not_empty
+           "Document id should not be empty"
+           id;
+         TestHelper.assert_not_empty
+           "Document resourceId should not be empty"
+           resourceId)
+
+let test_update_document () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (entry, session) =
+         create_document
+           new_empty_document
+           session in
+       let resourceId = entry |. Document.Entry.resourceId in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let updated_entry = entry
+         |> Document.Entry.title
+           ^%= GdataAtom.Title.value ^= "Updated title" in
+       let (entry, session) =
+         update_document
+           updated_entry
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         assert_equal
+           "Updated title"
+           (entry |. Document.Entry.title |. GdataAtom.Title.value);
+         assert_equal
+           resourceId
+           (entry |. Document.Entry.resourceId))
+
+let new_empty_document = Document.Entry.empty
+  |> Document.Entry.title
+    ^%= GdataAtom.Title.value ^= "Text document"
+  |> Document.Entry.categories ^= [Document.document_category]
+
+let test_update_content () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let media_source = {
+         GapiMediaResource.source = GapiMediaResource.String "text content";
+         name = "text_file.txt";
+         content_type = "text/plain";
+         content_length = 12L;
+       } in
+       let (upload_link, session) = get_resumable_create_media_link session in
+       let (entry, session) =
+         resumable_upload
+           upload_link
+           media_source
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let updated_entry = entry
+         |> Document.Entry.title
+           ^%= GdataAtom.Title.value ^= "text_file2.txt" in
+       let updated_media_source = {
+         GapiMediaResource.source = GapiMediaResource.String "new text";
+         name = "text_file2.txt";
+         content_type = "text/plain";
+         content_length = 8L;
+       } in
+       let (entry, session) =
+         update_document
+           ~media_source:updated_media_source
+           updated_entry
+           session in
+       let (entry, session) =
+         refresh_document
+           entry
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         assert_equal
+           "text_file2.txt"
+           (entry |. Document.Entry.title |. GdataAtom.Title.value))
+
+let test_delete_revision () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let media_source = {
+         GapiMediaResource.source = GapiMediaResource.String "text content";
+         name = "text_file.txt";
+         content_type = "text/plain";
+         content_length = 12L;
+       } in
+       let (upload_link, session) = get_resumable_create_media_link session in
+       let (entry, session) =
+         resumable_upload
+           upload_link
+           media_source
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let updated_media_source = {
+         GapiMediaResource.source = GapiMediaResource.String "new text";
+         name = "text_file2.txt";
+         content_type = "text/plain";
+         content_length = 8L;
+       } in
+       let (entry, session) =
+         update_document
+           ~new_revision:true
+           ~media_source:updated_media_source
+           entry
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let (revisions, session) = query_revisions entry session in
+       let revision_count = List.length revisions.Revision.Feed.entries in
+       let revision = revisions |. Revision.Feed.entries |. GapiLens.head in
+         ignore (delete_revision
+                   revision
+                   session);
+       let () = TestHelper.delay () in
+       let (revisions, session) = query_revisions entry session in
+       let revision_count' = List.length revisions.Revision.Feed.entries in
+       let (entry, session) =
+         refresh_document
+           entry
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         assert_equal
+           ~printer:string_of_int
+           revision_count
+           (revision_count' + 1))
+
+let test_update_revision () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (entry, session) =
+         create_document
+           new_empty_document
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let (revisions, session) = query_revisions entry session in
+       let revision = revisions |. Revision.Feed.entries |. GapiLens.head in
+       let publish_revision = revision
+         |> Revision.Entry.publish ^= true in
+       let (revision, session) =
+         update_revision
+           publish_revision
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         assert_equal
+           true
+           (revision |. Revision.Entry.publish))
+
+let test_toggle_property () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let starred = {
+         GdataAtom.Category.empty with
+           GdataAtom.Category.scheme =
+             "http://schemas.google.com/g/2005/labels";
+           term = "http://schemas.google.com/g/2005/labels#starred";
+           label = "starred";
+       } in
+       let categories =
+         starred :: (new_empty_document |. Document.Entry.categories) in
+       let new_doc = new_empty_document
+         |> Document.Entry.categories ^= categories in
+       let (entry, session) =
+         create_document
+           new_doc
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let unstarred = {
+         GdataAtom.Category.empty with
+           GdataAtom.Category.scheme =
+             "http://schemas.google.com/g/2005/labels";
+           term = "http://schemas.google.com/g/2005/labels#starred";
+           label = "";
+       } in
+       let updated_categories =
+         List.fold_left
+           (fun cs c ->
+              match c with
+                  { GdataAtom.Category.scheme =
+                      "http://schemas.google.com/g/2005/labels";
+                    term = "http://schemas.google.com/g/2005/labels#starred";
+                    _ } ->
+                    unstarred :: cs
+                | _ ->
+                    c :: cs)
+           []
+           (entry |. Document.Entry.categories) in
+       let updated_entry = entry
+         |> Document.Entry.categories ^= updated_categories in
+       let (entry, session) =
+         update_document
+           updated_entry
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         TestHelper.assert_not_exists
+           "Categories should not contain starred label"
+           (function
+                { GdataAtom.Category.scheme =
+                    "http://schemas.google.com/g/2005/labels";
+                  term = "http://schemas.google.com/g/2005/labels#starred";
+                  _ } -> true
+              | _ -> false)
+           (entry |. Document.Entry.categories))
+
 let suite = "Documents List v3 Service test" >:::
   [(*"test_query_user_metadata" >:: test_query_user_metadata;
    "test_query_metadata_remaining_changes"
@@ -290,7 +584,13 @@ let suite = "Documents List v3 Service test" >:::
    "test_partial_download" >:: test_partial_download;
    "test_download_document" >:: test_download_document;
    "test_query_revisions" >:: test_query_revisions;
-   "test_download_revision" >:: test_download_revision;*)
+   "test_download_revision" >:: test_download_revision;
    "test_get_acl" >:: test_get_acl;
+   "test_insert_empty_document" >:: test_insert_empty_document;
+   "test_update_document" >:: test_update_document;
+   "test_update_content" >:: test_update_content;
+   "test_delete_revision" >:: test_delete_revision;
+   "test_update_revision" >:: test_update_revision;*)
+   "test_toggle_property" >:: test_toggle_property;
   ]
 
