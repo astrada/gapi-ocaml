@@ -52,6 +52,8 @@ module RevisionsFeedLink : GdataExtensions.FeedLink
 
 module Document :
 sig
+  val document_category : GdataAtom.Category.t
+
   module Entry :
   sig
     type t = {
@@ -96,8 +98,10 @@ sig
 
     val id : (t , string) GapiLens.t
     val etag : (t, string) GapiLens.t
+    val title : (t , GdataAtom.Title.t) GapiLens.t
     val content : (t , GdataAtom.Content.t) GapiLens.t
     val links : (t, GdataAtom.Link.t list) GapiLens.t
+    val categories : (t, GdataAtom.Category.t list) GapiLens.t
 
     include GdataAtom.AtomData with type t := t
 

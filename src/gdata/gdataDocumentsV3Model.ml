@@ -129,6 +129,12 @@ module RevisionsFeedLink = GdataExtensions.MakeFeedLink(Revision.Feed)
 (* Document data type *)
 module Document =
 struct
+  let document_category = {
+    GdataAtom.Category.empty with
+      GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+      term = "http://schemas.google.com/docs/2007#document";
+  }
+
   module Entry =
   struct
     type t = {
@@ -229,9 +235,11 @@ struct
     }
 
     let id = common |-- GdataAtom.BasicEntry.id
-    let etag = common |-- GdataAtom.BasicEntry.id
+    let etag = common |-- GdataAtom.BasicEntry.etag
+    let title = common |-- GdataAtom.BasicEntry.title
     let content = common |-- GdataAtom.BasicEntry.content
     let links = common |-- GdataAtom.BasicEntry.links
+    let categories = common |-- GdataAtom.BasicEntry.categories
 
     let empty = {
       common = GdataAtom.BasicEntry.empty;
