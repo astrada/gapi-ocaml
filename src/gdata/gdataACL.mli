@@ -7,7 +7,7 @@ module RoleWithKey :
 sig
   type t = {
     key : string;
-    role : string
+    role : string;
   }
 
   val key : (t, string) GapiLens.t
@@ -21,11 +21,13 @@ module Scope :
 sig
   type t = {
     _type : string;
-    value : string
+    value : string;
+    name : string;
   }
 
   val _type : (t, string) GapiLens.t
   val value : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
 
   include GdataAtom.AtomData with type t := t
 
@@ -52,6 +54,7 @@ sig
   val etag : (t, string) GapiLens.t
   val id : (t, GdataAtom.atom_id) GapiLens.t
   val links : (t, GdataAtom.Link.t list) GapiLens.t
+  val categories : (t, GdataAtom.Category.t list) GapiLens.t
 
   include GdataAtom.AtomData with type t := t
 

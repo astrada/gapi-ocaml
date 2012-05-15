@@ -54,7 +54,8 @@ module Scope =
 struct
   type t = {
     _type : string;
-    value : string
+    value : string;
+    name : string;
   }
 
 	let _type = {
@@ -65,16 +66,22 @@ struct
 		GapiLens.get = (fun x -> x.value);
 		GapiLens.set = (fun v x -> { x with value = v })
 	}
+	let name = {
+		GapiLens.get = (fun x -> x.name);
+		GapiLens.set = (fun v x -> { x with name = v })
+	}
 
   let empty = {
     _type = "";
-    value = ""
+    value = "";
+    name = "";
   }
 
   let to_xml_data_model scope =
     GdataAtom.render_element ns_gAcl "scope"
       [GdataAtom.render_attribute "" "type" scope._type;
-       GdataAtom.render_attribute "" "value" scope.value]
+       GdataAtom.render_attribute "" "value" scope.value;
+       GdataAtom.render_attribute "" "name" scope.name]
 
   let of_xml_data_model scope tree =
     match tree with
@@ -86,6 +93,10 @@ struct
           ([`Attribute; `Name "value"; `Namespace ""],
            v) ->
           { scope with value = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "name"; `Namespace ""],
+           v) ->
+          { scope with name = v }
       | GapiCore.AnnotatedTree.Leaf
           ([`Attribute; `Name _; `Namespace ns],
            _) when ns = Xmlm.ns_xmlns ->
@@ -134,6 +145,7 @@ struct
   let etag = common |-- GdataAtom.BasicEntry.etag
   let id = common |-- GdataAtom.BasicEntry.id
   let links = common |-- GdataAtom.BasicEntry.links
+  let categories = common |-- GdataAtom.BasicEntry.categories
 
   let empty = {
     common = GdataAtom.BasicEntry.empty;
