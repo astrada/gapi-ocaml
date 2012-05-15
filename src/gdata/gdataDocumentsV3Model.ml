@@ -131,8 +131,94 @@ module Document =
 struct
   let document_category = {
     GdataAtom.Category.empty with
-      GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
-      term = "http://schemas.google.com/docs/2007#document";
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#document";
+        label = "document"
+  }
+  let drawing_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#drawing";
+        label = "drawing"
+  }
+  let folder_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#folder";
+        label = "folder"
+  }
+  let form_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#form";
+        label = "form"
+  }
+  let parent_folder_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#parent";
+        label = "parent"
+  }
+  let pdf_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#pdf";
+        label = "pdf"
+  }
+  let presentation_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#presentation";
+        label = "presentation"
+  }
+  let spreadsheet_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+        term = "http://schemas.google.com/docs/2007#spreadsheet";
+        label = "spreadsheet"
+  }
+
+  let hidden_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#hidden";
+        label = "hidden";
+  }
+  let mine_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#mine";
+        label = "mine";
+  }
+  let private_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#private";
+        label = "private";
+  }
+  let shared_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#shared";
+        label = "shared";
+  }
+  let starred_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#starred";
+        label = "starred";
+  }
+  let trashed_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#trashed";
+        label = "trashed";
+  }
+  let viewed_category = {
+    GdataAtom.Category.empty with
+        GdataAtom.Category.scheme = "http://schemas.google.com/g/2005/labels";
+        term = "http://schemas.google.com/g/2005/labels#viewed";
+        label = "viewed";
   }
 
   module Entry =
@@ -1037,6 +1123,10 @@ struct
       GapiLens.get = (fun x -> x.extensions);
       GapiLens.set = (fun v x -> { x with extensions = v })
     }
+
+    let id = common |-- GdataAtom.BasicEntry.id
+    let links = common |-- GdataAtom.BasicEntry.links
+    let content = common |-- GdataAtom.BasicEntry.content
 
     let empty = {
       common = GdataAtom.BasicEntry.empty;

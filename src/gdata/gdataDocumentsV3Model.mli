@@ -53,6 +53,21 @@ module RevisionsFeedLink : GdataExtensions.FeedLink
 module Document :
 sig
   val document_category : GdataAtom.Category.t
+  val drawing_category : GdataAtom.Category.t
+  val folder_category : GdataAtom.Category.t
+  val form_category : GdataAtom.Category.t
+  val parent_folder_category : GdataAtom.Category.t
+  val pdf_category : GdataAtom.Category.t
+  val presentation_category : GdataAtom.Category.t
+  val spreadsheet_category : GdataAtom.Category.t
+
+  val hidden_category : GdataAtom.Category.t
+  val mine_category : GdataAtom.Category.t
+  val private_category : GdataAtom.Category.t
+  val shared_category : GdataAtom.Category.t
+  val starred_category : GdataAtom.Category.t
+  val trashed_category : GdataAtom.Category.t
+  val viewed_category : GdataAtom.Category.t
 
   module Entry :
   sig
@@ -298,6 +313,10 @@ sig
     val archiveResourceIds : (t, string list) GapiLens.t
     val archiveConversions : (t, Conversion.t list) GapiLens.t
     val extensions : (t, GdataAtom.GenericExtensions.t) GapiLens.t
+
+    val id : (t , string) GapiLens.t
+    val links : (t, GdataAtom.Link.t list) GapiLens.t
+    val content : (t , GdataAtom.Content.t) GapiLens.t
 
     include GdataAtom.AtomData with type t := t
 
