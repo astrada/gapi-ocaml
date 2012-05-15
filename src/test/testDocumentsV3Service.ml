@@ -506,15 +506,9 @@ let test_toggle_property () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
     (fun session ->
-       let starred = {
-         GdataAtom.Category.empty with
-           GdataAtom.Category.scheme =
-             "http://schemas.google.com/g/2005/labels";
-           term = "http://schemas.google.com/g/2005/labels#starred";
-           label = "starred";
-       } in
        let categories =
-         starred :: (new_empty_document |. Document.Entry.categories) in
+         Document.starred_category :: (new_empty_document
+                                         |. Document.Entry.categories) in
        let new_doc = new_empty_document
          |> Document.Entry.categories ^= categories in
        let (entry, session) =
@@ -572,6 +566,284 @@ let test_toggle_property () =
               | _ -> false)
            (entry |. Document.Entry.categories))
 
+let test_copy_document () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (entry, session) =
+         create_document
+           new_empty_document
+           session in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           entry
+           session in
+       let copy_entry = Document.Entry.empty
+         |> Document.Entry.id ^= (entry |. Document.Entry.id)
+         |> Document.Entry.title
+           ^%= GdataAtom.Title.value ^= "Copy of Legal Document" in
+       let (copied, session) =
+         create_document
+           copy_entry
+           session in
+       let () = TestHelper.delay () in
+       let (copied, session) =
+         refresh_document
+           copied
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         ignore (delete_document
+                   ~delete:true
+                   copied
+                   session);
+         assert_equal
+           "Copy of Legal Document"
+           (copied |. Document.Entry.title |. GdataAtom.Title.value))
+
+let test_batch_request () =
+  let find_entry operation feed =
+    List.find
+      (fun e ->
+         e.Document.Entry.batch.GdataBatch.BatchExtensions.operation =
+           operation)
+      feed.Document.Feed.entries
+  in
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let batch_query_entry = Document.Entry.empty
+         |> Document.Entry.id ^=
+           "https://docs.google.com/feeds/id/file:1234abcd"
+         |> Document.Entry.batch
+           ^%= GdataBatch.BatchExtensions.operation ^=
+             GdataBatch.Operation.Query in
+       let batch_insert_entry = Document.Entry.empty
+         |> Document.Entry.batch ^= {
+            GdataBatch.BatchExtensions.empty with
+                GdataBatch.BatchExtensions.id = "1";
+                operation = GdataBatch.Operation.Insert;
+          }
+         |> Document.Entry.categories ^= [Document.document_category]
+         |> Document.Entry.title
+           ^%= GdataAtom.Title.value ^= "New Text Document" in
+       let batch_update_entry = Document.Entry.empty
+         |> Document.Entry.id ^=
+           "https://docs.google.com/feeds/id/drawing:5678efgh"
+         |> Document.Entry.batch
+           ^%= GdataBatch.BatchExtensions.operation ^=
+             GdataBatch.Operation.Update
+         |> Document.Entry.categories ^= [Document.drawing_category]
+         |> Document.Entry.title
+           ^%= GdataAtom.Title.value ^= "Updating Drawing" in
+       let batch_delete_entry = Document.Entry.empty
+         |> Document.Entry.id ^=
+           "https://docs.google.com/feeds/id/pdf:9012ijk"
+         |> Document.Entry.batch
+           ^%= GdataBatch.BatchExtensions.operation ^=
+             GdataBatch.Operation.Delete in
+       let batch_request = {
+         Document.Feed.empty with
+             Document.Feed.entries = [
+               batch_query_entry;
+               batch_insert_entry;
+               batch_update_entry;
+               batch_delete_entry;
+             ];
+       } in
+       let (batch_response, session) =
+         documents_batch_request
+           batch_request
+           session in
+       let e1 = find_entry GdataBatch.Operation.Query batch_response in
+       let e2 = find_entry GdataBatch.Operation.Insert batch_response in
+       let e3 = find_entry GdataBatch.Operation.Update batch_response in
+       let e4 = find_entry GdataBatch.Operation.Delete batch_response in
+       let batch_status = Document.Entry.batch
+         |-- GdataBatch.BatchExtensions.status
+         |-- GdataBatch.Status.code in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         refresh_document
+           e2
+           session
+       in
+         ignore (delete_document entry session);
+         assert_equal ~msg:"Query"
+           400
+           (e1 |. batch_status);
+         assert_equal ~msg:"Insert"
+           201
+           (e2 |. batch_status);
+         assert_equal ~msg:"Update"
+           400
+           (e3 |. batch_status);
+         assert_equal ~msg:"Delete"
+           400
+           (e4 |. batch_status))
+
+let test_query_folder_contents () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.category ^= "folder" in
+       let (feed, session) =
+         query_folder_contents
+           ~parameters
+           root_folder_id
+           session
+       in
+         assert_equal
+           "https://docs.google.com/feeds/default/private/full/folder%3Aroot/contents"
+           (feed |. Document.Feed.id);
+         TestHelper.assert_not_empty
+           "ETag should not be empty"
+           session.GapiConversation.Session.etag)
+
+let acl_entry = GdataACL.Entry.empty
+  |> GdataACL.Entry.categories ^= [
+     { GdataAtom.Category.empty with
+           GdataAtom.Category.scheme = "http://schemas.google.com/g/2005#kind";
+           term = "http://schemas.google.com/acl/2007#accessRule" } ]
+  |> GdataACL.Entry.scope ^=
+     { GdataACL.Scope.empty with
+           GdataACL.Scope._type = "user";
+           value = "test@example.com" }
+  |> GdataACL.Entry.role ^= "reader"
+
+let test_get_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.max_results ^= 1 in
+       let (docs, session) =
+         query_documents_list
+           ~parameters
+           session in
+       let entry = List.hd docs.Document.Feed.entries in
+       let (feed, session) =
+         get_acl
+           entry
+           session
+       in
+         TestHelper.assert_not_empty
+           "Feed ID should not be empty"
+           feed.GdataACL.Feed.id;
+         TestHelper.assert_not_empty
+           "ETag should not be empty"
+           session.GapiConversation.Session.etag)
+
+let test_create_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.max_results ^= 1 in
+       let (docs, session) =
+         query_documents_list
+           ~parameters
+           session in
+       let entry = List.hd docs.Document.Feed.entries in
+       let (new_entry, session) =
+         create_acl
+           ~send_notification_emails:false
+           acl_entry
+           entry
+           session in
+       let id = new_entry |. GdataACL.Entry.id in
+       let (feed, session) =
+         get_acl
+           entry
+           session
+       in
+         ignore (delete_acl
+                   new_entry
+                   session);
+         assert_bool
+           "Created entry id not found in acl feed"
+           (List.exists
+              (fun e -> e |. GdataACL.Entry.id = id)
+              feed.GdataACL.Feed.entries)) 
+
+let test_update_acl () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.max_results ^= 1 in
+       let (docs, session) =
+         query_documents_list
+           ~parameters
+           session in
+       let entry = List.hd docs.Document.Feed.entries in
+       let (new_entry, session) =
+         create_acl
+           ~send_notification_emails:false
+           acl_entry
+           entry
+           session in
+       let updated_entry = new_entry
+         |> GdataACL.Entry.role ^= "writer" in
+       let (server_updated_entry, session) =
+         update_acl
+           updated_entry
+           session in
+       let (_, session) =
+         refresh_acl
+           server_updated_entry
+           session
+       in
+         ignore (delete_acl
+                   server_updated_entry
+                   session);
+         assert_equal
+           updated_entry.GdataACL.Entry.role
+           server_updated_entry.GdataACL.Entry.role)
+
+let test_create_archive () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let parameters = QueryParameters.default
+         |> QueryParameters.category ^= "document" in
+       let entry = Archive.Entry.empty
+         |> Archive.Entry.archiveConversions ^= [{
+            Archive.Conversion.source = "application/vnd.google-apps.document";
+            Archive.Conversion.target = "application/msword";
+          }] in
+       let (archive, session) =
+         create_archive
+           ~parameters
+           entry
+           session in
+       let () = TestHelper.delay () in
+       let (archive, session) =
+         refresh_archive
+           archive
+           session in
+       let content = archive |. Archive.Entry.content in
+       let filename = Filename.temp_file "gdata" "archive.zip" in
+       let media_destination =
+         GapiMediaResource.TargetFile filename in
+       let ((), _) =
+         download_content
+           content
+           media_destination
+           session
+       in
+         TestHelper.assert_not_empty
+           "Archive ID should not be empty"
+           (archive |. Archive.Entry.id);
+         assert_bool
+           ("File " ^ filename ^ " should exist")
+           (Sys.file_exists filename))
+
 let suite = "Documents List v3 Service test" >:::
   [(*"test_query_user_metadata" >:: test_query_user_metadata;
    "test_query_metadata_remaining_changes"
@@ -590,7 +862,14 @@ let suite = "Documents List v3 Service test" >:::
    "test_update_document" >:: test_update_document;
    "test_update_content" >:: test_update_content;
    "test_delete_revision" >:: test_delete_revision;
-   "test_update_revision" >:: test_update_revision;*)
+   "test_update_revision" >:: test_update_revision;
    "test_toggle_property" >:: test_toggle_property;
+   "test_copy_document" >:: test_copy_document;
+   "test_batch_request" >:: test_batch_request;
+   "test_query_folder_contents" >:: test_query_folder_contents;
+   "test_get_acl" >:: test_get_acl;
+   "test_create_acl" >:: test_create_acl;
+   "test_update_acl" >:: test_update_acl;*)
+   "test_create_archive" >:: test_create_archive;
   ]
 

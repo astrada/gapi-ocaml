@@ -420,6 +420,9 @@ let parse_revisions_feed =
 let parse_revision_entry =
   GdataUtils.parse_xml_response Revision.parse_entry
 
+let parse_archive_entry =
+  GdataUtils.parse_xml_response Archive.parse_entry
+
 (* Upload *)
 let resumable_upload
       ?(convert = false)
@@ -655,17 +658,16 @@ let delete_document
       session
 
 let documents_batch_request
-      target_feed
+      ?(url = "https://docs.google.com/feeds/default/private/full/batch")
       batch_feed
       session =
-  let url = target_feed |. Document.Feed.links |> find_url `Batch in
-    GdataService.batch_request
-      Document.feed_to_data_model
-      ~version
-      batch_feed
-      url
-      parse_documents_feed
-      session
+  GdataService.batch_request
+    Document.feed_to_data_model
+    ~version
+    batch_feed
+    url
+    parse_documents_feed
+    session
 
 (* Revisions *)
 let query_revisions
@@ -804,13 +806,13 @@ let refresh_acl
     session
 
 let create_acl
-      ~send_notification_emails
+      ?send_notification_emails
       acl_entry
       document_entry
       session =
-  let url = document_entry |. Document.Entry.links |> find_url `Acl in
+  let url = document_entry |. Document.Entry.aclFeedLink |. AclFeedLink.href in
   let query_parameters =
-    QueryParameters.merge_parameters ~send_notification_emails ()
+    QueryParameters.merge_parameters ?send_notification_emails ()
       |> Option.map QueryParameters.to_key_value_list
   in
     GdataACLService.create_acl
@@ -845,4 +847,52 @@ let acl_batch_request
     target_feed
     batch_feed
     session
+
+(* Archives *)
+let create_archive
+      ?(url = "https://docs.google.com/feeds/default/private/archive")
+      ?parameters
+      entry
+      session =
+  let query_parameters = QueryParameters.to_query_parameters parameters in
+    GdataService.create
+      Archive.entry_to_data_model 
+      ~version
+      ?query_parameters
+      entry
+      url
+      parse_archive_entry
+      session
+
+let refresh_archive
+      entry
+      session =
+  let url = get_url ~rel:`Self Archive.Entry.links entry in
+    GdataService.read
+      ~version
+      entry
+      url
+      parse_archive_entry
+      session
+
+let update_archive
+      entry
+      session =
+  let url = get_url Archive.Entry.links entry in
+    GdataService.update
+      Archive.entry_to_data_model 
+      ~version
+      entry
+      url
+      parse_archive_entry
+      session
+
+let delete_archive
+      entry
+      session =
+  let url = get_url Archive.Entry.links entry in
+    GdataService.delete
+      ~version
+      url
+      session
 

@@ -32,7 +32,8 @@ let acl_entry =
         };
         GdataACL.Entry.scope =
           { GdataACL.Scope._type = "user";
-            value = "darcy@gmail.com" };
+            value = "darcy@gmail.com";
+            name = "darcy@gmail.com" };
         GdataACL.Entry.role =
           "http://schemas.google.com/gCal/2005#editor" }
 

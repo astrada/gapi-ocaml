@@ -160,6 +160,14 @@ val partial_download :
   GapiConversation.Session.t ->
   unit * GapiConversation.Session.t
 
+val download_content :
+  ?format:string ->
+  ?gid:string ->
+  GdataAtom.Content.t ->
+  GapiMediaResource.destination ->
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
+
 val query_metadata :
   ?url:string ->
   ?etag:string ->
@@ -226,7 +234,7 @@ val delete_document :
   unit * GapiConversation.Session.t
 
 val documents_batch_request :
-  GdataDocumentsV3Model.Document.Feed.t ->
+  ?url:string ->
   GdataDocumentsV3Model.Document.Feed.t ->
   GapiConversation.Session.t ->
   GdataDocumentsV3Model.Document.Feed.t * GapiConversation.Session.t
@@ -299,7 +307,7 @@ val refresh_acl :
   GdataACL.Entry.t * GapiConversation.Session.t
 
 val create_acl :
-  send_notification_emails:bool ->
+  ?send_notification_emails:bool ->
   GdataACL.Entry.t ->
   GdataDocumentsV3Model.Document.Entry.t ->
   GapiConversation.Session.t ->
@@ -320,4 +328,26 @@ val acl_batch_request :
   GdataACL.Feed.t ->
   GapiConversation.Session.t ->
   GdataACL.Feed.t * GapiConversation.Session.t
+
+val create_archive :
+  ?url:string ->
+  ?parameters:QueryParameters.t ->
+  GdataDocumentsV3Model.Archive.Entry.t ->
+  GapiConversation.Session.t ->
+  GdataDocumentsV3Model.Archive.Entry.t * GapiConversation.Session.t
+
+val refresh_archive :
+  GdataDocumentsV3Model.Archive.Entry.t ->
+  GapiConversation.Session.t ->
+  GdataDocumentsV3Model.Archive.Entry.t * GapiConversation.Session.t
+
+val update_archive :
+  GdataDocumentsV3Model.Archive.Entry.t ->
+  GapiConversation.Session.t ->
+  GdataDocumentsV3Model.Archive.Entry.t * GapiConversation.Session.t
+
+val delete_archive :
+  GdataDocumentsV3Model.Archive.Entry.t ->
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
 
