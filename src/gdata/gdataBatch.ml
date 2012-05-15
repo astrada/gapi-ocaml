@@ -89,12 +89,87 @@ struct
 
 end
 
+module Interrupted =
+struct
+  type t = {
+    reason : string;
+    parsed : int;
+    success : int;
+    error : int;
+    unprocessed : int;
+  }
+
+	let reason = {
+		GapiLens.get = (fun x -> x.reason);
+		GapiLens.set = (fun v x -> { x with reason = v })
+	}
+	let parsed = {
+		GapiLens.get = (fun x -> x.parsed);
+		GapiLens.set = (fun v x -> { x with parsed = v })
+	}
+	let success = {
+		GapiLens.get = (fun x -> x.success);
+		GapiLens.set = (fun v x -> { x with success = v })
+	}
+	let error = {
+		GapiLens.get = (fun x -> x.error);
+		GapiLens.set = (fun v x -> { x with error = v })
+	}
+	let unprocessed = {
+		GapiLens.get = (fun x -> x.unprocessed);
+		GapiLens.set = (fun v x -> { x with unprocessed = v })
+	}
+
+  let empty =  {
+    reason = "";
+    parsed = 0;
+    success = 0;
+    error = 0;
+    unprocessed = 0;
+  }
+
+  let to_xml_data_model interrupted =
+    GdataAtom.render_element GdataExtensions.ns_batch "interrupted"
+      [GdataAtom.render_attribute "" "reason" interrupted.reason;
+       GdataAtom.render_int_attribute "" "parsed" interrupted.parsed;
+       GdataAtom.render_int_attribute "" "success" interrupted.success;
+       GdataAtom.render_int_attribute "" "error" interrupted.error;
+       GdataAtom.render_int_attribute "" "unprocessed" interrupted.unprocessed]
+
+  let of_xml_data_model status tree =
+    match tree with
+        GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "reason"; `Namespace ""],
+           v) ->
+          { status with reason = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "parsed"; `Namespace ""],
+           v) ->
+          { status with parsed = int_of_string v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "success"; `Namespace ""],
+           v) ->
+          { status with success = int_of_string v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "error"; `Namespace ""],
+           v) ->
+          { status with error = int_of_string v }
+      | GapiCore.AnnotatedTree.Leaf
+          ([`Attribute; `Name "unprocessed"; `Namespace ""],
+           v) ->
+          { status with unprocessed = int_of_string v }
+      | e ->
+          GdataUtils.unexpected e
+
+end
+
 module BatchExtensions =
 struct
   type t = {
     id : string;
     operation : Operation.t;
     status : Status.t;
+    interrupted : Interrupted.t;
   }
 
 	let id = {
@@ -109,18 +184,24 @@ struct
 		GapiLens.get = (fun x -> x.status);
 		GapiLens.set = (fun v x -> { x with status = v })
 	}
+	let interrupted = {
+		GapiLens.get = (fun x -> x.interrupted);
+		GapiLens.set = (fun v x -> { x with interrupted = v })
+	}
 
   let empty = {
     id = "";
     operation = Operation.None;
     status = Status.empty;
+    interrupted = Interrupted.empty;
   }
 
   let to_xml_data_model ext =
     List.concat
       [GdataAtom.render_text_element GdataExtensions.ns_batch "id" ext.id;
-       GdataAtom.render_text_element GdataExtensions.ns_batch "operation" (Operation.to_string ext.operation);
-       Status.to_xml_data_model ext.status]
+       GdataAtom.render_value ~attribute:"type" GdataExtensions.ns_batch "operation" (Operation.to_string ext.operation);
+       Status.to_xml_data_model ext.status;
+       Interrupted.to_xml_data_model ext.interrupted]
 
   let of_xml_data_model ext tree =
     match tree with
@@ -132,7 +213,8 @@ struct
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "operation"; `Namespace ns],
            [GapiCore.AnnotatedTree.Leaf
-              ([`Text], v)]) when ns = GdataExtensions.ns_batch ->
+              ([`Attribute; `Name "type"; `Namespace ""],
+               v)]) when ns = GdataExtensions.ns_batch ->
           { ext with operation = Operation.of_string v }
       | GapiCore.AnnotatedTree.Node
           ([`Element; `Name "status"; `Namespace ns],
@@ -141,6 +223,14 @@ struct
             Status.of_xml_data_model
             Status.empty
             (fun status -> { ext with status })
+            cs
+      | GapiCore.AnnotatedTree.Node
+          ([`Element; `Name "interrupted"; `Namespace ns],
+           cs) when ns = GdataExtensions.ns_batch ->
+          GdataAtom.parse_children
+            Interrupted.of_xml_data_model
+            Interrupted.empty
+            (fun interrupted -> { ext with interrupted })
             cs
       | e ->
           GdataUtils.unexpected e
