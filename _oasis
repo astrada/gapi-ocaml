@@ -81,12 +81,13 @@ Library gdata
     GdataCore,
     GdataBatch,
     GdataAtom,
-    GdataACL,
-    GdataCalendar,
+    GdataExtensions,
     GdataComments,
-    GdataCalendarEvent,
     GdataService,
-    GdataCalendarService
+    GdataACL,
+    GdataACLService,
+    GdataDocumentsV3Model,
+    GdataDocumentsV3Service
   InternalModules:
     GdataUtils
   BuildDepends: xmlm, extlib, netstring, curl

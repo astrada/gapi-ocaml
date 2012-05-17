@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: ca0e552e6e8f00f9913b01c43d3e8505)
+# DO NOT EDIT (digest: 2e7b13b2743f6bc310ad1693a6fc371e)
 gapi/GapiCore
 gapi/GapiCurl
 gapi/GapiPipe
@@ -46,10 +46,11 @@ gapi/GapiBigqueryV2Service
 gdata/GdataCore
 gdata/GdataBatch
 gdata/GdataAtom
-gdata/GdataACL
-gdata/GdataCalendar
+gdata/GdataExtensions
 gdata/GdataComments
-gdata/GdataCalendarEvent
 gdata/GdataService
-gdata/GdataCalendarService
+gdata/GdataACL
+gdata/GdataACLService
+gdata/GdataDocumentsV3Model
+gdata/GdataDocumentsV3Service
 # OASIS_STOP
