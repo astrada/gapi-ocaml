@@ -7,7 +7,6 @@ struct
   type t = {
     author : string;
     category : string;
-    fields : string;
     max_results : int;
     prettyprint : bool;
     published_min : GapiDate.t;
@@ -18,7 +17,7 @@ struct
     updated_min : GapiDate.t;
     updated_max : GapiDate.t;
     title : string;
-    title_exact : string;
+    title_exact : bool;
     opened_min : GapiDate.t;
     opened_max : GapiDate.t;
     edited_min : GapiDate.t;
@@ -57,10 +56,6 @@ struct
 	let category = {
 		GapiLens.get = (fun x -> x.category);
 		GapiLens.set = (fun v x -> { x with category = v })
-	}
-	let fields = {
-		GapiLens.get = (fun x -> x.fields);
-		GapiLens.set = (fun v x -> { x with fields = v })
 	}
 	let max_results = {
 		GapiLens.get = (fun x -> x.max_results);
@@ -210,7 +205,6 @@ struct
   let default = {
     author = "";
     category = "";
-    fields = "";
     max_results = 0;
     prettyprint = false;
     published_min = GapiDate.epoch;
@@ -221,7 +215,7 @@ struct
     updated_min = GapiDate.epoch;
     updated_max = GapiDate.epoch;
     title = "";
-    title_exact = "";
+    title_exact = false;
     opened_min = GapiDate.epoch;
     opened_max = GapiDate.epoch;
     edited_min = GapiDate.epoch;
@@ -259,7 +253,6 @@ struct
     in
       [param (fun p -> p.author) Std.identity "author";
        param (fun p -> p.category) Std.identity "category";
-       param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.max_results) string_of_int "max-results";
        param (fun p -> p.prettyprint) string_of_bool "prettyprint";
        param (fun p -> p.published_min) GapiDate.to_string "published-min";
@@ -270,7 +263,7 @@ struct
        param (fun p -> p.updated_min) GapiDate.to_string "updated-min";
        param (fun p -> p.updated_max) GapiDate.to_string "updated-max";
        param (fun p -> p.title) Std.identity "title";
-       param (fun p -> p.title_exact) Std.identity "title-exact";
+       param (fun p -> p.title_exact) string_of_bool "title-exact";
        param (fun p -> p.opened_min) GapiDate.to_string "opened-min";
        param (fun p -> p.opened_max) GapiDate.to_string "opened-max";
        param (fun p -> p.edited_min) GapiDate.to_string "edited-min";
@@ -304,7 +297,6 @@ struct
   let merge_parameters
       ?(author = default.author)
       ?(category = default.category)
-      ?(fields = default.fields)
       ?(max_results = default.max_results)
       ?(prettyprint = default.prettyprint)
       ?(published_min = default.published_min)
@@ -345,7 +337,6 @@ struct
     let parameters = {
       author;
       category;
-      fields;
       max_results;
       prettyprint;
       published_min;
