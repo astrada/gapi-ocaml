@@ -1,3 +1,6 @@
+(** Google Data Protocol ATOM extensions.
+  *)
+
 val ns_batch : string
 
 module LastModifiedBy : GdataAtom.PersonConstruct
