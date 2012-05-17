@@ -53,12 +53,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiOauth2V2Service</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiOauth2V2Service</title>
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
@@ -81,6 +82,22 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiOauth2V2Model</span>.<span class="constructor">Userinfo</span>.t&nbsp;*&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;issueTokenGet&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?base_url:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?std_params:<span class="constructor">GapiService</span>.<span class="constructor">StandardParameters</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?alg:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?android_device_id:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?app_id:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?audience:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?force:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?hl:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?origin:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;client_id:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;response_type:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;scope:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiOauth2V2Model</span>.<span class="constructor">Oauth2IssueTokenV2Response</span>.t&nbsp;*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tokeninfo&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;?base_url:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?std_params:<span class="constructor">GapiService</span>.<span class="constructor">StandardParameters</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>

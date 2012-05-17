@@ -58,12 +58,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiConversation</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiConversation</title>
 </head>
 <body>
 <div class="navbar"><a href="GapiConfig.html">Previous</a>
@@ -77,7 +78,7 @@
 <pre><span class="keyword">module</span> <a href="GapiConversation.Session.html">Session</a>: <code class="code">sig</code> <a href="GapiConversation.Session.html">..</a> <code class="code">end</code></pre><div class="info">
 Defines the session that stores the current state of a conversation.
 </div>
-<pre><span id="VALrequest"><span class="keyword">val</span> request</span> : <code class="type">?header_list:<a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -><br>       ?post_data:<a href="GapiCore.PostData.html#TYPEt">GapiCore.PostData.t</a> -><br>       <a href="GapiCore.HttpMethod.html#TYPEt">GapiCore.HttpMethod.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -><br>       string -><br>       (GapiPipe.OcamlnetPipe.t -><br>        int -> <a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -> <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -><br>       'a * <a href="GapiConversation.Session.html#TYPEt">Session.t</a></code></pre><pre><span id="VALwith_session"><span class="keyword">val</span> with_session</span> : <code class="type">?auth_context:<a href="GapiConversation.Session.html#TYPEauth_context">Session.auth_context</a> -><br>       <a href="GapiConfig.html#TYPEt">GapiConfig.t</a> -><br>       [ `Initialized ] <a href="GapiCurl.html#TYPEt">GapiCurl.t</a> -> (<a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -> 'a</code></pre><div class="info">
+<pre><span id="VALrequest"><span class="keyword">val</span> request</span> : <code class="type">?header_list:<a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -><br>       ?post_data:<a href="GapiCore.PostData.html#TYPEt">GapiCore.PostData.t</a> -><br>       ?media_download:GapiMediaResource.download -><br>       <a href="GapiCore.HttpMethod.html#TYPEt">GapiCore.HttpMethod.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -><br>       string -><br>       (<a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -><br>        int -> <a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list -> <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -><br>       'a * <a href="GapiConversation.Session.html#TYPEt">Session.t</a></code></pre><pre><span id="VALwith_session"><span class="keyword">val</span> with_session</span> : <code class="type">?auth_context:<a href="GapiConversation.Session.html#TYPEauth_context">Session.auth_context</a> -><br>       <a href="GapiConfig.html#TYPEt">GapiConfig.t</a> -><br>       [ `Initialized ] <a href="GapiCurl.html#TYPEt">GapiCurl.t</a> -> (<a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a) -> 'a</code></pre><div class="info">
 Initializes a new session and executes a batch of requests to the server.
 <p>
 
@@ -91,7 +92,7 @@ Initializes a new connection to the server and executes a batch of requests.
  <code class="code">with_curl config interact</code> initializes a new connection using <code class="code">config</code> as configuration, and executes <code class="code">interact</code> in the context of the created connection. Then it disposes the connection, and returns the result of <code class="code">interact</code>.<br>
 </div>
 <div class="param_info"><code class="code">auth_context</code> : Optional current authorization context. Defaults to <code class="code">NoAuth</code>.</div>
-<pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type">GapiPipe.OcamlnetPipe.t -> string</code></pre><pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type">GapiPipe.OcamlnetPipe.t -> int -> 'a</code></pre><pre><span id="EXCEPTIONConversationException"><span class="keyword">exception</span> ConversationException</span> <span class="keyword">of</span> <code class="type">string</code></pre>
+<pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> string</code></pre><pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> int -> 'a</code></pre><pre><span id="EXCEPTIONConversationException"><span class="keyword">exception</span> ConversationException</span> <span class="keyword">of</span> <code class="type">string</code></pre>
 <br><code><span id="TYPEiter"><span class="keyword">type</span> <code class="type">('a, 'b)</code> iter</span> = </code><table class="typetable">
 <tr>
 <td align="left" valign="top" >

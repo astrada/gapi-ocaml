@@ -58,12 +58,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiOAuth2</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiOAuth2</title>
 </head>
 <body>
 <div class="navbar"><a href="GapiOAuth1.html">Previous</a>
@@ -74,4 +75,4 @@
 <br>
 <pre><span class="keyword">module</span> GapiOAuth2: <code class="code">sig</code> <a href="GapiOAuth2.html">..</a> <code class="code">end</code></pre>OAuth 2.0 authorization API implementation.<br>
 <hr width="100%">
-<pre><span id="VALauthorization_code_url"><span class="keyword">val</span> authorization_code_url</span> : <code class="type">?base_url:string -><br>       ?access_type:string -><br>       ?approval_prompt:string -><br>       redirect_uri:string -><br>       scope:string list -> response_type:string -> string -> string</code></pre><pre><span id="VALget_access_token"><span class="keyword">val</span> get_access_token</span> : <code class="type">?url:string -><br>       ?grant_type:string -><br>       client_id:string -><br>       client_secret:string -><br>       code:string -><br>       redirect_uri:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALrefresh_access_token"><span class="keyword">val</span> refresh_access_token</span> : <code class="type">?url:string -><br>       ?grant_type:string -><br>       client_id:string -><br>       client_secret:string -><br>       refresh_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre></body></html>
+<pre><span id="VALauthorization_code_url"><span class="keyword">val</span> authorization_code_url</span> : <code class="type">?base_url:string -><br>       ?access_type:string -><br>       ?approval_prompt:string -><br>       ?state:string -><br>       redirect_uri:string -><br>       scope:string list -> response_type:string -> string -> string</code></pre><pre><span id="VALget_access_token"><span class="keyword">val</span> get_access_token</span> : <code class="type">?url:string -><br>       ?grant_type:string -><br>       client_id:string -><br>       client_secret:string -><br>       code:string -><br>       redirect_uri:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALrefresh_access_token"><span class="keyword">val</span> refresh_access_token</span> : <code class="type">?url:string -><br>       ?grant_type:string -><br>       client_id:string -><br>       client_secret:string -><br>       refresh_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre></body></html>

@@ -53,12 +53,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GdataComments.Make</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataComments.Make</title>
 </head>
 <body>
 <code class="code"><span class="keyword">functor</span>&nbsp;(<span class="constructor">Link</span>&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">AtomData</span>)&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -88,6 +89,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;entry_t&nbsp;=&nbsp;<span class="constructor">Entry</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;link_t&nbsp;=&nbsp;link_t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;extensions_t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
@@ -107,11 +109,30 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalResults&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.opensearch_totalResults;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itemsPerPage&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.opensearch_itemsPerPage;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startIndex&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.opensearch_startIndex;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;extensions_t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authors&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Author</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;categories&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Category</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;contributors&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Contributor</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;generator&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Generator</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;icon&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.atom_icon)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.atom_id)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;updated&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.atom_updated)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;entries&nbsp;:&nbsp;(t,&nbsp;entry_t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;links&nbsp;:&nbsp;(t,&nbsp;link_t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;logo&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.atom_logo)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rights&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Rights</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;subtitle&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Subtitle</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;title&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Title</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalResults&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.opensearch_totalResults)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;itemsPerPage&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.opensearch_itemsPerPage)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;startIndex&nbsp;:&nbsp;(t,&nbsp;<span class="constructor">GdataAtom</span>.opensearch_startIndex)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;extensions&nbsp;:&nbsp;(t,&nbsp;extensions_t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse_feed&nbsp;:&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>

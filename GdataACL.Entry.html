@@ -58,12 +58,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GdataACL.Entry</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataACL.Entry</title>
 </head>
 <body>
 <div class="navbar"><a href="GdataACL.Scope.html">Previous</a>
@@ -78,84 +79,7 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>authors&nbsp;: <code class="type">GdataAtom.Author.t list</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>categories&nbsp;: <code class="type"><a href="GdataAtom.Category.html#TYPEt">GdataAtom.Category.t</a> list</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>contributors&nbsp;: <code class="type">GdataAtom.Contributor.t list</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>id&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_id">GdataAtom.atom_id</a></code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>content&nbsp;: <code class="type">GdataAtom.Content.t</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>published&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_published">GdataAtom.atom_published</a></code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>updated&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_updated">GdataAtom.atom_updated</a></code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>edited&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEapp_edited">GdataAtom.app_edited</a></code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>links&nbsp;: <code class="type"><a href="GdataAtom.Link.html#TYPEt">GdataAtom.Link.t</a> list</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>title&nbsp;: <code class="type">GdataAtom.Title.t</code>;</code></td>
+<code>common&nbsp;: <code class="type"><a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a></code>;</code></td>
 
 </tr>
 <tr>
@@ -169,10 +93,32 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>role&nbsp;: <code class="type"><a href="GdataACL.html#TYPEacl_role">GdataACL.acl_role</a></code>;</code></td>
+<code>role&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>additionalRole&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>withKey&nbsp;: <code class="type"><a href="GdataACL.RoleWithKey.html#TYPEt">GdataACL.RoleWithKey.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>batch&nbsp;: <code class="type"><a href="GdataBatch.BatchExtensions.html#TYPEt">GdataBatch.BatchExtensions.t</a></code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">t</a></code></pre><pre><span id="VALto_xml_data_model"><span class="keyword">val</span> to_xml_data_model</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">t</a> -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> list</code></pre><pre><span id="VALof_xml_data_model"><span class="keyword">val</span> of_xml_data_model</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">t</a> -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> <a href="GdataACL.Entry.html#TYPEt">t</a></code></pre></body></html>
+<pre><span id="VALcommon"><span class="keyword">val</span> common</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALscope"><span class="keyword">val</span> scope</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataACL.Scope.html#TYPEt">GdataACL.Scope.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrole"><span class="keyword">val</span> role</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALadditionalRole"><span class="keyword">val</span> additionalRole</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwithKey"><span class="keyword">val</span> withKey</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataACL.RoleWithKey.html#TYPEt">GdataACL.RoleWithKey.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALbatch"><span class="keyword">val</span> batch</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataBatch.BatchExtensions.html#TYPEt">GdataBatch.BatchExtensions.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_id">GdataAtom.atom_id</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataAtom.Link.html#TYPEt">GdataAtom.Link.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcategories"><span class="keyword">val</span> categories</span> : <code class="type">(<a href="GdataACL.Entry.html#TYPEt">t</a>, <a href="GdataAtom.Category.html#TYPEt">GdataAtom.Category.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+</body></html>

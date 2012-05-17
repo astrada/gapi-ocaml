@@ -54,12 +54,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>Index of types</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>Index of types</title>
 </head>
 <body>
 <center><h1>Index of types</h1></center>
@@ -68,8 +69,6 @@
 <tr><td><a href="GapiAuthResponse.OAuth2.html#TYPEaccess_token">access_token</a> [<a href="GapiAuthResponse.OAuth2.html">GapiAuthResponse.OAuth2</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiAuthResponse.OAuth1.html#TYPEaccess_token">access_token</a> [<a href="GapiAuthResponse.OAuth1.html">GapiAuthResponse.OAuth1</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataACL.html#TYPEacl_role">acl_role</a> [<a href="GdataACL.html">GdataACL</a>]</td>
 <td></td></tr>
 <tr><td><a href="GdataAtom.html#TYPEapp_edited">app_edited</a> [<a href="GdataAtom.html">GdataAtom</a>]</td>
 <td></td></tr>
@@ -108,32 +107,6 @@ Current authorization context.
 <tr><td><a href="GapiAuth.html#TYPEauthentication">authentication</a> [<a href="GapiAuth.html">GapiAuth</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>C</td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_accessLevelProperty">calendar_accessLevelProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_colorProperty">calendar_colorProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_hiddenProperty">calendar_hiddenProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_icalUIDProperty">calendar_icalUIDProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_overrideNameProperty">calendar_overrideNameProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_privateCopyProperty">calendar_privateCopyProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_quickAddProperty">calendar_quickAddProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_selectedProperty">calendar_selectedProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_sendEventNotificationsProperty">calendar_sendEventNotificationsProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_sequenceNumberProperty">calendar_sequenceNumberProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_syncEventProperty">calendar_syncEventProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_timeZoneProperty">calendar_timeZoneProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEcalendar_timesCleanedProperty">calendar_timesCleanedProperty</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
 <tr><td><a href="GapiAuthResponse.ClientLogin.html#TYPEcaptcha">captcha</a> [<a href="GapiAuthResponse.ClientLogin.html">GapiAuthResponse.ClientLogin</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiConfig.html#TYPEclient_login_config">client_login_config</a> [<a href="GapiConfig.html">GapiConfig</a>]</td>
@@ -152,16 +125,12 @@ Curl debug function used to log server interactions.
 <tr><td align="left"><br>E</td></tr>
 <tr><td><a href="GdataAtom.Feed.html#TYPEentry_t">entry_t</a> [<a href="GdataAtom.Feed.html">GdataAtom.Feed</a>]</td>
 <td></td></tr>
-<tr><td align="left"><br>G</td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEgdata_attendeeStatus">gdata_attendeeStatus</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
+<tr><td><a href="GdataAtom.Feed.html#TYPEextensions_t">extensions_t</a> [<a href="GdataAtom.Feed.html">GdataAtom.Feed</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEgdata_eventStatus">gdata_eventStatus</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
+<tr><td align="left"><br>F</td></tr>
+<tr><td><a href="GdataExtensions.FeedLink.html#TYPEfeed_t">feed_t</a> [<a href="GdataExtensions.FeedLink.html">GdataExtensions.FeedLink</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEgdata_recurrence">gdata_recurrence</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEgdata_transparency">gdata_transparency</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.html#TYPEgdata_visibility">gdata_visibility</a> [<a href="GdataCalendar.html">GdataCalendar</a>]</td>
+<tr><td><a href="GdataExtensions.MakeFeedLink.html#TYPEfeed_t">feed_t</a> [<a href="GdataExtensions.MakeFeedLink.html">GdataExtensions.MakeFeedLink</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>I</td></tr>
 <tr><td><a href="GapiConversation.html#TYPEiter">iter</a> [<a href="GapiConversation.html">GapiConversation</a>]</td>
@@ -220,39 +189,29 @@ Current OAuth2 context.
 <tr><td><a href="GapiRequest.html#TYPErequest_type">request_type</a> [<a href="GapiRequest.html">GapiRequest</a>]</td>
 <td></td></tr>
 <tr><td align="left"><br>T</td></tr>
-<tr><td><a href="GdataCalendarService.QueryParameters.html#TYPEt">t</a> [<a href="GdataCalendarService.QueryParameters.html">GdataCalendarService.QueryParameters</a>]</td>
+<tr><td><a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">t</a> [<a href="GdataDocumentsV3Service.QueryParameters.html">GdataDocumentsV3Service.QueryParameters</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendarEvent.Entry.html#TYPEt">t</a> [<a href="GdataCalendarEvent.Entry.html">GdataCalendarEvent.Entry</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Rel.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Rel.html">GdataDocumentsV3Model.Rel</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendarEvent.RecurrenceException.html#TYPEt">t</a> [<a href="GdataCalendarEvent.RecurrenceException.html">GdataCalendarEvent.RecurrenceException</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Archive.Entry.html">GdataDocumentsV3Model.Archive.Entry</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendarEvent.RecurrenceExceptionEntry.html#TYPEt">t</a> [<a href="GdataCalendarEvent.RecurrenceExceptionEntry.html">GdataCalendarEvent.RecurrenceExceptionEntry</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Metadata.Entry.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Metadata.Entry.html">GdataDocumentsV3Model.Metadata.Entry</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.Rel.html#TYPEt">t</a> [<a href="GdataCalendar.Rel.html">GdataCalendar.Rel</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.AdditionalRoleInfo.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.AdditionalRoleInfo.html">GdataDocumentsV3Model.AdditionalRoleInfo</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataComments.Comments.Entry.html#TYPEt">t</a> [<a href="GdataComments.Comments.Entry.html">GdataComments.Comments.Entry</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.AdditionalRoleSet.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.AdditionalRoleSet.html">GdataDocumentsV3Model.AdditionalRoleSet</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataComments.Comments.html#TYPEt">t</a> [<a href="GdataComments.Comments.html">GdataComments.Comments</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.MaxUploadSize.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.MaxUploadSize.html">GdataDocumentsV3Model.MaxUploadSize</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.Entry.html#TYPEt">t</a> [<a href="GdataCalendar.Entry.html">GdataCalendar.Entry</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Feature.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Feature.html">GdataDocumentsV3Model.Feature</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.Link.html#TYPEt">t</a> [<a href="GdataCalendar.Link.html">GdataCalendar.Link</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.DocumentFormat.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.DocumentFormat.html">GdataDocumentsV3Model.DocumentFormat</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.ExtendedProperty.html#TYPEt">t</a> [<a href="GdataCalendar.ExtendedProperty.html">GdataCalendar.ExtendedProperty</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html">GdataDocumentsV3Model.Document.DocumentFeedExtensions</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.OriginalEvent.html#TYPEt">t</a> [<a href="GdataCalendar.OriginalEvent.html">GdataCalendar.OriginalEvent</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Document.Entry.html">GdataDocumentsV3Model.Document.Entry</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataCalendar.When.html#TYPEt">t</a> [<a href="GdataCalendar.When.html">GdataCalendar.When</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.Reminder.html#TYPEt">t</a> [<a href="GdataCalendar.Reminder.html">GdataCalendar.Reminder</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.Who.html#TYPEt">t</a> [<a href="GdataCalendar.Who.html">GdataCalendar.Who</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.ResourceProperty.html#TYPEt">t</a> [<a href="GdataCalendar.ResourceProperty.html">GdataCalendar.ResourceProperty</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.WebContent.html#TYPEt">t</a> [<a href="GdataCalendar.WebContent.html">GdataCalendar.WebContent</a>]</td>
-<td></td></tr>
-<tr><td><a href="GdataCalendar.WebContentGadgetPref.html#TYPEt">t</a> [<a href="GdataCalendar.WebContentGadgetPref.html">GdataCalendar.WebContentGadgetPref</a>]</td>
+<tr><td><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a> [<a href="GdataDocumentsV3Model.Revision.Entry.html">GdataDocumentsV3Model.Revision.Entry</a>]</td>
 <td></td></tr>
 <tr><td><a href="GdataACL.Rel.html#TYPEt">t</a> [<a href="GdataACL.Rel.html">GdataACL.Rel</a>]</td>
 <td></td></tr>
@@ -260,9 +219,25 @@ Current OAuth2 context.
 <td></td></tr>
 <tr><td><a href="GdataACL.Scope.html#TYPEt">t</a> [<a href="GdataACL.Scope.html">GdataACL.Scope</a>]</td>
 <td></td></tr>
-<tr><td><a href="GdataAtom.AtomData.html#TYPEt">t</a> [<a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a>]</td>
+<tr><td><a href="GdataACL.RoleWithKey.html#TYPEt">t</a> [<a href="GdataACL.RoleWithKey.html">GdataACL.RoleWithKey</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataComments.Comments.Entry.html#TYPEt">t</a> [<a href="GdataComments.Comments.Entry.html">GdataComments.Comments.Entry</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataComments.Comments.html#TYPEt">t</a> [<a href="GdataComments.Comments.html">GdataComments.Comments</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataExtensions.FeedLink.html#TYPEt">t</a> [<a href="GdataExtensions.FeedLink.html">GdataExtensions.FeedLink</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataExtensions.Rel.html#TYPEt">t</a> [<a href="GdataExtensions.Rel.html">GdataExtensions.Rel</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataExtensions.MakeFeedLink.html#TYPEt">t</a> [<a href="GdataExtensions.MakeFeedLink.html">GdataExtensions.MakeFeedLink</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataAtom.LinkRelation.html#TYPEt">t</a> [<a href="GdataAtom.LinkRelation.html">GdataAtom.LinkRelation</a>]</td>
 <td></td></tr>
 <tr><td><a href="GdataAtom.Rel.html#TYPEt">t</a> [<a href="GdataAtom.Rel.html">GdataAtom.Rel</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataAtom.AtomData.html#TYPEt">t</a> [<a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataAtom.BasicEntry.html#TYPEt">t</a> [<a href="GdataAtom.BasicEntry.html">GdataAtom.BasicEntry</a>]</td>
 <td></td></tr>
 <tr><td><a href="GdataAtom.Feed.html#TYPEt">t</a> [<a href="GdataAtom.Feed.html">GdataAtom.Feed</a>]</td>
 <td></td></tr>
@@ -275,6 +250,10 @@ Current OAuth2 context.
 <tr><td><a href="GdataAtom.Category.html#TYPEt">t</a> [<a href="GdataAtom.Category.html">GdataAtom.Category</a>]</td>
 <td></td></tr>
 <tr><td><a href="GdataAtom.PersonConstruct.html#TYPEt">t</a> [<a href="GdataAtom.PersonConstruct.html">GdataAtom.PersonConstruct</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataBatch.BatchExtensions.html#TYPEt">t</a> [<a href="GdataBatch.BatchExtensions.html">GdataBatch.BatchExtensions</a>]</td>
+<td></td></tr>
+<tr><td><a href="GdataBatch.Interrupted.html#TYPEt">t</a> [<a href="GdataBatch.Interrupted.html">GdataBatch.Interrupted</a>]</td>
 <td></td></tr>
 <tr><td><a href="GdataBatch.Status.html#TYPEt">t</a> [<a href="GdataBatch.Status.html">GdataBatch.Status</a>]</td>
 <td></td></tr>
@@ -564,6 +543,14 @@ Current OAuth2 context.
 <td></td></tr>
 <tr><td><a href="GapiCustomsearchV1Model.Promotion.html#TYPEt">t</a> [<a href="GapiCustomsearchV1Model.Promotion.html">GapiCustomsearchV1Model.Promotion</a>]</td>
 <td></td></tr>
+<tr><td><a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.OauthClientData.html#TYPEt">t</a> [<a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.OauthClientData.html">GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.OauthClientData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.ScopesData.html#TYPEt">t</a> [<a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.ScopesData.html">GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.ScopesData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.html#TYPEt">t</a> [<a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData.html">GapiOauth2V2Model.Oauth2IssueTokenV2Response.ConsentData</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.html#TYPEt">t</a> [<a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.html">GapiOauth2V2Model.Oauth2IssueTokenV2Response</a>]</td>
+<td></td></tr>
 <tr><td><a href="GapiOauth2V2Model.Userinfo.html#TYPEt">t</a> [<a href="GapiOauth2V2Model.Userinfo.html">GapiOauth2V2Model.Userinfo</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> [<a href="GapiOauth2V2Model.Tokeninfo.html">GapiOauth2V2Model.Tokeninfo</a>]</td>
@@ -613,6 +600,8 @@ Current OAuth2 context.
 <tr><td><a href="GapiDiscoveryV1Model.RestMethod.ResponseData.html#TYPEt">t</a> [<a href="GapiDiscoveryV1Model.RestMethod.ResponseData.html">GapiDiscoveryV1Model.RestMethod.ResponseData</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiDiscoveryV1Model.RestMethod.html#TYPEt">t</a> [<a href="GapiDiscoveryV1Model.RestMethod.html">GapiDiscoveryV1Model.RestMethod</a>]</td>
+<td></td></tr>
+<tr><td><a href="GapiDiscoveryV1Model.JsonSchema.AnnotationsData.html#TYPEt">t</a> [<a href="GapiDiscoveryV1Model.JsonSchema.AnnotationsData.html">GapiDiscoveryV1Model.JsonSchema.AnnotationsData</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> [<a href="GapiDiscoveryV1Model.JsonSchema.html">GapiDiscoveryV1Model.JsonSchema</a>]</td>
 <td></td></tr>
@@ -793,7 +782,7 @@ Session type.
 Library configuration.
 </div>
 </td></tr>
-<tr><td><a href="GapiPipe.Pipe.html#TYPEt">t</a> [<a href="GapiPipe.Pipe.html">GapiPipe.Pipe</a>]</td>
+<tr><td><a href="GapiPipe.OcamlnetPipe.html#TYPEt">t</a> [<a href="GapiPipe.OcamlnetPipe.html">GapiPipe.OcamlnetPipe</a>]</td>
 <td></td></tr>
 <tr><td><a href="GapiCurl.html#TYPEt">t</a> [<a href="GapiCurl.html">GapiCurl</a>]</td>
 <td></td></tr>

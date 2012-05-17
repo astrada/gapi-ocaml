@@ -58,12 +58,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiOauth2V2Service</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiOauth2V2Service</title>
 </head>
 <body>
 <div class="navbar"><a href="GapiOauth2V2Model.html">Previous</a>
@@ -77,7 +78,11 @@
 
   OAuth2 API.<br>
 <hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiOauth2V2Service.UserinfoResource.html">UserinfoResource</a>: <code class="code">sig</code> <a href="GapiOauth2V2Service.UserinfoResource.html">..</a> <code class="code">end</code></pre><pre><span id="VALtokeninfo"><span class="keyword">val</span> tokeninfo</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?access_token:string -><br>       ?id_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">GapiOauth2V2Model.Tokeninfo.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span class="keyword">module</span> <a href="GapiOauth2V2Service.UserinfoResource.html">UserinfoResource</a>: <code class="code">sig</code> <a href="GapiOauth2V2Service.UserinfoResource.html">..</a> <code class="code">end</code></pre><pre><span id="VALissueTokenGet"><span class="keyword">val</span> issueTokenGet</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?alg:string -><br>       ?android_device_id:string -><br>       ?app_id:string -><br>       ?audience:string -><br>       ?force:bool -><br>       ?hl:string -><br>       ?origin:string -><br>       client_id:string -><br>       response_type:string -><br>       scope:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.html#TYPEt">GapiOauth2V2Model.Oauth2IssueTokenV2Response.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<pre><span id="VALtokeninfo"><span class="keyword">val</span> tokeninfo</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?access_token:string -><br>       ?id_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">GapiOauth2V2Model.Tokeninfo.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>

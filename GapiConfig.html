@@ -58,12 +58,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiConfig</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiConfig</title>
 </head>
 <body>
 <div class="navbar"><a href="GapiPipe.html">Previous</a>
@@ -264,6 +265,13 @@ Authorization method.<br>
 <td align="left" valign="top" >
 <code>auth&nbsp;: <code class="type"><a href="GapiConfig.html#TYPEauth_config">auth_config</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Authorization configuration.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>upload_chunk_size&nbsp;: <code class="type">int</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Chunk default size (in bytes) used by resumable upload. Should be a multiple of 512KB.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -289,6 +297,9 @@ Compression flag lens.<br>
 <pre><span id="VALauth"><span class="keyword">val</span> auth</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, <a href="GapiConfig.html#TYPEauth_config">auth_config</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 Authorization configuration lens.<br>
 </div>
+<pre><span id="VALupload_chunk_size"><span class="keyword">val</span> upload_chunk_size</span> : <code class="type">(<a href="GapiConfig.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
+Upload chunk size lens.<br>
+</div>
 <pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type"><a href="GapiConfig.html#TYPEt">t</a></code></pre><div class="info">
 Default configuration.
 <p>
@@ -300,6 +311,7 @@ Default configuration.
   connect_timeout = None;
   compress = true;
   auth = NoAuth;
+  upload_chunk_size = 10485760; (* 10MB *)
  }</code></pre><br>
 </div>
 <pre><span id="VALdefault_debug"><span class="keyword">val</span> default_debug</span> : <code class="type"><a href="GapiConfig.html#TYPEt">t</a></code></pre><div class="info">
@@ -313,6 +325,7 @@ Default configuration with debug output enabled.
   connect_timeout = None;
   compress = false;
   auth = NoAuth;
+  upload_chunk_size = 10485760; (* 10MB *)
  }</code></pre><br>
 </div>
 </body></html>

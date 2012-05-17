@@ -53,33 +53,35 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GdataACL.Entry</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataACL.Entry</title>
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;authors&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Author</span>.t&nbsp;list;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;categories&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Category</span>.t&nbsp;list;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;contributors&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Contributor</span>.t&nbsp;list;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_id;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;content&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Content</span>.t;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;published&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_published;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;updated&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.atom_updated;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;edited&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.app_edited;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;links&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Link</span>.t&nbsp;list;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Title</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;common&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">BasicEntry</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;scope&nbsp;:&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">Scope</span>.t;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;:&nbsp;<span class="constructor">GdataACL</span>.acl_role;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;role&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;additionalRole&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;withKey&nbsp;:&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">RoleWithKey</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;batch&nbsp;:&nbsp;<span class="constructor">GdataBatch</span>.<span class="constructor">BatchExtensions</span>.t;<br>
 &nbsp;&nbsp;}<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_xml_data_model&nbsp;:&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml_data_model&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;common&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">BasicEntry</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;scope&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">Scope</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;role&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;additionalRole&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;withKey&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataACL</span>.<span class="constructor">RoleWithKey</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;batch&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataBatch</span>.<span class="constructor">BatchExtensions</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.atom_id)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;links&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Link</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;categories&nbsp;:&nbsp;(<span class="constructor">GdataACL</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Category</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
 <span class="keyword">end</span></code></body></html>

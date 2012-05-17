@@ -53,12 +53,13 @@
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
-<link title="GdataACL" rel="Chapter" href="GdataACL.html">
-<link title="GdataCalendar" rel="Chapter" href="GdataCalendar.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
 <link title="GdataComments" rel="Chapter" href="GdataComments.html">
-<link title="GdataCalendarEvent" rel="Chapter" href="GdataCalendarEvent.html">
 <link title="GdataService" rel="Chapter" href="GdataService.html">
-<link title="GdataCalendarService" rel="Chapter" href="GdataCalendarService.html"><title>GapiDiscoveryV1Model.RestDescription</title>
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiDiscoveryV1Model.RestDescription</title>
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
@@ -141,6 +142,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;auth&nbsp;:&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.<span class="constructor">AuthData</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;basePath&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;baseUrl&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;batchPath&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;discoveryVersion&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;documentationLink&nbsp;:&nbsp;string;<br>
@@ -155,7 +157,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;protocol&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resources&nbsp;:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestResource</span>.t)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;revision&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rootUrl&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;schemas&nbsp;:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">JsonSchema</span>.t)&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;servicePath&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
@@ -165,6 +169,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;basePath&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;baseUrl&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;batchPath&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;discoveryVersion&nbsp;:<br>
@@ -196,10 +201,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestResource</span>.t)&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;revision&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rootUrl&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;schemas&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">JsonSchema</span>.t)&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;servicePath&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;title&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;version&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t<br>
