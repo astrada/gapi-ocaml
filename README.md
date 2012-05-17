@@ -21,7 +21,7 @@ Supported RESTful APIs:
 
 Google Data Protocol APIs (GData):
 
-* Google Documents List API v3
+* Google Documents List API v3 (supports Google Drive)
 
 ### Features
 
