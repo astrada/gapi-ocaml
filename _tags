@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: f04577c9fba769ddc5069bfc3d084a43)
+# DO NOT EDIT (digest: 64c3e8b861c8b54f845bbb9232754cf7)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -76,8 +76,12 @@
 <examples/auth/*.ml{,i}>: pkg_cryptokit
 # Library gdata
 "src/gdata": include
+<src/gdata/*.ml{,i}>: use_gapi
 <src/gdata/*.ml{,i}>: pkg_xmlm
+<src/gdata/*.ml{,i}>: pkg_str
 <src/gdata/*.ml{,i}>: pkg_netstring
+<src/gdata/*.ml{,i}>: pkg_json-wheel
 <src/gdata/*.ml{,i}>: pkg_extlib
 <src/gdata/*.ml{,i}>: pkg_curl
+<src/gdata/*.ml{,i}>: pkg_cryptokit
 # OASIS_STOP

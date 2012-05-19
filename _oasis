@@ -44,6 +44,7 @@ Library gapi
     GapiDate,
     GapiJson,
     GapiLens,
+    GapiMediaResource,
     GapiCalendarV3Model,
     GapiCalendarV3Service,
     GapiPlusV1Model,
@@ -90,7 +91,7 @@ Library gdata
     GdataDocumentsV3Service
   InternalModules:
     GdataUtils
-  BuildDepends: xmlm, extlib, netstring, curl
+  BuildDepends: gapi, xmlm, extlib, netstring, curl
   XMETADescription: Google Data Protocol (GData) client library
 
 # Documentation

@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 2e7b13b2743f6bc310ad1693a6fc371e)
+# DO NOT EDIT (digest: 7581e831bdeb2196f6b336799817be41)
 gapi/GapiCore
 gapi/GapiCurl
 gapi/GapiPipe
@@ -17,6 +17,7 @@ gapi/GapiService
 gapi/GapiDate
 gapi/GapiJson
 gapi/GapiLens
+gapi/GapiMediaResource
 gapi/GapiCalendarV3Model
 gapi/GapiCalendarV3Service
 gapi/GapiPlusV1Model
