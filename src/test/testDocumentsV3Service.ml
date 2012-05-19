@@ -447,6 +447,10 @@ let test_delete_revision () =
        let (revisions, session) = query_revisions entry session in
        let revision_count = List.length revisions.Revision.Feed.entries in
        let revision = revisions |. Revision.Feed.entries |. GapiLens.head in
+       let (revision, session) =
+         refresh_revision
+           revision
+           session in
          ignore (delete_revision
                    revision
                    session);
@@ -672,7 +676,10 @@ let test_batch_request () =
            e2
            session
        in
-         ignore (delete_document entry session);
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
          assert_equal ~msg:"Query"
            400
            (e1 |. batch_status);
@@ -845,7 +852,7 @@ let test_create_archive () =
            (Sys.file_exists filename))
 
 let suite = "Documents List v3 Service test" >:::
-  [(*"test_query_user_metadata" >:: test_query_user_metadata;
+  ["test_query_user_metadata" >:: test_query_user_metadata;
    "test_query_metadata_remaining_changes"
      >:: test_query_metadata_remaining_changes;
    "test_query_changes" >:: test_query_changes;
@@ -869,7 +876,6 @@ let suite = "Documents List v3 Service test" >:::
    "test_query_folder_contents" >:: test_query_folder_contents;
    "test_get_acl" >:: test_get_acl;
    "test_create_acl" >:: test_create_acl;
-   "test_update_acl" >:: test_update_acl;*)
-   "test_create_archive" >:: test_create_archive;
-  ]
+   "test_update_acl" >:: test_update_acl;
+   "test_create_archive" >:: test_create_archive]
 
