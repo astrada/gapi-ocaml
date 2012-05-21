@@ -31,3 +31,9 @@ val refresh_access_token :
   GapiConversation.Session.t ->
   GapiAuthResponse.t * GapiConversation.Session.t
 
+val revoke_token :
+  ?url:string ->
+  refresh_token:string ->
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
+

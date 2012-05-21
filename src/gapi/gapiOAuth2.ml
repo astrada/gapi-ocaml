@@ -134,3 +134,15 @@ let refresh_access_token
     (parse_response parse_token_info)
     session
 
+let revoke_token
+      ?(url = "https://accounts.google.com/o/oauth2/revoke")
+      ~refresh_token
+      session =
+  let query_string = Netencoding.Url.encode refresh_token in
+  let url' = Printf.sprintf "%s?token=%s" url query_string in
+    GapiConversation.request
+      GapiCore.HttpMethod.GET
+      session
+      url'
+      (parse_response (fun _ -> ()))
+

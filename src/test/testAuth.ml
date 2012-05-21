@@ -181,6 +181,16 @@ let test_oauth2_refresh_token () =
                  (token.GapiAuthResponse.OAuth2.refresh_token = "");
            | _ -> failwith "Not supported OAuth2 response")
 
+let test_oauth2_revoke_invalid_token () =
+  TestHelper.test_request_noauth
+    (fun _ session ->
+       assert_raises
+         (Failure "OAuth2 error: invalid_token (HTTP response code: 400)")
+         (fun () ->
+           GapiOAuth2.revoke_token
+             ~refresh_token:"123456789abcdefg"
+             session))
+
 let suite = "Auth Service test" >:::
   [(* "test_client_login" >:: test_client_login;
       disabled to avoid creating too many long-lived tokens *)
@@ -191,5 +201,6 @@ let suite = "Auth Service test" >:::
    "test_oauth1_revoke_invalid_token" >:: test_oauth1_revoke_invalid_token;
    "test_oauth2_authorization_url" >:: test_oauth2_authorization_url;
    "test_invalid_oauth2_access_token" >:: test_invalid_oauth2_access_token;
-   "test_oauth2_refresh_token" >:: test_oauth2_refresh_token]
+   "test_oauth2_refresh_token" >:: test_oauth2_refresh_token;
+   "test_oauth2_revoke_invalid_token" >:: test_oauth2_revoke_invalid_token]
 
