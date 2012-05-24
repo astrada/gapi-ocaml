@@ -3,6 +3,7 @@
 
 exception NotModified of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
+exception RefreshTokenFailed of GapiConversation.Session.t
 
 type request_type =
     Query

@@ -8,6 +8,7 @@ exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
 exception ServiceUnavailable of GapiConversation.Session.t
+exception RefreshTokenFailed of GapiConversation.Session.t
 
 type request_type =
     Query
@@ -200,6 +201,8 @@ let refresh_oauth2_token session =
         GapiAuth.OAuth2 { GapiAuth.client_id;
                            client_secret;
                            refresh_token; _ } ->
+          if client_id = "" || client_secret = "" || refresh_token = "" then
+            raise (RefreshTokenFailed session);
           let (response, new_session) =
             GapiOAuth2.refresh_access_token
               ~client_id
@@ -217,7 +220,7 @@ let refresh_oauth2_token session =
               ^%= GapiLens.option_get
               ^%= GapiConversation.Session.oauth2_token ^= access_token
       | _ ->
-          failwith "Unauthorized" (* TODO: better error handling *)
+          failwith "Bug: refresh_oauth2_token"
 
 let gapi_request
       ?post_data
