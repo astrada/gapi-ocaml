@@ -104,10 +104,10 @@ struct
   let return a =
     (fun s -> (a, s))
 
-  let bind m k =
+  let bind m f =
     (fun s ->
        let (a, s') = m s in
-       let m' = k a in
+       let m' = f a in
          m' s')
 
   let get s = (s, s)
@@ -147,8 +147,8 @@ struct
 
   let return x = [x]
 
-  let bind m k =
-    List.concat (List.map k m)
+  let bind m f =
+    List.concat (List.map f m)
 
   let mzero = []
 
