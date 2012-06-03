@@ -52,6 +52,9 @@ module RevisionsFeedLink : GdataExtensions.FeedLink
 
 module Document :
 sig
+  val kind_scheme : string
+  val labels_scheme : string
+
   val document_category : GdataAtom.Category.t
   val drawing_category : GdataAtom.Category.t
   val folder_category : GdataAtom.Category.t
