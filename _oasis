@@ -27,6 +27,7 @@ Flag generator
 Library gapi
   Path: src/gapi
   Modules:
+    GapiUtils,
     GapiCore,
     GapiCurl,
     GapiPipe,
@@ -71,14 +72,13 @@ Library gapi
     GapiAdsenseV1_1Service,
     GapiBigqueryV2Model,
     GapiBigqueryV2Service
-  InternalModules:
-    GapiUtils
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm
   XMETADescription: Google APIs client library
 
 Library gdata
   Path: src/gdata
   Modules:
+    GdataUtils,
     GdataCore,
     GdataBatch,
     GdataAtom,
@@ -89,8 +89,6 @@ Library gdata
     GdataACLService,
     GdataDocumentsV3Model,
     GdataDocumentsV3Service
-  InternalModules:
-    GdataUtils
   BuildDepends: gapi, xmlm, extlib, netstring, curl
   XMETADescription: Google Data Protocol (GData) client library
 

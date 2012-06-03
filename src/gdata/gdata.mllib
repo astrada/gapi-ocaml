@@ -1,5 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: 59b4229df4f420edf949077fa5bbe71f)
+# DO NOT EDIT (digest: fae4b92f0b5e0014098ae7225443a981)
+GdataUtils
 GdataCore
 GdataBatch
 GdataAtom
@@ -10,5 +11,4 @@ GdataACL
 GdataACLService
 GdataDocumentsV3Model
 GdataDocumentsV3Service
-GdataUtils
 # OASIS_STOP
