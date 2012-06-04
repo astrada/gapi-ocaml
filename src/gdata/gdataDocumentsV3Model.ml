@@ -356,7 +356,7 @@ struct
         [GdataAtom.BasicEntry.to_xml_data_model entry.common;
          GdataAtom.render_text_element ns_docs "description" entry.description;
          GdataAtom.render_text_element GdataAtom.ns_gd "resourceId" entry.resourceId;
-         GdataAtom.render_date_element GdataAtom.ns_gd "modifiedByMeDate" entry.modifiedByMeDate;
+         GdataAtom.render_date_element ns_docs "modifiedByMeDate" entry.modifiedByMeDate;
          GdataExtensions.LastModifiedBy.to_xml_data_model entry.lastModifiedBy;
          GdataAtom.render_date_element GdataAtom.ns_gd "lastViewed" entry.lastViewed;
          AclFeedLink.to_xml_data_model entry.aclFeedLink;
