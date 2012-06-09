@@ -248,6 +248,13 @@ val get_resumable_create_media_link :
   string * GapiConversation.Session.t
 (** Gets the resumable create media link from the documents feed. *)
 
+val get_document :
+  ?base_url:string ->
+  string ->
+  GapiConversation.Session.t ->
+  GdataDocumentsV3Model.Document.Entry.t * GapiConversation.Session.t
+(** Gets a document entry by its resource id. *)
+
 val refresh_document :
   GdataDocumentsV3Model.Document.Entry.t ->
   GapiConversation.Session.t ->

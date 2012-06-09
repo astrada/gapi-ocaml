@@ -315,6 +315,33 @@ let test_insert_empty_document () =
            "Document resourceId should not be empty"
            resourceId)
 
+let test_get_document () =
+  TestHelper.test_request
+    TestHelper.build_oauth2_auth
+    (fun session ->
+       let (entry, session) =
+         create_document
+           new_empty_document
+           session in
+       let id = entry |. Document.Entry.id in
+       let resourceId = entry |. Document.Entry.resourceId in
+       let () = TestHelper.delay () in
+       let (entry, session) =
+         get_document
+           resourceId
+           session
+       in
+         ignore (delete_document
+                   ~delete:true
+                   entry
+                   session);
+         assert_equal
+           resourceId
+           entry.Document.Entry.resourceId;
+         assert_equal
+           id
+           (entry |. Document.Entry.id))
+
 let test_update_document () =
   TestHelper.test_request
     TestHelper.build_oauth2_auth
@@ -866,6 +893,7 @@ let suite = "Documents List v3 Service test" >:::
    "test_download_revision" >:: test_download_revision;
    "test_get_acl" >:: test_get_acl;
    "test_insert_empty_document" >:: test_insert_empty_document;
+   "test_get_document" >:: test_get_document;
    "test_update_document" >:: test_update_document;
    "test_update_content" >:: test_update_content;
    "test_delete_revision" >:: test_delete_revision;

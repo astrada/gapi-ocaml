@@ -546,6 +546,17 @@ let get_resumable_create_media_link session =
   in
     (url, session)
 
+let get_document
+      ?(base_url = documents_base_url)
+      resource_id
+      session =
+  let url = GapiUtils.add_path_to_url ~encoded:false [resource_id] base_url in
+    GdataService.query
+      ~version
+      url
+      parse_document_entry
+      session
+
 let refresh_document
       entry
       session =
