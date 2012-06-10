@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: dc2206a05b67e365eaa1812f22cb1a2a)
-version = "0.1.8"
+# DO NOT EDIT (digest: 271414b8064eabaa56c4aa76c3ac261a)
+version = "0.1.9"
 description = "Google Data Protocol (GData) client library"
 requires = "gapi xmlm extlib netstring curl"
 archive(byte) = "gdata.cma"
