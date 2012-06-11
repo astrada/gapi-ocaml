@@ -1,30 +1,25 @@
-OASISFormat: 0.2
+OASISFormat: 0.3
 OCamlVersion: >= 3.12.0
 Name: gapi-ocaml
-Version: 0.1.9
-Synopsis: A simple OCaml client for Google Services.
-Authors: Alessandro Strada
-License: MIT
+Version: 0.1.10
 LicenseFile: LICENSE
+License: MIT
+BuildType: ocamlbuild (0.3)
+Authors: Alessandro Strada
+Copyrights: (C) 2011-2012 Alessandro Strada
 Homepage: http://gapi-ocaml.forge.ocamlcore.org
+Plugins: META (0.3)
 BuildTools: ocamlbuild
-Plugins: META (0.2)
+
+Synopsis: A simple OCaml client for Google Services.
 
 # Flags
-Flag all
-  Description: Build all
-  Default: false
-
-Flag tests
-  Description: Build and run tests
-  Default$: flag(all)
-
 Flag generator
   Description: Build service generator
-  Default$: flag(all)
+  Default: false
 
 # Libraries
-Library gapi
+Library "gapi-ocaml"
   Path: src/gapi
   Modules:
     GapiUtils,
@@ -89,65 +84,67 @@ Library gdata
     GdataACLService,
     GdataDocumentsV3Model,
     GdataDocumentsV3Service
-  BuildDepends: gapi, xmlm, extlib, netstring, curl
+  BuildDepends: gapi-ocaml, xmlm, extlib, netstring, curl
+  FindlibParent: gapi-ocaml
   XMETADescription: Google Data Protocol (GData) client library
 
 # Documentation
 Document "gapi-ocaml"
   Title: API reference for Google APIs client library
-  Type: ocamlbuild (0.2)
+  Type: ocamlbuild (0.3)
   InstallDir: $htmldir/html
   Install: false
   DataFiles: doc/style.css
-  BuildTools: ocamldoc
-  XOCamlbuildPath: src
-  XOCamlbuildLibraries: gapi, gdata
+  BuildTools+: ocamldoc
+  XOCamlbuildPath: src/
+  XOCamlbuildLibraries: gapi-ocaml, gapi-ocaml.gdata
 
 # Executables
-Executable serviceGenerator
-  Build$: flag(generator) || flag(all)
+Executable "serviceGenerator"
+  Build$: flag(generator)
   Path: tools
   Install: false
   MainIs: serviceGenerator.ml
+  BuildDepends: gapi-ocaml
 
 # Examples
-Executable oauth2Flow
+Executable "oauth2Flow"
   Path: examples/auth
   Install: false
   MainIs: oauth2Flow.ml
-  BuildDepends: nethttpd, extlib, curl, str, cryptokit, json-wheel, xmlm
+  BuildDepends: gapi-ocaml.gdata, nethttpd
 
-Executable oauth1Flow
+Executable "oauth1Flow"
   Path: examples/auth
   Install: false
   MainIs: oauth1Flow.ml
-  BuildDepends: nethttpd, extlib, curl, str, cryptokit, json-wheel
+  BuildDepends: gapi-ocaml, nethttpd
 
-Executable clientLoginFlow
+Executable "clientLoginFlow"
   Path: examples/auth
   Install: false
   MainIs: clientLoginFlow.ml
-  BuildDepends: nethttpd, extlib, curl, str, cryptokit, json-wheel
+  BuildDepends: gapi-ocaml, nethttpd
 
 # Tests
-Executable refreshOAuth2Token
-  Build$: flag(tests) || flag(all)
+Executable "refreshOAuth2Token"
+  Build$: flag(tests)
   Path: src/test
   Install: false
   MainIs: refreshOAuth2Token.ml
-  BuildDepends: oUnit, extlib, curl, str, cryptokit, json-wheel
+  BuildDepends: gapi-ocaml, oUnit
 
-Executable testSuite
-  Build$: flag(tests) || flag(all)
+Executable "test_suite"
+  Build$: flag(tests)
   Path: src/test
   Install: false
   MainIs: testSuite.ml
-  BuildDepends: oUnit, extlib, curl, str, cryptokit, json-wheel, xmlm
+  BuildDepends: oUnit, gapi-ocaml.gdata
 
 Test core
-  Run$: flag(tests) || flag(all)
-  Command: $testSuite
-  TestTools: testSuite
+  Run$: flag(tests)
+  Command: $test_suite
+  TestTools: test_suite
 
 # VCS
 SourceRepository head

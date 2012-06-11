@@ -49,7 +49,7 @@ You will need the following libraries:
 * [pa_monad][] >= 6.0 (syntax extension for Monads, optional)
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
-This library was developed and tested on Ubuntu 12.04 LTS.
+This library was developed and tested on Ubuntu 12.04 LTS (64-bit).
 
 [OCaml]: http://caml.inria.fr/ocaml/release.en.html
 [Findlib]: http://projects.camlcity.org/projects/findlib.html/
@@ -66,8 +66,8 @@ This library was developed and tested on Ubuntu 12.04 LTS.
 
 This project provides 2 libraries:
 
-* `gapi`: Google APIs client library
-* `gdata`: Google Data Protocol client library
+* `gapi-ocaml`: Google APIs client library
+* `gapi-ocaml.gdata`: Google Data Protocol client library
 
 To build the libraries, run
 
