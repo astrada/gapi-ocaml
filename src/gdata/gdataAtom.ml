@@ -1134,13 +1134,10 @@ let find_url_generic (type s) rel_module rel links =
   let module LinkRel = (val rel_module : LinkRelation with type t = s) in
   let rel_string = LinkRel.to_string rel in
   let link =
-    try
-      List.find
-        (fun link ->
-           link.Link.rel = rel_string)
-        links
-    with Not_found ->
-      failwith ("Link relation " ^ rel_string ^ " not found")
+    List.find
+      (fun link ->
+         link.Link.rel = rel_string)
+      links
   in
     link.Link.href
 
