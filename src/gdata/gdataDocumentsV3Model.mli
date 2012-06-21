@@ -124,6 +124,9 @@ sig
     val content : (t , GdataAtom.Content.t) GapiLens.t
     val links : (t, GdataAtom.Link.t list) GapiLens.t
     val categories : (t, GdataAtom.Category.t list) GapiLens.t
+    val published : (t, GapiDate.t) GapiLens.t
+    val updated : (t, GapiDate.t) GapiLens.t
+    val edited : (t, GapiDate.t) GapiLens.t
 
     include GdataAtom.AtomData with type t := t
 

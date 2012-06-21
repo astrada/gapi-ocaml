@@ -339,6 +339,9 @@ struct
     let content = common |-- GdataAtom.BasicEntry.content
     let links = common |-- GdataAtom.BasicEntry.links
     let categories = common |-- GdataAtom.BasicEntry.categories
+    let published = common |-- GdataAtom.BasicEntry.published
+    let updated = common |-- GdataAtom.BasicEntry.updated
+    let edited = common |-- GdataAtom.BasicEntry.edited
 
     let empty = {
       common = GdataAtom.BasicEntry.empty;
