@@ -34,15 +34,12 @@ let of_string date_string =
         let month = parse_int 2 in
         let day = parse_int 3 in
         let full_date = {
-              Netdate.year = year;
-              month = month;
+          epoch with
+              Netdate.year;
+              month;
               day = day;
-              hour = 0;
-              minute = 0;
-              second = 0;
-              zone = 0;
-              week_day = -1 }
-        in
+              week_day = -1
+        } in
           try
             let hour = parse_int 5 in
             let minute = parse_int 6 in
