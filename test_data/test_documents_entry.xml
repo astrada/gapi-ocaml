@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:docs="http://schemas.google.com/docs/2007" xmlns:gd="http://schemas.google.com/g/2005" gd:etag="&quot;BlUAUxUMGyt7ImBr&quot;">
+  <id>https://docs.google.com/feeds/id/document%3A22222221111111113333333333888888888999999999</id>
+  <published>2010-10-11T10:55:45.000Z</published>
+  <updated>2010-10-11T10:56:51.000Z</updated>
+  <app:edited xmlns:app="http://www.w3.org/2007/app">2011-06-11T09:18:58.000Z</app:edited>
+  <category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/docs/2007#document" label="document"/>
+  <category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#viewed" label="viewed"/>
+  <category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#shared" label="shared"/>
+  <category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#shared-with-me" label="shared-with-me"/>
+  <title>shared document</title>
+  <content type="text/html" src="https://docs.google.com/feeds/download/documents/export/Export?id=22222222222233333333334444444888888999999999"/>
+  <link rel="http://schemas.google.com/docs/2007#parent" type="application/atom+xml" href="https://docs.google.com/feeds/default/private/full/folder%3A1111111111118888888aaaaaaaaaaaaabbbbbbbbbbbbbccccccccuuuuuuuu" title="Folder"/>
+  <link rel="alternate" type="text/html" href="https://docs.google.com/document/d/11111111111111111177777777777777788888888888/edit"/>
+  <link rel="http://schemas.google.com/docs/2007#embed" type="text/html" href="https://docs.google.com/document/d/dddddddddddd999999999888888888333333aaaaaaaa/preview"/>
+  <link rel="http://schemas.google.com/docs/2007#icon" type="image/png" href="https://ssl.gstatic.com/docs/doclist/images/icon_10_document_list.png"/>
+  <link rel="http://schemas.google.com/docs/2007/thumbnail" type="image/png" href="https://docs.google.com/feeds/vt?authuser=0&amp;gd=true&amp;id=aaaaaaaaaaahhhhhhhhjjjjjjjjjkkkkkkkddddddaa4&amp;v=2&amp;s=111111117777777778888888aaaaaaabbbbbbccccccc&amp;sz=s220"/>
+  <link rel="self" type="application/atom+xml" href="https://docs.google.com/feeds/default/private/full/folder%3A00000000000000aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbccccccccccccccc/contents/document%3A33333333333333jjjjjjjjjjjjjaaaaaaaaaa8888888"/>
+  <author>
+    <name>author name</name>
+    <email>author_email@example.com</email>
+  </author>
+  <gd:resourceId>document:111111111222222222222666666666aaaaaaaabbbbbb</gd:resourceId>
+  <docs:sharedWithMeDate>2010-10-11T10:56:51.073Z</docs:sharedWithMeDate>
+  <gd:lastModifiedBy>
+    <name>name</name>
+    <email>email@example.com</email>
+  </gd:lastModifiedBy>
+  <gd:lastViewed>2011-06-11T09:18:58.000Z</gd:lastViewed>
+  <gd:quotaBytesUsed>0</gd:quotaBytesUsed>
+  <docs:writersCanInvite value="true"/>
+  <gd:feedLink rel="http://schemas.google.com/acl/2007#accessControlList" href="https://docs.google.com/feeds/default/private/full/document%3A1111111111111777777777aaaaaaaaaaaabbbbbbbbbb/acl"/>
+  <gd:feedLink rel="http://schemas.google.com/docs/2007/revisions" href="https://docs.google.com/feeds/default/private/full/document%3A444444443333333333322222222222hhhhhhdddddddd/revisions"/>
+  <customNode attr="attr">value</customNode>
+</entry>

@@ -231,6 +231,7 @@ struct
       description : string;
       resourceId : string;
       modifiedByMeDate : GapiDate.t;
+      sharedWithMeDate : GapiDate.t;
       lastModifiedBy : GdataExtensions.LastModifiedBy.t;
       lastViewed : GapiDate.t;
       aclFeedLink : AclFeedLink.t;
@@ -248,6 +249,7 @@ struct
       changestamp : int;
 
       batch : GdataBatch.BatchExtensions.t;
+      extensions : GdataAtom.GenericExtensions.t;
     }
 
     let common = {
@@ -265,6 +267,10 @@ struct
     let modifiedByMeDate = {
       GapiLens.get = (fun x -> x.modifiedByMeDate);
       GapiLens.set = (fun v x -> { x with modifiedByMeDate = v })
+    }
+    let sharedWithMeDate = {
+      GapiLens.get = (fun x -> x.sharedWithMeDate);
+      GapiLens.set = (fun v x -> { x with sharedWithMeDate = v })
     }
     let lastModifiedBy = {
       GapiLens.get = (fun x -> x.lastModifiedBy);
@@ -322,6 +328,10 @@ struct
       GapiLens.get = (fun x -> x.batch);
       GapiLens.set = (fun v x -> { x with batch = v })
     }
+    let extensions = {
+      GapiLens.get = (fun x -> x.extensions);
+      GapiLens.set = (fun v x -> { x with extensions = v })
+    }
 
     let id = common |-- GdataAtom.BasicEntry.id
     let etag = common |-- GdataAtom.BasicEntry.etag
@@ -335,6 +345,7 @@ struct
       description = "";
       resourceId = "";
       modifiedByMeDate = GapiDate.epoch;
+      sharedWithMeDate = GapiDate.epoch;
       lastModifiedBy = GdataExtensions.LastModifiedBy.empty;
       lastViewed = GapiDate.epoch;
       aclFeedLink = AclFeedLink.empty;
@@ -349,6 +360,7 @@ struct
       size = 0L;
       changestamp = 0;
       batch = GdataBatch.BatchExtensions.empty;
+      extensions = GdataAtom.GenericExtensions.empty;
     }
 
     let to_xml_data_model entry =
@@ -357,6 +369,7 @@ struct
          GdataAtom.render_text_element ns_docs "description" entry.description;
          GdataAtom.render_text_element GdataAtom.ns_gd "resourceId" entry.resourceId;
          GdataAtom.render_date_element ns_docs "modifiedByMeDate" entry.modifiedByMeDate;
+         GdataAtom.render_date_element ns_docs "sharedWithMeDate" entry.sharedWithMeDate;
          GdataExtensions.LastModifiedBy.to_xml_data_model entry.lastModifiedBy;
          GdataAtom.render_date_element GdataAtom.ns_gd "lastViewed" entry.lastViewed;
          AclFeedLink.to_xml_data_model entry.aclFeedLink;
@@ -370,7 +383,8 @@ struct
          GdataAtom.render_bool_empty_element ns_docs "deleted" entry.deleted;
          GdataAtom.render_int64_element ns_docs "size" entry.size;
          GdataAtom.render_int_value ns_docs "changestamp" entry.changestamp;
-         GdataBatch.BatchExtensions.to_xml_data_model entry.batch]
+         GdataBatch.BatchExtensions.to_xml_data_model entry.batch;
+         GdataAtom.GenericExtensions.to_xml_data_model entry.extensions]
 
     let of_xml_data_model entry tree =
       match tree with
@@ -399,6 +413,11 @@ struct
              [GapiCore.AnnotatedTree.Leaf
                 ([`Text], v)]) when ns = ns_docs ->
             { entry with modifiedByMeDate = GapiDate.of_string v }
+        | GapiCore.AnnotatedTree.Node
+            ([`Element; `Name "sharedWithMeDate"; `Namespace ns],
+             [GapiCore.AnnotatedTree.Leaf
+                ([`Text], v)]) when ns = ns_docs ->
+            { entry with sharedWithMeDate = GapiDate.of_string v }
         | GapiCore.AnnotatedTree.Node
             ([`Element; `Name "lastModifiedBy"; `Namespace ns],
              cs) when ns = GdataAtom.ns_gd ->
@@ -483,11 +502,20 @@ struct
             ([`Attribute; `Name _; `Namespace ns],
              _) when ns = Xmlm.ns_xmlns ->
             entry
-        | e ->
+        | GapiCore.AnnotatedTree.Leaf
+            ([_; `Name n; `Namespace ns],
+             _) when GdataBatch.BatchExtensions.node_matches (n, ns) ->
             let batch =
-              GdataBatch.BatchExtensions.of_xml_data_model entry.batch e
+              GdataBatch.BatchExtensions.of_xml_data_model entry.batch tree
             in
               { entry with batch }
+        | extension ->
+            let extensions =
+              GdataAtom.GenericExtensions.of_xml_data_model
+                entry.extensions
+                extension
+            in
+              { entry with extensions }
 
   end
 

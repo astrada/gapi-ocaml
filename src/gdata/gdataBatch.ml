@@ -235,5 +235,12 @@ struct
       | e ->
           GdataUtils.unexpected e
 
+  let node_matches = function
+      ("id", ns)
+    | ("operation", ns)
+    | ("status", ns)
+    | ("interrupted", ns) when ns = GdataExtensions.ns_batch -> true
+    | _ -> false
+
 end
 

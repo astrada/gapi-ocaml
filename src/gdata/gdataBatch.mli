@@ -70,5 +70,7 @@ sig
 
   include GdataAtom.AtomData with type t := t
 
+  val node_matches : (string * string) -> bool
+
 end
 
