@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: f0ce100317105fa2cafaa58a3693e92a)
-version = "0.1.10"
+# DO NOT EDIT (digest: 1acec30997a620f5695b0f69fe252a42)
+version = "0.1.12"
 description = "Google APIs client library"
 requires = "extlib netstring curl str cryptokit json-wheel xmlm"
 archive(byte) = "gapi-ocaml.cma"
@@ -9,7 +9,7 @@ archive(native) = "gapi-ocaml.cmxa"
 archive(native, plugin) = "gapi-ocaml.cmxs"
 exists_if = "gapi-ocaml.cma"
 package "gdata" (
- version = "0.1.10"
+ version = "0.1.12"
  description = "Google Data Protocol (GData) client library"
  requires = "gapi-ocaml xmlm extlib netstring curl"
  archive(byte) = "gdata.cma"
