@@ -3,6 +3,7 @@ open GapiLens.Infix
 
 exception Redirect of string * GapiConversation.Session.t
 exception Unauthorized of GapiConversation.Session.t
+exception PermissionDenied of GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
@@ -34,6 +35,19 @@ let parse_response
              GapiCore.Header.Location value -> value
            | _ -> u)
       ""
+      headers in
+  let get_reason_phrase () =
+    List.fold_left
+      (fun u h ->
+         match h with
+             GapiCore.Header.OtherHeader value ->
+               let parts = ExtString.String.nsplit " " value in
+                 if List.length parts > 2 &&
+                    List.nth parts 1 = string_of_int response_code then
+                   String.concat " " (List.tl (List.tl parts))
+                 else u
+           | _ -> u)
+      ""
       headers
   in
     match response_code with
@@ -63,7 +77,16 @@ let parse_response
           in
             raise (ResumeIncomplete (range, url, session))
       | 401 (* Unauthorized *) ->
-          raise (Unauthorized session)
+          let reason_phrase = get_reason_phrase () in
+            begin match reason_phrase with
+                "Permission denied" ->
+                  (* Documents List API may return a Permission denied reason
+                   * phrase, when a document cannot be accessed by the current
+                   * user. *)
+                  raise (PermissionDenied session)
+              | _ ->
+                  raise (Unauthorized session)
+            end
       | 304 (* Not Modified *) ->
           raise (NotModified session)
       | 412 (* Precondition Failed *) ->

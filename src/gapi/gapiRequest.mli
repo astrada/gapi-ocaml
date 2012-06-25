@@ -1,6 +1,7 @@
 (** Basic request to services.
   *)
 
+exception PermissionDenied of GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception RefreshTokenFailed of GapiConversation.Session.t
