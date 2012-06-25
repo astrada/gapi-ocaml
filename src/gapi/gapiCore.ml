@@ -155,7 +155,8 @@ struct
           | _ ->
               KeyValueHeader (key, value)
     else
-      OtherHeader full_header
+      let stripped_header = ExtString.String.strip full_header in
+        OtherHeader stripped_header
 
 end
 
