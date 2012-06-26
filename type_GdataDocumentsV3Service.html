@@ -7,6 +7,7 @@
 <link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiUtils" rel="Chapter" href="GapiUtils.html">
 <link title="GapiCore" rel="Chapter" href="GapiCore.html">
 <link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
 <link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
@@ -24,6 +25,7 @@
 <link title="GapiDate" rel="Chapter" href="GapiDate.html">
 <link title="GapiJson" rel="Chapter" href="GapiJson.html">
 <link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiMediaResource" rel="Chapter" href="GapiMediaResource.html">
 <link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
 <link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
 <link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
@@ -50,6 +52,7 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -272,6 +275,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Feed</span>.t&nbsp;*&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_resumable_create_media_link&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;*&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_document&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?base_url:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t&nbsp;*&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;refresh_document&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>

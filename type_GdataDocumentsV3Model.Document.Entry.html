@@ -7,6 +7,7 @@
 <link title="Index of values" rel=Appendix href="index_values.html">
 <link title="Index of modules" rel=Appendix href="index_modules.html">
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiUtils" rel="Chapter" href="GapiUtils.html">
 <link title="GapiCore" rel="Chapter" href="GapiCore.html">
 <link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
 <link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
@@ -24,6 +25,7 @@
 <link title="GapiDate" rel="Chapter" href="GapiDate.html">
 <link title="GapiJson" rel="Chapter" href="GapiJson.html">
 <link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiMediaResource" rel="Chapter" href="GapiMediaResource.html">
 <link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
 <link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
 <link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
@@ -50,6 +52,7 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
 <link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
@@ -68,6 +71,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resourceId&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;modifiedByMeDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sharedWithMeDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;lastModifiedBy&nbsp;:&nbsp;<span class="constructor">GdataExtensions</span>.<span class="constructor">LastModifiedBy</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;lastViewed&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;aclFeedLink&nbsp;:&nbsp;<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">AclFeedLink</span>.t;<br>
@@ -82,6 +86,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int64;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;changestamp&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;batch&nbsp;:&nbsp;<span class="constructor">GdataBatch</span>.<span class="constructor">BatchExtensions</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">GenericExtensions</span>.t;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;common&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">BasicEntry</span>.t)<br>
@@ -91,6 +96,8 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;resourceId&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;modifiedByMeDate&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sharedWithMeDate&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lastModifiedBy&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,<br>
@@ -122,6 +129,9 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;batch&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataBatch</span>.<span class="constructor">BatchExtensions</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;extensions&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">GenericExtensions</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;title&nbsp;:<br>
@@ -134,6 +144,12 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;categories&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GdataAtom</span>.<span class="constructor">Category</span>.t&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;published&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;updated&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;edited&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GdataDocumentsV3Model</span>.<span class="constructor">Document</span>.<span class="constructor">Entry</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml_data_model&nbsp;:&nbsp;t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GdataCore</span>.xml_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;t<br>
