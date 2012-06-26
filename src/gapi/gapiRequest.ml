@@ -2,9 +2,13 @@ open GapiUtils.Infix
 open GapiLens.Infix
 
 exception Redirect of string * GapiConversation.Session.t
+exception NotModified of GapiConversation.Session.t
 exception Unauthorized of GapiConversation.Session.t
 exception PermissionDenied of GapiConversation.Session.t
-exception NotModified of GapiConversation.Session.t
+exception Forbidden of GapiConversation.Session.t
+exception NotFound of GapiConversation.Session.t
+exception Conflict of GapiConversation.Session.t
+exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
@@ -40,12 +44,7 @@ let parse_response
     List.fold_left
       (fun u h ->
          match h with
-             GapiCore.Header.OtherHeader value ->
-               let parts = ExtString.String.nsplit " " value in
-                 if List.length parts > 2 &&
-                    List.nth parts 1 = string_of_int response_code then
-                   String.concat " " (List.tl (List.tl parts))
-                 else u
+             GapiCore.Header.HttpStatus (_, _, reason) -> reason
            | _ -> u)
       ""
       headers
@@ -64,6 +63,8 @@ let parse_response
       | 302 (* Found *) ->
           let url = get_location () in
             raise (Redirect (url, session))
+      | 304 (* Not Modified *) ->
+          raise (NotModified session)
       | 308 (* Resume Incomplete *) ->
           let (range, url) =
             List.fold_left
@@ -87,8 +88,14 @@ let parse_response
               | _ ->
                   raise (Unauthorized session)
             end
-      | 304 (* Not Modified *) ->
-          raise (NotModified session)
+      | 403 (* Forbidden *) ->
+          raise (Forbidden session)
+      | 404 (* Not Found *) ->
+          raise (NotFound session)
+      | 409 (* Conflict *) ->
+          raise (Conflict session)
+      | 410 (* Gone *) ->
+          raise (Gone session)
       | 412 (* Precondition Failed *) ->
           raise (PreconditionFailed session)
       | 503 (* Service Unavailable *) ->
