@@ -77,7 +77,8 @@ end
 module Header =
 struct
   type t =
-      ContentType of string
+      HttpStatus of string * int * string
+    | ContentType of string
     | Location of string
     | Authorization of string
     | ETag of string
@@ -94,34 +95,36 @@ struct
 
   let to_string h =
     match h with
-      ContentType value ->
-        "Content-Type: " ^ value
-    | Location value ->
-        "Location: " ^ value
-    | Authorization value ->
-        "Authorization: " ^ value
-    | ETag value ->
-        "ETag: " ^ value
-    | IfNoneMatch value ->
-        "If-None-Match: " ^ value
-    | IfMatch value ->
-        "If-Match: " ^ value
-    | GdataVersion value ->
-        "GData-Version: " ^ value
-    | ContentRange value ->
-        "Content-Range: " ^ value
-    | Range value ->
-        "Range: " ^ value
-    | UploadContentType value ->
-        "X-Upload-Content-Type: " ^ value
-    | UploadContentLength value ->
-        "X-Upload-Content-Length: " ^ value
-    | Slug value ->
-        "Slug: " ^ value
-    | KeyValueHeader (name, value) ->
-        name ^ ": " ^ value
-    | OtherHeader header ->
-        header
+        HttpStatus (version, code, reason) ->
+          Printf.sprintf "HTTP/%s %d %s" version code reason
+      | ContentType value ->
+          "Content-Type: " ^ value
+      | Location value ->
+          "Location: " ^ value
+      | Authorization value ->
+          "Authorization: " ^ value
+      | ETag value ->
+          "ETag: " ^ value
+      | IfNoneMatch value ->
+          "If-None-Match: " ^ value
+      | IfMatch value ->
+          "If-Match: " ^ value
+      | GdataVersion value ->
+          "GData-Version: " ^ value
+      | ContentRange value ->
+          "Content-Range: " ^ value
+      | Range value ->
+          "Range: " ^ value
+      | UploadContentType value ->
+          "X-Upload-Content-Type: " ^ value
+      | UploadContentLength value ->
+          "X-Upload-Content-Length: " ^ value
+      | Slug value ->
+          "Slug: " ^ value
+      | KeyValueHeader (name, value) ->
+          name ^ ": " ^ value
+      | OtherHeader header ->
+          header
 
   let parse full_header =
     if String.contains full_header ':' then
@@ -156,7 +159,12 @@ struct
               KeyValueHeader (key, value)
     else
       let stripped_header = ExtString.String.strip full_header in
-        OtherHeader stripped_header
+        if ExtString.String.starts_with stripped_header "HTTP" then
+          Scanf.sscanf stripped_header "HTTP/%s %d %s"
+            (fun version code reason ->
+               HttpStatus (version, code, reason))
+        else
+          OtherHeader stripped_header
 
 end
 
