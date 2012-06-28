@@ -16,6 +16,11 @@ You can start from the `auth.config.template` you can find in `../../config`:
 
 and then fill in the values obtained by the following tools.
 
+### Build the examples
+
+    $ ocaml setup.ml -configure --enable-examples
+    $ ocaml setup.ml -build
+
 ### Client login
 
 To obtain an authorization token, you can use the `clientLoginFlow` utility

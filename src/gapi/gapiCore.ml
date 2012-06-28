@@ -1,4 +1,4 @@
-let library_version = "0.1.12"
+let library_version = "0.1.13"
 
 module AnnotatedTree = struct
   type ('a, 'b) t =
@@ -160,7 +160,7 @@ struct
     else
       let stripped_header = ExtString.String.strip full_header in
         if ExtString.String.starts_with stripped_header "HTTP" then
-          Scanf.sscanf stripped_header "HTTP/%s %d %s"
+          Scanf.sscanf stripped_header "HTTP/%s %d %s@!"
             (fun version code reason ->
                HttpStatus (version, code, reason))
         else

@@ -88,6 +88,13 @@ To build and run the tests (you will need
 
 See `src/test/README.md` for further details regarding the tests.
 
+To build the examples:
+
+    $ ocaml setup.ml -configure --enable-examples
+    $ ocaml setup.ml -build
+
+See `examples/README.md` for further details regarding the examples.
+
 To generate the documentation, run
 
     $ ocaml setup.ml -doc
