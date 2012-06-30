@@ -175,7 +175,7 @@ sig
     (** A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing. *)
     rows : TableRow.t list;
     (** Rows of results. *)
-    totalRows : string;
+    totalRows : int64;
     (** The total number of rows in the complete table. *)
     
   }
@@ -184,7 +184,7 @@ sig
   val kind : (t, string) GapiLens.t
   val pageToken : (t, string) GapiLens.t
   val rows : (t, TableRow.t list) GapiLens.t
-  val totalRows : (t, string) GapiLens.t
+  val totalRows : (t, int64) GapiLens.t
   
   val empty : t
   
@@ -201,18 +201,18 @@ end
 module JobStatistics :
 sig
   type t = {
-    endTime : string;
+    endTime : int64;
     (** [Output-only] End time of this job, in milliseconds since the epoch. *)
-    startTime : string;
+    startTime : int64;
     (** [Output-only] Start time of this job, in milliseconds since the epoch. *)
-    totalBytesProcessed : string;
+    totalBytesProcessed : int64;
     (** [Output-only] Total bytes processed for this job. *)
     
   }
   
-  val endTime : (t, string) GapiLens.t
-  val startTime : (t, string) GapiLens.t
-  val totalBytesProcessed : (t, string) GapiLens.t
+  val endTime : (t, int64) GapiLens.t
+  val startTime : (t, int64) GapiLens.t
+  val totalBytesProcessed : (t, int64) GapiLens.t
   
   val empty : t
   
@@ -721,13 +721,13 @@ end
 module Table :
 sig
   type t = {
-    creationTime : string;
+    creationTime : int64;
     (** [Output-only] The time when this table was created, in milliseconds since the epoch. *)
     description : string;
     (** [Optional] A user-friendly description of this table. *)
     etag : string;
     (** [Output-only] A hash of this resource. *)
-    expirationTime : string;
+    expirationTime : int64;
     (** [Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. *)
     friendlyName : string;
     (** [Optional] A descriptive name for this table. *)
@@ -735,9 +735,9 @@ sig
     (** [Output-only] An opaque ID uniquely identifying the table. *)
     kind : string;
     (** [Output-only] The type of the resource. *)
-    lastModifiedTime : string;
+    lastModifiedTime : int64;
     (** [Output-only] The time when this table was last modified, in milliseconds since the epoch. *)
-    numBytes : string;
+    numBytes : int64;
     (** [Output-only] The size of the table in bytes. *)
     numRows : string;
     (** [Output-only] The number of rows of data in this table. *)
@@ -750,15 +750,15 @@ sig
     
   }
   
-  val creationTime : (t, string) GapiLens.t
+  val creationTime : (t, int64) GapiLens.t
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
-  val expirationTime : (t, string) GapiLens.t
+  val expirationTime : (t, int64) GapiLens.t
   val friendlyName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val lastModifiedTime : (t, string) GapiLens.t
-  val numBytes : (t, string) GapiLens.t
+  val lastModifiedTime : (t, int64) GapiLens.t
+  val numBytes : (t, int64) GapiLens.t
   val numRows : (t, string) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
@@ -1008,7 +1008,7 @@ Default values assigned to a new dataset are as follows: OWNER - Project owners,
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
 To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
 Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers. *)
-    creationTime : string;
+    creationTime : int64;
     (** [Output-only] The time when this dataset was created, in milliseconds since the epoch. *)
     datasetReference : DatasetReference.t;
     (** [Required] Reference identifying dataset. *)
@@ -1022,7 +1022,7 @@ Each access object can have only one of the following members: userByEmail, grou
     (** [Output-only] The fully-qualified unique name of this dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. *)
     kind : string;
     (** [Output-only] The resource type. *)
-    lastModifiedTime : string;
+    lastModifiedTime : int64;
     (** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. *)
     selfLink : string;
     (** [Output-only] An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource. *)
@@ -1030,14 +1030,14 @@ Each access object can have only one of the following members: userByEmail, grou
   }
   
   val access : (t, Access.t list) GapiLens.t
-  val creationTime : (t, string) GapiLens.t
+  val creationTime : (t, int64) GapiLens.t
   val datasetReference : (t, DatasetReference.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val friendlyName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val lastModifiedTime : (t, string) GapiLens.t
+  val lastModifiedTime : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   
   val empty : t

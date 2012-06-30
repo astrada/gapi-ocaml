@@ -165,7 +165,7 @@ struct
   
   type t = {
     description : string;
-    id : string;
+    id : int64;
     kind : string;
     locale : Locale.t;
     name : string;
@@ -225,7 +225,7 @@ struct
   
   let empty = {
     description = "";
-    id = "";
+    id = 0L;
     kind = "";
     locale = Locale.empty;
     name = "";
@@ -241,7 +241,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "description" x.description;
-      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_int64_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       (fun v -> GapiJson.render_object "locale" (Locale.render_content v)) x.locale;
       GapiJson.render_string_value "name" x.name;
@@ -264,7 +264,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with id = v }
+      { x with id = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -396,7 +396,7 @@ struct
   struct
     type t = {
       selfLink : string;
-      totalItems : string;
+      totalItems : int64;
       
     }
     
@@ -411,14 +411,14 @@ struct
     
     let empty = {
       selfLink = "";
-      totalItems = "";
+      totalItems = 0L;
       
     }
     
     let rec render_content x = 
        [
         GapiJson.render_string_value "selfLink" x.selfLink;
-        GapiJson.render_string_value "totalItems" x.totalItems;
+        GapiJson.render_int64_value "totalItems" x.totalItems;
         
       ]
     and render x = 
@@ -432,7 +432,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "totalItems"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with totalItems = v }
+        { x with totalItems = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -445,7 +445,7 @@ struct
   module Blog =
   struct
     type t = {
-      id : string;
+      id : int64;
       
     }
     
@@ -455,13 +455,13 @@ struct
     }
     
     let empty = {
-      id = "";
+      id = 0L;
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_int64_value "id" x.id;
         
       ]
     and render x = 
@@ -471,7 +471,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with id = v }
+        { x with id = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -600,7 +600,7 @@ struct
     author : Author.t;
     blog : Blog.t;
     content : string;
-    id : string;
+    id : int64;
     kind : string;
     labels : string list;
     published : GapiDate.t;
@@ -665,7 +665,7 @@ struct
     author = Author.empty;
     blog = Blog.empty;
     content = "";
-    id = "";
+    id = 0L;
     kind = "";
     labels = [];
     published = GapiDate.epoch;
@@ -682,7 +682,7 @@ struct
       (fun v -> GapiJson.render_object "author" (Author.render_content v)) x.author;
       (fun v -> GapiJson.render_object "blog" (Blog.render_content v)) x.blog;
       GapiJson.render_string_value "content" x.content;
-      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_int64_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "labels" (GapiJson.render_string_value "") x.labels;
       GapiJson.render_date_value "published" x.published;
@@ -720,7 +720,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with id = v }
+      { x with id = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -785,7 +785,7 @@ struct
   module Post =
   struct
     type t = {
-      id : string;
+      id : int64;
       
     }
     
@@ -795,13 +795,13 @@ struct
     }
     
     let empty = {
-      id = "";
+      id = 0L;
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_int64_value "id" x.id;
         
       ]
     and render x = 
@@ -811,7 +811,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with id = v }
+        { x with id = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -824,7 +824,7 @@ struct
   module InReplyTo =
   struct
     type t = {
-      id : string;
+      id : int64;
       
     }
     
@@ -834,13 +834,13 @@ struct
     }
     
     let empty = {
-      id = "";
+      id = 0L;
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_int64_value "id" x.id;
         
       ]
     and render x = 
@@ -850,7 +850,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with id = v }
+        { x with id = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -863,7 +863,7 @@ struct
   module Blog =
   struct
     type t = {
-      id : string;
+      id : int64;
       
     }
     
@@ -873,13 +873,13 @@ struct
     }
     
     let empty = {
-      id = "";
+      id = 0L;
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_int64_value "id" x.id;
         
       ]
     and render x = 
@@ -889,7 +889,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with id = v }
+        { x with id = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -1018,7 +1018,7 @@ struct
     author : Author.t;
     blog : Blog.t;
     content : string;
-    id : string;
+    id : int64;
     inReplyTo : InReplyTo.t;
     kind : string;
     post : Post.t;
@@ -1073,7 +1073,7 @@ struct
     author = Author.empty;
     blog = Blog.empty;
     content = "";
-    id = "";
+    id = 0L;
     inReplyTo = InReplyTo.empty;
     kind = "";
     post = Post.empty;
@@ -1088,7 +1088,7 @@ struct
       (fun v -> GapiJson.render_object "author" (Author.render_content v)) x.author;
       (fun v -> GapiJson.render_object "blog" (Blog.render_content v)) x.blog;
       GapiJson.render_string_value "content" x.content;
-      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_int64_value "id" x.id;
       (fun v -> GapiJson.render_object "inReplyTo" (InReplyTo.render_content v)) x.inReplyTo;
       GapiJson.render_string_value "kind" x.kind;
       (fun v -> GapiJson.render_object "post" (Post.render_content v)) x.post;
@@ -1124,7 +1124,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with id = v }
+      { x with id = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "inReplyTo"; data_type = GapiJson.Object },
         cs) ->
@@ -1351,7 +1351,7 @@ struct
   module Blog =
   struct
     type t = {
-      id : string;
+      id : int64;
       
     }
     
@@ -1361,13 +1361,13 @@ struct
     }
     
     let empty = {
-      id = "";
+      id = 0L;
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_int64_value "id" x.id;
         
       ]
     and render x = 
@@ -1377,7 +1377,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with id = v }
+        { x with id = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -1506,7 +1506,7 @@ struct
     author : Author.t;
     blog : Blog.t;
     content : string;
-    id : string;
+    id : int64;
     kind : string;
     published : GapiDate.t;
     selfLink : string;
@@ -1561,7 +1561,7 @@ struct
     author = Author.empty;
     blog = Blog.empty;
     content = "";
-    id = "";
+    id = 0L;
     kind = "";
     published = GapiDate.epoch;
     selfLink = "";
@@ -1576,7 +1576,7 @@ struct
       (fun v -> GapiJson.render_object "author" (Author.render_content v)) x.author;
       (fun v -> GapiJson.render_object "blog" (Blog.render_content v)) x.blog;
       GapiJson.render_string_value "content" x.content;
-      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_int64_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "selfLink" x.selfLink;
@@ -1612,7 +1612,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with id = v }
+      { x with id = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         Json_type.String v) ->

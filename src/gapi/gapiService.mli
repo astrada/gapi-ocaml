@@ -30,6 +30,15 @@ val service_request_with_data :
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
+val download_resource :
+  ?version:string ->
+  ?query_parameters:(string * string) list ->
+  ?ranges:(int64 option * int64 option) list ->
+  string ->
+  GapiMediaResource.destination ->
+  GapiConversation.Session.t ->
+  unit * GapiConversation.Session.t
+
 val build_param :
   'a -> 'a -> ('a -> 'b) -> ('b -> string) -> string ->
   (string * string) list

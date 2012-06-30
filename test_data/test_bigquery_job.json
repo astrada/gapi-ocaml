@@ -81,9 +81,9 @@
   "kind": "bigquery#job",
   "selfLink": "string",
   "statistics": {
-    "endTime": "long",
-    "startTime": "long",
-    "totalBytesProcessed": "long"
+    "endTime": "12345678901",
+    "startTime": "12345678901",
+    "totalBytesProcessed": "12345678901"
   },
   "status": {
     "errorResult": {

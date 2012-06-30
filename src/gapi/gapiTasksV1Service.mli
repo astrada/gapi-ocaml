@@ -71,7 +71,7 @@ sig
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
-    ?maxResults:string ->
+    ?maxResults:int64 ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
     GapiTasksV1Model.TaskLists.t * GapiConversation.Session.t
@@ -194,7 +194,7 @@ sig
     ?completedMin:string ->
     ?dueMax:string ->
     ?dueMin:string ->
-    ?maxResults:string ->
+    ?maxResults:int64 ->
     ?pageToken:string ->
     ?showCompleted:bool ->
     ?showDeleted:bool ->

@@ -6,7 +6,7 @@ struct
   struct
     type t = {
       comparisonType : string;
-      comparisonValue : string;
+      comparisonValue : int64;
       
     }
     
@@ -21,14 +21,14 @@ struct
     
     let empty = {
       comparisonType = "";
-      comparisonValue = "";
+      comparisonValue = 0L;
       
     }
     
     let rec render_content x = 
        [
         GapiJson.render_string_value "comparisonType" x.comparisonType;
-        GapiJson.render_string_value "comparisonValue" x.comparisonValue;
+        GapiJson.render_int64_value "comparisonValue" x.comparisonValue;
         
       ]
     and render x = 
@@ -42,7 +42,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "comparisonValue"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with comparisonValue = v }
+        { x with comparisonValue = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -56,7 +56,7 @@ struct
   struct
     type t = {
       comparisonType : string;
-      comparisonValue : string;
+      comparisonValue : int64;
       
     }
     
@@ -71,14 +71,14 @@ struct
     
     let empty = {
       comparisonType = "";
-      comparisonValue = "";
+      comparisonValue = 0L;
       
     }
     
     let rec render_content x = 
        [
         GapiJson.render_string_value "comparisonType" x.comparisonType;
-        GapiJson.render_string_value "comparisonValue" x.comparisonValue;
+        GapiJson.render_int64_value "comparisonValue" x.comparisonValue;
         
       ]
     and render x = 
@@ -92,7 +92,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "comparisonValue"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with comparisonValue = v }
+        { x with comparisonValue = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -312,7 +312,7 @@ struct
     struct
       type t = {
         comparisonType : string;
-        comparisonValue : string;
+        comparisonValue : int64;
         expression : string;
         matchType : string;
         _type : string;
@@ -342,7 +342,7 @@ struct
       
       let empty = {
         comparisonType = "";
-        comparisonValue = "";
+        comparisonValue = 0L;
         expression = "";
         matchType = "";
         _type = "";
@@ -352,7 +352,7 @@ struct
       let rec render_content x = 
          [
           GapiJson.render_string_value "comparisonType" x.comparisonType;
-          GapiJson.render_string_value "comparisonValue" x.comparisonValue;
+          GapiJson.render_int64_value "comparisonValue" x.comparisonValue;
           GapiJson.render_string_value "expression" x.expression;
           GapiJson.render_string_value "matchType" x.matchType;
           GapiJson.render_string_value "type" x._type;
@@ -369,7 +369,7 @@ struct
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "comparisonValue"; data_type = GapiJson.Scalar },
             Json_type.String v) ->
-          { x with comparisonValue = v }
+          { x with comparisonValue = Int64.of_string v }
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "expression"; data_type = GapiJson.Scalar },
             Json_type.String v) ->
