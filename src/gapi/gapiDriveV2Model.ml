@@ -263,7 +263,7 @@ end
 
 module File =
 struct
-  module LabelsData =
+  module Labels =
   struct
     type t = {
       hidden : bool;
@@ -342,11 +342,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.LabelsData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.Labels.parse" e x
     
   end
   
-  module IndexableTextData =
+  module IndexableText =
   struct
     type t = {
       text : string;
@@ -381,7 +381,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.IndexableTextData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.IndexableText.parse" e x
     
   end
   
@@ -397,9 +397,9 @@ struct
     fileExtension : string;
     fileSize : string;
     id : string;
-    indexableText : IndexableTextData.t;
+    indexableText : IndexableText.t;
     kind : string;
-    labels : LabelsData.t;
+    labels : Labels.t;
     lastModifyingUserName : string;
     lastViewedByMeDate : GapiDate.t;
     md5Checksum : string;
@@ -557,9 +557,9 @@ struct
     fileExtension = "";
     fileSize = "";
     id = "";
-    indexableText = IndexableTextData.empty;
+    indexableText = IndexableText.empty;
     kind = "";
-    labels = LabelsData.empty;
+    labels = Labels.empty;
     lastModifyingUserName = "";
     lastViewedByMeDate = GapiDate.epoch;
     md5Checksum = "";
@@ -593,9 +593,9 @@ struct
       GapiJson.render_string_value "fileExtension" x.fileExtension;
       GapiJson.render_string_value "fileSize" x.fileSize;
       GapiJson.render_string_value "id" x.id;
-      (fun v -> GapiJson.render_object "indexableText" (IndexableTextData.render_content v)) x.indexableText;
+      (fun v -> GapiJson.render_object "indexableText" (IndexableText.render_content v)) x.indexableText;
       GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "labels" (LabelsData.render_content v)) x.labels;
+      (fun v -> GapiJson.render_object "labels" (Labels.render_content v)) x.labels;
       GapiJson.render_string_value "lastModifyingUserName" x.lastModifyingUserName;
       GapiJson.render_date_value "lastViewedByMeDate" x.lastViewedByMeDate;
       GapiJson.render_string_value "md5Checksum" x.md5Checksum;
@@ -677,8 +677,8 @@ struct
         ({ GapiJson.name = "indexableText"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        IndexableTextData.parse
-        IndexableTextData.empty
+        IndexableText.parse
+        IndexableText.empty
         (fun v -> { x with indexableText = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -689,8 +689,8 @@ struct
         ({ GapiJson.name = "labels"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        LabelsData.parse
-        LabelsData.empty
+        Labels.parse
+        Labels.empty
         (fun v -> { x with labels = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -992,7 +992,7 @@ end
 
 module About =
 struct
-  module MaxUploadSizesData =
+  module MaxUploadSizes =
   struct
     type t = {
       size : string;
@@ -1038,11 +1038,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.MaxUploadSizesData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.MaxUploadSizes.parse" e x
     
   end
   
-  module ImportFormatsData =
+  module ImportFormats =
   struct
     type t = {
       source : string;
@@ -1089,7 +1089,7 @@ struct
                 Json_type.String v) ->
               v
             | e ->
-              GapiJson.unexpected "GapiDriveV2Model.ImportFormatsData.parse.parse_collection" e x')
+              GapiJson.unexpected "GapiDriveV2Model.ImportFormats.parse.parse_collection" e x')
           ""
           (fun v -> { x with targets = v })
           cs
@@ -1098,11 +1098,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.ImportFormatsData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.ImportFormats.parse" e x
     
   end
   
-  module FeaturesData =
+  module Features =
   struct
     type t = {
       featureName : string;
@@ -1152,11 +1152,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.FeaturesData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.Features.parse" e x
     
   end
   
-  module ExportFormatsData =
+  module ExportFormats =
   struct
     type t = {
       source : string;
@@ -1203,7 +1203,7 @@ struct
                 Json_type.String v) ->
               v
             | e ->
-              GapiJson.unexpected "GapiDriveV2Model.ExportFormatsData.parse.parse_collection" e x')
+              GapiJson.unexpected "GapiDriveV2Model.ExportFormats.parse.parse_collection" e x')
           ""
           (fun v -> { x with targets = v })
           cs
@@ -1212,13 +1212,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.ExportFormatsData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.ExportFormats.parse" e x
     
   end
   
-  module AdditionalRoleInfoData =
+  module AdditionalRoleInfo =
   struct
-    module RoleSetsData =
+    module RoleSets =
     struct
       type t = {
         additionalRoles : string list;
@@ -1261,7 +1261,7 @@ struct
                   Json_type.String v) ->
                 v
               | e ->
-                GapiJson.unexpected "GapiDriveV2Model.RoleSetsData.parse.parse_collection" e x')
+                GapiJson.unexpected "GapiDriveV2Model.RoleSets.parse.parse_collection" e x')
             ""
             (fun v -> { x with additionalRoles = v })
             cs
@@ -1274,12 +1274,12 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiDriveV2Model.RoleSetsData.parse" e x
+          GapiJson.unexpected "GapiDriveV2Model.RoleSets.parse" e x
       
     end
     
     type t = {
-      roleSets : RoleSetsData.t list;
+      roleSets : RoleSets.t list;
       _type : string;
       
     }
@@ -1301,7 +1301,7 @@ struct
     
     let rec render_content x = 
        [
-        GapiJson.render_array "roleSets" RoleSetsData.render x.roleSets;
+        GapiJson.render_array "roleSets" RoleSets.render x.roleSets;
         GapiJson.render_string_value "type" x._type;
         
       ]
@@ -1318,13 +1318,13 @@ struct
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
                 cs) ->
               GapiJson.parse_children
-                RoleSetsData.parse
-                RoleSetsData.empty
+                RoleSets.parse
+                RoleSets.empty
                 (fun v -> v)
                 cs
             | e ->
-              GapiJson.unexpected "GapiDriveV2Model.AdditionalRoleInfoData.parse.parse_collection" e x')
-          RoleSetsData.empty
+              GapiJson.unexpected "GapiDriveV2Model.AdditionalRoleInfo.parse.parse_collection" e x')
+          RoleSets.empty
           (fun v -> { x with roleSets = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -1336,21 +1336,21 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.AdditionalRoleInfoData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.AdditionalRoleInfo.parse" e x
     
   end
   
   type t = {
-    additionalRoleInfo : AdditionalRoleInfoData.t list;
+    additionalRoleInfo : AdditionalRoleInfo.t list;
     domainSharingPolicy : string;
     etag : string;
-    exportFormats : ExportFormatsData.t list;
-    features : FeaturesData.t list;
-    importFormats : ImportFormatsData.t list;
+    exportFormats : ExportFormats.t list;
+    features : Features.t list;
+    importFormats : ImportFormats.t list;
     isCurrentAppInstalled : bool;
     kind : string;
     largestChangeId : string;
-    maxUploadSizes : MaxUploadSizesData.t list;
+    maxUploadSizes : MaxUploadSizes.t list;
     name : string;
     permissionId : string;
     quotaBytesTotal : string;
@@ -1459,16 +1459,16 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_array "additionalRoleInfo" AdditionalRoleInfoData.render x.additionalRoleInfo;
+      GapiJson.render_array "additionalRoleInfo" AdditionalRoleInfo.render x.additionalRoleInfo;
       GapiJson.render_string_value "domainSharingPolicy" x.domainSharingPolicy;
       GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "exportFormats" ExportFormatsData.render x.exportFormats;
-      GapiJson.render_array "features" FeaturesData.render x.features;
-      GapiJson.render_array "importFormats" ImportFormatsData.render x.importFormats;
+      GapiJson.render_array "exportFormats" ExportFormats.render x.exportFormats;
+      GapiJson.render_array "features" Features.render x.features;
+      GapiJson.render_array "importFormats" ImportFormats.render x.importFormats;
       GapiJson.render_bool_value "isCurrentAppInstalled" x.isCurrentAppInstalled;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "largestChangeId" x.largestChangeId;
-      GapiJson.render_array "maxUploadSizes" MaxUploadSizesData.render x.maxUploadSizes;
+      GapiJson.render_array "maxUploadSizes" MaxUploadSizes.render x.maxUploadSizes;
       GapiJson.render_string_value "name" x.name;
       GapiJson.render_string_value "permissionId" x.permissionId;
       GapiJson.render_string_value "quotaBytesTotal" x.quotaBytesTotal;
@@ -1492,13 +1492,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              AdditionalRoleInfoData.parse
-              AdditionalRoleInfoData.empty
+              AdditionalRoleInfo.parse
+              AdditionalRoleInfo.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiDriveV2Model.About.parse.parse_collection" e x')
-        AdditionalRoleInfoData.empty
+        AdditionalRoleInfo.empty
         (fun v -> { x with additionalRoleInfo = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1518,13 +1518,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              ExportFormatsData.parse
-              ExportFormatsData.empty
+              ExportFormats.parse
+              ExportFormats.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiDriveV2Model.About.parse.parse_collection" e x')
-        ExportFormatsData.empty
+        ExportFormats.empty
         (fun v -> { x with exportFormats = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -1536,13 +1536,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              FeaturesData.parse
-              FeaturesData.empty
+              Features.parse
+              Features.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiDriveV2Model.About.parse.parse_collection" e x')
-        FeaturesData.empty
+        Features.empty
         (fun v -> { x with features = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -1554,13 +1554,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              ImportFormatsData.parse
-              ImportFormatsData.empty
+              ImportFormats.parse
+              ImportFormats.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiDriveV2Model.About.parse.parse_collection" e x')
-        ImportFormatsData.empty
+        ImportFormats.empty
         (fun v -> { x with importFormats = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1584,13 +1584,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              MaxUploadSizesData.parse
-              MaxUploadSizesData.empty
+              MaxUploadSizes.parse
+              MaxUploadSizes.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiDriveV2Model.About.parse.parse_collection" e x')
-        MaxUploadSizesData.empty
+        MaxUploadSizes.empty
         (fun v -> { x with maxUploadSizes = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1959,7 +1959,7 @@ end
 
 module App =
 struct
-  module IconsData =
+  module Icons =
   struct
     type t = {
       category : string;
@@ -2016,13 +2016,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiDriveV2Model.IconsData.parse" e x
+        GapiJson.unexpected "GapiDriveV2Model.Icons.parse" e x
     
   end
   
   type t = {
     authorized : bool;
-    icons : IconsData.t list;
+    icons : Icons.t list;
     id : string;
     installed : bool;
     kind : string;
@@ -2116,7 +2116,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_bool_value "authorized" x.authorized;
-      GapiJson.render_array "icons" IconsData.render x.icons;
+      GapiJson.render_array "icons" Icons.render x.icons;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_bool_value "installed" x.installed;
       GapiJson.render_string_value "kind" x.kind;
@@ -2147,14 +2147,10 @@ struct
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
-            GapiJson.parse_children
-              IconsData.parse
-              IconsData.empty
-              (fun v -> v)
-              cs
+            GapiJson.parse_children Icons.parse Icons.empty (fun v -> v) cs
           | e ->
             GapiJson.unexpected "GapiDriveV2Model.App.parse.parse_collection" e x')
-        IconsData.empty
+        Icons.empty
         (fun v -> { x with icons = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

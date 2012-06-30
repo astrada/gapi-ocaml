@@ -104,7 +104,7 @@ end
 
 module File :
 sig
-  module LabelsData :
+  module Labels :
   sig
     type t = {
       hidden : bool;
@@ -134,7 +134,7 @@ sig
     
   end
   
-  module IndexableTextData :
+  module IndexableText :
   sig
     type t = {
       text : string;
@@ -175,11 +175,11 @@ sig
     (** The size of the file in bytes. This will only be populated on files with content stored in Drive. *)
     id : string;
     (** The id of the file. *)
-    indexableText : IndexableTextData.t;
+    indexableText : IndexableText.t;
     (** Indexable text attributes for the file (can only be written) *)
     kind : string;
     (** The type of file. This is always drive#file. *)
-    labels : LabelsData.t;
+    labels : Labels.t;
     (** A group of labels for the file. *)
     lastModifyingUserName : string;
     (** Name of the last user to modify this file. This will only be populated if a user has edited this file. *)
@@ -230,9 +230,9 @@ On insert, setting this field will put the file in all of the provided folders. 
   val fileExtension : (t, string) GapiLens.t
   val fileSize : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
-  val indexableText : (t, IndexableTextData.t) GapiLens.t
+  val indexableText : (t, IndexableText.t) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val labels : (t, LabelsData.t) GapiLens.t
+  val labels : (t, Labels.t) GapiLens.t
   val lastModifyingUserName : (t, string) GapiLens.t
   val lastViewedByMeDate : (t, GapiDate.t) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
@@ -333,7 +333,7 @@ end
 
 module About :
 sig
-  module MaxUploadSizesData :
+  module MaxUploadSizes :
   sig
     type t = {
       size : string;
@@ -354,7 +354,7 @@ sig
     
   end
   
-  module ImportFormatsData :
+  module ImportFormats :
   sig
     type t = {
       source : string;
@@ -375,7 +375,7 @@ sig
     
   end
   
-  module FeaturesData :
+  module Features :
   sig
     type t = {
       featureName : string;
@@ -396,7 +396,7 @@ sig
     
   end
   
-  module ExportFormatsData :
+  module ExportFormats :
   sig
     type t = {
       source : string;
@@ -417,9 +417,9 @@ sig
     
   end
   
-  module AdditionalRoleInfoData :
+  module AdditionalRoleInfo :
   sig
-    module RoleSetsData :
+    module RoleSets :
     sig
       type t = {
         additionalRoles : string list;
@@ -441,14 +441,14 @@ sig
     end
     
     type t = {
-      roleSets : RoleSetsData.t list;
+      roleSets : RoleSets.t list;
       (** The role sets for this role info item. *)
       _type : string;
       (** The content type for this ACL role info item. *)
       
     }
     
-    val roleSets : (t, RoleSetsData.t list) GapiLens.t
+    val roleSets : (t, RoleSets.t list) GapiLens.t
     val _type : (t, string) GapiLens.t
     
     val empty : t
@@ -460,17 +460,17 @@ sig
   end
   
   type t = {
-    additionalRoleInfo : AdditionalRoleInfoData.t list;
+    additionalRoleInfo : AdditionalRoleInfo.t list;
     (** Additional ACL role info. *)
     domainSharingPolicy : string;
     (** The domain sharing policy for the current user. *)
     etag : string;
     (** The ETag of the item. *)
-    exportFormats : ExportFormatsData.t list;
+    exportFormats : ExportFormats.t list;
     (** The allowable export formats. *)
-    features : FeaturesData.t list;
+    features : Features.t list;
     (** List of additional features enabled on this account. *)
-    importFormats : ImportFormatsData.t list;
+    importFormats : ImportFormats.t list;
     (** The allowable import formats. *)
     isCurrentAppInstalled : bool;
     (** A boolean indicating whether the authenticated app is installed by the authenticated user. *)
@@ -478,7 +478,7 @@ sig
     (** This is always drive#about. *)
     largestChangeId : string;
     (** The largest change id. *)
-    maxUploadSizes : MaxUploadSizesData.t list;
+    maxUploadSizes : MaxUploadSizes.t list;
     (** List of max upload sizes for each file type. *)
     name : string;
     (** The name of the current user. *)
@@ -499,16 +499,16 @@ sig
     
   }
   
-  val additionalRoleInfo : (t, AdditionalRoleInfoData.t list) GapiLens.t
+  val additionalRoleInfo : (t, AdditionalRoleInfo.t list) GapiLens.t
   val domainSharingPolicy : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
-  val exportFormats : (t, ExportFormatsData.t list) GapiLens.t
-  val features : (t, FeaturesData.t list) GapiLens.t
-  val importFormats : (t, ImportFormatsData.t list) GapiLens.t
+  val exportFormats : (t, ExportFormats.t list) GapiLens.t
+  val features : (t, Features.t list) GapiLens.t
+  val importFormats : (t, ImportFormats.t list) GapiLens.t
   val isCurrentAppInstalled : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val largestChangeId : (t, string) GapiLens.t
-  val maxUploadSizes : (t, MaxUploadSizesData.t list) GapiLens.t
+  val maxUploadSizes : (t, MaxUploadSizes.t list) GapiLens.t
   val name : (t, string) GapiLens.t
   val permissionId : (t, string) GapiLens.t
   val quotaBytesTotal : (t, string) GapiLens.t
@@ -633,7 +633,7 @@ end
 
 module App :
 sig
-  module IconsData :
+  module Icons :
   sig
     type t = {
       category : string;
@@ -663,7 +663,7 @@ sig
   type t = {
     authorized : bool;
     (** Whether the app is authorized to access data on the user's Drive. *)
-    icons : IconsData.t list;
+    icons : Icons.t list;
     (** The various icons for the app. *)
     id : string;
     (** The ID of the app. *)
@@ -693,7 +693,7 @@ sig
   }
   
   val authorized : (t, bool) GapiLens.t
-  val icons : (t, IconsData.t list) GapiLens.t
+  val icons : (t, Icons.t list) GapiLens.t
   val id : (t, string) GapiLens.t
   val installed : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
