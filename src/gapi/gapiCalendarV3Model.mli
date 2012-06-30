@@ -244,6 +244,8 @@ sig
     (** The attendee's name, if available. Optional. *)
     email : string;
     (** The attendee's email address, if available. This field must be present when adding an attendee. *)
+    id : string;
+    (** The attendee's Profile ID, if available. *)
     optional : bool;
     (** Whether this is an optional attendee. Optional. The default is False. *)
     organizer : bool;
@@ -265,6 +267,7 @@ sig
   val comment : (t, string) GapiLens.t
   val displayName : (t, string) GapiLens.t
   val email : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
   val optional : (t, bool) GapiLens.t
   val organizer : (t, bool) GapiLens.t
   val resource : (t, bool) GapiLens.t
@@ -369,11 +372,17 @@ sig
       (** The organizer's name, if available. *)
       email : string;
       (** The organizer's email address, if available. *)
+      id : string;
+      (** The organizer's Profile ID, if available. *)
+      self : bool;
+      (** Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False. *)
       
     }
     
     val displayName : (t, string) GapiLens.t
     val email : (t, string) GapiLens.t
+    val id : (t, string) GapiLens.t
+    val self : (t, bool) GapiLens.t
     
     val empty : t
     
@@ -452,11 +461,17 @@ sig
       (** The creator's name, if available. *)
       email : string;
       (** The creator's email address, if available. *)
+      id : string;
+      (** The creator's Profile ID, if available. *)
+      self : bool;
+      (** Whether the creator corresponds to the calendar on which this copy of the event appears. Read-only. The default is False. *)
       
     }
     
     val displayName : (t, string) GapiLens.t
     val email : (t, string) GapiLens.t
+    val id : (t, string) GapiLens.t
+    val self : (t, bool) GapiLens.t
     
     val empty : t
     
@@ -483,6 +498,8 @@ sig
     (** Description of the event. Optional. *)
     _end : EventDateTime.t;
     (** The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance. *)
+    endTimeUnspecified : bool;
+    (**  *)
     etag : string;
     (** ETag of the resource. *)
     extendedProperties : ExtendedProperties.t;
@@ -505,6 +522,8 @@ sig
     (** Type of the resource ("calendar#event"). *)
     location : string;
     (** Geographic location of the event as free-form text. Optional. *)
+    locked : bool;
+    (** Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False. Read-Only. *)
     organizer : Organizer.t;
     (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the "move" operation. Read-only, except when importing an event. *)
     originalStartTime : EventDateTime.t;
@@ -551,6 +570,7 @@ sig
   val creator : (t, Creator.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val _end : (t, EventDateTime.t) GapiLens.t
+  val endTimeUnspecified : (t, bool) GapiLens.t
   val etag : (t, string) GapiLens.t
   val extendedProperties : (t, ExtendedProperties.t) GapiLens.t
   val gadget : (t, Gadget.t) GapiLens.t
@@ -562,6 +582,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val location : (t, string) GapiLens.t
+  val locked : (t, bool) GapiLens.t
   val organizer : (t, Organizer.t) GapiLens.t
   val originalStartTime : (t, EventDateTime.t) GapiLens.t
   val privateCopy : (t, bool) GapiLens.t

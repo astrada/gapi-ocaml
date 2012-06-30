@@ -66,12 +66,17 @@ struct
   module BodyLines =
   struct
     type t = {
+      htmlTitle : string;
       link : string;
       title : string;
       url : string;
       
     }
     
+    let htmlTitle = {
+      GapiLens.get = (fun x -> x.htmlTitle);
+      GapiLens.set = (fun v x -> { x with htmlTitle = v });
+    }
     let link = {
       GapiLens.get = (fun x -> x.link);
       GapiLens.set = (fun v x -> { x with link = v });
@@ -86,6 +91,7 @@ struct
     }
     
     let empty = {
+      htmlTitle = "";
       link = "";
       title = "";
       url = "";
@@ -94,6 +100,7 @@ struct
     
     let rec render_content x = 
        [
+        GapiJson.render_string_value "htmlTitle" x.htmlTitle;
         GapiJson.render_string_value "link" x.link;
         GapiJson.render_string_value "title" x.title;
         GapiJson.render_string_value "url" x.url;
@@ -103,6 +110,10 @@ struct
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with htmlTitle = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
@@ -127,6 +138,7 @@ struct
   type t = {
     bodyLines : BodyLines.t list;
     displayLink : string;
+    htmlTitle : string;
     image : Image.t;
     link : string;
     title : string;
@@ -140,6 +152,10 @@ struct
   let displayLink = {
     GapiLens.get = (fun x -> x.displayLink);
     GapiLens.set = (fun v x -> { x with displayLink = v });
+  }
+  let htmlTitle = {
+    GapiLens.get = (fun x -> x.htmlTitle);
+    GapiLens.set = (fun v x -> { x with htmlTitle = v });
   }
   let image = {
     GapiLens.get = (fun x -> x.image);
@@ -157,6 +173,7 @@ struct
   let empty = {
     bodyLines = [];
     displayLink = "";
+    htmlTitle = "";
     image = Image.empty;
     link = "";
     title = "";
@@ -167,6 +184,7 @@ struct
      [
       GapiJson.render_array "bodyLines" BodyLines.render x.bodyLines;
       GapiJson.render_string_value "displayLink" x.displayLink;
+      GapiJson.render_string_value "htmlTitle" x.htmlTitle;
       (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
       GapiJson.render_string_value "link" x.link;
       GapiJson.render_string_value "title" x.title;
@@ -198,6 +216,10 @@ struct
         ({ GapiJson.name = "displayLink"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with displayLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with htmlTitle = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "image"; data_type = GapiJson.Object },
         cs) ->

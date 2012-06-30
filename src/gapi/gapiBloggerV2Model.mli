@@ -3,7 +3,7 @@
 (** Data definition for Blogger API (v2).
   
   For more information about this data model, see the
-  {{:https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/blogger/docs/2.0/json/getting_started}API Documentation}.
   *)
 
 module Blog :

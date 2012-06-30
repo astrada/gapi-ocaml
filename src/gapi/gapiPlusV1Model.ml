@@ -2396,7 +2396,6 @@ struct
     _object : Object.t;
     placeId : string;
     placeName : string;
-    placeholder : bool;
     provider : Provider.t;
     published : GapiDate.t;
     radius : string;
@@ -2455,10 +2454,6 @@ struct
     GapiLens.get = (fun x -> x.placeName);
     GapiLens.set = (fun v x -> { x with placeName = v });
   }
-  let placeholder = {
-    GapiLens.get = (fun x -> x.placeholder);
-    GapiLens.set = (fun v x -> { x with placeholder = v });
-  }
   let provider = {
     GapiLens.get = (fun x -> x.provider);
     GapiLens.set = (fun v x -> { x with provider = v });
@@ -2501,7 +2496,6 @@ struct
     _object = Object.empty;
     placeId = "";
     placeName = "";
-    placeholder = false;
     provider = Provider.empty;
     published = GapiDate.epoch;
     radius = "";
@@ -2526,7 +2520,6 @@ struct
       (fun v -> GapiJson.render_object "object" (Object.render_content v)) x._object;
       GapiJson.render_string_value "placeId" x.placeId;
       GapiJson.render_string_value "placeName" x.placeName;
-      GapiJson.render_bool_value "placeholder" x.placeholder;
       (fun v -> GapiJson.render_object "provider" (Provider.render_content v)) x.provider;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "radius" x.radius;
@@ -2600,10 +2593,6 @@ struct
         ({ GapiJson.name = "placeName"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with placeName = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "placeholder"; data_type = GapiJson.Scalar },
-        Json_type.Bool v) ->
-      { x with placeholder = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "provider"; data_type = GapiJson.Object },
         cs) ->

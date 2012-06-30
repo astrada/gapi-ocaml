@@ -243,6 +243,12 @@ sig
     (** The schema for the response. *)
     scopes : string list;
     (** OAuth 2.0 scopes applicable to this method. *)
+    supportsMediaDownload : bool;
+    (** Whether this method supports media downloads. *)
+    supportsMediaUpload : bool;
+    (** Whether this method supports media uploads. *)
+    supportsSubscription : bool;
+    (** Whether this method supports subscriptions. *)
     
   }
   
@@ -256,6 +262,9 @@ sig
   val request : (t, Request.t) GapiLens.t
   val response : (t, Response.t) GapiLens.t
   val scopes : (t, string list) GapiLens.t
+  val supportsMediaDownload : (t, bool) GapiLens.t
+  val supportsMediaUpload : (t, bool) GapiLens.t
+  val supportsSubscription : (t, bool) GapiLens.t
   
   val empty : t
   

@@ -899,8 +899,6 @@ sig
     (** ID of the place where this activity occurred. *)
     placeName : string;
     (** Name of the place where this activity occurred. *)
-    placeholder : bool;
-    (** True if this activity is a placeholder. *)
     provider : Provider.t;
     (** The service provider that initially published this activity. *)
     published : GapiDate.t;
@@ -933,7 +931,6 @@ sig
   val _object : (t, Object.t) GapiLens.t
   val placeId : (t, string) GapiLens.t
   val placeName : (t, string) GapiLens.t
-  val placeholder : (t, bool) GapiLens.t
   val provider : (t, Provider.t) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val radius : (t, string) GapiLens.t

@@ -240,7 +240,7 @@ sig
     @param maxResults The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.
     @param language Specify the preferred language to search with. See search language codes for available values.
     @param pageToken The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response. This token may be of any length.
-    @param query Full-text search query string.
+    @param query Specify a query string for full text search of public text in all profiles.
     *)
   val search :
     ?base_url:string ->

@@ -41,14 +41,17 @@ sig
     (** [Optional] Whether or not to create a new table, if none exists. *)
     destinationTable : TableReference.t;
     (** [Required] The destination table of the link job. *)
-    sourceUri : string;
+    sourceUri : string list;
     (** [Required] URI of source table to link. *)
+    writeDisposition : string;
+    (** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND. *)
     
   }
   
   val createDisposition : (t, string) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
-  val sourceUri : (t, string) GapiLens.t
+  val sourceUri : (t, string list) GapiLens.t
+  val writeDisposition : (t, string) GapiLens.t
   
   val empty : t
   
@@ -168,6 +171,8 @@ sig
     (** A hash of this page of results. *)
     kind : string;
     (** The resource type of the response. *)
+    pageToken : string;
+    (** A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing. *)
     rows : TableRow.t list;
     (** Rows of results. *)
     totalRows : string;
@@ -177,6 +182,7 @@ sig
   
   val etag : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val pageToken : (t, string) GapiLens.t
   val rows : (t, TableRow.t list) GapiLens.t
   val totalRows : (t, string) GapiLens.t
   
@@ -258,12 +264,18 @@ sig
   type t = {
     destinationUri : string;
     (** [Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written. *)
+    fieldDelimiter : string;
+    (** [Optional] Delimiter to use between fields in the exported data. Default is ',' *)
+    printHeader : bool;
+    (** [Optional] Whether to print out a heder row in the results. Default is true. *)
     sourceTable : TableReference.t;
     (** [Required] A reference to the table being exported. *)
     
   }
   
   val destinationUri : (t, string) GapiLens.t
+  val fieldDelimiter : (t, string) GapiLens.t
+  val printHeader : (t, bool) GapiLens.t
   val sourceTable : (t, TableReference.t) GapiLens.t
   
   val empty : t
@@ -346,6 +358,10 @@ sig
     (** [Optional] Maximum number of bad records that should be ignored before the entire job is aborted and no updates are performed. *)
     schema : TableSchema.t;
     (** [Optional] Schema of the table being written to. *)
+    schemaInline : string;
+    (** [Experimental] Inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT" *)
+    schemaInlineFormat : string;
+    (** [Experimental] Format of inlineSchema field. *)
     skipLeadingRows : int;
     (** [Optional] Number of rows of initial data to skip in the data being imported. *)
     sourceUris : string list;
@@ -361,6 +377,8 @@ sig
   val fieldDelimiter : (t, string) GapiLens.t
   val maxBadRecords : (t, int) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
+  val schemaInline : (t, string) GapiLens.t
+  val schemaInlineFormat : (t, string) GapiLens.t
   val skipLeadingRows : (t, int) GapiLens.t
   val sourceUris : (t, string list) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
@@ -411,6 +429,8 @@ sig
     (** [Optional] Specifies the default dataset to assume for unqualified table names in the query. *)
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
+    priority : string;
+    (** [Experimental] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH, which may be subject to looser quota restrictions. *)
     query : string;
     (** [Required] BigQuery SQL query to execute. *)
     writeDisposition : string;
@@ -421,6 +441,7 @@ sig
   val createDisposition : (t, string) GapiLens.t
   val defaultDataset : (t, DatasetReference.t) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
+  val priority : (t, string) GapiLens.t
   val query : (t, string) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
@@ -706,6 +727,8 @@ sig
     (** [Optional] A user-friendly description of this table. *)
     etag : string;
     (** [Output-only] A hash of this resource. *)
+    expirationTime : string;
+    (** [Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. *)
     friendlyName : string;
     (** [Optional] A descriptive name for this table. *)
     id : string;
@@ -730,6 +753,7 @@ sig
   val creationTime : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
+  val expirationTime : (t, string) GapiLens.t
   val friendlyName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t

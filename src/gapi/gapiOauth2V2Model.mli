@@ -7,7 +7,7 @@ module Tokeninfo :
 sig
   type t = {
     access_type : string;
-    (** The access type granted with this toke. It can be offline or online. *)
+    (** The access type granted with this token. It can be offline or online. *)
     audience : string;
     (** Who is the intended audience for this token. In general the same as issued_to. *)
     email : string;
@@ -50,29 +50,29 @@ module Userinfo :
 sig
   type t = {
     birthday : string;
-    (**  *)
+    (** The user's birthday. The year is not present. *)
     email : string;
-    (**  *)
+    (** The user's email address. *)
     family_name : string;
-    (**  *)
+    (** The user's last name. *)
     gender : string;
-    (**  *)
+    (** The user's gender. *)
     given_name : string;
-    (**  *)
+    (** The user's first name. *)
     id : string;
-    (**  *)
+    (** The focus obfuscated gaia id of the user. *)
     link : string;
-    (**  *)
+    (** URL of the profile page. *)
     locale : string;
-    (**  *)
+    (** The user's default locale. *)
     name : string;
-    (**  *)
+    (** The user's full name. *)
     picture : string;
-    (**  *)
+    (** URL of the user's picture image. *)
     timezone : string;
-    (**  *)
+    (** The user's default timezone. *)
     verified_email : bool;
-    (**  *)
+    (** Boolean flag which is true if the email address is verified. *)
     
   }
   
@@ -88,106 +88,6 @@ sig
   val picture : (t, string) GapiLens.t
   val timezone : (t, string) GapiLens.t
   val verified_email : (t, bool) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module Oauth2IssueTokenV2Response :
-sig
-  module Consent :
-  sig
-    module Scopes :
-    sig
-      type t = {
-        description : string;
-        (**  *)
-        detail : string;
-        (**  *)
-        
-      }
-      
-      val description : (t, string) GapiLens.t
-      val detail : (t, string) GapiLens.t
-      
-      val empty : t
-      
-      val render : t -> GapiJson.json_data_model list
-      
-      val parse : t -> GapiJson.json_data_model -> t
-      
-    end
-    
-    module OauthClient :
-    sig
-      type t = {
-        developerEmail : string;
-        (**  *)
-        iconUri : string;
-        (**  *)
-        name : string;
-        (**  *)
-        
-      }
-      
-      val developerEmail : (t, string) GapiLens.t
-      val iconUri : (t, string) GapiLens.t
-      val name : (t, string) GapiLens.t
-      
-      val empty : t
-      
-      val render : t -> GapiJson.json_data_model list
-      
-      val parse : t -> GapiJson.json_data_model -> t
-      
-    end
-    
-    type t = {
-      oauthClient : OauthClient.t;
-      (**  *)
-      scopes : Scopes.t list;
-      (**  *)
-      
-    }
-    
-    val oauthClient : (t, OauthClient.t) GapiLens.t
-    val scopes : (t, Scopes.t list) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
-  type t = {
-    code : string;
-    (**  *)
-    consent : Consent.t;
-    (**  *)
-    idToken : string;
-    (**  *)
-    issueAdvice : string;
-    (**  *)
-    token : string;
-    (**  *)
-    
-  }
-  
-  val code : (t, string) GapiLens.t
-  val consent : (t, Consent.t) GapiLens.t
-  val idToken : (t, string) GapiLens.t
-  val issueAdvice : (t, string) GapiLens.t
-  val token : (t, string) GapiLens.t
   
   val empty : t
   

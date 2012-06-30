@@ -35,6 +35,8 @@ sig
   module BodyLines :
   sig
     type t = {
+      htmlTitle : string;
+      (**  *)
       link : string;
       (**  *)
       title : string;
@@ -44,6 +46,7 @@ sig
       
     }
     
+    val htmlTitle : (t, string) GapiLens.t
     val link : (t, string) GapiLens.t
     val title : (t, string) GapiLens.t
     val url : (t, string) GapiLens.t
@@ -61,6 +64,8 @@ sig
     (**  *)
     displayLink : string;
     (**  *)
+    htmlTitle : string;
+    (**  *)
     image : Image.t;
     (**  *)
     link : string;
@@ -72,6 +77,7 @@ sig
   
   val bodyLines : (t, BodyLines.t list) GapiLens.t
   val displayLink : (t, string) GapiLens.t
+  val htmlTitle : (t, string) GapiLens.t
   val image : (t, Image.t) GapiLens.t
   val link : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
