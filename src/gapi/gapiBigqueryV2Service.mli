@@ -8,8 +8,14 @@
   {{:https://code.google.com/apis/bigquery/docs/v2/}API Documentation}.
   *)
 
-(** View and manage your data in Google BigQuery *)
-val scope : string
+module Scope :
+sig
+  val bigquery : string
+  (** View and manage your data in Google BigQuery *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module DatasetsResource :
 sig

@@ -8,8 +8,14 @@
   {{:http://code.google.com/apis/urlshortener/v1/getting_started.html}API Documentation}.
   *)
 
-(** Manage your goo.gl short URLs *)
-val scope : string
+module Scope :
+sig
+  val urlshortener : string
+  (** Manage your goo.gl short URLs *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module UrlResource :
 sig

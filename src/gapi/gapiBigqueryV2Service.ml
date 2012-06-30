@@ -3,7 +3,12 @@
 open GapiUtils.Infix
 open GapiBigqueryV2Model
 
-let scope = "https://www.googleapis.com/auth/bigquery"
+module Scope =
+struct
+  let bigquery = "https://www.googleapis.com/auth/bigquery"
+  
+  
+end
 
 module DatasetsResource =
 struct

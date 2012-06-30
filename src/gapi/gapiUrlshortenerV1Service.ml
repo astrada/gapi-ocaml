@@ -3,7 +3,12 @@
 open GapiUtils.Infix
 open GapiUrlshortenerV1Model
 
-let scope = "https://www.googleapis.com/auth/urlshortener"
+module Scope =
+struct
+  let urlshortener = "https://www.googleapis.com/auth/urlshortener"
+  
+  
+end
 
 module UrlResource =
 struct

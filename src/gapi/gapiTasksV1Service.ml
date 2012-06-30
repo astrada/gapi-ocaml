@@ -3,9 +3,14 @@
 open GapiUtils.Infix
 open GapiTasksV1Model
 
-let scope = "https://www.googleapis.com/auth/tasks"
-
-let scope_readonly = "https://www.googleapis.com/auth/tasks.readonly"
+module Scope =
+struct
+  let tasks = "https://www.googleapis.com/auth/tasks"
+  
+  let tasks_readonly = "https://www.googleapis.com/auth/tasks.readonly"
+  
+  
+end
 
 module TasklistsResource =
 struct

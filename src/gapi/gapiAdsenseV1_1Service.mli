@@ -8,11 +8,17 @@
   {{:https://code.google.com/apis/adsense/management/}API Documentation}.
   *)
 
-(** View and manage your AdSense data *)
-val scope : string
-
-(** View your AdSense data *)
-val scope_readonly : string
+module Scope :
+sig
+  val adsense : string
+  (** View and manage your AdSense data *)
+  
+  val adsense_readonly : string
+  (** View your AdSense data *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module AccountsResource :
 sig

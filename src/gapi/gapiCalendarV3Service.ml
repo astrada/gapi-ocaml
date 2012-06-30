@@ -3,9 +3,14 @@
 open GapiUtils.Infix
 open GapiCalendarV3Model
 
-let scope = "https://www.googleapis.com/auth/calendar"
-
-let scope_readonly = "https://www.googleapis.com/auth/calendar.readonly"
+module Scope =
+struct
+  let calendar = "https://www.googleapis.com/auth/calendar"
+  
+  let calendar_readonly = "https://www.googleapis.com/auth/calendar.readonly"
+  
+  
+end
 
 module AclResource =
 struct

@@ -125,7 +125,7 @@ let test_oauth1_revoke_invalid_token () =
 let test_oauth2_authorization_url () =
   let url = GapiOAuth2.authorization_code_url
               ~redirect_uri:"urn:ietf:wg:oauth:2.0:oob"
-              ~scope:[GapiCalendarV3Service.scope]
+              ~scope:[GapiCalendarV3Service.Scope.calendar]
               ~state:"abcde12345"
               ~response_type:"code"
               "dummy key" in

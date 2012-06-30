@@ -1001,18 +1001,12 @@ let build_schema_module =
 let build_service_module =
   let generate_scope formatter (value, scope) =
     perform
-      (* Gets the string following the last dot in scope URL (e.g.
-       * 'https://www.googleapis.com/auth/tasks.readonly' -> readonly)
-       *)
+      let last_slash_position = String.rindex value '/' in
       let suffix =
-        let last_dot_position = String.rindex value '.' in
-        let last_slash_position = String.rindex value '/' in
-          if last_slash_position > last_dot_position then
-            ""
-          else
-            "_" ^ (Str.string_after value (last_dot_position + 1))
-         in
-      let scope_id = "scope" ^ suffix in
+        if last_slash_position > 0 then
+          (Str.string_after value (last_slash_position + 1))
+        else value in
+      let scope_id = OCamlName.get_ocaml_name ValueName suffix in
       lift_io $
         Format.fprintf formatter "let %s = \"%s\"@\n@\n" scope_id value;
       let scope_lens = State.get_service_module
@@ -1036,7 +1030,13 @@ let build_service_module =
                                       |-- auth
                                       |-- AuthData.oauth2
                                       |-- AuthData.Oauth2Data.scopes);
+      lift_io (
+        if List.length scopes > 0 then
+          Format.fprintf formatter "module Scope =@\n@[<v 2>struct@\n");
       mapM_ (generate_scope formatter) scopes;
+      lift_io (
+        if List.length scopes > 0 then
+          Format.fprintf formatter "@]@,end@\n@\n");
   in
 
   let generate_body file_lens =
@@ -1332,8 +1332,8 @@ let build_service_module_interface =
     List.iter
       (fun (id, scope) ->
          Format.fprintf formatter
-           "(** %s *)@\nval %s : string@\n@\n"
-           scope id)
+           "val %s : string@\n(** %s *)@\n@\n"
+           id scope)
       scopes
   in
 
@@ -1355,11 +1355,16 @@ let build_service_module_interface =
             "@\n@\nFor@ more@ information@ about@ this@ service,@ see@ the@ {{:%s}API Documentation}."
             service.RestDescription.documentationLink;
         end;
-        Format.fprintf formatter"@\n*)@]@\n@\n");
+        Format.fprintf formatter "@\n*)@]@\n@\n");
 
       scopes <-- GapiLens.get_state (State.get_service_module
                                        |-- ServiceModule.scopes);
-      lift_io $ render_scope formatter (List.rev scopes);
+      lift_io (
+        if List.length scopes > 0 then begin
+          Format.fprintf formatter"module Scope :@\n@[<v 2>sig@\n";
+          render_scope formatter (List.rev scopes);
+          Format.fprintf formatter"@]@,end@\n(** Service Auth Scopes *)@\n@\n"
+        end);
 
       (* Service modules are stored in reverse order *)
       service_modules <-- GapiLens.get_state
