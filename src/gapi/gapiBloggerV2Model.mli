@@ -77,7 +77,7 @@ sig
   type t = {
     description : string;
     (** The description of this blog. This is displayed underneath the title. *)
-    id : string;
+    id : int64;
     (** The identifier for this resource. *)
     kind : string;
     (** The kind of this entry. Always blogger#blog *)
@@ -101,7 +101,7 @@ sig
   }
   
   val description : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val kind : (t, string) GapiLens.t
   val locale : (t, Locale.t) GapiLens.t
   val name : (t, string) GapiLens.t
@@ -156,13 +156,13 @@ sig
     type t = {
       selfLink : string;
       (** The URL of the comments on this post. *)
-      totalItems : string;
+      totalItems : int64;
       (** The count of comments on this post. *)
       
     }
     
     val selfLink : (t, string) GapiLens.t
-    val totalItems : (t, string) GapiLens.t
+    val totalItems : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -175,12 +175,12 @@ sig
   module Blog :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the Blog that contains this Post. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -242,7 +242,7 @@ sig
     (** Data about the blog containing this Post. *)
     content : string;
     (** The content of the Post. May contain HTML markup. *)
-    id : string;
+    id : int64;
     (** The identifier of this Post. *)
     kind : string;
     (** The kind of this entity. Always blogger#post *)
@@ -266,7 +266,7 @@ sig
   val author : (t, Author.t) GapiLens.t
   val blog : (t, Blog.t) GapiLens.t
   val content : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val kind : (t, string) GapiLens.t
   val labels : (t, string list) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
@@ -293,12 +293,12 @@ sig
   module Post :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the post containing this comment. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -311,12 +311,12 @@ sig
   module InReplyTo :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identified of the parent of this comment. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -329,12 +329,12 @@ sig
   module Blog :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the blog containing this comment. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -396,7 +396,7 @@ sig
     (** Data about the blog containing this comment. *)
     content : string;
     (** The actual content of the comment. May include HTML markup. *)
-    id : string;
+    id : int64;
     (** The identifier for this resource. *)
     inReplyTo : InReplyTo.t;
     (** Data about the comment this is in reply to. *)
@@ -416,7 +416,7 @@ sig
   val author : (t, Author.t) GapiLens.t
   val blog : (t, Blog.t) GapiLens.t
   val content : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val inReplyTo : (t, InReplyTo.t) GapiLens.t
   val kind : (t, string) GapiLens.t
   val post : (t, Post.t) GapiLens.t
@@ -503,12 +503,12 @@ sig
   module Blog :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the blog containing this page. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -570,7 +570,7 @@ sig
     (** Data about the blog containing this Page. *)
     content : string;
     (** The body content of this Page, in HTML. *)
-    id : string;
+    id : int64;
     (** The identifier for this resource. *)
     kind : string;
     (** The kind of this entity. Always blogger#page *)
@@ -590,7 +590,7 @@ sig
   val author : (t, Author.t) GapiLens.t
   val blog : (t, Blog.t) GapiLens.t
   val content : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val kind : (t, string) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t

@@ -13,13 +13,13 @@ sig
     type t = {
       comparisonType : string;
       (** Type of comparison. Possible values are LESS_THAN or GREATER_THAN. *)
-      comparisonValue : string;
+      comparisonValue : int64;
       (** Value used for this comparison. *)
       
     }
     
     val comparisonType : (t, string) GapiLens.t
-    val comparisonValue : (t, string) GapiLens.t
+    val comparisonValue : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -34,13 +34,13 @@ sig
     type t = {
       comparisonType : string;
       (** Type of comparison. Possible values are LESS_THAN, GREATER_THAN, or EQUAL. *)
-      comparisonValue : string;
+      comparisonValue : int64;
       (** Value used for this comparison. *)
       
     }
     
     val comparisonType : (t, string) GapiLens.t
-    val comparisonValue : (t, string) GapiLens.t
+    val comparisonValue : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -132,7 +132,7 @@ sig
       type t = {
         comparisonType : string;
         (** Type of comparison. Possible values are LESS_THAN, GREATER_THAN or EQUAL. *)
-        comparisonValue : string;
+        comparisonValue : int64;
         (** Value used for this comparison. *)
         expression : string;
         (** Expression used for this match. *)
@@ -144,7 +144,7 @@ sig
       }
       
       val comparisonType : (t, string) GapiLens.t
-      val comparisonValue : (t, string) GapiLens.t
+      val comparisonValue : (t, int64) GapiLens.t
       val expression : (t, string) GapiLens.t
       val matchType : (t, string) GapiLens.t
       val _type : (t, string) GapiLens.t

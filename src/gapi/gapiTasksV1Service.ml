@@ -24,7 +24,7 @@ struct
       userIp : string;
       key : string;
       (* tasklists-specific query parameters *)
-      maxResults : string;
+      maxResults : int64;
       pageToken : string;
       
     }
@@ -35,7 +35,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
-      maxResults = "";
+      maxResults = 0L;
       pageToken = "";
       
     }
@@ -48,7 +48,7 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
-      param (fun p -> p.maxResults) (fun x -> x) "maxResults";
+      param (fun p -> p.maxResults) Int64.to_string "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       
     ] |> List.concat
@@ -187,7 +187,7 @@ struct
       completedMin : string;
       dueMax : string;
       dueMin : string;
-      maxResults : string;
+      maxResults : int64;
       pageToken : string;
       parent : string;
       previous : string;
@@ -208,7 +208,7 @@ struct
       completedMin = "";
       dueMax = "";
       dueMin = "";
-      maxResults = "";
+      maxResults = 0L;
       pageToken = "";
       parent = "";
       previous = "";
@@ -231,7 +231,7 @@ struct
       param (fun p -> p.completedMin) (fun x -> x) "completedMin";
       param (fun p -> p.dueMax) (fun x -> x) "dueMax";
       param (fun p -> p.dueMin) (fun x -> x) "dueMin";
-      param (fun p -> p.maxResults) (fun x -> x) "maxResults";
+      param (fun p -> p.maxResults) Int64.to_string "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.parent) (fun x -> x) "parent";
       param (fun p -> p.previous) (fun x -> x) "previous";

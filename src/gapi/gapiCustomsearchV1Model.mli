@@ -169,7 +169,7 @@ sig
     (**  *)
     title : string;
     (**  *)
-    totalResults : string;
+    totalResults : int64;
     (**  *)
     
   }
@@ -210,7 +210,7 @@ sig
   val startIndex : (t, int) GapiLens.t
   val startPage : (t, int) GapiLens.t
   val title : (t, string) GapiLens.t
-  val totalResults : (t, string) GapiLens.t
+  val totalResults : (t, int64) GapiLens.t
   
   val empty : t
   
@@ -444,7 +444,7 @@ sig
       (**  *)
       searchTime : float;
       (**  *)
-      totalResults : string;
+      totalResults : int64;
       (**  *)
       
     }
@@ -452,7 +452,7 @@ sig
     val formattedSearchTime : (t, string) GapiLens.t
     val formattedTotalResults : (t, string) GapiLens.t
     val searchTime : (t, float) GapiLens.t
-    val totalResults : (t, string) GapiLens.t
+    val totalResults : (t, int64) GapiLens.t
     
     val empty : t
     

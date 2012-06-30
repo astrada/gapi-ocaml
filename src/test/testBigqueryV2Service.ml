@@ -272,7 +272,7 @@ let test_list_tabledata () =
            "bigquery#tableDataList"
            tabledata.TableDataList.kind;
          assert_equal
-           "164656"
+           164656L
            tabledata.TableDataList.totalRows;
          assert_equal
            5

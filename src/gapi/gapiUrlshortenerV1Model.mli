@@ -9,14 +9,14 @@
 module StringCount :
 sig
   type t = {
-    count : string;
+    count : int64;
     (** Number of clicks for this top entry, e.g. for this particular country or browser. *)
     id : string;
     (** Label assigned to this top entry, e.g. "US" or "Chrome". *)
     
   }
   
-  val count : (t, string) GapiLens.t
+  val count : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   
   val empty : t
@@ -38,23 +38,23 @@ sig
     (** Top browsers, e.g. "Chrome"; sorted by (descending) click counts. Only present if this data is available. *)
     countries : StringCount.t list;
     (** Top countries (expressed as country codes), e.g. "US" or "DE"; sorted by (descending) click counts. Only present if this data is available. *)
-    longUrlClicks : string;
+    longUrlClicks : int64;
     (** Number of clicks on all goo.gl short URLs pointing to this long URL. *)
     platforms : StringCount.t list;
     (** Top platforms or OSes, e.g. "Windows"; sorted by (descending) click counts. Only present if this data is available. *)
     referrers : StringCount.t list;
     (** Top referring hosts, e.g. "www.google.com"; sorted by (descending) click counts. Only present if this data is available. *)
-    shortUrlClicks : string;
+    shortUrlClicks : int64;
     (** Number of clicks on this short URL. *)
     
   }
   
   val browsers : (t, StringCount.t list) GapiLens.t
   val countries : (t, StringCount.t list) GapiLens.t
-  val longUrlClicks : (t, string) GapiLens.t
+  val longUrlClicks : (t, int64) GapiLens.t
   val platforms : (t, StringCount.t list) GapiLens.t
   val referrers : (t, StringCount.t list) GapiLens.t
-  val shortUrlClicks : (t, string) GapiLens.t
+  val shortUrlClicks : (t, int64) GapiLens.t
   
   val empty : t
   

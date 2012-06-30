@@ -811,7 +811,7 @@ struct
     headers : Headers.t list;
     kind : string;
     rows : string list list;
-    totalMatchedRows : string;
+    totalMatchedRows : int64;
     totals : string list;
     warnings : string list;
     
@@ -851,7 +851,7 @@ struct
     headers = [];
     kind = "";
     rows = [];
-    totalMatchedRows = "";
+    totalMatchedRows = 0L;
     totals = [];
     warnings = [];
     
@@ -863,7 +863,7 @@ struct
       GapiJson.render_array "headers" Headers.render x.headers;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "rows" (GapiJson.render_array "" (GapiJson.render_string_value "")) x.rows;
-      GapiJson.render_string_value "totalMatchedRows" x.totalMatchedRows;
+      GapiJson.render_int64_value "totalMatchedRows" x.totalMatchedRows;
       GapiJson.render_array "totals" (GapiJson.render_string_value "") x.totals;
       GapiJson.render_array "warnings" (GapiJson.render_string_value "") x.warnings;
       
@@ -935,7 +935,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "totalMatchedRows"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with totalMatchedRows = v }
+      { x with totalMatchedRows = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "totals"; data_type = GapiJson.Array },
         cs) ->

@@ -413,7 +413,7 @@ struct
     kind : string;
     pageToken : string;
     rows : TableRow.t list;
-    totalRows : string;
+    totalRows : int64;
     
   }
   
@@ -443,7 +443,7 @@ struct
     kind = "";
     pageToken = "";
     rows = [];
-    totalRows = "";
+    totalRows = 0L;
     
   }
   
@@ -453,7 +453,7 @@ struct
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "pageToken" x.pageToken;
       GapiJson.render_array "rows" TableRow.render x.rows;
-      GapiJson.render_string_value "totalRows" x.totalRows;
+      GapiJson.render_int64_value "totalRows" x.totalRows;
       
     ]
   and render x = 
@@ -493,7 +493,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "totalRows"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with totalRows = v }
+      { x with totalRows = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -510,9 +510,9 @@ end
 module JobStatistics =
 struct
   type t = {
-    endTime : string;
-    startTime : string;
-    totalBytesProcessed : string;
+    endTime : int64;
+    startTime : int64;
+    totalBytesProcessed : int64;
     
   }
   
@@ -530,17 +530,17 @@ struct
   }
   
   let empty = {
-    endTime = "";
-    startTime = "";
-    totalBytesProcessed = "";
+    endTime = 0L;
+    startTime = 0L;
+    totalBytesProcessed = 0L;
     
   }
   
   let rec render_content x = 
      [
-      GapiJson.render_string_value "endTime" x.endTime;
-      GapiJson.render_string_value "startTime" x.startTime;
-      GapiJson.render_string_value "totalBytesProcessed" x.totalBytesProcessed;
+      GapiJson.render_int64_value "endTime" x.endTime;
+      GapiJson.render_int64_value "startTime" x.startTime;
+      GapiJson.render_int64_value "totalBytesProcessed" x.totalBytesProcessed;
       
     ]
   and render x = 
@@ -550,15 +550,15 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "endTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with endTime = v }
+      { x with endTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "startTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with startTime = v }
+      { x with startTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "totalBytesProcessed"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with totalBytesProcessed = v }
+      { x with totalBytesProcessed = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -1980,15 +1980,15 @@ end
 module Table =
 struct
   type t = {
-    creationTime : string;
+    creationTime : int64;
     description : string;
     etag : string;
-    expirationTime : string;
+    expirationTime : int64;
     friendlyName : string;
     id : string;
     kind : string;
-    lastModifiedTime : string;
-    numBytes : string;
+    lastModifiedTime : int64;
+    numBytes : int64;
     numRows : string;
     schema : TableSchema.t;
     selfLink : string;
@@ -2050,15 +2050,15 @@ struct
   }
   
   let empty = {
-    creationTime = "";
+    creationTime = 0L;
     description = "";
     etag = "";
-    expirationTime = "";
+    expirationTime = 0L;
     friendlyName = "";
     id = "";
     kind = "";
-    lastModifiedTime = "";
-    numBytes = "";
+    lastModifiedTime = 0L;
+    numBytes = 0L;
     numRows = "";
     schema = TableSchema.empty;
     selfLink = "";
@@ -2068,15 +2068,15 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_string_value "creationTime" x.creationTime;
+      GapiJson.render_int64_value "creationTime" x.creationTime;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_string_value "expirationTime" x.expirationTime;
+      GapiJson.render_int64_value "expirationTime" x.expirationTime;
       GapiJson.render_string_value "friendlyName" x.friendlyName;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "lastModifiedTime" x.lastModifiedTime;
-      GapiJson.render_string_value "numBytes" x.numBytes;
+      GapiJson.render_int64_value "lastModifiedTime" x.lastModifiedTime;
+      GapiJson.render_int64_value "numBytes" x.numBytes;
       GapiJson.render_string_value "numRows" x.numRows;
       (fun v -> GapiJson.render_object "schema" (TableSchema.render_content v)) x.schema;
       GapiJson.render_string_value "selfLink" x.selfLink;
@@ -2090,7 +2090,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "creationTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with creationTime = v }
+      { x with creationTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -2102,7 +2102,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "expirationTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with expirationTime = v }
+      { x with expirationTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "friendlyName"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -2118,11 +2118,11 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "lastModifiedTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with lastModifiedTime = v }
+      { x with lastModifiedTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "numBytes"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with numBytes = v }
+      { x with numBytes = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "numRows"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -2808,14 +2808,14 @@ struct
   
   type t = {
     access : Access.t list;
-    creationTime : string;
+    creationTime : int64;
     datasetReference : DatasetReference.t;
     description : string;
     etag : string;
     friendlyName : string;
     id : string;
     kind : string;
-    lastModifiedTime : string;
+    lastModifiedTime : int64;
     selfLink : string;
     
   }
@@ -2863,14 +2863,14 @@ struct
   
   let empty = {
     access = [];
-    creationTime = "";
+    creationTime = 0L;
     datasetReference = DatasetReference.empty;
     description = "";
     etag = "";
     friendlyName = "";
     id = "";
     kind = "";
-    lastModifiedTime = "";
+    lastModifiedTime = 0L;
     selfLink = "";
     
   }
@@ -2878,14 +2878,14 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_array "access" Access.render x.access;
-      GapiJson.render_string_value "creationTime" x.creationTime;
+      GapiJson.render_int64_value "creationTime" x.creationTime;
       (fun v -> GapiJson.render_object "datasetReference" (DatasetReference.render_content v)) x.datasetReference;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "friendlyName" x.friendlyName;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "lastModifiedTime" x.lastModifiedTime;
+      GapiJson.render_int64_value "lastModifiedTime" x.lastModifiedTime;
       GapiJson.render_string_value "selfLink" x.selfLink;
       
     ]
@@ -2910,7 +2910,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "creationTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with creationTime = v }
+      { x with creationTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "datasetReference"; data_type = GapiJson.Object },
         cs) ->
@@ -2942,7 +2942,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "lastModifiedTime"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with lastModifiedTime = v }
+      { x with lastModifiedTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         Json_type.String v) ->

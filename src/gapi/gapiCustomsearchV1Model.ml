@@ -288,7 +288,7 @@ struct
     startIndex : int;
     startPage : int;
     title : string;
-    totalResults : string;
+    totalResults : int64;
     
   }
   
@@ -478,7 +478,7 @@ struct
     startIndex = 0;
     startPage = 0;
     title = "";
-    totalResults = "";
+    totalResults = 0L;
     
   }
   
@@ -520,7 +520,7 @@ struct
       GapiJson.render_int_value "startIndex" x.startIndex;
       GapiJson.render_int_value "startPage" x.startPage;
       GapiJson.render_string_value "title" x.title;
-      GapiJson.render_string_value "totalResults" x.totalResults;
+      GapiJson.render_int64_value "totalResults" x.totalResults;
       
     ]
   and render x = 
@@ -674,7 +674,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "totalResults"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with totalResults = v }
+      { x with totalResults = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -1320,7 +1320,7 @@ struct
       formattedSearchTime : string;
       formattedTotalResults : string;
       searchTime : float;
-      totalResults : string;
+      totalResults : int64;
       
     }
     
@@ -1345,7 +1345,7 @@ struct
       formattedSearchTime = "";
       formattedTotalResults = "";
       searchTime = 0.0;
-      totalResults = "";
+      totalResults = 0L;
       
     }
     
@@ -1354,7 +1354,7 @@ struct
         GapiJson.render_string_value "formattedSearchTime" x.formattedSearchTime;
         GapiJson.render_string_value "formattedTotalResults" x.formattedTotalResults;
         GapiJson.render_float_value "searchTime" x.searchTime;
-        GapiJson.render_string_value "totalResults" x.totalResults;
+        GapiJson.render_int64_value "totalResults" x.totalResults;
         
       ]
     and render x = 
@@ -1380,7 +1380,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "totalResults"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with totalResults = v }
+        { x with totalResults = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->

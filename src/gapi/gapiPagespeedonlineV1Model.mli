@@ -32,15 +32,15 @@ sig
   module PageStats :
   sig
     type t = {
-      cssResponseBytes : string;
+      cssResponseBytes : int64;
       (** Number of uncompressed response bytes for CSS resources on the page. *)
-      flashResponseBytes : string;
+      flashResponseBytes : int64;
       (** Number of response bytes for flash resources on the page. *)
-      htmlResponseBytes : string;
+      htmlResponseBytes : int64;
       (** Number of uncompressed response bytes for the main HTML document and all iframes on the page. *)
-      imageResponseBytes : string;
+      imageResponseBytes : int64;
       (** Number of response bytes for image resources on the page. *)
-      javascriptResponseBytes : string;
+      javascriptResponseBytes : int64;
       (** Number of uncompressed response bytes for JS resources on the page. *)
       numberCssResources : int;
       (** Number of CSS resources referenced by the page. *)
@@ -52,28 +52,28 @@ sig
       (** Number of HTTP resources loaded by the page. *)
       numberStaticResources : int;
       (** Number of static (i.e. cacheable) resources on the page. *)
-      otherResponseBytes : string;
+      otherResponseBytes : int64;
       (** Number of response bytes for other resources on the page. *)
-      textResponseBytes : string;
+      textResponseBytes : int64;
       (** Number of uncompressed response bytes for text resources not covered by other statistics (i.e non-HTML, non-script, non-CSS resources) on the page. *)
-      totalRequestBytes : string;
+      totalRequestBytes : int64;
       (** Total size of all request bytes sent by the page. *)
       
     }
     
-    val cssResponseBytes : (t, string) GapiLens.t
-    val flashResponseBytes : (t, string) GapiLens.t
-    val htmlResponseBytes : (t, string) GapiLens.t
-    val imageResponseBytes : (t, string) GapiLens.t
-    val javascriptResponseBytes : (t, string) GapiLens.t
+    val cssResponseBytes : (t, int64) GapiLens.t
+    val flashResponseBytes : (t, int64) GapiLens.t
+    val htmlResponseBytes : (t, int64) GapiLens.t
+    val imageResponseBytes : (t, int64) GapiLens.t
+    val javascriptResponseBytes : (t, int64) GapiLens.t
     val numberCssResources : (t, int) GapiLens.t
     val numberHosts : (t, int) GapiLens.t
     val numberJsResources : (t, int) GapiLens.t
     val numberResources : (t, int) GapiLens.t
     val numberStaticResources : (t, int) GapiLens.t
-    val otherResponseBytes : (t, string) GapiLens.t
-    val textResponseBytes : (t, string) GapiLens.t
-    val totalRequestBytes : (t, string) GapiLens.t
+    val otherResponseBytes : (t, int64) GapiLens.t
+    val textResponseBytes : (t, int64) GapiLens.t
+    val totalRequestBytes : (t, int64) GapiLens.t
     
     val empty : t
     

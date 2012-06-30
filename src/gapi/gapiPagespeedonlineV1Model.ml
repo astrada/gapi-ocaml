@@ -55,19 +55,19 @@ struct
   module PageStats =
   struct
     type t = {
-      cssResponseBytes : string;
-      flashResponseBytes : string;
-      htmlResponseBytes : string;
-      imageResponseBytes : string;
-      javascriptResponseBytes : string;
+      cssResponseBytes : int64;
+      flashResponseBytes : int64;
+      htmlResponseBytes : int64;
+      imageResponseBytes : int64;
+      javascriptResponseBytes : int64;
       numberCssResources : int;
       numberHosts : int;
       numberJsResources : int;
       numberResources : int;
       numberStaticResources : int;
-      otherResponseBytes : string;
-      textResponseBytes : string;
-      totalRequestBytes : string;
+      otherResponseBytes : int64;
+      textResponseBytes : int64;
+      totalRequestBytes : int64;
       
     }
     
@@ -125,37 +125,37 @@ struct
     }
     
     let empty = {
-      cssResponseBytes = "";
-      flashResponseBytes = "";
-      htmlResponseBytes = "";
-      imageResponseBytes = "";
-      javascriptResponseBytes = "";
+      cssResponseBytes = 0L;
+      flashResponseBytes = 0L;
+      htmlResponseBytes = 0L;
+      imageResponseBytes = 0L;
+      javascriptResponseBytes = 0L;
       numberCssResources = 0;
       numberHosts = 0;
       numberJsResources = 0;
       numberResources = 0;
       numberStaticResources = 0;
-      otherResponseBytes = "";
-      textResponseBytes = "";
-      totalRequestBytes = "";
+      otherResponseBytes = 0L;
+      textResponseBytes = 0L;
+      totalRequestBytes = 0L;
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "cssResponseBytes" x.cssResponseBytes;
-        GapiJson.render_string_value "flashResponseBytes" x.flashResponseBytes;
-        GapiJson.render_string_value "htmlResponseBytes" x.htmlResponseBytes;
-        GapiJson.render_string_value "imageResponseBytes" x.imageResponseBytes;
-        GapiJson.render_string_value "javascriptResponseBytes" x.javascriptResponseBytes;
+        GapiJson.render_int64_value "cssResponseBytes" x.cssResponseBytes;
+        GapiJson.render_int64_value "flashResponseBytes" x.flashResponseBytes;
+        GapiJson.render_int64_value "htmlResponseBytes" x.htmlResponseBytes;
+        GapiJson.render_int64_value "imageResponseBytes" x.imageResponseBytes;
+        GapiJson.render_int64_value "javascriptResponseBytes" x.javascriptResponseBytes;
         GapiJson.render_int_value "numberCssResources" x.numberCssResources;
         GapiJson.render_int_value "numberHosts" x.numberHosts;
         GapiJson.render_int_value "numberJsResources" x.numberJsResources;
         GapiJson.render_int_value "numberResources" x.numberResources;
         GapiJson.render_int_value "numberStaticResources" x.numberStaticResources;
-        GapiJson.render_string_value "otherResponseBytes" x.otherResponseBytes;
-        GapiJson.render_string_value "textResponseBytes" x.textResponseBytes;
-        GapiJson.render_string_value "totalRequestBytes" x.totalRequestBytes;
+        GapiJson.render_int64_value "otherResponseBytes" x.otherResponseBytes;
+        GapiJson.render_int64_value "textResponseBytes" x.textResponseBytes;
+        GapiJson.render_int64_value "totalRequestBytes" x.totalRequestBytes;
         
       ]
     and render x = 
@@ -165,23 +165,23 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "cssResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with cssResponseBytes = v }
+        { x with cssResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "flashResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with flashResponseBytes = v }
+        { x with flashResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "htmlResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with htmlResponseBytes = v }
+        { x with htmlResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "imageResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with imageResponseBytes = v }
+        { x with imageResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "javascriptResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with javascriptResponseBytes = v }
+        { x with javascriptResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "numberCssResources"; data_type = GapiJson.Scalar },
           Json_type.Int v) ->
@@ -205,15 +205,15 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "otherResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with otherResponseBytes = v }
+        { x with otherResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "textResponseBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with textResponseBytes = v }
+        { x with textResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "totalRequestBytes"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with totalRequestBytes = v }
+        { x with totalRequestBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
