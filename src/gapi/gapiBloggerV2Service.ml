@@ -3,7 +3,12 @@
 open GapiUtils.Infix
 open GapiBloggerV2Model
 
-let scope = "https://www.googleapis.com/auth/blogger"
+module Scope =
+struct
+  let blogger = "https://www.googleapis.com/auth/blogger"
+  
+  
+end
 
 module BlogsResource =
 struct

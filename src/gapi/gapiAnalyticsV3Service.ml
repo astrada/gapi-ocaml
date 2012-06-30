@@ -3,7 +3,12 @@
 open GapiUtils.Infix
 open GapiAnalyticsV3Model
 
-let scope_readonly = "https://www.googleapis.com/auth/analytics.readonly"
+module Scope =
+struct
+  let analytics_readonly = "https://www.googleapis.com/auth/analytics.readonly"
+  
+  
+end
 
 module DataResource =
 struct

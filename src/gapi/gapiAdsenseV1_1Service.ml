@@ -3,9 +3,14 @@
 open GapiUtils.Infix
 open GapiAdsenseV1_1Model
 
-let scope = "https://www.googleapis.com/auth/adsense"
-
-let scope_readonly = "https://www.googleapis.com/auth/adsense.readonly"
+module Scope =
+struct
+  let adsense = "https://www.googleapis.com/auth/adsense"
+  
+  let adsense_readonly = "https://www.googleapis.com/auth/adsense.readonly"
+  
+  
+end
 
 module AccountsResource =
 struct

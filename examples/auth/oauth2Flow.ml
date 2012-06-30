@@ -85,17 +85,17 @@ let main () =
   (* Generate and print out the URL used to obtain the authorization code *)
   let url = GapiOAuth2.authorization_code_url
               ~redirect_uri
-              ~scope:[GapiCalendarV3Service.scope;
-                      GapiPlusV1Service.scope_me;
-                      GapiPlusV1Service.scope_email;
-                      GapiTasksV1Service.scope;
-                      GapiUrlshortenerV1Service.scope;
-                      GapiAnalyticsV3Service.scope_readonly;
-                      GapiBloggerV2Service.scope;
-                      GapiSiteVerificationV1Service.scope;
-                      GapiAdsenseV1_1Service.scope;
-                      GapiBigqueryV2Service.scope;
-                      GapiDriveV2Service.scope;
+              ~scope:[GapiCalendarV3Service.Scope.calendar;
+                      GapiPlusV1Service.Scope.plus_me;
+                      GapiPlusV1Service.Scope.userinfo_email;
+                      GapiTasksV1Service.Scope.tasks;
+                      GapiUrlshortenerV1Service.Scope.urlshortener;
+                      GapiAnalyticsV3Service.Scope.analytics_readonly;
+                      GapiBloggerV2Service.Scope.blogger;
+                      GapiSiteVerificationV1Service.Scope.siteverification;
+                      GapiAdsenseV1_1Service.Scope.adsense;
+                      GapiBigqueryV2Service.Scope.bigquery;
+                      GapiDriveV2Service.Scope.drive;
                       GdataDocumentsV3Service.all_scopes]
               ~response_type:"code"
               client_id in

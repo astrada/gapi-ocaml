@@ -8,8 +8,14 @@
   {{:https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html}API Documentation}.
   *)
 
-(** Manage your Blogger account *)
-val scope : string
+module Scope :
+sig
+  val blogger : string
+  (** Manage your Blogger account *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module BlogsResource :
 sig

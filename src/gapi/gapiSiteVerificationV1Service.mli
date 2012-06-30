@@ -8,11 +8,17 @@
   {{:http://code.google.com/apis/siteverification/}API Documentation}.
   *)
 
-(** Manage the list of sites and domains you control *)
-val scope : string
-
-(** Manage your new site verifications with Google *)
-val scope_verify_only : string
+module Scope :
+sig
+  val siteverification : string
+  (** Manage the list of sites and domains you control *)
+  
+  val siteverification_verify_only : string
+  (** Manage your new site verifications with Google *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module WebResourceResource :
 sig

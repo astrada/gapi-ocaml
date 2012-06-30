@@ -8,11 +8,17 @@
   {{:http://code.google.com/apis/calendar/v3/using.html}API Documentation}.
   *)
 
-(** Manage your calendars *)
-val scope : string
-
-(** View your calendars *)
-val scope_readonly : string
+module Scope :
+sig
+  val calendar : string
+  (** Manage your calendars *)
+  
+  val calendar_readonly : string
+  (** View your calendars *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module AclResource :
 sig

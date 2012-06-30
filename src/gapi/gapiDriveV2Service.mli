@@ -8,14 +8,26 @@
   {{:https://developers.google.com/drive/}API Documentation}.
   *)
 
-(** View and manage the files and documents in your Google Drive *)
-val scope : string
-
-(** View and manage Google Drive files that you have opened or created with this app *)
-val scope_file : string
-
-(** View the files and documents in your Google Drive *)
-val scope_readonly : string
+module Scope :
+sig
+  val drive : string
+  (** View and manage the files and documents in your Google Drive *)
+  
+  val drive_apps_readonly : string
+  (** New service: https://www.googleapis.com/auth/drive.apps.readonly *)
+  
+  val drive_file : string
+  (** View and manage Google Drive files that you have opened or created with this app *)
+  
+  val drive_metadata_readonly : string
+  (** View metadata for files and documents in your Google Drive *)
+  
+  val drive_readonly : string
+  (** View the files and documents in your Google Drive *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module AboutResource :
 sig

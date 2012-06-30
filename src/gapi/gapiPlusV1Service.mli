@@ -8,11 +8,17 @@
   {{:http://developers.google.com/+/api/}API Documentation}.
   *)
 
-(** Know who you are on Google *)
-val scope_me : string
-
-(** View your email address *)
-val scope_email : string
+module Scope :
+sig
+  val plus_me : string
+  (** Know who you are on Google *)
+  
+  val userinfo_email : string
+  (** View your email address *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module ActivitiesResource :
 sig

@@ -8,8 +8,14 @@
   {{:http://code.google.com/apis/analytics}API Documentation}.
   *)
 
-(** View your Google Analytics data *)
-val scope_readonly : string
+module Scope :
+sig
+  val analytics_readonly : string
+  (** View your Google Analytics data *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module DataResource :
 sig

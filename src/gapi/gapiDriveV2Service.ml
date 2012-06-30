@@ -3,15 +3,20 @@
 open GapiUtils.Infix
 open GapiDriveV2Model
 
-let scope = "https://www.googleapis.com/auth/drive"
-
-let scope_readonly = "https://www.googleapis.com/auth/drive.apps.readonly"
-
-let scope_file = "https://www.googleapis.com/auth/drive.file"
-
-let scope_readonly = "https://www.googleapis.com/auth/drive.metadata.readonly"
-
-let scope_readonly = "https://www.googleapis.com/auth/drive.readonly"
+module Scope =
+struct
+  let drive = "https://www.googleapis.com/auth/drive"
+  
+  let drive_apps_readonly = "https://www.googleapis.com/auth/drive.apps.readonly"
+  
+  let drive_file = "https://www.googleapis.com/auth/drive.file"
+  
+  let drive_metadata_readonly = "https://www.googleapis.com/auth/drive.metadata.readonly"
+  
+  let drive_readonly = "https://www.googleapis.com/auth/drive.readonly"
+  
+  
+end
 
 module AboutResource =
 struct
