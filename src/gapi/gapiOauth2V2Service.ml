@@ -3,6 +3,15 @@
 open GapiUtils.Infix
 open GapiOauth2V2Model
 
+module Scope =
+struct
+  let userinfo_email = "https://www.googleapis.com/auth/userinfo.email"
+  
+  let userinfo_profile = "https://www.googleapis.com/auth/userinfo.profile"
+  
+  
+end
+
 module UserinfoResource =
 struct
   module V2 =
@@ -52,17 +61,7 @@ struct
     key : string;
     (* oauth2-specific query parameters *)
     access_token : string;
-    alg : string;
-    android_device_id : string;
-    app_id : string;
-    audience : string;
-    client_id : string;
-    force : bool;
-    hl : string;
     id_token : string;
-    origin : string;
-    response_type : string;
-    scope : string;
     
   }
   
@@ -73,17 +72,7 @@ struct
     userIp = "";
     key = "";
     access_token = "";
-    alg = "";
-    android_device_id = "";
-    app_id = "";
-    audience = "";
-    client_id = "";
-    force = false;
-    hl = "";
     id_token = "";
-    origin = "";
-    response_type = "";
-    scope = "";
     
   }
   
@@ -96,34 +85,14 @@ struct
     param (fun p -> p.userIp) (fun x -> x) "userIp";
     param (fun p -> p.key) (fun x -> x) "key";
     param (fun p -> p.access_token) (fun x -> x) "access_token";
-    param (fun p -> p.alg) (fun x -> x) "alg";
-    param (fun p -> p.android_device_id) (fun x -> x) "android_device_id";
-    param (fun p -> p.app_id) (fun x -> x) "app_id";
-    param (fun p -> p.audience) (fun x -> x) "audience";
-    param (fun p -> p.client_id) (fun x -> x) "client_id";
-    param (fun p -> p.force) string_of_bool "force";
-    param (fun p -> p.hl) (fun x -> x) "hl";
     param (fun p -> p.id_token) (fun x -> x) "id_token";
-    param (fun p -> p.origin) (fun x -> x) "origin";
-    param (fun p -> p.response_type) (fun x -> x) "response_type";
-    param (fun p -> p.scope) (fun x -> x) "scope";
     
   ] |> List.concat
   
   let merge_parameters
       ?(standard_parameters = GapiService.StandardParameters.default)
       ?(access_token = default.access_token)
-      ?(alg = default.alg)
-      ?(android_device_id = default.android_device_id)
-      ?(app_id = default.app_id)
-      ?(audience = default.audience)
-      ?(client_id = default.client_id)
-      ?(force = default.force)
-      ?(hl = default.hl)
       ?(id_token = default.id_token)
-      ?(origin = default.origin)
-      ?(response_type = default.response_type)
-      ?(scope = default.scope)
       () =
     let parameters = {
       fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -132,48 +101,13 @@ struct
       userIp = standard_parameters.GapiService.StandardParameters.userIp;
       key = standard_parameters.GapiService.StandardParameters.key;
       access_token;
-      alg;
-      android_device_id;
-      app_id;
-      audience;
-      client_id;
-      force;
-      hl;
       id_token;
-      origin;
-      response_type;
-      scope;
       
     } in
     if parameters = default then None else Some parameters
   
 end
 
-let issueTokenGet
-      ?(base_url = "https://www.googleapis.com/")
-      ?std_params
-      ?alg
-      ?android_device_id
-      ?app_id
-      ?audience
-      ?force
-      ?hl
-      ?origin
-      ~client_id
-      ~response_type
-      ~scope
-      session =
-  let full_url = GapiUtils.add_path_to_url ["oauth2"; "v2"; "IssueToken"]
-    base_url in
-  let params = Oauth2Parameters.merge_parameters
-    ?standard_parameters:std_params ?alg ?android_device_id ?app_id ?audience
-    ~client_id ?force ?hl ?origin ~response_type ~scope () in
-  let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
-    in
-  GapiService.get ?query_parameters full_url
-    (GapiJson.parse_json_response Oauth2IssueTokenV2Response.of_data_model)
-    session 
-  
 let tokeninfo
       ?(base_url = "https://www.googleapis.com/")
       ?std_params

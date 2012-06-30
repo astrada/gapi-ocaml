@@ -77,7 +77,6 @@
   },
   "placeId": "string",
   "placeName": "string",
-  "placeholder": true,
   "provider": {
     "title": "string"
   },

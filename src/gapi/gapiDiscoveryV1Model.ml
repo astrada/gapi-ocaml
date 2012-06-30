@@ -645,6 +645,9 @@ struct
     request : Request.t;
     response : Response.t;
     scopes : string list;
+    supportsMediaDownload : bool;
+    supportsMediaUpload : bool;
+    supportsSubscription : bool;
     
   }
   
@@ -688,6 +691,18 @@ struct
     GapiLens.get = (fun x -> x.scopes);
     GapiLens.set = (fun v x -> { x with scopes = v });
   }
+  let supportsMediaDownload = {
+    GapiLens.get = (fun x -> x.supportsMediaDownload);
+    GapiLens.set = (fun v x -> { x with supportsMediaDownload = v });
+  }
+  let supportsMediaUpload = {
+    GapiLens.get = (fun x -> x.supportsMediaUpload);
+    GapiLens.set = (fun v x -> { x with supportsMediaUpload = v });
+  }
+  let supportsSubscription = {
+    GapiLens.get = (fun x -> x.supportsSubscription);
+    GapiLens.set = (fun v x -> { x with supportsSubscription = v });
+  }
   
   let empty = {
     description = "";
@@ -700,6 +715,9 @@ struct
     request = Request.empty;
     response = Response.empty;
     scopes = [];
+    supportsMediaDownload = false;
+    supportsMediaUpload = false;
+    supportsSubscription = false;
     
   }
   
@@ -715,6 +733,9 @@ struct
       (fun v -> GapiJson.render_object "request" (Request.render_content v)) x.request;
       (fun v -> GapiJson.render_object "response" (Response.render_content v)) x.response;
       GapiJson.render_array "scopes" (GapiJson.render_string_value "") x.scopes;
+      GapiJson.render_bool_value "supportsMediaDownload" x.supportsMediaDownload;
+      GapiJson.render_bool_value "supportsMediaUpload" x.supportsMediaUpload;
+      GapiJson.render_bool_value "supportsSubscription" x.supportsSubscription;
       
     ]
   and render x = 
@@ -807,6 +828,18 @@ struct
         ""
         (fun v -> { x with scopes = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "supportsMediaDownload"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with supportsMediaDownload = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "supportsMediaUpload"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with supportsMediaUpload = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "supportsSubscription"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with supportsSubscription = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->

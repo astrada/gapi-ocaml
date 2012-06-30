@@ -267,6 +267,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of results to return
+    @param pageToken Page token, returned by a previous call, identifying the result set
     @param startIndex Zero-based index of the starting row to read
     @param projectId Project ID of the table to read
     @param datasetId Dataset ID of the table to read
@@ -276,6 +277,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxResults:int ->
+    ?pageToken:string ->
     ?startIndex:string ->
     projectId:string ->
     datasetId:string ->

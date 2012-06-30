@@ -553,6 +553,7 @@ struct
     comment : string;
     displayName : string;
     email : string;
+    id : string;
     optional : bool;
     organizer : bool;
     resource : bool;
@@ -576,6 +577,10 @@ struct
   let email = {
     GapiLens.get = (fun x -> x.email);
     GapiLens.set = (fun v x -> { x with email = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
   }
   let optional = {
     GapiLens.get = (fun x -> x.optional);
@@ -603,6 +608,7 @@ struct
     comment = "";
     displayName = "";
     email = "";
+    id = "";
     optional = false;
     organizer = false;
     resource = false;
@@ -617,6 +623,7 @@ struct
       GapiJson.render_string_value "comment" x.comment;
       GapiJson.render_string_value "displayName" x.displayName;
       GapiJson.render_string_value "email" x.email;
+      GapiJson.render_string_value "id" x.id;
       GapiJson.render_bool_value "optional" x.optional;
       GapiJson.render_bool_value "organizer" x.organizer;
       GapiJson.render_bool_value "resource" x.resource;
@@ -644,6 +651,10 @@ struct
         ({ GapiJson.name = "email"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with email = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with id = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "optional"; data_type = GapiJson.Scalar },
         Json_type.Bool v) ->
@@ -867,6 +878,8 @@ struct
     type t = {
       displayName : string;
       email : string;
+      id : string;
+      self : bool;
       
     }
     
@@ -878,10 +891,20 @@ struct
       GapiLens.get = (fun x -> x.email);
       GapiLens.set = (fun v x -> { x with email = v });
     }
+    let id = {
+      GapiLens.get = (fun x -> x.id);
+      GapiLens.set = (fun v x -> { x with id = v });
+    }
+    let self = {
+      GapiLens.get = (fun x -> x.self);
+      GapiLens.set = (fun v x -> { x with self = v });
+    }
     
     let empty = {
       displayName = "";
       email = "";
+      id = "";
+      self = false;
       
     }
     
@@ -889,6 +912,8 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "email" x.email;
+        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_bool_value "self" x.self;
         
       ]
     and render x = 
@@ -903,6 +928,14 @@ struct
           ({ GapiJson.name = "email"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
         { x with email = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with id = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "self"; data_type = GapiJson.Scalar },
+          Json_type.Bool v) ->
+        { x with self = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -1113,6 +1146,8 @@ struct
     type t = {
       displayName : string;
       email : string;
+      id : string;
+      self : bool;
       
     }
     
@@ -1124,10 +1159,20 @@ struct
       GapiLens.get = (fun x -> x.email);
       GapiLens.set = (fun v x -> { x with email = v });
     }
+    let id = {
+      GapiLens.get = (fun x -> x.id);
+      GapiLens.set = (fun v x -> { x with id = v });
+    }
+    let self = {
+      GapiLens.get = (fun x -> x.self);
+      GapiLens.set = (fun v x -> { x with self = v });
+    }
     
     let empty = {
       displayName = "";
       email = "";
+      id = "";
+      self = false;
       
     }
     
@@ -1135,6 +1180,8 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "email" x.email;
+        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_bool_value "self" x.self;
         
       ]
     and render x = 
@@ -1149,6 +1196,14 @@ struct
           ({ GapiJson.name = "email"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
         { x with email = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+          Json_type.String v) ->
+        { x with id = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "self"; data_type = GapiJson.Scalar },
+          Json_type.Bool v) ->
+        { x with self = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -1167,6 +1222,7 @@ struct
     creator : Creator.t;
     description : string;
     _end : EventDateTime.t;
+    endTimeUnspecified : bool;
     etag : string;
     extendedProperties : ExtendedProperties.t;
     gadget : Gadget.t;
@@ -1178,6 +1234,7 @@ struct
     id : string;
     kind : string;
     location : string;
+    locked : bool;
     organizer : Organizer.t;
     originalStartTime : EventDateTime.t;
     privateCopy : bool;
@@ -1226,6 +1283,10 @@ struct
     GapiLens.get = (fun x -> x._end);
     GapiLens.set = (fun v x -> { x with _end = v });
   }
+  let endTimeUnspecified = {
+    GapiLens.get = (fun x -> x.endTimeUnspecified);
+    GapiLens.set = (fun v x -> { x with endTimeUnspecified = v });
+  }
   let etag = {
     GapiLens.get = (fun x -> x.etag);
     GapiLens.set = (fun v x -> { x with etag = v });
@@ -1269,6 +1330,10 @@ struct
   let location = {
     GapiLens.get = (fun x -> x.location);
     GapiLens.set = (fun v x -> { x with location = v });
+  }
+  let locked = {
+    GapiLens.get = (fun x -> x.locked);
+    GapiLens.set = (fun v x -> { x with locked = v });
   }
   let organizer = {
     GapiLens.get = (fun x -> x.organizer);
@@ -1332,6 +1397,7 @@ struct
     creator = Creator.empty;
     description = "";
     _end = EventDateTime.empty;
+    endTimeUnspecified = false;
     etag = "";
     extendedProperties = ExtendedProperties.empty;
     gadget = Gadget.empty;
@@ -1343,6 +1409,7 @@ struct
     id = "";
     kind = "";
     location = "";
+    locked = false;
     organizer = Organizer.empty;
     originalStartTime = EventDateTime.empty;
     privateCopy = false;
@@ -1369,6 +1436,7 @@ struct
       (fun v -> GapiJson.render_object "creator" (Creator.render_content v)) x.creator;
       GapiJson.render_string_value "description" x.description;
       (fun v -> GapiJson.render_object "end" (EventDateTime.render_content v)) x._end;
+      GapiJson.render_bool_value "endTimeUnspecified" x.endTimeUnspecified;
       GapiJson.render_string_value "etag" x.etag;
       (fun v -> GapiJson.render_object "extendedProperties" (ExtendedProperties.render_content v)) x.extendedProperties;
       (fun v -> GapiJson.render_object "gadget" (Gadget.render_content v)) x.gadget;
@@ -1380,6 +1448,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "location" x.location;
+      GapiJson.render_bool_value "locked" x.locked;
       (fun v -> GapiJson.render_object "organizer" (Organizer.render_content v)) x.organizer;
       (fun v -> GapiJson.render_object "originalStartTime" (EventDateTime.render_content v)) x.originalStartTime;
       GapiJson.render_bool_value "privateCopy" x.privateCopy;
@@ -1454,6 +1523,10 @@ struct
         (fun v -> { x with _end = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "endTimeUnspecified"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with endTimeUnspecified = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with etag = v }
@@ -1505,6 +1578,10 @@ struct
         ({ GapiJson.name = "location"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with location = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "locked"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with locked = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "organizer"; data_type = GapiJson.Object },
         cs) ->
