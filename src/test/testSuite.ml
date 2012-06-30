@@ -38,6 +38,7 @@ let service_tests =
    TestAdsenseV1_1Service.suite;
    TestBigqueryV2Service.suite;
    TestDocumentsV3Service.suite;
+   TestDriveV2Service.suite;
   ]
 
 let build_service_test_list service =
@@ -60,6 +61,7 @@ let build_service_test_list service =
       | "adsense" -> [TestAdsenseV1_1Service.suite]
       | "bigquery" -> [TestBigqueryV2Service.suite]
       | "documents" -> [TestDocumentsV3Service.suite]
+      | "drive" -> [TestDriveV2Service.suite]
       | _ -> failwith ("Service not supported: " ^ service)
   in
     model_tests @ service_suite
