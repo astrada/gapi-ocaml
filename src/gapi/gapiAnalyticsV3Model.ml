@@ -2,7 +2,7 @@
 
 module Goal =
 struct
-  module VisitTimeOnSiteDetailsData =
+  module VisitTimeOnSiteDetails =
   struct
     type t = {
       comparisonType : string;
@@ -48,11 +48,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.VisitTimeOnSiteDetailsData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.VisitTimeOnSiteDetails.parse" e x
     
   end
   
-  module VisitNumPagesDetailsData =
+  module VisitNumPagesDetails =
   struct
     type t = {
       comparisonType : string;
@@ -98,13 +98,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.VisitNumPagesDetailsData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.VisitNumPagesDetails.parse" e x
     
   end
   
-  module UrlDestinationDetailsData =
+  module UrlDestinationDetails =
   struct
-    module StepsData =
+    module Steps =
     struct
       type t = {
         name : string;
@@ -161,7 +161,7 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiAnalyticsV3Model.StepsData.parse" e x
+          GapiJson.unexpected "GapiAnalyticsV3Model.Steps.parse" e x
       
     end
     
@@ -169,7 +169,7 @@ struct
       caseSensitive : bool;
       firstStepRequired : bool;
       matchType : string;
-      steps : StepsData.t list;
+      steps : Steps.t list;
       url : string;
       
     }
@@ -209,7 +209,7 @@ struct
         GapiJson.render_bool_value "caseSensitive" x.caseSensitive;
         GapiJson.render_bool_value "firstStepRequired" x.firstStepRequired;
         GapiJson.render_string_value "matchType" x.matchType;
-        GapiJson.render_array "steps" StepsData.render x.steps;
+        GapiJson.render_array "steps" Steps.render x.steps;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -237,14 +237,10 @@ struct
             | GapiCore.AnnotatedTree.Node
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
                 cs) ->
-              GapiJson.parse_children
-                StepsData.parse
-                StepsData.empty
-                (fun v -> v)
-                cs
+              GapiJson.parse_children Steps.parse Steps.empty (fun v -> v) cs
             | e ->
-              GapiJson.unexpected "GapiAnalyticsV3Model.UrlDestinationDetailsData.parse.parse_collection" e x')
-          StepsData.empty
+              GapiJson.unexpected "GapiAnalyticsV3Model.UrlDestinationDetails.parse.parse_collection" e x')
+          Steps.empty
           (fun v -> { x with steps = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -256,11 +252,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.UrlDestinationDetailsData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.UrlDestinationDetails.parse" e x
     
   end
   
-  module ParentLinkData =
+  module ParentLink =
   struct
     type t = {
       href : string;
@@ -306,13 +302,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLinkData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLink.parse" e x
     
   end
   
-  module EventDetailsData =
+  module EventDetails =
   struct
-    module EventConditionsData =
+    module EventConditions =
     struct
       type t = {
         comparisonType : string;
@@ -391,12 +387,12 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiAnalyticsV3Model.EventConditionsData.parse" e x
+          GapiJson.unexpected "GapiAnalyticsV3Model.EventConditions.parse" e x
       
     end
     
     type t = {
-      eventConditions : EventConditionsData.t list;
+      eventConditions : EventConditions.t list;
       useEventValue : bool;
       
     }
@@ -418,7 +414,7 @@ struct
     
     let rec render_content x = 
        [
-        GapiJson.render_array "eventConditions" EventConditionsData.render x.eventConditions;
+        GapiJson.render_array "eventConditions" EventConditions.render x.eventConditions;
         GapiJson.render_bool_value "useEventValue" x.useEventValue;
         
       ]
@@ -435,13 +431,13 @@ struct
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
                 cs) ->
               GapiJson.parse_children
-                EventConditionsData.parse
-                EventConditionsData.empty
+                EventConditions.parse
+                EventConditions.empty
                 (fun v -> v)
                 cs
             | e ->
-              GapiJson.unexpected "GapiAnalyticsV3Model.EventDetailsData.parse.parse_collection" e x')
-          EventConditionsData.empty
+              GapiJson.unexpected "GapiAnalyticsV3Model.EventDetails.parse.parse_collection" e x')
+          EventConditions.empty
           (fun v -> { x with eventConditions = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -453,7 +449,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.EventDetailsData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.EventDetails.parse" e x
     
   end
   
@@ -461,20 +457,20 @@ struct
     accountId : string;
     active : bool;
     created : GapiDate.t;
-    eventDetails : EventDetailsData.t;
+    eventDetails : EventDetails.t;
     id : string;
     internalWebPropertyId : string;
     kind : string;
     name : string;
-    parentLink : ParentLinkData.t;
+    parentLink : ParentLink.t;
     profileId : string;
     selfLink : string;
     _type : string;
     updated : GapiDate.t;
-    urlDestinationDetails : UrlDestinationDetailsData.t;
+    urlDestinationDetails : UrlDestinationDetails.t;
     value : float;
-    visitNumPagesDetails : VisitNumPagesDetailsData.t;
-    visitTimeOnSiteDetails : VisitTimeOnSiteDetailsData.t;
+    visitNumPagesDetails : VisitNumPagesDetails.t;
+    visitTimeOnSiteDetails : VisitTimeOnSiteDetails.t;
     webPropertyId : string;
     
   }
@@ -556,20 +552,20 @@ struct
     accountId = "";
     active = false;
     created = GapiDate.epoch;
-    eventDetails = EventDetailsData.empty;
+    eventDetails = EventDetails.empty;
     id = "";
     internalWebPropertyId = "";
     kind = "";
     name = "";
-    parentLink = ParentLinkData.empty;
+    parentLink = ParentLink.empty;
     profileId = "";
     selfLink = "";
     _type = "";
     updated = GapiDate.epoch;
-    urlDestinationDetails = UrlDestinationDetailsData.empty;
+    urlDestinationDetails = UrlDestinationDetails.empty;
     value = 0.0;
-    visitNumPagesDetails = VisitNumPagesDetailsData.empty;
-    visitTimeOnSiteDetails = VisitTimeOnSiteDetailsData.empty;
+    visitNumPagesDetails = VisitNumPagesDetails.empty;
+    visitTimeOnSiteDetails = VisitTimeOnSiteDetails.empty;
     webPropertyId = "";
     
   }
@@ -579,20 +575,20 @@ struct
       GapiJson.render_string_value "accountId" x.accountId;
       GapiJson.render_bool_value "active" x.active;
       GapiJson.render_date_value "created" x.created;
-      (fun v -> GapiJson.render_object "eventDetails" (EventDetailsData.render_content v)) x.eventDetails;
+      (fun v -> GapiJson.render_object "eventDetails" (EventDetails.render_content v)) x.eventDetails;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "internalWebPropertyId" x.internalWebPropertyId;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "name" x.name;
-      (fun v -> GapiJson.render_object "parentLink" (ParentLinkData.render_content v)) x.parentLink;
+      (fun v -> GapiJson.render_object "parentLink" (ParentLink.render_content v)) x.parentLink;
       GapiJson.render_string_value "profileId" x.profileId;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_string_value "type" x._type;
       GapiJson.render_date_value "updated" x.updated;
-      (fun v -> GapiJson.render_object "urlDestinationDetails" (UrlDestinationDetailsData.render_content v)) x.urlDestinationDetails;
+      (fun v -> GapiJson.render_object "urlDestinationDetails" (UrlDestinationDetails.render_content v)) x.urlDestinationDetails;
       GapiJson.render_float_value "value" x.value;
-      (fun v -> GapiJson.render_object "visitNumPagesDetails" (VisitNumPagesDetailsData.render_content v)) x.visitNumPagesDetails;
-      (fun v -> GapiJson.render_object "visitTimeOnSiteDetails" (VisitTimeOnSiteDetailsData.render_content v)) x.visitTimeOnSiteDetails;
+      (fun v -> GapiJson.render_object "visitNumPagesDetails" (VisitNumPagesDetails.render_content v)) x.visitNumPagesDetails;
+      (fun v -> GapiJson.render_object "visitTimeOnSiteDetails" (VisitTimeOnSiteDetails.render_content v)) x.visitTimeOnSiteDetails;
       GapiJson.render_string_value "webPropertyId" x.webPropertyId;
       
     ]
@@ -616,8 +612,8 @@ struct
         ({ GapiJson.name = "eventDetails"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        EventDetailsData.parse
-        EventDetailsData.empty
+        EventDetails.parse
+        EventDetails.empty
         (fun v -> { x with eventDetails = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -640,8 +636,8 @@ struct
         ({ GapiJson.name = "parentLink"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ParentLinkData.parse
-        ParentLinkData.empty
+        ParentLink.parse
+        ParentLink.empty
         (fun v -> { x with parentLink = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -664,8 +660,8 @@ struct
         ({ GapiJson.name = "urlDestinationDetails"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        UrlDestinationDetailsData.parse
-        UrlDestinationDetailsData.empty
+        UrlDestinationDetails.parse
+        UrlDestinationDetails.empty
         (fun v -> { x with urlDestinationDetails = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -680,16 +676,16 @@ struct
         ({ GapiJson.name = "visitNumPagesDetails"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        VisitNumPagesDetailsData.parse
-        VisitNumPagesDetailsData.empty
+        VisitNumPagesDetails.parse
+        VisitNumPagesDetails.empty
         (fun v -> { x with visitNumPagesDetails = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "visitTimeOnSiteDetails"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        VisitTimeOnSiteDetailsData.parse
-        VisitTimeOnSiteDetailsData.empty
+        VisitTimeOnSiteDetails.parse
+        VisitTimeOnSiteDetails.empty
         (fun v -> { x with visitTimeOnSiteDetails = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -961,7 +957,7 @@ end
 
 module GaData =
 struct
-  module QueryData =
+  module Query =
   struct
     type t = {
       dimensions : string;
@@ -1080,7 +1076,7 @@ struct
                 Json_type.String v) ->
               v
             | e ->
-              GapiJson.unexpected "GapiAnalyticsV3Model.QueryData.parse.parse_collection" e x')
+              GapiJson.unexpected "GapiAnalyticsV3Model.Query.parse.parse_collection" e x')
           ""
           (fun v -> { x with metrics = v })
           cs
@@ -1098,7 +1094,7 @@ struct
                 Json_type.String v) ->
               v
             | e ->
-              GapiJson.unexpected "GapiAnalyticsV3Model.QueryData.parse.parse_collection" e x')
+              GapiJson.unexpected "GapiAnalyticsV3Model.Query.parse.parse_collection" e x')
           ""
           (fun v -> { x with sort = v })
           cs
@@ -1115,11 +1111,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.QueryData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.Query.parse" e x
     
   end
   
-  module ProfileInfoData =
+  module ProfileInfo =
   struct
     type t = {
       accountId : string;
@@ -1209,11 +1205,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ProfileInfoData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ProfileInfo.parse" e x
     
   end
   
-  module ColumnHeadersData =
+  module ColumnHeaders =
   struct
     type t = {
       columnType : string;
@@ -1270,20 +1266,20 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ColumnHeadersData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ColumnHeaders.parse" e x
     
   end
   
   type t = {
-    columnHeaders : ColumnHeadersData.t list;
+    columnHeaders : ColumnHeaders.t list;
     containsSampledData : bool;
     id : string;
     itemsPerPage : int;
     kind : string;
     nextLink : string;
     previousLink : string;
-    profileInfo : ProfileInfoData.t;
-    query : QueryData.t;
+    profileInfo : ProfileInfo.t;
+    query : Query.t;
     rows : string list list;
     selfLink : string;
     totalResults : int;
@@ -1352,8 +1348,8 @@ struct
     kind = "";
     nextLink = "";
     previousLink = "";
-    profileInfo = ProfileInfoData.empty;
-    query = QueryData.empty;
+    profileInfo = ProfileInfo.empty;
+    query = Query.empty;
     rows = [];
     selfLink = "";
     totalResults = 0;
@@ -1363,15 +1359,15 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_array "columnHeaders" ColumnHeadersData.render x.columnHeaders;
+      GapiJson.render_array "columnHeaders" ColumnHeaders.render x.columnHeaders;
       GapiJson.render_bool_value "containsSampledData" x.containsSampledData;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_int_value "itemsPerPage" x.itemsPerPage;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextLink" x.nextLink;
       GapiJson.render_string_value "previousLink" x.previousLink;
-      (fun v -> GapiJson.render_object "profileInfo" (ProfileInfoData.render_content v)) x.profileInfo;
-      (fun v -> GapiJson.render_object "query" (QueryData.render_content v)) x.query;
+      (fun v -> GapiJson.render_object "profileInfo" (ProfileInfo.render_content v)) x.profileInfo;
+      (fun v -> GapiJson.render_object "query" (Query.render_content v)) x.query;
       GapiJson.render_array "rows" (GapiJson.render_array "" (GapiJson.render_string_value "")) x.rows;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_int_value "totalResults" x.totalResults;
@@ -1391,13 +1387,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              ColumnHeadersData.parse
-              ColumnHeadersData.empty
+              ColumnHeaders.parse
+              ColumnHeaders.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiAnalyticsV3Model.GaData.parse.parse_collection" e x')
-        ColumnHeadersData.empty
+        ColumnHeaders.empty
         (fun v -> { x with columnHeaders = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1428,16 +1424,16 @@ struct
         ({ GapiJson.name = "profileInfo"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ProfileInfoData.parse
-        ProfileInfoData.empty
+        ProfileInfo.parse
+        ProfileInfo.empty
         (fun v -> { x with profileInfo = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "query"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        QueryData.parse
-        QueryData.empty
+        Query.parse
+        Query.empty
         (fun v -> { x with query = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -1501,7 +1497,7 @@ end
 
 module Webproperty =
 struct
-  module ParentLinkData =
+  module ParentLink =
   struct
     type t = {
       href : string;
@@ -1547,11 +1543,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLinkData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLink.parse" e x
     
   end
   
-  module ChildLinkData =
+  module ChildLink =
   struct
     type t = {
       href : string;
@@ -1597,19 +1593,19 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ChildLinkData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ChildLink.parse" e x
     
   end
   
   type t = {
     accountId : string;
-    childLink : ChildLinkData.t;
+    childLink : ChildLink.t;
     created : GapiDate.t;
     id : string;
     internalWebPropertyId : string;
     kind : string;
     name : string;
-    parentLink : ParentLinkData.t;
+    parentLink : ParentLink.t;
     selfLink : string;
     updated : GapiDate.t;
     websiteUrl : string;
@@ -1663,13 +1659,13 @@ struct
   
   let empty = {
     accountId = "";
-    childLink = ChildLinkData.empty;
+    childLink = ChildLink.empty;
     created = GapiDate.epoch;
     id = "";
     internalWebPropertyId = "";
     kind = "";
     name = "";
-    parentLink = ParentLinkData.empty;
+    parentLink = ParentLink.empty;
     selfLink = "";
     updated = GapiDate.epoch;
     websiteUrl = "";
@@ -1679,13 +1675,13 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "accountId" x.accountId;
-      (fun v -> GapiJson.render_object "childLink" (ChildLinkData.render_content v)) x.childLink;
+      (fun v -> GapiJson.render_object "childLink" (ChildLink.render_content v)) x.childLink;
       GapiJson.render_date_value "created" x.created;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "internalWebPropertyId" x.internalWebPropertyId;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "name" x.name;
-      (fun v -> GapiJson.render_object "parentLink" (ParentLinkData.render_content v)) x.parentLink;
+      (fun v -> GapiJson.render_object "parentLink" (ParentLink.render_content v)) x.parentLink;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "updated" x.updated;
       GapiJson.render_string_value "websiteUrl" x.websiteUrl;
@@ -1703,8 +1699,8 @@ struct
         ({ GapiJson.name = "childLink"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ChildLinkData.parse
-        ChildLinkData.empty
+        ChildLink.parse
+        ChildLink.empty
         (fun v -> { x with childLink = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1731,8 +1727,8 @@ struct
         ({ GapiJson.name = "parentLink"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ParentLinkData.parse
-        ParentLinkData.empty
+        ParentLink.parse
+        ParentLink.empty
         (fun v -> { x with parentLink = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1762,7 +1758,7 @@ end
 
 module Profile =
 struct
-  module ParentLinkData =
+  module ParentLink =
   struct
     type t = {
       href : string;
@@ -1808,11 +1804,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLinkData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLink.parse" e x
     
   end
   
-  module ChildLinkData =
+  module ChildLink =
   struct
     type t = {
       href : string;
@@ -1858,13 +1854,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ChildLinkData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ChildLink.parse" e x
     
   end
   
   type t = {
     accountId : string;
-    childLink : ChildLinkData.t;
+    childLink : ChildLink.t;
     created : GapiDate.t;
     currency : string;
     defaultPage : string;
@@ -1873,7 +1869,7 @@ struct
     internalWebPropertyId : string;
     kind : string;
     name : string;
-    parentLink : ParentLinkData.t;
+    parentLink : ParentLink.t;
     selfLink : string;
     siteSearchCategoryParameters : string;
     siteSearchQueryParameters : string;
@@ -1954,7 +1950,7 @@ struct
   
   let empty = {
     accountId = "";
-    childLink = ChildLinkData.empty;
+    childLink = ChildLink.empty;
     created = GapiDate.epoch;
     currency = "";
     defaultPage = "";
@@ -1963,7 +1959,7 @@ struct
     internalWebPropertyId = "";
     kind = "";
     name = "";
-    parentLink = ParentLinkData.empty;
+    parentLink = ParentLink.empty;
     selfLink = "";
     siteSearchCategoryParameters = "";
     siteSearchQueryParameters = "";
@@ -1976,7 +1972,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "accountId" x.accountId;
-      (fun v -> GapiJson.render_object "childLink" (ChildLinkData.render_content v)) x.childLink;
+      (fun v -> GapiJson.render_object "childLink" (ChildLink.render_content v)) x.childLink;
       GapiJson.render_date_value "created" x.created;
       GapiJson.render_string_value "currency" x.currency;
       GapiJson.render_string_value "defaultPage" x.defaultPage;
@@ -1985,7 +1981,7 @@ struct
       GapiJson.render_string_value "internalWebPropertyId" x.internalWebPropertyId;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "name" x.name;
-      (fun v -> GapiJson.render_object "parentLink" (ParentLinkData.render_content v)) x.parentLink;
+      (fun v -> GapiJson.render_object "parentLink" (ParentLink.render_content v)) x.parentLink;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_string_value "siteSearchCategoryParameters" x.siteSearchCategoryParameters;
       GapiJson.render_string_value "siteSearchQueryParameters" x.siteSearchQueryParameters;
@@ -2006,8 +2002,8 @@ struct
         ({ GapiJson.name = "childLink"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ChildLinkData.parse
-        ChildLinkData.empty
+        ChildLink.parse
+        ChildLink.empty
         (fun v -> { x with childLink = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -2046,8 +2042,8 @@ struct
         ({ GapiJson.name = "parentLink"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ParentLinkData.parse
-        ParentLinkData.empty
+        ParentLink.parse
+        ParentLink.empty
         (fun v -> { x with parentLink = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -2357,7 +2353,7 @@ end
 
 module Account =
 struct
-  module ChildLinkData =
+  module ChildLink =
   struct
     type t = {
       href : string;
@@ -2403,12 +2399,12 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAnalyticsV3Model.ChildLinkData.parse" e x
+        GapiJson.unexpected "GapiAnalyticsV3Model.ChildLink.parse" e x
     
   end
   
   type t = {
-    childLink : ChildLinkData.t;
+    childLink : ChildLink.t;
     created : GapiDate.t;
     id : string;
     kind : string;
@@ -2448,7 +2444,7 @@ struct
   }
   
   let empty = {
-    childLink = ChildLinkData.empty;
+    childLink = ChildLink.empty;
     created = GapiDate.epoch;
     id = "";
     kind = "";
@@ -2460,7 +2456,7 @@ struct
   
   let rec render_content x = 
      [
-      (fun v -> GapiJson.render_object "childLink" (ChildLinkData.render_content v)) x.childLink;
+      (fun v -> GapiJson.render_object "childLink" (ChildLink.render_content v)) x.childLink;
       GapiJson.render_date_value "created" x.created;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
@@ -2477,8 +2473,8 @@ struct
         ({ GapiJson.name = "childLink"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ChildLinkData.parse
-        ChildLinkData.empty
+        ChildLink.parse
+        ChildLink.empty
         (fun v -> { x with childLink = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

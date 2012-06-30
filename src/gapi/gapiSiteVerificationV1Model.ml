@@ -2,7 +2,7 @@
 
 module SiteVerificationWebResourceResource =
 struct
-  module SiteData =
+  module Site =
   struct
     type t = {
       identifier : string;
@@ -48,14 +48,14 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiSiteVerificationV1Model.SiteData.parse" e x
+        GapiJson.unexpected "GapiSiteVerificationV1Model.Site.parse" e x
     
   end
   
   type t = {
     id : string;
     owners : string list;
-    site : SiteData.t;
+    site : Site.t;
     
   }
   
@@ -75,7 +75,7 @@ struct
   let empty = {
     id = "";
     owners = [];
-    site = SiteData.empty;
+    site = Site.empty;
     
   }
   
@@ -83,7 +83,7 @@ struct
      [
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_array "owners" (GapiJson.render_string_value "") x.owners;
-      (fun v -> GapiJson.render_object "site" (SiteData.render_content v)) x.site;
+      (fun v -> GapiJson.render_object "site" (Site.render_content v)) x.site;
       
     ]
   and render x = 
@@ -112,8 +112,8 @@ struct
         ({ GapiJson.name = "site"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        SiteData.parse
-        SiteData.empty
+        Site.parse
+        Site.empty
         (fun v -> { x with site = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -242,7 +242,7 @@ end
 
 module SiteVerificationWebResourceGettokenRequest =
 struct
-  module SiteData =
+  module Site =
   struct
     type t = {
       identifier : string;
@@ -288,12 +288,12 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiSiteVerificationV1Model.SiteData.parse" e x
+        GapiJson.unexpected "GapiSiteVerificationV1Model.Site.parse" e x
     
   end
   
   type t = {
-    site : SiteData.t;
+    site : Site.t;
     verificationMethod : string;
     
   }
@@ -308,14 +308,14 @@ struct
   }
   
   let empty = {
-    site = SiteData.empty;
+    site = Site.empty;
     verificationMethod = "";
     
   }
   
   let rec render_content x = 
      [
-      (fun v -> GapiJson.render_object "site" (SiteData.render_content v)) x.site;
+      (fun v -> GapiJson.render_object "site" (Site.render_content v)) x.site;
       GapiJson.render_string_value "verificationMethod" x.verificationMethod;
       
     ]
@@ -327,8 +327,8 @@ struct
         ({ GapiJson.name = "site"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        SiteData.parse
-        SiteData.empty
+        Site.parse
+        Site.empty
         (fun v -> { x with site = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

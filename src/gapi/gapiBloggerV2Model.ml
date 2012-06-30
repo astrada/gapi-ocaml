@@ -2,7 +2,7 @@
 
 module Blog =
 struct
-  module PostsData =
+  module Posts =
   struct
     type t = {
       selfLink : string;
@@ -48,11 +48,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.PostsData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Posts.parse" e x
     
   end
   
-  module PagesData =
+  module Pages =
   struct
     type t = {
       selfLink : string;
@@ -98,11 +98,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.PagesData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Pages.parse" e x
     
   end
   
-  module LocaleData =
+  module Locale =
   struct
     type t = {
       country : string;
@@ -159,7 +159,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.LocaleData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Locale.parse" e x
     
   end
   
@@ -167,10 +167,10 @@ struct
     description : string;
     id : string;
     kind : string;
-    locale : LocaleData.t;
+    locale : Locale.t;
     name : string;
-    pages : PagesData.t;
-    posts : PostsData.t;
+    pages : Pages.t;
+    posts : Posts.t;
     published : GapiDate.t;
     selfLink : string;
     updated : GapiDate.t;
@@ -227,10 +227,10 @@ struct
     description = "";
     id = "";
     kind = "";
-    locale = LocaleData.empty;
+    locale = Locale.empty;
     name = "";
-    pages = PagesData.empty;
-    posts = PostsData.empty;
+    pages = Pages.empty;
+    posts = Posts.empty;
     published = GapiDate.epoch;
     selfLink = "";
     updated = GapiDate.epoch;
@@ -243,10 +243,10 @@ struct
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "locale" (LocaleData.render_content v)) x.locale;
+      (fun v -> GapiJson.render_object "locale" (Locale.render_content v)) x.locale;
       GapiJson.render_string_value "name" x.name;
-      (fun v -> GapiJson.render_object "pages" (PagesData.render_content v)) x.pages;
-      (fun v -> GapiJson.render_object "posts" (PostsData.render_content v)) x.posts;
+      (fun v -> GapiJson.render_object "pages" (Pages.render_content v)) x.pages;
+      (fun v -> GapiJson.render_object "posts" (Posts.render_content v)) x.posts;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "updated" x.updated;
@@ -273,8 +273,8 @@ struct
         ({ GapiJson.name = "locale"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        LocaleData.parse
-        LocaleData.empty
+        Locale.parse
+        Locale.empty
         (fun v -> { x with locale = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -285,16 +285,16 @@ struct
         ({ GapiJson.name = "pages"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        PagesData.parse
-        PagesData.empty
+        Pages.parse
+        Pages.empty
         (fun v -> { x with pages = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "posts"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        PostsData.parse
-        PostsData.empty
+        Posts.parse
+        Posts.empty
         (fun v -> { x with posts = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -392,7 +392,7 @@ end
 
 module Post =
 struct
-  module RepliesData =
+  module Replies =
   struct
     type t = {
       selfLink : string;
@@ -438,11 +438,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.RepliesData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Replies.parse" e x
     
   end
   
-  module BlogData =
+  module Blog =
   struct
     type t = {
       id : string;
@@ -477,13 +477,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.BlogData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Blog.parse" e x
     
   end
   
-  module AuthorData =
+  module Author =
   struct
-    module ImageData =
+    module Image =
     struct
       type t = {
         url : string;
@@ -518,14 +518,14 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiBloggerV2Model.ImageData.parse" e x
+          GapiJson.unexpected "GapiBloggerV2Model.Image.parse" e x
       
     end
     
     type t = {
       displayName : string;
       id : string;
-      image : ImageData.t;
+      image : Image.t;
       url : string;
       
     }
@@ -550,7 +550,7 @@ struct
     let empty = {
       displayName = "";
       id = "";
-      image = ImageData.empty;
+      image = Image.empty;
       url = "";
       
     }
@@ -559,7 +559,7 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
-        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+        (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -579,8 +579,8 @@ struct
           ({ GapiJson.name = "image"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ImageData.parse
-          ImageData.empty
+          Image.parse
+          Image.empty
           (fun v -> { x with image = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -592,19 +592,19 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.AuthorData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Author.parse" e x
     
   end
   
   type t = {
-    author : AuthorData.t;
-    blog : BlogData.t;
+    author : Author.t;
+    blog : Blog.t;
     content : string;
     id : string;
     kind : string;
     labels : string list;
     published : GapiDate.t;
-    replies : RepliesData.t;
+    replies : Replies.t;
     selfLink : string;
     title : string;
     updated : GapiDate.t;
@@ -662,14 +662,14 @@ struct
   }
   
   let empty = {
-    author = AuthorData.empty;
-    blog = BlogData.empty;
+    author = Author.empty;
+    blog = Blog.empty;
     content = "";
     id = "";
     kind = "";
     labels = [];
     published = GapiDate.epoch;
-    replies = RepliesData.empty;
+    replies = Replies.empty;
     selfLink = "";
     title = "";
     updated = GapiDate.epoch;
@@ -679,14 +679,14 @@ struct
   
   let rec render_content x = 
      [
-      (fun v -> GapiJson.render_object "author" (AuthorData.render_content v)) x.author;
-      (fun v -> GapiJson.render_object "blog" (BlogData.render_content v)) x.blog;
+      (fun v -> GapiJson.render_object "author" (Author.render_content v)) x.author;
+      (fun v -> GapiJson.render_object "blog" (Blog.render_content v)) x.blog;
       GapiJson.render_string_value "content" x.content;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "labels" (GapiJson.render_string_value "") x.labels;
       GapiJson.render_date_value "published" x.published;
-      (fun v -> GapiJson.render_object "replies" (RepliesData.render_content v)) x.replies;
+      (fun v -> GapiJson.render_object "replies" (Replies.render_content v)) x.replies;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_string_value "title" x.title;
       GapiJson.render_date_value "updated" x.updated;
@@ -701,16 +701,16 @@ struct
         ({ GapiJson.name = "author"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        AuthorData.parse
-        AuthorData.empty
+        Author.parse
+        Author.empty
         (fun v -> { x with author = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "blog"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        BlogData.parse
-        BlogData.empty
+        Blog.parse
+        Blog.empty
         (fun v -> { x with blog = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -747,8 +747,8 @@ struct
         ({ GapiJson.name = "replies"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        RepliesData.parse
-        RepliesData.empty
+        Replies.parse
+        Replies.empty
         (fun v -> { x with replies = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -782,7 +782,7 @@ end
 
 module Comment =
 struct
-  module PostData =
+  module Post =
   struct
     type t = {
       id : string;
@@ -817,11 +817,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.PostData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Post.parse" e x
     
   end
   
-  module InReplyToData =
+  module InReplyTo =
   struct
     type t = {
       id : string;
@@ -856,11 +856,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.InReplyToData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.InReplyTo.parse" e x
     
   end
   
-  module BlogData =
+  module Blog =
   struct
     type t = {
       id : string;
@@ -895,13 +895,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.BlogData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Blog.parse" e x
     
   end
   
-  module AuthorData =
+  module Author =
   struct
-    module ImageData =
+    module Image =
     struct
       type t = {
         url : string;
@@ -936,14 +936,14 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiBloggerV2Model.ImageData.parse" e x
+          GapiJson.unexpected "GapiBloggerV2Model.Image.parse" e x
       
     end
     
     type t = {
       displayName : string;
       id : string;
-      image : ImageData.t;
+      image : Image.t;
       url : string;
       
     }
@@ -968,7 +968,7 @@ struct
     let empty = {
       displayName = "";
       id = "";
-      image = ImageData.empty;
+      image = Image.empty;
       url = "";
       
     }
@@ -977,7 +977,7 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
-        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+        (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -997,8 +997,8 @@ struct
           ({ GapiJson.name = "image"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ImageData.parse
-          ImageData.empty
+          Image.parse
+          Image.empty
           (fun v -> { x with image = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -1010,18 +1010,18 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.AuthorData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Author.parse" e x
     
   end
   
   type t = {
-    author : AuthorData.t;
-    blog : BlogData.t;
+    author : Author.t;
+    blog : Blog.t;
     content : string;
     id : string;
-    inReplyTo : InReplyToData.t;
+    inReplyTo : InReplyTo.t;
     kind : string;
-    post : PostData.t;
+    post : Post.t;
     published : GapiDate.t;
     selfLink : string;
     updated : GapiDate.t;
@@ -1070,13 +1070,13 @@ struct
   }
   
   let empty = {
-    author = AuthorData.empty;
-    blog = BlogData.empty;
+    author = Author.empty;
+    blog = Blog.empty;
     content = "";
     id = "";
-    inReplyTo = InReplyToData.empty;
+    inReplyTo = InReplyTo.empty;
     kind = "";
-    post = PostData.empty;
+    post = Post.empty;
     published = GapiDate.epoch;
     selfLink = "";
     updated = GapiDate.epoch;
@@ -1085,13 +1085,13 @@ struct
   
   let rec render_content x = 
      [
-      (fun v -> GapiJson.render_object "author" (AuthorData.render_content v)) x.author;
-      (fun v -> GapiJson.render_object "blog" (BlogData.render_content v)) x.blog;
+      (fun v -> GapiJson.render_object "author" (Author.render_content v)) x.author;
+      (fun v -> GapiJson.render_object "blog" (Blog.render_content v)) x.blog;
       GapiJson.render_string_value "content" x.content;
       GapiJson.render_string_value "id" x.id;
-      (fun v -> GapiJson.render_object "inReplyTo" (InReplyToData.render_content v)) x.inReplyTo;
+      (fun v -> GapiJson.render_object "inReplyTo" (InReplyTo.render_content v)) x.inReplyTo;
       GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "post" (PostData.render_content v)) x.post;
+      (fun v -> GapiJson.render_object "post" (Post.render_content v)) x.post;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "updated" x.updated;
@@ -1105,16 +1105,16 @@ struct
         ({ GapiJson.name = "author"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        AuthorData.parse
-        AuthorData.empty
+        Author.parse
+        Author.empty
         (fun v -> { x with author = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "blog"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        BlogData.parse
-        BlogData.empty
+        Blog.parse
+        Blog.empty
         (fun v -> { x with blog = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1129,8 +1129,8 @@ struct
         ({ GapiJson.name = "inReplyTo"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        InReplyToData.parse
-        InReplyToData.empty
+        InReplyTo.parse
+        InReplyTo.empty
         (fun v -> { x with inReplyTo = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1141,8 +1141,8 @@ struct
         ({ GapiJson.name = "post"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        PostData.parse
-        PostData.empty
+        Post.parse
+        Post.empty
         (fun v -> { x with post = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1348,7 +1348,7 @@ end
 
 module Page =
 struct
-  module BlogData =
+  module Blog =
   struct
     type t = {
       id : string;
@@ -1383,13 +1383,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.BlogData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Blog.parse" e x
     
   end
   
-  module AuthorData =
+  module Author =
   struct
-    module ImageData =
+    module Image =
     struct
       type t = {
         url : string;
@@ -1424,14 +1424,14 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiBloggerV2Model.ImageData.parse" e x
+          GapiJson.unexpected "GapiBloggerV2Model.Image.parse" e x
       
     end
     
     type t = {
       displayName : string;
       id : string;
-      image : ImageData.t;
+      image : Image.t;
       url : string;
       
     }
@@ -1456,7 +1456,7 @@ struct
     let empty = {
       displayName = "";
       id = "";
-      image = ImageData.empty;
+      image = Image.empty;
       url = "";
       
     }
@@ -1465,7 +1465,7 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
-        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+        (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -1485,8 +1485,8 @@ struct
           ({ GapiJson.name = "image"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ImageData.parse
-          ImageData.empty
+          Image.parse
+          Image.empty
           (fun v -> { x with image = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -1498,13 +1498,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.AuthorData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Author.parse" e x
     
   end
   
   type t = {
-    author : AuthorData.t;
-    blog : BlogData.t;
+    author : Author.t;
+    blog : Blog.t;
     content : string;
     id : string;
     kind : string;
@@ -1558,8 +1558,8 @@ struct
   }
   
   let empty = {
-    author = AuthorData.empty;
-    blog = BlogData.empty;
+    author = Author.empty;
+    blog = Blog.empty;
     content = "";
     id = "";
     kind = "";
@@ -1573,8 +1573,8 @@ struct
   
   let rec render_content x = 
      [
-      (fun v -> GapiJson.render_object "author" (AuthorData.render_content v)) x.author;
-      (fun v -> GapiJson.render_object "blog" (BlogData.render_content v)) x.blog;
+      (fun v -> GapiJson.render_object "author" (Author.render_content v)) x.author;
+      (fun v -> GapiJson.render_object "blog" (Blog.render_content v)) x.blog;
       GapiJson.render_string_value "content" x.content;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
@@ -1593,16 +1593,16 @@ struct
         ({ GapiJson.name = "author"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        AuthorData.parse
-        AuthorData.empty
+        Author.parse
+        Author.empty
         (fun v -> { x with author = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "blog"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        BlogData.parse
-        BlogData.empty
+        Blog.parse
+        Blog.empty
         (fun v -> { x with blog = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1716,7 +1716,7 @@ end
 
 module User =
 struct
-  module LocaleData =
+  module Locale =
   struct
     type t = {
       country : string;
@@ -1773,11 +1773,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.LocaleData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Locale.parse" e x
     
   end
   
-  module BlogsData =
+  module Blogs =
   struct
     type t = {
       selfLink : string;
@@ -1812,18 +1812,18 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiBloggerV2Model.BlogsData.parse" e x
+        GapiJson.unexpected "GapiBloggerV2Model.Blogs.parse" e x
     
   end
   
   type t = {
     about : string;
-    blogs : BlogsData.t;
+    blogs : Blogs.t;
     created : GapiDate.t;
     displayName : string;
     id : string;
     kind : string;
-    locale : LocaleData.t;
+    locale : Locale.t;
     selfLink : string;
     url : string;
     
@@ -1868,12 +1868,12 @@ struct
   
   let empty = {
     about = "";
-    blogs = BlogsData.empty;
+    blogs = Blogs.empty;
     created = GapiDate.epoch;
     displayName = "";
     id = "";
     kind = "";
-    locale = LocaleData.empty;
+    locale = Locale.empty;
     selfLink = "";
     url = "";
     
@@ -1882,12 +1882,12 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "about" x.about;
-      (fun v -> GapiJson.render_object "blogs" (BlogsData.render_content v)) x.blogs;
+      (fun v -> GapiJson.render_object "blogs" (Blogs.render_content v)) x.blogs;
       GapiJson.render_date_value "created" x.created;
       GapiJson.render_string_value "displayName" x.displayName;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "locale" (LocaleData.render_content v)) x.locale;
+      (fun v -> GapiJson.render_object "locale" (Locale.render_content v)) x.locale;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_string_value "url" x.url;
       
@@ -1904,8 +1904,8 @@ struct
         ({ GapiJson.name = "blogs"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        BlogsData.parse
-        BlogsData.empty
+        Blogs.parse
+        Blogs.empty
         (fun v -> { x with blogs = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1928,8 +1928,8 @@ struct
         ({ GapiJson.name = "locale"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        LocaleData.parse
-        LocaleData.empty
+        Locale.parse
+        Locale.empty
         (fun v -> { x with locale = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

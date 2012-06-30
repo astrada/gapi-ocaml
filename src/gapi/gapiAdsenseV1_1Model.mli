@@ -47,7 +47,7 @@ end
 
 module CustomChannel :
 sig
-  module TargetingInfoData :
+  module TargetingInfo :
   sig
     type t = {
       adsAppearOn : string;
@@ -83,7 +83,7 @@ sig
     (** Kind of resource this is, in this case adsense#customChannel. *)
     name : string;
     (** Name of this custom channel. *)
-    targetingInfo : TargetingInfoData.t;
+    targetingInfo : TargetingInfo.t;
     (** The targeting information of this custom channel, if activated. *)
     
   }
@@ -92,7 +92,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
-  val targetingInfo : (t, TargetingInfoData.t) GapiLens.t
+  val targetingInfo : (t, TargetingInfo.t) GapiLens.t
   
   val empty : t
   
@@ -291,7 +291,7 @@ end
 
 module AdsenseReportsGenerateResponse :
 sig
-  module HeadersData :
+  module Headers :
   sig
     type t = {
       currency : string;
@@ -318,7 +318,7 @@ sig
   type t = {
     averages : string list;
     (** The averages of the report. This is the same length as any other row in the report; cells corresponding to dimension columns are empty. *)
-    headers : HeadersData.t list;
+    headers : Headers.t list;
     (** The header information of the columns requested in the report. This is a list of headers; one for each dimension in the request, followed by one for each metric in the request. *)
     kind : string;
     (** Kind this is, in this case adsense#report. *)
@@ -334,7 +334,7 @@ sig
   }
   
   val averages : (t, string list) GapiLens.t
-  val headers : (t, HeadersData.t list) GapiLens.t
+  val headers : (t, Headers.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val rows : (t, string list list) GapiLens.t
   val totalMatchedRows : (t, string) GapiLens.t

@@ -10,7 +10,7 @@ let acl_test_resource = {
   AclRule.empty with
       AclRule.kind = "calendar#acl";
       scope = {
-        AclRule.ScopeData._type = "user";
+        AclRule.Scope._type = "user";
         value = "test@example.com"
       };
       role = "reader"

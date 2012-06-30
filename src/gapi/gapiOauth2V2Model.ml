@@ -286,9 +286,9 @@ end
 
 module Oauth2IssueTokenV2Response =
 struct
-  module ConsentData =
+  module Consent =
   struct
-    module ScopesData =
+    module Scopes =
     struct
       type t = {
         description : string;
@@ -334,11 +334,11 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiOauth2V2Model.ScopesData.parse" e x
+          GapiJson.unexpected "GapiOauth2V2Model.Scopes.parse" e x
       
     end
     
-    module OauthClientData =
+    module OauthClient =
     struct
       type t = {
         developerEmail : string;
@@ -395,13 +395,13 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiOauth2V2Model.OauthClientData.parse" e x
+          GapiJson.unexpected "GapiOauth2V2Model.OauthClient.parse" e x
       
     end
     
     type t = {
-      oauthClient : OauthClientData.t;
-      scopes : ScopesData.t list;
+      oauthClient : OauthClient.t;
+      scopes : Scopes.t list;
       
     }
     
@@ -415,15 +415,15 @@ struct
     }
     
     let empty = {
-      oauthClient = OauthClientData.empty;
+      oauthClient = OauthClient.empty;
       scopes = [];
       
     }
     
     let rec render_content x = 
        [
-        (fun v -> GapiJson.render_object "oauthClient" (OauthClientData.render_content v)) x.oauthClient;
-        GapiJson.render_array "scopes" ScopesData.render x.scopes;
+        (fun v -> GapiJson.render_object "oauthClient" (OauthClient.render_content v)) x.oauthClient;
+        GapiJson.render_array "scopes" Scopes.render x.scopes;
         
       ]
     and render x = 
@@ -434,8 +434,8 @@ struct
           ({ GapiJson.name = "oauthClient"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          OauthClientData.parse
-          OauthClientData.empty
+          OauthClient.parse
+          OauthClient.empty
           (fun v -> { x with oauthClient = v })
           cs
       | GapiCore.AnnotatedTree.Node
@@ -447,13 +447,13 @@ struct
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
                 cs) ->
               GapiJson.parse_children
-                ScopesData.parse
-                ScopesData.empty
+                Scopes.parse
+                Scopes.empty
                 (fun v -> v)
                 cs
             | e ->
-              GapiJson.unexpected "GapiOauth2V2Model.ConsentData.parse.parse_collection" e x')
-          ScopesData.empty
+              GapiJson.unexpected "GapiOauth2V2Model.Consent.parse.parse_collection" e x')
+          Scopes.empty
           (fun v -> { x with scopes = v })
           cs
       | GapiCore.AnnotatedTree.Node
@@ -461,13 +461,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiOauth2V2Model.ConsentData.parse" e x
+        GapiJson.unexpected "GapiOauth2V2Model.Consent.parse" e x
     
   end
   
   type t = {
     code : string;
-    consent : ConsentData.t;
+    consent : Consent.t;
     idToken : string;
     issueAdvice : string;
     token : string;
@@ -497,7 +497,7 @@ struct
   
   let empty = {
     code = "";
-    consent = ConsentData.empty;
+    consent = Consent.empty;
     idToken = "";
     issueAdvice = "";
     token = "";
@@ -507,7 +507,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "code" x.code;
-      (fun v -> GapiJson.render_object "consent" (ConsentData.render_content v)) x.consent;
+      (fun v -> GapiJson.render_object "consent" (Consent.render_content v)) x.consent;
       GapiJson.render_string_value "idToken" x.idToken;
       GapiJson.render_string_value "issueAdvice" x.issueAdvice;
       GapiJson.render_string_value "token" x.token;
@@ -525,8 +525,8 @@ struct
         ({ GapiJson.name = "consent"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ConsentData.parse
-        ConsentData.empty
+        Consent.parse
+        Consent.empty
         (fun v -> { x with consent = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

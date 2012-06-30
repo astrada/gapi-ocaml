@@ -123,7 +123,7 @@ end
 
 module TableRow :
 sig
-  module FData :
+  module F :
   sig
     type t = {
       v : string;
@@ -142,12 +142,12 @@ sig
   end
   
   type t = {
-    f : FData.t list;
+    f : F.t list;
     (** Represents a single row in the result set, consisting of one or more fields. *)
     
   }
   
-  val f : (t, FData.t list) GapiLens.t
+  val f : (t, F.t list) GapiLens.t
   
   val empty : t
   
@@ -565,7 +565,7 @@ end
 
 module ProjectList :
 sig
-  module ProjectsData :
+  module Projects :
   sig
     type t = {
       friendlyName : string;
@@ -599,7 +599,7 @@ sig
     (** The type of list. *)
     nextPageToken : string;
     (** A token to request the next page of results. *)
-    projects : ProjectsData.t list;
+    projects : Projects.t list;
     (** Projects to which you have at least READ access. *)
     totalItems : int;
     (** The total number of projects in the list. *)
@@ -609,7 +609,7 @@ sig
   val etag : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
-  val projects : (t, ProjectsData.t list) GapiLens.t
+  val projects : (t, Projects.t list) GapiLens.t
   val totalItems : (t, int) GapiLens.t
   
   val empty : t
@@ -626,7 +626,7 @@ end
 
 module JobList :
 sig
-  module JobsData :
+  module Jobs :
   sig
     type t = {
       configuration : JobConfiguration.t;
@@ -668,7 +668,7 @@ sig
   type t = {
     etag : string;
     (** A hash of this page of results. *)
-    jobs : JobsData.t list;
+    jobs : Jobs.t list;
     (** List of jobs that were requested. *)
     kind : string;
     (** The resource type of the response. *)
@@ -680,7 +680,7 @@ sig
   }
   
   val etag : (t, string) GapiLens.t
-  val jobs : (t, JobsData.t list) GapiLens.t
+  val jobs : (t, Jobs.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   val totalItems : (t, int) GapiLens.t
@@ -754,7 +754,7 @@ end
 
 module DatasetList :
 sig
-  module DatasetsData :
+  module Datasets :
   sig
     type t = {
       datasetReference : DatasetReference.t;
@@ -782,7 +782,7 @@ sig
   end
   
   type t = {
-    datasets : DatasetsData.t list;
+    datasets : Datasets.t list;
     (** An array of one or more summarized dataset resources. Absent when there are no datasets in the specified project. *)
     etag : string;
     (** A hash of this page of results. See Paging Through Results in the developer's guide. *)
@@ -793,7 +793,7 @@ sig
     
   }
   
-  val datasets : (t, DatasetsData.t list) GapiLens.t
+  val datasets : (t, Datasets.t list) GapiLens.t
   val etag : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
@@ -886,7 +886,7 @@ end
 
 module TableList :
 sig
-  module TablesData :
+  module Tables :
   sig
     type t = {
       friendlyName : string;
@@ -920,7 +920,7 @@ sig
     (** The type of list. *)
     nextPageToken : string;
     (** A token to request the next page of results. *)
-    tables : TablesData.t list;
+    tables : Tables.t list;
     (** Tables in the requested dataset. *)
     totalItems : int;
     (** The total number of tables in the dataset. *)
@@ -930,7 +930,7 @@ sig
   val etag : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
-  val tables : (t, TablesData.t list) GapiLens.t
+  val tables : (t, Tables.t list) GapiLens.t
   val totalItems : (t, int) GapiLens.t
   
   val empty : t
@@ -947,7 +947,7 @@ end
 
 module Dataset :
 sig
-  module AccessData :
+  module Access :
   sig
     type t = {
       domain : string;
@@ -978,7 +978,7 @@ sig
   end
   
   type t = {
-    access : AccessData.t list;
+    access : Access.t list;
     (** [Optional] Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
 Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READ - Project readers WRITE - Project writers
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
@@ -1005,7 +1005,7 @@ Each access object can have only one of the following members: userByEmail, grou
     
   }
   
-  val access : (t, AccessData.t list) GapiLens.t
+  val access : (t, Access.t list) GapiLens.t
   val creationTime : (t, string) GapiLens.t
   val datasetReference : (t, DatasetReference.t) GapiLens.t
   val description : (t, string) GapiLens.t

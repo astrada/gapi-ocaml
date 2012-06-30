@@ -70,8 +70,7 @@ struct
 end
 
 let get_anonymous_type_module_name id =
-  let module_base_name = OCamlName.get_ocaml_name ModuleName id in
-    module_base_name ^ "Data"
+  OCamlName.get_ocaml_name ModuleName id
 
 (* END Symbol name generation *)
 

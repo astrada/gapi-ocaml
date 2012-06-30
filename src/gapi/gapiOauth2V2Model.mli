@@ -103,9 +103,9 @@ end
 
 module Oauth2IssueTokenV2Response :
 sig
-  module ConsentData :
+  module Consent :
   sig
-    module ScopesData :
+    module Scopes :
     sig
       type t = {
         description : string;
@@ -126,7 +126,7 @@ sig
       
     end
     
-    module OauthClientData :
+    module OauthClient :
     sig
       type t = {
         developerEmail : string;
@@ -151,15 +151,15 @@ sig
     end
     
     type t = {
-      oauthClient : OauthClientData.t;
+      oauthClient : OauthClient.t;
       (**  *)
-      scopes : ScopesData.t list;
+      scopes : Scopes.t list;
       (**  *)
       
     }
     
-    val oauthClient : (t, OauthClientData.t) GapiLens.t
-    val scopes : (t, ScopesData.t list) GapiLens.t
+    val oauthClient : (t, OauthClient.t) GapiLens.t
+    val scopes : (t, Scopes.t list) GapiLens.t
     
     val empty : t
     
@@ -172,7 +172,7 @@ sig
   type t = {
     code : string;
     (**  *)
-    consent : ConsentData.t;
+    consent : Consent.t;
     (**  *)
     idToken : string;
     (**  *)
@@ -184,7 +184,7 @@ sig
   }
   
   val code : (t, string) GapiLens.t
-  val consent : (t, ConsentData.t) GapiLens.t
+  val consent : (t, Consent.t) GapiLens.t
   val idToken : (t, string) GapiLens.t
   val issueAdvice : (t, string) GapiLens.t
   val token : (t, string) GapiLens.t

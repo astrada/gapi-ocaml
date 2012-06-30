@@ -8,7 +8,7 @@
 
 module SiteVerificationWebResourceResource :
 sig
-  module SiteData :
+  module Site :
   sig
     type t = {
       identifier : string;
@@ -34,14 +34,14 @@ sig
     (** The string used to identify this site. This value should be used in the "id" portion of the REST URL for the Get, Update, and Delete operations. *)
     owners : string list;
     (** The email addresses of all verified owners. *)
-    site : SiteData.t;
+    site : Site.t;
     (** The address and type of a site that is verified or will be verified. *)
     
   }
   
   val id : (t, string) GapiLens.t
   val owners : (t, string list) GapiLens.t
-  val site : (t, SiteData.t) GapiLens.t
+  val site : (t, Site.t) GapiLens.t
   
   val empty : t
   
@@ -104,7 +104,7 @@ end
 
 module SiteVerificationWebResourceGettokenRequest :
 sig
-  module SiteData :
+  module Site :
   sig
     type t = {
       identifier : string;
@@ -126,14 +126,14 @@ sig
   end
   
   type t = {
-    site : SiteData.t;
+    site : Site.t;
     (** The site for which a verification token will be generated. *)
     verificationMethod : string;
     (** The verification method that will be used to verify this site. For sites, 'FILE' or 'META' methods may be used. For domains, only 'DNS' may be used. *)
     
   }
   
-  val site : (t, SiteData.t) GapiLens.t
+  val site : (t, Site.t) GapiLens.t
   val verificationMethod : (t, string) GapiLens.t
   
   val empty : t
