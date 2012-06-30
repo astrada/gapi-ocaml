@@ -71,7 +71,9 @@ Library "gapi-ocaml"
     GapiAdsenseV1_1Model,
     GapiAdsenseV1_1Service,
     GapiBigqueryV2Model,
-    GapiBigqueryV2Service
+    GapiBigqueryV2Service,
+    GapiDriveV2Model,
+    GapiDriveV2Service
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm
   XMETADescription: Google APIs client library
 

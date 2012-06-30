@@ -95,6 +95,7 @@ let main () =
                       GapiSiteVerificationV1Service.scope;
                       GapiAdsenseV1_1Service.scope;
                       GapiBigqueryV2Service.scope;
+                      GapiDriveV2Service.scope;
                       GdataDocumentsV3Service.all_scopes]
               ~response_type:"code"
               client_id in
