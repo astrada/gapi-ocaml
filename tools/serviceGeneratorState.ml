@@ -124,6 +124,7 @@ struct
       String
     | Boolean
     | Integer
+    | Int64
     | Float
     | DateTime
     | Date
@@ -132,6 +133,7 @@ struct
       String -> "string"
     | Boolean -> "bool"
     | Integer -> "int"
+    | Int64 -> "int64"
     | Float -> "float"
     | DateTime
     | Date -> "GapiDate.t"
@@ -214,6 +216,7 @@ struct
       String -> "\"\""
     | Boolean -> "false"
     | Integer -> "0"
+    | Int64 -> "0L"
     | Float -> "0.0"
     | DateTime
     | Date -> "GapiDate.epoch"
@@ -233,6 +236,7 @@ struct
             begin match format with
                 DateTimeFormat -> DateTime
               | DateFormat -> Date
+              | Int64Format -> Int64
               | _ -> String
             end
         | "any" -> String
@@ -268,11 +272,13 @@ struct
     | Date -> "String"
     | Boolean -> "Bool"
     | Integer -> "Int"
+    | Int64 -> "String"
     | Float -> "Float"
 
   let get_convert_function = function
     | DateTime
     | Date -> "GapiDate.of_string "
+    | Int64 -> "Int64.of_string "
     | String
     | Boolean
     | Integer
@@ -286,6 +292,7 @@ struct
           String -> "\"" ^ scalar.default ^ "\""
         | Boolean
         | Integer
+        | Int64
         | DateTime
         | Float
         | Date -> scalar.default
@@ -295,6 +302,7 @@ struct
         String -> "(fun x -> x)"
       | Boolean -> "string_of_bool"
       | Integer -> "string_of_int"
+      | Int64 -> "Int64.to_string"
       | Float -> "string_of_float"
       | DateTime
       | Date -> "GapiDate.to_string"

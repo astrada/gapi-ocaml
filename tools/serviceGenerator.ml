@@ -152,6 +152,9 @@ let build_schema_inner_module file_lens complex_type =
               | ScalarType.Integer ->
                   Format.fprintf formatter
                     "GapiJson.render_int_value"
+              | ScalarType.Int64 ->
+                  Format.fprintf formatter
+                    "GapiJson.render_int64_value"
               | ScalarType.Float ->
                   Format.fprintf formatter
                     "GapiJson.render_float_value"
