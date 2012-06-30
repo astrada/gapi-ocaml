@@ -45,7 +45,7 @@ end
 
 module Task :
 sig
-  module LinksData :
+  module Links :
   sig
     type t = {
       description : string;
@@ -84,7 +84,7 @@ sig
     (** Task identifier. *)
     kind : string;
     (** Type of the resource. This is always "tasks#task". *)
-    links : LinksData.t list;
+    links : Links.t list;
     (** Collection of links. This collection is read-only. *)
     notes : string;
     (** Notes describing the task. Optional. *)
@@ -110,7 +110,7 @@ sig
   val hidden : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val links : (t, LinksData.t list) GapiLens.t
+  val links : (t, Links.t list) GapiLens.t
   val notes : (t, string) GapiLens.t
   val parent : (t, string) GapiLens.t
   val position : (t, string) GapiLens.t

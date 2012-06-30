@@ -108,10 +108,10 @@ let test_get_data () =
            data.GaData.id;
          assert_equal
            accountId
-           GaData.(data.profileInfo.ProfileInfoData.accountId);
+           GaData.(data.profileInfo.ProfileInfo.accountId);
          assert_equal
            profile_id
-           GaData.(data.profileInfo.ProfileInfoData.profileId))
+           GaData.(data.profileInfo.ProfileInfo.profileId))
 
 let suite = "Google Analytics services test" >:::
   ["test_list_segments" >:: test_list_segments;

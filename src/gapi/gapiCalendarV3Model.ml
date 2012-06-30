@@ -236,7 +236,7 @@ end
 
 module AclRule =
 struct
-  module ScopeData =
+  module Scope =
   struct
     type t = {
       _type : string;
@@ -282,7 +282,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.ScopeData.parse" e x
+        GapiJson.unexpected "GapiCalendarV3Model.Scope.parse" e x
     
   end
   
@@ -291,7 +291,7 @@ struct
     id : string;
     kind : string;
     role : string;
-    scope : ScopeData.t;
+    scope : Scope.t;
     
   }
   
@@ -321,7 +321,7 @@ struct
     id = "";
     kind = "";
     role = "";
-    scope = ScopeData.empty;
+    scope = Scope.empty;
     
   }
   
@@ -331,7 +331,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "role" x.role;
-      (fun v -> GapiJson.render_object "scope" (ScopeData.render_content v)) x.scope;
+      (fun v -> GapiJson.render_object "scope" (Scope.render_content v)) x.scope;
       
     ]
   and render x = 
@@ -358,8 +358,8 @@ struct
         ({ GapiJson.name = "scope"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ScopeData.parse
-        ScopeData.empty
+        Scope.parse
+        Scope.empty
         (fun v -> { x with scope = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -798,7 +798,7 @@ end
 
 module Event =
 struct
-  module RemindersData =
+  module Reminders =
   struct
     type t = {
       overrides : EventReminder.t list;
@@ -845,7 +845,7 @@ struct
                 (fun v -> v)
                 cs
             | e ->
-              GapiJson.unexpected "GapiCalendarV3Model.RemindersData.parse.parse_collection" e x')
+              GapiJson.unexpected "GapiCalendarV3Model.Reminders.parse.parse_collection" e x')
           EventReminder.empty
           (fun v -> { x with overrides = v })
           cs
@@ -858,11 +858,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.RemindersData.parse" e x
+        GapiJson.unexpected "GapiCalendarV3Model.Reminders.parse" e x
     
   end
   
-  module OrganizerData =
+  module Organizer =
   struct
     type t = {
       displayName : string;
@@ -908,11 +908,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.OrganizerData.parse" e x
+        GapiJson.unexpected "GapiCalendarV3Model.Organizer.parse" e x
     
   end
   
-  module GadgetData =
+  module Gadget =
   struct
     type t = {
       display : string;
@@ -1013,7 +1013,7 @@ struct
                 Json_type.String v) ->
               (n, v)
             | e ->
-              GapiJson.unexpected "GapiCalendarV3Model.GadgetData.parse.parse_dictionary" e x')
+              GapiJson.unexpected "GapiCalendarV3Model.Gadget.parse.parse_dictionary" e x')
           ("", "")
           (fun v -> { x with preferences = v })
           cs
@@ -1034,11 +1034,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.GadgetData.parse" e x
+        GapiJson.unexpected "GapiCalendarV3Model.Gadget.parse" e x
     
   end
   
-  module ExtendedPropertiesData =
+  module ExtendedProperties =
   struct
     type t = {
       _private : (string * string) list;
@@ -1081,7 +1081,7 @@ struct
                 Json_type.String v) ->
               (n, v)
             | e ->
-              GapiJson.unexpected "GapiCalendarV3Model.ExtendedPropertiesData.parse.parse_dictionary" e x')
+              GapiJson.unexpected "GapiCalendarV3Model.ExtendedProperties.parse.parse_dictionary" e x')
           ("", "")
           (fun v -> { x with _private = v })
           cs
@@ -1095,7 +1095,7 @@ struct
                 Json_type.String v) ->
               (n, v)
             | e ->
-              GapiJson.unexpected "GapiCalendarV3Model.ExtendedPropertiesData.parse.parse_dictionary" e x')
+              GapiJson.unexpected "GapiCalendarV3Model.ExtendedProperties.parse.parse_dictionary" e x')
           ("", "")
           (fun v -> { x with shared = v })
           cs
@@ -1104,11 +1104,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.ExtendedPropertiesData.parse" e x
+        GapiJson.unexpected "GapiCalendarV3Model.ExtendedProperties.parse" e x
     
   end
   
-  module CreatorData =
+  module Creator =
   struct
     type t = {
       displayName : string;
@@ -1154,7 +1154,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCalendarV3Model.CreatorData.parse" e x
+        GapiJson.unexpected "GapiCalendarV3Model.Creator.parse" e x
     
   end
   
@@ -1164,12 +1164,12 @@ struct
     attendeesOmitted : bool;
     colorId : string;
     created : GapiDate.t;
-    creator : CreatorData.t;
+    creator : Creator.t;
     description : string;
     _end : EventDateTime.t;
     etag : string;
-    extendedProperties : ExtendedPropertiesData.t;
-    gadget : GadgetData.t;
+    extendedProperties : ExtendedProperties.t;
+    gadget : Gadget.t;
     guestsCanInviteOthers : bool;
     guestsCanModify : bool;
     guestsCanSeeOtherGuests : bool;
@@ -1178,12 +1178,12 @@ struct
     id : string;
     kind : string;
     location : string;
-    organizer : OrganizerData.t;
+    organizer : Organizer.t;
     originalStartTime : EventDateTime.t;
     privateCopy : bool;
     recurrence : string list;
     recurringEventId : string;
-    reminders : RemindersData.t;
+    reminders : Reminders.t;
     sequence : int;
     start : EventDateTime.t;
     status : string;
@@ -1329,12 +1329,12 @@ struct
     attendeesOmitted = false;
     colorId = "";
     created = GapiDate.epoch;
-    creator = CreatorData.empty;
+    creator = Creator.empty;
     description = "";
     _end = EventDateTime.empty;
     etag = "";
-    extendedProperties = ExtendedPropertiesData.empty;
-    gadget = GadgetData.empty;
+    extendedProperties = ExtendedProperties.empty;
+    gadget = Gadget.empty;
     guestsCanInviteOthers = false;
     guestsCanModify = false;
     guestsCanSeeOtherGuests = false;
@@ -1343,12 +1343,12 @@ struct
     id = "";
     kind = "";
     location = "";
-    organizer = OrganizerData.empty;
+    organizer = Organizer.empty;
     originalStartTime = EventDateTime.empty;
     privateCopy = false;
     recurrence = [];
     recurringEventId = "";
-    reminders = RemindersData.empty;
+    reminders = Reminders.empty;
     sequence = 0;
     start = EventDateTime.empty;
     status = "";
@@ -1366,12 +1366,12 @@ struct
       GapiJson.render_bool_value "attendeesOmitted" x.attendeesOmitted;
       GapiJson.render_string_value "colorId" x.colorId;
       GapiJson.render_date_value "created" x.created;
-      (fun v -> GapiJson.render_object "creator" (CreatorData.render_content v)) x.creator;
+      (fun v -> GapiJson.render_object "creator" (Creator.render_content v)) x.creator;
       GapiJson.render_string_value "description" x.description;
       (fun v -> GapiJson.render_object "end" (EventDateTime.render_content v)) x._end;
       GapiJson.render_string_value "etag" x.etag;
-      (fun v -> GapiJson.render_object "extendedProperties" (ExtendedPropertiesData.render_content v)) x.extendedProperties;
-      (fun v -> GapiJson.render_object "gadget" (GadgetData.render_content v)) x.gadget;
+      (fun v -> GapiJson.render_object "extendedProperties" (ExtendedProperties.render_content v)) x.extendedProperties;
+      (fun v -> GapiJson.render_object "gadget" (Gadget.render_content v)) x.gadget;
       GapiJson.render_bool_value "guestsCanInviteOthers" x.guestsCanInviteOthers;
       GapiJson.render_bool_value "guestsCanModify" x.guestsCanModify;
       GapiJson.render_bool_value "guestsCanSeeOtherGuests" x.guestsCanSeeOtherGuests;
@@ -1380,12 +1380,12 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "location" x.location;
-      (fun v -> GapiJson.render_object "organizer" (OrganizerData.render_content v)) x.organizer;
+      (fun v -> GapiJson.render_object "organizer" (Organizer.render_content v)) x.organizer;
       (fun v -> GapiJson.render_object "originalStartTime" (EventDateTime.render_content v)) x.originalStartTime;
       GapiJson.render_bool_value "privateCopy" x.privateCopy;
       GapiJson.render_array "recurrence" (GapiJson.render_string_value "") x.recurrence;
       GapiJson.render_string_value "recurringEventId" x.recurringEventId;
-      (fun v -> GapiJson.render_object "reminders" (RemindersData.render_content v)) x.reminders;
+      (fun v -> GapiJson.render_object "reminders" (Reminders.render_content v)) x.reminders;
       GapiJson.render_int_value "sequence" x.sequence;
       (fun v -> GapiJson.render_object "start" (EventDateTime.render_content v)) x.start;
       GapiJson.render_string_value "status" x.status;
@@ -1437,8 +1437,8 @@ struct
         ({ GapiJson.name = "creator"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        CreatorData.parse
-        CreatorData.empty
+        Creator.parse
+        Creator.empty
         (fun v -> { x with creator = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1461,16 +1461,16 @@ struct
         ({ GapiJson.name = "extendedProperties"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ExtendedPropertiesData.parse
-        ExtendedPropertiesData.empty
+        ExtendedProperties.parse
+        ExtendedProperties.empty
         (fun v -> { x with extendedProperties = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "gadget"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        GadgetData.parse
-        GadgetData.empty
+        Gadget.parse
+        Gadget.empty
         (fun v -> { x with gadget = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1509,8 +1509,8 @@ struct
         ({ GapiJson.name = "organizer"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        OrganizerData.parse
-        OrganizerData.empty
+        Organizer.parse
+        Organizer.empty
         (fun v -> { x with organizer = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -1547,8 +1547,8 @@ struct
         ({ GapiJson.name = "reminders"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        RemindersData.parse
-        RemindersData.empty
+        Reminders.parse
+        Reminders.empty
         (fun v -> { x with reminders = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

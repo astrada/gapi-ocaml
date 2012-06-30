@@ -41,10 +41,10 @@ let test_get_comment () =
            comment.Comment.id;
          assert_equal
            "5310628572012276714"
-           Comment.(comment.post.PostData.id);
+           Comment.(comment.post.Post.id);
          assert_equal
            "2399953"
-           Comment.(comment.blog.BlogData.id))
+           Comment.(comment.blog.Blog.id))
 
 let test_list_comments () =
   TestHelper.test_request
@@ -81,7 +81,7 @@ let test_get_page () =
            page.Page.id;
          assert_equal
            "2399953"
-           Page.(page.blog.BlogData.id))
+           Page.(page.blog.Blog.id))
 
 let test_list_pages () =
   TestHelper.test_request
@@ -117,7 +117,7 @@ let test_get_post () =
            post.Post.id;
          assert_equal
            "2399953"
-           Post.(post.blog.BlogData.id))
+           Post.(post.blog.Blog.id))
 
 let test_list_posts () =
   TestHelper.test_request

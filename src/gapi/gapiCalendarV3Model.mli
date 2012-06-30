@@ -95,7 +95,7 @@ end
 
 module AclRule :
 sig
-  module ScopeData :
+  module Scope :
   sig
     type t = {
       _type : string;
@@ -134,7 +134,7 @@ sig
 - "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
 - "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
 - "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
-    scope : ScopeData.t;
+    scope : Scope.t;
     (** The scope of the rule. *)
     
   }
@@ -143,7 +143,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val role : (t, string) GapiLens.t
-  val scope : (t, ScopeData.t) GapiLens.t
+  val scope : (t, Scope.t) GapiLens.t
   
   val empty : t
   
@@ -341,7 +341,7 @@ end
 
 module Event :
 sig
-  module RemindersData :
+  module Reminders :
   sig
     type t = {
       overrides : EventReminder.t list;
@@ -362,7 +362,7 @@ sig
     
   end
   
-  module OrganizerData :
+  module Organizer :
   sig
     type t = {
       displayName : string;
@@ -383,7 +383,7 @@ sig
     
   end
   
-  module GadgetData :
+  module Gadget :
   sig
     type t = {
       display : string;
@@ -424,7 +424,7 @@ sig
     
   end
   
-  module ExtendedPropertiesData :
+  module ExtendedProperties :
   sig
     type t = {
       _private : (string * string) list;
@@ -445,7 +445,7 @@ sig
     
   end
   
-  module CreatorData :
+  module Creator :
   sig
     type t = {
       displayName : string;
@@ -477,7 +477,7 @@ sig
     (** The color of the event. This is an ID referring to an entry in the "event" section of the colors definition (see the "colors" endpoint). Optional. *)
     created : GapiDate.t;
     (** Creation time of the event (as a RFC 3339 timestamp). Read-only. *)
-    creator : CreatorData.t;
+    creator : Creator.t;
     (** The creator of the event. Read-only. *)
     description : string;
     (** Description of the event. Optional. *)
@@ -485,9 +485,9 @@ sig
     (** The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance. *)
     etag : string;
     (** ETag of the resource. *)
-    extendedProperties : ExtendedPropertiesData.t;
+    extendedProperties : ExtendedProperties.t;
     (** Extended properties of the event. *)
-    gadget : GadgetData.t;
+    gadget : Gadget.t;
     (** A gadget that extends this event. *)
     guestsCanInviteOthers : bool;
     (** Whether attendees other than the organizer can invite others to the event. Optional. The default is False. *)
@@ -505,7 +505,7 @@ sig
     (** Type of the resource ("calendar#event"). *)
     location : string;
     (** Geographic location of the event as free-form text. Optional. *)
-    organizer : OrganizerData.t;
+    organizer : Organizer.t;
     (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the "move" operation. Read-only, except when importing an event. *)
     originalStartTime : EventDateTime.t;
     (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable. *)
@@ -515,7 +515,7 @@ sig
     (** List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event. This field is omitted for single events or instances of recurring events. *)
     recurringEventId : string;
     (** For an instance of a recurring event, this is the event ID of the recurring event itself. Immutable. *)
-    reminders : RemindersData.t;
+    reminders : Reminders.t;
     (** Information about the event's reminders for the authenticated user. *)
     sequence : int;
     (** Sequence number as per iCalendar. *)
@@ -548,12 +548,12 @@ sig
   val attendeesOmitted : (t, bool) GapiLens.t
   val colorId : (t, string) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
-  val creator : (t, CreatorData.t) GapiLens.t
+  val creator : (t, Creator.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val _end : (t, EventDateTime.t) GapiLens.t
   val etag : (t, string) GapiLens.t
-  val extendedProperties : (t, ExtendedPropertiesData.t) GapiLens.t
-  val gadget : (t, GadgetData.t) GapiLens.t
+  val extendedProperties : (t, ExtendedProperties.t) GapiLens.t
+  val gadget : (t, Gadget.t) GapiLens.t
   val guestsCanInviteOthers : (t, bool) GapiLens.t
   val guestsCanModify : (t, bool) GapiLens.t
   val guestsCanSeeOtherGuests : (t, bool) GapiLens.t
@@ -562,12 +562,12 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val location : (t, string) GapiLens.t
-  val organizer : (t, OrganizerData.t) GapiLens.t
+  val organizer : (t, Organizer.t) GapiLens.t
   val originalStartTime : (t, EventDateTime.t) GapiLens.t
   val privateCopy : (t, bool) GapiLens.t
   val recurrence : (t, string list) GapiLens.t
   val recurringEventId : (t, string) GapiLens.t
-  val reminders : (t, RemindersData.t) GapiLens.t
+  val reminders : (t, Reminders.t) GapiLens.t
   val sequence : (t, int) GapiLens.t
   val start : (t, EventDateTime.t) GapiLens.t
   val status : (t, string) GapiLens.t

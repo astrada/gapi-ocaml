@@ -38,7 +38,7 @@ end
 
 module Comment :
 sig
-  module ObjectData :
+  module Object :
   sig
     type t = {
       content : string;
@@ -60,7 +60,7 @@ sig
     
   end
   
-  module InReplyToData :
+  module InReplyTo :
   sig
     type t = {
       id : string;
@@ -81,9 +81,9 @@ sig
     
   end
   
-  module ActorData :
+  module Actor :
   sig
-    module ImageData :
+    module Image :
     sig
       type t = {
         url : string;
@@ -106,7 +106,7 @@ sig
       (** The name of this actor, suitable for display. *)
       id : string;
       (** The ID of the actor. *)
-      image : ImageData.t;
+      image : Image.t;
       (** The image representation of this actor. *)
       url : string;
       (** A link to the person resource for this actor. *)
@@ -115,7 +115,7 @@ sig
     
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
-    val image : (t, ImageData.t) GapiLens.t
+    val image : (t, Image.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -127,17 +127,17 @@ sig
   end
   
   type t = {
-    actor : ActorData.t;
+    actor : Actor.t;
     (** The person who posted this comment. *)
     etag : string;
     (** ETag of this response for caching purposes. *)
     id : string;
     (** The ID of this comment. *)
-    inReplyTo : InReplyToData.t list;
+    inReplyTo : InReplyTo.t list;
     (** The activity this comment replied to. *)
     kind : string;
     (** Identifies this resource as a comment. Value: "plus#comment". *)
-    _object : ObjectData.t;
+    _object : Object.t;
     (** The object of this comment. *)
     published : GapiDate.t;
     (** The time at which this comment was initially published. Formatted as an RFC 3339 timestamp. *)
@@ -151,12 +151,12 @@ sig
     
   }
   
-  val actor : (t, ActorData.t) GapiLens.t
+  val actor : (t, Actor.t) GapiLens.t
   val etag : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
-  val inReplyTo : (t, InReplyToData.t list) GapiLens.t
+  val inReplyTo : (t, InReplyTo.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val _object : (t, ObjectData.t) GapiLens.t
+  val _object : (t, Object.t) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -247,7 +247,7 @@ end
 
 module Person :
 sig
-  module UrlsData :
+  module Urls :
   sig
     type t = {
       primary : bool;
@@ -276,7 +276,7 @@ sig
     
   end
   
-  module PlacesLivedData :
+  module PlacesLived :
   sig
     type t = {
       primary : bool;
@@ -297,7 +297,7 @@ sig
     
   end
   
-  module OrganizationsData :
+  module Organizations :
   sig
     type t = {
       department : string;
@@ -341,7 +341,7 @@ sig
     
   end
   
-  module NameData :
+  module Name :
   sig
     type t = {
       familyName : string;
@@ -374,7 +374,7 @@ sig
     
   end
   
-  module ImageData :
+  module Image :
   sig
     type t = {
       url : string;
@@ -392,7 +392,7 @@ sig
     
   end
   
-  module EmailsData :
+  module Emails :
   sig
     type t = {
       primary : bool;
@@ -428,7 +428,7 @@ sig
     (** The current location for this person. *)
     displayName : string;
     (** The name of this person, suitable for display. *)
-    emails : EmailsData.t list;
+    emails : Emails.t list;
     (** A list of email addresses for this person. *)
     etag : string;
     (** ETag of this response for caching purposes. *)
@@ -441,13 +441,13 @@ sig
     (** If "true", indicates that the person has installed the app that is making the request and has chosen to expose this install state to the caller. A value of "false" indicates that the install state cannot be determined (it is either not installed or the person has chosen to keep this information private). *)
     id : string;
     (** The ID of this person. *)
-    image : ImageData.t;
+    image : Image.t;
     (** The representation of the person's profile photo. *)
     kind : string;
     (** Identifies this resource as a person. Value: "plus#person". *)
     languagesSpoken : string list;
     (** The languages spoken by this person. *)
-    name : NameData.t;
+    name : Name.t;
     (** An object representation of the individual components of a person's name. *)
     nickname : string;
     (** The nickname of this person. *)
@@ -455,9 +455,9 @@ sig
     (** Type of person within Google+. Possible values are:  
 - "person" - represents an actual person. 
 - "page" - represents a page. *)
-    organizations : OrganizationsData.t list;
+    organizations : Organizations.t list;
     (** A list of current or past organizations with which this person is associated. *)
-    placesLived : PlacesLivedData.t list;
+    placesLived : PlacesLived.t list;
     (** A list of places where this person has lived. *)
     relationshipStatus : string;
     (** The person's relationship status. Possible values are:  
@@ -474,7 +474,7 @@ sig
     (** The brief description (tagline) of this person. *)
     url : string;
     (** The URL of this person's profile. *)
-    urls : UrlsData.t list;
+    urls : Urls.t list;
     (** A list of URLs for this person. *)
     
   }
@@ -483,23 +483,23 @@ sig
   val birthday : (t, string) GapiLens.t
   val currentLocation : (t, string) GapiLens.t
   val displayName : (t, string) GapiLens.t
-  val emails : (t, EmailsData.t list) GapiLens.t
+  val emails : (t, Emails.t list) GapiLens.t
   val etag : (t, string) GapiLens.t
   val gender : (t, string) GapiLens.t
   val hasApp : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
-  val image : (t, ImageData.t) GapiLens.t
+  val image : (t, Image.t) GapiLens.t
   val kind : (t, string) GapiLens.t
   val languagesSpoken : (t, string list) GapiLens.t
-  val name : (t, NameData.t) GapiLens.t
+  val name : (t, Name.t) GapiLens.t
   val nickname : (t, string) GapiLens.t
   val objectType : (t, string) GapiLens.t
-  val organizations : (t, OrganizationsData.t list) GapiLens.t
-  val placesLived : (t, PlacesLivedData.t list) GapiLens.t
+  val organizations : (t, Organizations.t list) GapiLens.t
+  val placesLived : (t, PlacesLived.t list) GapiLens.t
   val relationshipStatus : (t, string) GapiLens.t
   val tagline : (t, string) GapiLens.t
   val url : (t, string) GapiLens.t
-  val urls : (t, UrlsData.t list) GapiLens.t
+  val urls : (t, Urls.t list) GapiLens.t
   
   val empty : t
   
@@ -515,7 +515,7 @@ end
 
 module Activity :
 sig
-  module ProviderData :
+  module Provider :
   sig
     type t = {
       title : string;
@@ -533,9 +533,9 @@ sig
     
   end
   
-  module ObjectData :
+  module Object :
   sig
-    module ResharersData :
+    module Resharers :
     sig
       type t = {
         selfLink : string;
@@ -556,7 +556,7 @@ sig
       
     end
     
-    module RepliesData :
+    module Replies :
     sig
       type t = {
         selfLink : string;
@@ -577,7 +577,7 @@ sig
       
     end
     
-    module PlusonersData :
+    module Plusoners :
     sig
       type t = {
         selfLink : string;
@@ -598,9 +598,9 @@ sig
       
     end
     
-    module AttachmentsData :
+    module Attachments :
     sig
-      module ImageData :
+      module Image :
       sig
         type t = {
           height : int;
@@ -627,7 +627,7 @@ sig
         
       end
       
-      module FullImageData :
+      module FullImage :
       sig
         type t = {
           height : int;
@@ -654,7 +654,7 @@ sig
         
       end
       
-      module EmbedData :
+      module Embed :
       sig
         type t = {
           _type : string;
@@ -680,13 +680,13 @@ sig
         (** If the attachment is an article, this property contains a snippet of text from the article. *)
         displayName : string;
         (** The title of the attachment (such as a photo caption or an article title). *)
-        embed : EmbedData.t;
+        embed : Embed.t;
         (** If the attachment is a video, the embeddable link. *)
-        fullImage : FullImageData.t;
+        fullImage : FullImage.t;
         (** The full image url for photo attachments. *)
         id : string;
         (** The ID of the media object's resource. *)
-        image : ImageData.t;
+        image : Image.t;
         (** The preview image for photos or videos. *)
         objectType : string;
         (** The type of media object. Possible values are:  
@@ -700,10 +700,10 @@ sig
       
       val content : (t, string) GapiLens.t
       val displayName : (t, string) GapiLens.t
-      val embed : (t, EmbedData.t) GapiLens.t
-      val fullImage : (t, FullImageData.t) GapiLens.t
+      val embed : (t, Embed.t) GapiLens.t
+      val fullImage : (t, FullImage.t) GapiLens.t
       val id : (t, string) GapiLens.t
-      val image : (t, ImageData.t) GapiLens.t
+      val image : (t, Image.t) GapiLens.t
       val objectType : (t, string) GapiLens.t
       val url : (t, string) GapiLens.t
       
@@ -715,9 +715,9 @@ sig
       
     end
     
-    module ActorData :
+    module Actor :
     sig
-      module ImageData :
+      module Image :
       sig
         type t = {
           url : string;
@@ -740,7 +740,7 @@ sig
         (** The original actor's name, suitable for display. *)
         id : string;
         (** ID of the original actor. *)
-        image : ImageData.t;
+        image : Image.t;
         (** The image representation of the original actor. *)
         url : string;
         (** A link to the original actor's Google profile. *)
@@ -749,7 +749,7 @@ sig
       
       val displayName : (t, string) GapiLens.t
       val id : (t, string) GapiLens.t
-      val image : (t, ImageData.t) GapiLens.t
+      val image : (t, Image.t) GapiLens.t
       val url : (t, string) GapiLens.t
       
       val empty : t
@@ -761,9 +761,9 @@ sig
     end
     
     type t = {
-      actor : ActorData.t;
+      actor : Actor.t;
       (** If this activity's object is itself another activity (for example, when a person reshares an activity), this property specifies the original activity's actor. *)
-      attachments : AttachmentsData.t list;
+      attachments : Attachments.t list;
       (** The media objects attached to this activity. *)
       content : string;
       (** The HTML-formatted content, suitable for display. When creating or updating an activity, this value must be supplied as plain text in the request. If successful, the response will contain the HTML-formatted content. When updating an activity, use originalContent as the starting value, then assign the updated text to this property. *)
@@ -775,26 +775,26 @@ sig
 - "activity" - A Google+ activity. *)
       originalContent : string;
       (** The content (text) as provided by the author, stored without any HTML formatting. When updating an activity's content, use the value of originalContent as the starting point from which to make edits. *)
-      plusoners : PlusonersData.t;
+      plusoners : Plusoners.t;
       (** People who +1'd this activity. *)
-      replies : RepliesData.t;
+      replies : Replies.t;
       (** Comments in reply to this activity. *)
-      resharers : ResharersData.t;
+      resharers : Resharers.t;
       (** People who reshared this activity. *)
       url : string;
       (** The URL that points to the linked resource. *)
       
     }
     
-    val actor : (t, ActorData.t) GapiLens.t
-    val attachments : (t, AttachmentsData.t list) GapiLens.t
+    val actor : (t, Actor.t) GapiLens.t
+    val attachments : (t, Attachments.t list) GapiLens.t
     val content : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
     val objectType : (t, string) GapiLens.t
     val originalContent : (t, string) GapiLens.t
-    val plusoners : (t, PlusonersData.t) GapiLens.t
-    val replies : (t, RepliesData.t) GapiLens.t
-    val resharers : (t, ResharersData.t) GapiLens.t
+    val plusoners : (t, Plusoners.t) GapiLens.t
+    val replies : (t, Replies.t) GapiLens.t
+    val resharers : (t, Resharers.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -805,9 +805,9 @@ sig
     
   end
   
-  module ActorData :
+  module Actor :
   sig
-    module NameData :
+    module Name :
     sig
       type t = {
         familyName : string;
@@ -828,7 +828,7 @@ sig
       
     end
     
-    module ImageData :
+    module Image :
     sig
       type t = {
         url : string;
@@ -851,9 +851,9 @@ sig
       (** The name of the actor, suitable for display. *)
       id : string;
       (** The ID of the actor's person resource. *)
-      image : ImageData.t;
+      image : Image.t;
       (** The image representation of the actor. *)
-      name : NameData.t;
+      name : Name.t;
       (** An object representation of the individual components of name. *)
       url : string;
       (** The link to the actor's Google profile. *)
@@ -862,8 +862,8 @@ sig
     
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
-    val image : (t, ImageData.t) GapiLens.t
-    val name : (t, NameData.t) GapiLens.t
+    val image : (t, Image.t) GapiLens.t
+    val name : (t, Name.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -877,7 +877,7 @@ sig
   type t = {
     access : Acl.t;
     (** Identifies who has access to see this activity. *)
-    actor : ActorData.t;
+    actor : Actor.t;
     (** The person who performed this activity. *)
     address : string;
     (** Street address where this activity occurred. *)
@@ -893,7 +893,7 @@ sig
     (** The ID of this activity. *)
     kind : string;
     (** Identifies this resource as an activity. Value: "plus#activity". *)
-    _object : ObjectData.t;
+    _object : Object.t;
     (** The object of this activity. *)
     placeId : string;
     (** ID of the place where this activity occurred. *)
@@ -901,7 +901,7 @@ sig
     (** Name of the place where this activity occurred. *)
     placeholder : bool;
     (** True if this activity is a placeholder. *)
-    provider : ProviderData.t;
+    provider : Provider.t;
     (** The service provider that initially published this activity. *)
     published : GapiDate.t;
     (** The time at which this activity was initially published. Formatted as an RFC 3339 timestamp. *)
@@ -922,7 +922,7 @@ sig
   }
   
   val access : (t, Acl.t) GapiLens.t
-  val actor : (t, ActorData.t) GapiLens.t
+  val actor : (t, Actor.t) GapiLens.t
   val address : (t, string) GapiLens.t
   val annotation : (t, string) GapiLens.t
   val crosspostSource : (t, string) GapiLens.t
@@ -930,11 +930,11 @@ sig
   val geocode : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val _object : (t, ObjectData.t) GapiLens.t
+  val _object : (t, Object.t) GapiLens.t
   val placeId : (t, string) GapiLens.t
   val placeName : (t, string) GapiLens.t
   val placeholder : (t, bool) GapiLens.t
-  val provider : (t, ProviderData.t) GapiLens.t
+  val provider : (t, Provider.t) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val radius : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t

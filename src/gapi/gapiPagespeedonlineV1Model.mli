@@ -8,7 +8,7 @@
 
 module Result :
 sig
-  module VersionData :
+  module Version :
   sig
     type t = {
       major : int;
@@ -29,7 +29,7 @@ sig
     
   end
   
-  module PageStatsData :
+  module PageStats :
   sig
     type t = {
       cssResponseBytes : string;
@@ -83,17 +83,17 @@ sig
     
   end
   
-  module FormattedResultsData :
+  module FormattedResults :
   sig
-    module RuleResultsData :
+    module RuleResults :
     sig
-      module UrlBlocksData :
+      module UrlBlocks :
       sig
-        module UrlsData :
+        module Urls :
         sig
-          module ResultData :
+          module Result :
           sig
-            module ArgsData :
+            module Args :
             sig
               type t = {
                 _type : string;
@@ -115,14 +115,14 @@ sig
             end
             
             type t = {
-              args : ArgsData.t list;
+              args : Args.t list;
               (** List of arguments for the format string. *)
               format : string;
               (** A localized format string with $N placeholders, where N is the 1-indexed argument number, e.g. 'Minifying the resource at URL $1 can save $2 bytes'. *)
               
             }
             
-            val args : (t, ArgsData.t list) GapiLens.t
+            val args : (t, Args.t list) GapiLens.t
             val format : (t, string) GapiLens.t
             
             val empty : t
@@ -133,9 +133,9 @@ sig
             
           end
           
-          module DetailsData :
+          module Details :
           sig
-            module ArgsData :
+            module Args :
             sig
               type t = {
                 _type : string;
@@ -157,14 +157,14 @@ sig
             end
             
             type t = {
-              args : ArgsData.t list;
+              args : Args.t list;
               (** List of arguments for the format string. *)
               format : string;
               (** A localized format string with $N placeholders, where N is the 1-indexed argument number, e.g. 'Unnecessary metadata for this resource adds an additional $1 bytes to its download size'. *)
               
             }
             
-            val args : (t, ArgsData.t list) GapiLens.t
+            val args : (t, Args.t list) GapiLens.t
             val format : (t, string) GapiLens.t
             
             val empty : t
@@ -176,15 +176,15 @@ sig
           end
           
           type t = {
-            details : DetailsData.t list;
+            details : Details.t list;
             (** List of entries that provide additional details about a single URL. Optional. *)
-            result : ResultData.t;
+            result : Result.t;
             (** A format string that gives information about the URL, and a list of arguments for that format string. *)
             
           }
           
-          val details : (t, DetailsData.t list) GapiLens.t
-          val result : (t, ResultData.t) GapiLens.t
+          val details : (t, Details.t list) GapiLens.t
+          val result : (t, Result.t) GapiLens.t
           
           val empty : t
           
@@ -194,9 +194,9 @@ sig
           
         end
         
-        module HeaderData :
+        module Header :
         sig
-          module ArgsData :
+          module Args :
           sig
             type t = {
               _type : string;
@@ -218,14 +218,14 @@ sig
           end
           
           type t = {
-            args : ArgsData.t list;
+            args : Args.t list;
             (** List of arguments for the format string. *)
             format : string;
             (** A localized format string with $N placeholders, where N is the 1-indexed argument number, e.g. 'Minifying the following $1 resources would save a total of $2 bytes'. *)
             
           }
           
-          val args : (t, ArgsData.t list) GapiLens.t
+          val args : (t, Args.t list) GapiLens.t
           val format : (t, string) GapiLens.t
           
           val empty : t
@@ -237,15 +237,15 @@ sig
         end
         
         type t = {
-          header : HeaderData.t;
+          header : Header.t;
           (** Heading to be displayed with the list of URLs. *)
-          urls : UrlsData.t list;
+          urls : Urls.t list;
           (** List of entries that provide information about URLs in the url block. Optional. *)
           
         }
         
-        val header : (t, HeaderData.t) GapiLens.t
-        val urls : (t, UrlsData.t list) GapiLens.t
+        val header : (t, Header.t) GapiLens.t
+        val urls : (t, Urls.t list) GapiLens.t
         
         val empty : t
         
@@ -262,7 +262,7 @@ sig
         (** The impact (unbounded floating point value) that implementing the suggestions for this rule would have on making the page faster. Impact is comparable between rules to determine which rule's suggestions would have a higher or lower impact on making a page faster. For instance, if enabling compression would save 1MB, while optimizing images would save 500kB, the enable compression rule would have 2x the impact of the image optimization rule, all other things being equal. *)
         ruleScore : int;
         (** The score (0-100) for this rule. The rule score indicates how well a page implements the recommendations for the given rule. For instance, if none of the compressible resources on a page are compressed, the rule score would be 0, while if all of the compressible resources on a page are compressed, the rule score would be 100. *)
-        urlBlocks : UrlBlocksData.t list;
+        urlBlocks : UrlBlocks.t list;
         (** List of blocks of URLs. Each block may contain a heading and a list of URLs. Each URL may optionally include additional details. *)
         
       }
@@ -270,7 +270,7 @@ sig
       val localizedRuleName : (t, string) GapiLens.t
       val ruleImpact : (t, float) GapiLens.t
       val ruleScore : (t, int) GapiLens.t
-      val urlBlocks : (t, UrlBlocksData.t list) GapiLens.t
+      val urlBlocks : (t, UrlBlocks.t list) GapiLens.t
       
       val empty : t
       
@@ -283,13 +283,13 @@ sig
     type t = {
       locale : string;
       (** The locale of the formattedResults, e.g. "en_US". *)
-      ruleResults : (string * RuleResultsData.t) list;
+      ruleResults : (string * RuleResults.t) list;
       (** Dictionary of formatted rule results, with one entry for each Page Speed rule instantiated and run by the server. *)
       
     }
     
     val locale : (t, string) GapiLens.t
-    val ruleResults : (t, (string * RuleResultsData.t) list) GapiLens.t
+    val ruleResults : (t, (string * RuleResults.t) list) GapiLens.t
     
     val empty : t
     
@@ -300,7 +300,7 @@ sig
   end
   
   type t = {
-    formattedResults : FormattedResultsData.t;
+    formattedResults : FormattedResults.t;
     (** Localized Page Speed results. Contains a ruleResults entry for each Page Speed rule instantiated and run by the server. *)
     id : string;
     (** Canonicalized and final URL for the document, after following page redirects (if any). *)
@@ -308,7 +308,7 @@ sig
     (** List of rules that were specified in the request, but which the server did not know how to instantiate. *)
     kind : string;
     (** Kind of result. *)
-    pageStats : PageStatsData.t;
+    pageStats : PageStats.t;
     (** Summary statistics for the page, such as number of JavaScript bytes, number of HTML bytes, etc. *)
     responseCode : int;
     (** Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error. *)
@@ -316,20 +316,20 @@ sig
     (** The Page Speed Score (0-100), which indicates how much faster a page could be. A high score indicates little room for improvement, while a lower score indicates more room for improvement. *)
     title : string;
     (** Title of the page, as displayed in the browser's title bar. *)
-    version : VersionData.t;
+    version : Version.t;
     (** The version of the Page Speed SDK used to generate these results. *)
     
   }
   
-  val formattedResults : (t, FormattedResultsData.t) GapiLens.t
+  val formattedResults : (t, FormattedResults.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val invalidRules : (t, string list) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val pageStats : (t, PageStatsData.t) GapiLens.t
+  val pageStats : (t, PageStats.t) GapiLens.t
   val responseCode : (t, int) GapiLens.t
   val score : (t, int) GapiLens.t
   val title : (t, string) GapiLens.t
-  val version : (t, VersionData.t) GapiLens.t
+  val version : (t, Version.t) GapiLens.t
   
   val empty : t
   

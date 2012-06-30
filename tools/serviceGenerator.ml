@@ -720,10 +720,10 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         let request_parameter = methd.Method.request in
         request_module <--
           State.find_inner_schema_module
-            RestMethod.(rest_method.request.RequestData._ref);
+            RestMethod.(rest_method.request.Request._ref);
         response_module <--
           State.find_inner_schema_module
-            RestMethod.(rest_method.response.ResponseData._ref);
+            RestMethod.(rest_method.response.Response._ref);
 
         (* Get etag *)
         let is_etag_present =
@@ -865,8 +865,8 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       let methd = Method.create id
                     rest_method.RestMethod.parameters
                     rest_method.RestMethod.description
-                    RestMethod.(rest_method.request.RequestData._ref)
-                    RestMethod.(rest_method.response.ResponseData._ref)
+                    RestMethod.(rest_method.request.Request._ref)
+                    RestMethod.(rest_method.response.Response._ref)
                     type_table in
       method_lens ^=! methd;
 
@@ -1011,7 +1011,7 @@ let build_service_module =
         Format.fprintf formatter "let %s = \"%s\"@\n@\n" scope_id value;
       let scope_lens = State.get_service_module
         |-- ServiceModule.get_scope_lens scope_id in
-      scope_lens ^=! scope.RestDescription.AuthData.Oauth2Data.ScopesData.description;
+      scope_lens ^=! scope.RestDescription.Auth.Oauth2.Scopes.description;
   in
 
   let generate_header file_lens =
@@ -1028,8 +1028,8 @@ let build_service_module =
       scopes <-- GapiLens.get_state
                    RestDescription.(State.service
                                       |-- auth
-                                      |-- AuthData.oauth2
-                                      |-- AuthData.Oauth2Data.scopes);
+                                      |-- Auth.oauth2
+                                      |-- Auth.Oauth2.scopes);
       lift_io (
         if List.length scopes > 0 then
           Format.fprintf formatter "module Scope =@\n@[<v 2>struct@\n");

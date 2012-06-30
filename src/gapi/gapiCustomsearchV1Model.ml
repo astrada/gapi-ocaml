@@ -2,7 +2,7 @@
 
 module Promotion =
 struct
-  module ImageData =
+  module Image =
   struct
     type t = {
       height : int;
@@ -59,11 +59,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.ImageData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.Image.parse" e x
     
   end
   
-  module BodyLinesData =
+  module BodyLines =
   struct
     type t = {
       link : string;
@@ -120,14 +120,14 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.BodyLinesData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.BodyLines.parse" e x
     
   end
   
   type t = {
-    bodyLines : BodyLinesData.t list;
+    bodyLines : BodyLines.t list;
     displayLink : string;
-    image : ImageData.t;
+    image : Image.t;
     link : string;
     title : string;
     
@@ -157,7 +157,7 @@ struct
   let empty = {
     bodyLines = [];
     displayLink = "";
-    image = ImageData.empty;
+    image = Image.empty;
     link = "";
     title = "";
     
@@ -165,9 +165,9 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_array "bodyLines" BodyLinesData.render x.bodyLines;
+      GapiJson.render_array "bodyLines" BodyLines.render x.bodyLines;
       GapiJson.render_string_value "displayLink" x.displayLink;
-      (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+      (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
       GapiJson.render_string_value "link" x.link;
       GapiJson.render_string_value "title" x.title;
       
@@ -185,13 +185,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              BodyLinesData.parse
-              BodyLinesData.empty
+              BodyLines.parse
+              BodyLines.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiCustomsearchV1Model.Promotion.parse.parse_collection" e x')
-        BodyLinesData.empty
+        BodyLines.empty
         (fun v -> { x with bodyLines = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -202,8 +202,8 @@ struct
         ({ GapiJson.name = "image"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ImageData.parse
-        ImageData.empty
+        Image.parse
+        Image.empty
         (fun v -> { x with image = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -668,7 +668,7 @@ end
 
 module Context =
 struct
-  module FacetsData =
+  module Facets =
   struct
     type t = {
       anchor : string;
@@ -714,12 +714,12 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.FacetsData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.Facets.parse" e x
     
   end
   
   type t = {
-    facets : FacetsData.t list list;
+    facets : Facets.t list list;
     title : string;
     
   }
@@ -741,7 +741,7 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_array "facets" (GapiJson.render_array "" FacetsData.render) x.facets;
+      GapiJson.render_array "facets" (GapiJson.render_array "" Facets.render) x.facets;
       GapiJson.render_string_value "title" x.title;
       
     ]
@@ -763,13 +763,13 @@ struct
                     ({ GapiJson.name = ""; data_type = GapiJson.Object },
                     cs) ->
                   GapiJson.parse_children
-                    FacetsData.parse
-                    FacetsData.empty
+                    Facets.parse
+                    Facets.empty
                     (fun v -> v)
                     cs
                 | e ->
                   GapiJson.unexpected "GapiCustomsearchV1Model.Context.parse.parse_collection" e x')
-              FacetsData.empty
+              Facets.empty
               (fun v -> v)
               cs
           | e ->
@@ -796,7 +796,7 @@ end
 
 module Result =
 struct
-  module LabelsData =
+  module Labels =
   struct
     type t = {
       displayName : string;
@@ -842,11 +842,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.LabelsData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.Labels.parse" e x
     
   end
   
-  module ImageData =
+  module Image =
   struct
     type t = {
       byteSize : int;
@@ -947,7 +947,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.ImageData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.Image.parse" e x
     
   end
   
@@ -959,9 +959,9 @@ struct
     htmlFormattedUrl : string;
     htmlSnippet : string;
     htmlTitle : string;
-    image : ImageData.t;
+    image : Image.t;
     kind : string;
-    labels : LabelsData.t list;
+    labels : Labels.t list;
     link : string;
     mime : string;
     pagemap : (string * (string * string) list list) list;
@@ -1039,7 +1039,7 @@ struct
     htmlFormattedUrl = "";
     htmlSnippet = "";
     htmlTitle = "";
-    image = ImageData.empty;
+    image = Image.empty;
     kind = "";
     labels = [];
     link = "";
@@ -1059,9 +1059,9 @@ struct
       GapiJson.render_string_value "htmlFormattedUrl" x.htmlFormattedUrl;
       GapiJson.render_string_value "htmlSnippet" x.htmlSnippet;
       GapiJson.render_string_value "htmlTitle" x.htmlTitle;
-      (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+      (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_array "labels" LabelsData.render x.labels;
+      GapiJson.render_array "labels" Labels.render x.labels;
       GapiJson.render_string_value "link" x.link;
       GapiJson.render_string_value "mime" x.mime;
       GapiJson.render_collection "pagemap" GapiJson.Object (fun (id, v) -> GapiJson.render_array id (GapiJson.render_collection "" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v)) v) x.pagemap;
@@ -1105,8 +1105,8 @@ struct
         ({ GapiJson.name = "image"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ImageData.parse
-        ImageData.empty
+        Image.parse
+        Image.empty
         (fun v -> { x with image = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1121,14 +1121,10 @@ struct
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
-            GapiJson.parse_children
-              LabelsData.parse
-              LabelsData.empty
-              (fun v -> v)
-              cs
+            GapiJson.parse_children Labels.parse Labels.empty (fun v -> v) cs
           | e ->
             GapiJson.unexpected "GapiCustomsearchV1Model.Result.parse.parse_collection" e x')
-        LabelsData.empty
+        Labels.empty
         (fun v -> { x with labels = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1196,7 +1192,7 @@ end
 
 module Search =
 struct
-  module UrlData =
+  module Url =
   struct
     type t = {
       template : string;
@@ -1242,11 +1238,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.UrlData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.Url.parse" e x
     
   end
   
-  module SpellingData =
+  module Spelling =
   struct
     type t = {
       correctedQuery : string;
@@ -1292,11 +1288,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.SpellingData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.Spelling.parse" e x
     
   end
   
-  module SearchInformationData =
+  module SearchInformation =
   struct
     type t = {
       formattedSearchTime : string;
@@ -1368,7 +1364,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.SearchInformationData.parse" e x
+        GapiJson.unexpected "GapiCustomsearchV1Model.SearchInformation.parse" e x
     
   end
   
@@ -1378,9 +1374,9 @@ struct
     kind : string;
     promotions : Promotion.t list;
     queries : (string * Query.t list) list;
-    searchInformation : SearchInformationData.t;
-    spelling : SpellingData.t;
-    url : UrlData.t;
+    searchInformation : SearchInformation.t;
+    spelling : Spelling.t;
+    url : Url.t;
     
   }
   
@@ -1423,9 +1419,9 @@ struct
     kind = "";
     promotions = [];
     queries = [];
-    searchInformation = SearchInformationData.empty;
-    spelling = SpellingData.empty;
-    url = UrlData.empty;
+    searchInformation = SearchInformation.empty;
+    spelling = Spelling.empty;
+    url = Url.empty;
     
   }
   
@@ -1436,9 +1432,9 @@ struct
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "promotions" Promotion.render x.promotions;
       GapiJson.render_collection "queries" GapiJson.Object (fun (id, v) -> GapiJson.render_array id Query.render v) x.queries;
-      (fun v -> GapiJson.render_object "searchInformation" (SearchInformationData.render_content v)) x.searchInformation;
-      (fun v -> GapiJson.render_object "spelling" (SpellingData.render_content v)) x.spelling;
-      (fun v -> GapiJson.render_object "url" (UrlData.render_content v)) x.url;
+      (fun v -> GapiJson.render_object "searchInformation" (SearchInformation.render_content v)) x.searchInformation;
+      (fun v -> GapiJson.render_object "spelling" (Spelling.render_content v)) x.spelling;
+      (fun v -> GapiJson.render_object "url" (Url.render_content v)) x.url;
       
     ]
   and render x = 
@@ -1521,24 +1517,24 @@ struct
         ({ GapiJson.name = "searchInformation"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        SearchInformationData.parse
-        SearchInformationData.empty
+        SearchInformation.parse
+        SearchInformation.empty
         (fun v -> { x with searchInformation = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "spelling"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        SpellingData.parse
-        SpellingData.empty
+        Spelling.parse
+        Spelling.empty
         (fun v -> { x with spelling = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "url"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        UrlData.parse
-        UrlData.empty
+        Url.parse
+        Url.empty
         (fun v -> { x with url = v })
         cs
     | GapiCore.AnnotatedTree.Node
