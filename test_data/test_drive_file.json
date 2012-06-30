@@ -1,0 +1,61 @@
+{
+  "alternateLink": "string",
+  "createdDate": "2012-06-30T10:00:00.000Z",
+  "description": "string",
+  "downloadUrl": "string",
+  "editable": true,
+  "embedLink": "string",
+  "etag": "etag",
+  "exportLinks": {
+    "html": "string",
+    "odf": "string",
+    "pdf": "string"
+  },
+  "fileExtension": "string",
+  "fileSize": "123456",
+  "id": "string",
+  "indexableText": {
+    "text": "string"
+  },
+  "kind": "drive#file",
+  "labels": {
+    "hidden": true,
+    "restricted": true,
+    "starred": true,
+    "trashed": true,
+    "viewed": true
+  },
+  "lastModifyingUserName": "string",
+  "lastViewedByMeDate": "2012-06-30T10:00:00.000Z",
+  "md5Checksum": "string",
+  "mimeType": "string",
+  "modifiedByMeDate": "2012-06-30T10:00:00.000Z",
+  "modifiedDate": "2012-06-30T10:00:00.000Z",
+  "originalFilename": "string",
+  "ownerNames": [
+    "string"
+  ],
+  "parents": [
+    {
+      "id": "string",
+      "isRoot": true,
+      "kind": "drive#parentReference",
+      "parentLink": "string",
+      "selfLink": "string"
+    }
+  ],
+  "permissionsLink": "string",
+  "quotaBytesUsed": "123456",
+  "selfLink": "string",
+  "sharedWithMeDate": "2012-06-30T10:00:00.000Z",
+  "thumbnailLink": "string",
+  "title": "string",
+  "userPermission": {
+    "etag": "etag",
+    "id": "string",
+    "kind": "drive#permission",
+    "role": "string",
+    "type": "string"
+  },
+  "writersCanShare": true
+}

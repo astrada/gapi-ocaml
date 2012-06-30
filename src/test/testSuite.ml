@@ -18,6 +18,7 @@ let model_tests =
    TestBigqueryV2Model.suite;
    TestDocumentsV3Model.suite;
    TestMediaResource.suite;
+   TestDriveV2Model.suite;
   ]
 
 let service_tests = 

@@ -395,7 +395,7 @@ struct
     etag : string;
     exportLinks : (string * string) list;
     fileExtension : string;
-    fileSize : string;
+    fileSize : int64;
     id : string;
     indexableText : IndexableText.t;
     kind : string;
@@ -410,7 +410,7 @@ struct
     ownerNames : string list;
     parents : ParentReference.t list;
     permissionsLink : string;
-    quotaBytesUsed : string;
+    quotaBytesUsed : int64;
     selfLink : string;
     sharedWithMeDate : GapiDate.t;
     thumbnailLink : string;
@@ -555,7 +555,7 @@ struct
     etag = "";
     exportLinks = [];
     fileExtension = "";
-    fileSize = "";
+    fileSize = 0L;
     id = "";
     indexableText = IndexableText.empty;
     kind = "";
@@ -570,7 +570,7 @@ struct
     ownerNames = [];
     parents = [];
     permissionsLink = "";
-    quotaBytesUsed = "";
+    quotaBytesUsed = 0L;
     selfLink = "";
     sharedWithMeDate = GapiDate.epoch;
     thumbnailLink = "";
@@ -591,7 +591,7 @@ struct
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.exportLinks;
       GapiJson.render_string_value "fileExtension" x.fileExtension;
-      GapiJson.render_string_value "fileSize" x.fileSize;
+      GapiJson.render_int64_value "fileSize" x.fileSize;
       GapiJson.render_string_value "id" x.id;
       (fun v -> GapiJson.render_object "indexableText" (IndexableText.render_content v)) x.indexableText;
       GapiJson.render_string_value "kind" x.kind;
@@ -606,7 +606,7 @@ struct
       GapiJson.render_array "ownerNames" (GapiJson.render_string_value "") x.ownerNames;
       GapiJson.render_array "parents" ParentReference.render x.parents;
       GapiJson.render_string_value "permissionsLink" x.permissionsLink;
-      GapiJson.render_string_value "quotaBytesUsed" x.quotaBytesUsed;
+      GapiJson.render_int64_value "quotaBytesUsed" x.quotaBytesUsed;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "sharedWithMeDate" x.sharedWithMeDate;
       GapiJson.render_string_value "thumbnailLink" x.thumbnailLink;
@@ -668,7 +668,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "fileSize"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with fileSize = v }
+      { x with fileSize = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -760,7 +760,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "quotaBytesUsed"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with quotaBytesUsed = v }
+      { x with quotaBytesUsed = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -995,7 +995,7 @@ struct
   module MaxUploadSizes =
   struct
     type t = {
-      size : string;
+      size : int64;
       _type : string;
       
     }
@@ -1010,14 +1010,14 @@ struct
     }
     
     let empty = {
-      size = "";
+      size = 0L;
       _type = "";
       
     }
     
     let rec render_content x = 
        [
-        GapiJson.render_string_value "size" x.size;
+        GapiJson.render_int64_value "size" x.size;
         GapiJson.render_string_value "type" x._type;
         
       ]
@@ -1028,7 +1028,7 @@ struct
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "size"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
-        { x with size = v }
+        { x with size = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
           Json_type.String v) ->
@@ -1349,14 +1349,14 @@ struct
     importFormats : ImportFormats.t list;
     isCurrentAppInstalled : bool;
     kind : string;
-    largestChangeId : string;
+    largestChangeId : int64;
     maxUploadSizes : MaxUploadSizes.t list;
     name : string;
     permissionId : string;
-    quotaBytesTotal : string;
-    quotaBytesUsed : string;
-    quotaBytesUsedInTrash : string;
-    remainingChangeIds : string;
+    quotaBytesTotal : int64;
+    quotaBytesUsed : int64;
+    quotaBytesUsedInTrash : int64;
+    remainingChangeIds : int64;
     rootFolderId : string;
     selfLink : string;
     
@@ -1444,14 +1444,14 @@ struct
     importFormats = [];
     isCurrentAppInstalled = false;
     kind = "";
-    largestChangeId = "";
+    largestChangeId = 0L;
     maxUploadSizes = [];
     name = "";
     permissionId = "";
-    quotaBytesTotal = "";
-    quotaBytesUsed = "";
-    quotaBytesUsedInTrash = "";
-    remainingChangeIds = "";
+    quotaBytesTotal = 0L;
+    quotaBytesUsed = 0L;
+    quotaBytesUsedInTrash = 0L;
+    remainingChangeIds = 0L;
     rootFolderId = "";
     selfLink = "";
     
@@ -1467,14 +1467,14 @@ struct
       GapiJson.render_array "importFormats" ImportFormats.render x.importFormats;
       GapiJson.render_bool_value "isCurrentAppInstalled" x.isCurrentAppInstalled;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "largestChangeId" x.largestChangeId;
+      GapiJson.render_int64_value "largestChangeId" x.largestChangeId;
       GapiJson.render_array "maxUploadSizes" MaxUploadSizes.render x.maxUploadSizes;
       GapiJson.render_string_value "name" x.name;
       GapiJson.render_string_value "permissionId" x.permissionId;
-      GapiJson.render_string_value "quotaBytesTotal" x.quotaBytesTotal;
-      GapiJson.render_string_value "quotaBytesUsed" x.quotaBytesUsed;
-      GapiJson.render_string_value "quotaBytesUsedInTrash" x.quotaBytesUsedInTrash;
-      GapiJson.render_string_value "remainingChangeIds" x.remainingChangeIds;
+      GapiJson.render_int64_value "quotaBytesTotal" x.quotaBytesTotal;
+      GapiJson.render_int64_value "quotaBytesUsed" x.quotaBytesUsed;
+      GapiJson.render_int64_value "quotaBytesUsedInTrash" x.quotaBytesUsedInTrash;
+      GapiJson.render_int64_value "remainingChangeIds" x.remainingChangeIds;
       GapiJson.render_string_value "rootFolderId" x.rootFolderId;
       GapiJson.render_string_value "selfLink" x.selfLink;
       
@@ -1574,7 +1574,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "largestChangeId"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with largestChangeId = v }
+      { x with largestChangeId = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "maxUploadSizes"; data_type = GapiJson.Array },
         cs) ->
@@ -1604,19 +1604,19 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "quotaBytesTotal"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with quotaBytesTotal = v }
+      { x with quotaBytesTotal = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "quotaBytesUsed"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with quotaBytesUsed = v }
+      { x with quotaBytesUsed = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "quotaBytesUsedInTrash"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with quotaBytesUsedInTrash = v }
+      { x with quotaBytesUsedInTrash = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "remainingChangeIds"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with remainingChangeIds = v }
+      { x with remainingChangeIds = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "rootFolderId"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -1644,7 +1644,7 @@ struct
     downloadUrl : string;
     etag : string;
     exportLinks : (string * string) list;
-    fileSize : string;
+    fileSize : int64;
     id : string;
     kind : string;
     lastModifyingUserName : string;
@@ -1734,7 +1734,7 @@ struct
     downloadUrl = "";
     etag = "";
     exportLinks = [];
-    fileSize = "";
+    fileSize = 0L;
     id = "";
     kind = "";
     lastModifyingUserName = "";
@@ -1756,7 +1756,7 @@ struct
       GapiJson.render_string_value "downloadUrl" x.downloadUrl;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.exportLinks;
-      GapiJson.render_string_value "fileSize" x.fileSize;
+      GapiJson.render_int64_value "fileSize" x.fileSize;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "lastModifyingUserName" x.lastModifyingUserName;
@@ -1801,7 +1801,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "fileSize"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with fileSize = v }
+      { x with fileSize = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         Json_type.String v) ->

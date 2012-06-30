@@ -171,7 +171,7 @@ sig
     (** Links for exporting Google Docs to specific formats. *)
     fileExtension : string;
     (** The file extension used when downloading this file. This field is read only. To set the extension, include it on title when creating the file. This will only be populated on files with content stored in Drive. *)
-    fileSize : string;
+    fileSize : int64;
     (** The size of the file in bytes. This will only be populated on files with content stored in Drive. *)
     id : string;
     (** The id of the file. *)
@@ -202,7 +202,7 @@ sig
 On insert, setting this field will put the file in all of the provided folders. If no folders are provided, the file will be placed in the default root folder. On update, this field is ignored. *)
     permissionsLink : string;
     (** A link to the permissions collection. *)
-    quotaBytesUsed : string;
+    quotaBytesUsed : int64;
     (** The number of quota bytes used by this file. *)
     selfLink : string;
     (** A link back to this file. *)
@@ -228,7 +228,7 @@ On insert, setting this field will put the file in all of the provided folders. 
   val etag : (t, string) GapiLens.t
   val exportLinks : (t, (string * string) list) GapiLens.t
   val fileExtension : (t, string) GapiLens.t
-  val fileSize : (t, string) GapiLens.t
+  val fileSize : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val indexableText : (t, IndexableText.t) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -243,7 +243,7 @@ On insert, setting this field will put the file in all of the provided folders. 
   val ownerNames : (t, string list) GapiLens.t
   val parents : (t, ParentReference.t list) GapiLens.t
   val permissionsLink : (t, string) GapiLens.t
-  val quotaBytesUsed : (t, string) GapiLens.t
+  val quotaBytesUsed : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val sharedWithMeDate : (t, GapiDate.t) GapiLens.t
   val thumbnailLink : (t, string) GapiLens.t
@@ -336,14 +336,14 @@ sig
   module MaxUploadSizes :
   sig
     type t = {
-      size : string;
+      size : int64;
       (** The max upload size for this type. *)
       _type : string;
       (** The file type. *)
       
     }
     
-    val size : (t, string) GapiLens.t
+    val size : (t, int64) GapiLens.t
     val _type : (t, string) GapiLens.t
     
     val empty : t
@@ -476,7 +476,7 @@ sig
     (** A boolean indicating whether the authenticated app is installed by the authenticated user. *)
     kind : string;
     (** This is always drive#about. *)
-    largestChangeId : string;
+    largestChangeId : int64;
     (** The largest change id. *)
     maxUploadSizes : MaxUploadSizes.t list;
     (** List of max upload sizes for each file type. *)
@@ -484,13 +484,13 @@ sig
     (** The name of the current user. *)
     permissionId : string;
     (** The current user's ID as visible in the permissions collection. *)
-    quotaBytesTotal : string;
+    quotaBytesTotal : int64;
     (** The total number of quota bytes. *)
-    quotaBytesUsed : string;
+    quotaBytesUsed : int64;
     (** The number of quota bytes used. *)
-    quotaBytesUsedInTrash : string;
+    quotaBytesUsedInTrash : int64;
     (** The number of quota bytes used by trashed items. *)
-    remainingChangeIds : string;
+    remainingChangeIds : int64;
     (** The number of remaining change ids. *)
     rootFolderId : string;
     (** The id of the root folder. *)
@@ -507,14 +507,14 @@ sig
   val importFormats : (t, ImportFormats.t list) GapiLens.t
   val isCurrentAppInstalled : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val largestChangeId : (t, string) GapiLens.t
+  val largestChangeId : (t, int64) GapiLens.t
   val maxUploadSizes : (t, MaxUploadSizes.t list) GapiLens.t
   val name : (t, string) GapiLens.t
   val permissionId : (t, string) GapiLens.t
-  val quotaBytesTotal : (t, string) GapiLens.t
-  val quotaBytesUsed : (t, string) GapiLens.t
-  val quotaBytesUsedInTrash : (t, string) GapiLens.t
-  val remainingChangeIds : (t, string) GapiLens.t
+  val quotaBytesTotal : (t, int64) GapiLens.t
+  val quotaBytesUsed : (t, int64) GapiLens.t
+  val quotaBytesUsedInTrash : (t, int64) GapiLens.t
+  val remainingChangeIds : (t, int64) GapiLens.t
   val rootFolderId : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   
@@ -539,7 +539,7 @@ sig
     (** The ETag of the revision. *)
     exportLinks : (string * string) list;
     (** Links for exporting Google Docs to specific formats. *)
-    fileSize : string;
+    fileSize : int64;
     (** The size of the revision in bytes. This will only be populated on files with content stored in Drive. *)
     id : string;
     (** The ID of the revision. *)
@@ -573,7 +573,7 @@ sig
   val downloadUrl : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val exportLinks : (t, (string * string) list) GapiLens.t
-  val fileSize : (t, string) GapiLens.t
+  val fileSize : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val lastModifyingUserName : (t, string) GapiLens.t
