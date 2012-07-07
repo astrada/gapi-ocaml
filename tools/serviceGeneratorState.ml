@@ -747,6 +747,7 @@ struct
     parameter_order : string list;
     request : Field.t option;
     response : Field.t option;
+    supports_media_upload : bool;
   }
 
 	let original_name = {
@@ -769,6 +770,10 @@ struct
 		GapiLens.get = (fun x -> x.parameter_order);
 		GapiLens.set = (fun v x -> { x with parameter_order = v })
 	}
+	let supports_media_upload = {
+		GapiLens.get = (fun x -> x.supports_media_upload);
+		GapiLens.set = (fun v x -> { x with supports_media_upload = v })
+	}
   let parameter id = GapiLens.for_assoc id
 
   let get_parameter_lens id =
@@ -780,6 +785,7 @@ struct
         description
         request_ref
         response_ref
+        supports_media_upload
         type_table =
     let get_field_from_ref reference =
       if reference = "" then None
@@ -812,6 +818,7 @@ struct
         parameter_order = [];
         request;
         response;
+        supports_media_upload;
       }
 
 end
