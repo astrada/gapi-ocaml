@@ -186,7 +186,7 @@ sig
   
   (** Starts a new asynchronous job.
     
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
     @param projectId Project ID of the project that will be billed for the job
     *)

@@ -565,7 +565,7 @@ struct
       (GapiJson.parse_json_response File.of_data_model) session 
     
   let insert
-        ?(base_url = "https://www.googleapis.com/")
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
         ?media_source
         ?(convert = false)
@@ -578,8 +578,11 @@ struct
         ?timedTextTrackName
         file
         session =
-    let full_url = GapiUtils.add_path_to_url [""; "resumable"; "upload";
-      "drive"; "v2"; "files"] base_url in
+    let base_path = ["files"] in
+    let media_path = [""; "resumable"; "upload"; "drive"; "v2"; "files"] in
+    let path_to_add = if Option.is_some media_source then media_path
+      else base_path in
+    let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
@@ -681,7 +684,7 @@ struct
       (GapiJson.parse_json_response File.of_data_model) session 
     
   let update
-        ?(base_url = "https://www.googleapis.com/")
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
         ?media_source
         ?(convert = false)
@@ -698,8 +701,12 @@ struct
         ~fileId
         file
         session =
-    let full_url = GapiUtils.add_path_to_url [""; "resumable"; "upload";
-      "drive"; "v2"; "files"; ((fun x -> x) fileId)] base_url in
+    let base_path = ["files"; ((fun x -> x) fileId)] in
+    let media_path = [""; "resumable"; "upload"; "drive"; "v2"; "files";
+      ((fun x -> x) fileId)] in
+    let path_to_add = if Option.is_some media_source then media_path
+      else base_path in
+    let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~newRevision ~ocr ?ocrLanguage
