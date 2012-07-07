@@ -1,0 +1,12 @@
+{
+  "deleted": true,
+  "file": {
+    "etag": "etag",
+    "id": "string",
+    "kind": "drive#file"
+  },
+  "fileId": "string",
+  "id": "12345678901234567",
+  "kind": "drive#change",
+  "selfLink": "string"
+}

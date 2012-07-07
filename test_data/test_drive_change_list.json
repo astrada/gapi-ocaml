@@ -1,0 +1,17 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "id": "string",
+      "kind": "drive#change"
+    }
+  ],
+  "kind": "drive#changeList",
+  "largestChangeId": "1234567890123456",
+  "nextLink": "string",
+  "nextPageToken": "string",
+  "selfLink": "string"
+}
+
+
+

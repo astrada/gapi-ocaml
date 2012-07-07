@@ -1,0 +1,16 @@
+{
+  "additionalRoles": [
+    "string"
+  ],
+  "authKey": "string",
+  "etag": "etag",
+  "id": "string",
+  "kind": "drive#permission",
+  "name": "string",
+  "photoLink": "string",
+  "role": "string",
+  "selfLink": "string",
+  "type": "string",
+  "value": "string",
+  "withLink": true
+}

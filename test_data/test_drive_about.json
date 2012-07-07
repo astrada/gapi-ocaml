@@ -1,0 +1,56 @@
+{
+  "additionalRoleInfo": [
+    {
+      "roleSets": [
+        {
+          "additionalRoles": [
+            "string"
+          ],
+          "primaryRole": "string"
+        }
+      ],
+      "type": "string"
+    }
+  ],
+  "domainSharingPolicy": "string",
+  "etag": "etag",
+  "exportFormats": [
+    {
+      "source": "string",
+      "targets": [
+        "string"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "featureName": "string",
+      "featureRate": 0.5
+    }
+  ],
+  "importFormats": [
+    {
+      "source": "string",
+      "targets": [
+        "string"
+      ]
+    }
+  ],
+  "isCurrentAppInstalled": true,
+  "kind": "drive#about",
+  "largestChangeId": "123456",
+  "maxUploadSizes": [
+    {
+      "size": "123456",
+      "type": "string"
+    }
+  ],
+  "name": "string",
+  "permissionId": "string",
+  "quotaBytesTotal": "123456",
+  "quotaBytesUsed": "123456",
+  "quotaBytesUsedInTrash": "123456",
+  "remainingChangeIds": "123456",
+  "rootFolderId": "string",
+  "selfLink": "string"
+}
