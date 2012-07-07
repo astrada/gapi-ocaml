@@ -349,19 +349,21 @@ struct
       session 
     
   let insert
-        ?(base_url = "https://www.googleapis.com/bigquery/v2/")
+        ?(base_url = "https://www.googleapis.com/")
         ?std_params
+        ?media_source
         ~projectId
         job
         session =
-    let full_url = GapiUtils.add_path_to_url ["projects";
-      ((fun x -> x) projectId); "jobs"] base_url in
+    let full_url = GapiUtils.add_path_to_url [""; "resumable"; "upload";
+      "bigquery"; "v2"; "projects"; ((fun x -> x) projectId); "jobs"]
+      base_url in
     let etag = GapiUtils.etag_option job.Job.etag in
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params () in
     let query_parameters = Option.map JobsParameters.to_key_value_list params
       in
-    GapiService.post ?query_parameters ?etag
+    GapiService.post ?query_parameters ?etag ?media_source
       ~data_to_post:(GapiJson.render_json Job.to_data_model) ~data:job
       full_url (GapiJson.parse_json_response Job.of_data_model) session 
     

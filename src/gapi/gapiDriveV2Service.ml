@@ -565,8 +565,9 @@ struct
       (GapiJson.parse_json_response File.of_data_model) session 
     
   let insert
-        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?(base_url = "https://www.googleapis.com/")
         ?std_params
+        ?media_source
         ?(convert = false)
         ?(ocr = false)
         ?(pinned = false)
@@ -577,7 +578,8 @@ struct
         ?timedTextTrackName
         file
         session =
-    let full_url = GapiUtils.add_path_to_url ["files"] base_url in
+    let full_url = GapiUtils.add_path_to_url [""; "resumable"; "upload";
+      "drive"; "v2"; "files"] base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
@@ -585,7 +587,7 @@ struct
       () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters ?etag
+    GapiService.post ?query_parameters ?etag ?media_source
       ~data_to_post:(GapiJson.render_json File.to_data_model) ~data:file
       full_url (GapiJson.parse_json_response File.of_data_model) session 
     
@@ -679,8 +681,9 @@ struct
       (GapiJson.parse_json_response File.of_data_model) session 
     
   let update
-        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?(base_url = "https://www.googleapis.com/")
         ?std_params
+        ?media_source
         ?(convert = false)
         ?(newRevision = true)
         ?(ocr = false)
@@ -695,8 +698,8 @@ struct
         ~fileId
         file
         session =
-    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId)]
-      base_url in
+    let full_url = GapiUtils.add_path_to_url [""; "resumable"; "upload";
+      "drive"; "v2"; "files"; ((fun x -> x) fileId)] base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~newRevision ~ocr ?ocrLanguage
@@ -704,7 +707,7 @@ struct
       ?timedTextLanguage ?timedTextTrackName ~updateViewedDate () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
-    GapiService.put ?query_parameters ?etag
+    GapiService.put ?query_parameters ?etag ?media_source
       ~data_to_post:(GapiJson.render_json File.to_data_model) ~data:file
       full_url (GapiJson.parse_json_response File.of_data_model) session 
     

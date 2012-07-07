@@ -254,7 +254,7 @@ sig
   
   (** Insert a new file.
     
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param ocr Whether to attempt OCR on .jpg, .png, or .gif uploads.
@@ -268,6 +268,7 @@ sig
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_source:GapiMediaResource.t ->
     ?convert:bool ->
     ?ocr:bool ->
     ?pinned:bool ->
@@ -376,7 +377,7 @@ sig
   
   (** Updates file metadata and/or content
     
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.
@@ -394,6 +395,7 @@ sig
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_source:GapiMediaResource.t ->
     ?convert:bool ->
     ?newRevision:bool ->
     ?ocr:bool ->

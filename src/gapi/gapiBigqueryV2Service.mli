@@ -186,13 +186,14 @@ sig
   
   (** Starts a new asynchronous job.
     
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
     @param std_params Optional standard parameters.
     @param projectId Project ID of the project that will be billed for the job
     *)
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_source:GapiMediaResource.t ->
     projectId:string ->
     GapiBigqueryV2Model.Job.t ->
     GapiConversation.Session.t ->
