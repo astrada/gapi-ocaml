@@ -18,6 +18,7 @@ Supported RESTful APIs:
 * Site Verification API v1
 * AdSense Management API v1.1
 * BigQuery API v2
+* Drive API v2
 
 Google Data Protocol APIs (GData):
 
