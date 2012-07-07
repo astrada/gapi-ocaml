@@ -70,6 +70,10 @@ struct
            Json_type.String v) ->
           { x with message = v }
       | AnnotatedTree.Leaf
+          ({ name = "message"; data_type = Scalar },
+           Json_type.Null) ->
+          x
+      | AnnotatedTree.Leaf
           ({ name = "locationType"; data_type = Scalar },
            Json_type.String v) ->
           { x with locationType = v }

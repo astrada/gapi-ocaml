@@ -37,7 +37,18 @@ let merge_query_string ?(encoded = true) parameters url =
 
 let add_path_to_url ?(encoded = true) path_to_add url =
   let neturl = Neturl.parse_url url in
-  let path = Neturl.url_path neturl |> List.filter (fun p -> p <> "") in
+  let base_path =
+    if List.length path_to_add > 0 && List.hd path_to_add = "" then
+      (* if the path_to_add starts with /, then it's not relative, so base path
+       * should be empty *)
+      []
+    else
+      (* get the base path *)
+      let base_path =
+        Neturl.url_path neturl |> List.filter (fun p -> p <> "")
+      in
+        "" :: base_path
+  in
   let path_to_add_encoded =
     List.map
       (fun p ->
@@ -49,7 +60,7 @@ let add_path_to_url ?(encoded = true) path_to_add url =
            Netencoding.Url.encode p
          else p)
       path_to_add in
-  let new_path = "" :: (path @ path_to_add_encoded) in
+  let new_path = base_path @ path_to_add_encoded in
   let new_neturl = Neturl.modify_url
                      ~encoded
                      ~path:new_path

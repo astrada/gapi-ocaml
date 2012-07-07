@@ -692,28 +692,22 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                                 |-- InnerServiceModule.parameters_module_name);
 
         (* Build complete url *)
-        let path =
-          if rest_method.RestMethod.supportsMediaUpload then
-            rest_method
-            |. RestMethod.mediaUpload
-            |. RestMethod.MediaUpload.protocols
-            |. RestMethod.MediaUpload.Protocols.resumable
-            |. RestMethod.MediaUpload.Protocols.Resumable.path
-          else rest_method.RestMethod.path in
-        let splitted_path =
-          ExtString.String.nsplit path "/" in
-        let path_list =
-          List.map
-            (fun p ->
-               if ExtString.String.starts_with p "{" then
-                 let id = String.sub p 1 (String.length p - 2) in
-                 let { Field.ocaml_name; to_string_function; _ } =
-                   methd |. Method.get_parameter_lens id
-                 in
-                   Printf.sprintf "(%s %s)" to_string_function ocaml_name
-               else
-                 "\"" ^ p ^ "\"")
-            splitted_path in
+        let build_path_to_add path =
+          let splitted_path =
+            ExtString.String.nsplit path "/"
+          in
+            List.map
+              (fun p ->
+                 if ExtString.String.starts_with p "{" then
+                   let id = String.sub p 1 (String.length p - 2) in
+                   let { Field.ocaml_name; to_string_function; _ } =
+                     methd |. Method.get_parameter_lens id
+                   in
+                     Printf.sprintf "(%s %s)" to_string_function ocaml_name
+                 else
+                   "\"" ^ p ^ "\"")
+              splitted_path
+        in
         let print_path_list formatter pl =
           List.iter
             (fun p ->
@@ -722,10 +716,27 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                else
                  Format.fprintf formatter ";@ %s" p)
             pl in
-        lift_io $
-          Format.fprintf formatter
-            "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%a]@ base_url@ in@]@\n"
-            print_path_list path_list;
+        lift_io (
+          let base_path_list = build_path_to_add rest_method.RestMethod.path in
+          if rest_method.RestMethod.supportsMediaUpload then
+            let media_path = rest_method
+              |. RestMethod.mediaUpload
+              |. RestMethod.MediaUpload.protocols
+              |. RestMethod.MediaUpload.Protocols.resumable
+              |. RestMethod.MediaUpload.Protocols.Resumable.path in
+            let media_path_list = build_path_to_add media_path in
+            Format.fprintf formatter
+              "@[<hov 2>let base_path =@ [%a]@ in@]@\n\
+               @[<hov 2>let media_path =@ [%a]@ in@]@\n\
+               @[<hov 2>let path_to_add =@ if Option.is_some media_source then media_path@ else base_path@ in@]@\n\
+               @[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ path_to_add@ base_url@ in@]@\n"
+              print_path_list base_path_list
+              print_path_list media_path_list;
+          else
+            Format.fprintf formatter
+              "@[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ [%a]@ base_url@ in@]@\n"
+              print_path_list base_path_list;
+        );
 
         let request_parameter = methd.Method.request in
         request_module <--
@@ -886,16 +897,11 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
 
       base_url <-- GapiLens.get_state
                      (State.service |-- RestDescription.baseUrl);
-      root_url <-- GapiLens.get_state
-                     (State.service |-- RestDescription.rootUrl);
       lift_io (
-        let b_url =
-          if rest_method.RestMethod.supportsMediaUpload then root_url
-          else base_url in
         Format.fprintf formatter
           "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?std_params@ "
           methd.Method.ocaml_name
-          b_url;
+          base_url;
         if rest_method.RestMethod.supportsMediaUpload then begin
           Format.fprintf formatter "?media_source@ ";
         end);
@@ -1252,21 +1258,16 @@ let rec generate_service_module_signature
       perform
         base_url <-- GapiLens.get_state
                        (State.service |-- RestDescription.baseUrl);
-        root_url <-- GapiLens.get_state
-                       (State.service |-- RestDescription.rootUrl);
         schema_module <-- GapiLens.get_state State.get_schema_module_lens;
         request_module <-- State.find_inner_schema_module request_ref;
         response_module <-- State.find_inner_schema_module response_ref;
 
         lift_io (
-          let b_url =
-            if methd.Method.supports_media_upload then root_url
-            else base_url in
           (* Documentation *)
           Format.fprintf formatter
             "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n@@param std_params Optional standard parameters.@\n"
             methd.Method.description
-            b_url;
+            base_url;
           List.iter
             (fun id ->
                let { Field.ocaml_name; field_type; _ } =
