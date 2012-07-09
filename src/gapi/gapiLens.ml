@@ -103,13 +103,11 @@ let for_array i = {
 let for_list i = {
   get = (fun xs -> List.nth xs i);
   set = (fun v xs ->
-           List.fold_right
-             (fun x k j ->
-                let xs' = k (j + 1) in
-                  if j = i then v :: xs' else x :: xs')
-             xs
-             (fun _ -> [])
-             0)
+          List.fold_left
+            (fun (xs', j) x ->
+              (if i = j then v::xs' else x::xs'), (j+1))
+            ([], 0)
+            xs |> fst |> List.rev)
 }
 
 let option_get = {
