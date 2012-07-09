@@ -1,0 +1,12 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "id": "string",
+      "kind": "drive#parent"
+    }
+  ],
+  "kind": "drive#parentList",
+  "selfLink": "string"
+}
+

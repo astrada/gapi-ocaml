@@ -32,7 +32,7 @@ let test_get_token () =
          SiteVerificationWebResourceGettokenRequest.(
            { verificationMethod = "FILE";
              site = {
-               SiteData.identifier = "http://www.example.com";
+               Site.identifier = "http://www.example.com";
                _type = "SITE"
              };
            }) in
@@ -56,7 +56,7 @@ let test_insert_webresource () =
          SiteVerificationWebResourceResource.(
            { empty with
                  site = {
-                   SiteData.identifier = "http://www.example.com";
+                   Site.identifier = "http://www.example.com";
                    _type = "SITE"
                  };
            }) in

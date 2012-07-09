@@ -2,8 +2,13 @@ open GapiUtils.Infix
 open GapiLens.Infix
 
 exception Redirect of string * GapiConversation.Session.t
-exception Unauthorized of GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
+exception Unauthorized of GapiConversation.Session.t
+exception PermissionDenied of GapiConversation.Session.t
+exception Forbidden of GapiConversation.Session.t
+exception NotFound of GapiConversation.Session.t
+exception Conflict of GapiConversation.Session.t
+exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
@@ -34,6 +39,14 @@ let parse_response
              GapiCore.Header.Location value -> value
            | _ -> u)
       ""
+      headers in
+  let get_reason_phrase () =
+    List.fold_left
+      (fun u h ->
+         match h with
+             GapiCore.Header.HttpStatus (_, _, reason) -> reason
+           | _ -> u)
+      ""
       headers
   in
     match response_code with
@@ -50,6 +63,8 @@ let parse_response
       | 302 (* Found *) ->
           let url = get_location () in
             raise (Redirect (url, session))
+      | 304 (* Not Modified *) ->
+          raise (NotModified session)
       | 308 (* Resume Incomplete *) ->
           let (range, url) =
             List.fold_left
@@ -63,9 +78,24 @@ let parse_response
           in
             raise (ResumeIncomplete (range, url, session))
       | 401 (* Unauthorized *) ->
-          raise (Unauthorized session)
-      | 304 (* Not Modified *) ->
-          raise (NotModified session)
+          let reason_phrase = get_reason_phrase () in
+            begin match reason_phrase with
+                "Permission denied" ->
+                  (* Documents List API may return a Permission denied reason
+                   * phrase, when a document cannot be accessed by the current
+                   * user. *)
+                  raise (PermissionDenied session)
+              | _ ->
+                  raise (Unauthorized session)
+            end
+      | 403 (* Forbidden *) ->
+          raise (Forbidden session)
+      | 404 (* Not Found *) ->
+          raise (NotFound session)
+      | 409 (* Conflict *) ->
+          raise (Conflict session)
+      | 410 (* Gone *) ->
+          raise (Gone session)
       | 412 (* Precondition Failed *) ->
           raise (PreconditionFailed session)
       | 503 (* Service Unavailable *) ->

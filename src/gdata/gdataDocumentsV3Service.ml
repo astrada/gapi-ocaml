@@ -440,33 +440,12 @@ let resumable_upload
       session
 
 (* Download *)
-let download_resource
-      ?query_parameters
-      ?ranges
-      url
-      media_destination
-      session =
-  let range_spec =
-    Option.map_default GapiMediaResource.generate_range_spec "" ranges in
-  let media_download = {
-    GapiMediaResource.destination = media_destination;
-    range_spec;
-  } in
-    GapiService.service_request
-      ?query_parameters
-      ~media_download
-      ~version
-      ~request_type:GapiRequest.Query
-      url
-      GapiRequest.parse_empty_response
-      session
-
 let partial_download
       ?ranges
       url
       media_destination
       session =
-  download_resource
+  GapiService.download_resource
     ?ranges
     url
     media_destination
@@ -483,7 +462,7 @@ let download_content
     QueryParameters.merge_parameters ?format ?exportFormat:format ?gid ()
       |> Option.map QueryParameters.to_key_value_list
   in
-    download_resource
+    GapiService.download_resource
       ?query_parameters
       url
       media_destination

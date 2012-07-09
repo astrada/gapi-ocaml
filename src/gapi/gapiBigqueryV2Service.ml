@@ -3,7 +3,12 @@
 open GapiUtils.Infix
 open GapiBigqueryV2Model
 
-let scope = "https://www.googleapis.com/auth/bigquery"
+module Scope =
+struct
+  let bigquery = "https://www.googleapis.com/auth/bigquery"
+  
+  
+end
 
 module DatasetsResource =
 struct
@@ -346,17 +351,22 @@ struct
   let insert
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?std_params
+        ?media_source
         ~projectId
         job
         session =
-    let full_url = GapiUtils.add_path_to_url ["projects";
-      ((fun x -> x) projectId); "jobs"] base_url in
+    let base_path = ["projects"; ((fun x -> x) projectId); "jobs"] in
+    let media_path = [""; "resumable"; "upload"; "bigquery"; "v2";
+      "projects"; ((fun x -> x) projectId); "jobs"] in
+    let path_to_add = if Option.is_some media_source then media_path
+      else base_path in
+    let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let etag = GapiUtils.etag_option job.Job.etag in
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params () in
     let query_parameters = Option.map JobsParameters.to_key_value_list params
       in
-    GapiService.post ?query_parameters ?etag
+    GapiService.post ?query_parameters ?etag ?media_source
       ~data_to_post:(GapiJson.render_json Job.to_data_model) ~data:job
       full_url (GapiJson.parse_json_response Job.of_data_model) session 
     
@@ -490,6 +500,7 @@ struct
       key : string;
       (* tabledata-specific query parameters *)
       maxResults : int;
+      pageToken : string;
       startIndex : string;
       
     }
@@ -501,6 +512,7 @@ struct
       userIp = "";
       key = "";
       maxResults = 0;
+      pageToken = "";
       startIndex = "";
       
     }
@@ -514,6 +526,7 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.startIndex) (fun x -> x) "startIndex";
       
     ] |> List.concat
@@ -521,6 +534,7 @@ struct
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(maxResults = default.maxResults)
+        ?(pageToken = default.pageToken)
         ?(startIndex = default.startIndex)
         () =
       let parameters = {
@@ -530,6 +544,7 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         maxResults;
+        pageToken;
         startIndex;
         
       } in
@@ -541,6 +556,7 @@ struct
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?std_params
         ?maxResults
+        ?pageToken
         ?startIndex
         ~projectId
         ~datasetId
@@ -550,7 +566,8 @@ struct
       ((fun x -> x) projectId); "datasets"; ((fun x -> x) datasetId);
       "tables"; ((fun x -> x) tableId); "data"] base_url in
     let params = TabledataParameters.merge_parameters
-      ?standard_parameters:std_params ?maxResults ?startIndex () in
+      ?standard_parameters:std_params ?maxResults ?pageToken ?startIndex ()
+      in
     let query_parameters = Option.map TabledataParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url

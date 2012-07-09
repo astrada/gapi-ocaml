@@ -3,9 +3,14 @@
 open GapiUtils.Infix
 open GapiSiteVerificationV1Model
 
-let scope = "https://www.googleapis.com/auth/siteverification"
-
-let scope_verify_only = "https://www.googleapis.com/auth/siteverification.verify_only"
+module Scope =
+struct
+  let siteverification = "https://www.googleapis.com/auth/siteverification"
+  
+  let siteverification_verify_only = "https://www.googleapis.com/auth/siteverification.verify_only"
+  
+  
+end
 
 module WebResourceResource =
 struct

@@ -3,7 +3,12 @@
 open GapiUtils.Infix
 open GapiBloggerV2Model
 
-let scope = "https://www.googleapis.com/auth/blogger"
+module Scope =
+struct
+  let blogger = "https://www.googleapis.com/auth/blogger"
+  
+  
+end
 
 module BlogsResource =
 struct
@@ -39,7 +44,7 @@ struct
       fetchBodies : bool;
       maxResults : int;
       pageToken : string;
-      startDate : string;
+      startDate : GapiDate.t;
       
     }
     
@@ -52,7 +57,7 @@ struct
       fetchBodies = false;
       maxResults = 0;
       pageToken = "";
-      startDate = "";
+      startDate = GapiDate.epoch;
       
     }
     
@@ -67,7 +72,7 @@ struct
       param (fun p -> p.fetchBodies) string_of_bool "fetchBodies";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
-      param (fun p -> p.startDate) (fun x -> x) "startDate";
+      param (fun p -> p.startDate) GapiDate.to_string "startDate";
       
     ] |> List.concat
     
@@ -237,7 +242,7 @@ struct
       fetchBodies : bool;
       maxResults : int;
       pageToken : string;
-      startDate : string;
+      startDate : GapiDate.t;
       
     }
     
@@ -250,7 +255,7 @@ struct
       fetchBodies = false;
       maxResults = 0;
       pageToken = "";
-      startDate = "";
+      startDate = GapiDate.epoch;
       
     }
     
@@ -265,7 +270,7 @@ struct
       param (fun p -> p.fetchBodies) string_of_bool "fetchBodies";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
-      param (fun p -> p.startDate) (fun x -> x) "startDate";
+      param (fun p -> p.startDate) GapiDate.to_string "startDate";
       
     ] |> List.concat
     

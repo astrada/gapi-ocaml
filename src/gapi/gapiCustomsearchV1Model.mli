@@ -8,7 +8,7 @@
 
 module Promotion :
 sig
-  module ImageData :
+  module Image :
   sig
     type t = {
       height : int;
@@ -32,9 +32,11 @@ sig
     
   end
   
-  module BodyLinesData :
+  module BodyLines :
   sig
     type t = {
+      htmlTitle : string;
+      (**  *)
       link : string;
       (**  *)
       title : string;
@@ -44,6 +46,7 @@ sig
       
     }
     
+    val htmlTitle : (t, string) GapiLens.t
     val link : (t, string) GapiLens.t
     val title : (t, string) GapiLens.t
     val url : (t, string) GapiLens.t
@@ -57,11 +60,13 @@ sig
   end
   
   type t = {
-    bodyLines : BodyLinesData.t list;
+    bodyLines : BodyLines.t list;
     (**  *)
     displayLink : string;
     (**  *)
-    image : ImageData.t;
+    htmlTitle : string;
+    (**  *)
+    image : Image.t;
     (**  *)
     link : string;
     (**  *)
@@ -70,9 +75,10 @@ sig
     
   }
   
-  val bodyLines : (t, BodyLinesData.t list) GapiLens.t
+  val bodyLines : (t, BodyLines.t list) GapiLens.t
   val displayLink : (t, string) GapiLens.t
-  val image : (t, ImageData.t) GapiLens.t
+  val htmlTitle : (t, string) GapiLens.t
+  val image : (t, Image.t) GapiLens.t
   val link : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   
@@ -163,7 +169,7 @@ sig
     (**  *)
     title : string;
     (**  *)
-    totalResults : string;
+    totalResults : int64;
     (**  *)
     
   }
@@ -204,7 +210,7 @@ sig
   val startIndex : (t, int) GapiLens.t
   val startPage : (t, int) GapiLens.t
   val title : (t, string) GapiLens.t
-  val totalResults : (t, string) GapiLens.t
+  val totalResults : (t, int64) GapiLens.t
   
   val empty : t
   
@@ -220,7 +226,7 @@ end
 
 module Context :
 sig
-  module FacetsData :
+  module Facets :
   sig
     type t = {
       anchor : string;
@@ -242,14 +248,14 @@ sig
   end
   
   type t = {
-    facets : FacetsData.t list list;
+    facets : Facets.t list list;
     (**  *)
     title : string;
     (**  *)
     
   }
   
-  val facets : (t, FacetsData.t list list) GapiLens.t
+  val facets : (t, Facets.t list list) GapiLens.t
   val title : (t, string) GapiLens.t
   
   val empty : t
@@ -266,7 +272,7 @@ end
 
 module Result :
 sig
-  module LabelsData :
+  module Labels :
   sig
     type t = {
       displayName : string;
@@ -287,7 +293,7 @@ sig
     
   end
   
-  module ImageData :
+  module Image :
   sig
     type t = {
       byteSize : int;
@@ -338,11 +344,11 @@ sig
     (**  *)
     htmlTitle : string;
     (**  *)
-    image : ImageData.t;
+    image : Image.t;
     (**  *)
     kind : string;
     (**  *)
-    labels : LabelsData.t list;
+    labels : Labels.t list;
     (**  *)
     link : string;
     (**  *)
@@ -364,9 +370,9 @@ sig
   val htmlFormattedUrl : (t, string) GapiLens.t
   val htmlSnippet : (t, string) GapiLens.t
   val htmlTitle : (t, string) GapiLens.t
-  val image : (t, ImageData.t) GapiLens.t
+  val image : (t, Image.t) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val labels : (t, LabelsData.t list) GapiLens.t
+  val labels : (t, Labels.t list) GapiLens.t
   val link : (t, string) GapiLens.t
   val mime : (t, string) GapiLens.t
   val pagemap : (t, (string * (string * string) list list) list) GapiLens.t
@@ -387,7 +393,7 @@ end
 
 module Search :
 sig
-  module UrlData :
+  module Url :
   sig
     type t = {
       template : string;
@@ -408,7 +414,7 @@ sig
     
   end
   
-  module SpellingData :
+  module Spelling :
   sig
     type t = {
       correctedQuery : string;
@@ -429,7 +435,7 @@ sig
     
   end
   
-  module SearchInformationData :
+  module SearchInformation :
   sig
     type t = {
       formattedSearchTime : string;
@@ -438,7 +444,7 @@ sig
       (**  *)
       searchTime : float;
       (**  *)
-      totalResults : string;
+      totalResults : int64;
       (**  *)
       
     }
@@ -446,7 +452,7 @@ sig
     val formattedSearchTime : (t, string) GapiLens.t
     val formattedTotalResults : (t, string) GapiLens.t
     val searchTime : (t, float) GapiLens.t
-    val totalResults : (t, string) GapiLens.t
+    val totalResults : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -467,11 +473,11 @@ sig
     (**  *)
     queries : (string * Query.t list) list;
     (**  *)
-    searchInformation : SearchInformationData.t;
+    searchInformation : SearchInformation.t;
     (**  *)
-    spelling : SpellingData.t;
+    spelling : Spelling.t;
     (**  *)
-    url : UrlData.t;
+    url : Url.t;
     (**  *)
     
   }
@@ -481,9 +487,9 @@ sig
   val kind : (t, string) GapiLens.t
   val promotions : (t, Promotion.t list) GapiLens.t
   val queries : (t, (string * Query.t list) list) GapiLens.t
-  val searchInformation : (t, SearchInformationData.t) GapiLens.t
-  val spelling : (t, SpellingData.t) GapiLens.t
-  val url : (t, UrlData.t) GapiLens.t
+  val searchInformation : (t, SearchInformation.t) GapiLens.t
+  val spelling : (t, Spelling.t) GapiLens.t
+  val url : (t, Url.t) GapiLens.t
   
   val empty : t
   

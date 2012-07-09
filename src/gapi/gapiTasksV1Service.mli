@@ -8,11 +8,17 @@
   {{:http://code.google.com/apis/tasks/v1/using.html}API Documentation}.
   *)
 
-(** Manage your tasks *)
-val scope : string
-
-(** View your tasks *)
-val scope_readonly : string
+module Scope :
+sig
+  val tasks : string
+  (** Manage your tasks *)
+  
+  val tasks_readonly : string
+  (** View your tasks *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module TasklistsResource :
 sig
@@ -65,7 +71,7 @@ sig
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
-    ?maxResults:string ->
+    ?maxResults:int64 ->
     ?pageToken:string ->
     GapiConversation.Session.t ->
     GapiTasksV1Model.TaskLists.t * GapiConversation.Session.t
@@ -188,7 +194,7 @@ sig
     ?completedMin:string ->
     ?dueMax:string ->
     ?dueMin:string ->
-    ?maxResults:string ->
+    ?maxResults:int64 ->
     ?pageToken:string ->
     ?showCompleted:bool ->
     ?showDeleted:bool ->

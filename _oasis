@@ -1,7 +1,7 @@
 OASISFormat: 0.3
 OCamlVersion: >= 3.12.0
 Name: gapi-ocaml
-Version: 0.1.10
+Version: 0.1.14
 LicenseFile: LICENSE
 License: MIT
 BuildType: ocamlbuild (0.3)
@@ -16,6 +16,11 @@ Synopsis: A simple OCaml client for Google Services.
 # Flags
 Flag generator
   Description: Build service generator
+  Default: false
+
+# Flags
+Flag examples
+  Description: Build examples
   Default: false
 
 # Libraries
@@ -66,7 +71,9 @@ Library "gapi-ocaml"
     GapiAdsenseV1_1Model,
     GapiAdsenseV1_1Service,
     GapiBigqueryV2Model,
-    GapiBigqueryV2Service
+    GapiBigqueryV2Service,
+    GapiDriveV2Model,
+    GapiDriveV2Service
   BuildDepends: extlib, netstring, curl, str, cryptokit, json-wheel, xmlm
   XMETADescription: Google APIs client library
 
@@ -109,18 +116,21 @@ Executable "serviceGenerator"
 
 # Examples
 Executable "oauth2Flow"
+  Build$: flag(examples)
   Path: examples/auth
   Install: false
   MainIs: oauth2Flow.ml
   BuildDepends: gapi-ocaml.gdata, nethttpd
 
 Executable "oauth1Flow"
+  Build$: flag(examples)
   Path: examples/auth
   Install: false
   MainIs: oauth1Flow.ml
   BuildDepends: gapi-ocaml, nethttpd
 
 Executable "clientLoginFlow"
+  Build$: flag(examples)
   Path: examples/auth
   Install: false
   MainIs: clientLoginFlow.ml

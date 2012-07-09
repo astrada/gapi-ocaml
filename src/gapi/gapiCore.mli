@@ -59,7 +59,8 @@ end
 module Header :
 sig
   type t =
-      ContentType of string
+      HttpStatus of string * int * string
+    | ContentType of string
     | Location of string
     | Authorization of string
     | ETag of string

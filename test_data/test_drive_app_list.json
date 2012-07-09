@@ -1,0 +1,37 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "authorized": true,
+      "icons": [
+        {
+          "category": "string",
+          "iconUrl": "string",
+          "size": 100
+        }
+      ],
+      "id": "string",
+      "installed": true,
+      "kind": "drive#app",
+      "name": "string",
+      "objectType": "string",
+      "primaryFileExtensions": [
+        "string"
+      ],
+      "primaryMimeTypes": [
+        "string"
+      ],
+      "productUrl": "string",
+      "secondaryFileExtensions": [
+        "string"
+      ],
+      "secondaryMimeTypes": [
+        "string"
+      ],
+      "supportsCreate": true,
+      "supportsImport": true
+    }
+  ],
+  "kind": "drive#appList",
+  "selfLink": "string"
+}

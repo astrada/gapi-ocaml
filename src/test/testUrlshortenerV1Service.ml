@@ -27,7 +27,7 @@ let test_get_url () =
            entry.Url.id;
          assert_bool
            "All time long url clicks should be greater than 0"
-           (int_of_string entry.Url.analytics.AnalyticsSummary.allTime.AnalyticsSnapshot.longUrlClicks > 0))
+           (entry.Url.analytics.AnalyticsSummary.allTime.AnalyticsSnapshot.longUrlClicks > 0L))
 
 let new_url = {
   Url.empty with

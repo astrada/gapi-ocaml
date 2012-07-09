@@ -37,6 +37,12 @@ val render_int_value :
   int ->
   json_data_model list
 
+val render_int64_value :
+  ?default:int64 ->
+  string ->
+  int64 ->
+  json_data_model list
+
 val render_bool_value :
   ?default:bool ->
   string ->

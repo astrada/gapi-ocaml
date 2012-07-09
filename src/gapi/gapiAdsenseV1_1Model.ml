@@ -89,7 +89,7 @@ end
 
 module CustomChannel =
 struct
-  module TargetingInfoData =
+  module TargetingInfo =
   struct
     type t = {
       adsAppearOn : string;
@@ -157,7 +157,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAdsenseV1_1Model.TargetingInfoData.parse" e x
+        GapiJson.unexpected "GapiAdsenseV1_1Model.TargetingInfo.parse" e x
     
   end
   
@@ -166,7 +166,7 @@ struct
     id : string;
     kind : string;
     name : string;
-    targetingInfo : TargetingInfoData.t;
+    targetingInfo : TargetingInfo.t;
     
   }
   
@@ -196,7 +196,7 @@ struct
     id = "";
     kind = "";
     name = "";
-    targetingInfo = TargetingInfoData.empty;
+    targetingInfo = TargetingInfo.empty;
     
   }
   
@@ -206,7 +206,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "name" x.name;
-      (fun v -> GapiJson.render_object "targetingInfo" (TargetingInfoData.render_content v)) x.targetingInfo;
+      (fun v -> GapiJson.render_object "targetingInfo" (TargetingInfo.render_content v)) x.targetingInfo;
       
     ]
   and render x = 
@@ -233,8 +233,8 @@ struct
         ({ GapiJson.name = "targetingInfo"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        TargetingInfoData.parse
-        TargetingInfoData.empty
+        TargetingInfo.parse
+        TargetingInfo.empty
         (fun v -> { x with targetingInfo = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -745,7 +745,7 @@ end
 
 module AdsenseReportsGenerateResponse =
 struct
-  module HeadersData =
+  module Headers =
   struct
     type t = {
       currency : string;
@@ -802,16 +802,16 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiAdsenseV1_1Model.HeadersData.parse" e x
+        GapiJson.unexpected "GapiAdsenseV1_1Model.Headers.parse" e x
     
   end
   
   type t = {
     averages : string list;
-    headers : HeadersData.t list;
+    headers : Headers.t list;
     kind : string;
     rows : string list list;
-    totalMatchedRows : string;
+    totalMatchedRows : int64;
     totals : string list;
     warnings : string list;
     
@@ -851,7 +851,7 @@ struct
     headers = [];
     kind = "";
     rows = [];
-    totalMatchedRows = "";
+    totalMatchedRows = 0L;
     totals = [];
     warnings = [];
     
@@ -860,10 +860,10 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_array "averages" (GapiJson.render_string_value "") x.averages;
-      GapiJson.render_array "headers" HeadersData.render x.headers;
+      GapiJson.render_array "headers" Headers.render x.headers;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "rows" (GapiJson.render_array "" (GapiJson.render_string_value "")) x.rows;
-      GapiJson.render_string_value "totalMatchedRows" x.totalMatchedRows;
+      GapiJson.render_int64_value "totalMatchedRows" x.totalMatchedRows;
       GapiJson.render_array "totals" (GapiJson.render_string_value "") x.totals;
       GapiJson.render_array "warnings" (GapiJson.render_string_value "") x.warnings;
       
@@ -895,13 +895,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              HeadersData.parse
-              HeadersData.empty
+              Headers.parse
+              Headers.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.parse.parse_collection" e x')
-        HeadersData.empty
+        Headers.empty
         (fun v -> { x with headers = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -935,7 +935,7 @@ struct
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "totalMatchedRows"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
-      { x with totalMatchedRows = v }
+      { x with totalMatchedRows = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "totals"; data_type = GapiJson.Array },
         cs) ->

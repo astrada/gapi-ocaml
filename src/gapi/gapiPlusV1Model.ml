@@ -56,7 +56,7 @@ end
 
 module Comment =
 struct
-  module ObjectData =
+  module Object =
   struct
     type t = {
       content : string;
@@ -102,11 +102,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Object.parse" e x
     
   end
   
-  module InReplyToData =
+  module InReplyTo =
   struct
     type t = {
       id : string;
@@ -152,13 +152,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.InReplyToData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.InReplyTo.parse" e x
     
   end
   
-  module ActorData =
+  module Actor =
   struct
-    module ImageData =
+    module Image =
     struct
       type t = {
         url : string;
@@ -193,14 +193,14 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Image.parse" e x
       
     end
     
     type t = {
       displayName : string;
       id : string;
-      image : ImageData.t;
+      image : Image.t;
       url : string;
       
     }
@@ -225,7 +225,7 @@ struct
     let empty = {
       displayName = "";
       id = "";
-      image = ImageData.empty;
+      image = Image.empty;
       url = "";
       
     }
@@ -234,7 +234,7 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
-        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+        (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -254,8 +254,8 @@ struct
           ({ GapiJson.name = "image"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ImageData.parse
-          ImageData.empty
+          Image.parse
+          Image.empty
           (fun v -> { x with image = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -267,17 +267,17 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Actor.parse" e x
     
   end
   
   type t = {
-    actor : ActorData.t;
+    actor : Actor.t;
     etag : string;
     id : string;
-    inReplyTo : InReplyToData.t list;
+    inReplyTo : InReplyTo.t list;
     kind : string;
-    _object : ObjectData.t;
+    _object : Object.t;
     published : GapiDate.t;
     selfLink : string;
     updated : GapiDate.t;
@@ -327,12 +327,12 @@ struct
   }
   
   let empty = {
-    actor = ActorData.empty;
+    actor = Actor.empty;
     etag = "";
     id = "";
     inReplyTo = [];
     kind = "";
-    _object = ObjectData.empty;
+    _object = Object.empty;
     published = GapiDate.epoch;
     selfLink = "";
     updated = GapiDate.epoch;
@@ -342,12 +342,12 @@ struct
   
   let rec render_content x = 
      [
-      (fun v -> GapiJson.render_object "actor" (ActorData.render_content v)) x.actor;
+      (fun v -> GapiJson.render_object "actor" (Actor.render_content v)) x.actor;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
-      GapiJson.render_array "inReplyTo" InReplyToData.render x.inReplyTo;
+      GapiJson.render_array "inReplyTo" InReplyTo.render x.inReplyTo;
       GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "object" (ObjectData.render_content v)) x._object;
+      (fun v -> GapiJson.render_object "object" (Object.render_content v)) x._object;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "updated" x.updated;
@@ -362,8 +362,8 @@ struct
         ({ GapiJson.name = "actor"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ActorData.parse
-        ActorData.empty
+        Actor.parse
+        Actor.empty
         (fun v -> { x with actor = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -383,13 +383,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              InReplyToData.parse
-              InReplyToData.empty
+              InReplyTo.parse
+              InReplyTo.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiPlusV1Model.Comment.parse.parse_collection" e x')
-        InReplyToData.empty
+        InReplyTo.empty
         (fun v -> { x with inReplyTo = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -400,8 +400,8 @@ struct
         ({ GapiJson.name = "object"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ObjectData.parse
-        ObjectData.empty
+        Object.parse
+        Object.empty
         (fun v -> { x with _object = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -648,7 +648,7 @@ end
 
 module Person =
 struct
-  module UrlsData =
+  module Urls =
   struct
     type t = {
       primary : bool;
@@ -705,11 +705,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.UrlsData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Urls.parse" e x
     
   end
   
-  module PlacesLivedData =
+  module PlacesLived =
   struct
     type t = {
       primary : bool;
@@ -755,11 +755,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.PlacesLivedData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.PlacesLived.parse" e x
     
   end
   
-  module OrganizationsData =
+  module Organizations =
   struct
     type t = {
       department : string;
@@ -882,11 +882,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.OrganizationsData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Organizations.parse" e x
     
   end
   
-  module NameData =
+  module Name =
   struct
     type t = {
       familyName : string;
@@ -976,11 +976,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.NameData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Name.parse" e x
     
   end
   
-  module ImageData =
+  module Image =
   struct
     type t = {
       url : string;
@@ -1015,11 +1015,11 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Image.parse" e x
     
   end
   
-  module EmailsData =
+  module Emails =
   struct
     type t = {
       primary : bool;
@@ -1076,7 +1076,7 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.EmailsData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Emails.parse" e x
     
   end
   
@@ -1085,23 +1085,23 @@ struct
     birthday : string;
     currentLocation : string;
     displayName : string;
-    emails : EmailsData.t list;
+    emails : Emails.t list;
     etag : string;
     gender : string;
     hasApp : bool;
     id : string;
-    image : ImageData.t;
+    image : Image.t;
     kind : string;
     languagesSpoken : string list;
-    name : NameData.t;
+    name : Name.t;
     nickname : string;
     objectType : string;
-    organizations : OrganizationsData.t list;
-    placesLived : PlacesLivedData.t list;
+    organizations : Organizations.t list;
+    placesLived : PlacesLived.t list;
     relationshipStatus : string;
     tagline : string;
     url : string;
-    urls : UrlsData.t list;
+    urls : Urls.t list;
     
   }
   
@@ -1200,10 +1200,10 @@ struct
     gender = "";
     hasApp = false;
     id = "";
-    image = ImageData.empty;
+    image = Image.empty;
     kind = "";
     languagesSpoken = [];
-    name = NameData.empty;
+    name = Name.empty;
     nickname = "";
     objectType = "";
     organizations = [];
@@ -1221,23 +1221,23 @@ struct
       GapiJson.render_string_value "birthday" x.birthday;
       GapiJson.render_string_value "currentLocation" x.currentLocation;
       GapiJson.render_string_value "displayName" x.displayName;
-      GapiJson.render_array "emails" EmailsData.render x.emails;
+      GapiJson.render_array "emails" Emails.render x.emails;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "gender" x.gender;
       GapiJson.render_bool_value "hasApp" x.hasApp;
       GapiJson.render_string_value "id" x.id;
-      (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+      (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "languagesSpoken" (GapiJson.render_string_value "") x.languagesSpoken;
-      (fun v -> GapiJson.render_object "name" (NameData.render_content v)) x.name;
+      (fun v -> GapiJson.render_object "name" (Name.render_content v)) x.name;
       GapiJson.render_string_value "nickname" x.nickname;
       GapiJson.render_string_value "objectType" x.objectType;
-      GapiJson.render_array "organizations" OrganizationsData.render x.organizations;
-      GapiJson.render_array "placesLived" PlacesLivedData.render x.placesLived;
+      GapiJson.render_array "organizations" Organizations.render x.organizations;
+      GapiJson.render_array "placesLived" PlacesLived.render x.placesLived;
       GapiJson.render_string_value "relationshipStatus" x.relationshipStatus;
       GapiJson.render_string_value "tagline" x.tagline;
       GapiJson.render_string_value "url" x.url;
-      GapiJson.render_array "urls" UrlsData.render x.urls;
+      GapiJson.render_array "urls" Urls.render x.urls;
       
     ]
   and render x = 
@@ -1268,14 +1268,10 @@ struct
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
-            GapiJson.parse_children
-              EmailsData.parse
-              EmailsData.empty
-              (fun v -> v)
-              cs
+            GapiJson.parse_children Emails.parse Emails.empty (fun v -> v) cs
           | e ->
             GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
-        EmailsData.empty
+        Emails.empty
         (fun v -> { x with emails = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1298,8 +1294,8 @@ struct
         ({ GapiJson.name = "image"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ImageData.parse
-        ImageData.empty
+        Image.parse
+        Image.empty
         (fun v -> { x with image = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1324,8 +1320,8 @@ struct
         ({ GapiJson.name = "name"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        NameData.parse
-        NameData.empty
+        Name.parse
+        Name.empty
         (fun v -> { x with name = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1345,13 +1341,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              OrganizationsData.parse
-              OrganizationsData.empty
+              Organizations.parse
+              Organizations.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
-        OrganizationsData.empty
+        Organizations.empty
         (fun v -> { x with organizations = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -1363,13 +1359,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              PlacesLivedData.parse
-              PlacesLivedData.empty
+              PlacesLived.parse
+              PlacesLived.empty
               (fun v -> v)
               cs
           | e ->
             GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
-        PlacesLivedData.empty
+        PlacesLived.empty
         (fun v -> { x with placesLived = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1392,14 +1388,10 @@ struct
           | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
-            GapiJson.parse_children
-              UrlsData.parse
-              UrlsData.empty
-              (fun v -> v)
-              cs
+            GapiJson.parse_children Urls.parse Urls.empty (fun v -> v) cs
           | e ->
             GapiJson.unexpected "GapiPlusV1Model.Person.parse.parse_collection" e x')
-        UrlsData.empty
+        Urls.empty
         (fun v -> { x with urls = v })
         cs
     | GapiCore.AnnotatedTree.Node
@@ -1417,7 +1409,7 @@ end
 
 module Activity =
 struct
-  module ProviderData =
+  module Provider =
   struct
     type t = {
       title : string;
@@ -1452,13 +1444,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ProviderData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Provider.parse" e x
     
   end
   
-  module ObjectData =
+  module Object =
   struct
-    module ResharersData =
+    module Resharers =
     struct
       type t = {
         selfLink : string;
@@ -1504,11 +1496,11 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ResharersData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Resharers.parse" e x
       
     end
     
-    module RepliesData =
+    module Replies =
     struct
       type t = {
         selfLink : string;
@@ -1554,11 +1546,11 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.RepliesData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Replies.parse" e x
       
     end
     
-    module PlusonersData =
+    module Plusoners =
     struct
       type t = {
         selfLink : string;
@@ -1604,13 +1596,13 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.PlusonersData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Plusoners.parse" e x
       
     end
     
-    module AttachmentsData =
+    module Attachments =
     struct
-      module ImageData =
+      module Image =
       struct
         type t = {
           height : int;
@@ -1678,11 +1670,11 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
+            GapiJson.unexpected "GapiPlusV1Model.Image.parse" e x
         
       end
       
-      module FullImageData =
+      module FullImage =
       struct
         type t = {
           height : int;
@@ -1750,11 +1742,11 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.FullImageData.parse" e x
+            GapiJson.unexpected "GapiPlusV1Model.FullImage.parse" e x
         
       end
       
-      module EmbedData =
+      module Embed =
       struct
         type t = {
           _type : string;
@@ -1800,17 +1792,17 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.EmbedData.parse" e x
+            GapiJson.unexpected "GapiPlusV1Model.Embed.parse" e x
         
       end
       
       type t = {
         content : string;
         displayName : string;
-        embed : EmbedData.t;
-        fullImage : FullImageData.t;
+        embed : Embed.t;
+        fullImage : FullImage.t;
         id : string;
-        image : ImageData.t;
+        image : Image.t;
         objectType : string;
         url : string;
         
@@ -1852,10 +1844,10 @@ struct
       let empty = {
         content = "";
         displayName = "";
-        embed = EmbedData.empty;
-        fullImage = FullImageData.empty;
+        embed = Embed.empty;
+        fullImage = FullImage.empty;
         id = "";
-        image = ImageData.empty;
+        image = Image.empty;
         objectType = "";
         url = "";
         
@@ -1865,10 +1857,10 @@ struct
          [
           GapiJson.render_string_value "content" x.content;
           GapiJson.render_string_value "displayName" x.displayName;
-          (fun v -> GapiJson.render_object "embed" (EmbedData.render_content v)) x.embed;
-          (fun v -> GapiJson.render_object "fullImage" (FullImageData.render_content v)) x.fullImage;
+          (fun v -> GapiJson.render_object "embed" (Embed.render_content v)) x.embed;
+          (fun v -> GapiJson.render_object "fullImage" (FullImage.render_content v)) x.fullImage;
           GapiJson.render_string_value "id" x.id;
-          (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+          (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
           GapiJson.render_string_value "objectType" x.objectType;
           GapiJson.render_string_value "url" x.url;
           
@@ -1889,16 +1881,16 @@ struct
             ({ GapiJson.name = "embed"; data_type = GapiJson.Object },
             cs) ->
           GapiJson.parse_children
-            EmbedData.parse
-            EmbedData.empty
+            Embed.parse
+            Embed.empty
             (fun v -> { x with embed = v })
             cs
         | GapiCore.AnnotatedTree.Node
             ({ GapiJson.name = "fullImage"; data_type = GapiJson.Object },
             cs) ->
           GapiJson.parse_children
-            FullImageData.parse
-            FullImageData.empty
+            FullImage.parse
+            FullImage.empty
             (fun v -> { x with fullImage = v })
             cs
         | GapiCore.AnnotatedTree.Leaf
@@ -1909,8 +1901,8 @@ struct
             ({ GapiJson.name = "image"; data_type = GapiJson.Object },
             cs) ->
           GapiJson.parse_children
-            ImageData.parse
-            ImageData.empty
+            Image.parse
+            Image.empty
             (fun v -> { x with image = v })
             cs
         | GapiCore.AnnotatedTree.Leaf
@@ -1926,13 +1918,13 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.AttachmentsData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Attachments.parse" e x
       
     end
     
-    module ActorData =
+    module Actor =
     struct
-      module ImageData =
+      module Image =
       struct
         type t = {
           url : string;
@@ -1967,14 +1959,14 @@ struct
             cs) ->
             GapiJson.parse_children parse empty (fun x -> x) cs
           | e ->
-            GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
+            GapiJson.unexpected "GapiPlusV1Model.Image.parse" e x
         
       end
       
       type t = {
         displayName : string;
         id : string;
-        image : ImageData.t;
+        image : Image.t;
         url : string;
         
       }
@@ -1999,7 +1991,7 @@ struct
       let empty = {
         displayName = "";
         id = "";
-        image = ImageData.empty;
+        image = Image.empty;
         url = "";
         
       }
@@ -2008,7 +2000,7 @@ struct
          [
           GapiJson.render_string_value "displayName" x.displayName;
           GapiJson.render_string_value "id" x.id;
-          (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
+          (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
           GapiJson.render_string_value "url" x.url;
           
         ]
@@ -2028,8 +2020,8 @@ struct
             ({ GapiJson.name = "image"; data_type = GapiJson.Object },
             cs) ->
           GapiJson.parse_children
-            ImageData.parse
-            ImageData.empty
+            Image.parse
+            Image.empty
             (fun v -> { x with image = v })
             cs
         | GapiCore.AnnotatedTree.Leaf
@@ -2041,20 +2033,20 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Actor.parse" e x
       
     end
     
     type t = {
-      actor : ActorData.t;
-      attachments : AttachmentsData.t list;
+      actor : Actor.t;
+      attachments : Attachments.t list;
       content : string;
       id : string;
       objectType : string;
       originalContent : string;
-      plusoners : PlusonersData.t;
-      replies : RepliesData.t;
-      resharers : ResharersData.t;
+      plusoners : Plusoners.t;
+      replies : Replies.t;
+      resharers : Resharers.t;
       url : string;
       
     }
@@ -2101,30 +2093,30 @@ struct
     }
     
     let empty = {
-      actor = ActorData.empty;
+      actor = Actor.empty;
       attachments = [];
       content = "";
       id = "";
       objectType = "";
       originalContent = "";
-      plusoners = PlusonersData.empty;
-      replies = RepliesData.empty;
-      resharers = ResharersData.empty;
+      plusoners = Plusoners.empty;
+      replies = Replies.empty;
+      resharers = Resharers.empty;
       url = "";
       
     }
     
     let rec render_content x = 
        [
-        (fun v -> GapiJson.render_object "actor" (ActorData.render_content v)) x.actor;
-        GapiJson.render_array "attachments" AttachmentsData.render x.attachments;
+        (fun v -> GapiJson.render_object "actor" (Actor.render_content v)) x.actor;
+        GapiJson.render_array "attachments" Attachments.render x.attachments;
         GapiJson.render_string_value "content" x.content;
         GapiJson.render_string_value "id" x.id;
         GapiJson.render_string_value "objectType" x.objectType;
         GapiJson.render_string_value "originalContent" x.originalContent;
-        (fun v -> GapiJson.render_object "plusoners" (PlusonersData.render_content v)) x.plusoners;
-        (fun v -> GapiJson.render_object "replies" (RepliesData.render_content v)) x.replies;
-        (fun v -> GapiJson.render_object "resharers" (ResharersData.render_content v)) x.resharers;
+        (fun v -> GapiJson.render_object "plusoners" (Plusoners.render_content v)) x.plusoners;
+        (fun v -> GapiJson.render_object "replies" (Replies.render_content v)) x.replies;
+        (fun v -> GapiJson.render_object "resharers" (Resharers.render_content v)) x.resharers;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -2136,8 +2128,8 @@ struct
           ({ GapiJson.name = "actor"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ActorData.parse
-          ActorData.empty
+          Actor.parse
+          Actor.empty
           (fun v -> { x with actor = v })
           cs
       | GapiCore.AnnotatedTree.Node
@@ -2149,13 +2141,13 @@ struct
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
                 cs) ->
               GapiJson.parse_children
-                AttachmentsData.parse
-                AttachmentsData.empty
+                Attachments.parse
+                Attachments.empty
                 (fun v -> v)
                 cs
             | e ->
-              GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse.parse_collection" e x')
-          AttachmentsData.empty
+              GapiJson.unexpected "GapiPlusV1Model.Object.parse.parse_collection" e x')
+          Attachments.empty
           (fun v -> { x with attachments = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -2178,24 +2170,24 @@ struct
           ({ GapiJson.name = "plusoners"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          PlusonersData.parse
-          PlusonersData.empty
+          Plusoners.parse
+          Plusoners.empty
           (fun v -> { x with plusoners = v })
           cs
       | GapiCore.AnnotatedTree.Node
           ({ GapiJson.name = "replies"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          RepliesData.parse
-          RepliesData.empty
+          Replies.parse
+          Replies.empty
           (fun v -> { x with replies = v })
           cs
       | GapiCore.AnnotatedTree.Node
           ({ GapiJson.name = "resharers"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ResharersData.parse
-          ResharersData.empty
+          Resharers.parse
+          Resharers.empty
           (fun v -> { x with resharers = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -2207,13 +2199,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ObjectData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Object.parse" e x
     
   end
   
-  module ActorData =
+  module Actor =
   struct
-    module NameData =
+    module Name =
     struct
       type t = {
         familyName : string;
@@ -2259,11 +2251,11 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.NameData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Name.parse" e x
       
     end
     
-    module ImageData =
+    module Image =
     struct
       type t = {
         url : string;
@@ -2298,15 +2290,15 @@ struct
           cs) ->
           GapiJson.parse_children parse empty (fun x -> x) cs
         | e ->
-          GapiJson.unexpected "GapiPlusV1Model.ImageData.parse" e x
+          GapiJson.unexpected "GapiPlusV1Model.Image.parse" e x
       
     end
     
     type t = {
       displayName : string;
       id : string;
-      image : ImageData.t;
-      name : NameData.t;
+      image : Image.t;
+      name : Name.t;
       url : string;
       
     }
@@ -2335,8 +2327,8 @@ struct
     let empty = {
       displayName = "";
       id = "";
-      image = ImageData.empty;
-      name = NameData.empty;
+      image = Image.empty;
+      name = Name.empty;
       url = "";
       
     }
@@ -2345,8 +2337,8 @@ struct
        [
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
-        (fun v -> GapiJson.render_object "image" (ImageData.render_content v)) x.image;
-        (fun v -> GapiJson.render_object "name" (NameData.render_content v)) x.name;
+        (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
+        (fun v -> GapiJson.render_object "name" (Name.render_content v)) x.name;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -2366,16 +2358,16 @@ struct
           ({ GapiJson.name = "image"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          ImageData.parse
-          ImageData.empty
+          Image.parse
+          Image.empty
           (fun v -> { x with image = v })
           cs
       | GapiCore.AnnotatedTree.Node
           ({ GapiJson.name = "name"; data_type = GapiJson.Object },
           cs) ->
         GapiJson.parse_children
-          NameData.parse
-          NameData.empty
+          Name.parse
+          Name.empty
           (fun v -> { x with name = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
@@ -2387,13 +2379,13 @@ struct
         cs) ->
         GapiJson.parse_children parse empty (fun x -> x) cs
       | e ->
-        GapiJson.unexpected "GapiPlusV1Model.ActorData.parse" e x
+        GapiJson.unexpected "GapiPlusV1Model.Actor.parse" e x
     
   end
   
   type t = {
     access : Acl.t;
-    actor : ActorData.t;
+    actor : Actor.t;
     address : string;
     annotation : string;
     crosspostSource : string;
@@ -2401,11 +2393,10 @@ struct
     geocode : string;
     id : string;
     kind : string;
-    _object : ObjectData.t;
+    _object : Object.t;
     placeId : string;
     placeName : string;
-    placeholder : bool;
-    provider : ProviderData.t;
+    provider : Provider.t;
     published : GapiDate.t;
     radius : string;
     title : string;
@@ -2463,10 +2454,6 @@ struct
     GapiLens.get = (fun x -> x.placeName);
     GapiLens.set = (fun v x -> { x with placeName = v });
   }
-  let placeholder = {
-    GapiLens.get = (fun x -> x.placeholder);
-    GapiLens.set = (fun v x -> { x with placeholder = v });
-  }
   let provider = {
     GapiLens.get = (fun x -> x.provider);
     GapiLens.set = (fun v x -> { x with provider = v });
@@ -2498,7 +2485,7 @@ struct
   
   let empty = {
     access = Acl.empty;
-    actor = ActorData.empty;
+    actor = Actor.empty;
     address = "";
     annotation = "";
     crosspostSource = "";
@@ -2506,11 +2493,10 @@ struct
     geocode = "";
     id = "";
     kind = "";
-    _object = ObjectData.empty;
+    _object = Object.empty;
     placeId = "";
     placeName = "";
-    placeholder = false;
-    provider = ProviderData.empty;
+    provider = Provider.empty;
     published = GapiDate.epoch;
     radius = "";
     title = "";
@@ -2523,7 +2509,7 @@ struct
   let rec render_content x = 
      [
       (fun v -> GapiJson.render_object "access" (Acl.render_content v)) x.access;
-      (fun v -> GapiJson.render_object "actor" (ActorData.render_content v)) x.actor;
+      (fun v -> GapiJson.render_object "actor" (Actor.render_content v)) x.actor;
       GapiJson.render_string_value "address" x.address;
       GapiJson.render_string_value "annotation" x.annotation;
       GapiJson.render_string_value "crosspostSource" x.crosspostSource;
@@ -2531,11 +2517,10 @@ struct
       GapiJson.render_string_value "geocode" x.geocode;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "object" (ObjectData.render_content v)) x._object;
+      (fun v -> GapiJson.render_object "object" (Object.render_content v)) x._object;
       GapiJson.render_string_value "placeId" x.placeId;
       GapiJson.render_string_value "placeName" x.placeName;
-      GapiJson.render_bool_value "placeholder" x.placeholder;
-      (fun v -> GapiJson.render_object "provider" (ProviderData.render_content v)) x.provider;
+      (fun v -> GapiJson.render_object "provider" (Provider.render_content v)) x.provider;
       GapiJson.render_date_value "published" x.published;
       GapiJson.render_string_value "radius" x.radius;
       GapiJson.render_string_value "title" x.title;
@@ -2560,8 +2545,8 @@ struct
         ({ GapiJson.name = "actor"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ActorData.parse
-        ActorData.empty
+        Actor.parse
+        Actor.empty
         (fun v -> { x with actor = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -2596,8 +2581,8 @@ struct
         ({ GapiJson.name = "object"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ObjectData.parse
-        ObjectData.empty
+        Object.parse
+        Object.empty
         (fun v -> { x with _object = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -2608,16 +2593,12 @@ struct
         ({ GapiJson.name = "placeName"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with placeName = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "placeholder"; data_type = GapiJson.Scalar },
-        Json_type.Bool v) ->
-      { x with placeholder = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "provider"; data_type = GapiJson.Object },
         cs) ->
       GapiJson.parse_children
-        ProviderData.parse
-        ProviderData.empty
+        Provider.parse
+        Provider.empty
         (fun v -> { x with provider = v })
         cs
     | GapiCore.AnnotatedTree.Leaf

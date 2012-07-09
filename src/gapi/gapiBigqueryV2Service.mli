@@ -8,8 +8,14 @@
   {{:https://code.google.com/apis/bigquery/docs/v2/}API Documentation}.
   *)
 
-(** View and manage your data in Google BigQuery *)
-val scope : string
+module Scope :
+sig
+  val bigquery : string
+  (** View and manage your data in Google BigQuery *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module DatasetsResource :
 sig
@@ -187,6 +193,7 @@ sig
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_source:GapiMediaResource.t ->
     projectId:string ->
     GapiBigqueryV2Model.Job.t ->
     GapiConversation.Session.t ->
@@ -261,6 +268,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of results to return
+    @param pageToken Page token, returned by a previous call, identifying the result set
     @param startIndex Zero-based index of the starting row to read
     @param projectId Project ID of the table to read
     @param datasetId Dataset ID of the table to read
@@ -270,6 +278,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxResults:int ->
+    ?pageToken:string ->
     ?startIndex:string ->
     projectId:string ->
     datasetId:string ->

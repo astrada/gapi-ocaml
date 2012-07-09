@@ -1,13 +1,13 @@
 {
-  "creationTime": "long",
+  "creationTime": "12345678901",
   "description": "string",
   "etag": "etag",
   "friendlyName": "string",
   "id": "string",
   "kind": "bigquery#table",
-  "lastModifiedTime": "long",
-  "numBytes": "long",
-  "numRows": "unsigned long",
+  "lastModifiedTime": "12345678901",
+  "numBytes": "12345678901",
+  "numRows": "12345678901",
   "schema": {
     "fields": [
       {

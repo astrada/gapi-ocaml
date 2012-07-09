@@ -259,9 +259,7 @@ let test_download_revision () =
              assert_bool
                ("File " ^ filename ^ " should exist")
                (Sys.file_exists filename);
-             (*
              Sys.remove filename
-              *)
          with Not_found -> ())
 
 let test_get_acl () =

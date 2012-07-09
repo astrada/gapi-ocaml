@@ -16,7 +16,7 @@ let test_get_blog () =
            "blogger#blog"
            blog.Blog.kind;
          assert_equal
-           "2399953"
+           2399953L
            blog.Blog.id;
          assert_equal
            "Blogger Buzz"
@@ -37,14 +37,14 @@ let test_get_comment () =
            "blogger#comment"
            comment.Comment.kind;
          assert_equal
-           "3631289146393899451"
+           3631289146393899451L
            comment.Comment.id;
          assert_equal
-           "5310628572012276714"
-           Comment.(comment.post.PostData.id);
+           5310628572012276714L
+           Comment.(comment.post.Post.id);
          assert_equal
-           "2399953"
-           Comment.(comment.blog.BlogData.id))
+           2399953L
+           Comment.(comment.blog.Blog.id))
 
 let test_list_comments () =
   TestHelper.test_request
@@ -77,11 +77,11 @@ let test_get_page () =
            "blogger#page"
            page.Page.kind;
          assert_equal
-           "8251768148820290538"
+           8251768148820290538L
            page.Page.id;
          assert_equal
-           "2399953"
-           Page.(page.blog.BlogData.id))
+           2399953L
+           Page.(page.blog.Blog.id))
 
 let test_list_pages () =
   TestHelper.test_request
@@ -113,11 +113,11 @@ let test_get_post () =
            "blogger#post"
            post.Post.kind;
          assert_equal
-           "5310628572012276714"
+           5310628572012276714L
            post.Post.id;
          assert_equal
-           "2399953"
-           Post.(post.blog.BlogData.id))
+           2399953L
+           Post.(post.blog.Blog.id))
 
 let test_list_posts () =
   TestHelper.test_request

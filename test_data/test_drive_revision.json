@@ -1,0 +1,23 @@
+{
+  "downloadUrl": "string",
+  "etag": "etag",
+  "exportLinks": {
+    "key1": "string",
+    "key2": "string",
+    "key3": "string"
+  },
+  "fileSize": "123456789012345",
+  "id": "string",
+  "kind": "drive#revision",
+  "lastModifyingUserName": "string",
+  "md5Checksum": "string",
+  "mimeType": "string",
+  "modifiedDate": "2012-07-05T10:00:00.000Z",
+  "originalFilename": "string",
+  "pinned": true,
+  "publishAuto": true,
+  "published": true,
+  "publishedLink": "string",
+  "publishedOutsideDomain": true,
+  "selfLink": "string"
+}

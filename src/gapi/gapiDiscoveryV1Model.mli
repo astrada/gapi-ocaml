@@ -8,7 +8,7 @@
 
 module JsonSchema :
 sig
-  module AnnotationsData :
+  module Annotations :
   sig
     type t = {
       required : string list;
@@ -31,7 +31,7 @@ sig
     (** A reference to another schema. The value of this property is the "id" of another schema. *)
     additionalProperties : t option;
     (** If this is a schema for an object, this property is the schema for any additional properties with dynamic keys on this object. *)
-    annotations : AnnotationsData.t;
+    annotations : Annotations.t;
     (** Additional information about this property. *)
     default : string;
     (** The default value of this property (if one exists). *)
@@ -68,7 +68,7 @@ sig
   
   val _ref : (t, string) GapiLens.t
   val additionalProperties : (t, t option) GapiLens.t
-  val annotations : (t, AnnotationsData.t) GapiLens.t
+  val annotations : (t, Annotations.t) GapiLens.t
   val default : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val enum : (t, string list) GapiLens.t
@@ -99,7 +99,7 @@ end
 
 module RestMethod :
 sig
-  module ResponseData :
+  module Response :
   sig
     type t = {
       _ref : string;
@@ -117,7 +117,7 @@ sig
     
   end
   
-  module RequestData :
+  module Request :
   sig
     type t = {
       _ref : string;
@@ -135,11 +135,11 @@ sig
     
   end
   
-  module MediaUploadData :
+  module MediaUpload :
   sig
-    module ProtocolsData :
+    module Protocols :
     sig
-      module SimpleData :
+      module Simple :
       sig
         type t = {
           multipart : bool;
@@ -160,7 +160,7 @@ sig
         
       end
       
-      module ResumableData :
+      module Resumable :
       sig
         type t = {
           multipart : bool;
@@ -182,15 +182,15 @@ sig
       end
       
       type t = {
-        resumable : ResumableData.t;
+        resumable : Resumable.t;
         (** Supports the Resumable Media Upload protocol. *)
-        simple : SimpleData.t;
+        simple : Simple.t;
         (** Supports uploading as a single HTTP request. *)
         
       }
       
-      val resumable : (t, ResumableData.t) GapiLens.t
-      val simple : (t, SimpleData.t) GapiLens.t
+      val resumable : (t, Resumable.t) GapiLens.t
+      val simple : (t, Simple.t) GapiLens.t
       
       val empty : t
       
@@ -205,14 +205,14 @@ sig
       (** MIME Media Ranges for acceptable media uploads to this method. *)
       maxSize : string;
       (** Maximum size of a media upload, such as "1MB", "2GB" or "3TB". *)
-      protocols : ProtocolsData.t;
+      protocols : Protocols.t;
       (** Supported upload protocols. *)
       
     }
     
     val accept : (t, string list) GapiLens.t
     val maxSize : (t, string) GapiLens.t
-    val protocols : (t, ProtocolsData.t) GapiLens.t
+    val protocols : (t, Protocols.t) GapiLens.t
     
     val empty : t
     
@@ -229,7 +229,7 @@ sig
     (** HTTP method used by this method. *)
     id : string;
     (** A unique ID for this method. This property can be used to match methods between different versions of Discovery. *)
-    mediaUpload : MediaUploadData.t;
+    mediaUpload : MediaUpload.t;
     (** Media upload parameters. *)
     parameterOrder : string list;
     (** Ordered list of required parameters, serves as a hint to clients on how to structure their method signatures. The array is ordered such that the "most-significant" parameter appears first. *)
@@ -237,25 +237,34 @@ sig
     (** Details for all parameters in this method. *)
     path : string;
     (** The URI path of this REST method. Should be used in conjunction with the basePath property at the api-level. *)
-    request : RequestData.t;
+    request : Request.t;
     (** The schema for the request. *)
-    response : ResponseData.t;
+    response : Response.t;
     (** The schema for the response. *)
     scopes : string list;
     (** OAuth 2.0 scopes applicable to this method. *)
+    supportsMediaDownload : bool;
+    (** Whether this method supports media downloads. *)
+    supportsMediaUpload : bool;
+    (** Whether this method supports media uploads. *)
+    supportsSubscription : bool;
+    (** Whether this method supports subscriptions. *)
     
   }
   
   val description : (t, string) GapiLens.t
   val httpMethod : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
-  val mediaUpload : (t, MediaUploadData.t) GapiLens.t
+  val mediaUpload : (t, MediaUpload.t) GapiLens.t
   val parameterOrder : (t, string list) GapiLens.t
   val parameters : (t, (string * JsonSchema.t) list) GapiLens.t
   val path : (t, string) GapiLens.t
-  val request : (t, RequestData.t) GapiLens.t
-  val response : (t, ResponseData.t) GapiLens.t
+  val request : (t, Request.t) GapiLens.t
+  val response : (t, Response.t) GapiLens.t
   val scopes : (t, string list) GapiLens.t
+  val supportsMediaDownload : (t, bool) GapiLens.t
+  val supportsMediaUpload : (t, bool) GapiLens.t
+  val supportsSubscription : (t, bool) GapiLens.t
   
   val empty : t
   
@@ -296,7 +305,7 @@ end
 
 module RestDescription :
 sig
-  module IconsData :
+  module Icons :
   sig
     type t = {
       x16 : string;
@@ -317,11 +326,11 @@ sig
     
   end
   
-  module AuthData :
+  module Auth :
   sig
-    module Oauth2Data :
+    module Oauth2 :
     sig
-      module ScopesData :
+      module Scopes :
       sig
         type t = {
           description : string;
@@ -340,12 +349,12 @@ sig
       end
       
       type t = {
-        scopes : (string * ScopesData.t) list;
+        scopes : (string * Scopes.t) list;
         (** Available OAuth 2.0 scopes. *)
         
       }
       
-      val scopes : (t, (string * ScopesData.t) list) GapiLens.t
+      val scopes : (t, (string * Scopes.t) list) GapiLens.t
       
       val empty : t
       
@@ -356,12 +365,12 @@ sig
     end
     
     type t = {
-      oauth2 : Oauth2Data.t;
+      oauth2 : Oauth2.t;
       (** OAuth 2.0 authentication information. *)
       
     }
     
-    val oauth2 : (t, Oauth2Data.t) GapiLens.t
+    val oauth2 : (t, Oauth2.t) GapiLens.t
     
     val empty : t
     
@@ -372,7 +381,7 @@ sig
   end
   
   type t = {
-    auth : AuthData.t;
+    auth : Auth.t;
     (** Authentication information. *)
     basePath : string;
     (** [DEPRECATED] The base path for REST requests. *)
@@ -388,7 +397,7 @@ sig
     (** A link to human readable documentation for the API. *)
     features : string list;
     (** A list of supported features for this API. *)
-    icons : IconsData.t;
+    icons : Icons.t;
     (** Links to 16x16 and 32x32 icons representing the API. *)
     id : string;
     (** The id of this API. *)
@@ -421,7 +430,7 @@ sig
     
   }
   
-  val auth : (t, AuthData.t) GapiLens.t
+  val auth : (t, Auth.t) GapiLens.t
   val basePath : (t, string) GapiLens.t
   val baseUrl : (t, string) GapiLens.t
   val batchPath : (t, string) GapiLens.t
@@ -429,7 +438,7 @@ sig
   val discoveryVersion : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
   val features : (t, string list) GapiLens.t
-  val icons : (t, IconsData.t) GapiLens.t
+  val icons : (t, Icons.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val labels : (t, string list) GapiLens.t
@@ -459,9 +468,9 @@ end
 
 module DirectoryList :
 sig
-  module ItemsData :
+  module Items :
   sig
-    module IconsData :
+    module Icons :
     sig
       type t = {
         x16 : string;
@@ -491,7 +500,7 @@ sig
       (** The url for the discovery REST document. *)
       documentationLink : string;
       (** A link to human readable documentation for the API. *)
-      icons : IconsData.t;
+      icons : Icons.t;
       (** Links to 16x16 and 32x32 icons representing the API. *)
       id : string;
       (** The id of this API. *)
@@ -514,7 +523,7 @@ sig
     val discoveryLink : (t, string) GapiLens.t
     val discoveryRestUrl : (t, string) GapiLens.t
     val documentationLink : (t, string) GapiLens.t
-    val icons : (t, IconsData.t) GapiLens.t
+    val icons : (t, Icons.t) GapiLens.t
     val id : (t, string) GapiLens.t
     val kind : (t, string) GapiLens.t
     val labels : (t, string list) GapiLens.t
@@ -534,7 +543,7 @@ sig
   type t = {
     discoveryVersion : string;
     (** Indicate the version of the Discovery API used to generate this doc. *)
-    items : ItemsData.t list;
+    items : Items.t list;
     (** The individual directory entries. One entry per api/version pair. *)
     kind : string;
     (** The kind for this response. *)
@@ -542,7 +551,7 @@ sig
   }
   
   val discoveryVersion : (t, string) GapiLens.t
-  val items : (t, ItemsData.t list) GapiLens.t
+  val items : (t, Items.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   
   val empty : t

@@ -3,9 +3,14 @@
 open GapiUtils.Infix
 open GapiPlusV1Model
 
-let scope_me = "https://www.googleapis.com/auth/plus.me"
-
-let scope_email = "https://www.googleapis.com/auth/userinfo.email"
+module Scope =
+struct
+  let plus_me = "https://www.googleapis.com/auth/plus.me"
+  
+  let userinfo_email = "https://www.googleapis.com/auth/userinfo.email"
+  
+  
+end
 
 module ActivitiesResource =
 struct

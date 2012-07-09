@@ -5,11 +5,17 @@
   API for access to the data within Blogger..
   
   For more information about this service, see the
-  {{:https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/blogger/docs/2.0/json/getting_started}API Documentation}.
   *)
 
-(** Manage your Blogger account *)
-val scope : string
+module Scope :
+sig
+  val blogger : string
+  (** Manage your Blogger account *)
+  
+  
+end
+(** Service Auth Scopes *)
 
 module BlogsResource :
 sig
@@ -57,7 +63,7 @@ sig
     @param fetchBodies Whether the body content of the comments is included.
     @param maxResults Maximum number of comments to include in the result.
     @param pageToken Continuation token if request is paged.
-    @param startDate Earliest date of comment to fetch.
+    @param startDate Earliest date of comment to fetch, a date-time with RFC 3339 formatting.
     @param blogId ID of the blog to fetch comments from.
     @param postId ID of the post to fetch posts from.
     *)
@@ -67,7 +73,7 @@ sig
     ?fetchBodies:bool ->
     ?maxResults:int ->
     ?pageToken:string ->
-    ?startDate:string ->
+    ?startDate:GapiDate.t ->
     blogId:string ->
     postId:string ->
     GapiConversation.Session.t ->
@@ -137,7 +143,7 @@ sig
     @param fetchBodies Whether the body content of posts is included.
     @param maxResults Maximum number of posts to fetch.
     @param pageToken Continuation token if the request is paged.
-    @param startDate Earliest post date to fetch.
+    @param startDate Earliest post date to fetch, a date-time with RFC 3339 formatting.
     @param blogId ID of the blog to fetch posts from.
     *)
   val list :
@@ -146,7 +152,7 @@ sig
     ?fetchBodies:bool ->
     ?maxResults:int ->
     ?pageToken:string ->
-    ?startDate:string ->
+    ?startDate:GapiDate.t ->
     blogId:string ->
     GapiConversation.Session.t ->
     GapiBloggerV2Model.PostList.t * GapiConversation.Session.t

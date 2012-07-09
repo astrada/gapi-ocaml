@@ -46,6 +46,10 @@ let render_string_value ?(default = "") name value =
 let render_int_value ?(default = 0) name value =
   render_value name (Json_type.Int default) (Json_type.Int value)
 
+let render_int64_value ?(default = 0L) name value =
+  let to_json v = Json_type.String (Int64.to_string v) in
+    render_value name (to_json default) (to_json value)
+
 let render_bool_value ?(default = false) name value =
   render_value name (Json_type.Bool default) (Json_type.Bool value)
 

@@ -2,6 +2,11 @@
   *)
 
 exception NotModified of GapiConversation.Session.t
+exception PermissionDenied of GapiConversation.Session.t
+exception Forbidden of GapiConversation.Session.t
+exception NotFound of GapiConversation.Session.t
+exception Conflict of GapiConversation.Session.t
+exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception RefreshTokenFailed of GapiConversation.Session.t
 

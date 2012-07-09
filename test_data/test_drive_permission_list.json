@@ -1,0 +1,13 @@
+{
+  "etag": "etag",
+  "items": [
+    {
+      "etag": "etag",
+      "id": "string",
+      "kind": "drive#permission"
+    }
+  ],
+  "kind": "drive#permissionList",
+  "selfLink": "string"
+}
+

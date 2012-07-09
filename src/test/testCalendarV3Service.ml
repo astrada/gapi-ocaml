@@ -10,7 +10,7 @@ let acl_test_resource = {
   AclRule.empty with
       AclRule.kind = "calendar#acl";
       scope = {
-        AclRule.ScopeData._type = "user";
+        AclRule.Scope._type = "user";
         value = "test@example.com"
       };
       role = "reader"
@@ -531,7 +531,7 @@ let test_delete_event () =
        let (events, session) =
          EventsResource.list
            ~calendarId:"primary"
-           ~timeMin:"2011-12-19T00:00:00Z"
+           ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
            session in
        let ((), session) =
          EventsResource.delete
@@ -541,7 +541,7 @@ let test_delete_event () =
        let (events', _) =
          EventsResource.list
            ~calendarId:"primary"
-           ~timeMin:"2011-12-19T00:00:00Z"
+           ~timeMin:(GapiDate.of_string "2011-12-19T00:00:00Z")
            session
        in
          TestHelper.assert_exists

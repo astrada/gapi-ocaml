@@ -12,7 +12,7 @@ let get_project_id session =
     if (List.length projects.ProjectList.projects) > 0 then
       Some (projects.ProjectList.projects
               |> List.hd
-              |. ProjectList.ProjectsData.id)
+              |. ProjectList.Projects.id)
     else
       None
   in
@@ -124,9 +124,9 @@ let test_update_dataset () =
                   session in
               let () = TestHelper.delay () in
               let access =
-                { Dataset.AccessData.empty with
-                      Dataset.AccessData.role = "READER";
-                      Dataset.AccessData.domain = "example.com";
+                { Dataset.Access.empty with
+                      Dataset.Access.role = "READER";
+                      Dataset.Access.domain = "example.com";
                 } :: dataset.Dataset.access in
               let dataset_to_update = dataset
                 |> Dataset.access ^= access in
@@ -147,7 +147,7 @@ let test_update_dataset () =
                     session);
                 TestHelper.assert_exists
                   "Dataset update failed"
-                  (fun a -> a.Dataset.AccessData.domain = "example.com")
+                  (fun a -> a.Dataset.Access.domain = "example.com")
                   updated_dataset.Dataset.access)
            project_id)
 
@@ -272,7 +272,7 @@ let test_list_tabledata () =
            "bigquery#tableDataList"
            tabledata.TableDataList.kind;
          assert_equal
-           "164656"
+           164656L
            tabledata.TableDataList.totalRows;
          assert_equal
            5

@@ -8,18 +8,18 @@
 
 module Goal :
 sig
-  module VisitTimeOnSiteDetailsData :
+  module VisitTimeOnSiteDetails :
   sig
     type t = {
       comparisonType : string;
       (** Type of comparison. Possible values are LESS_THAN or GREATER_THAN. *)
-      comparisonValue : string;
+      comparisonValue : int64;
       (** Value used for this comparison. *)
       
     }
     
     val comparisonType : (t, string) GapiLens.t
-    val comparisonValue : (t, string) GapiLens.t
+    val comparisonValue : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -29,18 +29,18 @@ sig
     
   end
   
-  module VisitNumPagesDetailsData :
+  module VisitNumPagesDetails :
   sig
     type t = {
       comparisonType : string;
       (** Type of comparison. Possible values are LESS_THAN, GREATER_THAN, or EQUAL. *)
-      comparisonValue : string;
+      comparisonValue : int64;
       (** Value used for this comparison. *)
       
     }
     
     val comparisonType : (t, string) GapiLens.t
-    val comparisonValue : (t, string) GapiLens.t
+    val comparisonValue : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -50,9 +50,9 @@ sig
     
   end
   
-  module UrlDestinationDetailsData :
+  module UrlDestinationDetails :
   sig
-    module StepsData :
+    module Steps :
     sig
       type t = {
         name : string;
@@ -83,7 +83,7 @@ sig
       (** Determines if the first step in this goal is required. *)
       matchType : string;
       (** Match type for the goal URL. Possible values are HEAD, EXACT, or REGEX. *)
-      steps : StepsData.t list;
+      steps : Steps.t list;
       (** List of steps configured for this goal funnel. *)
       url : string;
       (** URL for this goal. *)
@@ -93,7 +93,7 @@ sig
     val caseSensitive : (t, bool) GapiLens.t
     val firstStepRequired : (t, bool) GapiLens.t
     val matchType : (t, string) GapiLens.t
-    val steps : (t, StepsData.t list) GapiLens.t
+    val steps : (t, Steps.t list) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -104,7 +104,7 @@ sig
     
   end
   
-  module ParentLinkData :
+  module ParentLink :
   sig
     type t = {
       href : string;
@@ -125,14 +125,14 @@ sig
     
   end
   
-  module EventDetailsData :
+  module EventDetails :
   sig
-    module EventConditionsData :
+    module EventConditions :
     sig
       type t = {
         comparisonType : string;
         (** Type of comparison. Possible values are LESS_THAN, GREATER_THAN or EQUAL. *)
-        comparisonValue : string;
+        comparisonValue : int64;
         (** Value used for this comparison. *)
         expression : string;
         (** Expression used for this match. *)
@@ -144,7 +144,7 @@ sig
       }
       
       val comparisonType : (t, string) GapiLens.t
-      val comparisonValue : (t, string) GapiLens.t
+      val comparisonValue : (t, int64) GapiLens.t
       val expression : (t, string) GapiLens.t
       val matchType : (t, string) GapiLens.t
       val _type : (t, string) GapiLens.t
@@ -158,14 +158,14 @@ sig
     end
     
     type t = {
-      eventConditions : EventConditionsData.t list;
+      eventConditions : EventConditions.t list;
       (** List of event conditions. *)
       useEventValue : bool;
       (** Determines if the event value should be used as the value for this goal. *)
       
     }
     
-    val eventConditions : (t, EventConditionsData.t list) GapiLens.t
+    val eventConditions : (t, EventConditions.t list) GapiLens.t
     val useEventValue : (t, bool) GapiLens.t
     
     val empty : t
@@ -183,7 +183,7 @@ sig
     (** Determines whether this goal is active. *)
     created : GapiDate.t;
     (** Time this goal was created. *)
-    eventDetails : EventDetailsData.t;
+    eventDetails : EventDetails.t;
     (** Details for the goal of the type EVENT. *)
     id : string;
     (** Goal ID. *)
@@ -193,7 +193,7 @@ sig
     (** Resource type for an Analytics goal. *)
     name : string;
     (** Goal name. *)
-    parentLink : ParentLinkData.t;
+    parentLink : ParentLink.t;
     (** Parent link for a goal. Points to the profile to which this goal belongs. *)
     profileId : string;
     (** Profile ID to which this goal belongs. *)
@@ -203,13 +203,13 @@ sig
     (** Goal type. Possible values are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES, AND EVENT. *)
     updated : GapiDate.t;
     (** Time this goal was last modified. *)
-    urlDestinationDetails : UrlDestinationDetailsData.t;
+    urlDestinationDetails : UrlDestinationDetails.t;
     (** Details for the goal of the type URL_DESTINATION. *)
     value : float;
     (** Goal value. *)
-    visitNumPagesDetails : VisitNumPagesDetailsData.t;
+    visitNumPagesDetails : VisitNumPagesDetails.t;
     (** Details for the goal of the type VISIT_NUM_PAGES. *)
-    visitTimeOnSiteDetails : VisitTimeOnSiteDetailsData.t;
+    visitTimeOnSiteDetails : VisitTimeOnSiteDetails.t;
     (** Details for the goal of the type VISIT_TIME_ON_SITE. *)
     webPropertyId : string;
     (** Web property ID to which this goal belongs. The web property ID is of the form UA-XXXXX-YY. *)
@@ -219,20 +219,20 @@ sig
   val accountId : (t, string) GapiLens.t
   val active : (t, bool) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
-  val eventDetails : (t, EventDetailsData.t) GapiLens.t
+  val eventDetails : (t, EventDetails.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
-  val parentLink : (t, ParentLinkData.t) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
   val profileId : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
-  val urlDestinationDetails : (t, UrlDestinationDetailsData.t) GapiLens.t
+  val urlDestinationDetails : (t, UrlDestinationDetails.t) GapiLens.t
   val value : (t, float) GapiLens.t
-  val visitNumPagesDetails : (t, VisitNumPagesDetailsData.t) GapiLens.t
-  val visitTimeOnSiteDetails : (t, VisitTimeOnSiteDetailsData.t) GapiLens.t
+  val visitNumPagesDetails : (t, VisitNumPagesDetails.t) GapiLens.t
+  val visitTimeOnSiteDetails : (t, VisitTimeOnSiteDetails.t) GapiLens.t
   val webPropertyId : (t, string) GapiLens.t
   
   val empty : t
@@ -335,7 +335,7 @@ end
 
 module GaData :
 sig
-  module QueryData :
+  module Query :
   sig
     type t = {
       dimensions : string;
@@ -380,7 +380,7 @@ sig
     
   end
   
-  module ProfileInfoData :
+  module ProfileInfo :
   sig
     type t = {
       accountId : string;
@@ -413,7 +413,7 @@ sig
     
   end
   
-  module ColumnHeadersData :
+  module ColumnHeaders :
   sig
     type t = {
       columnType : string;
@@ -438,7 +438,7 @@ sig
   end
   
   type t = {
-    columnHeaders : ColumnHeadersData.t list;
+    columnHeaders : ColumnHeaders.t list;
     (** Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request. *)
     containsSampledData : bool;
     (** Determines if Analytics data contains samples. *)
@@ -452,9 +452,9 @@ sig
     (** Link to next page for this Analytics data query. *)
     previousLink : string;
     (** Link to previous page for this Analytics data query. *)
-    profileInfo : ProfileInfoData.t;
+    profileInfo : ProfileInfo.t;
     (** Information for the profile, for which the Analytics data was requested. *)
-    query : QueryData.t;
+    query : Query.t;
     (** Analytics data request query parameters. *)
     rows : string list list;
     (** Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request. *)
@@ -467,15 +467,15 @@ sig
     
   }
   
-  val columnHeaders : (t, ColumnHeadersData.t list) GapiLens.t
+  val columnHeaders : (t, ColumnHeaders.t list) GapiLens.t
   val containsSampledData : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val itemsPerPage : (t, int) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextLink : (t, string) GapiLens.t
   val previousLink : (t, string) GapiLens.t
-  val profileInfo : (t, ProfileInfoData.t) GapiLens.t
-  val query : (t, QueryData.t) GapiLens.t
+  val profileInfo : (t, ProfileInfo.t) GapiLens.t
+  val query : (t, Query.t) GapiLens.t
   val rows : (t, string list list) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val totalResults : (t, int) GapiLens.t
@@ -495,7 +495,7 @@ end
 
 module Webproperty :
 sig
-  module ParentLinkData :
+  module ParentLink :
   sig
     type t = {
       href : string;
@@ -516,7 +516,7 @@ sig
     
   end
   
-  module ChildLinkData :
+  module ChildLink :
   sig
     type t = {
       href : string;
@@ -540,7 +540,7 @@ sig
   type t = {
     accountId : string;
     (** Account ID to which this web property belongs. *)
-    childLink : ChildLinkData.t;
+    childLink : ChildLink.t;
     (** Child link for this web property. Points to the list of profiles for this web property. *)
     created : GapiDate.t;
     (** Time this web property was created. *)
@@ -552,7 +552,7 @@ sig
     (** Resource type for Analytics WebProperty. *)
     name : string;
     (** Name of this web property. *)
-    parentLink : ParentLinkData.t;
+    parentLink : ParentLink.t;
     (** Parent link for this web property. Points to the account to which this web property belongs. *)
     selfLink : string;
     (** Link for this web property. *)
@@ -564,13 +564,13 @@ sig
   }
   
   val accountId : (t, string) GapiLens.t
-  val childLink : (t, ChildLinkData.t) GapiLens.t
+  val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
-  val parentLink : (t, ParentLinkData.t) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   val websiteUrl : (t, string) GapiLens.t
@@ -589,7 +589,7 @@ end
 
 module Profile :
 sig
-  module ParentLinkData :
+  module ParentLink :
   sig
     type t = {
       href : string;
@@ -610,7 +610,7 @@ sig
     
   end
   
-  module ChildLinkData :
+  module ChildLink :
   sig
     type t = {
       href : string;
@@ -634,7 +634,7 @@ sig
   type t = {
     accountId : string;
     (** Account ID to which this profile belongs. *)
-    childLink : ChildLinkData.t;
+    childLink : ChildLink.t;
     (** Child link for this profile. Points to the list of goals for this profile. *)
     created : GapiDate.t;
     (** Time this profile was created. *)
@@ -652,7 +652,7 @@ sig
     (** Resource type for Analytics profile. *)
     name : string;
     (** Name of this profile. *)
-    parentLink : ParentLinkData.t;
+    parentLink : ParentLink.t;
     (** Parent link for this profile. Points to the web property to which this profile belongs. *)
     selfLink : string;
     (** Link for this profile. *)
@@ -670,7 +670,7 @@ sig
   }
   
   val accountId : (t, string) GapiLens.t
-  val childLink : (t, ChildLinkData.t) GapiLens.t
+  val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val currency : (t, string) GapiLens.t
   val defaultPage : (t, string) GapiLens.t
@@ -679,7 +679,7 @@ sig
   val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
-  val parentLink : (t, ParentLinkData.t) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val siteSearchCategoryParameters : (t, string) GapiLens.t
   val siteSearchQueryParameters : (t, string) GapiLens.t
@@ -787,7 +787,7 @@ end
 
 module Account :
 sig
-  module ChildLinkData :
+  module ChildLink :
   sig
     type t = {
       href : string;
@@ -809,7 +809,7 @@ sig
   end
   
   type t = {
-    childLink : ChildLinkData.t;
+    childLink : ChildLink.t;
     (** Child link for an account entry. Points to the list of web properties for this account. *)
     created : GapiDate.t;
     (** Time the account was created. *)
@@ -826,7 +826,7 @@ sig
     
   }
   
-  val childLink : (t, ChildLinkData.t) GapiLens.t
+  val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t

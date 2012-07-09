@@ -3,12 +3,12 @@
 (** Data definition for Blogger API (v2).
   
   For more information about this data model, see the
-  {{:https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/blogger/docs/2.0/json/getting_started}API Documentation}.
   *)
 
 module Blog :
 sig
-  module PostsData :
+  module Posts :
   sig
     type t = {
       selfLink : string;
@@ -29,7 +29,7 @@ sig
     
   end
   
-  module PagesData :
+  module Pages :
   sig
     type t = {
       selfLink : string;
@@ -50,7 +50,7 @@ sig
     
   end
   
-  module LocaleData :
+  module Locale :
   sig
     type t = {
       country : string;
@@ -77,17 +77,17 @@ sig
   type t = {
     description : string;
     (** The description of this blog. This is displayed underneath the title. *)
-    id : string;
+    id : int64;
     (** The identifier for this resource. *)
     kind : string;
     (** The kind of this entry. Always blogger#blog *)
-    locale : LocaleData.t;
+    locale : Locale.t;
     (** The locale this Blog is set to. *)
     name : string;
     (** The name of this blog. This is displayed as the title. *)
-    pages : PagesData.t;
+    pages : Pages.t;
     (** The container of pages in this blog. *)
-    posts : PostsData.t;
+    posts : Posts.t;
     (** The container of posts in this blog. *)
     published : GapiDate.t;
     (** RFC 3339 date-time when this blog was published. *)
@@ -101,12 +101,12 @@ sig
   }
   
   val description : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val locale : (t, LocaleData.t) GapiLens.t
+  val locale : (t, Locale.t) GapiLens.t
   val name : (t, string) GapiLens.t
-  val pages : (t, PagesData.t) GapiLens.t
-  val posts : (t, PostsData.t) GapiLens.t
+  val pages : (t, Pages.t) GapiLens.t
+  val posts : (t, Posts.t) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -151,18 +151,18 @@ end
 
 module Post :
 sig
-  module RepliesData :
+  module Replies :
   sig
     type t = {
       selfLink : string;
       (** The URL of the comments on this post. *)
-      totalItems : string;
+      totalItems : int64;
       (** The count of comments on this post. *)
       
     }
     
     val selfLink : (t, string) GapiLens.t
-    val totalItems : (t, string) GapiLens.t
+    val totalItems : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -172,15 +172,15 @@ sig
     
   end
   
-  module BlogData :
+  module Blog :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the Blog that contains this Post. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -190,9 +190,9 @@ sig
     
   end
   
-  module AuthorData :
+  module Author :
   sig
-    module ImageData :
+    module Image :
     sig
       type t = {
         url : string;
@@ -215,7 +215,7 @@ sig
       (** The display name. *)
       id : string;
       (** The identifier of the Post creator. *)
-      image : ImageData.t;
+      image : Image.t;
       (** The Post author's avatar. *)
       url : string;
       (** The URL of the Post creator's Profile page. *)
@@ -224,7 +224,7 @@ sig
     
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
-    val image : (t, ImageData.t) GapiLens.t
+    val image : (t, Image.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -236,13 +236,13 @@ sig
   end
   
   type t = {
-    author : AuthorData.t;
+    author : Author.t;
     (** The author of this Post. *)
-    blog : BlogData.t;
+    blog : Blog.t;
     (** Data about the blog containing this Post. *)
     content : string;
     (** The content of the Post. May contain HTML markup. *)
-    id : string;
+    id : int64;
     (** The identifier of this Post. *)
     kind : string;
     (** The kind of this entity. Always blogger#post *)
@@ -250,7 +250,7 @@ sig
     (** The list of labels this Post was tagged with. *)
     published : GapiDate.t;
     (** RFC 3339 date-time when this Post was published. *)
-    replies : RepliesData.t;
+    replies : Replies.t;
     (** The container of comments on this Post. *)
     selfLink : string;
     (** The API REST URL to fetch this resource from. *)
@@ -263,14 +263,14 @@ sig
     
   }
   
-  val author : (t, AuthorData.t) GapiLens.t
-  val blog : (t, BlogData.t) GapiLens.t
+  val author : (t, Author.t) GapiLens.t
+  val blog : (t, Blog.t) GapiLens.t
   val content : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val kind : (t, string) GapiLens.t
   val labels : (t, string list) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
-  val replies : (t, RepliesData.t) GapiLens.t
+  val replies : (t, Replies.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -290,15 +290,15 @@ end
 
 module Comment :
 sig
-  module PostData :
+  module Post :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the post containing this comment. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -308,15 +308,15 @@ sig
     
   end
   
-  module InReplyToData :
+  module InReplyTo :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identified of the parent of this comment. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -326,15 +326,15 @@ sig
     
   end
   
-  module BlogData :
+  module Blog :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the blog containing this comment. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -344,9 +344,9 @@ sig
     
   end
   
-  module AuthorData :
+  module Author :
   sig
-    module ImageData :
+    module Image :
     sig
       type t = {
         url : string;
@@ -369,7 +369,7 @@ sig
       (** The display name. *)
       id : string;
       (** The identifier of the Comment creator. *)
-      image : ImageData.t;
+      image : Image.t;
       (** The comment creator's avatar. *)
       url : string;
       (** The URL of the Comment creator's Profile page. *)
@@ -378,7 +378,7 @@ sig
     
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
-    val image : (t, ImageData.t) GapiLens.t
+    val image : (t, Image.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -390,19 +390,19 @@ sig
   end
   
   type t = {
-    author : AuthorData.t;
+    author : Author.t;
     (** The author of this Comment. *)
-    blog : BlogData.t;
+    blog : Blog.t;
     (** Data about the blog containing this comment. *)
     content : string;
     (** The actual content of the comment. May include HTML markup. *)
-    id : string;
+    id : int64;
     (** The identifier for this resource. *)
-    inReplyTo : InReplyToData.t;
+    inReplyTo : InReplyTo.t;
     (** Data about the comment this is in reply to. *)
     kind : string;
     (** The kind of this entry. Always blogger#comment *)
-    post : PostData.t;
+    post : Post.t;
     (** Data about the post containing this comment. *)
     published : GapiDate.t;
     (** RFC 3339 date-time when this comment was published. *)
@@ -413,13 +413,13 @@ sig
     
   }
   
-  val author : (t, AuthorData.t) GapiLens.t
-  val blog : (t, BlogData.t) GapiLens.t
+  val author : (t, Author.t) GapiLens.t
+  val blog : (t, Blog.t) GapiLens.t
   val content : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
-  val inReplyTo : (t, InReplyToData.t) GapiLens.t
+  val id : (t, int64) GapiLens.t
+  val inReplyTo : (t, InReplyTo.t) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val post : (t, PostData.t) GapiLens.t
+  val post : (t, Post.t) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -500,15 +500,15 @@ end
 
 module Page :
 sig
-  module BlogData :
+  module Blog :
   sig
     type t = {
-      id : string;
+      id : int64;
       (** The identifier of the blog containing this page. *)
       
     }
     
-    val id : (t, string) GapiLens.t
+    val id : (t, int64) GapiLens.t
     
     val empty : t
     
@@ -518,9 +518,9 @@ sig
     
   end
   
-  module AuthorData :
+  module Author :
   sig
-    module ImageData :
+    module Image :
     sig
       type t = {
         url : string;
@@ -543,7 +543,7 @@ sig
       (** The display name. *)
       id : string;
       (** The identifier of the Page creator. *)
-      image : ImageData.t;
+      image : Image.t;
       (** The page author's avatar. *)
       url : string;
       (** The URL of the Page creator's Profile page. *)
@@ -552,7 +552,7 @@ sig
     
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
-    val image : (t, ImageData.t) GapiLens.t
+    val image : (t, Image.t) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -564,13 +564,13 @@ sig
   end
   
   type t = {
-    author : AuthorData.t;
+    author : Author.t;
     (** The author of this Page. *)
-    blog : BlogData.t;
+    blog : Blog.t;
     (** Data about the blog containing this Page. *)
     content : string;
     (** The body content of this Page, in HTML. *)
-    id : string;
+    id : int64;
     (** The identifier for this resource. *)
     kind : string;
     (** The kind of this entity. Always blogger#page *)
@@ -587,10 +587,10 @@ sig
     
   }
   
-  val author : (t, AuthorData.t) GapiLens.t
-  val blog : (t, BlogData.t) GapiLens.t
+  val author : (t, Author.t) GapiLens.t
+  val blog : (t, Blog.t) GapiLens.t
   val content : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val id : (t, int64) GapiLens.t
   val kind : (t, string) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
@@ -637,7 +637,7 @@ end
 
 module User :
 sig
-  module LocaleData :
+  module Locale :
   sig
     type t = {
       country : string;
@@ -661,7 +661,7 @@ sig
     
   end
   
-  module BlogsData :
+  module Blogs :
   sig
     type t = {
       selfLink : string;
@@ -682,7 +682,7 @@ sig
   type t = {
     about : string;
     (** Profile summary information. *)
-    blogs : BlogsData.t;
+    blogs : Blogs.t;
     (** The container of blogs for this user. *)
     created : GapiDate.t;
     (** The timestamp of when this profile was created, in seconds since epoch. *)
@@ -692,7 +692,7 @@ sig
     (** The identifier for this User. *)
     kind : string;
     (** The kind of this entity. Always blogger#user *)
-    locale : LocaleData.t;
+    locale : Locale.t;
     (** This user's locale *)
     selfLink : string;
     (** The API REST URL to fetch this resource from. *)
@@ -702,12 +702,12 @@ sig
   }
   
   val about : (t, string) GapiLens.t
-  val blogs : (t, BlogsData.t) GapiLens.t
+  val blogs : (t, Blogs.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val displayName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val locale : (t, LocaleData.t) GapiLens.t
+  val locale : (t, Locale.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val url : (t, string) GapiLens.t
   

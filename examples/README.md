@@ -8,3 +8,5 @@ each subdirectory named like a service, there are 2 files:
 * `samples.ml`: developer's guide samples
 * `monadic.ml`: developer's guide samples using monadic style
 
+See `auth/README.md` for details about the authorization process.
+
