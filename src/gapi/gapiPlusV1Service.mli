@@ -63,12 +63,14 @@ sig
   (** Get an activity.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param alt Specifies an alternative representation type.
     @param activityId The ID of the activity to get.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?alt:Alt.t ->
     activityId:string ->
@@ -151,11 +153,13 @@ sig
   (** Get a comment.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param commentId The ID of the comment to get.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     commentId:string ->
     GapiConversation.Session.t ->
@@ -204,11 +208,13 @@ sig
   (** Get a person's profile.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param userId The ID of the person to get the profile for. The special value "me" can be used to indicate the authenticated user.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     userId:string ->
     GapiConversation.Session.t ->

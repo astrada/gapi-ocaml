@@ -88,6 +88,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
+        ?etag
         ?std_params
         ~tasklist
         session =
@@ -97,7 +98,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map TasklistsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response TaskList.of_data_model) session 
     
   let insert
@@ -312,6 +313,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/tasks/v1/")
+        ?etag
         ?std_params
         ~tasklist
         ~task
@@ -322,7 +324,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map TasksParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Task.of_data_model) session 
     
   let insert

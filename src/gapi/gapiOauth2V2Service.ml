@@ -20,6 +20,7 @@ struct
     struct
       let get
             ?(base_url = "https://www.googleapis.com/")
+            ?etag
             ?std_params
             session =
         let full_url = GapiUtils.add_path_to_url ["userinfo"; "v2"; "me"]
@@ -28,7 +29,7 @@ struct
           ?standard_parameters:std_params () in
         let query_parameters = Option.map
           GapiService.StandardParameters.to_key_value_list params in
-        GapiService.get ?query_parameters full_url
+        GapiService.get ?query_parameters ?etag full_url
           (GapiJson.parse_json_response Userinfo.of_data_model) session 
         
       
@@ -37,14 +38,18 @@ struct
     
   end
   
-  let get ?(base_url = "https://www.googleapis.com/") ?std_params session =
+  let get
+        ?(base_url = "https://www.googleapis.com/")
+        ?etag
+        ?std_params
+        session =
     let full_url = GapiUtils.add_path_to_url ["oauth2"; "v2"; "userinfo"]
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Userinfo.of_data_model) session 
     
   

@@ -39,11 +39,13 @@ sig
   (** Returns the authenticated user's specified task list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/tasks/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param tasklist Task list identifier.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     tasklist:string ->
     GapiConversation.Session.t ->
@@ -141,12 +143,14 @@ sig
   (** Returns the specified task.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/tasks/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param tasklist Task list identifier.
     @param task Task identifier.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     tasklist:string ->
     task:string ->

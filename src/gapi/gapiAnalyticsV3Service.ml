@@ -114,6 +114,7 @@ struct
     
     let get
           ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?etag
           ?std_params
           ?dimensions
           ?filters
@@ -132,7 +133,7 @@ struct
         ?max_results ~metrics ?segment ?sort ~start_date ?start_index () in
       let query_parameters = Option.map GaParameters.to_key_value_list params
         in
-      GapiService.get ?query_parameters full_url
+      GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response GaData.of_data_model) session 
       
     

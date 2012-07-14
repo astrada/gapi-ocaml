@@ -25,6 +25,7 @@ sig
     (** Returns Analytics data for a profile.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param etag Optional ETag.
       @param std_params Optional standard parameters.
       @param dimensions A comma-separated list of Analytics dimensions. E.g., 'ga:browser,ga:city'.
       @param filters A comma-separated list of dimension or metric filters to be applied to Analytics data.
@@ -39,6 +40,7 @@ sig
       *)
     val get :
       ?base_url:string ->
+      ?etag:string ->
       ?std_params:GapiService.StandardParameters.t ->
       ?dimensions:string ->
       ?filters:string ->

@@ -148,6 +148,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?etag
         ?std_params
         ?(alt = Alt.Default)
         ~activityId
@@ -158,7 +159,7 @@ struct
       ?standard_parameters:std_params ~alt () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Activity.of_data_model) session 
     
   let list
@@ -310,6 +311,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?etag
         ?std_params
         ~commentId
         session =
@@ -319,7 +321,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map CommentsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
     
   let list
@@ -436,6 +438,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?etag
         ?std_params
         ~userId
         session =
@@ -445,7 +448,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map PeopleParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Person.of_data_model) session 
     
   let listByActivity

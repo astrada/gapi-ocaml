@@ -35,6 +35,7 @@ sig
   (** Gets the information about the current user along with Drive API settings
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param includeSubscribed Whether to include subscribed items when calculating the number of remaining change IDs
     @param maxChangeIdCount Maximum number of remaining change IDs to count
@@ -42,6 +43,7 @@ sig
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?includeSubscribed:bool ->
     ?maxChangeIdCount:string ->
@@ -75,11 +77,13 @@ sig
   (** Gets a specific change.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param changeId The ID of the change.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     changeId:string ->
     GapiConversation.Session.t ->
@@ -130,12 +134,14 @@ sig
   (** Gets a specific child reference.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param folderId The ID of the folder.
     @param childId The ID of the child.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     folderId:string ->
     childId:string ->
@@ -238,6 +244,7 @@ sig
   (** Gets a file's metadata by ID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param updateViewedDate Whether to update the view date after successfully retrieving the file.
     @param projection Restrict information returned for simplicity and optimization.
@@ -245,6 +252,7 @@ sig
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?updateViewedDate:bool ->
     ?projection:Projection.t ->
@@ -436,12 +444,14 @@ sig
   (** Gets a specific parent reference.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param fileId The ID of the file.
     @param parentId The ID of the parent.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     fileId:string ->
     parentId:string ->
@@ -499,12 +509,14 @@ sig
   (** Gets a permission by ID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     fileId:string ->
     permissionId:string ->
@@ -596,12 +608,14 @@ sig
   (** Gets a specific revision.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param fileId The ID of the file.
     @param revisionId The ID of the revision.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     fileId:string ->
     revisionId:string ->

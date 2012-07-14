@@ -23,11 +23,13 @@ sig
   (** Gets one blog by id.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/blogger/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param blogId The ID of the blog to get.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     blogId:string ->
     GapiConversation.Session.t ->
@@ -42,6 +44,7 @@ sig
   (** Gets one comment by id.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/blogger/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param blogId ID of the blog to containing the comment.
     @param postId ID of the post to fetch posts from.
@@ -49,6 +52,7 @@ sig
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     blogId:string ->
     postId:string ->
@@ -88,12 +92,14 @@ sig
   (** Gets one blog page by id.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/blogger/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param blogId ID of the blog containing the page.
     @param pageId The ID of the page to get.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     blogId:string ->
     pageId:string ->
@@ -124,12 +130,14 @@ sig
   (** Get a post by id.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/blogger/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param blogId ID of the blog to fetch the post from.
     @param postId The ID of the post
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     blogId:string ->
     postId:string ->
@@ -185,11 +193,13 @@ sig
   (** Gets one user by id.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/blogger/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param userId The ID of the user to get.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     userId:string ->
     GapiConversation.Session.t ->

@@ -31,6 +31,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?etag
         ?std_params
         ~calendarId
         ~ruleId
@@ -41,7 +42,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response AclRule.of_data_model) session 
     
   let insert
@@ -229,6 +230,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?etag
         ?std_params
         ~calendarId
         session =
@@ -238,7 +240,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response CalendarListEntry.of_data_model) session 
     
   let insert
@@ -350,6 +352,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?etag
         ?std_params
         ~calendarId
         session =
@@ -359,7 +362,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Calendar.of_data_model) session 
     
   let insert
@@ -421,6 +424,7 @@ module ColorsResource =
 struct
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?etag
         ?std_params
         session =
     let full_url = GapiUtils.add_path_to_url ["colors"] base_url in
@@ -428,7 +432,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Colors.of_data_model) session 
     
   
@@ -613,6 +617,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?etag
         ?std_params
         ?alwaysIncludeEmail
         ?maxAttendees
@@ -628,7 +633,7 @@ struct
       ?timeZone () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Event.of_data_model) session 
     
   let import
@@ -826,6 +831,7 @@ module SettingsResource =
 struct
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?etag
         ?std_params
         ~setting
         session =
@@ -835,7 +841,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Setting.of_data_model) session 
     
   let list

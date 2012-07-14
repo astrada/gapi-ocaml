@@ -85,6 +85,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ?(includeSubscribed = true)
         ?(maxChangeIdCount = "1")
@@ -96,7 +97,7 @@ struct
       ?startChangeId () in
     let query_parameters = Option.map AboutParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response About.of_data_model) session 
     
   
@@ -196,6 +197,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ~changeId
         session =
@@ -205,7 +207,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map ChangesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Change.of_data_model) session 
     
   let list
@@ -312,6 +314,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ~folderId
         ~childId
@@ -323,7 +326,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map ChildrenParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response ChildReference.of_data_model) session 
     
   let insert
@@ -550,6 +553,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ?(updateViewedDate = false)
         ?projection
@@ -561,7 +565,7 @@ struct
       ?standard_parameters:std_params ?projection ~updateViewedDate () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response File.of_data_model) session 
     
   let insert
@@ -740,6 +744,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ~fileId
         ~parentId
@@ -750,7 +755,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response ParentReference.of_data_model) session 
     
   let insert
@@ -859,6 +864,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ~fileId
         ~permissionId
@@ -869,7 +875,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
     
   let insert
@@ -965,6 +971,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
         ?std_params
         ~fileId
         ~revisionId
@@ -975,7 +982,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Revision.of_data_model) session 
     
   let list

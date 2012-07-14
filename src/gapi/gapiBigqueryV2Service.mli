@@ -40,12 +40,14 @@ sig
   (** Returns the dataset specified by datasetID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param projectId Project ID of the requested dataset
     @param datasetId Dataset ID of the requested dataset
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     projectId:string ->
     datasetId:string ->
@@ -151,12 +153,14 @@ sig
   (** Retrieves the specified job by ID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param projectId Project ID of the requested job
     @param jobId Job ID of the requested job
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     projectId:string ->
     jobId:string ->
@@ -312,6 +316,7 @@ sig
   (** Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param projectId Project ID of the requested table
     @param datasetId Dataset ID of the requested table
@@ -319,6 +324,7 @@ sig
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     projectId:string ->
     datasetId:string ->

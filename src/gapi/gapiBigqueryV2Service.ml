@@ -94,6 +94,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
+        ?etag
         ?std_params
         ~projectId
         ~datasetId
@@ -105,7 +106,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map DatasetsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Dataset.of_data_model) session 
     
   let insert
@@ -315,6 +316,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
+        ?etag
         ?std_params
         ~projectId
         ~jobId
@@ -325,7 +327,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map JobsParameters.to_key_value_list params
       in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Job.of_data_model) session 
     
   let getQueryResults
@@ -655,6 +657,7 @@ struct
     
   let get
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
+        ?etag
         ?std_params
         ~projectId
         ~datasetId
@@ -667,7 +670,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map TablesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Table.of_data_model) session 
     
   let insert

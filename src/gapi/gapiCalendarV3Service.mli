@@ -41,12 +41,14 @@ sig
   (** Returns an access control rule.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param calendarId Calendar identifier.
     @param ruleId ACL rule identifier.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     calendarId:string ->
     ruleId:string ->
@@ -149,11 +151,13 @@ sig
   (** Returns an entry on the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param calendarId Calendar identifier.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     calendarId:string ->
     GapiConversation.Session.t ->
@@ -253,11 +257,13 @@ sig
   (** Returns metadata for a calendar.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param calendarId Calendar identifier.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     calendarId:string ->
     GapiConversation.Session.t ->
@@ -312,10 +318,12 @@ sig
   (** Returns the color definitions for calendars and events.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Colors.t * GapiConversation.Session.t
@@ -359,6 +367,7 @@ sig
   (** Returns an event.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
@@ -368,6 +377,7 @@ sig
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?alwaysIncludeEmail:bool ->
     ?maxAttendees:int ->
@@ -580,11 +590,13 @@ sig
   (** Returns a single user setting.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param setting Name of the user setting.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     setting:string ->
     GapiConversation.Session.t ->

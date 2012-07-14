@@ -39,11 +39,13 @@ sig
   (** Get the most current data for a website or domain.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/siteVerification/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param id The id of a verified site or domain.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     id:string ->
     GapiConversation.Session.t ->

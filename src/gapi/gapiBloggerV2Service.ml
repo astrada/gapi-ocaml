@@ -14,6 +14,7 @@ module BlogsResource =
 struct
   let get
         ?(base_url = "https://www.googleapis.com/blogger/v2/")
+        ?etag
         ?std_params
         ~blogId
         session =
@@ -23,7 +24,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Blog.of_data_model) session 
     
   
@@ -101,6 +102,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/blogger/v2/")
+        ?etag
         ?std_params
         ~blogId
         ~postId
@@ -113,7 +115,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map CommentsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
     
   let list
@@ -196,6 +198,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/blogger/v2/")
+        ?etag
         ?std_params
         ~blogId
         ~pageId
@@ -206,7 +209,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map PagesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Page.of_data_model) session 
     
   let list
@@ -299,6 +302,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/blogger/v2/")
+        ?etag
         ?std_params
         ~blogId
         ~postId
@@ -309,7 +313,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map PostsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Post.of_data_model) session 
     
   let list
@@ -357,6 +361,7 @@ struct
   
   let get
         ?(base_url = "https://www.googleapis.com/blogger/v2/")
+        ?etag
         ?std_params
         ~userId
         session =
@@ -366,7 +371,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response User.of_data_model) session 
     
   

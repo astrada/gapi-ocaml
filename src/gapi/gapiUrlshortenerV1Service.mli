@@ -37,12 +37,14 @@ sig
   (** Expands a short URL or gets creation time and analytics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/urlshortener/v1/"]).
+    @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param projection Additional information to return.
     @param shortUrl The short URL, including the protocol.
     *)
   val get :
     ?base_url:string ->
+    ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?projection:Projection.t ->
     shortUrl:string ->
