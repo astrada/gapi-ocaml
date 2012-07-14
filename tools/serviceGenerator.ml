@@ -797,7 +797,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
           Format.fprintf formatter
             "@[<hov 2>GapiService.%s%s@ ?query_parameters@ "
             function_to_call apostrophe;
-          if is_etag_present then begin
+          if is_etag_present || id = "get" then begin
             Format.fprintf formatter "?etag@ ";
           end;
           if rest_method.RestMethod.supportsMediaUpload then begin
@@ -899,9 +899,13 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                      (State.service |-- RestDescription.baseUrl);
       lift_io (
         Format.fprintf formatter
-          "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ ?std_params@ "
+          "@[<v 2>let @[<hv 2>%s@ ?(base_url = \"%s\")@ "
           methd.Method.ocaml_name
           base_url;
+        if id = "get" then begin
+          Format.fprintf formatter "?etag@ ";
+        end;
+        Format.fprintf formatter "?std_params@ ";
         if rest_method.RestMethod.supportsMediaUpload then begin
           Format.fprintf formatter "?media_source@ ";
         end);
@@ -1265,9 +1269,15 @@ let rec generate_service_module_signature
         lift_io (
           (* Documentation *)
           Format.fprintf formatter
-            "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n@@param std_params Optional standard parameters.@\n"
+            "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n"
             methd.Method.description
             base_url;
+          if methd.Method.original_name = "get" then begin
+            Format.fprintf formatter
+              "@@param etag Optional ETag.@\n";
+          end;
+          Format.fprintf formatter
+            "@@param std_params Optional standard parameters.@\n";
           List.iter
             (fun id ->
                let { Field.ocaml_name; field_type; _ } =
@@ -1282,8 +1292,13 @@ let rec generate_service_module_signature
           Format.fprintf formatter "*)@]@\n";
           (* Declaration *)
           Format.fprintf formatter
-            "@[<hv 2>val %s :@ ?base_url:string ->@ ?std_params:GapiService.StandardParameters.t ->@ "
+            "@[<hv 2>val %s :@ ?base_url:string ->@ "
             methd.Method.ocaml_name;
+          if methd.Method.original_name = "get" then begin
+            Format.fprintf formatter "?etag:string ->@ ";
+          end;
+          Format.fprintf formatter
+            "?std_params:GapiService.StandardParameters.t ->@ ";
           if methd.Method.supports_media_upload then begin
             Format.fprintf formatter "?media_source:GapiMediaResource.t ->@ ";
           end;
