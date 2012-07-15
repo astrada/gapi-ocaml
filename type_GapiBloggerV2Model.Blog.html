@@ -52,6 +52,8 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
@@ -66,70 +68,66 @@
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
-&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">PostsData</span>&nbsp;:<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Posts</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;selfLink&nbsp;:&nbsp;string;&nbsp;totalItems&nbsp;:&nbsp;int;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">PagesData</span>&nbsp;:<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Pages</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;selfLink&nbsp;:&nbsp;string;&nbsp;totalItems&nbsp;:&nbsp;int;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalItems&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">LocaleData</span>&nbsp;:<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Locale</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;country&nbsp;:&nbsp;string;&nbsp;language&nbsp;:&nbsp;string;&nbsp;variant&nbsp;:&nbsp;string;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;country&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;language&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;variant&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;country&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;language&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;variant&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;int64;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;locale&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;locale&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pages&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;posts&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pages&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;posts&nbsp;:&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;published&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;updated&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;locale&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">LocaleData</span>.t)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Locale</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;name&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pages&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PagesData</span>.t)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Pages</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;posts&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">PostsData</span>.t)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.<span class="constructor">Posts</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;published&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;updated&nbsp;:&nbsp;(<span class="constructor">GapiBloggerV2Model</span>.<span class="constructor">Blog</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>

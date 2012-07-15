@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
+<link rel="previous" href="GapiBigqueryV2Service.Scope.html">
 <link rel="next" href="GapiBigqueryV2Service.JobsResource.html">
 <link rel="Up" href="GapiBigqueryV2Service.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -56,6 +57,8 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
@@ -69,7 +72,8 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Service.DatasetsResource</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GapiBigqueryV2Service.html">Up</a>
+<div class="navbar"><a href="GapiBigqueryV2Service.Scope.html">Previous</a>
+&nbsp;<a href="GapiBigqueryV2Service.html">Up</a>
 &nbsp;<a href="GapiBigqueryV2Service.JobsResource.html">Next</a>
 </div>
 <center><h1>Module <a href="type_GapiBigqueryV2Service.DatasetsResource.html">GapiBigqueryV2Service.DatasetsResource</a></h1></center>
@@ -83,10 +87,11 @@ Deletes the dataset specified by datasetId value. Before you can delete a datase
 <div class="param_info"><code class="code">deleteContents</code> : If True, delete all the tables in the dataset. If False and the dataset contains tables, the request will fail. Default is False</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the dataset being deleted</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of dataset being deleted</div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Dataset.html#TYPEt">GapiBigqueryV2Model.Dataset.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Dataset.html#TYPEt">GapiBigqueryV2Model.Dataset.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns the dataset specified by datasetID.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
+<div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the requested dataset</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the requested dataset</div>

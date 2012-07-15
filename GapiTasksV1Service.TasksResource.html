@@ -56,6 +56,8 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
@@ -88,10 +90,11 @@ Deletes the specified task from the task list.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">tasklist</code> : Task list identifier.</div>
 <div class="param_info"><code class="code">task</code> : Task identifier.</div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       tasklist:string -><br>       task:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiTasksV1Model.Task.html#TYPEt">GapiTasksV1Model.Task.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       tasklist:string -><br>       task:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiTasksV1Model.Task.html#TYPEt">GapiTasksV1Model.Task.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns the specified task.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/tasks/v1/"</code>).</div>
+<div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">tasklist</code> : Task list identifier.</div>
 <div class="param_info"><code class="code">task</code> : Task identifier.</div>
@@ -103,7 +106,7 @@ Creates a new task on the specified task list.<br>
 <div class="param_info"><code class="code">parent</code> : Parent task identifier. If the task is created at the top level, this parameter is omitted. Optional.</div>
 <div class="param_info"><code class="code">previous</code> : Previous sibling task identifier. If the task is created at the first position among its siblings, this parameter is omitted. Optional.</div>
 <div class="param_info"><code class="code">tasklist</code> : Task list identifier.</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?completedMax:string -><br>       ?completedMin:string -><br>       ?dueMax:string -><br>       ?dueMin:string -><br>       ?maxResults:string -><br>       ?pageToken:string -><br>       ?showCompleted:bool -><br>       ?showDeleted:bool -><br>       ?showHidden:bool -><br>       ?updatedMin:string -><br>       tasklist:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiTasksV1Model.Tasks.html#TYPEt">GapiTasksV1Model.Tasks.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?completedMax:string -><br>       ?completedMin:string -><br>       ?dueMax:string -><br>       ?dueMin:string -><br>       ?maxResults:int64 -><br>       ?pageToken:string -><br>       ?showCompleted:bool -><br>       ?showDeleted:bool -><br>       ?showHidden:bool -><br>       ?updatedMin:string -><br>       tasklist:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiTasksV1Model.Tasks.html#TYPEt">GapiTasksV1Model.Tasks.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns all tasks in the specified task list.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/tasks/v1/"</code>).</div>

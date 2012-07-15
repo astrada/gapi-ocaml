@@ -57,6 +57,8 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
@@ -77,10 +79,11 @@
 <center><h1>Module <a href="type_GapiBigqueryV2Service.JobsResource.html">GapiBigqueryV2Service.JobsResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> JobsResource: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBigqueryV2Service.JobsResource.StateFilter.html">StateFilter</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.StateFilter.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBigqueryV2Service.JobsResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.Projection.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       jobId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span class="keyword">module</span> <a href="GapiBigqueryV2Service.JobsResource.StateFilter.html">StateFilter</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.StateFilter.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBigqueryV2Service.JobsResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.Projection.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       jobId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Retrieves the specified job by ID.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
+<div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the requested job</div>
 <div class="param_info"><code class="code">jobId</code> : Job ID of the requested job</div>
@@ -94,7 +97,7 @@ Retrieves the results of a query job.<br>
 <div class="param_info"><code class="code">timeoutMs</code> : How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the query job</div>
 <div class="param_info"><code class="code">jobId</code> : Job ID of the query job</div>
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       projectId:string -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Starts a new asynchronous job.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>

@@ -57,6 +57,8 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
@@ -81,11 +83,10 @@
 
   OAuth2 API.<br>
 <hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiOauth2V2Service.UserinfoResource.html">UserinfoResource</a>: <code class="code">sig</code> <a href="GapiOauth2V2Service.UserinfoResource.html">..</a> <code class="code">end</code></pre><pre><span id="VALissueTokenGet"><span class="keyword">val</span> issueTokenGet</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?alg:string -><br>       ?android_device_id:string -><br>       ?app_id:string -><br>       ?audience:string -><br>       ?force:bool -><br>       ?hl:string -><br>       ?origin:string -><br>       client_id:string -><br>       response_type:string -><br>       scope:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiOauth2V2Model.Oauth2IssueTokenV2Response.html#TYPEt">GapiOauth2V2Model.Oauth2IssueTokenV2Response.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span class="keyword">module</span> <a href="GapiOauth2V2Service.Scope.html">Scope</a>: <code class="code">sig</code> <a href="GapiOauth2V2Service.Scope.html">..</a> <code class="code">end</code></pre><div class="info">
+Service Auth Scopes
 </div>
-<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/"</code>).</div>
-<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<pre><span id="VALtokeninfo"><span class="keyword">val</span> tokeninfo</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?access_token:string -><br>       ?id_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">GapiOauth2V2Model.Tokeninfo.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span class="keyword">module</span> <a href="GapiOauth2V2Service.UserinfoResource.html">UserinfoResource</a>: <code class="code">sig</code> <a href="GapiOauth2V2Service.UserinfoResource.html">..</a> <code class="code">end</code></pre><pre><span id="VALtokeninfo"><span class="keyword">val</span> tokeninfo</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?access_token:string -><br>       ?id_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">GapiOauth2V2Model.Tokeninfo.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>

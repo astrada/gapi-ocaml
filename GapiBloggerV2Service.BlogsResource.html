@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
+<link rel="previous" href="GapiBloggerV2Service.Scope.html">
 <link rel="next" href="GapiBloggerV2Service.CommentsResource.html">
 <link rel="Up" href="GapiBloggerV2Service.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -56,6 +57,8 @@
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
 <link title="GdataCore" rel="Chapter" href="GdataCore.html">
 <link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
@@ -69,16 +72,18 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBloggerV2Service.BlogsResource</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GapiBloggerV2Service.html">Up</a>
+<div class="navbar"><a href="GapiBloggerV2Service.Scope.html">Previous</a>
+&nbsp;<a href="GapiBloggerV2Service.html">Up</a>
 &nbsp;<a href="GapiBloggerV2Service.CommentsResource.html">Next</a>
 </div>
 <center><h1>Module <a href="type_GapiBloggerV2Service.BlogsResource.html">GapiBloggerV2Service.BlogsResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> BlogsResource: <code class="code">sig</code> <a href="GapiBloggerV2Service.BlogsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       blogId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBloggerV2Model.Blog.html#TYPEt">GapiBloggerV2Model.Blog.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       blogId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBloggerV2Model.Blog.html#TYPEt">GapiBloggerV2Model.Blog.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Gets one blog by id.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/blogger/v2/"</code>).</div>
+<div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">blogId</code> : The ID of the blog to get.</div>
 </body></html>
