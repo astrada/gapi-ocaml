@@ -263,6 +263,7 @@ let with_curl
     try
       let result =
         with_session
+          ?auth_context
           config
           curl_state
           interact in
