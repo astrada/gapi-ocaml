@@ -15,13 +15,16 @@ open GapiTasksV1Service
 
 let application_name = "YOUR_APPLICATION_NAME"
 
-let configuration = GapiConfig.default
-    |> GapiConfig.application_name ^= application_name
-
 (* The clientId and clientSecret are copied from the API Access tab on
  * the Google APIs Console *)
 let client_id = "YOUR_CLIENT_ID"
 let client_secret = "YOUR_CLIENT_SECRET"
+
+let configuration = GapiConfig.default
+    |> GapiConfig.application_name ^= application_name
+    |> GapiConfig.auth ^= GapiConfig.OAuth2
+                            { GapiConfig.client_id;
+                              client_secret }
 
 (* Or your redirect URL for web based applications. *)
 let redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
