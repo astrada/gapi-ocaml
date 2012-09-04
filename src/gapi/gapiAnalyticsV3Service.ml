@@ -5,6 +5,8 @@ open GapiAnalyticsV3Model
 
 module Scope =
 struct
+  let analytics = "https://www.googleapis.com/auth/analytics"
+  
   let analytics_readonly = "https://www.googleapis.com/auth/analytics.readonly"
   
   
@@ -135,6 +137,127 @@ struct
         in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response GaData.of_data_model) session 
+      
+    
+  end
+  
+  module Mcf =
+  struct
+    module McfParameters =
+    struct
+      type t = {
+        (* Standard query parameters *)
+        fields : string;
+        prettyPrint : bool;
+        quotaUser : string;
+        userIp : string;
+        key : string;
+        (* mcf-specific query parameters *)
+        dimensions : string;
+        end_date : string;
+        filters : string;
+        ids : string;
+        max_results : int;
+        metrics : string;
+        sort : string;
+        start_date : string;
+        start_index : int;
+        
+      }
+      
+      let default = {
+        fields = "";
+        prettyPrint = true;
+        quotaUser = "";
+        userIp = "";
+        key = "";
+        dimensions = "";
+        end_date = "";
+        filters = "";
+        ids = "";
+        max_results = 0;
+        metrics = "";
+        sort = "";
+        start_date = "";
+        start_index = 0;
+        
+      }
+      
+      let to_key_value_list qp =
+        let param get_value to_string name =
+          GapiService.build_param default qp get_value to_string name in [
+        param (fun p -> p.fields) (fun x -> x) "fields";
+        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+        param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+        param (fun p -> p.userIp) (fun x -> x) "userIp";
+        param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.dimensions) (fun x -> x) "dimensions";
+        param (fun p -> p.end_date) (fun x -> x) "end-date";
+        param (fun p -> p.filters) (fun x -> x) "filters";
+        param (fun p -> p.ids) (fun x -> x) "ids";
+        param (fun p -> p.max_results) string_of_int "max-results";
+        param (fun p -> p.metrics) (fun x -> x) "metrics";
+        param (fun p -> p.sort) (fun x -> x) "sort";
+        param (fun p -> p.start_date) (fun x -> x) "start-date";
+        param (fun p -> p.start_index) string_of_int "start-index";
+        
+      ] |> List.concat
+      
+      let merge_parameters
+          ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(dimensions = default.dimensions)
+          ?(end_date = default.end_date)
+          ?(filters = default.filters)
+          ?(ids = default.ids)
+          ?(max_results = default.max_results)
+          ?(metrics = default.metrics)
+          ?(sort = default.sort)
+          ?(start_date = default.start_date)
+          ?(start_index = default.start_index)
+          () =
+        let parameters = {
+          fields = standard_parameters.GapiService.StandardParameters.fields;
+          prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+          quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+          userIp = standard_parameters.GapiService.StandardParameters.userIp;
+          key = standard_parameters.GapiService.StandardParameters.key;
+          dimensions;
+          end_date;
+          filters;
+          ids;
+          max_results;
+          metrics;
+          sort;
+          start_date;
+          start_index;
+          
+        } in
+        if parameters = default then None else Some parameters
+      
+    end
+    
+    let get
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?etag
+          ?std_params
+          ?dimensions
+          ?filters
+          ?max_results
+          ?sort
+          ?start_index
+          ~ids
+          ~start_date
+          ~end_date
+          ~metrics
+          session =
+      let full_url = GapiUtils.add_path_to_url ["data"; "mcf"] base_url in
+      let params = McfParameters.merge_parameters
+        ?standard_parameters:std_params ?dimensions ~end_date ?filters ~ids
+        ?max_results ~metrics ?sort ~start_date ?start_index () in
+      let query_parameters = Option.map McfParameters.to_key_value_list
+        params in
+      GapiService.get ?query_parameters ?etag full_url
+        (GapiJson.parse_json_response McfData.of_data_model) session 
       
     
   end

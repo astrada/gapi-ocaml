@@ -54,7 +54,7 @@ sig
     minimum : string;
     (** The minimum value of this parameter. *)
     pattern : string;
-    (** The regular expression this parameter must conform to. *)
+    (** The regular expression this parameter must conform to. Uses Java 6 regex format: http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html *)
     properties : (string * t) list;
     (** If this is a schema for an object, list the schema for each property of this object. *)
     repeated : bool;
@@ -389,6 +389,8 @@ sig
     (** [DEPRECATED] The base URL for REST requests. *)
     batchPath : string;
     (** The path for REST batch requests. *)
+    canonicalName : string;
+    (** Indicates how the API name should be capitalized and split into various parts. Useful for generating pretty class names. *)
     description : string;
     (** The description of this API. *)
     discoveryVersion : string;
@@ -434,6 +436,7 @@ sig
   val basePath : (t, string) GapiLens.t
   val baseUrl : (t, string) GapiLens.t
   val batchPath : (t, string) GapiLens.t
+  val canonicalName : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val discoveryVersion : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t

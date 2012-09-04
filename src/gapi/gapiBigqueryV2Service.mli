@@ -13,6 +13,15 @@ sig
   val bigquery : string
   (** View and manage your data in Google BigQuery *)
   
+  val devstorage_full_control : string
+  (** Manage your data and permissions in Google Cloud Storage *)
+  
+  val devstorage_read_only : string
+  (** View your data in Google Cloud Storage *)
+  
+  val devstorage_read_write : string
+  (** Manage your data in Google Cloud Storage *)
+  
   
 end
 (** Service Auth Scopes *)

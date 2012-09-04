@@ -156,6 +156,7 @@ struct
       userIp : string;
       key : string;
       (* calendarList-specific query parameters *)
+      colorRgbFormat : bool;
       maxResults : int;
       minAccessRole : MinAccessRole.t;
       pageToken : string;
@@ -169,6 +170,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      colorRgbFormat = false;
       maxResults = 0;
       minAccessRole = MinAccessRole.Default;
       pageToken = "";
@@ -184,6 +186,7 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.colorRgbFormat) string_of_bool "colorRgbFormat";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.minAccessRole) MinAccessRole.to_string "minAccessRole";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
@@ -193,6 +196,7 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(colorRgbFormat = default.colorRgbFormat)
         ?(maxResults = default.maxResults)
         ?(minAccessRole = default.minAccessRole)
         ?(pageToken = default.pageToken)
@@ -204,6 +208,7 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        colorRgbFormat;
         maxResults;
         minAccessRole;
         pageToken;
@@ -246,6 +251,7 @@ struct
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?colorRgbFormat
         calendarListEntry
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList"]
@@ -253,7 +259,7 @@ struct
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?colorRgbFormat () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
@@ -282,6 +288,7 @@ struct
   let patch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?colorRgbFormat
         ~calendarId
         calendarListEntry
         session =
@@ -290,7 +297,7 @@ struct
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?colorRgbFormat () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
@@ -301,6 +308,7 @@ struct
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?colorRgbFormat
         ~calendarId
         calendarListEntry
         session =
@@ -309,7 +317,7 @@ struct
     let etag = GapiUtils.etag_option calendarListEntry.CalendarListEntry.etag
       in
     let params = CalendarListParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?colorRgbFormat () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag

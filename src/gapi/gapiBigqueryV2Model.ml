@@ -884,11 +884,13 @@ end
 module JobConfigurationLoad =
 struct
   type t = {
+    allowQuotedNewlines : bool;
     createDisposition : string;
     destinationTable : TableReference.t;
     encoding : string;
     fieldDelimiter : string;
     maxBadRecords : int;
+    quote : string;
     schema : TableSchema.t;
     schemaInline : string;
     schemaInlineFormat : string;
@@ -898,6 +900,10 @@ struct
     
   }
   
+  let allowQuotedNewlines = {
+    GapiLens.get = (fun x -> x.allowQuotedNewlines);
+    GapiLens.set = (fun v x -> { x with allowQuotedNewlines = v });
+  }
   let createDisposition = {
     GapiLens.get = (fun x -> x.createDisposition);
     GapiLens.set = (fun v x -> { x with createDisposition = v });
@@ -917,6 +923,10 @@ struct
   let maxBadRecords = {
     GapiLens.get = (fun x -> x.maxBadRecords);
     GapiLens.set = (fun v x -> { x with maxBadRecords = v });
+  }
+  let quote = {
+    GapiLens.get = (fun x -> x.quote);
+    GapiLens.set = (fun v x -> { x with quote = v });
   }
   let schema = {
     GapiLens.get = (fun x -> x.schema);
@@ -944,11 +954,13 @@ struct
   }
   
   let empty = {
+    allowQuotedNewlines = false;
     createDisposition = "";
     destinationTable = TableReference.empty;
     encoding = "";
     fieldDelimiter = "";
     maxBadRecords = 0;
+    quote = "";
     schema = TableSchema.empty;
     schemaInline = "";
     schemaInlineFormat = "";
@@ -960,11 +972,13 @@ struct
   
   let rec render_content x = 
      [
+      GapiJson.render_bool_value "allowQuotedNewlines" x.allowQuotedNewlines;
       GapiJson.render_string_value "createDisposition" x.createDisposition;
       (fun v -> GapiJson.render_object "destinationTable" (TableReference.render_content v)) x.destinationTable;
       GapiJson.render_string_value "encoding" x.encoding;
       GapiJson.render_string_value "fieldDelimiter" x.fieldDelimiter;
       GapiJson.render_int_value "maxBadRecords" x.maxBadRecords;
+      GapiJson.render_string_value "quote" x.quote;
       (fun v -> GapiJson.render_object "schema" (TableSchema.render_content v)) x.schema;
       GapiJson.render_string_value "schemaInline" x.schemaInline;
       GapiJson.render_string_value "schemaInlineFormat" x.schemaInlineFormat;
@@ -977,6 +991,10 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "allowQuotedNewlines"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with allowQuotedNewlines = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "createDisposition"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -1001,6 +1019,10 @@ struct
         ({ GapiJson.name = "maxBadRecords"; data_type = GapiJson.Scalar },
         Json_type.Int v) ->
       { x with maxBadRecords = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "quote"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with quote = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "schema"; data_type = GapiJson.Object },
         cs) ->
@@ -2461,6 +2483,7 @@ module QueryRequest =
 struct
   type t = {
     defaultDataset : DatasetReference.t;
+    dryRun : bool;
     kind : string;
     maxResults : int;
     query : string;
@@ -2471,6 +2494,10 @@ struct
   let defaultDataset = {
     GapiLens.get = (fun x -> x.defaultDataset);
     GapiLens.set = (fun v x -> { x with defaultDataset = v });
+  }
+  let dryRun = {
+    GapiLens.get = (fun x -> x.dryRun);
+    GapiLens.set = (fun v x -> { x with dryRun = v });
   }
   let kind = {
     GapiLens.get = (fun x -> x.kind);
@@ -2491,6 +2518,7 @@ struct
   
   let empty = {
     defaultDataset = DatasetReference.empty;
+    dryRun = false;
     kind = "";
     maxResults = 0;
     query = "";
@@ -2501,6 +2529,7 @@ struct
   let rec render_content x = 
      [
       (fun v -> GapiJson.render_object "defaultDataset" (DatasetReference.render_content v)) x.defaultDataset;
+      GapiJson.render_bool_value "dryRun" x.dryRun;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_int_value "maxResults" x.maxResults;
       GapiJson.render_string_value "query" x.query;
@@ -2519,6 +2548,10 @@ struct
         DatasetReference.empty
         (fun v -> { x with defaultDataset = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "dryRun"; data_type = GapiJson.Scalar },
+        Json_type.Bool v) ->
+      { x with dryRun = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         Json_type.String v) ->

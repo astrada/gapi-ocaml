@@ -346,6 +346,8 @@ end
 module JobConfigurationLoad :
 sig
   type t = {
+    allowQuotedNewlines : bool;
+    (** [Experimental] Whether to allow quoted newlines in the source CSV data. *)
     createDisposition : string;
     (** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. *)
     destinationTable : TableReference.t;
@@ -353,9 +355,11 @@ sig
     encoding : string;
     (** [Optional] Character encoding of the input data. May be UTF-8 or ISO-8859-1. Default is UTF-8. *)
     fieldDelimiter : string;
-    (** [Optional] Delimiter to use between fields in the import data. Default is ',' *)
+    (** [Optional] Delimiter to use between fields in the import data. Default is ','. Note that delimiters are applied to the raw, binary data before the encoding is applied. *)
     maxBadRecords : int;
     (** [Optional] Maximum number of bad records that should be ignored before the entire job is aborted and no updates are performed. *)
+    quote : string;
+    (** [Optional] Quote character to use. Default is '"'. Note that quoting is done on the raw, binary data before the encoding is applied. *)
     schema : TableSchema.t;
     (** [Optional] Schema of the table being written to. *)
     schemaInline : string;
@@ -371,11 +375,13 @@ sig
     
   }
   
+  val allowQuotedNewlines : (t, bool) GapiLens.t
   val createDisposition : (t, string) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
   val encoding : (t, string) GapiLens.t
   val fieldDelimiter : (t, string) GapiLens.t
   val maxBadRecords : (t, int) GapiLens.t
+  val quote : (t, string) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
   val schemaInline : (t, string) GapiLens.t
   val schemaInlineFormat : (t, string) GapiLens.t
@@ -430,7 +436,7 @@ sig
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
     priority : string;
-    (** [Experimental] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH, which may be subject to looser quota restrictions. *)
+    (** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH, which may be subject to looser quota restrictions. *)
     query : string;
     (** [Required] BigQuery SQL query to execute. *)
     writeDisposition : string;
@@ -842,7 +848,7 @@ sig
     jobComplete : bool;
     (** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. *)
     jobReference : JobReference.t;
-    (** Reference to the Helix Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults). *)
+    (** Reference to the BigQuery Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults). *)
     kind : string;
     (** The resource type of the response. *)
     rows : TableRow.t list;
@@ -879,6 +885,8 @@ sig
   type t = {
     defaultDataset : DatasetReference.t;
     (** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be fully-qualified in the format projectId:datasetId.tableid. *)
+    dryRun : bool;
+    (** [Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. *)
     kind : string;
     (** The resource type of the request. *)
     maxResults : int;
@@ -891,6 +899,7 @@ sig
   }
   
   val defaultDataset : (t, DatasetReference.t) GapiLens.t
+  val dryRun : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val maxResults : (t, int) GapiLens.t
   val query : (t, string) GapiLens.t

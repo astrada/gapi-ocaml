@@ -44,7 +44,6 @@
       "selfLink": "string"
     }
   ],
-  "permissionsLink": "string",
   "quotaBytesUsed": "123456",
   "selfLink": "string",
   "sharedWithMeDate": "2012-06-30T10:00:00.000Z",

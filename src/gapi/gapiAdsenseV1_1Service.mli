@@ -5,7 +5,7 @@
   Gives AdSense publishers access to their inventory and the ability to generate reports.
   
   For more information about this service, see the
-  {{:https://code.google.com/apis/adsense/management/}API Documentation}.
+  {{:https://developers.google.com/adsense/management/}API Documentation}.
   *)
 
 module Scope :

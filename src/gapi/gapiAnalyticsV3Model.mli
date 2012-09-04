@@ -666,6 +666,8 @@ sig
     (** Time this profile was last modified. *)
     webPropertyId : string;
     (** Web property ID of the form UA-XXXXX-YY to which this profile belongs. *)
+    websiteUrl : string;
+    (** Website URL for this profile. *)
     
   }
   
@@ -686,6 +688,7 @@ sig
   val timezone : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   val webPropertyId : (t, string) GapiLens.t
+  val websiteUrl : (t, string) GapiLens.t
   
   val empty : t
   
@@ -876,6 +879,208 @@ sig
   val startIndex : (t, int) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module McfData :
+sig
+  module Rows :
+  sig
+    module ConversionPathValue :
+    sig
+      type t = {
+        interactionType : string;
+        (** Type of an interaction on conversion path. Such as CLICK, IMPRESSION etc. *)
+        nodeValue : string;
+        (** Node value of an interaction on conversion path. Such as source, medium etc. *)
+        
+      }
+      
+      val interactionType : (t, string) GapiLens.t
+      val nodeValue : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      conversionPathValue : ConversionPathValue.t list;
+      (** A conversion path dimension value, containing a list of interactions with their attributes. *)
+      primitiveValue : string;
+      (** A primitive metric value. A primitive dimension value. *)
+      
+    }
+    
+    val conversionPathValue : (t, ConversionPathValue.t list) GapiLens.t
+    val primitiveValue : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module Query :
+  sig
+    type t = {
+      dimensions : string;
+      (** List of analytics dimensions. *)
+      end_date : string;
+      (** End date. *)
+      filters : string;
+      (** Comma-separated list of dimension or metric filters. *)
+      ids : string;
+      (** Unique table ID. *)
+      max_results : int;
+      (** Maximum results per page. *)
+      metrics : string list;
+      (** List of analytics metrics. *)
+      segment : string;
+      (** Analytics advanced segment. *)
+      sort : string list;
+      (** List of dimensions or metrics based on which Analytics data is sorted. *)
+      start_date : string;
+      (** Start date. *)
+      start_index : int;
+      (** Start index. *)
+      
+    }
+    
+    val dimensions : (t, string) GapiLens.t
+    val end_date : (t, string) GapiLens.t
+    val filters : (t, string) GapiLens.t
+    val ids : (t, string) GapiLens.t
+    val max_results : (t, int) GapiLens.t
+    val metrics : (t, string list) GapiLens.t
+    val segment : (t, string) GapiLens.t
+    val sort : (t, string list) GapiLens.t
+    val start_date : (t, string) GapiLens.t
+    val start_index : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ProfileInfo :
+  sig
+    type t = {
+      accountId : string;
+      (** Account ID to which this profile belongs. *)
+      internalWebPropertyId : string;
+      (** Internal ID for the web property to which this profile belongs. *)
+      profileId : string;
+      (** Profile ID. *)
+      profileName : string;
+      (** Profile name. *)
+      tableId : string;
+      (** Table ID for profile. *)
+      webPropertyId : string;
+      (** Web Property ID to which this profile belongs. *)
+      
+    }
+    
+    val accountId : (t, string) GapiLens.t
+    val internalWebPropertyId : (t, string) GapiLens.t
+    val profileId : (t, string) GapiLens.t
+    val profileName : (t, string) GapiLens.t
+    val tableId : (t, string) GapiLens.t
+    val webPropertyId : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ColumnHeaders :
+  sig
+    type t = {
+      columnType : string;
+      (** Column Type. Either DIMENSION or METRIC. *)
+      dataType : string;
+      (** Data type. Dimension and metric values data types such as INTEGER, DOUBLE, CURRENCY, MCF_SEQUENCE etc. *)
+      name : string;
+      (** Column name. *)
+      
+    }
+    
+    val columnType : (t, string) GapiLens.t
+    val dataType : (t, string) GapiLens.t
+    val name : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    columnHeaders : ColumnHeaders.t list;
+    (** Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request. *)
+    containsSampledData : bool;
+    (** Determines if the Analytics data contains sampled data. *)
+    id : string;
+    (** Unique ID for this data response. *)
+    itemsPerPage : int;
+    (** The maximum number of rows the response can contain, regardless of the actual number of rows returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Resource type. *)
+    nextLink : string;
+    (** Link to next page for this Analytics data query. *)
+    previousLink : string;
+    (** Link to previous page for this Analytics data query. *)
+    profileInfo : ProfileInfo.t;
+    (** Information for the profile, for which the Analytics data was requested. *)
+    query : Query.t;
+    (** Analytics data request query parameters. *)
+    rows : Rows.t list list;
+    (** Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request. *)
+    selfLink : string;
+    (** Link to this page. *)
+    totalResults : int;
+    (** The total number of rows for the query, regardless of the number of rows in the response. *)
+    totalsForAllResults : (string * string) list;
+    (** Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request. *)
+    
+  }
+  
+  val columnHeaders : (t, ColumnHeaders.t list) GapiLens.t
+  val containsSampledData : (t, bool) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val profileInfo : (t, ProfileInfo.t) GapiLens.t
+  val query : (t, Query.t) GapiLens.t
+  val rows : (t, Rows.t list list) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val totalsForAllResults : (t, (string * string) list) GapiLens.t
   
   val empty : t
   

@@ -7,6 +7,12 @@ module Scope =
 struct
   let bigquery = "https://www.googleapis.com/auth/bigquery"
   
+  let devstorage_full_control = "https://www.googleapis.com/auth/devstorage.full_control"
+  
+  let devstorage_read_only = "https://www.googleapis.com/auth/devstorage.read_only"
+  
+  let devstorage_read_write = "https://www.googleapis.com/auth/devstorage.read_write"
+  
   
 end
 

@@ -1229,6 +1229,7 @@ struct
     guestsCanInviteOthers : bool;
     guestsCanModify : bool;
     guestsCanSeeOtherGuests : bool;
+    hangoutLink : string;
     htmlLink : string;
     iCalUID : string;
     id : string;
@@ -1310,6 +1311,10 @@ struct
   let guestsCanSeeOtherGuests = {
     GapiLens.get = (fun x -> x.guestsCanSeeOtherGuests);
     GapiLens.set = (fun v x -> { x with guestsCanSeeOtherGuests = v });
+  }
+  let hangoutLink = {
+    GapiLens.get = (fun x -> x.hangoutLink);
+    GapiLens.set = (fun v x -> { x with hangoutLink = v });
   }
   let htmlLink = {
     GapiLens.get = (fun x -> x.htmlLink);
@@ -1404,6 +1409,7 @@ struct
     guestsCanInviteOthers = false;
     guestsCanModify = false;
     guestsCanSeeOtherGuests = false;
+    hangoutLink = "";
     htmlLink = "";
     iCalUID = "";
     id = "";
@@ -1443,6 +1449,7 @@ struct
       GapiJson.render_bool_value "guestsCanInviteOthers" x.guestsCanInviteOthers;
       GapiJson.render_bool_value "guestsCanModify" x.guestsCanModify;
       GapiJson.render_bool_value "guestsCanSeeOtherGuests" x.guestsCanSeeOtherGuests;
+      GapiJson.render_string_value "hangoutLink" x.hangoutLink;
       GapiJson.render_string_value "htmlLink" x.htmlLink;
       GapiJson.render_string_value "iCalUID" x.iCalUID;
       GapiJson.render_string_value "id" x.id;
@@ -1558,6 +1565,10 @@ struct
         ({ GapiJson.name = "guestsCanSeeOtherGuests"; data_type = GapiJson.Scalar },
         Json_type.Bool v) ->
       { x with guestsCanSeeOtherGuests = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hangoutLink"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with hangoutLink = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "htmlLink"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -2287,10 +2298,12 @@ module CalendarListEntry =
 struct
   type t = {
     accessRole : string;
+    backgroundColor : string;
     colorId : string;
     defaultReminders : EventReminder.t list;
     description : string;
     etag : string;
+    foregroundColor : string;
     hidden : bool;
     id : string;
     kind : string;
@@ -2305,6 +2318,10 @@ struct
   let accessRole = {
     GapiLens.get = (fun x -> x.accessRole);
     GapiLens.set = (fun v x -> { x with accessRole = v });
+  }
+  let backgroundColor = {
+    GapiLens.get = (fun x -> x.backgroundColor);
+    GapiLens.set = (fun v x -> { x with backgroundColor = v });
   }
   let colorId = {
     GapiLens.get = (fun x -> x.colorId);
@@ -2321,6 +2338,10 @@ struct
   let etag = {
     GapiLens.get = (fun x -> x.etag);
     GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let foregroundColor = {
+    GapiLens.get = (fun x -> x.foregroundColor);
+    GapiLens.set = (fun v x -> { x with foregroundColor = v });
   }
   let hidden = {
     GapiLens.get = (fun x -> x.hidden);
@@ -2357,10 +2378,12 @@ struct
   
   let empty = {
     accessRole = "";
+    backgroundColor = "";
     colorId = "";
     defaultReminders = [];
     description = "";
     etag = "";
+    foregroundColor = "";
     hidden = false;
     id = "";
     kind = "";
@@ -2375,10 +2398,12 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "accessRole" x.accessRole;
+      GapiJson.render_string_value "backgroundColor" x.backgroundColor;
       GapiJson.render_string_value "colorId" x.colorId;
       GapiJson.render_array "defaultReminders" EventReminder.render x.defaultReminders;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_string_value "foregroundColor" x.foregroundColor;
       GapiJson.render_bool_value "hidden" x.hidden;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
@@ -2397,6 +2422,10 @@ struct
         ({ GapiJson.name = "accessRole"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with accessRole = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "backgroundColor"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with backgroundColor = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "colorId"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
@@ -2427,6 +2456,10 @@ struct
         ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with etag = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "foregroundColor"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with foregroundColor = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "hidden"; data_type = GapiJson.Scalar },
         Json_type.Bool v) ->

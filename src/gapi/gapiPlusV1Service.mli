@@ -5,7 +5,7 @@
   The Google+ API enables developers to build on top of the Google+ platform..
   
   For more information about this service, see the
-  {{:http://developers.google.com/+/api/}API Documentation}.
+  {{:https://developers.google.com/+/api/}API Documentation}.
   *)
 
 module Scope :

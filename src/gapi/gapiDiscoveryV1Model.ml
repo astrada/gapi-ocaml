@@ -1123,6 +1123,7 @@ struct
     basePath : string;
     baseUrl : string;
     batchPath : string;
+    canonicalName : string;
     description : string;
     discoveryVersion : string;
     documentationLink : string;
@@ -1160,6 +1161,10 @@ struct
   let batchPath = {
     GapiLens.get = (fun x -> x.batchPath);
     GapiLens.set = (fun v x -> { x with batchPath = v });
+  }
+  let canonicalName = {
+    GapiLens.get = (fun x -> x.canonicalName);
+    GapiLens.set = (fun v x -> { x with canonicalName = v });
   }
   let description = {
     GapiLens.get = (fun x -> x.description);
@@ -1243,6 +1248,7 @@ struct
     basePath = "";
     baseUrl = "";
     batchPath = "";
+    canonicalName = "";
     description = "";
     discoveryVersion = "";
     documentationLink = "";
@@ -1271,6 +1277,7 @@ struct
       GapiJson.render_string_value "basePath" x.basePath;
       GapiJson.render_string_value "baseUrl" x.baseUrl;
       GapiJson.render_string_value "batchPath" x.batchPath;
+      GapiJson.render_string_value "canonicalName" x.canonicalName;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "discoveryVersion" x.discoveryVersion;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
@@ -1316,6 +1323,10 @@ struct
         ({ GapiJson.name = "batchPath"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with batchPath = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "canonicalName"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with canonicalName = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         Json_type.String v) ->

@@ -31,8 +31,8 @@ struct
       key : string;
       (* about-specific query parameters *)
       includeSubscribed : bool;
-      maxChangeIdCount : string;
-      startChangeId : string;
+      maxChangeIdCount : int64;
+      startChangeId : int64;
       
     }
     
@@ -43,8 +43,8 @@ struct
       userIp = "";
       key = "";
       includeSubscribed = true;
-      maxChangeIdCount = "1";
-      startChangeId = "";
+      maxChangeIdCount = 1L;
+      startChangeId = 0L;
       
     }
     
@@ -57,8 +57,8 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.includeSubscribed) string_of_bool "includeSubscribed";
-      param (fun p -> p.maxChangeIdCount) (fun x -> x) "maxChangeIdCount";
-      param (fun p -> p.startChangeId) (fun x -> x) "startChangeId";
+      param (fun p -> p.maxChangeIdCount) Int64.to_string "maxChangeIdCount";
+      param (fun p -> p.startChangeId) Int64.to_string "startChangeId";
       
     ] |> List.concat
     
@@ -88,7 +88,7 @@ struct
         ?etag
         ?std_params
         ?(includeSubscribed = true)
-        ?(maxChangeIdCount = "1")
+        ?(maxChangeIdCount = 1L)
         ?startChangeId
         session =
     let full_url = GapiUtils.add_path_to_url ["about"] base_url in
@@ -105,6 +105,21 @@ end
 
 module AppsResource =
 struct
+  let get
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
+        ?std_params
+        ~appId
+        session =
+    let full_url = GapiUtils.add_path_to_url ["apps"; ((fun x -> x) appId)]
+      base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.get ?query_parameters ?etag full_url
+      (GapiJson.parse_json_response App.of_data_model) session 
+    
   let list
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
@@ -136,7 +151,7 @@ struct
       includeSubscribed : bool;
       maxResults : int;
       pageToken : string;
-      startChangeId : string;
+      startChangeId : int64;
       
     }
     
@@ -150,7 +165,7 @@ struct
       includeSubscribed = true;
       maxResults = 100;
       pageToken = "";
-      startChangeId = "";
+      startChangeId = 0L;
       
     }
     
@@ -166,7 +181,7 @@ struct
       param (fun p -> p.includeSubscribed) string_of_bool "includeSubscribed";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
-      param (fun p -> p.startChangeId) (fun x -> x) "startChangeId";
+      param (fun p -> p.startChangeId) Int64.to_string "startChangeId";
       
     ] |> List.concat
     
@@ -516,6 +531,7 @@ struct
         ?std_params
         ?(convert = false)
         ?(ocr = false)
+        ?(pinned = false)
         ?ocrLanguage
         ?sourceLanguage
         ?targetLanguage
@@ -528,7 +544,7 @@ struct
       "copy"] base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage
+      ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
       ?sourceLanguage ?targetLanguage ?timedTextLanguage ?timedTextTrackName
       () in
     let query_parameters = Option.map FilesParameters.to_key_value_list

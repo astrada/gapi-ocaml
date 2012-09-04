@@ -290,9 +290,9 @@ struct
     else
       match scalar.data_type with
           String -> "\"" ^ scalar.default ^ "\""
+        | Int64 -> scalar.default ^ "L"
         | Boolean
         | Integer
-        | Int64
         | DateTime
         | Float
         | Date -> scalar.default

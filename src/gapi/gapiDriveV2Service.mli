@@ -14,7 +14,7 @@ sig
   (** View and manage the files and documents in your Google Drive *)
   
   val drive_apps_readonly : string
-  (** New service: https://www.googleapis.com/auth/drive.apps.readonly *)
+  (** View your Google Drive apps *)
   
   val drive_file : string
   (** View and manage Google Drive files that you have opened or created with this app *)
@@ -46,8 +46,8 @@ sig
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?includeSubscribed:bool ->
-    ?maxChangeIdCount:string ->
-    ?startChangeId:string ->
+    ?maxChangeIdCount:int64 ->
+    ?startChangeId:int64 ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.About.t * GapiConversation.Session.t
   
@@ -56,6 +56,21 @@ end
 
 module AppsResource :
 sig
+  
+  (** Gets a specific app.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
+    @param std_params Optional standard parameters.
+    @param appId The ID of the app.
+    *)
+  val get :
+    ?base_url:string ->
+    ?etag:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    appId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.App.t * GapiConversation.Session.t
   
   (** Lists a user's apps.
     
@@ -106,7 +121,7 @@ sig
     ?includeSubscribed:bool ->
     ?maxResults:int ->
     ?pageToken:string ->
-    ?startChangeId:string ->
+    ?startChangeId:int64 ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.ChangeList.t * GapiConversation.Session.t
   
@@ -206,6 +221,7 @@ sig
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param ocr Whether to attempt OCR on .jpg, .png, or .gif uploads.
+    @param pinned Whether to pin the head revision of the new copy.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
     @param sourceLanguage The language of the original file to be translated.
     @param targetLanguage Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.
@@ -218,6 +234,7 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?convert:bool ->
     ?ocr:bool ->
+    ?pinned:bool ->
     ?ocrLanguage:string ->
     ?sourceLanguage:string ->
     ?targetLanguage:string ->
@@ -247,7 +264,7 @@ sig
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param updateViewedDate Whether to update the view date after successfully retrieving the file.
-    @param projection Restrict information returned for simplicity and optimization.
+    @param projection This parameter is deprecated and has no function.
     @param fileId The ID for the file in question.
     *)
   val get :
@@ -295,7 +312,7 @@ sig
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of files to return.
     @param pageToken Page token for files.
-    @param projection Restrict information returned for simplicity and optimization.
+    @param projection This parameter is deprecated and has no function.
     @param q Query string for searching files.
     *)
   val list :

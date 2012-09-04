@@ -5,7 +5,7 @@
   Lets you manipulate events and other calendar data..
   
   For more information about this service, see the
-  {{:http://code.google.com/apis/calendar/v3/using.html}API Documentation}.
+  {{:https://developers.google.com/google-apps/calendar/firstapp}API Documentation}.
   *)
 
 module Scope :
@@ -167,10 +167,12 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
     *)
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?colorRgbFormat:bool ->
     GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t
@@ -198,11 +200,13 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val patch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?colorRgbFormat:bool ->
     calendarId:string ->
     GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
@@ -212,11 +216,13 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?colorRgbFormat:bool ->
     calendarId:string ->
     GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
@@ -457,7 +463,7 @@ sig
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
     @param q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
-    @param showDeleted Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.
+    @param showDeleted Whether to include deleted single events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.
     @param showHiddenInvitations Whether to include hidden invitations in the result. Optional. The default is False.
     @param singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
     @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.

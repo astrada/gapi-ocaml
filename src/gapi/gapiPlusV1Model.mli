@@ -3,7 +3,7 @@
 (** Data definition for Google+ API (v1).
   
   For more information about this data model, see the
-  {{:http://developers.google.com/+/api/}API Documentation}.
+  {{:https://developers.google.com/+/api/}API Documentation}.
   *)
 
 module PlusAclentryResource :
@@ -301,13 +301,13 @@ sig
   sig
     type t = {
       department : string;
-      (** The department within the organization. *)
+      (** The department within the organization. Deprecated. *)
       description : string;
-      (** A short description of the person's role in this organization. *)
+      (** A short description of the person's role in this organization. Deprecated. *)
       endDate : string;
       (** The date the person left this organization. *)
       location : string;
-      (** The location of this organization. *)
+      (** The location of this organization. Deprecated. *)
       name : string;
       (** The name of the organization. *)
       primary : bool;

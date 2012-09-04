@@ -3,7 +3,7 @@
 (** Data definition for Calendar API (v3).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/calendar/v3/using.html}API Documentation}.
+  {{:https://developers.google.com/google-apps/calendar/firstapp}API Documentation}.
   *)
 
 module ColorDefinition :
@@ -487,7 +487,7 @@ sig
     attendees : EventAttendee.t list;
     (** The attendees of the event. *)
     attendeesOmitted : bool;
-    (** Whether attendees have been omitted from the event's representation. When retrieving an event, this is due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False. *)
+    (** Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False. *)
     colorId : string;
     (** The color of the event. This is an ID referring to an entry in the "event" section of the colors definition (see the "colors" endpoint). Optional. *)
     created : GapiDate.t;
@@ -499,7 +499,7 @@ sig
     _end : EventDateTime.t;
     (** The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance. *)
     endTimeUnspecified : bool;
-    (**  *)
+    (** Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False. *)
     etag : string;
     (** ETag of the resource. *)
     extendedProperties : ExtendedProperties.t;
@@ -512,6 +512,8 @@ sig
     (** Whether attendees other than the organizer can modify the event. Optional. The default is False. *)
     guestsCanSeeOtherGuests : bool;
     (** Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is False. *)
+    hangoutLink : string;
+    (** An absolute link to the Google+ hangout associated with this event. Read-only. *)
     htmlLink : string;
     (** An absolute link to this event in the Google Calendar Web UI. Read-only. *)
     iCalUID : string;
@@ -577,6 +579,7 @@ sig
   val guestsCanInviteOthers : (t, bool) GapiLens.t
   val guestsCanModify : (t, bool) GapiLens.t
   val guestsCanSeeOtherGuests : (t, bool) GapiLens.t
+  val hangoutLink : (t, string) GapiLens.t
   val htmlLink : (t, string) GapiLens.t
   val iCalUID : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -833,6 +836,8 @@ sig
 - "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
 - "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
 - "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
+    backgroundColor : string;
+    (** The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional. *)
     colorId : string;
     (** The color of the calendar. This is an ID referring to an entry in the "calendar" section of the colors definition (see the "colors" endpoint). Optional. *)
     defaultReminders : EventReminder.t list;
@@ -841,6 +846,8 @@ sig
     (** Description of the calendar. Optional. Read-only. *)
     etag : string;
     (** ETag of the resource. *)
+    foregroundColor : string;
+    (** The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional. *)
     hidden : bool;
     (** Whether the calendar has been hidden from the list. Optional. The default is False. *)
     id : string;
@@ -861,10 +868,12 @@ sig
   }
   
   val accessRole : (t, string) GapiLens.t
+  val backgroundColor : (t, string) GapiLens.t
   val colorId : (t, string) GapiLens.t
   val defaultReminders : (t, EventReminder.t list) GapiLens.t
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
+  val foregroundColor : (t, string) GapiLens.t
   val hidden : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t

@@ -3,7 +3,7 @@
 (** Data definition for AdSense Management API (v1.1).
   
   For more information about this data model, see the
-  {{:https://code.google.com/apis/adsense/management/}API Documentation}.
+  {{:https://developers.google.com/adsense/management/}API Documentation}.
   *)
 
 module AdUnit :

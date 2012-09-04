@@ -24,8 +24,8 @@ let test_get_remaining_changes () =
     (fun session ->
        let (about, session) =
          AboutResource.get session
-           ~startChangeId:"1"
-           ~maxChangeIdCount:"10"
+           ~startChangeId:1L
+           ~maxChangeIdCount:10L
        in
          assert_bool
            "remainingChangeIds should be greater than 0"

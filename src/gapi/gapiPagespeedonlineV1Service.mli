@@ -5,7 +5,7 @@
   Lets you analyze the performance of a web page and get tailored suggestions to make that page faster..
   
   For more information about this service, see the
-  {{:https://code.google.com/apis/pagespeedonline/v1/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/speed/docs/insights/v1/getting_started}API Documentation}.
   *)
 
 module PagespeedapiResource :

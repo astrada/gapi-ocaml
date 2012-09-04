@@ -3,7 +3,7 @@
 (** Data definition for Page Speed Online API (v1).
   
   For more information about this data model, see the
-  {{:https://code.google.com/apis/pagespeedonline/v1/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/speed/docs/insights/v1/getting_started}API Documentation}.
   *)
 
 module Result :
