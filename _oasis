@@ -1,7 +1,7 @@
 OASISFormat: 0.3
 OCamlVersion: >= 3.12.0
 Name: gapi-ocaml
-Version: 0.1.14
+Version: 0.1.15
 LicenseFile: LICENSE
 License: MIT
 BuildType: ocamlbuild (0.3)
