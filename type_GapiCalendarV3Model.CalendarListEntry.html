@@ -70,10 +70,12 @@
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;accessRole&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;backgroundColor&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colorId&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defaultReminders&nbsp;:&nbsp;<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">EventReminder</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foregroundColor&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hidden&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
@@ -85,6 +87,8 @@
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;accessRole&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;backgroundColor&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;colorId&nbsp;:&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;defaultReminders&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,<br>
@@ -93,6 +97,8 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;foregroundColor&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;hidden&nbsp;:&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiCalendarV3Model</span>.<span class="constructor">CalendarListEntry</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>

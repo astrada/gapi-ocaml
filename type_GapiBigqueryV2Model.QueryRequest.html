@@ -70,6 +70,7 @@
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defaultDataset&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dryRun&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxResults&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;:&nbsp;string;<br>
@@ -79,6 +80,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">DatasetReference</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;dryRun&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;maxResults&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;query&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">QueryRequest</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>

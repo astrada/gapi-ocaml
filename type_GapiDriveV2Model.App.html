@@ -96,6 +96,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;secondaryMimeTypes&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;supportsCreate&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;supportsImport&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;useByDefault&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authorized&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;icons&nbsp;:<br>
@@ -114,6 +115,7 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;secondaryMimeTypes&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supportsCreate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supportsImport&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;useByDefault&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
