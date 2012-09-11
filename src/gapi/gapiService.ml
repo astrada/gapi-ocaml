@@ -184,6 +184,7 @@ let put
   service_request_with_data
     GapiRequest.Update
     data_to_post
+    ?etag
     ?query_parameters
     ?media_source
     data
@@ -223,6 +224,7 @@ let patch
   service_request_with_data
     GapiRequest.Patch
     data_to_post
+    ?etag
     ?query_parameters
     ?media_source
     data
