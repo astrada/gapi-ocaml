@@ -664,6 +664,7 @@ struct
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?maxAttendees
         ?sendNotifications
         ~calendarId
         event
@@ -672,7 +673,7 @@ struct
       ((fun x -> x) calendarId); "events"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?sendNotifications () in
+      ?standard_parameters:std_params ?maxAttendees ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -756,6 +757,7 @@ struct
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
         ?alwaysIncludeEmail
+        ?maxAttendees
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -766,8 +768,8 @@ struct
       in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?alwaysIncludeEmail ?sendNotifications
-      () in
+      ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
+      ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -794,6 +796,7 @@ struct
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
         ?alwaysIncludeEmail
+        ?maxAttendees
         ?sendNotifications
         ~calendarId
         ~eventId
@@ -804,8 +807,8 @@ struct
       in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?alwaysIncludeEmail ?sendNotifications
-      () in
+      ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
+      ?sendNotifications () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag

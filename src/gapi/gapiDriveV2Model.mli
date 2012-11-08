@@ -104,6 +104,27 @@ end
 
 module File :
 sig
+  module Thumbnail :
+  sig
+    type t = {
+      image : string;
+      (** The URL-safe Base64 encoded bytes of the thumbnail image. *)
+      mimeType : string;
+      (** The MIME type of the thumbnail. *)
+      
+    }
+    
+    val image : (t, string) GapiLens.t
+    val mimeType : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Labels :
   sig
     type t = {
@@ -179,8 +200,24 @@ sig
     end
     
     type t = {
+      aperture : float;
+      (** The aperture used to create the photo (f-number). *)
+      cameraMake : string;
+      (** The make of the camera used to create the photo. *)
+      cameraModel : string;
+      (** The model of the camera used to create the photo. *)
+      date : string;
+      (** The date and time the photo was taken (EXIF format timestamp). *)
+      exposureTime : float;
+      (** The length of the exposure, in seconds. *)
+      flashUsed : bool;
+      (** Whether a flash was used to create the photo. *)
+      focalLength : float;
+      (** The focal length used to create the photo, in millimeters. *)
       height : int;
       (** The height of the image in pixels. *)
+      isoSpeed : int;
+      (** The ISO speed used to create the photo. *)
       location : Location.t;
       (** Geographic location information stored in the image. *)
       rotation : int;
@@ -190,7 +227,15 @@ sig
       
     }
     
+    val aperture : (t, float) GapiLens.t
+    val cameraMake : (t, string) GapiLens.t
+    val cameraModel : (t, string) GapiLens.t
+    val date : (t, string) GapiLens.t
+    val exposureTime : (t, float) GapiLens.t
+    val flashUsed : (t, bool) GapiLens.t
+    val focalLength : (t, float) GapiLens.t
     val height : (t, int) GapiLens.t
+    val isoSpeed : (t, int) GapiLens.t
     val location : (t, Location.t) GapiLens.t
     val rotation : (t, int) GapiLens.t
     val width : (t, int) GapiLens.t
@@ -261,6 +306,8 @@ Setting this field will put the file in all of the provided folders. On insert, 
     (** A link back to this file. *)
     sharedWithMeDate : GapiDate.t;
     (** Time at which this file was shared with the user (formatted RFC 3339 timestamp). *)
+    thumbnail : Thumbnail.t;
+    (** Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google. *)
     thumbnailLink : string;
     (** A link to the file's thumbnail. *)
     title : string;
@@ -302,6 +349,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val quotaBytesUsed : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val sharedWithMeDate : (t, GapiDate.t) GapiLens.t
+  val thumbnail : (t, Thumbnail.t) GapiLens.t
   val thumbnailLink : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val userPermission : (t, Permission.t) GapiLens.t
@@ -375,6 +423,55 @@ sig
   val nextLink : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module User :
+sig
+  module Picture :
+  sig
+    type t = {
+      url : string;
+      (** A URL that points to a profile picture of this user. *)
+      
+    }
+    
+    val url : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    displayName : string;
+    (** A plain text displayable name for this user. *)
+    isAuthenticatedUser : bool;
+    (** Whether this user is the same as the authenticated user of which the request was made on behalf. *)
+    kind : string;
+    (** This is always drive#user. *)
+    picture : Picture.t;
+    (** The user's profile picture. *)
+    
+  }
+  
+  val displayName : (t, string) GapiLens.t
+  val isAuthenticatedUser : (t, bool) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val picture : (t, Picture.t) GapiLens.t
   
   val empty : t
   
@@ -545,6 +642,8 @@ sig
     (** The total number of quota bytes. *)
     quotaBytesUsed : int64;
     (** The number of quota bytes used. *)
+    quotaBytesUsedAggregate : int64;
+    (** The number of quota bytes used by all Google apps (Drive, Picasa, etc.). *)
     quotaBytesUsedInTrash : int64;
     (** The number of quota bytes used by trashed items. *)
     remainingChangeIds : int64;
@@ -553,6 +652,8 @@ sig
     (** The id of the root folder. *)
     selfLink : string;
     (** A link back to this item. *)
+    user : User.t;
+    (** The authenticated user. *)
     
   }
   
@@ -570,10 +671,175 @@ sig
   val permissionId : (t, string) GapiLens.t
   val quotaBytesTotal : (t, int64) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
+  val quotaBytesUsedAggregate : (t, int64) GapiLens.t
   val quotaBytesUsedInTrash : (t, int64) GapiLens.t
   val remainingChangeIds : (t, int64) GapiLens.t
   val rootFolderId : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val user : (t, User.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CommentReply :
+sig
+  type t = {
+    author : User.t;
+    (** The user who wrote this reply. *)
+    content : string;
+    (** The plain text content used to create this reply. This is not HTML safe and should only be used as a starting point to make edits to a reply's content. This field is required on inserts if no verb is specified (resolve/reopen). *)
+    createdDate : GapiDate.t;
+    (** The date when this reply was first created. *)
+    deleted : bool;
+    (** Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed. *)
+    htmlContent : string;
+    (** HTML formatted content for this reply. *)
+    kind : string;
+    (** This is always drive#commentReply. *)
+    modifiedDate : GapiDate.t;
+    (** The date when this reply was last modified. *)
+    replyId : string;
+    (** The ID of the reply. *)
+    verb : string;
+    (** The action this reply performed to the parent comment. When creating a new reply this is the action to be perform to the parent comment. Possible values are:  
+- "resolve" - To resolve a comment. 
+- "reopen" - To reopen (un-resolve) a comment. *)
+    
+  }
+  
+  val author : (t, User.t) GapiLens.t
+  val content : (t, string) GapiLens.t
+  val createdDate : (t, GapiDate.t) GapiLens.t
+  val deleted : (t, bool) GapiLens.t
+  val htmlContent : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val modifiedDate : (t, GapiDate.t) GapiLens.t
+  val replyId : (t, string) GapiLens.t
+  val verb : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Comment :
+sig
+  module Context :
+  sig
+    type t = {
+      _type : string;
+      (** The MIME type of the context snippet. *)
+      value : string;
+      (** Data representation of the segment of the file being commented on. In the case of a text file for example, this would be the actual text that the comment is about. *)
+      
+    }
+    
+    val _type : (t, string) GapiLens.t
+    val value : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    anchor : string;
+    (** A region of the document represented as a JSON string. See anchor documentation for details on how to define and interpret anchor properties. *)
+    author : User.t;
+    (** The user who wrote this comment. *)
+    commentId : string;
+    (** The ID of the comment. *)
+    content : string;
+    (** The plain text content used to create this comment. This is not HTML safe and should only be used as a starting point to make edits to a comment's content. *)
+    context : Context.t;
+    (** The context of the file which is being commented on. *)
+    createdDate : GapiDate.t;
+    (** The date when this comment was first created. *)
+    deleted : bool;
+    (** Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed. *)
+    fileId : string;
+    (** The file which this comment is addressing. *)
+    fileTitle : string;
+    (** The title of the file which this comment is addressing. *)
+    htmlContent : string;
+    (** HTML formatted content for this comment. *)
+    kind : string;
+    (** This is always drive#comment. *)
+    modifiedDate : GapiDate.t;
+    (** The date when this comment or any of its replies were last modified. *)
+    replies : CommentReply.t list;
+    (** Replies to this post. *)
+    selfLink : string;
+    (** A link back to this comment. *)
+    status : string;
+    (** The status of this comment. Status can be changed by posting a reply to a comment with the desired status.  
+- "open" - The comment is still open. 
+- "resolved" - The comment has been resolved by one of its replies. *)
+    
+  }
+  
+  val anchor : (t, string) GapiLens.t
+  val author : (t, User.t) GapiLens.t
+  val commentId : (t, string) GapiLens.t
+  val content : (t, string) GapiLens.t
+  val context : (t, Context.t) GapiLens.t
+  val createdDate : (t, GapiDate.t) GapiLens.t
+  val deleted : (t, bool) GapiLens.t
+  val fileId : (t, string) GapiLens.t
+  val fileTitle : (t, string) GapiLens.t
+  val htmlContent : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val modifiedDate : (t, GapiDate.t) GapiLens.t
+  val replies : (t, CommentReply.t list) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val status : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CommentList :
+sig
+  type t = {
+    items : Comment.t list;
+    (** List of comments. *)
+    kind : string;
+    (** This is always drive#commentList. *)
+    nextPageToken : string;
+    (** The token to use to request the next page of results. *)
+    
+  }
+  
+  val items : (t, Comment.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -942,6 +1208,34 @@ sig
   val items : (t, App.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CommentReplyList :
+sig
+  type t = {
+    items : CommentReply.t list;
+    (** List of reply. *)
+    kind : string;
+    (** This is always drive#commentReplyList. *)
+    nextPageToken : string;
+    (** The token to use to request the next page of results. *)
+    
+  }
+  
+  val items : (t, CommentReply.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   

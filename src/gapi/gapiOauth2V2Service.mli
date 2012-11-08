@@ -1,12 +1,18 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-(** Service definition for  (v2).
+(** Service definition for Google OAuth2 API (v2).
   
-  OAuth2 API.
+  Lets you access OAuth2 protocol related APIs..
+  
+  For more information about this service, see the
+  {{:https://developers.google.com/accounts/docs/OAuth2}API Documentation}.
   *)
 
 module Scope :
 sig
+  val plus_me : string
+  (** Know who you are on Google *)
+  
   val userinfo_email : string
   (** View your email address *)
   

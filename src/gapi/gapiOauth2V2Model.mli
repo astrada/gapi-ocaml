@@ -1,6 +1,9 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-(** Data definition for  (v2).
+(** Data definition for Google OAuth2 API (v2).
+  
+  For more information about this data model, see the
+  {{:https://developers.google.com/accounts/docs/OAuth2}API Documentation}.
   *)
 
 module Tokeninfo :

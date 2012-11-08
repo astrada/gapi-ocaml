@@ -345,6 +345,270 @@ struct
     
   end
   
+  module CustomDataSources =
+  struct
+    module CustomDataSourcesParameters =
+    struct
+      type t = {
+        (* Standard query parameters *)
+        fields : string;
+        prettyPrint : bool;
+        quotaUser : string;
+        userIp : string;
+        key : string;
+        (* customDataSources-specific query parameters *)
+        max_results : int;
+        start_index : int;
+        
+      }
+      
+      let default = {
+        fields = "";
+        prettyPrint = true;
+        quotaUser = "";
+        userIp = "";
+        key = "";
+        max_results = 0;
+        start_index = 0;
+        
+      }
+      
+      let to_key_value_list qp =
+        let param get_value to_string name =
+          GapiService.build_param default qp get_value to_string name in [
+        param (fun p -> p.fields) (fun x -> x) "fields";
+        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+        param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+        param (fun p -> p.userIp) (fun x -> x) "userIp";
+        param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.max_results) string_of_int "max-results";
+        param (fun p -> p.start_index) string_of_int "start-index";
+        
+      ] |> List.concat
+      
+      let merge_parameters
+          ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(max_results = default.max_results)
+          ?(start_index = default.start_index)
+          () =
+        let parameters = {
+          fields = standard_parameters.GapiService.StandardParameters.fields;
+          prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+          quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+          userIp = standard_parameters.GapiService.StandardParameters.userIp;
+          key = standard_parameters.GapiService.StandardParameters.key;
+          max_results;
+          start_index;
+          
+        } in
+        if parameters = default then None else Some parameters
+      
+    end
+    
+    let list
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ?max_results
+          ?start_index
+          ~accountId
+          ~webPropertyId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "customDataSources"] base_url in
+      let params = CustomDataSourcesParameters.merge_parameters
+        ?standard_parameters:std_params ?max_results ?start_index () in
+      let query_parameters = Option.map
+        CustomDataSourcesParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response CustomDataSources.of_data_model)
+        session 
+      
+    
+  end
+  
+  module DailyUploads =
+  struct
+    module Type =
+    struct
+      type t =
+        | Default
+        | Cost
+        
+      let to_string = function
+        | Default -> ""
+        | Cost -> "cost"
+        
+      let of_string = function
+        | "" -> Default
+        | "cost" -> Cost
+        | s -> failwith ("Unexpected value for Type:" ^ s)
+    
+    end
+    
+    module DailyUploadsParameters =
+    struct
+      type t = {
+        (* Standard query parameters *)
+        fields : string;
+        prettyPrint : bool;
+        quotaUser : string;
+        userIp : string;
+        key : string;
+        (* dailyUploads-specific query parameters *)
+        appendNumber : int;
+        end_date : string;
+        max_results : int;
+        reset : bool;
+        start_date : string;
+        start_index : int;
+        _type : Type.t;
+        
+      }
+      
+      let default = {
+        fields = "";
+        prettyPrint = true;
+        quotaUser = "";
+        userIp = "";
+        key = "";
+        appendNumber = 0;
+        end_date = "";
+        max_results = 0;
+        reset = false;
+        start_date = "";
+        start_index = 0;
+        _type = Type.Default;
+        
+      }
+      
+      let to_key_value_list qp =
+        let param get_value to_string name =
+          GapiService.build_param default qp get_value to_string name in [
+        param (fun p -> p.fields) (fun x -> x) "fields";
+        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+        param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+        param (fun p -> p.userIp) (fun x -> x) "userIp";
+        param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.appendNumber) string_of_int "appendNumber";
+        param (fun p -> p.end_date) (fun x -> x) "end-date";
+        param (fun p -> p.max_results) string_of_int "max-results";
+        param (fun p -> p.reset) string_of_bool "reset";
+        param (fun p -> p.start_date) (fun x -> x) "start-date";
+        param (fun p -> p.start_index) string_of_int "start-index";
+        param (fun p -> p._type) Type.to_string "type";
+        
+      ] |> List.concat
+      
+      let merge_parameters
+          ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(appendNumber = default.appendNumber)
+          ?(end_date = default.end_date)
+          ?(max_results = default.max_results)
+          ?(reset = default.reset)
+          ?(start_date = default.start_date)
+          ?(start_index = default.start_index)
+          ?(_type = default._type)
+          () =
+        let parameters = {
+          fields = standard_parameters.GapiService.StandardParameters.fields;
+          prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+          quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+          userIp = standard_parameters.GapiService.StandardParameters.userIp;
+          key = standard_parameters.GapiService.StandardParameters.key;
+          appendNumber;
+          end_date;
+          max_results;
+          reset;
+          start_date;
+          start_index;
+          _type;
+          
+        } in
+        if parameters = default then None else Some parameters
+      
+    end
+    
+    let delete
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~customDataSourceId
+          ~date
+          ~_type
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "customDataSources";
+        ((fun x -> x) customDataSourceId); "dailyUploads";
+        ((fun x -> x) date)] base_url in
+      let params = DailyUploadsParameters.merge_parameters
+        ?standard_parameters:std_params ~_type () in
+      let query_parameters = Option.map
+        DailyUploadsParameters.to_key_value_list params in
+      GapiService.delete ?query_parameters full_url
+        GapiRequest.parse_empty_response session 
+      
+    let list
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ?max_results
+          ?start_index
+          ~accountId
+          ~webPropertyId
+          ~customDataSourceId
+          ~start_date
+          ~end_date
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "customDataSources";
+        ((fun x -> x) customDataSourceId); "dailyUploads"] base_url in
+      let params = DailyUploadsParameters.merge_parameters
+        ?standard_parameters:std_params ~end_date ?max_results ~start_date
+        ?start_index () in
+      let query_parameters = Option.map
+        DailyUploadsParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response DailyUploads.of_data_model) session 
+      
+    let upload
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ?media_source
+          ?(reset = false)
+          ~accountId
+          ~webPropertyId
+          ~customDataSourceId
+          ~date
+          ~appendNumber
+          ~_type
+          session =
+      let base_path = ["management"; "accounts"; ((fun x -> x) accountId);
+        "webproperties"; ((fun x -> x) webPropertyId); "customDataSources";
+        ((fun x -> x) customDataSourceId); "dailyUploads";
+        ((fun x -> x) date); "uploads"] in
+      let media_path = [""; "resumable"; "upload"; "analytics"; "v3";
+        "management"; "accounts"; ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "customDataSources";
+        ((fun x -> x) customDataSourceId); "dailyUploads";
+        ((fun x -> x) date); "uploads"] in
+      let path_to_add = if Option.is_some media_source then media_path
+        else base_path in
+      let full_url = GapiUtils.add_path_to_url path_to_add base_url in
+      let params = DailyUploadsParameters.merge_parameters
+        ?standard_parameters:std_params ~appendNumber ~reset ~_type () in
+      let query_parameters = Option.map
+        DailyUploadsParameters.to_key_value_list params in
+      GapiService.post ?query_parameters ?media_source
+        ~data:DailyUploadAppend.empty full_url
+        (GapiJson.parse_json_response DailyUploadAppend.of_data_model)
+        session 
+      
+    
+  end
+  
   module Goals =
   struct
     module GoalsParameters =

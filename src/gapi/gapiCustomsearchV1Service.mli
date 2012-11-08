@@ -5,7 +5,7 @@
   Lets you search over a website or collection of websites.
   
   For more information about this service, see the
-  {{:http://code.google.com/apis/customsearch/v1/using_rest.html}API Documentation}.
+  {{:https://developers.google.com/custom-search/v1/using_rest}API Documentation}.
   *)
 
 module CseResource :

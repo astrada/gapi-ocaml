@@ -3,7 +3,7 @@
 (** Data definition for CustomSearch API (v1).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/customsearch/v1/using_rest.html}API Documentation}.
+  {{:https://developers.google.com/custom-search/v1/using_rest}API Documentation}.
   *)
 
 module Promotion :

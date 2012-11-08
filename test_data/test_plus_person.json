@@ -17,9 +17,6 @@
     "url": "string"
   },
   "kind": "plus#person",
-  "languagesSpoken": [
-    "string"
-  ],
   "name": {
     "familyName": "string",
     "formatted": "string",

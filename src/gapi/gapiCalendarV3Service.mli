@@ -411,12 +411,14 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the creation of the new event. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?maxAttendees:int ->
     ?sendNotifications:bool ->
     calendarId:string ->
     GapiCalendarV3Model.Event.t ->
@@ -517,6 +519,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
     @param calendarId Calendar identifier.
     @param eventId Event identifier.
@@ -525,6 +528,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?alwaysIncludeEmail:bool ->
+    ?maxAttendees:int ->
     ?sendNotifications:bool ->
     calendarId:string ->
     eventId:string ->
@@ -554,6 +558,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
     @param calendarId Calendar identifier.
     @param eventId Event identifier.
@@ -562,6 +567,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?alwaysIncludeEmail:bool ->
+    ?maxAttendees:int ->
     ?sendNotifications:bool ->
     calendarId:string ->
     eventId:string ->

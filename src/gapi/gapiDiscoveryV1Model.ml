@@ -1127,6 +1127,7 @@ struct
     description : string;
     discoveryVersion : string;
     documentationLink : string;
+    etag : string;
     features : string list;
     icons : Icons.t;
     id : string;
@@ -1177,6 +1178,10 @@ struct
   let documentationLink = {
     GapiLens.get = (fun x -> x.documentationLink);
     GapiLens.set = (fun v x -> { x with documentationLink = v });
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
   }
   let features = {
     GapiLens.get = (fun x -> x.features);
@@ -1252,6 +1257,7 @@ struct
     description = "";
     discoveryVersion = "";
     documentationLink = "";
+    etag = "";
     features = [];
     icons = Icons.empty;
     id = "";
@@ -1281,6 +1287,7 @@ struct
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "discoveryVersion" x.discoveryVersion;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
+      GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "features" (GapiJson.render_string_value "") x.features;
       (fun v -> GapiJson.render_object "icons" (Icons.render_content v)) x.icons;
       GapiJson.render_string_value "id" x.id;
@@ -1339,6 +1346,10 @@ struct
         ({ GapiJson.name = "documentationLink"; data_type = GapiJson.Scalar },
         Json_type.String v) ->
       { x with documentationLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        Json_type.String v) ->
+      { x with etag = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "features"; data_type = GapiJson.Array },
         cs) ->

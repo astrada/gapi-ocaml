@@ -37,7 +37,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param includeSubscribed Whether to include subscribed items when calculating the number of remaining change IDs
+    @param includeSubscribed When calculating the number of remaining change IDs, whether to include shared files and public files the user has opened. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explictly added to a folder in Drive.
     @param maxChangeIdCount Maximum number of remaining change IDs to count
     @param startChangeId Change ID to start counting from when calculating number of remaining change IDs
     *)
@@ -109,7 +109,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param includeDeleted Whether to include deleted items.
-    @param includeSubscribed Whether to include subscribed items.
+    @param includeSubscribed Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.
     @param maxResults Maximum number of changes to return.
     @param pageToken Page token for changes.
     @param startChangeId Change ID to start listing changes from.
@@ -199,6 +199,113 @@ sig
   
 end
 
+module CommentsResource :
+sig
+  
+  (** Deletes a comment.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    *)
+  val delete :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  (** Gets a comment by ID.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
+    @param std_params Optional standard parameters.
+    @param includeDeleted If set, this will succeed when retrieving a deleted comment, and will include any deleted replies.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    *)
+  val get :
+    ?base_url:string ->
+    ?etag:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?includeDeleted:bool ->
+    fileId:string ->
+    commentId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Comment.t * GapiConversation.Session.t
+  
+  (** Creates a new comment on the given file.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    *)
+  val insert :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    GapiDriveV2Model.Comment.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Comment.t * GapiConversation.Session.t
+  
+  (** Lists a file's comments.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param includeDeleted If set, all comments and replies, including deleted comments and replies (with content stripped) will be returned.
+    @param maxResults The maximum number of discussions to include in the response, used for paging.
+    @param pageToken The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.
+    @param updatedMin Only discussions that were updated after this timestamp will be returned. Formatted as an RFC 3339 timestamp.
+    @param fileId The ID of the file.
+    *)
+  val list :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?includeDeleted:bool ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?updatedMin:string ->
+    fileId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.CommentList.t * GapiConversation.Session.t
+  
+  (** Updates an existing comment. This method supports patch semantics.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    *)
+  val patch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    GapiDriveV2Model.Comment.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Comment.t * GapiConversation.Session.t
+  
+  (** Updates an existing comment.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    *)
+  val update :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    GapiDriveV2Model.Comment.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Comment.t * GapiConversation.Session.t
+  
+  
+end
+
 module FilesResource :
 sig
   
@@ -220,7 +327,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param ocr Whether to attempt OCR on .jpg, .png, or .gif uploads.
+    @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the new copy.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
     @param sourceLanguage The language of the original file to be translated.
@@ -282,7 +389,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param ocr Whether to attempt OCR on .jpg, .png, or .gif uploads.
+    @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the uploaded file.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
     @param sourceLanguage The language of the original file to be translated.
@@ -331,7 +438,7 @@ sig
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.
-    @param ocr Whether to attempt OCR on .jpg, .png, or .gif uploads.
+    @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
@@ -406,7 +513,7 @@ sig
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.
-    @param ocr Whether to attempt OCR on .jpg, .png, or .gif uploads.
+    @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
@@ -600,6 +707,123 @@ sig
     GapiDriveV2Model.Permission.t ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.Permission.t * GapiConversation.Session.t
+  
+  
+end
+
+module RepliesResource :
+sig
+  
+  (** Deletes a reply.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    @param replyId The ID of the reply.
+    *)
+  val delete :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    replyId:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  (** Gets a reply.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
+    @param std_params Optional standard parameters.
+    @param includeDeleted If set, this will succeed when retrieving a deleted reply.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    @param replyId The ID of the reply.
+    *)
+  val get :
+    ?base_url:string ->
+    ?etag:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?includeDeleted:bool ->
+    fileId:string ->
+    commentId:string ->
+    replyId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.CommentReply.t * GapiConversation.Session.t
+  
+  (** Creates a new reply to the given comment.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    *)
+  val insert :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    GapiDriveV2Model.CommentReply.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.CommentReply.t * GapiConversation.Session.t
+  
+  (** Lists all of the replies to a comment.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param includeDeleted If set, all replies, including deleted replies (with content stripped) will be returned.
+    @param maxResults The maximum number of replies to include in the response, used for paging.
+    @param pageToken The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    *)
+  val list :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?includeDeleted:bool ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    fileId:string ->
+    commentId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.CommentReplyList.t * GapiConversation.Session.t
+  
+  (** Updates an existing reply. This method supports patch semantics.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    @param replyId The ID of the reply.
+    *)
+  val patch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    replyId:string ->
+    GapiDriveV2Model.CommentReply.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.CommentReply.t * GapiConversation.Session.t
+  
+  (** Updates an existing reply.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param commentId The ID of the comment.
+    @param replyId The ID of the reply.
+    *)
+  val update :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    commentId:string ->
+    replyId:string ->
+    GapiDriveV2Model.CommentReply.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.CommentReply.t * GapiConversation.Session.t
   
   
 end

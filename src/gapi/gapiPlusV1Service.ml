@@ -7,30 +7,11 @@ module Scope =
 struct
   let plus_me = "https://www.googleapis.com/auth/plus.me"
   
-  let userinfo_email = "https://www.googleapis.com/auth/userinfo.email"
-  
   
 end
 
 module ActivitiesResource =
 struct
-  module Alt =
-  struct
-    type t =
-      | Default
-      | Json
-      
-    let to_string = function
-      | Default -> ""
-      | Json -> "json"
-      
-    let of_string = function
-      | "" -> Default
-      | "json" -> Json
-      | s -> failwith ("Unexpected value for Alt:" ^ s)
-  
-  end
-  
   module Collection =
   struct
     type t =
@@ -78,7 +59,6 @@ struct
       userIp : string;
       key : string;
       (* activities-specific query parameters *)
-      alt : Alt.t;
       language : string;
       maxResults : int;
       orderBy : OrderBy.t;
@@ -93,8 +73,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
-      alt = Alt.Default;
-      language = "";
+      language = "en-US";
       maxResults = 20;
       orderBy = OrderBy.Default;
       pageToken = "";
@@ -110,7 +89,6 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
-      param (fun p -> p.alt) Alt.to_string "alt";
       param (fun p -> p.language) (fun x -> x) "language";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.orderBy) OrderBy.to_string "orderBy";
@@ -121,7 +99,6 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
-        ?(alt = default.alt)
         ?(language = default.language)
         ?(maxResults = default.maxResults)
         ?(orderBy = default.orderBy)
@@ -134,7 +111,6 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
-        alt;
         language;
         maxResults;
         orderBy;
@@ -150,13 +126,12 @@ struct
         ?(base_url = "https://www.googleapis.com/plus/v1/")
         ?etag
         ?std_params
-        ?(alt = Alt.Default)
         ~activityId
         session =
     let full_url = GapiUtils.add_path_to_url ["activities";
       ((fun x -> x) activityId)] base_url in
     let params = ActivitiesParameters.merge_parameters
-      ?standard_parameters:std_params ~alt () in
+      ?standard_parameters:std_params () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
@@ -165,7 +140,6 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/plus/v1/")
         ?std_params
-        ?(alt = Alt.Default)
         ?(maxResults = 20)
         ?pageToken
         ~userId
@@ -175,7 +149,7 @@ struct
       ((fun x -> x) userId); "activities"; (Collection.to_string collection)]
       base_url in
     let params = ActivitiesParameters.merge_parameters
-      ?standard_parameters:std_params ~alt ~maxResults ?pageToken () in
+      ?standard_parameters:std_params ~maxResults ?pageToken () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -184,15 +158,15 @@ struct
   let search
         ?(base_url = "https://www.googleapis.com/plus/v1/")
         ?std_params
+        ?(language = "en-US")
         ?(maxResults = 10)
         ?(orderBy = OrderBy.Default)
-        ?language
         ?pageToken
         ~query
         session =
     let full_url = GapiUtils.add_path_to_url ["activities"] base_url in
     let params = ActivitiesParameters.merge_parameters
-      ?standard_parameters:std_params ?language ~maxResults ~orderBy
+      ?standard_parameters:std_params ~language ~maxResults ~orderBy
       ?pageToken ~query () in
     let query_parameters = Option.map ActivitiesParameters.to_key_value_list
       params in
@@ -204,23 +178,6 @@ end
 
 module CommentsResource =
 struct
-  module Alt =
-  struct
-    type t =
-      | Default
-      | Json
-      
-    let to_string = function
-      | Default -> ""
-      | Json -> "json"
-      
-    let of_string = function
-      | "" -> Default
-      | "json" -> Json
-      | s -> failwith ("Unexpected value for Alt:" ^ s)
-  
-  end
-  
   module SortOrder =
   struct
     type t =
@@ -251,7 +208,6 @@ struct
       userIp : string;
       key : string;
       (* comments-specific query parameters *)
-      alt : Alt.t;
       maxResults : int;
       pageToken : string;
       sortOrder : SortOrder.t;
@@ -264,7 +220,6 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
-      alt = Alt.Default;
       maxResults = 20;
       pageToken = "";
       sortOrder = SortOrder.Default;
@@ -279,7 +234,6 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
-      param (fun p -> p.alt) Alt.to_string "alt";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.sortOrder) SortOrder.to_string "sortOrder";
@@ -288,7 +242,6 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
-        ?(alt = default.alt)
         ?(maxResults = default.maxResults)
         ?(pageToken = default.pageToken)
         ?(sortOrder = default.sortOrder)
@@ -299,7 +252,6 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
-        alt;
         maxResults;
         pageToken;
         sortOrder;
@@ -327,7 +279,6 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/plus/v1/")
         ?std_params
-        ?(alt = Alt.Default)
         ?(maxResults = 20)
         ?(sortOrder = SortOrder.Default)
         ?pageToken
@@ -336,8 +287,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["activities";
       ((fun x -> x) activityId); "comments"] base_url in
     let params = CommentsParameters.merge_parameters
-      ?standard_parameters:std_params ~alt ~maxResults ?pageToken ~sortOrder
-      () in
+      ?standard_parameters:std_params ~maxResults ?pageToken ~sortOrder () in
     let query_parameters = Option.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -391,7 +341,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
-      language = "";
+      language = "en-US";
       maxResults = 20;
       pageToken = "";
       query = "";
@@ -472,14 +422,14 @@ struct
   let search
         ?(base_url = "https://www.googleapis.com/plus/v1/")
         ?std_params
+        ?(language = "en-US")
         ?(maxResults = 10)
-        ?language
         ?pageToken
         ~query
         session =
     let full_url = GapiUtils.add_path_to_url ["people"] base_url in
     let params = PeopleParameters.merge_parameters
-      ?standard_parameters:std_params ?language ~maxResults ?pageToken ~query
+      ?standard_parameters:std_params ~language ~maxResults ?pageToken ~query
       () in
     let query_parameters = Option.map PeopleParameters.to_key_value_list
       params in

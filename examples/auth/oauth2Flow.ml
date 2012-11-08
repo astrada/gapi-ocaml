@@ -87,7 +87,6 @@ let main () =
               ~redirect_uri
               ~scope:[GapiCalendarV3Service.Scope.calendar;
                       GapiPlusV1Service.Scope.plus_me;
-                      GapiPlusV1Service.Scope.userinfo_email;
                       GapiTasksV1Service.Scope.tasks;
                       GapiUrlshortenerV1Service.Scope.urlshortener;
                       GapiAnalyticsV3Service.Scope.analytics_readonly;

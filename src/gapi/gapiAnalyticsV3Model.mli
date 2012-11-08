@@ -3,7 +3,7 @@
 (** Data definition for Google Analytics API (v3).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/analytics}API Documentation}.
+  {{:https://developers.google.com/analytics/}API Documentation}.
   *)
 
 module Goal :
@@ -253,7 +253,7 @@ sig
     items : Goal.t list;
     (** A list of goals. *)
     itemsPerPage : int;
-    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
     kind : string;
     (** Collection type. *)
     nextLink : string;
@@ -587,6 +587,103 @@ sig
   
 end
 
+module CustomDataSource :
+sig
+  module ParentLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the web property to which this custom data source belongs. *)
+      _type : string;
+      (** Value is "analytics#webproperty". *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ChildLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the list of daily uploads for this custom data source. *)
+      _type : string;
+      (** Value is "analytics#dailyUploads". *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountId : string;
+    (** Account ID to which this custom data source belongs. *)
+    childLink : ChildLink.t;
+    (** Child link for this custom data source. Points to the list of daily uploads for this custom data source. *)
+    created : GapiDate.t;
+    (** Time this custom data source was created. *)
+    description : string;
+    (** Description of custom data source. *)
+    id : string;
+    (** Custom data source ID. *)
+    kind : string;
+    (** Resource type for Analytics custom data source. *)
+    name : string;
+    (** Name of this custom data source. *)
+    parentLink : ParentLink.t;
+    (** Parent link for this custom data source. Points to the web property to which this custom data source belongs. *)
+    profilesLinked : string list;
+    (**  *)
+    selfLink : string;
+    (** Link for this Analytics custom data source. *)
+    updated : GapiDate.t;
+    (** Time this custom data source was last modified. *)
+    webPropertyId : string;
+    (** Web property ID of the form UA-XXXXX-YY to which this custom data source belongs. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val childLink : (t, ChildLink.t) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
+  val profilesLinked : (t, string list) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Profile :
 sig
   module ParentLink :
@@ -642,6 +739,8 @@ sig
     (** The currency type associated with this profile. *)
     defaultPage : string;
     (** Default page for this profile. *)
+    eCommerceTracking : bool;
+    (** E-commerce tracking parameter for this profile. *)
     excludeQueryParameters : string;
     (** The query parameters that are excluded from this profile. *)
     id : string;
@@ -676,6 +775,7 @@ sig
   val created : (t, GapiDate.t) GapiLens.t
   val currency : (t, string) GapiLens.t
   val defaultPage : (t, string) GapiLens.t
+  val eCommerceTracking : (t, bool) GapiLens.t
   val excludeQueryParameters : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
@@ -708,7 +808,7 @@ sig
     items : Profile.t list;
     (** A list of profiles. *)
     itemsPerPage : int;
-    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
     kind : string;
     (** Collection type. *)
     nextLink : string;
@@ -745,13 +845,150 @@ sig
   
 end
 
+module DailyUpload :
+sig
+  module RecentChanges :
+  sig
+    type t = {
+      change : string;
+      (**  *)
+      time : GapiDate.t;
+      (**  *)
+      
+    }
+    
+    val change : (t, string) GapiLens.t
+    val time : (t, GapiDate.t) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ParentLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the custom data source to which this daily upload belongs. *)
+      _type : string;
+      (** Value is "analytics#customDataSource". *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountId : string;
+    (** Account ID to which this daily upload belongs. *)
+    appendCount : int;
+    (** Number of appends for this date. *)
+    createdTime : GapiDate.t;
+    (** Time this daily upload was created. *)
+    customDataSourceId : string;
+    (** Custom data source ID to which this daily upload belongs. *)
+    date : string;
+    (** Date associated with daily upload. *)
+    kind : string;
+    (** Resource type for Analytics daily upload. *)
+    modifiedTime : GapiDate.t;
+    (** Time this daily upload was last modified. *)
+    parentLink : ParentLink.t;
+    (** Parent link for a daily upload. Points to the custom data source to which this daily upload belongs. *)
+    recentChanges : RecentChanges.t list;
+    (** Change log for last 10 changes in chronological order. *)
+    selfLink : string;
+    (** Link for this daily upload. *)
+    webPropertyId : string;
+    (** Web property ID of the form UA-XXXXX-YY to which this daily upload belongs. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val appendCount : (t, int) GapiLens.t
+  val createdTime : (t, GapiDate.t) GapiLens.t
+  val customDataSourceId : (t, string) GapiLens.t
+  val date : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val modifiedTime : (t, GapiDate.t) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
+  val recentChanges : (t, RecentChanges.t list) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module DailyUploads :
+sig
+  type t = {
+    items : DailyUpload.t list;
+    (** A collection of daily uploads. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. Value is analytics#dailyUploads. *)
+    nextLink : string;
+    (** Link to next page for this daily upload collection. *)
+    previousLink : string;
+    (** Link to previous page for this daily upload collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, DailyUpload.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Webproperties :
 sig
   type t = {
     items : Webproperty.t list;
     (** A list of web properties. *)
     itemsPerPage : int;
-    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
     kind : string;
     (** Collection type. *)
     nextLink : string;
@@ -849,13 +1086,53 @@ sig
   
 end
 
+module DailyUploadAppend :
+sig
+  type t = {
+    accountId : string;
+    (** Account Id to which this daily upload append belongs. *)
+    appendNumber : int;
+    (** Append number. *)
+    customDataSourceId : string;
+    (** Custom data source Id to which this daily upload append belongs. *)
+    date : string;
+    (** Date associated with daily upload append. *)
+    kind : string;
+    (** Resource type for Analytics daily upload append. *)
+    nextAppendLink : string;
+    (**  *)
+    webPropertyId : string;
+    (** Web property Id of the form UA-XXXXX-YY to which this daily upload append belongs. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val appendNumber : (t, int) GapiLens.t
+  val customDataSourceId : (t, string) GapiLens.t
+  val date : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextAppendLink : (t, string) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Segments :
 sig
   type t = {
     items : Segment.t list;
     (** A list of advanced segments. *)
     itemsPerPage : int;
-    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
     kind : string;
     (** Collection type for advanced segments. *)
     nextLink : string;
@@ -921,7 +1198,7 @@ sig
       conversionPathValue : ConversionPathValue.t list;
       (** A conversion path dimension value, containing a list of interactions with their attributes. *)
       primitiveValue : string;
-      (** A primitive metric value. A primitive dimension value. *)
+      (** A primitive dimension value. A primitive metric value. *)
       
     }
     
@@ -1094,13 +1371,56 @@ sig
   
 end
 
+module CustomDataSources :
+sig
+  type t = {
+    items : CustomDataSource.t list;
+    (** Collection of custom data sources. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this custom data source collection. *)
+    previousLink : string;
+    (** Link to previous page for this custom data source collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, CustomDataSource.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Accounts :
 sig
   type t = {
     items : Account.t list;
     (** A list of accounts. *)
     itemsPerPage : int;
-    (** The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    (** The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
     kind : string;
     (** Collection type. *)
     nextLink : string;

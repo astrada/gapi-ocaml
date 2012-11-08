@@ -5,7 +5,7 @@
   Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API.
   
   For more information about this service, see the
-  {{:http://code.google.com/apis/discovery}API Documentation}.
+  {{:https://developers.google.com/discovery/}API Documentation}.
   *)
 
 module ApisResource :

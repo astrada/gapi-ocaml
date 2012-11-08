@@ -507,11 +507,11 @@ sig
     gadget : Gadget.t;
     (** A gadget that extends this event. *)
     guestsCanInviteOthers : bool;
-    (** Whether attendees other than the organizer can invite others to the event. Optional. The default is False. *)
+    (** Whether attendees other than the organizer can invite others to the event. Optional. The default is True. *)
     guestsCanModify : bool;
     (** Whether attendees other than the organizer can modify the event. Optional. The default is False. *)
     guestsCanSeeOtherGuests : bool;
-    (** Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is False. *)
+    (** Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True. *)
     hangoutLink : string;
     (** An absolute link to the Google+ hangout associated with this event. Read-only. *)
     htmlLink : string;

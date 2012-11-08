@@ -5,7 +5,7 @@
   A data platform for customers to create, manage, share and query data..
   
   For more information about this service, see the
-  {{:https://code.google.com/apis/bigquery/docs/v2/}API Documentation}.
+  {{:https://developers.google.com/bigquery/docs/overview}API Documentation}.
   *)
 
 module Scope :

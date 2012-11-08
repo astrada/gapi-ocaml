@@ -9,6 +9,8 @@
 module PlusAclentryResource :
 sig
   type t = {
+    displayName : string;
+    (** A descriptive name for this entry. Suitable for display. *)
     id : string;
     (** The ID of the entry. For entries of type "person" or "circle", this is the ID of the resource. For other types, this property is not set. *)
     _type : string;
@@ -21,6 +23,7 @@ sig
     
   }
   
+  val displayName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val _type : (t, string) GapiLens.t
   
@@ -38,19 +41,40 @@ end
 
 module Comment :
 sig
+  module Plusoners :
+  sig
+    type t = {
+      totalItems : int;
+      (** Total number of people who +1'd this comment. *)
+      
+    }
+    
+    val totalItems : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Object :
   sig
     type t = {
       content : string;
-      (** The content of this comment. *)
+      (** The HTML-formatted content, suitable for display. *)
       objectType : string;
       (** The object type of this comment. Possible values are:  
 - "comment" - A comment in reply to an activity. *)
+      originalContent : string;
+      (** The content (text) as provided by the author, stored without any HTML formatting. When creating or updating a comment, this value must be supplied as plain text in the request. *)
       
     }
     
     val content : (t, string) GapiLens.t
     val objectType : (t, string) GapiLens.t
+    val originalContent : (t, string) GapiLens.t
     
     val empty : t
     
@@ -64,9 +88,9 @@ sig
   sig
     type t = {
       id : string;
-      (** The id of the activity. *)
+      (** The ID of the activity. *)
       url : string;
-      (** The url of the activity. *)
+      (** The URL of the activity. *)
       
     }
     
@@ -139,6 +163,8 @@ sig
     (** Identifies this resource as a comment. Value: "plus#comment". *)
     _object : Object.t;
     (** The object of this comment. *)
+    plusoners : Plusoners.t;
+    (** People who +1'd this comment. *)
     published : GapiDate.t;
     (** The time at which this comment was initially published. Formatted as an RFC 3339 timestamp. *)
     selfLink : string;
@@ -157,6 +183,7 @@ sig
   val inReplyTo : (t, InReplyTo.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val _object : (t, Object.t) GapiLens.t
+  val plusoners : (t, Plusoners.t) GapiLens.t
   val published : (t, GapiDate.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -188,7 +215,7 @@ sig
     nextLink : string;
     (** Link to the next page of activities. *)
     nextPageToken : string;
-    (** The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
+    (** The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     title : string;
     (** The title of this collection of comments. *)
     updated : GapiDate.t;
@@ -443,10 +470,10 @@ sig
     (** The ID of this person. *)
     image : Image.t;
     (** The representation of the person's profile photo. *)
+    isPlusUser : bool;
+    (** Whether this user has signed up for G+. *)
     kind : string;
     (** Identifies this resource as a person. Value: "plus#person". *)
-    languagesSpoken : string list;
-    (** The languages spoken by this person. *)
     name : Name.t;
     (** An object representation of the individual components of a person's name. *)
     nickname : string;
@@ -489,8 +516,8 @@ sig
   val hasApp : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val image : (t, Image.t) GapiLens.t
+  val isPlusUser : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val languagesSpoken : (t, string list) GapiLens.t
   val name : (t, Name.t) GapiLens.t
   val nickname : (t, string) GapiLens.t
   val objectType : (t, string) GapiLens.t
@@ -600,6 +627,57 @@ sig
     
     module Attachments :
     sig
+      module Thumbnails :
+      sig
+        module Image :
+        sig
+          type t = {
+            height : int;
+            (** The height, in pixels, of the linked resource. *)
+            _type : string;
+            (** Media type of the link. *)
+            url : string;
+            (** Image url. *)
+            width : int;
+            (** The width, in pixels, of the linked resource. *)
+            
+          }
+          
+          val height : (t, int) GapiLens.t
+          val _type : (t, string) GapiLens.t
+          val url : (t, string) GapiLens.t
+          val width : (t, int) GapiLens.t
+          
+          val empty : t
+          
+          val render : t -> GapiJson.json_data_model list
+          
+          val parse : t -> GapiJson.json_data_model -> t
+          
+        end
+        
+        type t = {
+          description : string;
+          (** Potential name of the thumbnail. *)
+          image : Image.t;
+          (** Image resource. *)
+          url : string;
+          (** URL to the webpage containing the image. *)
+          
+        }
+        
+        val description : (t, string) GapiLens.t
+        val image : (t, Image.t) GapiLens.t
+        val url : (t, string) GapiLens.t
+        
+        val empty : t
+        
+        val render : t -> GapiJson.json_data_model list
+        
+        val parse : t -> GapiJson.json_data_model -> t
+        
+      end
+      
       module Image :
       sig
         type t = {
@@ -608,7 +686,7 @@ sig
           _type : string;
           (** Media type of the link. *)
           url : string;
-          (** URL of the link. *)
+          (** Image url. *)
           width : int;
           (** The width, in pixels, of the linked resource. *)
           
@@ -635,7 +713,7 @@ sig
           _type : string;
           (** Media type of the link. *)
           url : string;
-          (** URL of the link. *)
+          (** URL to the image. *)
           width : int;
           (** The width, in pixels, of the linked resource. *)
           
@@ -677,22 +755,25 @@ sig
       
       type t = {
         content : string;
-        (** If the attachment is an article, this property contains a snippet of text from the article. *)
+        (** If the attachment is an article, this property contains a snippet of text from the article. It can also include descriptions for other types. *)
         displayName : string;
         (** The title of the attachment (such as a photo caption or an article title). *)
         embed : Embed.t;
         (** If the attachment is a video, the embeddable link. *)
         fullImage : FullImage.t;
-        (** The full image url for photo attachments. *)
+        (** The full image URL for photo attachments. *)
         id : string;
-        (** The ID of the media object's resource. *)
+        (** The ID of the attachment. *)
         image : Image.t;
         (** The preview image for photos or videos. *)
         objectType : string;
         (** The type of media object. Possible values are:  
 - "photo" - A photo. 
+- "album" - A photo album. 
 - "video" - A video. 
 - "article" - An article, specified by a link. *)
+        thumbnails : Thumbnails.t list;
+        (** If the attachment is an album, potential additional thumbnails from the album. *)
         url : string;
         (** The link to the attachment, should be of type text/html. *)
         
@@ -705,6 +786,7 @@ sig
       val id : (t, string) GapiLens.t
       val image : (t, Image.t) GapiLens.t
       val objectType : (t, string) GapiLens.t
+      val thumbnails : (t, Thumbnails.t list) GapiLens.t
       val url : (t, string) GapiLens.t
       
       val empty : t
@@ -766,7 +848,7 @@ sig
       attachments : Attachments.t list;
       (** The media objects attached to this activity. *)
       content : string;
-      (** The HTML-formatted content, suitable for display. When creating or updating an activity, this value must be supplied as plain text in the request. If successful, the response will contain the HTML-formatted content. When updating an activity, use originalContent as the starting value, then assign the updated text to this property. *)
+      (** The HTML-formatted content, suitable for display. *)
       id : string;
       (** The ID of the object. When resharing an activity, this is the ID of the activity being reshared. *)
       objectType : string;
@@ -774,7 +856,7 @@ sig
 - "note" - Textual content. 
 - "activity" - A Google+ activity. *)
       originalContent : string;
-      (** The content (text) as provided by the author, stored without any HTML formatting. When updating an activity's content, use the value of originalContent as the starting point from which to make edits. *)
+      (** The content (text) as provided by the author, stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request. *)
       plusoners : Plusoners.t;
       (** People who +1'd this activity. *)
       replies : Replies.t;
@@ -913,8 +995,8 @@ sig
     (** The link to this activity. *)
     verb : string;
     (** This activity's verb, indicating what action was performed. Possible values are:  
-- "post" - Publish content to the stream. 
 - "checkin" - Check in to a location. 
+- "post" - Publish content to the stream. 
 - "share" - Reshare an activity. *)
     
   }
@@ -965,7 +1047,7 @@ sig
     nextLink : string;
     (** Link to the next page of activities. *)
     nextPageToken : string;
-    (** The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
+    (** The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     selfLink : string;
     (** Link to this activity resource. *)
     title : string;
@@ -1003,15 +1085,17 @@ sig
     etag : string;
     (** ETag of this response for caching purposes. *)
     items : Person.t list;
-    (** The people in this page of results. Each item will include the id, displayName, image, and url for the person. To retrieve additional profile data, see the people.get method. *)
+    (** The people in this page of results. Each item includes the id, displayName, image, and url for the person. To retrieve additional profile data, see the people.get method. *)
     kind : string;
     (** Identifies this resource as a collection of people. Value: "plus#peopleFeed". *)
     nextPageToken : string;
-    (** The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
+    (** The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     selfLink : string;
     (** Link to this resource. *)
     title : string;
     (** The title of this collection of people. *)
+    totalItems : int;
+    (** The total number of people available in this list. The number of people in a response might be smaller due to paging. This might not be set for all collections. *)
     
   }
   
@@ -1021,6 +1105,7 @@ sig
   val nextPageToken : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
+  val totalItems : (t, int) GapiLens.t
   
   val empty : t
   

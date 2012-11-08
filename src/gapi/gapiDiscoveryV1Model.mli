@@ -3,7 +3,7 @@
 (** Data definition for APIs Discovery Service (v1).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/discovery}API Documentation}.
+  {{:https://developers.google.com/discovery/}API Documentation}.
   *)
 
 module JsonSchema :
@@ -397,6 +397,8 @@ sig
     (** Indicate the version of the Discovery API used to generate this doc. *)
     documentationLink : string;
     (** A link to human readable documentation for the API. *)
+    etag : string;
+    (** The etag for this response. *)
     features : string list;
     (** A list of supported features for this API. *)
     icons : Icons.t;
@@ -440,6 +442,7 @@ sig
   val description : (t, string) GapiLens.t
   val discoveryVersion : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
   val features : (t, string list) GapiLens.t
   val icons : (t, Icons.t) GapiLens.t
   val id : (t, string) GapiLens.t

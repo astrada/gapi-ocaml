@@ -3,7 +3,7 @@
 (** Data definition for BigQuery API (v2).
   
   For more information about this data model, see the
-  {{:https://code.google.com/apis/bigquery/docs/v2/}API Documentation}.
+  {{:https://developers.google.com/bigquery/docs/overview}API Documentation}.
   *)
 
 module TableReference :
@@ -124,33 +124,37 @@ sig
   
 end
 
-module TableRow :
+module TableCell :
 sig
-  module F :
-  sig
-    type t = {
-      v : string;
-      (** Contains the field value in this row, as a string. *)
-      
-    }
-    
-    val v : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
   type t = {
-    f : F.t list;
-    (** Represents a single row in the result set, consisting of one or more fields. *)
+    v : string;
+    (**  *)
     
   }
   
-  val f : (t, F.t list) GapiLens.t
+  val v : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module TableRow :
+sig
+  type t = {
+    f : TableCell.t list;
+    (**  *)
+    
+  }
+  
+  val f : (t, TableCell.t list) GapiLens.t
   
   val empty : t
   
@@ -198,19 +202,78 @@ sig
   
 end
 
-module JobStatistics :
+module JobStatistics3 :
 sig
   type t = {
-    endTime : int64;
-    (** [Output-only] End time of this job, in milliseconds since the epoch. *)
-    startTime : int64;
-    (** [Output-only] Start time of this job, in milliseconds since the epoch. *)
+    inputFileBytes : int64;
+    (** [Output-only] Number of bytes of source data in a joad job. *)
+    inputFiles : int64;
+    (** [Output-only] Number of source files in a load job. *)
+    outputBytes : int64;
+    (** [Output-only] Size of the loaded data in bytes. Note that while an import job is in the running state, this value may change. *)
+    outputRows : int64;
+    (** [Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change. *)
+    
+  }
+  
+  val inputFileBytes : (t, int64) GapiLens.t
+  val inputFiles : (t, int64) GapiLens.t
+  val outputBytes : (t, int64) GapiLens.t
+  val outputRows : (t, int64) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module JobStatistics2 :
+sig
+  type t = {
     totalBytesProcessed : int64;
     (** [Output-only] Total bytes processed for this job. *)
     
   }
   
+  val totalBytesProcessed : (t, int64) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module JobStatistics :
+sig
+  type t = {
+    endTime : int64;
+    (** [Output-only] End time of this job, in milliseconds since the epoch. *)
+    load : JobStatistics3.t;
+    (** [Output-only] Statistics for a load job. *)
+    query : JobStatistics2.t;
+    (** [Output-only] Statistics for a query job. *)
+    startTime : int64;
+    (** [Output-only] Start time of this job, in milliseconds since the epoch. *)
+    totalBytesProcessed : int64;
+    (** [Output-only] [Deprecated] Use the bytes processed in the query statistics instead. *)
+    
+  }
+  
   val endTime : (t, int64) GapiLens.t
+  val load : (t, JobStatistics3.t) GapiLens.t
+  val query : (t, JobStatistics2.t) GapiLens.t
   val startTime : (t, int64) GapiLens.t
   val totalBytesProcessed : (t, int64) GapiLens.t
   
@@ -262,6 +325,8 @@ end
 module JobConfigurationExtract :
 sig
   type t = {
+    destinationFormat : string;
+    (** [Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify "CSV". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". *)
     destinationUri : string;
     (** [Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written. *)
     fieldDelimiter : string;
@@ -273,6 +338,7 @@ sig
     
   }
   
+  val destinationFormat : (t, string) GapiLens.t
   val destinationUri : (t, string) GapiLens.t
   val fieldDelimiter : (t, string) GapiLens.t
   val printHeader : (t, bool) GapiLens.t
@@ -359,7 +425,7 @@ sig
     maxBadRecords : int;
     (** [Optional] Maximum number of bad records that should be ignored before the entire job is aborted and no updates are performed. *)
     quote : string;
-    (** [Optional] Quote character to use. Default is '"'. Note that quoting is done on the raw, binary data before the encoding is applied. *)
+    (** [Optional] Quote character to use. Default is '"'. Note that quoting is done on the raw, binary data before the encoding is applied. If no quoting is done, use am empty string. *)
     schema : TableSchema.t;
     (** [Optional] Schema of the table being written to. *)
     schemaInline : string;
@@ -368,6 +434,8 @@ sig
     (** [Experimental] Format of inlineSchema field. *)
     skipLeadingRows : int;
     (** [Optional] Number of rows of initial data to skip in the data being imported. *)
+    sourceFormat : string;
+    (** [Experimental] Optional and defaults to CSV. Format of source files. For CSV uploads, specify "CSV". For imports of datastore backups, specify "DATASTORE_BACKUP". For imports of newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". *)
     sourceUris : string list;
     (** [Required] Source URIs describing Google Cloud Storage locations of data to load. *)
     writeDisposition : string;
@@ -386,6 +454,7 @@ sig
   val schemaInline : (t, string) GapiLens.t
   val schemaInlineFormat : (t, string) GapiLens.t
   val skipLeadingRows : (t, int) GapiLens.t
+  val sourceFormat : (t, string) GapiLens.t
   val sourceUris : (t, string list) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
@@ -436,7 +505,7 @@ sig
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
     priority : string;
-    (** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH, which may be subject to looser quota restrictions. *)
+    (** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH. *)
     query : string;
     (** [Required] BigQuery SQL query to execute. *)
     writeDisposition : string;
