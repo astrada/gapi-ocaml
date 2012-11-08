@@ -89,17 +89,17 @@ List all of the people in the specified collection for a particular activity.<br
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">maxResults</code> : The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.</div>
-<div class="param_info"><code class="code">pageToken</code> : The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.</div>
+<div class="param_info"><code class="code">maxResults</code> : The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.</div>
+<div class="param_info"><code class="code">pageToken</code> : The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.</div>
 <div class="param_info"><code class="code">activityId</code> : The ID of the activity to get the list of people for.</div>
 <div class="param_info"><code class="code">collection</code> : The collection of people to list.</div>
-<pre><span id="VALsearch"><span class="keyword">val</span> search</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?language:string -><br>       ?pageToken:string -><br>       query:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.PeopleFeed.html#TYPEt">GapiPlusV1Model.PeopleFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALsearch"><span class="keyword">val</span> search</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?language:string -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       query:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.PeopleFeed.html#TYPEt">GapiPlusV1Model.PeopleFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Search all public profiles.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">maxResults</code> : The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.</div>
 <div class="param_info"><code class="code">language</code> : Specify the preferred language to search with. See search language codes for available values.</div>
-<div class="param_info"><code class="code">pageToken</code> : The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response. This token may be of any length.</div>
+<div class="param_info"><code class="code">maxResults</code> : The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.</div>
+<div class="param_info"><code class="code">pageToken</code> : The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response. This token can be of any length.</div>
 <div class="param_info"><code class="code">query</code> : Specify a query string for full text search of public text in all profiles.</div>
 </body></html>
