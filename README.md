@@ -45,7 +45,7 @@ You will need the following libraries:
 * [Ocurl][] >= 0.5.3
 * [Cryptokit][] >= 1.3.14
 * [ExtLib][] >= 1.5.1
-* [json-wheel][] >= 1.0.6
+* [Yojson][] >= 1.0.2
 * [Xmlm][] >= 1.0.2
 * [pa_monad][] >= 6.0 (syntax extension for Monads, optional)
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
@@ -58,7 +58,7 @@ This library was developed and tested on Ubuntu 12.04 LTS (64-bit).
 [Ocurl]: http://sourceforge.net/projects/ocurl/
 [Cryptokit]: http://forge.ocamlcore.org/projects/cryptokit/
 [ExtLib]: http://code.google.com/p/ocaml-extlib/
-[json-wheel]: http://martin.jambon.free.fr/json-wheel.html
+[Yojson]: http://mjambon.com/yojson.html
 [Xmlm]: http://erratique.ch/software/xmlm/doc/Xmlm
 [pa_monad]: http://www.cas.mcmaster.ca/~carette/pa_monad/
 [OUnit]: http://ounit.forge.ocamlcore.org/
