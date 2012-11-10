@@ -21,14 +21,14 @@ struct
     secret : string;
   }
 
-	let token = {
-		GapiLens.get = (fun x -> x.token);
-		GapiLens.set = (fun v x -> { x with token = v })
-	}
-	let secret = {
-		GapiLens.get = (fun x -> x.secret);
-		GapiLens.set = (fun v x -> { x with secret = v })
-	}
+  let token = {
+    GapiLens.get = (fun x -> x.token);
+    GapiLens.set = (fun v x -> { x with token = v })
+  }
+  let secret = {
+    GapiLens.get = (fun x -> x.secret);
+    GapiLens.set = (fun v x -> { x with secret = v })
+  }
 
   type oauth2_context = {
     oauth2_token: string;
@@ -36,13 +36,13 @@ struct
   }
 
   let oauth2_token = {
-		GapiLens.get = (fun x -> x.oauth2_token);
-		GapiLens.set = (fun v x -> { x with oauth2_token = v })
-	}
-	let refresh_token = {
-		GapiLens.get = (fun x -> x.refresh_token);
-		GapiLens.set = (fun v x -> { x with refresh_token = v })
-	}
+    GapiLens.get = (fun x -> x.oauth2_token);
+    GapiLens.set = (fun v x -> { x with oauth2_token = v })
+  }
+  let refresh_token = {
+    GapiLens.get = (fun x -> x.refresh_token);
+    GapiLens.set = (fun v x -> { x with refresh_token = v })
+  }
 
   type auth_context =
       NoAuth
@@ -51,20 +51,20 @@ struct
     | OAuth2 of oauth2_context
 
   let no_auth = {
-		GapiLens.get = (function NoAuth -> Some () | _ -> None);
-		GapiLens.set = (fun _ _ -> NoAuth)
+    GapiLens.get = (function NoAuth -> Some () | _ -> None);
+    GapiLens.set = (fun _ _ -> NoAuth)
   }
   let client_login = {
-		GapiLens.get = (function ClientLogin v -> Some v | _ -> None);
-		GapiLens.set = (fun v _ -> ClientLogin (Option.get v))
+    GapiLens.get = (function ClientLogin v -> Some v | _ -> None);
+    GapiLens.set = (fun v _ -> ClientLogin (Option.get v))
   }
   let oauth1 = {
-		GapiLens.get = (function OAuth1 v -> Some v | _ -> None);
-		GapiLens.set = (fun v _ -> OAuth1 (Option.get v))
+    GapiLens.get = (function OAuth1 v -> Some v | _ -> None);
+    GapiLens.set = (fun v _ -> OAuth1 (Option.get v))
   }
   let oauth2 = {
-		GapiLens.get = (function OAuth2 v -> Some v | _ -> None);
-		GapiLens.set = (fun v _ -> OAuth2 (Option.get v))
+    GapiLens.get = (function OAuth2 v -> Some v | _ -> None);
+    GapiLens.set = (fun v _ -> OAuth2 (Option.get v))
   }
 
   type t = {
@@ -75,26 +75,26 @@ struct
     etag : string;
   }
 
-	let curl = {
-		GapiLens.get = (fun x -> x.curl);
-		GapiLens.set = (fun v x -> { x with curl = v })
-	}
-	let config = {
-		GapiLens.get = (fun x -> x.config);
-		GapiLens.set = (fun v x -> { x with config = v })
-	}
-	let auth = {
-		GapiLens.get = (fun x -> x.auth);
-		GapiLens.set = (fun v x -> { x with auth = v })
-	}
-	let cookies = {
-		GapiLens.get = (fun x -> x.cookies);
-		GapiLens.set = (fun v x -> { x with cookies = v })
-	}
-	let etag = {
-		GapiLens.get = (fun x -> x.etag);
-		GapiLens.set = (fun v x -> { x with etag = v })
-	}
+  let curl = {
+    GapiLens.get = (fun x -> x.curl);
+    GapiLens.set = (fun v x -> { x with curl = v })
+  }
+  let config = {
+    GapiLens.get = (fun x -> x.config);
+    GapiLens.set = (fun v x -> { x with config = v })
+  }
+  let auth = {
+    GapiLens.get = (fun x -> x.auth);
+    GapiLens.set = (fun v x -> { x with auth = v })
+  }
+  let cookies = {
+    GapiLens.get = (fun x -> x.cookies);
+    GapiLens.set = (fun v x -> { x with cookies = v })
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v })
+  }
 
 end
 

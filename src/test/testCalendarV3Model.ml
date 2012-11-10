@@ -21,7 +21,7 @@ let second_item_first_defaultReminder_minutes =
 
 let load_calendar_list () =
   let calendar_list_json =
-    Json_io.load_json "test_data/test_calendar_list.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_list.json" in
   let tree = GapiJson.json_to_data_model calendar_list_json in
     CalendarList.of_data_model tree
 
@@ -83,7 +83,7 @@ let test_lenses_modify () =
 
 let test_parse_calendar_list () =
   let calendar_list_json =
-    Json_io.load_json "test_data/test_calendar_list.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_list.json" in
   let tree = GapiJson.json_to_data_model calendar_list_json in
   let calendarListList = CalendarList.of_data_model tree in
   let tree' = CalendarList.to_data_model calendarListList in
@@ -93,13 +93,13 @@ let test_parse_calendar_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       calendar_list_json
       json
 
 let test_parse_calendar_acl () =
   let calendar_acl_json =
-    Json_io.load_json "test_data/test_calendar_acl.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_acl.json" in
   let tree = GapiJson.json_to_data_model calendar_acl_json in
   let acl_list = Acl.of_data_model tree in
   let tree' = Acl.to_data_model acl_list in
@@ -109,13 +109,13 @@ let test_parse_calendar_acl () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       calendar_acl_json
       json
 
 let test_parse_calendars () =
   let calendars_json =
-    Json_io.load_json "test_data/test_calendars.json" in
+    Yojson.Safe.from_file "test_data/test_calendars.json" in
   let tree = GapiJson.json_to_data_model calendars_json in
   let calendars = Calendar.of_data_model tree in
   let tree' = Calendar.to_data_model calendars in
@@ -125,13 +125,13 @@ let test_parse_calendars () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       calendars_json
       json
 
 let test_parse_colors () =
   let colors_json =
-    Json_io.load_json "test_data/test_calendar_colors.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_colors.json" in
   let tree = GapiJson.json_to_data_model colors_json in
   let colors = Colors.of_data_model tree in
   let tree' = Colors.to_data_model colors in
@@ -141,13 +141,13 @@ let test_parse_colors () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       colors_json
       json
 
 let test_parse_settings () =
   let settings_json =
-    Json_io.load_json "test_data/test_calendar_settings.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_settings.json" in
   let tree = GapiJson.json_to_data_model settings_json in
   let settings = Settings.of_data_model tree in
   let tree' = Settings.to_data_model settings in
@@ -157,7 +157,7 @@ let test_parse_settings () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       settings_json
       json
 
@@ -173,11 +173,11 @@ let test_render_free_busy_parameters () =
   let json = GapiJson.data_model_to_json tree in
     TestHelper.assert_equal_file
       "test_data/test_freebusy_parameters.json"
-      (Json_io.string_of_json ~compact:true json)
+      (Yojson.Safe.to_string json)
 
 let test_parse_free_busy_resource () =
   let freeBusy_json =
-    Json_io.load_json "test_data/test_freebusy.json" in
+    Yojson.Safe.from_file "test_data/test_freebusy.json" in
   let tree = GapiJson.json_to_data_model freeBusy_json in
   let freeBusy = FreeBusyResponse.of_data_model tree in
   let tree' = FreeBusyResponse.to_data_model freeBusy in
@@ -187,13 +187,13 @@ let test_parse_free_busy_resource () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       freeBusy_json
       json
 
 let test_parse_event_resource () =
   let event_json =
-    Json_io.load_json "test_data/test_calendar_event_resource.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_event_resource.json" in
   let tree = GapiJson.json_to_data_model event_json in
   let event = Event.of_data_model tree in
   let tree' = Event.to_data_model event in
@@ -203,13 +203,13 @@ let test_parse_event_resource () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       event_json
       json
 
 let test_parse_event_list () =
   let event_json =
-    Json_io.load_json "test_data/test_calendar_event_list.json" in
+    Yojson.Safe.from_file "test_data/test_calendar_event_list.json" in
   let tree = GapiJson.json_to_data_model event_json in
   let event = Events.of_data_model tree in
   let tree' = Events.to_data_model event in
@@ -219,7 +219,7 @@ let test_parse_event_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       event_json
       json
 

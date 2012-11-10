@@ -19,7 +19,7 @@ type json_metadata =
 let metadata_description { name = n; data_type = dt } =
   Printf.sprintf "name=%s data_type=%s" n (json_data_type_to_string dt)
 
-type json_data_model = (json_metadata, Json_type.t) AnnotatedTree.t
+type json_data_model = (json_metadata, Yojson.Safe.json) AnnotatedTree.t
 
 let unexpected r e x =
   begin match e with
@@ -41,23 +41,23 @@ let render_value name default value =
     []
 
 let render_string_value ?(default = "") name value =
-  render_value name (Json_type.String default) (Json_type.String value)
+  render_value name (`String default) (`String value)
 
 let render_int_value ?(default = 0) name value =
-  render_value name (Json_type.Int default) (Json_type.Int value)
+  render_value name (`Int default) (`Int value)
 
 let render_int64_value ?(default = 0L) name value =
-  let to_json v = Json_type.String (Int64.to_string v) in
+  let to_json v = `String (Int64.to_string v) in
     render_value name (to_json default) (to_json value)
 
 let render_bool_value ?(default = false) name value =
-  render_value name (Json_type.Bool default) (Json_type.Bool value)
+  render_value name (`Bool default) (`Bool value)
 
 let render_float_value ?(default = 0.0) name value =
-  render_value name (Json_type.Float default) (Json_type.Float value)
+  render_value name (`Float default) (`Float value)
 
 let render_date_value ?time ?(default = GapiDate.epoch) name value =
-  let to_json v = Json_type.String (GapiDate.to_string ?time v) in
+  let to_json v = `String (GapiDate.to_string ?time v) in
     render_value name (to_json default) (to_json value)
 
 let render_struct name data_type xs =
@@ -115,7 +115,7 @@ let parse_root parse_object empty_object tree =
 let parse_string_element x = function
     AnnotatedTree.Leaf
       ({ name = ""; data_type = Scalar },
-       Json_type.String v) ->
+       `String v) ->
       v
   | e ->
       unexpected "GapiJson.parse_string_element" e x
@@ -123,7 +123,7 @@ let parse_string_element x = function
 let parse_dictionary_entry x = function
    AnnotatedTree.Leaf
      ({ name = n; data_type = Scalar },
-      Json_type.String v) ->
+      `String v) ->
      (n, v)
  | e ->
      unexpected "GapiJson.parse_property" e x
@@ -131,11 +131,11 @@ let parse_dictionary_entry x = function
 let json_to_data_model json_value =
   let rec map (name, value) =
     match value with
-        Json_type.Object xs ->
+        `Assoc xs ->
           AnnotatedTree.Node (
             { name; data_type = Object },
             List.map map xs)
-      | Json_type.Array xs ->
+      | `List xs ->
           AnnotatedTree.Node (
             { name; data_type = Array },
             List.map (fun x -> map ("", x)) xs)
@@ -151,10 +151,10 @@ let data_model_to_json tree =
     (fun m xs ->
        match m.data_type with
            Object ->
-             (m.name, Json_type.Object xs)
+             (m.name, `Assoc xs)
          | Array ->
              let xs' = List.map snd xs in
-               (m.name, Json_type.Array xs')
+               (m.name, `List xs')
          | _ -> failwith "Unexpected scalar JSON value in AnnotatedTree.Node"
     )
     (fun m x -> (m.name, x))
@@ -163,7 +163,7 @@ let data_model_to_json tree =
 
 let parse_json_response parse pipe =
   let json_string = GapiConversation.read_all pipe in
-  let json = Json_io.json_of_string json_string in
+  let json = Yojson.Safe.from_string json_string in
   let tree = json_to_data_model json in
     parse tree
 
@@ -172,7 +172,7 @@ let default_content_type = "application/json"
 let render_json render_data_model data =
   let tree = render_data_model data in
   let json = data_model_to_json tree in
-  let json_string = Json_io.string_of_json ~compact:true json in
+  let json_string = Yojson.Safe.to_string json in
     GapiCore.PostData.Body (json_string, default_content_type)
 
 module StringDictionary =
@@ -190,7 +190,7 @@ struct
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
         ({ name = n; data_type = Scalar },
-        Json_type.String v) ->
+        `String v) ->
       x @ [(n, v)]
     | e ->
       unexpected "GapiJson.StringDictionary.parse" e x

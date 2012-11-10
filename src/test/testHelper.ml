@@ -57,7 +57,7 @@ let string_of_json_data_model tree =
                Printf.sprintf "\"%s\":[%a]" m.GapiJson.name join xs
            | _ -> assert false)
       (fun m value ->
-         let s = Json_type.Browse.describe value in
+         let s = Yojson.Safe.to_string value in
            if m.GapiJson.name <> "" then
              Printf.sprintf "\"%s\":%s" m.GapiJson.name s
            else

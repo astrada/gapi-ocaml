@@ -5,7 +5,7 @@ open GapiBloggerV2Model
 
 let test_parse_blog () =
   let blog_json =
-    Json_io.load_json "test_data/test_blogger_blog.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_blog.json" in
   let tree = GapiJson.json_to_data_model blog_json in
   let blog = Blog.of_data_model tree in
   let tree' = Blog.to_data_model blog in
@@ -15,13 +15,13 @@ let test_parse_blog () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       blog_json
       json
 
 let test_parse_blog_list () =
   let blog_list_json =
-    Json_io.load_json "test_data/test_blogger_blog_list.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_blog_list.json" in
   let tree = GapiJson.json_to_data_model blog_list_json in
   let blog_list = BlogList.of_data_model tree in
   let tree' = BlogList.to_data_model blog_list in
@@ -31,13 +31,13 @@ let test_parse_blog_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       blog_list_json
       json
 
 let test_parse_post_list () =
   let post_list_json =
-    Json_io.load_json "test_data/test_blogger_post_list.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_post_list.json" in
   let tree = GapiJson.json_to_data_model post_list_json in
   let post_list = PostList.of_data_model tree in
   let tree' = PostList.to_data_model post_list in
@@ -47,13 +47,13 @@ let test_parse_post_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       post_list_json
       json
 
 let test_parse_post () =
   let post_json =
-    Json_io.load_json "test_data/test_blogger_post.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_post.json" in
   let tree = GapiJson.json_to_data_model post_json in
   let post = Post.of_data_model tree in
   let tree' = Post.to_data_model post in
@@ -63,13 +63,13 @@ let test_parse_post () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       post_json
       json
 
 let test_parse_comment_list () =
   let comment_list_json =
-    Json_io.load_json "test_data/test_blogger_comment_list.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_comment_list.json" in
   let tree = GapiJson.json_to_data_model comment_list_json in
   let comment_list = CommentList.of_data_model tree in
   let tree' = CommentList.to_data_model comment_list in
@@ -79,13 +79,13 @@ let test_parse_comment_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       comment_list_json
       json
 
 let test_parse_comment () =
   let comment_json =
-    Json_io.load_json "test_data/test_blogger_comment.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_comment.json" in
   let tree = GapiJson.json_to_data_model comment_json in
   let comment = Comment.of_data_model tree in
   let tree' = Comment.to_data_model comment in
@@ -95,13 +95,13 @@ let test_parse_comment () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       comment_json
       json
 
 let test_parse_page_list () =
   let page_list_json =
-    Json_io.load_json "test_data/test_blogger_page_list.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_page_list.json" in
   let tree = GapiJson.json_to_data_model page_list_json in
   let page_list = PageList.of_data_model tree in
   let tree' = PageList.to_data_model page_list in
@@ -111,13 +111,13 @@ let test_parse_page_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       page_list_json
       json
 
 let test_parse_page () =
   let page_json =
-    Json_io.load_json "test_data/test_blogger_page.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_page.json" in
   let tree = GapiJson.json_to_data_model page_json in
   let page = Page.of_data_model tree in
   let tree' = Page.to_data_model page in
@@ -127,13 +127,13 @@ let test_parse_page () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       page_json
       json
 
 let test_parse_user () =
   let user_json =
-    Json_io.load_json "test_data/test_blogger_user.json" in
+    Yojson.Safe.from_file "test_data/test_blogger_user.json" in
   let tree = GapiJson.json_to_data_model user_json in
   let user = User.of_data_model tree in
   let tree' = User.to_data_model user in
@@ -143,7 +143,7 @@ let test_parse_user () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       user_json
       json
 

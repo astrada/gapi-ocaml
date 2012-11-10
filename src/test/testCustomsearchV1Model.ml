@@ -5,7 +5,7 @@ open GapiUtils.Infix
 
 let test_parse_search_results () =
   let search_json =
-    Json_io.load_json "test_data/test_search_results.json" in
+    Yojson.Safe.from_file "test_data/test_search_results.json" in
   let tree = GapiJson.json_to_data_model search_json in
   let search = Search.of_data_model tree in
   let tree' = Search.to_data_model search in
@@ -15,7 +15,7 @@ let test_parse_search_results () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       search_json
       json
 

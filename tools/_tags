@@ -1,3 +1,0 @@
-<serviceGeneratorState.*> : pkg_extlib, pkg_json-wheel
-<serviceGenerator.*> : pkg_curl, pkg_str, pkg_cryptokit, pkg_extlib, pkg_json-wheel, pkg_monad, syntax_camlp4o
-

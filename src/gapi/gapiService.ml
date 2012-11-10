@@ -9,7 +9,7 @@ let parse_error pipe response_code =
                   pipe
     in
       raise (ServiceError error)
-  with Json_type.Json_error _ ->
+  with Yojson.Json_error _ ->
     GapiConversation.parse_error pipe response_code
 
 let service_request

@@ -1,5 +1,7 @@
+<tools/*.ml> : syntax_camlp4o
+
 # OASIS_START
-# DO NOT EDIT (digest: 01ec1070db7cf6e2075b573621bf875d)
+# DO NOT EDIT (digest: 91a1846667b525dbca00d086ce147167)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -21,7 +23,7 @@
 <src/gapi/*.ml{,i}>: pkg_curl
 <src/gapi/*.ml{,i}>: pkg_str
 <src/gapi/*.ml{,i}>: pkg_cryptokit
-<src/gapi/*.ml{,i}>: pkg_json-wheel
+<src/gapi/*.ml{,i}>: pkg_yojson
 # Library gdata
 "src/gdata/gdata.cmxs": use_gdata
 <src/gdata/*.ml{,i}>: use_gapi-ocaml
@@ -31,24 +33,26 @@
 <src/gdata/*.ml{,i}>: pkg_curl
 <src/gdata/*.ml{,i}>: pkg_str
 <src/gdata/*.ml{,i}>: pkg_cryptokit
-<src/gdata/*.ml{,i}>: pkg_json-wheel
+<src/gdata/*.ml{,i}>: pkg_yojson
 # Executable serviceGenerator
 "tools/serviceGenerator.byte": use_gapi-ocaml
+"tools/serviceGenerator.byte": pkg_monad
 "tools/serviceGenerator.byte": pkg_xmlm
 "tools/serviceGenerator.byte": pkg_extlib
 "tools/serviceGenerator.byte": pkg_netstring
 "tools/serviceGenerator.byte": pkg_curl
 "tools/serviceGenerator.byte": pkg_str
 "tools/serviceGenerator.byte": pkg_cryptokit
-"tools/serviceGenerator.byte": pkg_json-wheel
+"tools/serviceGenerator.byte": pkg_yojson
 <tools/*.ml{,i}>: use_gapi-ocaml
+<tools/*.ml{,i}>: pkg_monad
 <tools/*.ml{,i}>: pkg_xmlm
 <tools/*.ml{,i}>: pkg_extlib
 <tools/*.ml{,i}>: pkg_netstring
 <tools/*.ml{,i}>: pkg_curl
 <tools/*.ml{,i}>: pkg_str
 <tools/*.ml{,i}>: pkg_cryptokit
-<tools/*.ml{,i}>: pkg_json-wheel
+<tools/*.ml{,i}>: pkg_yojson
 # Executable oauth2Flow
 "examples/auth/oauth2Flow.byte": use_gdata
 "examples/auth/oauth2Flow.byte": use_gapi-ocaml
@@ -59,7 +63,7 @@
 "examples/auth/oauth2Flow.byte": pkg_curl
 "examples/auth/oauth2Flow.byte": pkg_str
 "examples/auth/oauth2Flow.byte": pkg_cryptokit
-"examples/auth/oauth2Flow.byte": pkg_json-wheel
+"examples/auth/oauth2Flow.byte": pkg_yojson
 <examples/auth/*.ml{,i}>: use_gdata
 # Executable oauth1Flow
 "examples/auth/oauth1Flow.byte": use_gapi-ocaml
@@ -70,7 +74,7 @@
 "examples/auth/oauth1Flow.byte": pkg_curl
 "examples/auth/oauth1Flow.byte": pkg_str
 "examples/auth/oauth1Flow.byte": pkg_cryptokit
-"examples/auth/oauth1Flow.byte": pkg_json-wheel
+"examples/auth/oauth1Flow.byte": pkg_yojson
 # Executable clientLoginFlow
 "examples/auth/clientLoginFlow.byte": use_gapi-ocaml
 "examples/auth/clientLoginFlow.byte": pkg_nethttpd
@@ -80,7 +84,7 @@
 "examples/auth/clientLoginFlow.byte": pkg_curl
 "examples/auth/clientLoginFlow.byte": pkg_str
 "examples/auth/clientLoginFlow.byte": pkg_cryptokit
-"examples/auth/clientLoginFlow.byte": pkg_json-wheel
+"examples/auth/clientLoginFlow.byte": pkg_yojson
 <examples/auth/*.ml{,i}>: use_gapi-ocaml
 <examples/auth/*.ml{,i}>: pkg_nethttpd
 <examples/auth/*.ml{,i}>: pkg_xmlm
@@ -89,7 +93,7 @@
 <examples/auth/*.ml{,i}>: pkg_curl
 <examples/auth/*.ml{,i}>: pkg_str
 <examples/auth/*.ml{,i}>: pkg_cryptokit
-<examples/auth/*.ml{,i}>: pkg_json-wheel
+<examples/auth/*.ml{,i}>: pkg_yojson
 # Executable refreshOAuth2Token
 "src/test/refreshOAuth2Token.byte": use_gapi-ocaml
 "src/test/refreshOAuth2Token.byte": pkg_oUnit
@@ -99,7 +103,7 @@
 "src/test/refreshOAuth2Token.byte": pkg_curl
 "src/test/refreshOAuth2Token.byte": pkg_str
 "src/test/refreshOAuth2Token.byte": pkg_cryptokit
-"src/test/refreshOAuth2Token.byte": pkg_json-wheel
+"src/test/refreshOAuth2Token.byte": pkg_yojson
 # Executable test_suite
 "src/test/testSuite.byte": use_gdata
 "src/test/testSuite.byte": use_gapi-ocaml
@@ -110,7 +114,7 @@
 "src/test/testSuite.byte": pkg_curl
 "src/test/testSuite.byte": pkg_str
 "src/test/testSuite.byte": pkg_cryptokit
-"src/test/testSuite.byte": pkg_json-wheel
+"src/test/testSuite.byte": pkg_yojson
 <src/test/*.ml{,i}>: use_gdata
 <src/test/*.ml{,i}>: use_gapi-ocaml
 <src/test/*.ml{,i}>: pkg_oUnit
@@ -120,5 +124,5 @@
 <src/test/*.ml{,i}>: pkg_curl
 <src/test/*.ml{,i}>: pkg_str
 <src/test/*.ml{,i}>: pkg_cryptokit
-<src/test/*.ml{,i}>: pkg_json-wheel
+<src/test/*.ml{,i}>: pkg_yojson
 # OASIS_STOP

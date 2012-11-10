@@ -23,30 +23,49 @@ let authorization_code_url
 
 let parse_token_info pipe =
   let response = GapiConversation.read_all pipe in
-  let json = Json_io.json_of_string response in
-  let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
-    GapiAuthResponse.OAuth2AccessToken
-      { GapiAuthResponse.OAuth2.access_token =
-          Json_type.Browse.string (Json_type.Browse.field table "access_token");
-        GapiAuthResponse.OAuth2.token_type =
-          Json_type.Browse.string (Json_type.Browse.field table "token_type");
-        GapiAuthResponse.OAuth2.expires_in =
-          Json_type.Browse.int (Json_type.Browse.field table "expires_in");
-        GapiAuthResponse.OAuth2.refresh_token =
-          Json_type.Browse.string (
-            Option.default
-              (Json_type.Build.string "")
-              (Json_type.Browse.optfield table "refresh_token"))
-      }
+  let json = Yojson.Safe.from_string response in
+    match json with
+        `Assoc xs ->
+          let table = Hashtbl.create 4 in
+          let () = List.iter (fun (n, v) -> Hashtbl.add table n v) xs in
+          let parse_string n =
+            match Hashtbl.find table n with
+                `String s -> s
+              | _ ->
+                  failwith (Printf.sprintf "Unable to parse %s in response: %s"
+                              n response) in
+          let access_token = parse_string "access_token" in
+          let token_type = parse_string "token_type" in
+          let expires_in =
+            match Hashtbl.find table "expires_in" with
+                `Int i -> i
+              | _ ->
+                  failwith
+                    ("Unable to parse expires_in in response: " ^ response) in
+          let refresh_token =
+            try
+              parse_string "refresh_token"
+            with Not_found -> ""
+          in
+            GapiAuthResponse.OAuth2AccessToken
+              { GapiAuthResponse.OAuth2.access_token;
+                token_type;
+                expires_in;
+                refresh_token;
+              }
+      | _ ->
+          failwith ("Unexpected access token response: " ^ response)
 
 let parse_error pipe response_code =
   let response = GapiConversation.read_all pipe in
   let error_message =
     try
-      let json = Json_io.json_of_string response in
-      let table = Json_type.Browse.make_table (Json_type.Browse.objekt json) in
-        Json_type.Browse.string (Json_type.Browse.field table "error")
-    with Json_type.Json_error _ ->
+      let json = Yojson.Safe.from_string response in
+        match json with
+            `Assoc [("error", `String e)] -> e
+          | _ ->
+              failwith ("Unexpected error response: " ^ response)
+    with Yojson.Json_error _ ->
       response
   in
     failwith (Printf.sprintf "OAuth2 error: %s (HTTP response code: %d)"

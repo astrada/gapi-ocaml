@@ -37,11 +37,11 @@ struct
     let rec parse x = function
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "major"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with major = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "minor"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with minor = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -164,55 +164,55 @@ struct
     let rec parse x = function
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "cssResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with cssResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "flashResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with flashResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "htmlResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with htmlResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "imageResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with imageResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "javascriptResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with javascriptResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "numberCssResources"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with numberCssResources = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "numberHosts"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with numberHosts = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "numberJsResources"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with numberJsResources = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "numberResources"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with numberResources = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "numberStaticResources"; data_type = GapiJson.Scalar },
-          Json_type.Int v) ->
+          `Int v) ->
         { x with numberStaticResources = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "otherResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with otherResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "textResponseBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with textResponseBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "totalRequestBytes"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with totalRequestBytes = Int64.of_string v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -268,11 +268,11 @@ struct
               let rec parse x = function
                 | GapiCore.AnnotatedTree.Leaf
                     ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
-                    Json_type.String v) ->
+                    `String v) ->
                   { x with _type = v }
                 | GapiCore.AnnotatedTree.Leaf
                     ({ GapiJson.name = "value"; data_type = GapiJson.Scalar },
-                    Json_type.String v) ->
+                    `String v) ->
                   { x with value = v }
                 | GapiCore.AnnotatedTree.Node
                   ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -334,7 +334,7 @@ struct
                   cs
               | GapiCore.AnnotatedTree.Leaf
                   ({ GapiJson.name = "format"; data_type = GapiJson.Scalar },
-                  Json_type.String v) ->
+                  `String v) ->
                 { x with format = v }
               | GapiCore.AnnotatedTree.Node
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -382,11 +382,11 @@ struct
               let rec parse x = function
                 | GapiCore.AnnotatedTree.Leaf
                     ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
-                    Json_type.String v) ->
+                    `String v) ->
                   { x with _type = v }
                 | GapiCore.AnnotatedTree.Leaf
                     ({ GapiJson.name = "value"; data_type = GapiJson.Scalar },
-                    Json_type.String v) ->
+                    `String v) ->
                   { x with value = v }
                 | GapiCore.AnnotatedTree.Node
                   ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -448,7 +448,7 @@ struct
                   cs
               | GapiCore.AnnotatedTree.Leaf
                   ({ GapiJson.name = "format"; data_type = GapiJson.Scalar },
-                  Json_type.String v) ->
+                  `String v) ->
                 { x with format = v }
               | GapiCore.AnnotatedTree.Node
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -562,11 +562,11 @@ struct
             let rec parse x = function
               | GapiCore.AnnotatedTree.Leaf
                   ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
-                  Json_type.String v) ->
+                  `String v) ->
                 { x with _type = v }
               | GapiCore.AnnotatedTree.Leaf
                   ({ GapiJson.name = "value"; data_type = GapiJson.Scalar },
-                  Json_type.String v) ->
+                  `String v) ->
                 { x with value = v }
               | GapiCore.AnnotatedTree.Node
                 ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -628,7 +628,7 @@ struct
                 cs
             | GapiCore.AnnotatedTree.Leaf
                 ({ GapiJson.name = "format"; data_type = GapiJson.Scalar },
-                Json_type.String v) ->
+                `String v) ->
               { x with format = v }
             | GapiCore.AnnotatedTree.Node
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -752,19 +752,19 @@ struct
       let rec parse x = function
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "localizedRuleName"; data_type = GapiJson.Scalar },
-            Json_type.String v) ->
+            `String v) ->
           { x with localizedRuleName = v }
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "ruleImpact"; data_type = GapiJson.Scalar },
-            Json_type.Float v) ->
+            `Float v) ->
           { x with ruleImpact = v }
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "ruleImpact"; data_type = GapiJson.Scalar },
-            Json_type.Int v) ->
+            `Int v) ->
           { x with ruleImpact = float_of_int v }
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "ruleScore"; data_type = GapiJson.Scalar },
-            Json_type.Int v) ->
+            `Int v) ->
           { x with ruleScore = v }
         | GapiCore.AnnotatedTree.Node
             ({ GapiJson.name = "urlBlocks"; data_type = GapiJson.Array },
@@ -826,7 +826,7 @@ struct
     let rec parse x = function
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "locale"; data_type = GapiJson.Scalar },
-          Json_type.String v) ->
+          `String v) ->
         { x with locale = v }
       | GapiCore.AnnotatedTree.Node
           ({ GapiJson.name = "ruleResults"; data_type = GapiJson.Object },
@@ -945,7 +945,7 @@ struct
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with id = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "invalidRules"; data_type = GapiJson.Array },
@@ -954,7 +954,7 @@ struct
         (fun x' -> function
           | GapiCore.AnnotatedTree.Leaf
               ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
-              Json_type.String v) ->
+              `String v) ->
             v
           | e ->
             GapiJson.unexpected "GapiPagespeedonlineV1Model.Result.parse.parse_collection" e x')
@@ -963,7 +963,7 @@ struct
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with kind = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "pageStats"; data_type = GapiJson.Object },
@@ -975,15 +975,15 @@ struct
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "responseCode"; data_type = GapiJson.Scalar },
-        Json_type.Int v) ->
+        `Int v) ->
       { x with responseCode = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "score"; data_type = GapiJson.Scalar },
-        Json_type.Int v) ->
+        `Int v) ->
       { x with score = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with title = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "version"; data_type = GapiJson.Object },

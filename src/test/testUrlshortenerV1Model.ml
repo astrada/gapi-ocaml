@@ -3,7 +3,7 @@ open GapiUrlshortenerV1Model
 
 let test_parse_url () =
   let url_json =
-    Json_io.load_json "test_data/test_urlshortener_url.json" in
+    Yojson.Safe.from_file "test_data/test_urlshortener_url.json" in
   let tree = GapiJson.json_to_data_model url_json in
   let url = Url.of_data_model tree in
   let tree' = Url.to_data_model url in
@@ -13,13 +13,13 @@ let test_parse_url () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       url_json
       json
 
 let test_parse_url_history () =
   let url_history_json =
-    Json_io.load_json "test_data/test_urlshortener_url_history.json" in
+    Yojson.Safe.from_file "test_data/test_urlshortener_url_history.json" in
   let tree = GapiJson.json_to_data_model url_history_json in
   let url_history = UrlHistory.of_data_model tree in
   let tree' = UrlHistory.to_data_model url_history in
@@ -29,7 +29,7 @@ let test_parse_url_history () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       url_history_json
       json
 

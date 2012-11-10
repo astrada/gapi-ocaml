@@ -59,31 +59,31 @@ struct
     match tree with
         AnnotatedTree.Leaf
           ({ name = "domain"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with domain = v }
       | AnnotatedTree.Leaf
           ({ name = "reason"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with reason = v }
       | AnnotatedTree.Leaf
           ({ name = "message"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with message = v }
       | AnnotatedTree.Leaf
           ({ name = "message"; data_type = Scalar },
-           Json_type.Null) ->
+           `Null) ->
           x
       | AnnotatedTree.Leaf
           ({ name = "locationType"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with locationType = v }
       | AnnotatedTree.Leaf
           ({ name = "location"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with location = v }
       | AnnotatedTree.Leaf
           ({ name = "extendedHelp"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with extendedHelp = v }
       | AnnotatedTree.Node
           ({ name = ""; data_type = Object },
@@ -144,11 +144,11 @@ struct
             cs
       | AnnotatedTree.Leaf
           ({ name = "code"; data_type = Scalar },
-           Json_type.Int v) ->
+           `Int v) ->
           { x with code = v }
       | AnnotatedTree.Leaf
           ({ name = "message"; data_type = Scalar },
-           Json_type.String v) ->
+           `String v) ->
           { x with message = v }
       | AnnotatedTree.Node
           ({ name = "error"; data_type = Object },

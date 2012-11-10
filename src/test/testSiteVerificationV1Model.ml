@@ -3,7 +3,7 @@ open GapiSiteVerificationV1Model
 
 let test_parse_webresource_list () =
   let webresources_json =
-    Json_io.load_json "test_data/test_siteVerification_webresource_list.json" in
+    Yojson.Safe.from_file "test_data/test_siteVerification_webresource_list.json" in
   let tree = GapiJson.json_to_data_model webresources_json in
   let webresources =
     SiteVerificationWebResourceListResponse.of_data_model tree in
@@ -15,13 +15,13 @@ let test_parse_webresource_list () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       webresources_json
       json
 
 let test_parse_webresource () =
   let webresource_json =
-    Json_io.load_json "test_data/test_siteVerification_webresource.json" in
+    Yojson.Safe.from_file "test_data/test_siteVerification_webresource.json" in
   let tree = GapiJson.json_to_data_model webresource_json in
   let webresource =
     SiteVerificationWebResourceResource.of_data_model tree in
@@ -33,13 +33,13 @@ let test_parse_webresource () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       webresource_json
       json
 
 let test_parse_token () =
   let token_json =
-    Json_io.load_json "test_data/test_siteVerification_token.json" in
+    Yojson.Safe.from_file "test_data/test_siteVerification_token.json" in
   let tree = GapiJson.json_to_data_model token_json in
   let token =
     SiteVerificationWebResourceGettokenResponse.of_data_model tree in
@@ -51,7 +51,7 @@ let test_parse_token () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       token_json
       json
 

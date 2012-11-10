@@ -77,35 +77,35 @@ struct
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "access_type"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with access_type = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "audience"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with audience = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "email"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with email = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "expires_in"; data_type = GapiJson.Scalar },
-        Json_type.Int v) ->
+        `Int v) ->
       { x with expires_in = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "issued_to"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with issued_to = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "scope"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with scope = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "user_id"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with user_id = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "verified_email"; data_type = GapiJson.Scalar },
-        Json_type.Bool v) ->
+        `Bool v) ->
       { x with verified_email = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
@@ -225,51 +225,51 @@ struct
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "birthday"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with birthday = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "email"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with email = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "family_name"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with family_name = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "gender"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with gender = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "given_name"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with given_name = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with id = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with link = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "locale"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with locale = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with name = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "picture"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with picture = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "timezone"; data_type = GapiJson.Scalar },
-        Json_type.String v) ->
+        `String v) ->
       { x with timezone = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "verified_email"; data_type = GapiJson.Scalar },
-        Json_type.Bool v) ->
+        `Bool v) ->
       { x with verified_email = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },

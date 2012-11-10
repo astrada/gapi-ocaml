@@ -269,11 +269,11 @@ struct
   let get_json_type = function
       String
     | DateTime
-    | Date -> "String"
-    | Boolean -> "Bool"
-    | Integer -> "Int"
-    | Int64 -> "String"
-    | Float -> "Float"
+    | Date -> "`String"
+    | Boolean -> "`Bool"
+    | Integer -> "`Int"
+    | Int64 -> "`String"
+    | Float -> "`Float"
 
   let get_convert_function = function
     | DateTime

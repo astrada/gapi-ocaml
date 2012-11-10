@@ -67,12 +67,12 @@ let get_service_description api version nocache =
       let () = print_endline "Done" in
       let tree = RestDescription.to_data_model document in
       let json = GapiJson.data_model_to_json tree in
-      let () = Json_io.save_json file_name json in
+      let () = Yojson.Safe.to_file file_name json in
         document
     end else begin
       Printf.printf "Reusing %s %s service description file %s\n%!"
         api version file_name;
-      let json = Json_io.load_json file_name in
+      let json = Yojson.Safe.from_file file_name in
       let tree = GapiJson.json_to_data_model json in
         RestDescription.of_data_model tree
     end
@@ -236,7 +236,7 @@ let build_schema_inner_module file_lens complex_type =
       match field_type.ComplexType.data_type with
           ComplexType.Scalar scalar ->
             Format.fprintf formatter
-              "| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = %s; data_type = GapiJson.Scalar },@ Json_type.%s v) ->@]@,"
+              "| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = %s; data_type = GapiJson.Scalar },@ %s v) ->@]@,"
               name (ScalarType.get_json_type scalar.ScalarType.data_type)
         | ComplexType.Array _ ->
             Format.fprintf formatter
@@ -349,7 +349,6 @@ let build_schema_inner_module file_lens complex_type =
                          scalar.ScalarType.data_type) ^ "v }");
                  if scalar.ScalarType.data_type = ScalarType.Float then begin
                    (* Float type includes integral literals *)
-                   (* TODO: remove when upgrading to Yojson *)
                    render_parse_element formatter
                      (name,
                       prefix,

@@ -5,7 +5,7 @@ open GapiUtils.Infix
 
 let test_parse_pagespeedonline_result () =
   let result_json =
-    Json_io.load_json "test_data/test_pagespeedonline_result.json" in
+    Yojson.Safe.from_file "test_data/test_pagespeedonline_result.json" in
   let tree = GapiJson.json_to_data_model result_json in
   let result = Result.of_data_model tree in
   let tree' = Result.to_data_model result in
@@ -15,7 +15,7 @@ let test_parse_pagespeedonline_result () =
       tree
       tree';
     assert_equal
-      ~printer:Json_io.string_of_json
+      ~printer:Yojson.Safe.to_string
       result_json
       json
 
