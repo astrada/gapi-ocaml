@@ -14,14 +14,19 @@ BuildTools: ocamlbuild
 Synopsis: A simple OCaml client for Google Services.
 
 # Flags
+Flag all
+  Description: Build all
+  Default: false
+
+# Flags
 Flag generator
   Description: Build service generator
-  Default: false
+  Default$: flag(all)
 
 # Flags
 Flag examples
   Description: Build examples
-  Default: false
+  Default$: flag(all)
 
 # Libraries
 Library "gapi-ocaml"
@@ -108,7 +113,7 @@ Document "gapi-ocaml"
 
 # Executables
 Executable "serviceGenerator"
-  Build$: flag(generator)
+  Build$: flag(generator) || flag(all)
   Path: tools
   Install: false
   MainIs: serviceGenerator.ml
@@ -116,21 +121,21 @@ Executable "serviceGenerator"
 
 # Examples
 Executable "oauth2Flow"
-  Build$: flag(examples)
+  Build$: flag(examples) || flag(all)
   Path: examples/auth
   Install: false
   MainIs: oauth2Flow.ml
   BuildDepends: gapi-ocaml.gdata, nethttpd
 
 Executable "oauth1Flow"
-  Build$: flag(examples)
+  Build$: flag(examples) || flag(all)
   Path: examples/auth
   Install: false
   MainIs: oauth1Flow.ml
   BuildDepends: gapi-ocaml, nethttpd
 
 Executable "clientLoginFlow"
-  Build$: flag(examples)
+  Build$: flag(examples) || flag(all)
   Path: examples/auth
   Install: false
   MainIs: clientLoginFlow.ml
@@ -138,21 +143,21 @@ Executable "clientLoginFlow"
 
 # Tests
 Executable "refreshOAuth2Token"
-  Build$: flag(tests)
+  Build$: flag(tests) || flag(all)
   Path: src/test
   Install: false
   MainIs: refreshOAuth2Token.ml
   BuildDepends: gapi-ocaml, oUnit
 
 Executable "test_suite"
-  Build$: flag(tests)
+  Build$: flag(tests) || flag(all)
   Path: src/test
   Install: false
   MainIs: testSuite.ml
   BuildDepends: oUnit, gapi-ocaml.gdata
 
 Test core
-  Run$: flag(tests)
+  Run$: flag(tests) || flag(all)
   Command: $test_suite
   TestTools: test_suite
 
