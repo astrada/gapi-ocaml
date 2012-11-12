@@ -1,9 +1,0 @@
-# Packages deps
-<gdataUtils.*> : pkg_xmlm
-<gdataAtom.*> : pkg_extlib, pkg_xmlm
-<gdataComments.*> : pkg_extlib, pkg_xmlm
-<gdataACL.*> : pkg_extlib, pkg_xmlm
-<gdataCalendar*.*> : pkg_extlib, pkg_xmlm
-<gdataService.*> : pkg_extlib
-<gdataCalendarService.*> : pkg_netstring, pkg_curl
-

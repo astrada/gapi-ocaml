@@ -1,4 +1,7 @@
-<tools/*.ml> : syntax_camlp4o
+<tools/*.ml>: syntax_camlp4o
+"src/test/testMonadic.ml": syntax_camlp4o
+# Disable warning 23 (Useless record "with" clause.) for generated modules
+<src/gapi/gapi*Model.ml>: warn_x
 
 # OASIS_START
 # DO NOT EDIT (digest: 91a1846667b525dbca00d086ce147167)

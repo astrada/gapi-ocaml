@@ -96,7 +96,7 @@ Library gdata
     GdataACLService,
     GdataDocumentsV3Model,
     GdataDocumentsV3Service
-  BuildDepends: gapi-ocaml, xmlm, extlib, netstring, curl
+  BuildDepends: gapi-ocaml, xmlm
   FindlibParent: gapi-ocaml
   XMETADescription: Google Data Protocol (GData) client library
 
@@ -154,7 +154,7 @@ Executable "test_suite"
   Path: src/test
   Install: false
   MainIs: testSuite.ml
-  BuildDepends: oUnit, gapi-ocaml.gdata
+  BuildDepends: oUnit, gapi-ocaml.gdata, monad
 
 Test core
   Run$: flag(tests) || flag(all)
