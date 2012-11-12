@@ -4,7 +4,7 @@
 <src/gapi/gapi*Model.ml>: warn_x
 
 # OASIS_START
-# DO NOT EDIT (digest: 91a1846667b525dbca00d086ce147167)
+# DO NOT EDIT (digest: c24ca32aba5c5de4fc5bec6dcc7381d8)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -20,7 +20,6 @@
 "_darcs": not_hygienic
 # Library gapi-ocaml
 "src/gapi/gapi-ocaml.cmxs": use_gapi-ocaml
-<src/gapi/*.ml{,i}>: pkg_xmlm
 <src/gapi/*.ml{,i}>: pkg_extlib
 <src/gapi/*.ml{,i}>: pkg_netstring
 <src/gapi/*.ml{,i}>: pkg_curl
@@ -40,7 +39,6 @@
 # Executable serviceGenerator
 "tools/serviceGenerator.byte": use_gapi-ocaml
 "tools/serviceGenerator.byte": pkg_monad
-"tools/serviceGenerator.byte": pkg_xmlm
 "tools/serviceGenerator.byte": pkg_extlib
 "tools/serviceGenerator.byte": pkg_netstring
 "tools/serviceGenerator.byte": pkg_curl
@@ -49,7 +47,6 @@
 "tools/serviceGenerator.byte": pkg_yojson
 <tools/*.ml{,i}>: use_gapi-ocaml
 <tools/*.ml{,i}>: pkg_monad
-<tools/*.ml{,i}>: pkg_xmlm
 <tools/*.ml{,i}>: pkg_extlib
 <tools/*.ml{,i}>: pkg_netstring
 <tools/*.ml{,i}>: pkg_curl
@@ -68,10 +65,10 @@
 "examples/auth/oauth2Flow.byte": pkg_cryptokit
 "examples/auth/oauth2Flow.byte": pkg_yojson
 <examples/auth/*.ml{,i}>: use_gdata
+<examples/auth/*.ml{,i}>: pkg_xmlm
 # Executable oauth1Flow
 "examples/auth/oauth1Flow.byte": use_gapi-ocaml
 "examples/auth/oauth1Flow.byte": pkg_nethttpd
-"examples/auth/oauth1Flow.byte": pkg_xmlm
 "examples/auth/oauth1Flow.byte": pkg_extlib
 "examples/auth/oauth1Flow.byte": pkg_netstring
 "examples/auth/oauth1Flow.byte": pkg_curl
@@ -81,7 +78,6 @@
 # Executable clientLoginFlow
 "examples/auth/clientLoginFlow.byte": use_gapi-ocaml
 "examples/auth/clientLoginFlow.byte": pkg_nethttpd
-"examples/auth/clientLoginFlow.byte": pkg_xmlm
 "examples/auth/clientLoginFlow.byte": pkg_extlib
 "examples/auth/clientLoginFlow.byte": pkg_netstring
 "examples/auth/clientLoginFlow.byte": pkg_curl
@@ -90,7 +86,6 @@
 "examples/auth/clientLoginFlow.byte": pkg_yojson
 <examples/auth/*.ml{,i}>: use_gapi-ocaml
 <examples/auth/*.ml{,i}>: pkg_nethttpd
-<examples/auth/*.ml{,i}>: pkg_xmlm
 <examples/auth/*.ml{,i}>: pkg_extlib
 <examples/auth/*.ml{,i}>: pkg_netstring
 <examples/auth/*.ml{,i}>: pkg_curl
@@ -100,7 +95,6 @@
 # Executable refreshOAuth2Token
 "src/test/refreshOAuth2Token.byte": use_gapi-ocaml
 "src/test/refreshOAuth2Token.byte": pkg_oUnit
-"src/test/refreshOAuth2Token.byte": pkg_xmlm
 "src/test/refreshOAuth2Token.byte": pkg_extlib
 "src/test/refreshOAuth2Token.byte": pkg_netstring
 "src/test/refreshOAuth2Token.byte": pkg_curl
@@ -111,6 +105,7 @@
 "src/test/testSuite.byte": use_gdata
 "src/test/testSuite.byte": use_gapi-ocaml
 "src/test/testSuite.byte": pkg_oUnit
+"src/test/testSuite.byte": pkg_monad
 "src/test/testSuite.byte": pkg_xmlm
 "src/test/testSuite.byte": pkg_extlib
 "src/test/testSuite.byte": pkg_netstring
@@ -121,6 +116,7 @@
 <src/test/*.ml{,i}>: use_gdata
 <src/test/*.ml{,i}>: use_gapi-ocaml
 <src/test/*.ml{,i}>: pkg_oUnit
+<src/test/*.ml{,i}>: pkg_monad
 <src/test/*.ml{,i}>: pkg_xmlm
 <src/test/*.ml{,i}>: pkg_extlib
 <src/test/*.ml{,i}>: pkg_netstring

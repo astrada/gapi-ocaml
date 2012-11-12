@@ -79,7 +79,7 @@ Library "gapi-ocaml"
     GapiBigqueryV2Service,
     GapiDriveV2Model,
     GapiDriveV2Service
-  BuildDepends: extlib, netstring, curl, str, cryptokit, yojson, xmlm
+  BuildDepends: extlib, netstring, curl, str, cryptokit, yojson
   XMETADescription: Google APIs client library
 
 Library gdata
