@@ -6,40 +6,6 @@
   {{:https://developers.google.com/drive/}API Documentation}.
   *)
 
-module ParentReference :
-sig
-  type t = {
-    id : string;
-    (** The ID of the parent. *)
-    isRoot : bool;
-    (** Whether or not the parent is the root folder. *)
-    kind : string;
-    (** This is always drive#parentReference. *)
-    parentLink : string;
-    (** A link to the parent. *)
-    selfLink : string;
-    (** A link back to this reference. *)
-    
-  }
-  
-  val id : (t, string) GapiLens.t
-  val isRoot : (t, bool) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val parentLink : (t, string) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Permission :
 sig
   type t = {
@@ -89,6 +55,40 @@ sig
   val _type : (t, string) GapiLens.t
   val value : (t, string) GapiLens.t
   val withLink : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ParentReference :
+sig
+  type t = {
+    id : string;
+    (** The ID of the parent. *)
+    isRoot : bool;
+    (** Whether or not the parent is the root folder. *)
+    kind : string;
+    (** This is always drive#parentReference. *)
+    parentLink : string;
+    (** A link to the parent. *)
+    selfLink : string;
+    (** A link back to this reference. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val isRoot : (t, bool) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val parentLink : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
   
   val empty : t
   
@@ -206,8 +206,14 @@ sig
       (** The make of the camera used to create the photo. *)
       cameraModel : string;
       (** The model of the camera used to create the photo. *)
+      colorSpace : string;
+      (** The color space of the photo. *)
       date : string;
       (** The date and time the photo was taken (EXIF format timestamp). *)
+      exposureBias : float;
+      (** The exposure bias of the photo (APEX value). *)
+      exposureMode : string;
+      (** The exposure mode used to create the photo. *)
       exposureTime : float;
       (** The length of the exposure, in seconds. *)
       flashUsed : bool;
@@ -218,10 +224,22 @@ sig
       (** The height of the image in pixels. *)
       isoSpeed : int;
       (** The ISO speed used to create the photo. *)
+      lens : string;
+      (** The lens used to create the photo. *)
       location : Location.t;
       (** Geographic location information stored in the image. *)
+      maxApertureValue : float;
+      (** The smallest f-number of the lens at the focal length used to create the photo (APEX value). *)
+      meteringMode : string;
+      (** The metering mode used to create the photo. *)
       rotation : int;
       (** The rotation in clockwise degrees from the image's original orientation. *)
+      sensor : string;
+      (** The type of sensor used to create the photo. *)
+      subjectDistance : int;
+      (** The distance to the subject of the photo, in meters. *)
+      whiteBalance : string;
+      (** The white balance mode used to create the photo. *)
       width : int;
       (** The width of the image in pixels. *)
       
@@ -230,14 +248,23 @@ sig
     val aperture : (t, float) GapiLens.t
     val cameraMake : (t, string) GapiLens.t
     val cameraModel : (t, string) GapiLens.t
+    val colorSpace : (t, string) GapiLens.t
     val date : (t, string) GapiLens.t
+    val exposureBias : (t, float) GapiLens.t
+    val exposureMode : (t, string) GapiLens.t
     val exposureTime : (t, float) GapiLens.t
     val flashUsed : (t, bool) GapiLens.t
     val focalLength : (t, float) GapiLens.t
     val height : (t, int) GapiLens.t
     val isoSpeed : (t, int) GapiLens.t
+    val lens : (t, string) GapiLens.t
     val location : (t, Location.t) GapiLens.t
+    val maxApertureValue : (t, float) GapiLens.t
+    val meteringMode : (t, string) GapiLens.t
     val rotation : (t, int) GapiLens.t
+    val sensor : (t, string) GapiLens.t
+    val subjectDistance : (t, int) GapiLens.t
+    val whiteBalance : (t, string) GapiLens.t
     val width : (t, int) GapiLens.t
     
     val empty : t
@@ -271,6 +298,8 @@ sig
     (** The file extension used when downloading this file. This field is set from the title when inserting or uploading new content. This will only be populated on files with content stored in Drive. *)
     fileSize : int64;
     (** The size of the file in bytes. This will only be populated on files with content stored in Drive. *)
+    iconLink : string;
+    (** A link to the file's icon. *)
     id : string;
     (** The id of the file. *)
     imageMediaMetadata : ImageMediaMetadata.t;
@@ -316,6 +345,8 @@ Setting this field will put the file in all of the provided folders. On insert, 
     (** The permissions for the authenticated user on this file. *)
     webContentLink : string;
     (** A link for downloading the content of the file in a browser using cookie based authentication. In cases where the content is shared publicly, the content can be downloaded without any credentials. *)
+    webViewLink : string;
+    (** A link providing access to static web assets (HTML, CSS, JS, etc) in a public folder hierarchy using filenames in a relative path. *)
     writersCanShare : bool;
     (** Whether writers can share the document with other users. *)
     
@@ -332,6 +363,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val exportLinks : (t, (string * string) list) GapiLens.t
   val fileExtension : (t, string) GapiLens.t
   val fileSize : (t, int64) GapiLens.t
+  val iconLink : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val imageMediaMetadata : (t, ImageMediaMetadata.t) GapiLens.t
   val indexableText : (t, IndexableText.t) GapiLens.t
@@ -354,6 +386,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val title : (t, string) GapiLens.t
   val userPermission : (t, Permission.t) GapiLens.t
   val webContentLink : (t, string) GapiLens.t
+  val webViewLink : (t, string) GapiLens.t
   val writersCanShare : (t, bool) GapiLens.t
   
   val empty : t

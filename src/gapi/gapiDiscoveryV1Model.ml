@@ -67,6 +67,7 @@ struct
     minimum : string;
     pattern : string;
     properties : (string * t) list;
+    readOnly : bool;
     repeated : bool;
     required : bool;
     _type : string;
@@ -133,6 +134,10 @@ struct
     GapiLens.get = (fun x -> x.properties);
     GapiLens.set = (fun v x -> { x with properties = v });
   }
+  let readOnly = {
+    GapiLens.get = (fun x -> x.readOnly);
+    GapiLens.set = (fun v x -> { x with readOnly = v });
+  }
   let repeated = {
     GapiLens.get = (fun x -> x.repeated);
     GapiLens.set = (fun v x -> { x with repeated = v });
@@ -162,6 +167,7 @@ struct
     minimum = "";
     pattern = "";
     properties = [];
+    readOnly = false;
     repeated = false;
     required = false;
     _type = "";
@@ -185,6 +191,7 @@ struct
       GapiJson.render_string_value "minimum" x.minimum;
       GapiJson.render_string_value "pattern" x.pattern;
       GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (render_content v)) v) x.properties;
+      GapiJson.render_bool_value "readOnly" x.readOnly;
       GapiJson.render_bool_value "repeated" x.repeated;
       GapiJson.render_bool_value "required" x.required;
       GapiJson.render_string_value "type" x._type;
@@ -296,6 +303,10 @@ struct
         ("", empty)
         (fun v -> { x with properties = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "readOnly"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with readOnly = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "repeated"; data_type = GapiJson.Scalar },
         `Bool v) ->

@@ -1,92 +1,5 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-module ParentReference =
-struct
-  type t = {
-    id : string;
-    isRoot : bool;
-    kind : string;
-    parentLink : string;
-    selfLink : string;
-    
-  }
-  
-  let id = {
-    GapiLens.get = (fun x -> x.id);
-    GapiLens.set = (fun v x -> { x with id = v });
-  }
-  let isRoot = {
-    GapiLens.get = (fun x -> x.isRoot);
-    GapiLens.set = (fun v x -> { x with isRoot = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let parentLink = {
-    GapiLens.get = (fun x -> x.parentLink);
-    GapiLens.set = (fun v x -> { x with parentLink = v });
-  }
-  let selfLink = {
-    GapiLens.get = (fun x -> x.selfLink);
-    GapiLens.set = (fun v x -> { x with selfLink = v });
-  }
-  
-  let empty = {
-    id = "";
-    isRoot = false;
-    kind = "";
-    parentLink = "";
-    selfLink = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "id" x.id;
-      GapiJson.render_bool_value "isRoot" x.isRoot;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "parentLink" x.parentLink;
-      GapiJson.render_string_value "selfLink" x.selfLink;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with id = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "isRoot"; data_type = GapiJson.Scalar },
-        `Bool v) ->
-      { x with isRoot = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "parentLink"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with parentLink = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with selfLink = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiDriveV2Model.ParentReference.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
 module Permission =
 struct
   type t = {
@@ -254,6 +167,93 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiDriveV2Model.Permission.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ParentReference =
+struct
+  type t = {
+    id : string;
+    isRoot : bool;
+    kind : string;
+    parentLink : string;
+    selfLink : string;
+    
+  }
+  
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let isRoot = {
+    GapiLens.get = (fun x -> x.isRoot);
+    GapiLens.set = (fun v x -> { x with isRoot = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let parentLink = {
+    GapiLens.get = (fun x -> x.parentLink);
+    GapiLens.set = (fun v x -> { x with parentLink = v });
+  }
+  let selfLink = {
+    GapiLens.get = (fun x -> x.selfLink);
+    GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  
+  let empty = {
+    id = "";
+    isRoot = false;
+    kind = "";
+    parentLink = "";
+    selfLink = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_bool_value "isRoot" x.isRoot;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "parentLink" x.parentLink;
+      GapiJson.render_string_value "selfLink" x.selfLink;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "isRoot"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with isRoot = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "parentLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with parentLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDriveV2Model.ParentReference.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -514,14 +514,23 @@ struct
       aperture : float;
       cameraMake : string;
       cameraModel : string;
+      colorSpace : string;
       date : string;
+      exposureBias : float;
+      exposureMode : string;
       exposureTime : float;
       flashUsed : bool;
       focalLength : float;
       height : int;
       isoSpeed : int;
+      lens : string;
       location : Location.t;
+      maxApertureValue : float;
+      meteringMode : string;
       rotation : int;
+      sensor : string;
+      subjectDistance : int;
+      whiteBalance : string;
       width : int;
       
     }
@@ -538,9 +547,21 @@ struct
       GapiLens.get = (fun x -> x.cameraModel);
       GapiLens.set = (fun v x -> { x with cameraModel = v });
     }
+    let colorSpace = {
+      GapiLens.get = (fun x -> x.colorSpace);
+      GapiLens.set = (fun v x -> { x with colorSpace = v });
+    }
     let date = {
       GapiLens.get = (fun x -> x.date);
       GapiLens.set = (fun v x -> { x with date = v });
+    }
+    let exposureBias = {
+      GapiLens.get = (fun x -> x.exposureBias);
+      GapiLens.set = (fun v x -> { x with exposureBias = v });
+    }
+    let exposureMode = {
+      GapiLens.get = (fun x -> x.exposureMode);
+      GapiLens.set = (fun v x -> { x with exposureMode = v });
     }
     let exposureTime = {
       GapiLens.get = (fun x -> x.exposureTime);
@@ -562,13 +583,37 @@ struct
       GapiLens.get = (fun x -> x.isoSpeed);
       GapiLens.set = (fun v x -> { x with isoSpeed = v });
     }
+    let lens = {
+      GapiLens.get = (fun x -> x.lens);
+      GapiLens.set = (fun v x -> { x with lens = v });
+    }
     let location = {
       GapiLens.get = (fun x -> x.location);
       GapiLens.set = (fun v x -> { x with location = v });
     }
+    let maxApertureValue = {
+      GapiLens.get = (fun x -> x.maxApertureValue);
+      GapiLens.set = (fun v x -> { x with maxApertureValue = v });
+    }
+    let meteringMode = {
+      GapiLens.get = (fun x -> x.meteringMode);
+      GapiLens.set = (fun v x -> { x with meteringMode = v });
+    }
     let rotation = {
       GapiLens.get = (fun x -> x.rotation);
       GapiLens.set = (fun v x -> { x with rotation = v });
+    }
+    let sensor = {
+      GapiLens.get = (fun x -> x.sensor);
+      GapiLens.set = (fun v x -> { x with sensor = v });
+    }
+    let subjectDistance = {
+      GapiLens.get = (fun x -> x.subjectDistance);
+      GapiLens.set = (fun v x -> { x with subjectDistance = v });
+    }
+    let whiteBalance = {
+      GapiLens.get = (fun x -> x.whiteBalance);
+      GapiLens.set = (fun v x -> { x with whiteBalance = v });
     }
     let width = {
       GapiLens.get = (fun x -> x.width);
@@ -579,14 +624,23 @@ struct
       aperture = 0.0;
       cameraMake = "";
       cameraModel = "";
+      colorSpace = "";
       date = "";
+      exposureBias = 0.0;
+      exposureMode = "";
       exposureTime = 0.0;
       flashUsed = false;
       focalLength = 0.0;
       height = 0;
       isoSpeed = 0;
+      lens = "";
       location = Location.empty;
+      maxApertureValue = 0.0;
+      meteringMode = "";
       rotation = 0;
+      sensor = "";
+      subjectDistance = 0;
+      whiteBalance = "";
       width = 0;
       
     }
@@ -596,14 +650,23 @@ struct
         GapiJson.render_float_value "aperture" x.aperture;
         GapiJson.render_string_value "cameraMake" x.cameraMake;
         GapiJson.render_string_value "cameraModel" x.cameraModel;
+        GapiJson.render_string_value "colorSpace" x.colorSpace;
         GapiJson.render_string_value "date" x.date;
+        GapiJson.render_float_value "exposureBias" x.exposureBias;
+        GapiJson.render_string_value "exposureMode" x.exposureMode;
         GapiJson.render_float_value "exposureTime" x.exposureTime;
         GapiJson.render_bool_value "flashUsed" x.flashUsed;
         GapiJson.render_float_value "focalLength" x.focalLength;
         GapiJson.render_int_value "height" x.height;
         GapiJson.render_int_value "isoSpeed" x.isoSpeed;
+        GapiJson.render_string_value "lens" x.lens;
         (fun v -> GapiJson.render_object "location" (Location.render_content v)) x.location;
+        GapiJson.render_float_value "maxApertureValue" x.maxApertureValue;
+        GapiJson.render_string_value "meteringMode" x.meteringMode;
         GapiJson.render_int_value "rotation" x.rotation;
+        GapiJson.render_string_value "sensor" x.sensor;
+        GapiJson.render_int_value "subjectDistance" x.subjectDistance;
+        GapiJson.render_string_value "whiteBalance" x.whiteBalance;
         GapiJson.render_int_value "width" x.width;
         
       ]
@@ -628,9 +691,25 @@ struct
           `String v) ->
         { x with cameraModel = v }
       | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "colorSpace"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with colorSpace = v }
+      | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "date"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with date = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "exposureBias"; data_type = GapiJson.Scalar },
+          `Float v) ->
+        { x with exposureBias = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "exposureBias"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with exposureBias = float_of_int v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "exposureMode"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with exposureMode = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "exposureTime"; data_type = GapiJson.Scalar },
           `Float v) ->
@@ -659,6 +738,10 @@ struct
           ({ GapiJson.name = "isoSpeed"; data_type = GapiJson.Scalar },
           `Int v) ->
         { x with isoSpeed = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "lens"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with lens = v }
       | GapiCore.AnnotatedTree.Node
           ({ GapiJson.name = "location"; data_type = GapiJson.Object },
           cs) ->
@@ -668,9 +751,33 @@ struct
           (fun v -> { x with location = v })
           cs
       | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "maxApertureValue"; data_type = GapiJson.Scalar },
+          `Float v) ->
+        { x with maxApertureValue = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "maxApertureValue"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with maxApertureValue = float_of_int v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "meteringMode"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with meteringMode = v }
+      | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "rotation"; data_type = GapiJson.Scalar },
           `Int v) ->
         { x with rotation = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "sensor"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with sensor = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "subjectDistance"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with subjectDistance = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "whiteBalance"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with whiteBalance = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "width"; data_type = GapiJson.Scalar },
           `Int v) ->
@@ -696,6 +803,7 @@ struct
     exportLinks : (string * string) list;
     fileExtension : string;
     fileSize : int64;
+    iconLink : string;
     id : string;
     imageMediaMetadata : ImageMediaMetadata.t;
     indexableText : IndexableText.t;
@@ -718,6 +826,7 @@ struct
     title : string;
     userPermission : Permission.t;
     webContentLink : string;
+    webViewLink : string;
     writersCanShare : bool;
     
   }
@@ -765,6 +874,10 @@ struct
   let fileSize = {
     GapiLens.get = (fun x -> x.fileSize);
     GapiLens.set = (fun v x -> { x with fileSize = v });
+  }
+  let iconLink = {
+    GapiLens.get = (fun x -> x.iconLink);
+    GapiLens.set = (fun v x -> { x with iconLink = v });
   }
   let id = {
     GapiLens.get = (fun x -> x.id);
@@ -854,6 +967,10 @@ struct
     GapiLens.get = (fun x -> x.webContentLink);
     GapiLens.set = (fun v x -> { x with webContentLink = v });
   }
+  let webViewLink = {
+    GapiLens.get = (fun x -> x.webViewLink);
+    GapiLens.set = (fun v x -> { x with webViewLink = v });
+  }
   let writersCanShare = {
     GapiLens.get = (fun x -> x.writersCanShare);
     GapiLens.set = (fun v x -> { x with writersCanShare = v });
@@ -871,6 +988,7 @@ struct
     exportLinks = [];
     fileExtension = "";
     fileSize = 0L;
+    iconLink = "";
     id = "";
     imageMediaMetadata = ImageMediaMetadata.empty;
     indexableText = IndexableText.empty;
@@ -893,6 +1011,7 @@ struct
     title = "";
     userPermission = Permission.empty;
     webContentLink = "";
+    webViewLink = "";
     writersCanShare = false;
     
   }
@@ -910,6 +1029,7 @@ struct
       GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.exportLinks;
       GapiJson.render_string_value "fileExtension" x.fileExtension;
       GapiJson.render_int64_value "fileSize" x.fileSize;
+      GapiJson.render_string_value "iconLink" x.iconLink;
       GapiJson.render_string_value "id" x.id;
       (fun v -> GapiJson.render_object "imageMediaMetadata" (ImageMediaMetadata.render_content v)) x.imageMediaMetadata;
       (fun v -> GapiJson.render_object "indexableText" (IndexableText.render_content v)) x.indexableText;
@@ -932,6 +1052,7 @@ struct
       GapiJson.render_string_value "title" x.title;
       (fun v -> GapiJson.render_object "userPermission" (Permission.render_content v)) x.userPermission;
       GapiJson.render_string_value "webContentLink" x.webContentLink;
+      GapiJson.render_string_value "webViewLink" x.webViewLink;
       GapiJson.render_bool_value "writersCanShare" x.writersCanShare;
       
     ]
@@ -993,6 +1114,10 @@ struct
         ({ GapiJson.name = "fileSize"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with fileSize = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "iconLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with iconLink = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1125,6 +1250,10 @@ struct
         ({ GapiJson.name = "webContentLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with webContentLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "webViewLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with webViewLink = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "writersCanShare"; data_type = GapiJson.Scalar },
         `Bool v) ->
