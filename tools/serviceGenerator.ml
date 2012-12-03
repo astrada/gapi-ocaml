@@ -67,8 +67,14 @@ let get_service_description api version nocache =
       let () = print_endline "Done" in
       let tree = RestDescription.to_data_model document in
       let json = GapiJson.data_model_to_json tree in
-      let () = Yojson.Safe.to_file file_name json in
-        document
+      let ch = open_out file_name in
+        try
+          Yojson.Safe.pretty_to_channel ch json;
+          close_out ch;
+          document
+        with e ->
+          close_out ch;
+          raise e
     end else begin
       Printf.printf "Reusing %s %s service description file %s\n%!"
         api version file_name;
