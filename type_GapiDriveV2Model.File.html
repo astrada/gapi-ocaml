@@ -140,14 +140,23 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aperture&nbsp;:&nbsp;float;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cameraMake&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cameraModel&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colorSpace&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exposureBias&nbsp;:&nbsp;float;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exposureMode&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exposureTime&nbsp;:&nbsp;float;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flashUsed&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;focalLength&nbsp;:&nbsp;float;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isoSpeed&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lens&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.<span class="constructor">Location</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxApertureValue&nbsp;:&nbsp;float;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;meteringMode&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rotation&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sensor&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subjectDistance&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whiteBalance&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;aperture&nbsp;:<br>
@@ -156,7 +165,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cameraModel&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;colorSpace&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;date&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exposureBias&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;float)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exposureMode&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;exposureTime&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;float)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -168,12 +183,24 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;isoSpeed&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lens&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;location&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.<span class="constructor">Location</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;maxApertureValue&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;float)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;meteringMode&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rotation&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sensor&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;subjectDistance&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;whiteBalance&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;width&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t<br>
@@ -197,6 +224,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;exportLinks&nbsp;:&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fileExtension&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fileSize&nbsp;:&nbsp;int64;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;iconLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;imageMediaMetadata&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;indexableText&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">IndexableText</span>.t;<br>
@@ -219,6 +247,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userPermission&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Permission</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;webContentLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;webViewLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;writersCanShare&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;alternateLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -233,6 +262,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fileExtension&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fileSize&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iconLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;imageMediaMetadata&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">ImageMediaMetadata</span>.t)<br>
@@ -264,6 +294,7 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;userPermission&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Permission</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;webContentLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;webViewLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;writersCanShare&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
