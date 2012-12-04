@@ -793,6 +793,7 @@ struct
   
   type t = {
     alternateLink : string;
+    appDataContents : bool;
     createdDate : GapiDate.t;
     description : string;
     downloadUrl : string;
@@ -834,6 +835,10 @@ struct
   let alternateLink = {
     GapiLens.get = (fun x -> x.alternateLink);
     GapiLens.set = (fun v x -> { x with alternateLink = v });
+  }
+  let appDataContents = {
+    GapiLens.get = (fun x -> x.appDataContents);
+    GapiLens.set = (fun v x -> { x with appDataContents = v });
   }
   let createdDate = {
     GapiLens.get = (fun x -> x.createdDate);
@@ -978,6 +983,7 @@ struct
   
   let empty = {
     alternateLink = "";
+    appDataContents = false;
     createdDate = GapiDate.epoch;
     description = "";
     downloadUrl = "";
@@ -1019,6 +1025,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "alternateLink" x.alternateLink;
+      GapiJson.render_bool_value "appDataContents" x.appDataContents;
       GapiJson.render_date_value "createdDate" x.createdDate;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "downloadUrl" x.downloadUrl;
@@ -1064,6 +1071,10 @@ struct
         ({ GapiJson.name = "alternateLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with alternateLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "appDataContents"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with appDataContents = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "createdDate"; data_type = GapiJson.Scalar },
         `String v) ->

@@ -278,6 +278,8 @@ sig
   type t = {
     alternateLink : string;
     (** A link for opening the file in using a relevant Google editor or viewer. *)
+    appDataContents : bool;
+    (** Whether this file is in the appdata folder. *)
     createdDate : GapiDate.t;
     (** Create time for this file (formatted ISO8601 timestamp). *)
     description : string;
@@ -353,6 +355,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   }
   
   val alternateLink : (t, string) GapiLens.t
+  val appDataContents : (t, bool) GapiLens.t
   val createdDate : (t, GapiDate.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val downloadUrl : (t, string) GapiLens.t
