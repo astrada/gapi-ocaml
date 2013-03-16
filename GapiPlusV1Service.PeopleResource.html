@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiPlusV1Service.CommentsResource.html">
+<link rel="previous" href="GapiPlusV1Service.MomentsResource.html">
 <link rel="Up" href="GapiPlusV1Service.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -71,19 +71,29 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiPlusV1Service.PeopleResource</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiPlusV1Service.CommentsResource.html">Previous</a>
+<div class="navbar"><a href="GapiPlusV1Service.MomentsResource.html">Previous</a>
 &nbsp;<a href="GapiPlusV1Service.html">Up</a>
 &nbsp;</div>
 <center><h1>Module <a href="type_GapiPlusV1Service.PeopleResource.html">GapiPlusV1Service.PeopleResource</a></h1></center>
 <br>
 <pre><span class="keyword">module</span> PeopleResource: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.PeopleResource.Collection.html">Collection</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.Collection.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Person.html#TYPEt">GapiPlusV1Model.Person.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
-Get a person's profile.<br>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.PeopleResource.OrderBy.html">OrderBy</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.OrderBy.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Service.PeopleResource.Collection.html">Collection</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.PeopleResource.Collection.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Person.html#TYPEt">GapiPlusV1Model.Person.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Get a person's profile. If your app uses scope https://www.googleapis.com/auth/plus.login, this method is guaranteed to return ageRange and language.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">userId</code> : The ID of the person to get the profile for. The special value "me" can be used to indicate the authenticated user.</div>
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?orderBy:<a href="GapiPlusV1Service.PeopleResource.OrderBy.html#TYPEt">OrderBy.t</a> -><br>       ?pageToken:string -><br>       userId:string -><br>       collection:<a href="GapiPlusV1Service.PeopleResource.Collection.html#TYPEt">Collection.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.PeopleFeed.html#TYPEt">GapiPlusV1Model.PeopleFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+List all of the people in the specified collection.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">maxResults</code> : The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.</div>
+<div class="param_info"><code class="code">orderBy</code> : The order to return people in.</div>
+<div class="param_info"><code class="code">pageToken</code> : The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.</div>
+<div class="param_info"><code class="code">userId</code> : Get the collection of people for the person identified. Use "me" to indicate the authenticated user.</div>
+<div class="param_info"><code class="code">collection</code> : The collection of people to list.</div>
 <pre><span id="VALlistByActivity"><span class="keyword">val</span> listByActivity</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       activityId:string -><br>       collection:<a href="GapiPlusV1Service.PeopleResource.Collection.html#TYPEt">Collection.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.PeopleFeed.html#TYPEt">GapiPlusV1Model.PeopleFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 List all of the people in the specified collection for a particular activity.<br>
 </div>

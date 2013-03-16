@@ -97,7 +97,7 @@ Adds an entry to the user's calendar list.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.</div>
+<div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.</div>
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?minAccessRole:<a href="GapiCalendarV3Service.CalendarListResource.MinAccessRole.html#TYPEt">MinAccessRole.t</a> -><br>       ?pageToken:string -><br>       ?showHidden:bool -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.CalendarList.html#TYPEt">GapiCalendarV3Model.CalendarList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns entries on the user's calendar list.<br>
 </div>
@@ -112,13 +112,13 @@ Updates an entry on the user's calendar list. This method supports patch semanti
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.</div>
+<div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 <pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?colorRgbFormat:bool -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Updates an entry on the user's calendar list.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.</div>
+<div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 </body></html>
