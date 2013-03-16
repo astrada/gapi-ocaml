@@ -207,7 +207,7 @@ sig
     sig
       type t =
         | Default
-        | Cost
+        | Cost (** Value for specifying cost data upload. *)
         
       val to_string : t -> string
       

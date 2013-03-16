@@ -24,9 +24,9 @@ sig
   sig
     type t =
       | Default
-      | ANALYTICS_CLICKS
-      | ANALYTICS_TOP_STRINGS
-      | FULL
+      | ANALYTICS_CLICKS (** Returns only click counts. *)
+      | ANALYTICS_TOP_STRINGS (** Returns only top string counts. *)
+      | FULL (** Returns the creation timestamp and all available analytics. *)
       
     val to_string : t -> string
     

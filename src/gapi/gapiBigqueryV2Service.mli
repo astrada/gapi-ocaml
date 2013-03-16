@@ -136,9 +136,9 @@ sig
   sig
     type t =
       | Default
-      | Done
-      | Pending
-      | Running
+      | Done (** Finished jobs *)
+      | Pending (** Pending jobs *)
+      | Running (** Running jobs *)
       
     val to_string : t -> string
     
@@ -150,8 +150,8 @@ sig
   sig
     type t =
       | Default
-      | Full
-      | Minimal
+      | Full (** Includes all job data *)
+      | Minimal (** Does not include the job configuration *)
       
     val to_string : t -> string
     

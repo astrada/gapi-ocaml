@@ -124,10 +124,10 @@ sig
   sig
     type t =
       | Default
-      | FreeBusyReader
-      | Owner
-      | Reader
-      | Writer
+      | FreeBusyReader (** The user can read free/busy information. *)
+      | Owner (** The user can read and modify events and access control lists. *)
+      | Reader (** The user can read events that are not private. *)
+      | Writer (** The user can read and modify events. *)
       
     val to_string : t -> string
     
@@ -167,7 +167,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
+    @param colorRgbFormat Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.
     *)
   val insert :
     ?base_url:string ->
@@ -200,7 +200,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
+    @param colorRgbFormat Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val patch :
@@ -216,7 +216,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
+    @param colorRgbFormat Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val update :
@@ -344,8 +344,8 @@ sig
   sig
     type t =
       | Default
-      | StartTime
-      | Updated
+      | StartTime (** Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter "singleEvents" is True) *)
+      | Updated (** Order by last modification time (ascending). *)
       
     val to_string : t -> string
     
@@ -434,7 +434,9 @@ sig
     @param maxResults Maximum number of events returned on one result page. Optional.
     @param originalStart The original start time of the instance in the result. Optional.
     @param pageToken Token specifying which result page to return. Optional.
-    @param showDeleted Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.
+    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
     @param calendarId Calendar identifier.
     @param eventId Recurring event identifier.
@@ -448,6 +450,8 @@ sig
     ?originalStart:string ->
     ?pageToken:string ->
     ?showDeleted:bool ->
+    ?timeMax:GapiDate.t ->
+    ?timeMin:GapiDate.t ->
     ?timeZone:string ->
     calendarId:string ->
     eventId:string ->
@@ -465,7 +469,7 @@ sig
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
     @param q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
-    @param showDeleted Whether to include deleted single events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.
+    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
     @param showHiddenInvitations Whether to include hidden invitations in the result. Optional. The default is False.
     @param singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
     @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.

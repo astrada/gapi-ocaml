@@ -2157,6 +2157,7 @@ struct
     siteSearchCategoryParameters : string;
     siteSearchQueryParameters : string;
     timezone : string;
+    _type : string;
     updated : GapiDate.t;
     webPropertyId : string;
     websiteUrl : string;
@@ -2227,6 +2228,10 @@ struct
     GapiLens.get = (fun x -> x.timezone);
     GapiLens.set = (fun v x -> { x with timezone = v });
   }
+  let _type = {
+    GapiLens.get = (fun x -> x._type);
+    GapiLens.set = (fun v x -> { x with _type = v });
+  }
   let updated = {
     GapiLens.get = (fun x -> x.updated);
     GapiLens.set = (fun v x -> { x with updated = v });
@@ -2257,6 +2262,7 @@ struct
     siteSearchCategoryParameters = "";
     siteSearchQueryParameters = "";
     timezone = "";
+    _type = "";
     updated = GapiDate.epoch;
     webPropertyId = "";
     websiteUrl = "";
@@ -2281,6 +2287,7 @@ struct
       GapiJson.render_string_value "siteSearchCategoryParameters" x.siteSearchCategoryParameters;
       GapiJson.render_string_value "siteSearchQueryParameters" x.siteSearchQueryParameters;
       GapiJson.render_string_value "timezone" x.timezone;
+      GapiJson.render_string_value "type" x._type;
       GapiJson.render_date_value "updated" x.updated;
       GapiJson.render_string_value "webPropertyId" x.webPropertyId;
       GapiJson.render_string_value "websiteUrl" x.websiteUrl;
@@ -2362,6 +2369,10 @@ struct
         ({ GapiJson.name = "timezone"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with timezone = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with _type = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "updated"; data_type = GapiJson.Scalar },
         `String v) ->

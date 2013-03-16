@@ -15,8 +15,8 @@ sig
   sig
     type t =
       | Default
-      | Desktop
-      | Mobile
+      | Desktop (** Fetch and analyze the URL for desktop browsers *)
+      | Mobile (** Fetch and analyze the URL for mobile devices *)
       
     val to_string : t -> string
     

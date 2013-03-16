@@ -647,6 +647,7 @@ struct
   
   type t = {
     description : string;
+    etagRequired : bool;
     httpMethod : string;
     id : string;
     mediaUpload : MediaUpload.t;
@@ -665,6 +666,10 @@ struct
   let description = {
     GapiLens.get = (fun x -> x.description);
     GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let etagRequired = {
+    GapiLens.get = (fun x -> x.etagRequired);
+    GapiLens.set = (fun v x -> { x with etagRequired = v });
   }
   let httpMethod = {
     GapiLens.get = (fun x -> x.httpMethod);
@@ -717,6 +722,7 @@ struct
   
   let empty = {
     description = "";
+    etagRequired = false;
     httpMethod = "";
     id = "";
     mediaUpload = MediaUpload.empty;
@@ -735,6 +741,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "description" x.description;
+      GapiJson.render_bool_value "etagRequired" x.etagRequired;
       GapiJson.render_string_value "httpMethod" x.httpMethod;
       GapiJson.render_string_value "id" x.id;
       (fun v -> GapiJson.render_object "mediaUpload" (MediaUpload.render_content v)) x.mediaUpload;
@@ -757,6 +764,10 @@ struct
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etagRequired"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with etagRequired = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "httpMethod"; data_type = GapiJson.Scalar },
         `String v) ->

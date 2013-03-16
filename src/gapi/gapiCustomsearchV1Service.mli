@@ -15,8 +15,8 @@ sig
   sig
     type t =
       | Default
-      | E
-      | I
+      | E (** exclude *)
+      | I (** include *)
       
     val to_string : t -> string
     
@@ -28,7 +28,7 @@ sig
   sig
     type t =
       | Default
-      | Image
+      | Image (** custom image search *)
       
     val to_string : t -> string
     
@@ -40,9 +40,9 @@ sig
   sig
     type t =
       | Default
-      | High
-      | Medium
-      | Off
+      | High (** Enables highest level of safe search filtering. *)
+      | Medium (** Enables moderate safe search filtering. *)
+      | Off (** Disables safe search filtering. *)
       
     val to_string : t -> string
     
@@ -54,41 +54,41 @@ sig
   sig
     type t =
       | Default
-      | Lang_ar
-      | Lang_bg
-      | Lang_ca
-      | Lang_cs
-      | Lang_da
-      | Lang_de
-      | Lang_el
-      | Lang_en
-      | Lang_es
-      | Lang_et
-      | Lang_fi
-      | Lang_fr
-      | Lang_hr
-      | Lang_hu
-      | Lang_id
-      | Lang_is
-      | Lang_it
-      | Lang_iw
-      | Lang_ja
-      | Lang_ko
-      | Lang_lt
-      | Lang_lv
-      | Lang_nl
-      | Lang_no
-      | Lang_pl
-      | Lang_pt
-      | Lang_ro
-      | Lang_ru
-      | Lang_sk
-      | Lang_sl
-      | Lang_sr
-      | Lang_sv
-      | Lang_tr
-      | Lang_zh_CN
-      | Lang_zh_TW
+      | Lang_ar (** Arabic *)
+      | Lang_bg (** Bulgarian *)
+      | Lang_ca (** Catalan *)
+      | Lang_cs (** Czech *)
+      | Lang_da (** Danish *)
+      | Lang_de (** German *)
+      | Lang_el (** Greek *)
+      | Lang_en (** English *)
+      | Lang_es (** Spanish *)
+      | Lang_et (** Estonian *)
+      | Lang_fi (** Finnish *)
+      | Lang_fr (** French *)
+      | Lang_hr (** Croatian *)
+      | Lang_hu (** Hungarian *)
+      | Lang_id (** Indonesian *)
+      | Lang_is (** Icelandic *)
+      | Lang_it (** Italian *)
+      | Lang_iw (** Hebrew *)
+      | Lang_ja (** Japanese *)
+      | Lang_ko (** Korean *)
+      | Lang_lt (** Lithuanian *)
+      | Lang_lv (** Latvian *)
+      | Lang_nl (** Dutch *)
+      | Lang_no (** Norwegian *)
+      | Lang_pl (** Polish *)
+      | Lang_pt (** Portuguese *)
+      | Lang_ro (** Romanian *)
+      | Lang_ru (** Russian *)
+      | Lang_sk (** Slovak *)
+      | Lang_sl (** Slovenian *)
+      | Lang_sr (** Serbian *)
+      | Lang_sv (** Swedish *)
+      | Lang_tr (** Turkish *)
+      | Lang_zh_CN (** Chinese (Simplified) *)
+      | Lang_zh_TW (** Chinese (Traditional) *)
       
     val to_string : t -> string
     
@@ -100,11 +100,11 @@ sig
   sig
     type t =
       | Default
-      | Clipart
-      | Face
-      | Lineart
-      | News
-      | Photo
+      | Clipart (** clipart *)
+      | Face (** face *)
+      | Lineart (** lineart *)
+      | News (** news *)
+      | Photo (** photo *)
       
     val to_string : t -> string
     
@@ -116,13 +116,13 @@ sig
   sig
     type t =
       | Default
-      | Huge
-      | Icon
-      | Large
-      | Medium
-      | Small
-      | Xlarge
-      | Xxlarge
+      | Huge (** huge *)
+      | Icon (** icon *)
+      | Large (** large *)
+      | Medium (** medium *)
+      | Small (** small *)
+      | Xlarge (** xlarge *)
+      | Xxlarge (** xxlarge *)
       
     val to_string : t -> string
     
@@ -134,16 +134,16 @@ sig
   sig
     type t =
       | Default
-      | Black
-      | Blue
-      | Brown
-      | Gray
-      | Green
-      | Pink
-      | Purple
-      | Teal
-      | White
-      | Yellow
+      | Black (** black *)
+      | Blue (** blue *)
+      | Brown (** brown *)
+      | Gray (** gray *)
+      | Green (** green *)
+      | Pink (** pink *)
+      | Purple (** purple *)
+      | Teal (** teal *)
+      | White (** white *)
+      | Yellow (** yellow *)
       
     val to_string : t -> string
     
@@ -155,9 +155,9 @@ sig
   sig
     type t =
       | Default
-      | Color
-      | Gray
-      | Mono
+      | Color (** color *)
+      | Gray (** gray *)
+      | Mono (** mono *)
       
     val to_string : t -> string
     
@@ -169,8 +169,8 @@ sig
   sig
     type t =
       | Default
-      | V0
-      | V1
+      | V0 (** Turns off duplicate content filter. *)
+      | V1 (** Turns on duplicate content filter. *)
       
     val to_string : t -> string
     

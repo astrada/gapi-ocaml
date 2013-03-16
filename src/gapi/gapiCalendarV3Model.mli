@@ -856,6 +856,8 @@ sig
     (** Type of the resource ("calendar#calendarListEntry"). *)
     location : string;
     (** Geographic location of the calendar as free-form text. Optional. Read-only. *)
+    primary : bool;
+    (** Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False. *)
     selected : bool;
     (** Whether the calendar content shows up in the calendar UI. Optional. The default is False. *)
     summary : string;
@@ -878,6 +880,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val location : (t, string) GapiLens.t
+  val primary : (t, bool) GapiLens.t
   val selected : (t, bool) GapiLens.t
   val summary : (t, string) GapiLens.t
   val summaryOverride : (t, string) GapiLens.t

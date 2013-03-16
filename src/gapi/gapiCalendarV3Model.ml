@@ -2308,6 +2308,7 @@ struct
     id : string;
     kind : string;
     location : string;
+    primary : bool;
     selected : bool;
     summary : string;
     summaryOverride : string;
@@ -2359,6 +2360,10 @@ struct
     GapiLens.get = (fun x -> x.location);
     GapiLens.set = (fun v x -> { x with location = v });
   }
+  let primary = {
+    GapiLens.get = (fun x -> x.primary);
+    GapiLens.set = (fun v x -> { x with primary = v });
+  }
   let selected = {
     GapiLens.get = (fun x -> x.selected);
     GapiLens.set = (fun v x -> { x with selected = v });
@@ -2388,6 +2393,7 @@ struct
     id = "";
     kind = "";
     location = "";
+    primary = false;
     selected = false;
     summary = "";
     summaryOverride = "";
@@ -2408,6 +2414,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "location" x.location;
+      GapiJson.render_bool_value "primary" x.primary;
       GapiJson.render_bool_value "selected" x.selected;
       GapiJson.render_string_value "summary" x.summary;
       GapiJson.render_string_value "summaryOverride" x.summaryOverride;
@@ -2476,6 +2483,10 @@ struct
         ({ GapiJson.name = "location"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with location = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "primary"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with primary = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "selected"; data_type = GapiJson.Scalar },
         `Bool v) ->

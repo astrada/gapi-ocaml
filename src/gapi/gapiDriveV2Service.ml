@@ -600,11 +600,10 @@ struct
       projection : Projection.t;
       q : string;
       setModifiedDate : bool;
-      sourceLanguage : string;
-      targetLanguage : string;
       timedTextLanguage : string;
       timedTextTrackName : string;
       updateViewedDate : bool;
+      useContentAsIndexableText : bool;
       
     }
     
@@ -624,11 +623,10 @@ struct
       projection = Projection.Default;
       q = "";
       setModifiedDate = false;
-      sourceLanguage = "";
-      targetLanguage = "";
       timedTextLanguage = "";
       timedTextTrackName = "";
       updateViewedDate = false;
+      useContentAsIndexableText = false;
       
     }
     
@@ -650,11 +648,10 @@ struct
       param (fun p -> p.projection) Projection.to_string "projection";
       param (fun p -> p.q) (fun x -> x) "q";
       param (fun p -> p.setModifiedDate) string_of_bool "setModifiedDate";
-      param (fun p -> p.sourceLanguage) (fun x -> x) "sourceLanguage";
-      param (fun p -> p.targetLanguage) (fun x -> x) "targetLanguage";
       param (fun p -> p.timedTextLanguage) (fun x -> x) "timedTextLanguage";
       param (fun p -> p.timedTextTrackName) (fun x -> x) "timedTextTrackName";
       param (fun p -> p.updateViewedDate) string_of_bool "updateViewedDate";
+      param (fun p -> p.useContentAsIndexableText) string_of_bool "useContentAsIndexableText";
       
     ] |> List.concat
     
@@ -670,11 +667,10 @@ struct
         ?(projection = default.projection)
         ?(q = default.q)
         ?(setModifiedDate = default.setModifiedDate)
-        ?(sourceLanguage = default.sourceLanguage)
-        ?(targetLanguage = default.targetLanguage)
         ?(timedTextLanguage = default.timedTextLanguage)
         ?(timedTextTrackName = default.timedTextTrackName)
         ?(updateViewedDate = default.updateViewedDate)
+        ?(useContentAsIndexableText = default.useContentAsIndexableText)
         () =
       let parameters = {
         fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -692,11 +688,10 @@ struct
         projection;
         q;
         setModifiedDate;
-        sourceLanguage;
-        targetLanguage;
         timedTextLanguage;
         timedTextTrackName;
         updateViewedDate;
+        useContentAsIndexableText;
         
       } in
       if parameters = default then None else Some parameters
@@ -710,8 +705,6 @@ struct
         ?(ocr = false)
         ?(pinned = false)
         ?ocrLanguage
-        ?sourceLanguage
-        ?targetLanguage
         ?timedTextLanguage
         ?timedTextTrackName
         ~fileId
@@ -722,8 +715,7 @@ struct
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
-      ?sourceLanguage ?targetLanguage ?timedTextLanguage ?timedTextTrackName
-      () in
+      ?timedTextLanguage ?timedTextTrackName () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -768,9 +760,8 @@ struct
         ?(convert = false)
         ?(ocr = false)
         ?(pinned = false)
+        ?(useContentAsIndexableText = false)
         ?ocrLanguage
-        ?sourceLanguage
-        ?targetLanguage
         ?timedTextLanguage
         ?timedTextTrackName
         file
@@ -783,8 +774,7 @@ struct
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
-      ?sourceLanguage ?targetLanguage ?timedTextLanguage ?timedTextTrackName
-      () in
+      ?timedTextLanguage ?timedTextTrackName ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag ?media_source
@@ -817,9 +807,8 @@ struct
         ?(pinned = false)
         ?(setModifiedDate = false)
         ?(updateViewedDate = true)
+        ?(useContentAsIndexableText = false)
         ?ocrLanguage
-        ?sourceLanguage
-        ?targetLanguage
         ?timedTextLanguage
         ?timedTextTrackName
         ~fileId
@@ -830,8 +819,8 @@ struct
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~newRevision ~ocr ?ocrLanguage
-      ~pinned ~setModifiedDate ?sourceLanguage ?targetLanguage
-      ?timedTextLanguage ?timedTextTrackName ~updateViewedDate () in
+      ~pinned ~setModifiedDate ?timedTextLanguage ?timedTextTrackName
+      ~updateViewedDate ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -890,9 +879,8 @@ struct
         ?(pinned = false)
         ?(setModifiedDate = false)
         ?(updateViewedDate = true)
+        ?(useContentAsIndexableText = false)
         ?ocrLanguage
-        ?sourceLanguage
-        ?targetLanguage
         ?timedTextLanguage
         ?timedTextTrackName
         ~fileId
@@ -907,8 +895,8 @@ struct
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~newRevision ~ocr ?ocrLanguage
-      ~pinned ~setModifiedDate ?sourceLanguage ?targetLanguage
-      ?timedTextLanguage ?timedTextTrackName ~updateViewedDate () in
+      ~pinned ~setModifiedDate ?timedTextLanguage ?timedTextTrackName
+      ~updateViewedDate ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag ?media_source
@@ -997,6 +985,7 @@ struct
       userIp : string;
       key : string;
       (* permissions-specific query parameters *)
+      emailMessage : string;
       sendNotificationEmails : bool;
       
     }
@@ -1007,6 +996,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      emailMessage = "";
       sendNotificationEmails = true;
       
     }
@@ -1019,12 +1009,14 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.emailMessage) (fun x -> x) "emailMessage";
       param (fun p -> p.sendNotificationEmails) string_of_bool "sendNotificationEmails";
       
     ] |> List.concat
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(emailMessage = default.emailMessage)
         ?(sendNotificationEmails = default.sendNotificationEmails)
         () =
       let parameters = {
@@ -1033,6 +1025,7 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        emailMessage;
         sendNotificationEmails;
         
       } in
@@ -1075,6 +1068,7 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
         ?(sendNotificationEmails = true)
+        ?emailMessage
         ~fileId
         permission
         session =
@@ -1082,7 +1076,8 @@ struct
       "permissions"] base_url in
     let etag = GapiUtils.etag_option permission.Permission.etag in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params ~sendNotificationEmails () in
+      ?standard_parameters:std_params ?emailMessage ~sendNotificationEmails
+      () in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag

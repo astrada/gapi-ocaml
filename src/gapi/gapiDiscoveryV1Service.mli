@@ -15,9 +15,9 @@ sig
   sig
     type t =
       | Default
-      | Deprecated
-      | Graduated
-      | Labs
+      | Deprecated (** APIs that have been deprecated. *)
+      | Graduated (** Supported APIs that have graduated from labs. *)
+      | Labs (** APIs that are experimental *)
       
     val to_string : t -> string
     

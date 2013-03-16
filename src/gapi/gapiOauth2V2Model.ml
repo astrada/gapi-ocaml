@@ -128,6 +128,7 @@ struct
     family_name : string;
     gender : string;
     given_name : string;
+    hd : string;
     id : string;
     link : string;
     locale : string;
@@ -157,6 +158,10 @@ struct
   let given_name = {
     GapiLens.get = (fun x -> x.given_name);
     GapiLens.set = (fun v x -> { x with given_name = v });
+  }
+  let hd = {
+    GapiLens.get = (fun x -> x.hd);
+    GapiLens.set = (fun v x -> { x with hd = v });
   }
   let id = {
     GapiLens.get = (fun x -> x.id);
@@ -193,6 +198,7 @@ struct
     family_name = "";
     gender = "";
     given_name = "";
+    hd = "";
     id = "";
     link = "";
     locale = "";
@@ -210,6 +216,7 @@ struct
       GapiJson.render_string_value "family_name" x.family_name;
       GapiJson.render_string_value "gender" x.gender;
       GapiJson.render_string_value "given_name" x.given_name;
+      GapiJson.render_string_value "hd" x.hd;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "link" x.link;
       GapiJson.render_string_value "locale" x.locale;
@@ -243,6 +250,10 @@ struct
         ({ GapiJson.name = "given_name"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with given_name = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hd"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with hd = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         `String v) ->

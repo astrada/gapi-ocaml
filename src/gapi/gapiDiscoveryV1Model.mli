@@ -228,6 +228,8 @@ sig
   type t = {
     description : string;
     (** Description of this method. *)
+    etagRequired : bool;
+    (** Whether this method requires an ETag to be specified. The ETag is sent as an HTTP If-Match or If-None-Match header. *)
     httpMethod : string;
     (** HTTP method used by this method. *)
     id : string;
@@ -256,6 +258,7 @@ sig
   }
   
   val description : (t, string) GapiLens.t
+  val etagRequired : (t, bool) GapiLens.t
   val httpMethod : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val mediaUpload : (t, MediaUpload.t) GapiLens.t

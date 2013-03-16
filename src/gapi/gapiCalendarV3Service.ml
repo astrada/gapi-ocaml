@@ -689,6 +689,8 @@ struct
         ?originalStart
         ?pageToken
         ?showDeleted
+        ?timeMax
+        ?timeMin
         ?timeZone
         ~calendarId
         ~eventId
@@ -698,7 +700,8 @@ struct
       "instances"] base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
-      ?maxResults ?originalStart ?pageToken ?showDeleted ?timeZone () in
+      ?maxResults ?originalStart ?pageToken ?showDeleted ?timeMax ?timeMin
+      ?timeZone () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url

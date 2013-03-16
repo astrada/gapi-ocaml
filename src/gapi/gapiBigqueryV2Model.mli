@@ -360,13 +360,13 @@ module TableFieldSchema :
 sig
   type t = {
     fields : t list;
-    (** [Optional] Describes nested fields when type is RECORD. *)
+    (** [Optional] Describes the nested schema fields if the type property is set to RECORD. *)
     mode : string;
-    (** [Optional] Mode of the field (whether or not it can be null. Default is NULLABLE. *)
+    (** [Optional] The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The default value is NULLABLE. *)
     name : string;
-    (** [Required] Name of the field. *)
+    (** [Required] The field name. *)
     _type : string;
-    (** [Required] Data type of the field. *)
+    (** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates a nested schema). *)
     
   }
   
@@ -413,33 +413,33 @@ module JobConfigurationLoad :
 sig
   type t = {
     allowQuotedNewlines : bool;
-    (** [Experimental] Whether to allow quoted newlines in the source CSV data. *)
+    (** Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. *)
     createDisposition : string;
-    (** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. *)
+    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     destinationTable : TableReference.t;
-    (** [Required] Table being written to. *)
+    (** [Required] The destination table to load the data into. *)
     encoding : string;
-    (** [Optional] Character encoding of the input data. May be UTF-8 or ISO-8859-1. Default is UTF-8. *)
+    (** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
     fieldDelimiter : string;
-    (** [Optional] Delimiter to use between fields in the import data. Default is ','. Note that delimiters are applied to the raw, binary data before the encoding is applied. *)
+    (** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
     maxBadRecords : int;
-    (** [Optional] Maximum number of bad records that should be ignored before the entire job is aborted and no updates are performed. *)
+    (** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid. *)
     quote : string;
-    (** [Optional] Quote character to use. Default is '"'. Note that quoting is done on the raw, binary data before the encoding is applied. If no quoting is done, use am empty string. *)
+    (** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
     schema : TableSchema.t;
-    (** [Optional] Schema of the table being written to. *)
+    (** [Optional] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data. *)
     schemaInline : string;
-    (** [Experimental] Inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT" *)
+    (** [Deprecated] The inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT". *)
     schemaInlineFormat : string;
-    (** [Experimental] Format of inlineSchema field. *)
+    (** [Deprecated] The format of the schemaInline property. *)
     skipLeadingRows : int;
-    (** [Optional] Number of rows of initial data to skip in the data being imported. *)
+    (** [Optional] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
     sourceFormat : string;
-    (** [Experimental] Optional and defaults to CSV. Format of source files. For CSV uploads, specify "CSV". For imports of datastore backups, specify "DATASTORE_BACKUP". For imports of newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". *)
+    (** [Optional] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV. *)
     sourceUris : string list;
-    (** [Required] Source URIs describing Google Cloud Storage locations of data to load. *)
+    (** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. *)
     writeDisposition : string;
-    (** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND. *)
+    (** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -498,12 +498,16 @@ end
 module JobConfigurationQuery :
 sig
   type t = {
+    allowLargeResults : bool;
+    (** [Experimental] If true, allows >128M results to be materialized in the destination table. Requires destination_table to be set. *)
     createDisposition : string;
     (** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. *)
     defaultDataset : DatasetReference.t;
     (** [Optional] Specifies the default dataset to assume for unqualified table names in the query. *)
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
+    preserveNulls : bool;
+    (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
     priority : string;
     (** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH. *)
     query : string;
@@ -513,9 +517,11 @@ sig
     
   }
   
+  val allowLargeResults : (t, bool) GapiLens.t
   val createDisposition : (t, string) GapiLens.t
   val defaultDataset : (t, DatasetReference.t) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
+  val preserveNulls : (t, bool) GapiLens.t
   val priority : (t, string) GapiLens.t
   val query : (t, string) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
@@ -960,6 +966,8 @@ sig
     (** The resource type of the request. *)
     maxResults : int;
     (** [Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size. *)
+    preserveNulls : bool;
+    (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
     query : string;
     (** [Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId. *)
     timeoutMs : int;
@@ -971,6 +979,7 @@ sig
   val dryRun : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val maxResults : (t, int) GapiLens.t
+  val preserveNulls : (t, bool) GapiLens.t
   val query : (t, string) GapiLens.t
   val timeoutMs : (t, int) GapiLens.t
   

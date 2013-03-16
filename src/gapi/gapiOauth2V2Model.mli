@@ -62,6 +62,8 @@ sig
     (** The user's gender. *)
     given_name : string;
     (** The user's first name. *)
+    hd : string;
+    (** The hosted domain e.g. example.com if the user is Google apps user. *)
     id : string;
     (** The focus obfuscated gaia id of the user. *)
     link : string;
@@ -84,6 +86,7 @@ sig
   val family_name : (t, string) GapiLens.t
   val gender : (t, string) GapiLens.t
   val given_name : (t, string) GapiLens.t
+  val hd : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val link : (t, string) GapiLens.t
   val locale : (t, string) GapiLens.t

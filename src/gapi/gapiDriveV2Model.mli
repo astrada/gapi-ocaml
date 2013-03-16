@@ -102,6 +102,58 @@ sig
   
 end
 
+module User :
+sig
+  module Picture :
+  sig
+    type t = {
+      url : string;
+      (** A URL that points to a profile picture of this user. *)
+      
+    }
+    
+    val url : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    displayName : string;
+    (** A plain text displayable name for this user. *)
+    isAuthenticatedUser : bool;
+    (** Whether this user is the same as the authenticated user for whom the request was made. *)
+    kind : string;
+    (** This is always drive#user. *)
+    permissionId : string;
+    (** The user's ID as visible in the permissions collection. *)
+    picture : Picture.t;
+    (** The user's profile picture. *)
+    
+  }
+  
+  val displayName : (t, string) GapiLens.t
+  val isAuthenticatedUser : (t, bool) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val permissionId : (t, string) GapiLens.t
+  val picture : (t, Picture.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module File :
 sig
   module Thumbnail :
@@ -159,7 +211,7 @@ sig
   sig
     type t = {
       text : string;
-      (** The text to be indexed for this file *)
+      (** The text to be indexed for this file. *)
       
     }
     
@@ -278,14 +330,12 @@ sig
   type t = {
     alternateLink : string;
     (** A link for opening the file in using a relevant Google editor or viewer. *)
-    appDataContents : bool;
-    (** Whether this file is in the appdata folder. *)
     createdDate : GapiDate.t;
     (** Create time for this file (formatted ISO8601 timestamp). *)
     description : string;
     (** A short description of the file. *)
     downloadUrl : string;
-    (** Short term download URL for the file. This will only be populated on files with content stored in Drive. *)
+    (** Short lived download URL for the file. This is only populated for files with content stored in Drive. *)
     editable : bool;
     (** Whether the file can be edited by the current user. *)
     embedLink : string;
@@ -297,13 +347,13 @@ sig
     exportLinks : (string * string) list;
     (** Links for exporting Google Docs to specific formats. *)
     fileExtension : string;
-    (** The file extension used when downloading this file. This field is set from the title when inserting or uploading new content. This will only be populated on files with content stored in Drive. *)
+    (** The file extension used when downloading this file. This field is read only. To set the extension, include it in the title when creating the file. This is only populated for files with content stored in Drive. *)
     fileSize : int64;
-    (** The size of the file in bytes. This will only be populated on files with content stored in Drive. *)
+    (** The size of the file in bytes. This is only populated for files with content stored in Drive. *)
     iconLink : string;
     (** A link to the file's icon. *)
     id : string;
-    (** The id of the file. *)
+    (** The ID of the file. *)
     imageMediaMetadata : ImageMediaMetadata.t;
     (** Metadata about image media. This will only be present for image types, and its contents will depend on what can be parsed from the image content. *)
     indexableText : IndexableText.t;
@@ -312,12 +362,14 @@ sig
     (** The type of file. This is always drive#file. *)
     labels : Labels.t;
     (** A group of labels for the file. *)
+    lastModifyingUser : User.t;
+    (** The last user to modify this file. *)
     lastModifyingUserName : string;
-    (** Name of the last user to modify this file. This will only be populated if a user has edited this file. *)
+    (** Name of the last user to modify this file. *)
     lastViewedByMeDate : GapiDate.t;
     (** Last time this file was viewed by the user (formatted RFC 3339 timestamp). *)
     md5Checksum : string;
-    (** An MD5 checksum for the content of this file. This will only be populated on files with content stored in Drive. *)
+    (** An MD5 checksum for the content of this file. This is populated only for files with content stored in Drive. *)
     mimeType : string;
     (** The MIME type of the file. This is only mutable on update when uploading new content. This field can be left blank, and the mimetype will be determined from the uploaded content's MIME type. *)
     modifiedByMeDate : GapiDate.t;
@@ -328,6 +380,8 @@ sig
     (** The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This will only be populated on files with content stored in Drive. *)
     ownerNames : string list;
     (** Name(s) of the owner(s) of this file. *)
+    owners : User.t list;
+    (** The owner(s) of this file. *)
     parents : ParentReference.t list;
     (** Collection of parent folders which contain this file.
 Setting this field will put the file in all of the provided folders. On insert, if no folders are provided, the file will be placed in the default root folder. *)
@@ -335,6 +389,8 @@ Setting this field will put the file in all of the provided folders. On insert, 
     (** The number of quota bytes used by this file. *)
     selfLink : string;
     (** A link back to this file. *)
+    shared : bool;
+    (** Whether the file has been shared. *)
     sharedWithMeDate : GapiDate.t;
     (** Time at which this file was shared with the user (formatted RFC 3339 timestamp). *)
     thumbnail : Thumbnail.t;
@@ -348,14 +404,13 @@ Setting this field will put the file in all of the provided folders. On insert, 
     webContentLink : string;
     (** A link for downloading the content of the file in a browser using cookie based authentication. In cases where the content is shared publicly, the content can be downloaded without any credentials. *)
     webViewLink : string;
-    (** A link providing access to static web assets (HTML, CSS, JS, etc) in a public folder hierarchy using filenames in a relative path. *)
+    (** A link only available on public folders for viewing their static web assets (HTML, CSS, JS, etc) via Google Drive's Website Hosting. *)
     writersCanShare : bool;
     (** Whether writers can share the document with other users. *)
     
   }
   
   val alternateLink : (t, string) GapiLens.t
-  val appDataContents : (t, bool) GapiLens.t
   val createdDate : (t, GapiDate.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val downloadUrl : (t, string) GapiLens.t
@@ -372,6 +427,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val indexableText : (t, IndexableText.t) GapiLens.t
   val kind : (t, string) GapiLens.t
   val labels : (t, Labels.t) GapiLens.t
+  val lastModifyingUser : (t, User.t) GapiLens.t
   val lastModifyingUserName : (t, string) GapiLens.t
   val lastViewedByMeDate : (t, GapiDate.t) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
@@ -380,9 +436,11 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val modifiedDate : (t, GapiDate.t) GapiLens.t
   val originalFilename : (t, string) GapiLens.t
   val ownerNames : (t, string list) GapiLens.t
+  val owners : (t, User.t list) GapiLens.t
   val parents : (t, ParentReference.t list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val shared : (t, bool) GapiLens.t
   val sharedWithMeDate : (t, GapiDate.t) GapiLens.t
   val thumbnail : (t, Thumbnail.t) GapiLens.t
   val thumbnailLink : (t, string) GapiLens.t
@@ -459,55 +517,6 @@ sig
   val nextLink : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module User :
-sig
-  module Picture :
-  sig
-    type t = {
-      url : string;
-      (** A URL that points to a profile picture of this user. *)
-      
-    }
-    
-    val url : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
-  type t = {
-    displayName : string;
-    (** A plain text displayable name for this user. *)
-    isAuthenticatedUser : bool;
-    (** Whether this user is the same as the authenticated user of which the request was made on behalf. *)
-    kind : string;
-    (** This is always drive#user. *)
-    picture : Picture.t;
-    (** The user's profile picture. *)
-    
-  }
-  
-  val displayName : (t, string) GapiLens.t
-  val isAuthenticatedUser : (t, bool) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val picture : (t, Picture.t) GapiLens.t
   
   val empty : t
   
@@ -677,7 +686,7 @@ sig
     quotaBytesTotal : int64;
     (** The total number of quota bytes. *)
     quotaBytesUsed : int64;
-    (** The number of quota bytes used. *)
+    (** The number of quota bytes used by Google Drive. *)
     quotaBytesUsedAggregate : int64;
     (** The number of quota bytes used by all Google apps (Drive, Picasa, etc.). *)
     quotaBytesUsedInTrash : int64;
@@ -904,6 +913,8 @@ sig
     (** The ID of the revision. *)
     kind : string;
     (** This is always drive#revision. *)
+    lastModifyingUser : User.t;
+    (** The last user to modify this revision. *)
     lastModifyingUserName : string;
     (** Name of the last user to modify this revision. *)
     md5Checksum : string;
@@ -935,6 +946,7 @@ sig
   val fileSize : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val lastModifyingUser : (t, User.t) GapiLens.t
   val lastModifyingUserName : (t, string) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
   val mimeType : (t, string) GapiLens.t

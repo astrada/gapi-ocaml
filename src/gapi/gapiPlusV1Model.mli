@@ -39,6 +39,270 @@ sig
   
 end
 
+module ItemScope :
+sig
+  type t = {
+    about : t option;
+    (** The subject matter of the content. *)
+    additionalName : string list;
+    (** An additional name for a Person, can be used for a middle name. *)
+    address : t option;
+    (** Postal address. *)
+    addressCountry : string;
+    (** Address country. *)
+    addressLocality : string;
+    (** Address locality. *)
+    addressRegion : string;
+    (** Address region. *)
+    associated_media : t list;
+    (** The encoding. *)
+    attendeeCount : int;
+    (** Number of attendees. *)
+    attendees : t list;
+    (** A person attending the event. *)
+    audio : t option;
+    (** From http://schema.org/MusicRecording, the audio file. *)
+    author : t list;
+    (** The person or persons who created this result. In the example of restaurant reviews, this might be the reviewer's name. *)
+    bestRating : string;
+    (** Best possible rating value that a result might obtain. This property defines the upper bound for the ratingValue. For example, you might have a 5 star rating scale, you would provide 5 as the value for this property. *)
+    birthDate : string;
+    (** Date of birth. *)
+    byArtist : t option;
+    (** From http://schema.org/MusicRecording, the artist that performed this recording. *)
+    caption : string;
+    (** The caption for this object. *)
+    contentSize : string;
+    (** File size in (mega/kilo) bytes. *)
+    contentUrl : string;
+    (** Actual bytes of the media object, for example the image file or video file. *)
+    contributor : t list;
+    (** A list of contributors to this result. *)
+    dateCreated : string;
+    (** The date the result was created such as the date that a review was first created. *)
+    dateModified : string;
+    (** The date the result was last modified such as the date that a review was last edited. *)
+    datePublished : string;
+    (** The initial date that the result was published. For example, a user writes a comment on a blog, which has a result.dateCreated of when they submit it. If the blog users comment moderation, the result.datePublished value would match the date when the owner approved the message. *)
+    description : string;
+    (** The string that describes the content of the result. *)
+    duration : string;
+    (** The duration of the item (movie, audio recording, event, etc.) in ISO 8601 date format. *)
+    embedUrl : string;
+    (** A URL pointing to a player for a specific video. In general, this is the information in the src element of an embed tag and should not be the same as the content of the loc tag. *)
+    endDate : string;
+    (** The end date and time of the event (in ISO 8601 date format). *)
+    familyName : string;
+    (** Family name. This property can be used with givenName instead of the name property. *)
+    gender : string;
+    (** Gender of the person. *)
+    geo : t option;
+    (** Geo coordinates. *)
+    givenName : string;
+    (** Given name. This property can be used with familyName instead of the name property. *)
+    height : string;
+    (** The height of the media object. *)
+    id : string;
+    (** An identifier for the target. Your app can choose how to identify targets. The target.id is required if you are writing an activity that does not have a corresponding web page or target.url property. *)
+    image : string;
+    (** A URL to the image that represents this result. For example, if a user writes a review of a restaurant and attaches a photo of their meal, you might use that photo as the result.image. *)
+    inAlbum : t option;
+    (** From http://schema.org/MusicRecording, which album a song is in. *)
+    kind : string;
+    (** Identifies this resource as an itemScope. *)
+    latitude : float;
+    (** Latitude. *)
+    location : t option;
+    (** The location of the event or organization. *)
+    longitude : float;
+    (** Longitude. *)
+    name : string;
+    (** The name of the result. In the example of a restaurant review, this might be the summary the user gave their review such as "Great ambiance, but overpriced." *)
+    partOfTVSeries : t option;
+    (** Property of http://schema.org/TVEpisode indicating which series the episode belongs to. *)
+    performers : t list;
+    (** The main performer or performers of the event-for example, a presenter, musician, or actor. *)
+    playerType : string;
+    (** Player type that is required. For example: Flash or Silverlight. *)
+    postOfficeBoxNumber : string;
+    (** Post office box number. *)
+    postalCode : string;
+    (** Postal code. *)
+    ratingValue : string;
+    (** Rating value. *)
+    reviewRating : t option;
+    (** Review rating. *)
+    startDate : string;
+    (** The start date and time of the event (in ISO 8601 date format). *)
+    streetAddress : string;
+    (** Street address. *)
+    text : string;
+    (** The text that is the result of the app activity. For example, if a user leaves a review of a restaurant, this might be the text of the review. *)
+    thumbnail : t option;
+    (** Thumbnail image for an image or video. *)
+    thumbnailUrl : string;
+    (** A URL to a thumbnail image that represents this result. *)
+    tickerSymbol : string;
+    (** The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we reccommend using the controlled vocaulary of Market Identifier Codes (MIC) specified in ISO15022. *)
+    _type : string;
+    (** The schema.org URL that best describes the referenced target and matches the type of moment. *)
+    url : string;
+    (** The URL that points to the result object. For example, a permalink directly to a restaurant reviewer's comment. *)
+    width : string;
+    (** The width of the media object. *)
+    worstRating : string;
+    (** Worst possible rating value that a result might obtain. This property defines the lower bound for the ratingValue. *)
+    
+  }
+  
+  val about : (t, t option) GapiLens.t
+  val additionalName : (t, string list) GapiLens.t
+  val address : (t, t option) GapiLens.t
+  val addressCountry : (t, string) GapiLens.t
+  val addressLocality : (t, string) GapiLens.t
+  val addressRegion : (t, string) GapiLens.t
+  val associated_media : (t, t list) GapiLens.t
+  val attendeeCount : (t, int) GapiLens.t
+  val attendees : (t, t list) GapiLens.t
+  val audio : (t, t option) GapiLens.t
+  val author : (t, t list) GapiLens.t
+  val bestRating : (t, string) GapiLens.t
+  val birthDate : (t, string) GapiLens.t
+  val byArtist : (t, t option) GapiLens.t
+  val caption : (t, string) GapiLens.t
+  val contentSize : (t, string) GapiLens.t
+  val contentUrl : (t, string) GapiLens.t
+  val contributor : (t, t list) GapiLens.t
+  val dateCreated : (t, string) GapiLens.t
+  val dateModified : (t, string) GapiLens.t
+  val datePublished : (t, string) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val duration : (t, string) GapiLens.t
+  val embedUrl : (t, string) GapiLens.t
+  val endDate : (t, string) GapiLens.t
+  val familyName : (t, string) GapiLens.t
+  val gender : (t, string) GapiLens.t
+  val geo : (t, t option) GapiLens.t
+  val givenName : (t, string) GapiLens.t
+  val height : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val image : (t, string) GapiLens.t
+  val inAlbum : (t, t option) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val latitude : (t, float) GapiLens.t
+  val location : (t, t option) GapiLens.t
+  val longitude : (t, float) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val partOfTVSeries : (t, t option) GapiLens.t
+  val performers : (t, t list) GapiLens.t
+  val playerType : (t, string) GapiLens.t
+  val postOfficeBoxNumber : (t, string) GapiLens.t
+  val postalCode : (t, string) GapiLens.t
+  val ratingValue : (t, string) GapiLens.t
+  val reviewRating : (t, t option) GapiLens.t
+  val startDate : (t, string) GapiLens.t
+  val streetAddress : (t, string) GapiLens.t
+  val text : (t, string) GapiLens.t
+  val thumbnail : (t, t option) GapiLens.t
+  val thumbnailUrl : (t, string) GapiLens.t
+  val tickerSymbol : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val url : (t, string) GapiLens.t
+  val width : (t, string) GapiLens.t
+  val worstRating : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Moment :
+sig
+  type t = {
+    id : string;
+    (** The moment ID. *)
+    kind : string;
+    (** Identifies this resource as a moment. *)
+    result : ItemScope.t;
+    (** The object generated by performing the action on the target. For example, a user writes a review of a restaurant, the target is the restaurant and the result is the review. *)
+    startDate : GapiDate.t;
+    (** Time stamp of when the action occurred in RFC3339 format. *)
+    target : ItemScope.t;
+    (** The object on which the action was performed. *)
+    _type : string;
+    (** The Google schema for the type of moment to write. For example, http://schemas.google.com/AddActivity. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val result : (t, ItemScope.t) GapiLens.t
+  val startDate : (t, GapiDate.t) GapiLens.t
+  val target : (t, ItemScope.t) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module MomentsFeed :
+sig
+  type t = {
+    etag : string;
+    (** ETag of this response for caching purposes. *)
+    items : Moment.t list;
+    (** The moments in this page of results. *)
+    kind : string;
+    (** Identifies this resource as a collection of moments. Value: "plus#momentsFeed". *)
+    nextLink : string;
+    (** Link to the next page of moments. *)
+    nextPageToken : string;
+    (** The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
+    selfLink : string;
+    (** Link to this page of moments. *)
+    title : string;
+    (** The title of this collection of moments. *)
+    updated : GapiDate.t;
+    (** The RFC 339 timestamp for when this collection of moments was last updated. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, Moment.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val title : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Comment :
 sig
   module Plusoners :
@@ -446,17 +710,116 @@ sig
     
   end
   
+  module Cover :
+  sig
+    module CoverPhoto :
+    sig
+      type t = {
+        height : int;
+        (** The height to the image. *)
+        url : string;
+        (** The url to the image. *)
+        width : int;
+        (** The width to the image. *)
+        
+      }
+      
+      val height : (t, int) GapiLens.t
+      val url : (t, string) GapiLens.t
+      val width : (t, int) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    module CoverInfo :
+    sig
+      type t = {
+        leftImageOffset : int;
+        (** The difference between the left position of the image cover and the actual displayed cover image. Only valid for BANNER layout. *)
+        topImageOffset : int;
+        (** The difference between the top position of the image cover and the actual displayed cover image. Only valid for BANNER layout. *)
+        
+      }
+      
+      val leftImageOffset : (t, int) GapiLens.t
+      val topImageOffset : (t, int) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      coverInfo : CoverInfo.t;
+      (** Extra information about the cover photo. *)
+      coverPhoto : CoverPhoto.t;
+      (** The person's primary cover image. *)
+      layout : string;
+      (** The layout of the cover art. Possible values are:  
+- "banner" - One large image banner. *)
+      
+    }
+    
+    val coverInfo : (t, CoverInfo.t) GapiLens.t
+    val coverPhoto : (t, CoverPhoto.t) GapiLens.t
+    val layout : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module AgeRange :
+  sig
+    type t = {
+      max : int;
+      (** The age range's upper bound, if any. *)
+      min : int;
+      (** The age range's lower bound, if any. *)
+      
+    }
+    
+    val max : (t, int) GapiLens.t
+    val min : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     aboutMe : string;
     (** A short biography for this person. *)
+    ageRange : AgeRange.t;
+    (** The age range of the person. *)
     birthday : string;
     (** The person's date of birth, represented as YYYY-MM-DD. *)
+    braggingRights : string;
+    (** The "bragging rights" line of this person. *)
+    circledByCount : int;
+    (** If a Google+ Page and for followers who are visible, the number of people who have added this page to a circle. *)
+    cover : Cover.t;
+    (** The cover photo content. *)
     currentLocation : string;
     (** The current location for this person. *)
     displayName : string;
     (** The name of this person, suitable for display. *)
     emails : Emails.t list;
-    (** A list of email addresses for this person. *)
+    (** A list of email addresses that this person has set to public on their Google+ profile. You can also use the userinfo.email scope to retrieve an authenticated user's email address. *)
     etag : string;
     (** ETag of this response for caching purposes. *)
     gender : string;
@@ -471,9 +834,11 @@ sig
     image : Image.t;
     (** The representation of the person's profile photo. *)
     isPlusUser : bool;
-    (** Whether this user has signed up for G+. *)
+    (** Whether this user has signed up for Google+. *)
     kind : string;
     (** Identifies this resource as a person. Value: "plus#person". *)
+    language : string;
+    (** The user's preferred language for rendering. *)
     name : Name.t;
     (** An object representation of the individual components of a person's name. *)
     nickname : string;
@@ -486,6 +851,8 @@ sig
     (** A list of current or past organizations with which this person is associated. *)
     placesLived : PlacesLived.t list;
     (** A list of places where this person has lived. *)
+    plusOneCount : int;
+    (** If a Google+ Page, the number of people who have +1'ed this page. *)
     relationshipStatus : string;
     (** The person's relationship status. Possible values are:  
 - "single" - Person is single. 
@@ -503,11 +870,17 @@ sig
     (** The URL of this person's profile. *)
     urls : Urls.t list;
     (** A list of URLs for this person. *)
+    verified : bool;
+    (** Whether the person or Google+ Page has been verified. *)
     
   }
   
   val aboutMe : (t, string) GapiLens.t
+  val ageRange : (t, AgeRange.t) GapiLens.t
   val birthday : (t, string) GapiLens.t
+  val braggingRights : (t, string) GapiLens.t
+  val circledByCount : (t, int) GapiLens.t
+  val cover : (t, Cover.t) GapiLens.t
   val currentLocation : (t, string) GapiLens.t
   val displayName : (t, string) GapiLens.t
   val emails : (t, Emails.t list) GapiLens.t
@@ -518,15 +891,18 @@ sig
   val image : (t, Image.t) GapiLens.t
   val isPlusUser : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val language : (t, string) GapiLens.t
   val name : (t, Name.t) GapiLens.t
   val nickname : (t, string) GapiLens.t
   val objectType : (t, string) GapiLens.t
   val organizations : (t, Organizations.t list) GapiLens.t
   val placesLived : (t, PlacesLived.t list) GapiLens.t
+  val plusOneCount : (t, int) GapiLens.t
   val relationshipStatus : (t, string) GapiLens.t
   val tagline : (t, string) GapiLens.t
   val url : (t, string) GapiLens.t
   val urls : (t, Urls.t list) GapiLens.t
+  val verified : (t, bool) GapiLens.t
   
   val empty : t
   
@@ -995,7 +1371,6 @@ sig
     (** The link to this activity. *)
     verb : string;
     (** This activity's verb, indicating what action was performed. Possible values are:  
-- "checkin" - Check in to a location. 
 - "post" - Publish content to the stream. 
 - "share" - Reshare an activity. *)
     
@@ -1039,7 +1414,7 @@ sig
     etag : string;
     (** ETag of this response for caching purposes. *)
     id : string;
-    (** The ID of this collection of activities. *)
+    (** The ID of this collection of activities. Deprecated. *)
     items : Activity.t list;
     (** The activities in this page of results. *)
     kind : string;

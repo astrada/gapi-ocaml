@@ -72,7 +72,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.App.t * GapiConversation.Session.t
   
-  (** Lists a user's apps.
+  (** Lists a user's installed apps.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
@@ -313,8 +313,8 @@ sig
   sig
     type t =
       | Default
-      | BASIC
-      | FULL
+      | BASIC (** Deprecated *)
+      | FULL (** Deprecated *)
       
     val to_string : t -> string
     
@@ -330,8 +330,6 @@ sig
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the new copy.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
-    @param sourceLanguage The language of the original file to be translated.
-    @param targetLanguage Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     @param fileId The ID of the file to copy.
@@ -343,8 +341,6 @@ sig
     ?ocr:bool ->
     ?pinned:bool ->
     ?ocrLanguage:string ->
-    ?sourceLanguage:string ->
-    ?targetLanguage:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
     fileId:string ->
@@ -391,9 +387,8 @@ sig
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the uploaded file.
+    @param useContentAsIndexableText Whether to use the content as indexable text.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
-    @param sourceLanguage The language of the original file to be translated.
-    @param targetLanguage Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     *)
@@ -404,9 +399,8 @@ sig
     ?convert:bool ->
     ?ocr:bool ->
     ?pinned:bool ->
+    ?useContentAsIndexableText:bool ->
     ?ocrLanguage:string ->
-    ?sourceLanguage:string ->
-    ?targetLanguage:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
     GapiDriveV2Model.File.t ->
@@ -437,14 +431,13 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.
+    @param newRevision Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
+    @param useContentAsIndexableText Whether to use the content as indexable text.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
-    @param sourceLanguage The language of the original file to be translated.
-    @param targetLanguage Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     @param fileId The ID of the file to update.
@@ -458,9 +451,8 @@ sig
     ?pinned:bool ->
     ?setModifiedDate:bool ->
     ?updateViewedDate:bool ->
+    ?useContentAsIndexableText:bool ->
     ?ocrLanguage:string ->
-    ?sourceLanguage:string ->
-    ?targetLanguage:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
     fileId:string ->
@@ -507,19 +499,18 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.File.t * GapiConversation.Session.t
   
-  (** Updates file metadata and/or content
+  (** Updates file metadata and/or content.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.
+    @param newRevision Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
+    @param useContentAsIndexableText Whether to use the content as indexable text.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
-    @param sourceLanguage The language of the original file to be translated.
-    @param targetLanguage Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     @param fileId The ID of the file to update.
@@ -534,9 +525,8 @@ sig
     ?pinned:bool ->
     ?setModifiedDate:bool ->
     ?updateViewedDate:bool ->
+    ?useContentAsIndexableText:bool ->
     ?ocrLanguage:string ->
-    ?sourceLanguage:string ->
-    ?targetLanguage:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
     fileId:string ->
@@ -651,13 +641,15 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param sendNotificationEmails Whether to send notification emails.
+    @param sendNotificationEmails Whether to send notification emails when sharing to users or groups.
+    @param emailMessage A custom message to include in notification emails.
     @param fileId The ID for the file.
     *)
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?sendNotificationEmails:bool ->
+    ?emailMessage:string ->
     fileId:string ->
     GapiDriveV2Model.Permission.t ->
     GapiConversation.Session.t ->

@@ -761,6 +761,8 @@ sig
     (** The site search query parameters for this profile. *)
     timezone : string;
     (** Time zone for which this profile has been configured. *)
+    _type : string;
+    (** Profile type. Supported types: WEB or APP. *)
     updated : GapiDate.t;
     (** Time this profile was last modified. *)
     webPropertyId : string;
@@ -786,6 +788,7 @@ sig
   val siteSearchCategoryParameters : (t, string) GapiLens.t
   val siteSearchQueryParameters : (t, string) GapiLens.t
   val timezone : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   val webPropertyId : (t, string) GapiLens.t
   val websiteUrl : (t, string) GapiLens.t

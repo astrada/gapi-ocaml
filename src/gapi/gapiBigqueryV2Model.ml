@@ -1310,15 +1310,21 @@ end
 module JobConfigurationQuery =
 struct
   type t = {
+    allowLargeResults : bool;
     createDisposition : string;
     defaultDataset : DatasetReference.t;
     destinationTable : TableReference.t;
+    preserveNulls : bool;
     priority : string;
     query : string;
     writeDisposition : string;
     
   }
   
+  let allowLargeResults = {
+    GapiLens.get = (fun x -> x.allowLargeResults);
+    GapiLens.set = (fun v x -> { x with allowLargeResults = v });
+  }
   let createDisposition = {
     GapiLens.get = (fun x -> x.createDisposition);
     GapiLens.set = (fun v x -> { x with createDisposition = v });
@@ -1330,6 +1336,10 @@ struct
   let destinationTable = {
     GapiLens.get = (fun x -> x.destinationTable);
     GapiLens.set = (fun v x -> { x with destinationTable = v });
+  }
+  let preserveNulls = {
+    GapiLens.get = (fun x -> x.preserveNulls);
+    GapiLens.set = (fun v x -> { x with preserveNulls = v });
   }
   let priority = {
     GapiLens.get = (fun x -> x.priority);
@@ -1345,9 +1355,11 @@ struct
   }
   
   let empty = {
+    allowLargeResults = false;
     createDisposition = "";
     defaultDataset = DatasetReference.empty;
     destinationTable = TableReference.empty;
+    preserveNulls = false;
     priority = "";
     query = "";
     writeDisposition = "";
@@ -1356,9 +1368,11 @@ struct
   
   let rec render_content x = 
      [
+      GapiJson.render_bool_value "allowLargeResults" x.allowLargeResults;
       GapiJson.render_string_value "createDisposition" x.createDisposition;
       (fun v -> GapiJson.render_object "defaultDataset" (DatasetReference.render_content v)) x.defaultDataset;
       (fun v -> GapiJson.render_object "destinationTable" (TableReference.render_content v)) x.destinationTable;
+      GapiJson.render_bool_value "preserveNulls" x.preserveNulls;
       GapiJson.render_string_value "priority" x.priority;
       GapiJson.render_string_value "query" x.query;
       GapiJson.render_string_value "writeDisposition" x.writeDisposition;
@@ -1368,6 +1382,10 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "allowLargeResults"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with allowLargeResults = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "createDisposition"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1388,6 +1406,10 @@ struct
         TableReference.empty
         (fun v -> { x with destinationTable = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "preserveNulls"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with preserveNulls = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "priority"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -2665,6 +2687,7 @@ struct
     dryRun : bool;
     kind : string;
     maxResults : int;
+    preserveNulls : bool;
     query : string;
     timeoutMs : int;
     
@@ -2686,6 +2709,10 @@ struct
     GapiLens.get = (fun x -> x.maxResults);
     GapiLens.set = (fun v x -> { x with maxResults = v });
   }
+  let preserveNulls = {
+    GapiLens.get = (fun x -> x.preserveNulls);
+    GapiLens.set = (fun v x -> { x with preserveNulls = v });
+  }
   let query = {
     GapiLens.get = (fun x -> x.query);
     GapiLens.set = (fun v x -> { x with query = v });
@@ -2700,6 +2727,7 @@ struct
     dryRun = false;
     kind = "";
     maxResults = 0;
+    preserveNulls = false;
     query = "";
     timeoutMs = 0;
     
@@ -2711,6 +2739,7 @@ struct
       GapiJson.render_bool_value "dryRun" x.dryRun;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_int_value "maxResults" x.maxResults;
+      GapiJson.render_bool_value "preserveNulls" x.preserveNulls;
       GapiJson.render_string_value "query" x.query;
       GapiJson.render_int_value "timeoutMs" x.timeoutMs;
       
@@ -2739,6 +2768,10 @@ struct
         ({ GapiJson.name = "maxResults"; data_type = GapiJson.Scalar },
         `Int v) ->
       { x with maxResults = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "preserveNulls"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with preserveNulls = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "query"; data_type = GapiJson.Scalar },
         `String v) ->

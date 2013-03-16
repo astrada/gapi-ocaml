@@ -5,6 +5,8 @@ open GapiPlusV1Model
 
 module Scope =
 struct
+  let plus_login = "https://www.googleapis.com/auth/plus.login"
+  
   let plus_me = "https://www.googleapis.com/auth/plus.me"
   
   
@@ -296,25 +298,197 @@ struct
   
 end
 
+module MomentsResource =
+struct
+  module Collection =
+  struct
+    type t =
+      | Default
+      | Vault
+      
+    let to_string = function
+      | Default -> ""
+      | Vault -> "vault"
+      
+    let of_string = function
+      | "" -> Default
+      | "vault" -> Vault
+      | s -> failwith ("Unexpected value for Collection:" ^ s)
+  
+  end
+  
+  module MomentsParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* moments-specific query parameters *)
+      debug : bool;
+      maxResults : int;
+      pageToken : string;
+      targetUrl : string;
+      _type : string;
+      
+    }
+    
+    let default = {
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      debug = false;
+      maxResults = 20;
+      pageToken = "";
+      targetUrl = "";
+      _type = "";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.debug) string_of_bool "debug";
+      param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.targetUrl) (fun x -> x) "targetUrl";
+      param (fun p -> p._type) (fun x -> x) "type";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(debug = default.debug)
+        ?(maxResults = default.maxResults)
+        ?(pageToken = default.pageToken)
+        ?(targetUrl = default.targetUrl)
+        ?(_type = default._type)
+        () =
+      let parameters = {
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        debug;
+        maxResults;
+        pageToken;
+        targetUrl;
+        _type;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
+  let insert
+        ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?std_params
+        ?debug
+        ~userId
+        ~collection
+        moment
+        session =
+    let full_url = GapiUtils.add_path_to_url ["people";
+      ((fun x -> x) userId); "moments"; (Collection.to_string collection)]
+      base_url in
+    let params = MomentsParameters.merge_parameters
+      ?standard_parameters:std_params ?debug () in
+    let query_parameters = Option.map MomentsParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Moment.to_data_model) ~data:moment
+      full_url (GapiJson.parse_json_response Moment.of_data_model) session 
+    
+  let list
+        ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?std_params
+        ?(maxResults = 20)
+        ?pageToken
+        ?targetUrl
+        ?_type
+        ~userId
+        ~collection
+        session =
+    let full_url = GapiUtils.add_path_to_url ["people";
+      ((fun x -> x) userId); "moments"; (Collection.to_string collection)]
+      base_url in
+    let params = MomentsParameters.merge_parameters
+      ?standard_parameters:std_params ~maxResults ?pageToken ?targetUrl
+      ?_type () in
+    let query_parameters = Option.map MomentsParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters full_url
+      (GapiJson.parse_json_response MomentsFeed.of_data_model) session 
+    
+  let remove
+        ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?std_params
+        ~id
+        session =
+    let full_url = GapiUtils.add_path_to_url ["moments"; ((fun x -> x) id)]
+      base_url in
+    let params = MomentsParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map MomentsParameters.to_key_value_list
+      params in
+    GapiService.delete ?query_parameters full_url
+      GapiRequest.parse_empty_response session 
+    
+  
+end
+
 module PeopleResource =
 struct
   module Collection =
   struct
     type t =
       | Default
+      | Visible
       | Plusoners
       | Resharers
       
     let to_string = function
       | Default -> ""
+      | Visible -> "visible"
       | Plusoners -> "plusoners"
       | Resharers -> "resharers"
       
     let of_string = function
       | "" -> Default
+      | "visible" -> Visible
       | "plusoners" -> Plusoners
       | "resharers" -> Resharers
       | s -> failwith ("Unexpected value for Collection:" ^ s)
+  
+  end
+  
+  module OrderBy =
+  struct
+    type t =
+      | Default
+      | Alphabetical
+      | Best
+      
+    let to_string = function
+      | Default -> ""
+      | Alphabetical -> "alphabetical"
+      | Best -> "best"
+      
+    let of_string = function
+      | "" -> Default
+      | "alphabetical" -> Alphabetical
+      | "best" -> Best
+      | s -> failwith ("Unexpected value for OrderBy:" ^ s)
   
   end
   
@@ -330,6 +504,7 @@ struct
       (* people-specific query parameters *)
       language : string;
       maxResults : int;
+      orderBy : OrderBy.t;
       pageToken : string;
       query : string;
       
@@ -342,7 +517,8 @@ struct
       userIp = "";
       key = "";
       language = "en-US";
-      maxResults = 20;
+      maxResults = 100;
+      orderBy = OrderBy.Default;
       pageToken = "";
       query = "";
       
@@ -358,6 +534,7 @@ struct
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.language) (fun x -> x) "language";
       param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.orderBy) OrderBy.to_string "orderBy";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.query) (fun x -> x) "query";
       
@@ -367,6 +544,7 @@ struct
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(language = default.language)
         ?(maxResults = default.maxResults)
+        ?(orderBy = default.orderBy)
         ?(pageToken = default.pageToken)
         ?(query = default.query)
         () =
@@ -378,6 +556,7 @@ struct
         key = standard_parameters.GapiService.StandardParameters.key;
         language;
         maxResults;
+        orderBy;
         pageToken;
         query;
         
@@ -400,6 +579,25 @@ struct
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Person.of_data_model) session 
+    
+  let list
+        ?(base_url = "https://www.googleapis.com/plus/v1/")
+        ?std_params
+        ?(maxResults = 100)
+        ?orderBy
+        ?pageToken
+        ~userId
+        ~collection
+        session =
+    let full_url = GapiUtils.add_path_to_url ["people";
+      ((fun x -> x) userId); "people"; (Collection.to_string collection)]
+      base_url in
+    let params = PeopleParameters.merge_parameters
+      ?standard_parameters:std_params ~maxResults ?orderBy ?pageToken () in
+    let query_parameters = Option.map PeopleParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters full_url
+      (GapiJson.parse_json_response PeopleFeed.of_data_model) session 
     
   let listByActivity
         ?(base_url = "https://www.googleapis.com/plus/v1/")

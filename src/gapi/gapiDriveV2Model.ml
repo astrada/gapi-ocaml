@@ -261,6 +261,136 @@ struct
   
 end
 
+module User =
+struct
+  module Picture =
+  struct
+    type t = {
+      url : string;
+      
+    }
+    
+    let url = {
+      GapiLens.get = (fun x -> x.url);
+      GapiLens.set = (fun v x -> { x with url = v });
+    }
+    
+    let empty = {
+      url = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "url" x.url;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with url = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDriveV2Model.Picture.parse" e x
+    
+  end
+  
+  type t = {
+    displayName : string;
+    isAuthenticatedUser : bool;
+    kind : string;
+    permissionId : string;
+    picture : Picture.t;
+    
+  }
+  
+  let displayName = {
+    GapiLens.get = (fun x -> x.displayName);
+    GapiLens.set = (fun v x -> { x with displayName = v });
+  }
+  let isAuthenticatedUser = {
+    GapiLens.get = (fun x -> x.isAuthenticatedUser);
+    GapiLens.set = (fun v x -> { x with isAuthenticatedUser = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let permissionId = {
+    GapiLens.get = (fun x -> x.permissionId);
+    GapiLens.set = (fun v x -> { x with permissionId = v });
+  }
+  let picture = {
+    GapiLens.get = (fun x -> x.picture);
+    GapiLens.set = (fun v x -> { x with picture = v });
+  }
+  
+  let empty = {
+    displayName = "";
+    isAuthenticatedUser = false;
+    kind = "";
+    permissionId = "";
+    picture = Picture.empty;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "displayName" x.displayName;
+      GapiJson.render_bool_value "isAuthenticatedUser" x.isAuthenticatedUser;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "permissionId" x.permissionId;
+      (fun v -> GapiJson.render_object "picture" (Picture.render_content v)) x.picture;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with displayName = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "isAuthenticatedUser"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with isAuthenticatedUser = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "permissionId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with permissionId = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "picture"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Picture.parse
+        Picture.empty
+        (fun v -> { x with picture = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDriveV2Model.User.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module File =
 struct
   module Thumbnail =
@@ -793,7 +923,6 @@ struct
   
   type t = {
     alternateLink : string;
-    appDataContents : bool;
     createdDate : GapiDate.t;
     description : string;
     downloadUrl : string;
@@ -810,6 +939,7 @@ struct
     indexableText : IndexableText.t;
     kind : string;
     labels : Labels.t;
+    lastModifyingUser : User.t;
     lastModifyingUserName : string;
     lastViewedByMeDate : GapiDate.t;
     md5Checksum : string;
@@ -818,9 +948,11 @@ struct
     modifiedDate : GapiDate.t;
     originalFilename : string;
     ownerNames : string list;
+    owners : User.t list;
     parents : ParentReference.t list;
     quotaBytesUsed : int64;
     selfLink : string;
+    shared : bool;
     sharedWithMeDate : GapiDate.t;
     thumbnail : Thumbnail.t;
     thumbnailLink : string;
@@ -835,10 +967,6 @@ struct
   let alternateLink = {
     GapiLens.get = (fun x -> x.alternateLink);
     GapiLens.set = (fun v x -> { x with alternateLink = v });
-  }
-  let appDataContents = {
-    GapiLens.get = (fun x -> x.appDataContents);
-    GapiLens.set = (fun v x -> { x with appDataContents = v });
   }
   let createdDate = {
     GapiLens.get = (fun x -> x.createdDate);
@@ -904,6 +1032,10 @@ struct
     GapiLens.get = (fun x -> x.labels);
     GapiLens.set = (fun v x -> { x with labels = v });
   }
+  let lastModifyingUser = {
+    GapiLens.get = (fun x -> x.lastModifyingUser);
+    GapiLens.set = (fun v x -> { x with lastModifyingUser = v });
+  }
   let lastModifyingUserName = {
     GapiLens.get = (fun x -> x.lastModifyingUserName);
     GapiLens.set = (fun v x -> { x with lastModifyingUserName = v });
@@ -936,6 +1068,10 @@ struct
     GapiLens.get = (fun x -> x.ownerNames);
     GapiLens.set = (fun v x -> { x with ownerNames = v });
   }
+  let owners = {
+    GapiLens.get = (fun x -> x.owners);
+    GapiLens.set = (fun v x -> { x with owners = v });
+  }
   let parents = {
     GapiLens.get = (fun x -> x.parents);
     GapiLens.set = (fun v x -> { x with parents = v });
@@ -947,6 +1083,10 @@ struct
   let selfLink = {
     GapiLens.get = (fun x -> x.selfLink);
     GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  let shared = {
+    GapiLens.get = (fun x -> x.shared);
+    GapiLens.set = (fun v x -> { x with shared = v });
   }
   let sharedWithMeDate = {
     GapiLens.get = (fun x -> x.sharedWithMeDate);
@@ -983,7 +1123,6 @@ struct
   
   let empty = {
     alternateLink = "";
-    appDataContents = false;
     createdDate = GapiDate.epoch;
     description = "";
     downloadUrl = "";
@@ -1000,6 +1139,7 @@ struct
     indexableText = IndexableText.empty;
     kind = "";
     labels = Labels.empty;
+    lastModifyingUser = User.empty;
     lastModifyingUserName = "";
     lastViewedByMeDate = GapiDate.epoch;
     md5Checksum = "";
@@ -1008,9 +1148,11 @@ struct
     modifiedDate = GapiDate.epoch;
     originalFilename = "";
     ownerNames = [];
+    owners = [];
     parents = [];
     quotaBytesUsed = 0L;
     selfLink = "";
+    shared = false;
     sharedWithMeDate = GapiDate.epoch;
     thumbnail = Thumbnail.empty;
     thumbnailLink = "";
@@ -1025,7 +1167,6 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "alternateLink" x.alternateLink;
-      GapiJson.render_bool_value "appDataContents" x.appDataContents;
       GapiJson.render_date_value "createdDate" x.createdDate;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "downloadUrl" x.downloadUrl;
@@ -1042,6 +1183,7 @@ struct
       (fun v -> GapiJson.render_object "indexableText" (IndexableText.render_content v)) x.indexableText;
       GapiJson.render_string_value "kind" x.kind;
       (fun v -> GapiJson.render_object "labels" (Labels.render_content v)) x.labels;
+      (fun v -> GapiJson.render_object "lastModifyingUser" (User.render_content v)) x.lastModifyingUser;
       GapiJson.render_string_value "lastModifyingUserName" x.lastModifyingUserName;
       GapiJson.render_date_value "lastViewedByMeDate" x.lastViewedByMeDate;
       GapiJson.render_string_value "md5Checksum" x.md5Checksum;
@@ -1050,9 +1192,11 @@ struct
       GapiJson.render_date_value "modifiedDate" x.modifiedDate;
       GapiJson.render_string_value "originalFilename" x.originalFilename;
       GapiJson.render_array "ownerNames" (GapiJson.render_string_value "") x.ownerNames;
+      GapiJson.render_array "owners" User.render x.owners;
       GapiJson.render_array "parents" ParentReference.render x.parents;
       GapiJson.render_int64_value "quotaBytesUsed" x.quotaBytesUsed;
       GapiJson.render_string_value "selfLink" x.selfLink;
+      GapiJson.render_bool_value "shared" x.shared;
       GapiJson.render_date_value "sharedWithMeDate" x.sharedWithMeDate;
       (fun v -> GapiJson.render_object "thumbnail" (Thumbnail.render_content v)) x.thumbnail;
       GapiJson.render_string_value "thumbnailLink" x.thumbnailLink;
@@ -1071,10 +1215,6 @@ struct
         ({ GapiJson.name = "alternateLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with alternateLink = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "appDataContents"; data_type = GapiJson.Scalar },
-        `Bool v) ->
-      { x with appDataContents = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "createdDate"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1161,6 +1301,14 @@ struct
         Labels.empty
         (fun v -> { x with labels = v })
         cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "lastModifyingUser"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        User.parse
+        User.empty
+        (fun v -> { x with lastModifyingUser = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "lastModifyingUserName"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1204,6 +1352,20 @@ struct
         (fun v -> { x with ownerNames = v })
         cs
     | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "owners"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children User.parse User.empty (fun v -> v) cs
+          | e ->
+            GapiJson.unexpected "GapiDriveV2Model.File.parse.parse_collection" e x')
+        User.empty
+        (fun v -> { x with owners = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "parents"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
@@ -1229,6 +1391,10 @@ struct
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "shared"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with shared = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "sharedWithMeDate"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1463,125 +1629,6 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiDriveV2Model.ChildList.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
-module User =
-struct
-  module Picture =
-  struct
-    type t = {
-      url : string;
-      
-    }
-    
-    let url = {
-      GapiLens.get = (fun x -> x.url);
-      GapiLens.set = (fun v x -> { x with url = v });
-    }
-    
-    let empty = {
-      url = "";
-      
-    }
-    
-    let rec render_content x = 
-       [
-        GapiJson.render_string_value "url" x.url;
-        
-      ]
-    and render x = 
-      GapiJson.render_object "" (render_content x)
-    
-    let rec parse x = function
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with url = v }
-      | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = ""; data_type = GapiJson.Object },
-        cs) ->
-        GapiJson.parse_children parse empty (fun x -> x) cs
-      | e ->
-        GapiJson.unexpected "GapiDriveV2Model.Picture.parse" e x
-    
-  end
-  
-  type t = {
-    displayName : string;
-    isAuthenticatedUser : bool;
-    kind : string;
-    picture : Picture.t;
-    
-  }
-  
-  let displayName = {
-    GapiLens.get = (fun x -> x.displayName);
-    GapiLens.set = (fun v x -> { x with displayName = v });
-  }
-  let isAuthenticatedUser = {
-    GapiLens.get = (fun x -> x.isAuthenticatedUser);
-    GapiLens.set = (fun v x -> { x with isAuthenticatedUser = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let picture = {
-    GapiLens.get = (fun x -> x.picture);
-    GapiLens.set = (fun v x -> { x with picture = v });
-  }
-  
-  let empty = {
-    displayName = "";
-    isAuthenticatedUser = false;
-    kind = "";
-    picture = Picture.empty;
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "displayName" x.displayName;
-      GapiJson.render_bool_value "isAuthenticatedUser" x.isAuthenticatedUser;
-      GapiJson.render_string_value "kind" x.kind;
-      (fun v -> GapiJson.render_object "picture" (Picture.render_content v)) x.picture;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with displayName = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "isAuthenticatedUser"; data_type = GapiJson.Scalar },
-        `Bool v) ->
-      { x with isAuthenticatedUser = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "picture"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        Picture.parse
-        Picture.empty
-        (fun v -> { x with picture = v })
-        cs
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiDriveV2Model.User.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2755,6 +2802,7 @@ struct
     fileSize : int64;
     id : string;
     kind : string;
+    lastModifyingUser : User.t;
     lastModifyingUserName : string;
     md5Checksum : string;
     mimeType : string;
@@ -2792,6 +2840,10 @@ struct
   let kind = {
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let lastModifyingUser = {
+    GapiLens.get = (fun x -> x.lastModifyingUser);
+    GapiLens.set = (fun v x -> { x with lastModifyingUser = v });
   }
   let lastModifyingUserName = {
     GapiLens.get = (fun x -> x.lastModifyingUserName);
@@ -2845,6 +2897,7 @@ struct
     fileSize = 0L;
     id = "";
     kind = "";
+    lastModifyingUser = User.empty;
     lastModifyingUserName = "";
     md5Checksum = "";
     mimeType = "";
@@ -2867,6 +2920,7 @@ struct
       GapiJson.render_int64_value "fileSize" x.fileSize;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
+      (fun v -> GapiJson.render_object "lastModifyingUser" (User.render_content v)) x.lastModifyingUser;
       GapiJson.render_string_value "lastModifyingUserName" x.lastModifyingUserName;
       GapiJson.render_string_value "md5Checksum" x.md5Checksum;
       GapiJson.render_string_value "mimeType" x.mimeType;
@@ -2918,6 +2972,14 @@ struct
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "lastModifyingUser"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        User.parse
+        User.empty
+        (fun v -> { x with lastModifyingUser = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "lastModifyingUserName"; data_type = GapiJson.Scalar },
         `String v) ->
