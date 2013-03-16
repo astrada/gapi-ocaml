@@ -155,62 +155,62 @@ struct
     empty_value : string;
   }
 
-	let original_type = {
-		GapiLens.get = (fun x -> x.original_type);
-		GapiLens.set = (fun v x -> { x with original_type = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let default = {
-		GapiLens.get = (fun x -> x.default);
-		GapiLens.set = (fun v x -> { x with default = v })
-	}
-	let required = {
-		GapiLens.get = (fun x -> x.required);
-		GapiLens.set = (fun v x -> { x with required = v })
-	}
-	let format = {
-		GapiLens.get = (fun x -> x.format);
-		GapiLens.set = (fun v x -> { x with format = v })
-	}
-	let pattern = {
-		GapiLens.get = (fun x -> x.pattern);
-		GapiLens.set = (fun v x -> { x with pattern = v })
-	}
-	let minimum = {
-		GapiLens.get = (fun x -> x.minimum);
-		GapiLens.set = (fun v x -> { x with minimum = v })
-	}
-	let maximum = {
-		GapiLens.get = (fun x -> x.maximum);
-		GapiLens.set = (fun v x -> { x with maximum = v })
-	}
-	let enum = {
-		GapiLens.get = (fun x -> x.enum);
-		GapiLens.set = (fun v x -> { x with enum = v })
-	}
-	let enumDescriptions = {
-		GapiLens.get = (fun x -> x.enumDescriptions);
-		GapiLens.set = (fun v x -> { x with enumDescriptions = v })
-	}
-	let repeated = {
-		GapiLens.get = (fun x -> x.repeated);
-		GapiLens.set = (fun v x -> { x with repeated = v })
-	}
-	let location = {
-		GapiLens.get = (fun x -> x.location);
-		GapiLens.set = (fun v x -> { x with location = v })
-	}
-	let data_type = {
-		GapiLens.get = (fun x -> x.data_type);
-		GapiLens.set = (fun v x -> { x with data_type = v })
-	}
-	let empty_value = {
-		GapiLens.get = (fun x -> x.empty_value);
-		GapiLens.set = (fun v x -> { x with empty_value = v })
-	}
+  let original_type = {
+    GapiLens.get = (fun x -> x.original_type);
+    GapiLens.set = (fun v x -> { x with original_type = v })
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v })
+  }
+  let default = {
+    GapiLens.get = (fun x -> x.default);
+    GapiLens.set = (fun v x -> { x with default = v })
+  }
+  let required = {
+    GapiLens.get = (fun x -> x.required);
+    GapiLens.set = (fun v x -> { x with required = v })
+  }
+  let format = {
+    GapiLens.get = (fun x -> x.format);
+    GapiLens.set = (fun v x -> { x with format = v })
+  }
+  let pattern = {
+    GapiLens.get = (fun x -> x.pattern);
+    GapiLens.set = (fun v x -> { x with pattern = v })
+  }
+  let minimum = {
+    GapiLens.get = (fun x -> x.minimum);
+    GapiLens.set = (fun v x -> { x with minimum = v })
+  }
+  let maximum = {
+    GapiLens.get = (fun x -> x.maximum);
+    GapiLens.set = (fun v x -> { x with maximum = v })
+  }
+  let enum = {
+    GapiLens.get = (fun x -> x.enum);
+    GapiLens.set = (fun v x -> { x with enum = v })
+  }
+  let enumDescriptions = {
+    GapiLens.get = (fun x -> x.enumDescriptions);
+    GapiLens.set = (fun v x -> { x with enumDescriptions = v })
+  }
+  let repeated = {
+    GapiLens.get = (fun x -> x.repeated);
+    GapiLens.set = (fun v x -> { x with repeated = v })
+  }
+  let location = {
+    GapiLens.get = (fun x -> x.location);
+    GapiLens.set = (fun v x -> { x with location = v })
+  }
+  let data_type = {
+    GapiLens.get = (fun x -> x.data_type);
+    GapiLens.set = (fun v x -> { x with data_type = v })
+  }
+  let empty_value = {
+    GapiLens.get = (fun x -> x.empty_value);
+    GapiLens.set = (fun v x -> { x with empty_value = v })
+  }
 
   let get_empty_value = function
       String -> "\"\""
@@ -325,22 +325,22 @@ struct
     description : string;
   }
 
-	let id = {
-		GapiLens.get = (fun x -> x.id);
-		GapiLens.set = (fun v x -> { x with id = v })
-	}
-	let data_type = {
-		GapiLens.get = (fun x -> x.data_type);
-		GapiLens.set = (fun v x -> { x with data_type = v })
-	}
-	let original_type = {
-		GapiLens.get = (fun x -> x.original_type);
-		GapiLens.set = (fun v x -> { x with original_type = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v })
+  }
+  let data_type = {
+    GapiLens.get = (fun x -> x.data_type);
+    GapiLens.set = (fun v x -> { x with data_type = v })
+  }
+  let original_type = {
+    GapiLens.get = (fun x -> x.original_type);
+    GapiLens.set = (fun v x -> { x with original_type = v })
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v })
+  }
 
   let merge xs ys =
     List.fold_left
@@ -611,46 +611,46 @@ struct
     is_option : bool;
   }
 
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let ocaml_type = {
-		GapiLens.get = (fun x -> x.ocaml_type);
-		GapiLens.set = (fun v x -> { x with ocaml_type = v })
-	}
-	let ocaml_type_module = {
-		GapiLens.get = (fun x -> x.ocaml_type_module);
-		GapiLens.set = (fun v x -> { x with ocaml_type_module = v })
-	}
-	let field_type = {
-		GapiLens.get = (fun x -> x.field_type);
-		GapiLens.set = (fun v x -> { x with field_type = v })
-	}
-	let empty_value = {
-		GapiLens.get = (fun x -> x.empty_value);
-		GapiLens.set = (fun v x -> { x with empty_value = v })
-	}
-	let default = {
-		GapiLens.get = (fun x -> x.default);
-		GapiLens.set = (fun v x -> { x with default = v })
-	}
-	let to_string_function = {
-		GapiLens.get = (fun x -> x.to_string_function);
-		GapiLens.set = (fun v x -> { x with to_string_function = v })
-	}
-	let is_recursive = {
-		GapiLens.get = (fun x -> x.is_recursive);
-		GapiLens.set = (fun v x -> { x with is_recursive = v })
-	}
-	let is_option = {
-		GapiLens.get = (fun x -> x.is_option);
-		GapiLens.set = (fun v x -> { x with is_option = v })
-	}
+  let original_name = {
+    GapiLens.get = (fun x -> x.original_name);
+    GapiLens.set = (fun v x -> { x with original_name = v })
+  }
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let ocaml_type = {
+    GapiLens.get = (fun x -> x.ocaml_type);
+    GapiLens.set = (fun v x -> { x with ocaml_type = v })
+  }
+  let ocaml_type_module = {
+    GapiLens.get = (fun x -> x.ocaml_type_module);
+    GapiLens.set = (fun v x -> { x with ocaml_type_module = v })
+  }
+  let field_type = {
+    GapiLens.get = (fun x -> x.field_type);
+    GapiLens.set = (fun v x -> { x with field_type = v })
+  }
+  let empty_value = {
+    GapiLens.get = (fun x -> x.empty_value);
+    GapiLens.set = (fun v x -> { x with empty_value = v })
+  }
+  let default = {
+    GapiLens.get = (fun x -> x.default);
+    GapiLens.set = (fun v x -> { x with default = v })
+  }
+  let to_string_function = {
+    GapiLens.get = (fun x -> x.to_string_function);
+    GapiLens.set = (fun v x -> { x with to_string_function = v })
+  }
+  let is_recursive = {
+    GapiLens.get = (fun x -> x.is_recursive);
+    GapiLens.set = (fun v x -> { x with is_recursive = v })
+  }
+  let is_option = {
+    GapiLens.get = (fun x -> x.is_option);
+    GapiLens.set = (fun v x -> { x with is_option = v })
+  }
 
   let create ?(module_name = "") (original_name, property) =
     let ocaml_name = OCamlName.get_ocaml_name FieldName original_name in
@@ -926,18 +926,18 @@ struct
     values : (string * value) list;
   }
 
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let values = {
-		GapiLens.get = (fun x -> x.values);
-		GapiLens.set = (fun v x -> { x with values = v })
-	}
+  let original_name = {
+    GapiLens.get = (fun x -> x.original_name);
+    GapiLens.set = (fun v x -> { x with original_name = v })
+  }
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let values = {
+    GapiLens.get = (fun x -> x.values);
+    GapiLens.set = (fun v x -> { x with values = v })
+  }
 
   let create original_name enums enum_descriptions =
     let ocaml_name = OCamlName.get_ocaml_name ModuleName original_name in
@@ -974,30 +974,31 @@ struct
     parameters_module_name : string;
   }
 
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let methods = {
-		GapiLens.get = (fun x -> x.methods);
-		GapiLens.set = (fun v x -> { x with methods = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
-	let enums = {
-		GapiLens.get = (fun x -> x.enums);
-		GapiLens.set = (fun v x -> { x with enums = v })
-	}
-	let parameters_module_name = {
-		GapiLens.get = (fun x -> x.parameters_module_name);
-		GapiLens.set = (fun v x -> { x with parameters_module_name = v })
-	}
+  let original_name = {
+    GapiLens.get = (fun x -> x.original_name);
+    GapiLens.set = (fun v x -> { x with original_name = v })
+  }
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let methods = {
+    GapiLens.get = (fun x -> x.methods);
+    GapiLens.set = (fun v x -> { x with methods = v })
+  }
+  let inner_modules = {
+    GapiLens.get = (fun x -> x.inner_modules);
+    GapiLens.set = (fun v x -> { x with inner_modules = v })
+  }
+  let enums = {
+    GapiLens.get = (fun x -> x.enums);
+    GapiLens.set = (fun v x -> { x with enums = v })
+  }
+  let parameters_module_name = {
+    GapiLens.get = (fun x -> x.parameters_module_name);
+    GapiLens.set = (fun v x -> { x with parameters_module_name = v })
+  }
+
   let _method id = GapiLens.for_assoc id
   let inner_module id = GapiLens.for_assoc id
   let enum id = GapiLens.for_assoc id
