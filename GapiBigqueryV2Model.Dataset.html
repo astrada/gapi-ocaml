@@ -86,7 +86,7 @@
 <td align="left" valign="top" >
 <code>access&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">Access.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
-Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READ - Project readers WRITE - Project writers
+Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
 To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
 Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>

@@ -214,7 +214,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;alternateLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;appDataContents&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;createdDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defaultOpenWithLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;downloadUrl&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;editable&nbsp;:&nbsp;bool;<br>
@@ -237,6 +239,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;mimeType&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;modifiedByMeDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;modifiedDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;openWithLinks&nbsp;:&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;originalFilename&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ownerNames&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;owners&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">User</span>.t&nbsp;list;<br>
@@ -254,7 +257,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;writersCanShare&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;alternateLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;appDataContents&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createdDate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;defaultOpenWithLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;downloadUrl&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;editable&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -284,6 +289,8 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mimeType&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;modifiedByMeDate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;modifiedDate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;openWithLinks&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;originalFilename&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ownerNames&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;owners&nbsp;:<br>

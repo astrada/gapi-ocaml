@@ -5,7 +5,7 @@
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiAnalyticsV3Model.GaData.html">
-<link rel="next" href="GapiAnalyticsV3Model.CustomDataSource.html">
+<link rel="next" href="GapiAnalyticsV3Model.Experiment.html">
 <link rel="Up" href="GapiAnalyticsV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -74,7 +74,7 @@
 <body>
 <div class="navbar"><a href="GapiAnalyticsV3Model.GaData.html">Previous</a>
 &nbsp;<a href="GapiAnalyticsV3Model.html">Up</a>
-&nbsp;<a href="GapiAnalyticsV3Model.CustomDataSource.html">Next</a>
+&nbsp;<a href="GapiAnalyticsV3Model.Experiment.html">Next</a>
 </div>
 <center><h1>Module <a href="type_GapiAnalyticsV3Model.Webproperty.html">GapiAnalyticsV3Model.Webproperty</a></h1></center>
 <br>
@@ -112,6 +112,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code>industryVertical&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The industry vertical/category selected for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code>internalWebPropertyId&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Internal ID for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -126,6 +133,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code>level&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Level for this web property. Possible values are STANDARD or PREMIUM.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code>name&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Name of this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -135,6 +149,13 @@
 <td align="left" valign="top" >
 <code>parentLink&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html#TYPEt">ParentLink.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Parent link for this web property. Points to the account to which this web property belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>profileCount&nbsp;: <code class="type">int</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Profile count for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -160,4 +181,4 @@
 }
 
 
-<pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALchildLink"><span class="keyword">val</span> childLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.ChildLink.html#TYPEt">ChildLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreated"><span class="keyword">val</span> created</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALinternalWebPropertyId"><span class="keyword">val</span> internalWebPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwebsiteUrl"><span class="keyword">val</span> websiteUrl</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a></code></pre></body></html>
+<pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALchildLink"><span class="keyword">val</span> childLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.ChildLink.html#TYPEt">ChildLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreated"><span class="keyword">val</span> created</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALindustryVertical"><span class="keyword">val</span> industryVertical</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALinternalWebPropertyId"><span class="keyword">val</span> internalWebPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlevel"><span class="keyword">val</span> level</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprofileCount"><span class="keyword">val</span> profileCount</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwebsiteUrl"><span class="keyword">val</span> websiteUrl</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a></code></pre></body></html>

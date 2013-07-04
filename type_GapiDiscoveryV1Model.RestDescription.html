@@ -159,6 +159,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;labels&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;methods&nbsp;:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestMethod</span>.t)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ownerDomain&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ownerName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;packagePath&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;parameters&nbsp;:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">JsonSchema</span>.t)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;protocol&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resources&nbsp;:&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestResource</span>.t)&nbsp;list;<br>
@@ -200,6 +203,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestMethod</span>.t)&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;name&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ownerDomain&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ownerName&nbsp;:&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;packagePath&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parameters&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">RestDescription</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;*&nbsp;<span class="constructor">GapiDiscoveryV1Model</span>.<span class="constructor">JsonSchema</span>.t)&nbsp;list)<br>

@@ -87,12 +87,13 @@ Retrieves the specified job by ID.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the requested job</div>
 <div class="param_info"><code class="code">jobId</code> : Job ID of the requested job</div>
-<pre><span id="VALgetQueryResults"><span class="keyword">val</span> getQueryResults</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?startIndex:string -><br>       ?timeoutMs:int -><br>       projectId:string -><br>       jobId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">GapiBigqueryV2Model.GetQueryResultsResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALgetQueryResults"><span class="keyword">val</span> getQueryResults</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startIndex:string -><br>       ?timeoutMs:int -><br>       projectId:string -><br>       jobId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">GapiBigqueryV2Model.GetQueryResultsResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Retrieves the results of a query job.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of results to read</div>
+<div class="param_info"><code class="code">pageToken</code> : Page token, returned by a previous call, to request the next page of results</div>
 <div class="param_info"><code class="code">startIndex</code> : Zero-based index of the starting row</div>
 <div class="param_info"><code class="code">timeoutMs</code> : How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the query job</div>
