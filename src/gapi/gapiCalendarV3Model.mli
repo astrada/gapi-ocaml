@@ -344,6 +344,27 @@ end
 
 module Event :
 sig
+  module Source :
+  sig
+    type t = {
+      title : string;
+      (** Title of the source; for example a title of a web page or an email subject. *)
+      url : string;
+      (** URL of the source pointing to a resource. URL's protocol must be HTTP or HTTPS. *)
+      
+    }
+    
+    val title : (t, string) GapiLens.t
+    val url : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Reminders :
   sig
     type t = {
@@ -531,7 +552,7 @@ sig
     originalStartTime : EventDateTime.t;
     (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable. *)
     privateCopy : bool;
-    (** Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. *)
+    (** Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False. *)
     recurrence : string list;
     (** List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event. This field is omitted for single events or instances of recurring events. *)
     recurringEventId : string;
@@ -540,6 +561,8 @@ sig
     (** Information about the event's reminders for the authenticated user. *)
     sequence : int;
     (** Sequence number as per iCalendar. *)
+    source : Source.t;
+    (** Source of an event from which it was created; for example a web page, an email message or any document identifiable by an URL using HTTP/HTTPS protocol. Accessible only by the creator of the event. *)
     start : EventDateTime.t;
     (** The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance. *)
     status : string;
@@ -593,6 +616,7 @@ sig
   val recurringEventId : (t, string) GapiLens.t
   val reminders : (t, Reminders.t) GapiLens.t
   val sequence : (t, int) GapiLens.t
+  val source : (t, Source.t) GapiLens.t
   val start : (t, EventDateTime.t) GapiLens.t
   val status : (t, string) GapiLens.t
   val summary : (t, string) GapiLens.t

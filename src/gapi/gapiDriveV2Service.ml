@@ -15,6 +15,8 @@ struct
   
   let drive_readonly = "https://www.googleapis.com/auth/drive.readonly"
   
+  let drive_scripts = "https://www.googleapis.com/auth/drive.scripts"
+  
   
 end
 
@@ -987,6 +989,7 @@ struct
       (* permissions-specific query parameters *)
       emailMessage : string;
       sendNotificationEmails : bool;
+      transferOwnership : bool;
       
     }
     
@@ -998,6 +1001,7 @@ struct
       key = "";
       emailMessage = "";
       sendNotificationEmails = true;
+      transferOwnership = false;
       
     }
     
@@ -1011,6 +1015,7 @@ struct
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.emailMessage) (fun x -> x) "emailMessage";
       param (fun p -> p.sendNotificationEmails) string_of_bool "sendNotificationEmails";
+      param (fun p -> p.transferOwnership) string_of_bool "transferOwnership";
       
     ] |> List.concat
     
@@ -1018,6 +1023,7 @@ struct
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(emailMessage = default.emailMessage)
         ?(sendNotificationEmails = default.sendNotificationEmails)
+        ?(transferOwnership = default.transferOwnership)
         () =
       let parameters = {
         fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -1027,6 +1033,7 @@ struct
         key = standard_parameters.GapiService.StandardParameters.key;
         emailMessage;
         sendNotificationEmails;
+        transferOwnership;
         
       } in
       if parameters = default then None else Some parameters
@@ -1102,6 +1109,7 @@ struct
   let patch
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?(transferOwnership = false)
         ~fileId
         ~permissionId
         permission
@@ -1110,7 +1118,7 @@ struct
       "permissions"; ((fun x -> x) permissionId)] base_url in
     let etag = GapiUtils.etag_option permission.Permission.etag in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ~transferOwnership () in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -1121,6 +1129,7 @@ struct
   let update
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?(transferOwnership = false)
         ~fileId
         ~permissionId
         permission
@@ -1129,13 +1138,176 @@ struct
       "permissions"; ((fun x -> x) permissionId)] base_url in
     let etag = GapiUtils.etag_option permission.Permission.etag in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ~transferOwnership () in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Permission.to_data_model)
       ~data:permission full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
+    
+  
+end
+
+module PropertiesResource =
+struct
+  module PropertiesParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* properties-specific query parameters *)
+      visibility : string;
+      
+    }
+    
+    let default = {
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      visibility = "private";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.visibility) (fun x -> x) "visibility";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(visibility = default.visibility)
+        () =
+      let parameters = {
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        visibility;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
+  let delete
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?(visibility = "private")
+        ~fileId
+        ~propertyKey
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "properties"; ((fun x -> x) propertyKey)] base_url in
+    let params = PropertiesParameters.merge_parameters
+      ?standard_parameters:std_params ~visibility () in
+    let query_parameters = Option.map PropertiesParameters.to_key_value_list
+      params in
+    GapiService.delete ?query_parameters full_url
+      GapiRequest.parse_empty_response session 
+    
+  let get
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
+        ?std_params
+        ?(visibility = "private")
+        ~fileId
+        ~propertyKey
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "properties"; ((fun x -> x) propertyKey)] base_url in
+    let params = PropertiesParameters.merge_parameters
+      ?standard_parameters:std_params ~visibility () in
+    let query_parameters = Option.map PropertiesParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters ?etag full_url
+      (GapiJson.parse_json_response Property.of_data_model) session 
+    
+  let insert
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ~fileId
+        property
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "properties"] base_url in
+    let etag = GapiUtils.etag_option property.Property.etag in
+    let params = PropertiesParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map PropertiesParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters ?etag
+      ~data_to_post:(GapiJson.render_json Property.to_data_model)
+      ~data:property full_url
+      (GapiJson.parse_json_response Property.of_data_model) session 
+    
+  let list
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ~fileId
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "properties"] base_url in
+    let params = PropertiesParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map PropertiesParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters full_url
+      (GapiJson.parse_json_response PropertyList.of_data_model) session 
+    
+  let patch
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?(visibility = "private")
+        ~fileId
+        ~propertyKey
+        property
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "properties"; ((fun x -> x) propertyKey)] base_url in
+    let etag = GapiUtils.etag_option property.Property.etag in
+    let params = PropertiesParameters.merge_parameters
+      ?standard_parameters:std_params ~visibility () in
+    let query_parameters = Option.map PropertiesParameters.to_key_value_list
+      params in
+    GapiService.patch ?query_parameters ?etag
+      ~data_to_post:(GapiJson.render_json Property.to_data_model)
+      ~data:property full_url
+      (GapiJson.parse_json_response Property.of_data_model) session 
+    
+  let update
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?(visibility = "private")
+        ~fileId
+        ~propertyKey
+        property
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "properties"; ((fun x -> x) propertyKey)] base_url in
+    let etag = GapiUtils.etag_option property.Property.etag in
+    let params = PropertiesParameters.merge_parameters
+      ?standard_parameters:std_params ~visibility () in
+    let query_parameters = Option.map PropertiesParameters.to_key_value_list
+      params in
+    GapiService.put ?query_parameters ?etag
+      ~data_to_post:(GapiJson.render_json Property.to_data_model)
+      ~data:property full_url
+      (GapiJson.parse_json_response Property.of_data_model) session 
     
   
 end

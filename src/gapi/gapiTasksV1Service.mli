@@ -5,7 +5,7 @@
   Lets you manage your tasks and task lists..
   
   For more information about this service, see the
-  {{:http://code.google.com/apis/tasks/v1/using.html}API Documentation}.
+  {{:https://developers.google.com/google-apps/tasks/firstapp}API Documentation}.
   *)
 
 module Scope :

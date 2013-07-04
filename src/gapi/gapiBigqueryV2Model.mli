@@ -69,13 +69,13 @@ module ErrorProto :
 sig
   type t = {
     debugInfo : string;
-    (** Debugging information for the service, if present. Should be ignored. *)
+    (** Debugging information. This property is internal to Google and should not be used. *)
     location : string;
     (** Specifies where the error occurred, if present. *)
     message : string;
-    (** A human readable explanation of the error. *)
+    (** A human-readable description of the error. *)
     reason : string;
-    (** Specifies the error reason. For example, reason will be "required" or "invalid" if some field was missing or malformed. *)
+    (** A short error code that summarizes the error. *)
     
   }
   
@@ -236,11 +236,17 @@ end
 module JobStatistics2 :
 sig
   type t = {
+    cacheHit : bool;
+    (** [Output-only] Whether the query result was fetched from the query cache. *)
+    completionRatio : float;
+    (** [Output-Only] Approximate fraction of data processed for this query. This will be 1.0 unless min_completion_ratio for the query was set to something other than 1.0. *)
     totalBytesProcessed : int64;
     (** [Output-only] Total bytes processed for this job. *)
     
   }
   
+  val cacheHit : (t, bool) GapiLens.t
+  val completionRatio : (t, float) GapiLens.t
   val totalBytesProcessed : (t, int64) GapiLens.t
   
   val empty : t
@@ -289,25 +295,109 @@ sig
   
 end
 
-module JobConfigurationProperties : module type of GapiJson.StringDictionary
-
-module JobConfigurationTableCopy :
+module TableFieldSchema :
 sig
   type t = {
-    createDisposition : string;
-    (** [Optional] Whether or not to create a new table, if none exists. *)
-    destinationTable : TableReference.t;
-    (** [Required] The destination table *)
-    sourceTable : TableReference.t;
-    (** [Required] Source table to copy. *)
-    writeDisposition : string;
-    (** [Optional] Whether or not to append or require the table to be empty. *)
+    fields : t list;
+    (** [Optional] Describes the nested schema fields if the type property is set to RECORD. *)
+    mode : string;
+    (** [Optional] The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The default value is NULLABLE. *)
+    name : string;
+    (** [Required] The field name. *)
+    _type : string;
+    (** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema). *)
     
   }
   
+  val fields : (t, t list) GapiLens.t
+  val mode : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module TableSchema :
+sig
+  type t = {
+    fields : TableFieldSchema.t list;
+    (** Describes the fields in a table. *)
+    
+  }
+  
+  val fields : (t, TableFieldSchema.t list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module JobConfigurationLoad :
+sig
+  type t = {
+    allowJaggedRows : bool;
+    (** [Optional] Accept rows that are missing trailing optional columns. The missing values are treated as nulls. Default is false which treats short rows as errors. Only applicable to CSV, ignored for other formats. *)
+    allowQuotedNewlines : bool;
+    (** Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. *)
+    createDisposition : string;
+    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    destinationTable : TableReference.t;
+    (** [Required] The destination table to load the data into. *)
+    encoding : string;
+    (** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
+    fieldDelimiter : string;
+    (** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
+    maxBadRecords : int;
+    (** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid. *)
+    quote : string;
+    (** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
+    schema : TableSchema.t;
+    (** [Optional] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data. *)
+    schemaInline : string;
+    (** [Deprecated] The inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT". *)
+    schemaInlineFormat : string;
+    (** [Deprecated] The format of the schemaInline property. *)
+    skipLeadingRows : int;
+    (** [Optional] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
+    sourceFormat : string;
+    (** [Optional] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV. *)
+    sourceUris : string list;
+    (** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. *)
+    writeDisposition : string;
+    (** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    
+  }
+  
+  val allowJaggedRows : (t, bool) GapiLens.t
+  val allowQuotedNewlines : (t, bool) GapiLens.t
   val createDisposition : (t, string) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
-  val sourceTable : (t, TableReference.t) GapiLens.t
+  val encoding : (t, string) GapiLens.t
+  val fieldDelimiter : (t, string) GapiLens.t
+  val maxBadRecords : (t, int) GapiLens.t
+  val quote : (t, string) GapiLens.t
+  val schema : (t, TableSchema.t) GapiLens.t
+  val schemaInline : (t, string) GapiLens.t
+  val schemaInlineFormat : (t, string) GapiLens.t
+  val skipLeadingRows : (t, int) GapiLens.t
+  val sourceFormat : (t, string) GapiLens.t
+  val sourceUris : (t, string list) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
   val empty : t
@@ -356,106 +446,23 @@ sig
   
 end
 
-module TableFieldSchema :
+module JobConfigurationTableCopy :
 sig
   type t = {
-    fields : t list;
-    (** [Optional] Describes the nested schema fields if the type property is set to RECORD. *)
-    mode : string;
-    (** [Optional] The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The default value is NULLABLE. *)
-    name : string;
-    (** [Required] The field name. *)
-    _type : string;
-    (** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates a nested schema). *)
-    
-  }
-  
-  val fields : (t, t list) GapiLens.t
-  val mode : (t, string) GapiLens.t
-  val name : (t, string) GapiLens.t
-  val _type : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module TableSchema :
-sig
-  type t = {
-    fields : TableFieldSchema.t list;
-    (** Describes the fields in a table. *)
-    
-  }
-  
-  val fields : (t, TableFieldSchema.t list) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module JobConfigurationLoad :
-sig
-  type t = {
-    allowQuotedNewlines : bool;
-    (** Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. *)
     createDisposition : string;
-    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** [Optional] Whether or not to create a new table, if none exists. *)
     destinationTable : TableReference.t;
-    (** [Required] The destination table to load the data into. *)
-    encoding : string;
-    (** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
-    fieldDelimiter : string;
-    (** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
-    maxBadRecords : int;
-    (** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid. *)
-    quote : string;
-    (** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
-    schema : TableSchema.t;
-    (** [Optional] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data. *)
-    schemaInline : string;
-    (** [Deprecated] The inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT". *)
-    schemaInlineFormat : string;
-    (** [Deprecated] The format of the schemaInline property. *)
-    skipLeadingRows : int;
-    (** [Optional] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
-    sourceFormat : string;
-    (** [Optional] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV. *)
-    sourceUris : string list;
-    (** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. *)
+    (** [Required] The destination table *)
+    sourceTable : TableReference.t;
+    (** [Required] Source table to copy. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** [Optional] Whether or not to append or require the table to be empty. *)
     
   }
   
-  val allowQuotedNewlines : (t, bool) GapiLens.t
   val createDisposition : (t, string) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
-  val encoding : (t, string) GapiLens.t
-  val fieldDelimiter : (t, string) GapiLens.t
-  val maxBadRecords : (t, int) GapiLens.t
-  val quote : (t, string) GapiLens.t
-  val schema : (t, TableSchema.t) GapiLens.t
-  val schemaInline : (t, string) GapiLens.t
-  val schemaInlineFormat : (t, string) GapiLens.t
-  val skipLeadingRows : (t, int) GapiLens.t
-  val sourceFormat : (t, string) GapiLens.t
-  val sourceUris : (t, string list) GapiLens.t
+  val sourceTable : (t, TableReference.t) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
   val empty : t
@@ -506,12 +513,16 @@ sig
     (** [Optional] Specifies the default dataset to assume for unqualified table names in the query. *)
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
+    minCompletionRatio : float;
+    (** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. *)
     preserveNulls : bool;
     (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
     priority : string;
     (** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH. *)
     query : string;
     (** [Required] BigQuery SQL query to execute. *)
+    useQueryCache : bool;
+    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. *)
     writeDisposition : string;
     (** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY. *)
     
@@ -521,9 +532,11 @@ sig
   val createDisposition : (t, string) GapiLens.t
   val defaultDataset : (t, DatasetReference.t) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
+  val minCompletionRatio : (t, float) GapiLens.t
   val preserveNulls : (t, bool) GapiLens.t
   val priority : (t, string) GapiLens.t
   val query : (t, string) GapiLens.t
+  val useQueryCache : (t, bool) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
   val empty : t
@@ -543,24 +556,24 @@ sig
   type t = {
     copy : JobConfigurationTableCopy.t;
     (** [Pick one] Copies a table. *)
+    dryRun : bool;
+    (** [Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run. Behavior of non-query jobs is undefined. *)
     extract : JobConfigurationExtract.t;
     (** [Pick one] Configures an extract job. *)
     link : JobConfigurationLink.t;
     (** [Pick one] Configures a link job. *)
     load : JobConfigurationLoad.t;
     (** [Pick one] Configures a load job. *)
-    properties : JobConfigurationProperties.t;
-    (** [Optional] Properties providing extra details about how the job should be run. Not used for most jobs. *)
     query : JobConfigurationQuery.t;
     (** [Pick one] Configures a query job. *)
     
   }
   
   val copy : (t, JobConfigurationTableCopy.t) GapiLens.t
+  val dryRun : (t, bool) GapiLens.t
   val extract : (t, JobConfigurationExtract.t) GapiLens.t
   val link : (t, JobConfigurationLink.t) GapiLens.t
   val load : (t, JobConfigurationLoad.t) GapiLens.t
-  val properties : (t, JobConfigurationProperties.t) GapiLens.t
   val query : (t, JobConfigurationQuery.t) GapiLens.t
   
   val empty : t
@@ -676,6 +689,8 @@ sig
       (** An opaque ID of this project. *)
       kind : string;
       (** The resource type. *)
+      numericId : string;
+      (** The numeric ID of this project. *)
       projectReference : ProjectReference.t;
       (** A unique reference to this project. *)
       
@@ -684,6 +699,7 @@ sig
     val friendlyName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
     val kind : (t, string) GapiLens.t
+    val numericId : (t, string) GapiLens.t
     val projectReference : (t, ProjectReference.t) GapiLens.t
     
     val empty : t
@@ -863,13 +879,13 @@ sig
   sig
     type t = {
       datasetReference : DatasetReference.t;
-      (** Reference identifying dataset. *)
+      (** The dataset reference. Use this property to access specific parts of the dataset's ID, such as project ID or dataset ID. *)
       friendlyName : string;
-      (** A descriptive name for this dataset, if one exists. *)
+      (** A descriptive name for the dataset, if one exists. *)
       id : string;
-      (** The fully-qualified unique name of this dataset in the format projectId:datasetId. *)
+      (** The fully-qualified, unique, opaque ID of the dataset. *)
       kind : string;
-      (** The resource type. *)
+      (** The resource type. This property always returns the value "bigquery#dataset". *)
       
     }
     
@@ -888,13 +904,13 @@ sig
   
   type t = {
     datasets : Datasets.t list;
-    (** An array of one or more summarized dataset resources. Absent when there are no datasets in the specified project. *)
+    (** An array of the dataset resources in the project. Each resource contains basic information. For full information about a particular dataset resource, use the Datasets: get method. This property is omitted when there are no datasets in the project. *)
     etag : string;
-    (** A hash of this page of results. See Paging Through Results in the developer's guide. *)
+    (** A hash value of the results page. You can use this property to determine if the page has changed since the last request. *)
     kind : string;
-    (** The type of list. *)
+    (** The list type. This property always returns the value "bigquery#datasetList". *)
     nextPageToken : string;
-    (** A token to request the next page of results. Present only when there is more than one page of results.* See Paging Through Results in the developer's guide. *)
+    (** A token that can be used to request the next results page. This property is omitted on the final results page. *)
     
   }
   
@@ -918,6 +934,8 @@ end
 module GetQueryResultsResponse :
 sig
   type t = {
+    cacheHit : bool;
+    (** Whether the query result was fetched from the query cache. *)
     etag : string;
     (** A hash of this response. *)
     jobComplete : bool;
@@ -926,6 +944,8 @@ sig
     (** Reference to the BigQuery Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults). *)
     kind : string;
     (** The resource type of the response. *)
+    pageToken : string;
+    (** A token used for paging results. *)
     rows : TableRow.t list;
     (** An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. Present only when the query completes successfully. *)
     schema : TableSchema.t;
@@ -935,10 +955,12 @@ sig
     
   }
   
+  val cacheHit : (t, bool) GapiLens.t
   val etag : (t, string) GapiLens.t
   val jobComplete : (t, bool) GapiLens.t
   val jobReference : (t, JobReference.t) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val pageToken : (t, string) GapiLens.t
   val rows : (t, TableRow.t list) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
   val totalRows : (t, string) GapiLens.t
@@ -966,12 +988,16 @@ sig
     (** The resource type of the request. *)
     maxResults : int;
     (** [Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size. *)
+    minCompletionRatio : float;
+    (** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. *)
     preserveNulls : bool;
     (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
     query : string;
     (** [Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId. *)
     timeoutMs : int;
     (** [Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error. *)
+    useQueryCache : bool;
+    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. *)
     
   }
   
@@ -979,9 +1005,11 @@ sig
   val dryRun : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val maxResults : (t, int) GapiLens.t
+  val minCompletionRatio : (t, float) GapiLens.t
   val preserveNulls : (t, bool) GapiLens.t
   val query : (t, string) GapiLens.t
   val timeoutMs : (t, int) GapiLens.t
+  val useQueryCache : (t, bool) GapiLens.t
   
   val empty : t
   
@@ -1066,7 +1094,7 @@ sig
       groupByEmail : string;
       (** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups. *)
       role : string;
-      (** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READ - User can call any list() or get() method on any collection or resource. WRITE - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. *)
+      (** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. *)
       specialGroup : string;
       (** [Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. *)
       userByEmail : string;
@@ -1091,7 +1119,7 @@ sig
   type t = {
     access : Access.t list;
     (** [Optional] Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
-Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READ - Project readers WRITE - Project writers
+Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
 To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
 Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers. *)
@@ -1142,26 +1170,35 @@ end
 module QueryResponse :
 sig
   type t = {
+    cacheHit : bool;
+    (** Whether the query result was fetched from the query cache. *)
     jobComplete : bool;
     (** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. *)
     jobReference : JobReference.t;
     (** Reference to the Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults). *)
     kind : string;
     (** The resource type. *)
+    pageToken : string;
+    (** A token used for paging results. *)
     rows : TableRow.t list;
     (** An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. *)
     schema : TableSchema.t;
     (** The schema of the results. Present only when the query completes successfully. *)
+    totalBytesProcessed : int64;
+    (** The total number of bytes processed for this query. If this query was a dry run, this is the number of bytes that would be processed if the query were run. *)
     totalRows : string;
     (** The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. *)
     
   }
   
+  val cacheHit : (t, bool) GapiLens.t
   val jobComplete : (t, bool) GapiLens.t
   val jobReference : (t, JobReference.t) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val pageToken : (t, string) GapiLens.t
   val rows : (t, TableRow.t list) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
+  val totalBytesProcessed : (t, int64) GapiLens.t
   val totalRows : (t, string) GapiLens.t
   
   val empty : t

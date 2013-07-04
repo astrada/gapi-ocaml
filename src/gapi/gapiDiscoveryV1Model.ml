@@ -1157,6 +1157,9 @@ struct
     labels : string list;
     methods : (string * RestMethod.t) list;
     name : string;
+    ownerDomain : string;
+    ownerName : string;
+    packagePath : string;
     parameters : (string * JsonSchema.t) list;
     protocol : string;
     resources : (string * RestResource.t) list;
@@ -1233,6 +1236,18 @@ struct
     GapiLens.get = (fun x -> x.name);
     GapiLens.set = (fun v x -> { x with name = v });
   }
+  let ownerDomain = {
+    GapiLens.get = (fun x -> x.ownerDomain);
+    GapiLens.set = (fun v x -> { x with ownerDomain = v });
+  }
+  let ownerName = {
+    GapiLens.get = (fun x -> x.ownerName);
+    GapiLens.set = (fun v x -> { x with ownerName = v });
+  }
+  let packagePath = {
+    GapiLens.get = (fun x -> x.packagePath);
+    GapiLens.set = (fun v x -> { x with packagePath = v });
+  }
   let parameters = {
     GapiLens.get = (fun x -> x.parameters);
     GapiLens.set = (fun v x -> { x with parameters = v });
@@ -1287,6 +1302,9 @@ struct
     labels = [];
     methods = [];
     name = "";
+    ownerDomain = "";
+    ownerName = "";
+    packagePath = "";
     parameters = [];
     protocol = "";
     resources = [];
@@ -1317,6 +1335,9 @@ struct
       GapiJson.render_array "labels" (GapiJson.render_string_value "") x.labels;
       GapiJson.render_collection "methods" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestMethod.render_content v)) v) x.methods;
       GapiJson.render_string_value "name" x.name;
+      GapiJson.render_string_value "ownerDomain" x.ownerDomain;
+      GapiJson.render_string_value "ownerName" x.ownerName;
+      GapiJson.render_string_value "packagePath" x.packagePath;
       GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (JsonSchema.render_content v)) v) x.parameters;
       GapiJson.render_string_value "protocol" x.protocol;
       GapiJson.render_collection "resources" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (RestResource.render_content v)) v) x.resources;
@@ -1438,6 +1459,18 @@ struct
         ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with name = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "ownerDomain"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with ownerDomain = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "ownerName"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with ownerName = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "packagePath"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with packagePath = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
         cs) ->

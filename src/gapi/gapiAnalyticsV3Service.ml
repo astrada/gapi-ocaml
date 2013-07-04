@@ -609,6 +609,193 @@ struct
     
   end
   
+  module Experiments =
+  struct
+    module ExperimentsParameters =
+    struct
+      type t = {
+        (* Standard query parameters *)
+        fields : string;
+        prettyPrint : bool;
+        quotaUser : string;
+        userIp : string;
+        key : string;
+        (* experiments-specific query parameters *)
+        max_results : int;
+        start_index : int;
+        
+      }
+      
+      let default = {
+        fields = "";
+        prettyPrint = true;
+        quotaUser = "";
+        userIp = "";
+        key = "";
+        max_results = 0;
+        start_index = 0;
+        
+      }
+      
+      let to_key_value_list qp =
+        let param get_value to_string name =
+          GapiService.build_param default qp get_value to_string name in [
+        param (fun p -> p.fields) (fun x -> x) "fields";
+        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+        param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+        param (fun p -> p.userIp) (fun x -> x) "userIp";
+        param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.max_results) string_of_int "max-results";
+        param (fun p -> p.start_index) string_of_int "start-index";
+        
+      ] |> List.concat
+      
+      let merge_parameters
+          ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(max_results = default.max_results)
+          ?(start_index = default.start_index)
+          () =
+        let parameters = {
+          fields = standard_parameters.GapiService.StandardParameters.fields;
+          prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+          quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+          userIp = standard_parameters.GapiService.StandardParameters.userIp;
+          key = standard_parameters.GapiService.StandardParameters.key;
+          max_results;
+          start_index;
+          
+        } in
+        if parameters = default then None else Some parameters
+      
+    end
+    
+    let delete
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          ~experimentId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "experiments"; ((fun x -> x) experimentId)] base_url in
+      let params = ExperimentsParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        ExperimentsParameters.to_key_value_list params in
+      GapiService.delete ?query_parameters full_url
+        GapiRequest.parse_empty_response session 
+      
+    let get
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?etag
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          ~experimentId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "experiments"; ((fun x -> x) experimentId)] base_url in
+      let params = ExperimentsParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        ExperimentsParameters.to_key_value_list params in
+      GapiService.get ?query_parameters ?etag full_url
+        (GapiJson.parse_json_response Experiment.of_data_model) session 
+      
+    let insert
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          experiment
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "experiments"] base_url in
+      let params = ExperimentsParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        ExperimentsParameters.to_key_value_list params in
+      GapiService.post ?query_parameters
+        ~data_to_post:(GapiJson.render_json Experiment.to_data_model)
+        ~data:experiment full_url
+        (GapiJson.parse_json_response Experiment.of_data_model) session 
+      
+    let list
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ?max_results
+          ?start_index
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "experiments"] base_url in
+      let params = ExperimentsParameters.merge_parameters
+        ?standard_parameters:std_params ?max_results ?start_index () in
+      let query_parameters = Option.map
+        ExperimentsParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response Experiments.of_data_model) session 
+      
+    let patch
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          ~experimentId
+          experiment
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "experiments"; ((fun x -> x) experimentId)] base_url in
+      let params = ExperimentsParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        ExperimentsParameters.to_key_value_list params in
+      GapiService.patch ?query_parameters
+        ~data_to_post:(GapiJson.render_json Experiment.to_data_model)
+        ~data:experiment full_url
+        (GapiJson.parse_json_response Experiment.of_data_model) session 
+      
+    let update
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          ~experimentId
+          experiment
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "experiments"; ((fun x -> x) experimentId)] base_url in
+      let params = ExperimentsParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        ExperimentsParameters.to_key_value_list params in
+      GapiService.put ?query_parameters
+        ~data_to_post:(GapiJson.render_json Experiment.to_data_model)
+        ~data:experiment full_url
+        (GapiJson.parse_json_response Experiment.of_data_model) session 
+      
+    
+  end
+  
   module Goals =
   struct
     module GoalsParameters =

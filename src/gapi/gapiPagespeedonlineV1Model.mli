@@ -29,6 +29,33 @@ sig
     
   end
   
+  module Screenshot :
+  sig
+    type t = {
+      data : string;
+      (** Image data base64 encoded. *)
+      height : int;
+      (** Height of screenshot in pixels. *)
+      mime_type : string;
+      (** Mime type of image data. E.g. "image/jpeg". *)
+      width : int;
+      (** Width of screenshot in pixels. *)
+      
+    }
+    
+    val data : (t, string) GapiLens.t
+    val height : (t, int) GapiLens.t
+    val mime_type : (t, string) GapiLens.t
+    val width : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module PageStats :
   sig
     type t = {
@@ -314,6 +341,8 @@ sig
     (** Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error. *)
     score : int;
     (** The Page Speed Score (0-100), which indicates how much faster a page could be. A high score indicates little room for improvement, while a lower score indicates more room for improvement. *)
+    screenshot : Screenshot.t;
+    (** Base64 encoded screenshot of the page that was analyzed. *)
     title : string;
     (** Title of the page, as displayed in the browser's title bar. *)
     version : Version.t;
@@ -328,6 +357,7 @@ sig
   val pageStats : (t, PageStats.t) GapiLens.t
   val responseCode : (t, int) GapiLens.t
   val score : (t, int) GapiLens.t
+  val screenshot : (t, Screenshot.t) GapiLens.t
   val title : (t, string) GapiLens.t
   val version : (t, Version.t) GapiLens.t
   

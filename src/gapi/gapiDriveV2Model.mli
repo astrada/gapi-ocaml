@@ -6,6 +6,43 @@
   {{:https://developers.google.com/drive/}API Documentation}.
   *)
 
+module Property :
+sig
+  type t = {
+    etag : string;
+    (** ETag of the property. *)
+    key : string;
+    (** The key of this property. *)
+    kind : string;
+    (** This is always drive#property. *)
+    selfLink : string;
+    (** The link back to this property. *)
+    value : string;
+    (** The value of this property. *)
+    visibility : string;
+    (** The visibility of this property. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val key : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
+  val visibility : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Permission :
 sig
   type t = {
@@ -330,8 +367,12 @@ sig
   type t = {
     alternateLink : string;
     (** A link for opening the file in using a relevant Google editor or viewer. *)
+    appDataContents : bool;
+    (** Whether this file is in the appdata folder. *)
     createdDate : GapiDate.t;
     (** Create time for this file (formatted ISO8601 timestamp). *)
+    defaultOpenWithLink : string;
+    (** A link to open this file with the user's default app for this file. Only populated when the drive.apps.readonly scope is used. *)
     description : string;
     (** A short description of the file. *)
     downloadUrl : string;
@@ -376,6 +417,8 @@ sig
     (** Last time this file was modified by the user (formatted RFC 3339 timestamp). Note that setting modifiedDate will also update the modifiedByMe date for the user which set the date. *)
     modifiedDate : GapiDate.t;
     (** Last time this file was modified by anyone (formatted RFC 3339 timestamp). This is only mutable on update when the setModifiedDate parameter is set. *)
+    openWithLinks : (string * string) list;
+    (** A map of the id of each of the user's apps to a link to open this file with that app. Only populated when the drive.apps.readonly scope is used. *)
     originalFilename : string;
     (** The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This will only be populated on files with content stored in Drive. *)
     ownerNames : string list;
@@ -411,7 +454,9 @@ Setting this field will put the file in all of the provided folders. On insert, 
   }
   
   val alternateLink : (t, string) GapiLens.t
+  val appDataContents : (t, bool) GapiLens.t
   val createdDate : (t, GapiDate.t) GapiLens.t
+  val defaultOpenWithLink : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
   val downloadUrl : (t, string) GapiLens.t
   val editable : (t, bool) GapiLens.t
@@ -434,6 +479,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val mimeType : (t, string) GapiLens.t
   val modifiedByMeDate : (t, GapiDate.t) GapiLens.t
   val modifiedDate : (t, GapiDate.t) GapiLens.t
+  val openWithLinks : (t, (string * string) list) GapiLens.t
   val originalFilename : (t, string) GapiLens.t
   val ownerNames : (t, string list) GapiLens.t
   val owners : (t, User.t list) GapiLens.t
@@ -877,14 +923,20 @@ sig
     (** List of comments. *)
     kind : string;
     (** This is always drive#commentList. *)
+    nextLink : string;
+    (** A link to the next page of comments. *)
     nextPageToken : string;
     (** The token to use to request the next page of results. *)
+    selfLink : string;
+    (** A link back to this list. *)
     
   }
   
   val items : (t, Comment.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1042,24 +1094,34 @@ sig
     (** Whether the app is installed. *)
     kind : string;
     (** This is always drive#app. *)
+    longDescription : string;
+    (** A long description of the app. *)
     name : string;
     (** The name of the app. *)
     objectType : string;
     (** The type of object this app creates (e.g. Chart). If empty, the app name should be used instead. *)
+    openUrlTemplate : string;
+    (** The template url for opening files with this app. The template will contain {ids} and/or {exportIds} to be replaced by the actual file ids. *)
     primaryFileExtensions : string list;
     (** The list of primary file extensions. *)
     primaryMimeTypes : string list;
     (** The list of primary mime types. *)
+    productId : string;
+    (** The ID of the product listing for this app. *)
     productUrl : string;
-    (** The product URL. *)
+    (** A link to the product listing for this app. *)
     secondaryFileExtensions : string list;
     (** The list of secondary file extensions. *)
     secondaryMimeTypes : string list;
     (** The list of secondary mime types. *)
+    shortDescription : string;
+    (** A short description of the app. *)
     supportsCreate : bool;
     (** Whether this app supports creating new objects. *)
     supportsImport : bool;
     (** Whether this app supports importing Google Docs. *)
+    supportsMultiOpen : bool;
+    (** Whether this app supports opening more than one file. *)
     useByDefault : bool;
     (** Whether the app is selected as the default handler for the types it supports. *)
     
@@ -1070,16 +1132,52 @@ sig
   val id : (t, string) GapiLens.t
   val installed : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val longDescription : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val objectType : (t, string) GapiLens.t
+  val openUrlTemplate : (t, string) GapiLens.t
   val primaryFileExtensions : (t, string list) GapiLens.t
   val primaryMimeTypes : (t, string list) GapiLens.t
+  val productId : (t, string) GapiLens.t
   val productUrl : (t, string) GapiLens.t
   val secondaryFileExtensions : (t, string list) GapiLens.t
   val secondaryMimeTypes : (t, string list) GapiLens.t
+  val shortDescription : (t, string) GapiLens.t
   val supportsCreate : (t, bool) GapiLens.t
   val supportsImport : (t, bool) GapiLens.t
+  val supportsMultiOpen : (t, bool) GapiLens.t
   val useByDefault : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module PropertyList :
+sig
+  type t = {
+    etag : string;
+    (** The ETag of the list. *)
+    items : Property.t list;
+    (** The list of properties. *)
+    kind : string;
+    (** This is always drive#propertyList. *)
+    selfLink : string;
+    (** The link back to this list. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, Property.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1276,14 +1374,20 @@ sig
     (** List of reply. *)
     kind : string;
     (** This is always drive#commentReplyList. *)
+    nextLink : string;
+    (** A link to the next page of replies. *)
     nextPageToken : string;
     (** The token to use to request the next page of results. *)
+    selfLink : string;
+    (** A link back to this list. *)
     
   }
   
   val items : (t, CommentReply.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
   
   val empty : t
   

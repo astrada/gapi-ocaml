@@ -1602,10 +1602,13 @@ struct
     childLink : ChildLink.t;
     created : GapiDate.t;
     id : string;
+    industryVertical : string;
     internalWebPropertyId : string;
     kind : string;
+    level : string;
     name : string;
     parentLink : ParentLink.t;
+    profileCount : int;
     selfLink : string;
     updated : GapiDate.t;
     websiteUrl : string;
@@ -1628,6 +1631,10 @@ struct
     GapiLens.get = (fun x -> x.id);
     GapiLens.set = (fun v x -> { x with id = v });
   }
+  let industryVertical = {
+    GapiLens.get = (fun x -> x.industryVertical);
+    GapiLens.set = (fun v x -> { x with industryVertical = v });
+  }
   let internalWebPropertyId = {
     GapiLens.get = (fun x -> x.internalWebPropertyId);
     GapiLens.set = (fun v x -> { x with internalWebPropertyId = v });
@@ -1636,6 +1643,10 @@ struct
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
   }
+  let level = {
+    GapiLens.get = (fun x -> x.level);
+    GapiLens.set = (fun v x -> { x with level = v });
+  }
   let name = {
     GapiLens.get = (fun x -> x.name);
     GapiLens.set = (fun v x -> { x with name = v });
@@ -1643,6 +1654,10 @@ struct
   let parentLink = {
     GapiLens.get = (fun x -> x.parentLink);
     GapiLens.set = (fun v x -> { x with parentLink = v });
+  }
+  let profileCount = {
+    GapiLens.get = (fun x -> x.profileCount);
+    GapiLens.set = (fun v x -> { x with profileCount = v });
   }
   let selfLink = {
     GapiLens.get = (fun x -> x.selfLink);
@@ -1662,10 +1677,13 @@ struct
     childLink = ChildLink.empty;
     created = GapiDate.epoch;
     id = "";
+    industryVertical = "";
     internalWebPropertyId = "";
     kind = "";
+    level = "";
     name = "";
     parentLink = ParentLink.empty;
+    profileCount = 0;
     selfLink = "";
     updated = GapiDate.epoch;
     websiteUrl = "";
@@ -1678,10 +1696,13 @@ struct
       (fun v -> GapiJson.render_object "childLink" (ChildLink.render_content v)) x.childLink;
       GapiJson.render_date_value "created" x.created;
       GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "industryVertical" x.industryVertical;
       GapiJson.render_string_value "internalWebPropertyId" x.internalWebPropertyId;
       GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "level" x.level;
       GapiJson.render_string_value "name" x.name;
       (fun v -> GapiJson.render_object "parentLink" (ParentLink.render_content v)) x.parentLink;
+      GapiJson.render_int_value "profileCount" x.profileCount;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_date_value "updated" x.updated;
       GapiJson.render_string_value "websiteUrl" x.websiteUrl;
@@ -1712,6 +1733,10 @@ struct
         `String v) ->
       { x with id = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "industryVertical"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with industryVertical = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "internalWebPropertyId"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with internalWebPropertyId = v }
@@ -1719,6 +1744,10 @@ struct
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "level"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with level = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1731,6 +1760,10 @@ struct
         ParentLink.empty
         (fun v -> { x with parentLink = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "profileCount"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with profileCount = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1749,6 +1782,632 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiAnalyticsV3Model.Webproperty.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module Experiment =
+struct
+  module Variations =
+  struct
+    type t = {
+      name : string;
+      status : string;
+      url : string;
+      weight : float;
+      won : bool;
+      
+    }
+    
+    let name = {
+      GapiLens.get = (fun x -> x.name);
+      GapiLens.set = (fun v x -> { x with name = v });
+    }
+    let status = {
+      GapiLens.get = (fun x -> x.status);
+      GapiLens.set = (fun v x -> { x with status = v });
+    }
+    let url = {
+      GapiLens.get = (fun x -> x.url);
+      GapiLens.set = (fun v x -> { x with url = v });
+    }
+    let weight = {
+      GapiLens.get = (fun x -> x.weight);
+      GapiLens.set = (fun v x -> { x with weight = v });
+    }
+    let won = {
+      GapiLens.get = (fun x -> x.won);
+      GapiLens.set = (fun v x -> { x with won = v });
+    }
+    
+    let empty = {
+      name = "";
+      status = "";
+      url = "";
+      weight = 0.0;
+      won = false;
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "name" x.name;
+        GapiJson.render_string_value "status" x.status;
+        GapiJson.render_string_value "url" x.url;
+        GapiJson.render_float_value "weight" x.weight;
+        GapiJson.render_bool_value "won" x.won;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with name = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "status"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with status = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with url = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "weight"; data_type = GapiJson.Scalar },
+          `Float v) ->
+        { x with weight = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "weight"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with weight = float_of_int v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "won"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with won = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiAnalyticsV3Model.Variations.parse" e x
+    
+  end
+  
+  module ParentLink =
+  struct
+    type t = {
+      href : string;
+      _type : string;
+      
+    }
+    
+    let href = {
+      GapiLens.get = (fun x -> x.href);
+      GapiLens.set = (fun v x -> { x with href = v });
+    }
+    let _type = {
+      GapiLens.get = (fun x -> x._type);
+      GapiLens.set = (fun v x -> { x with _type = v });
+    }
+    
+    let empty = {
+      href = "";
+      _type = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "href" x.href;
+        GapiJson.render_string_value "type" x._type;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "href"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with href = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with _type = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiAnalyticsV3Model.ParentLink.parse" e x
+    
+  end
+  
+  type t = {
+    accountId : string;
+    created : GapiDate.t;
+    description : string;
+    editableInGaUi : string;
+    endTime : GapiDate.t;
+    id : string;
+    internalWebPropertyId : string;
+    kind : string;
+    minimumExperimentLengthInDays : int;
+    name : string;
+    objectiveMetric : string;
+    optimizationType : string;
+    parentLink : ParentLink.t;
+    profileId : string;
+    reasonExperimentEnded : string;
+    rewriteVariationUrlsAsOriginal : bool;
+    selfLink : string;
+    servingFramework : string;
+    snippet : string;
+    startTime : GapiDate.t;
+    status : string;
+    trafficCoverage : float;
+    updated : GapiDate.t;
+    variations : Variations.t list;
+    webPropertyId : string;
+    winnerConfidenceLevel : float;
+    winnerFound : bool;
+    
+  }
+  
+  let accountId = {
+    GapiLens.get = (fun x -> x.accountId);
+    GapiLens.set = (fun v x -> { x with accountId = v });
+  }
+  let created = {
+    GapiLens.get = (fun x -> x.created);
+    GapiLens.set = (fun v x -> { x with created = v });
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v });
+  }
+  let editableInGaUi = {
+    GapiLens.get = (fun x -> x.editableInGaUi);
+    GapiLens.set = (fun v x -> { x with editableInGaUi = v });
+  }
+  let endTime = {
+    GapiLens.get = (fun x -> x.endTime);
+    GapiLens.set = (fun v x -> { x with endTime = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let internalWebPropertyId = {
+    GapiLens.get = (fun x -> x.internalWebPropertyId);
+    GapiLens.set = (fun v x -> { x with internalWebPropertyId = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let minimumExperimentLengthInDays = {
+    GapiLens.get = (fun x -> x.minimumExperimentLengthInDays);
+    GapiLens.set = (fun v x -> { x with minimumExperimentLengthInDays = v });
+  }
+  let name = {
+    GapiLens.get = (fun x -> x.name);
+    GapiLens.set = (fun v x -> { x with name = v });
+  }
+  let objectiveMetric = {
+    GapiLens.get = (fun x -> x.objectiveMetric);
+    GapiLens.set = (fun v x -> { x with objectiveMetric = v });
+  }
+  let optimizationType = {
+    GapiLens.get = (fun x -> x.optimizationType);
+    GapiLens.set = (fun v x -> { x with optimizationType = v });
+  }
+  let parentLink = {
+    GapiLens.get = (fun x -> x.parentLink);
+    GapiLens.set = (fun v x -> { x with parentLink = v });
+  }
+  let profileId = {
+    GapiLens.get = (fun x -> x.profileId);
+    GapiLens.set = (fun v x -> { x with profileId = v });
+  }
+  let reasonExperimentEnded = {
+    GapiLens.get = (fun x -> x.reasonExperimentEnded);
+    GapiLens.set = (fun v x -> { x with reasonExperimentEnded = v });
+  }
+  let rewriteVariationUrlsAsOriginal = {
+    GapiLens.get = (fun x -> x.rewriteVariationUrlsAsOriginal);
+    GapiLens.set = (fun v x -> { x with rewriteVariationUrlsAsOriginal = v });
+  }
+  let selfLink = {
+    GapiLens.get = (fun x -> x.selfLink);
+    GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  let servingFramework = {
+    GapiLens.get = (fun x -> x.servingFramework);
+    GapiLens.set = (fun v x -> { x with servingFramework = v });
+  }
+  let snippet = {
+    GapiLens.get = (fun x -> x.snippet);
+    GapiLens.set = (fun v x -> { x with snippet = v });
+  }
+  let startTime = {
+    GapiLens.get = (fun x -> x.startTime);
+    GapiLens.set = (fun v x -> { x with startTime = v });
+  }
+  let status = {
+    GapiLens.get = (fun x -> x.status);
+    GapiLens.set = (fun v x -> { x with status = v });
+  }
+  let trafficCoverage = {
+    GapiLens.get = (fun x -> x.trafficCoverage);
+    GapiLens.set = (fun v x -> { x with trafficCoverage = v });
+  }
+  let updated = {
+    GapiLens.get = (fun x -> x.updated);
+    GapiLens.set = (fun v x -> { x with updated = v });
+  }
+  let variations = {
+    GapiLens.get = (fun x -> x.variations);
+    GapiLens.set = (fun v x -> { x with variations = v });
+  }
+  let webPropertyId = {
+    GapiLens.get = (fun x -> x.webPropertyId);
+    GapiLens.set = (fun v x -> { x with webPropertyId = v });
+  }
+  let winnerConfidenceLevel = {
+    GapiLens.get = (fun x -> x.winnerConfidenceLevel);
+    GapiLens.set = (fun v x -> { x with winnerConfidenceLevel = v });
+  }
+  let winnerFound = {
+    GapiLens.get = (fun x -> x.winnerFound);
+    GapiLens.set = (fun v x -> { x with winnerFound = v });
+  }
+  
+  let empty = {
+    accountId = "";
+    created = GapiDate.epoch;
+    description = "";
+    editableInGaUi = "";
+    endTime = GapiDate.epoch;
+    id = "";
+    internalWebPropertyId = "";
+    kind = "";
+    minimumExperimentLengthInDays = 0;
+    name = "";
+    objectiveMetric = "";
+    optimizationType = "";
+    parentLink = ParentLink.empty;
+    profileId = "";
+    reasonExperimentEnded = "";
+    rewriteVariationUrlsAsOriginal = false;
+    selfLink = "";
+    servingFramework = "";
+    snippet = "";
+    startTime = GapiDate.epoch;
+    status = "";
+    trafficCoverage = 0.0;
+    updated = GapiDate.epoch;
+    variations = [];
+    webPropertyId = "";
+    winnerConfidenceLevel = 0.0;
+    winnerFound = false;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "accountId" x.accountId;
+      GapiJson.render_date_value "created" x.created;
+      GapiJson.render_string_value "description" x.description;
+      GapiJson.render_string_value "editableInGaUi" x.editableInGaUi;
+      GapiJson.render_date_value "endTime" x.endTime;
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "internalWebPropertyId" x.internalWebPropertyId;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_int_value "minimumExperimentLengthInDays" x.minimumExperimentLengthInDays;
+      GapiJson.render_string_value "name" x.name;
+      GapiJson.render_string_value "objectiveMetric" x.objectiveMetric;
+      GapiJson.render_string_value "optimizationType" x.optimizationType;
+      (fun v -> GapiJson.render_object "parentLink" (ParentLink.render_content v)) x.parentLink;
+      GapiJson.render_string_value "profileId" x.profileId;
+      GapiJson.render_string_value "reasonExperimentEnded" x.reasonExperimentEnded;
+      GapiJson.render_bool_value "rewriteVariationUrlsAsOriginal" x.rewriteVariationUrlsAsOriginal;
+      GapiJson.render_string_value "selfLink" x.selfLink;
+      GapiJson.render_string_value "servingFramework" x.servingFramework;
+      GapiJson.render_string_value "snippet" x.snippet;
+      GapiJson.render_date_value "startTime" x.startTime;
+      GapiJson.render_string_value "status" x.status;
+      GapiJson.render_float_value "trafficCoverage" x.trafficCoverage;
+      GapiJson.render_date_value "updated" x.updated;
+      GapiJson.render_array "variations" Variations.render x.variations;
+      GapiJson.render_string_value "webPropertyId" x.webPropertyId;
+      GapiJson.render_float_value "winnerConfidenceLevel" x.winnerConfidenceLevel;
+      GapiJson.render_bool_value "winnerFound" x.winnerFound;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "accountId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with accountId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "created"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with created = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with description = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "editableInGaUi"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with editableInGaUi = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "endTime"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with endTime = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "internalWebPropertyId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with internalWebPropertyId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "minimumExperimentLengthInDays"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with minimumExperimentLengthInDays = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with name = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "objectiveMetric"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with objectiveMetric = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "optimizationType"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with optimizationType = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "parentLink"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ParentLink.parse
+        ParentLink.empty
+        (fun v -> { x with parentLink = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "profileId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with profileId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "reasonExperimentEnded"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with reasonExperimentEnded = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "rewriteVariationUrlsAsOriginal"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with rewriteVariationUrlsAsOriginal = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "servingFramework"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with servingFramework = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "snippet"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with snippet = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "startTime"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with startTime = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "status"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with status = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "trafficCoverage"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with trafficCoverage = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "trafficCoverage"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with trafficCoverage = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "updated"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with updated = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "variations"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              Variations.parse
+              Variations.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiAnalyticsV3Model.Experiment.parse.parse_collection" e x')
+        Variations.empty
+        (fun v -> { x with variations = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "webPropertyId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with webPropertyId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "winnerConfidenceLevel"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with winnerConfidenceLevel = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "winnerConfidenceLevel"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with winnerConfidenceLevel = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "winnerFound"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with winnerFound = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiAnalyticsV3Model.Experiment.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module Experiments =
+struct
+  type t = {
+    items : Experiment.t list;
+    itemsPerPage : int;
+    kind : string;
+    nextLink : string;
+    previousLink : string;
+    startIndex : int;
+    totalResults : int;
+    username : string;
+    
+  }
+  
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let itemsPerPage = {
+    GapiLens.get = (fun x -> x.itemsPerPage);
+    GapiLens.set = (fun v x -> { x with itemsPerPage = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextLink = {
+    GapiLens.get = (fun x -> x.nextLink);
+    GapiLens.set = (fun v x -> { x with nextLink = v });
+  }
+  let previousLink = {
+    GapiLens.get = (fun x -> x.previousLink);
+    GapiLens.set = (fun v x -> { x with previousLink = v });
+  }
+  let startIndex = {
+    GapiLens.get = (fun x -> x.startIndex);
+    GapiLens.set = (fun v x -> { x with startIndex = v });
+  }
+  let totalResults = {
+    GapiLens.get = (fun x -> x.totalResults);
+    GapiLens.set = (fun v x -> { x with totalResults = v });
+  }
+  let username = {
+    GapiLens.get = (fun x -> x.username);
+    GapiLens.set = (fun v x -> { x with username = v });
+  }
+  
+  let empty = {
+    items = [];
+    itemsPerPage = 0;
+    kind = "";
+    nextLink = "";
+    previousLink = "";
+    startIndex = 0;
+    totalResults = 0;
+    username = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_array "items" Experiment.render x.items;
+      GapiJson.render_int_value "itemsPerPage" x.itemsPerPage;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextLink" x.nextLink;
+      GapiJson.render_string_value "previousLink" x.previousLink;
+      GapiJson.render_int_value "startIndex" x.startIndex;
+      GapiJson.render_int_value "totalResults" x.totalResults;
+      GapiJson.render_string_value "username" x.username;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              Experiment.parse
+              Experiment.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiAnalyticsV3Model.Experiments.parse.parse_collection" e x')
+        Experiment.empty
+        (fun v -> { x with items = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "itemsPerPage"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with itemsPerPage = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "previousLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with previousLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "startIndex"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with startIndex = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "totalResults"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with totalResults = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "username"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with username = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiAnalyticsV3Model.Experiments.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

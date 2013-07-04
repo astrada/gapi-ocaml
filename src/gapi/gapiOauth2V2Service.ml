@@ -5,6 +5,8 @@ open GapiOauth2V2Model
 
 module Scope =
 struct
+  let plus_login = "https://www.googleapis.com/auth/plus.login"
+  
   let plus_me = "https://www.googleapis.com/auth/plus.me"
   
   let userinfo_email = "https://www.googleapis.com/auth/userinfo.email"

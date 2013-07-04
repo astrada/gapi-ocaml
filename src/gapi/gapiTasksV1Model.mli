@@ -3,7 +3,7 @@
 (** Data definition for Tasks API (v1).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/tasks/v1/using.html}API Documentation}.
+  {{:https://developers.google.com/google-apps/tasks/firstapp}API Documentation}.
   *)
 
 module TaskList :

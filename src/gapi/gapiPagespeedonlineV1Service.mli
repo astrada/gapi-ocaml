@@ -28,6 +28,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/pagespeedonline/v1/"]).
     @param std_params Optional standard parameters.
+    @param screenshot Indicates if binary data containing a screenshot should be included
     @param locale The locale used to localize formatted results
     @param rule A Page Speed rule to run; if none are given, all rules are run
     @param strategy The analysis strategy to use
@@ -36,6 +37,7 @@ sig
   val runpagespeed :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?screenshot:bool ->
     ?locale:string ->
     ?rule:string list ->
     ?strategy:Strategy.t ->

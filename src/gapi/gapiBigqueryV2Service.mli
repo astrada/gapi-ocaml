@@ -13,6 +13,9 @@ sig
   val bigquery : string
   (** View and manage your data in Google BigQuery *)
   
+  val cloud_platform : string
+  (** MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services *)
+  
   val devstorage_full_control : string
   (** Manage your data and permissions in Google Cloud Storage *)
   
@@ -181,6 +184,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of results to read
+    @param pageToken Page token, returned by a previous call, to request the next page of results
     @param startIndex Zero-based index of the starting row
     @param timeoutMs How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error
     @param projectId Project ID of the query job
@@ -190,6 +194,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxResults:int ->
+    ?pageToken:string ->
     ?startIndex:string ->
     ?timeoutMs:int ->
     projectId:string ->

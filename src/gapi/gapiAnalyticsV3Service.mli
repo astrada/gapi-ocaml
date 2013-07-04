@@ -200,6 +200,131 @@ sig
     
   end
   
+  module Experiments :
+  sig
+    
+    (** Delete an experiment.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account ID to which the experiment belongs
+      @param webPropertyId Web property ID to which the experiment belongs
+      @param profileId Profile ID to which the experiment belongs
+      @param experimentId ID of the experiment to delete
+      *)
+    val delete :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      experimentId:string ->
+      GapiConversation.Session.t ->
+      unit * GapiConversation.Session.t
+    
+    (** Returns an experiment to which the user has access.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param etag Optional ETag.
+      @param std_params Optional standard parameters.
+      @param accountId Account ID to retrieve the experiment for.
+      @param webPropertyId Web property ID to retrieve the experiment for.
+      @param profileId Profile ID to retrieve the experiment for.
+      @param experimentId Experiment ID to retrieve the experiment for.
+      *)
+    val get :
+      ?base_url:string ->
+      ?etag:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      experimentId:string ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.Experiment.t * GapiConversation.Session.t
+    
+    (** Create a new experiment.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account ID to create the experiment for.
+      @param webPropertyId Web property ID to create the experiment for.
+      @param profileId Profile ID to create the experiment for.
+      *)
+    val insert :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      GapiAnalyticsV3Model.Experiment.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.Experiment.t * GapiConversation.Session.t
+    
+    (** Lists experiments to which the user has access.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param max_results The maximum number of experiments to include in this response.
+      @param start_index An index of the first experiment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+      @param accountId Account ID to retrieve experiments for.
+      @param webPropertyId Web property ID to retrieve experiments for.
+      @param profileId Profile ID to retrieve experiments for.
+      *)
+    val list :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      ?max_results:int ->
+      ?start_index:int ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.Experiments.t * GapiConversation.Session.t
+    
+    (** Update an existing experiment. This method supports patch semantics.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account ID of the experiment to update.
+      @param webPropertyId Web property ID of the experiment to update.
+      @param profileId Profile ID of the experiment to update.
+      @param experimentId Experiment ID of the experiment to update.
+      *)
+    val patch :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      experimentId:string ->
+      GapiAnalyticsV3Model.Experiment.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.Experiment.t * GapiConversation.Session.t
+    
+    (** Update an existing experiment.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account ID of the experiment to update.
+      @param webPropertyId Web property ID of the experiment to update.
+      @param profileId Profile ID of the experiment to update.
+      @param experimentId Experiment ID of the experiment to update.
+      *)
+    val update :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      experimentId:string ->
+      GapiAnalyticsV3Model.Experiment.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.Experiment.t * GapiConversation.Session.t
+    
+    
+  end
+  
   module DailyUploads :
   sig
     

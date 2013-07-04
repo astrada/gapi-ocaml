@@ -7,6 +7,8 @@ module Scope =
 struct
   let bigquery = "https://www.googleapis.com/auth/bigquery"
   
+  let cloud_platform = "https://www.googleapis.com/auth/cloud-platform"
+  
   let devstorage_full_control = "https://www.googleapis.com/auth/devstorage.full_control"
   
   let devstorage_read_only = "https://www.googleapis.com/auth/devstorage.read_only"
@@ -340,6 +342,7 @@ struct
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?std_params
         ?maxResults
+        ?pageToken
         ?startIndex
         ?timeoutMs
         ~projectId
@@ -348,8 +351,8 @@ struct
     let full_url = GapiUtils.add_path_to_url ["projects";
       ((fun x -> x) projectId); "queries"; ((fun x -> x) jobId)] base_url in
     let params = JobsParameters.merge_parameters
-      ?standard_parameters:std_params ?maxResults ?startIndex ?timeoutMs ()
-      in
+      ?standard_parameters:std_params ?maxResults ?pageToken ?startIndex
+      ?timeoutMs () in
     let query_parameters = Option.map JobsParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url

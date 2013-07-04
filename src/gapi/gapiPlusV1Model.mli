@@ -19,6 +19,7 @@ sig
 - "circle" - Access to members of a circle. 
 - "myCircles" - Access to members of all the person's circles. 
 - "extendedCircles" - Access to members of everyone in a person's circles, plus all of the people in their circles. 
+- "domain" - Access to members of the person's Google Apps domain. 
 - "public" - Access to anyone on the web. *)
     
   }
@@ -26,6 +27,76 @@ sig
   val displayName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val _type : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Place :
+sig
+  module Position :
+  sig
+    type t = {
+      latitude : float;
+      (** The latitude of this position. *)
+      longitude : float;
+      (** The longitude of this position. *)
+      
+    }
+    
+    val latitude : (t, float) GapiLens.t
+    val longitude : (t, float) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module Address :
+  sig
+    type t = {
+      formatted : string;
+      (** The formatted address for display. *)
+      
+    }
+    
+    val formatted : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    address : Address.t;
+    (** The physical address of the place. *)
+    displayName : string;
+    (** The display name of the place. *)
+    kind : string;
+    (** Identifies this resource as a place. Value: "plus#place". *)
+    position : Position.t;
+    (** The position of the place. *)
+    
+  }
+  
+  val address : (t, Address.t) GapiLens.t
+  val displayName : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val position : (t, Position.t) GapiLens.t
   
   val empty : t
   
@@ -541,21 +612,20 @@ sig
   module Urls :
   sig
     type t = {
-      primary : bool;
-      (** If "true", this URL is the person's primary URL. *)
+      label : string;
+      (** The label of the URL. *)
       _type : string;
       (** The type of URL. Possible values are:  
-- "home" - URL for home. 
-- "work" - URL for work. 
-- "blog" - URL for blog. 
-- "profile" - URL for profile. 
+- "otherProfile" - URL for another profile. 
+- "contributor" - URL for which this person is a contributor to. 
+- "website" - URL for this Google+ Page's primary website. 
 - "other" - Other. *)
       value : string;
       (** The URL value. *)
       
     }
     
-    val primary : (t, bool) GapiLens.t
+    val label : (t, string) GapiLens.t
     val _type : (t, string) GapiLens.t
     val value : (t, string) GapiLens.t
     
@@ -827,8 +897,6 @@ sig
 - "male" - Male gender. 
 - "female" - Female gender. 
 - "other" - Other. *)
-    hasApp : bool;
-    (** If "true", indicates that the person has installed the app that is making the request and has chosen to expose this install state to the caller. A value of "false" indicates that the install state cannot be determined (it is either not installed or the person has chosen to keep this information private). *)
     id : string;
     (** The ID of this person. *)
     image : Image.t;
@@ -886,7 +954,6 @@ sig
   val emails : (t, Emails.t list) GapiLens.t
   val etag : (t, string) GapiLens.t
   val gender : (t, string) GapiLens.t
-  val hasApp : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val image : (t, Image.t) GapiLens.t
   val isPlusUser : (t, bool) GapiLens.t
@@ -1351,6 +1418,8 @@ sig
     (** The ID of this activity. *)
     kind : string;
     (** Identifies this resource as an activity. Value: "plus#activity". *)
+    location : Place.t;
+    (** The location where this activity occurred. *)
     _object : Object.t;
     (** The object of this activity. *)
     placeId : string;
@@ -1385,6 +1454,7 @@ sig
   val geocode : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val location : (t, Place.t) GapiLens.t
   val _object : (t, Object.t) GapiLens.t
   val placeId : (t, string) GapiLens.t
   val placeName : (t, string) GapiLens.t

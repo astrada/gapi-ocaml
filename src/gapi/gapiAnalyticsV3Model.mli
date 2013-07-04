@@ -546,14 +546,20 @@ sig
     (** Time this web property was created. *)
     id : string;
     (** Web property ID of the form UA-XXXXX-YY. *)
+    industryVertical : string;
+    (** The industry vertical/category selected for this web property. *)
     internalWebPropertyId : string;
     (** Internal ID for this web property. *)
     kind : string;
     (** Resource type for Analytics WebProperty. *)
+    level : string;
+    (** Level for this web property. Possible values are STANDARD or PREMIUM. *)
     name : string;
     (** Name of this web property. *)
     parentLink : ParentLink.t;
     (** Parent link for this web property. Points to the account to which this web property belongs. *)
+    profileCount : int;
+    (** Profile count for this web property. *)
     selfLink : string;
     (** Link for this web property. *)
     updated : GapiDate.t;
@@ -567,13 +573,213 @@ sig
   val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val id : (t, string) GapiLens.t
+  val industryVertical : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val level : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val parentLink : (t, ParentLink.t) GapiLens.t
+  val profileCount : (t, int) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   val websiteUrl : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Experiment :
+sig
+  module Variations :
+  sig
+    type t = {
+      name : string;
+      (** The name of the variation. This field is required when creating an experiment. This field may not be changed for an experiment whose status is ENDED. *)
+      status : string;
+      (** Status of the variation. Possible values: "ACTIVE", "INACTIVE". INACTIVE variations are not served. This field may not be changed for an experiment whose status is ENDED. *)
+      url : string;
+      (** The URL of the variation. This field may not be changed for an experiment whose status is RUNNING or ENDED. *)
+      weight : float;
+      (** Weight that this variation should receive. Only present if the experiment is running. This field is read-only. *)
+      won : bool;
+      (** True if the experiment has ended and this variation performed (statistically) significantly better than the original. This field is read-only. *)
+      
+    }
+    
+    val name : (t, string) GapiLens.t
+    val status : (t, string) GapiLens.t
+    val url : (t, string) GapiLens.t
+    val weight : (t, float) GapiLens.t
+    val won : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ParentLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the profile to which this experiment belongs. This field is read-only. *)
+      _type : string;
+      (** Value is "analytics#profile". This field is read-only. *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountId : string;
+    (** Account ID to which this experiment belongs. This field is read-only. *)
+    created : GapiDate.t;
+    (** Time the experiment was created. This field is read-only. *)
+    description : string;
+    (** Notes about this experiment. *)
+    editableInGaUi : string;
+    (** If true, the end user will be able to edit the experiment via the Google Analytics user interface. *)
+    endTime : GapiDate.t;
+    (** The ending time of the experiment (the time the status changed from RUNNING to ENDED). This field is present only if the experiment has ended. This field is read-only. *)
+    id : string;
+    (** Experiment ID. Required for patch and update. Disallowed for create. *)
+    internalWebPropertyId : string;
+    (** Internal ID for the web property to which this experiment belongs. This field is read-only. *)
+    kind : string;
+    (** Resource type for an Analytics experiment. This field is read-only. *)
+    minimumExperimentLengthInDays : int;
+    (** Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
+    name : string;
+    (** Experiment name. This field may not be changed for an experiment whose status is ENDED. This field is required when creating an experiment. *)
+    objectiveMetric : string;
+    (** The metric that the experiment is optimizing. Valid values: "ga:goal(n)Completions", "ga:bounces", "ga:pageviews", "ga:timeOnSite", "ga:transactions", "ga:transactionRevenue". This field is required if status is "RUNNING" and servingFramework is one of "REDIRECT" or "API". *)
+    optimizationType : string;
+    (** Whether the objectiveMetric should be minimized or maximized. Possible values: "MAXIMUM", "MINIMUM". Optional--defaults to "MAXIMUM". Cannot be specified without objectiveMetric. Cannot be modified when status is "RUNNING" or "ENDED". *)
+    parentLink : ParentLink.t;
+    (** Parent link for an experiment. Points to the profile to which this experiment belongs. *)
+    profileId : string;
+    (** Profile ID to which this experiment belongs. This field is read-only. *)
+    reasonExperimentEnded : string;
+    (** Why the experiment ended. Possible values: "STOPPED_BY_USER", "WINNER_FOUND", "EXPERIMENT_EXPIRED", "ENDED_WITH_NO_WINNER", "GOAL_OBJECTIVE_CHANGED". "ENDED_WITH_NO_WINNER" means that the experiment didn't expire but no winner was projected to be found. If the experiment status is changed via the API to ENDED this field is set to STOPPED_BY_USER. This field is read-only. *)
+    rewriteVariationUrlsAsOriginal : bool;
+    (** Boolean specifying whether variations URLS are rewritten to match those of the original. This field may not be changed for an experiments whose status is ENDED. *)
+    selfLink : string;
+    (** Link for this experiment. This field is read-only. *)
+    servingFramework : string;
+    (** The framework used to serve the experiment variations and evaluate the results. One of:  
+- REDIRECT: Google Analytics redirects traffic to different variation pages, reports the chosen variation and evaluates the results.
+- API: Google Analytics chooses and reports the variation to serve and evaluates the results; the caller is responsible for serving the selected variation.
+- EXTERNAL: The variations will be served externally and the chosen variation reported to Google Analytics. The caller is responsible for serving the selected variation and evaluating the results. *)
+    snippet : string;
+    (** The snippet of code to include on the control page(s). This field is read-only. *)
+    startTime : GapiDate.t;
+    (** The starting time of the experiment (the time the status changed from READY_TO_RUN to RUNNING). This field is present only if the experiment has started. This field is read-only. *)
+    status : string;
+    (** Experiment status. Possible values: "DRAFT", "READY_TO_RUN", "RUNNING", "ENDED". Experiments can be created in the "DRAFT", "READY_TO_RUN" or "RUNNING" state. This field is required when creating an experiment. *)
+    trafficCoverage : float;
+    (** A floating-point number between 0 and 1. Specifies the fraction of the traffic that participates in the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
+    updated : GapiDate.t;
+    (** Time the experiment was last modified. This field is read-only. *)
+    variations : Variations.t list;
+    (** Array of variations. The first variation in the array is the original. The number of variations may not change once an experiment is in the RUNNING state. At least two variations are required before status can be set to RUNNING. *)
+    webPropertyId : string;
+    (** Web property ID to which this experiment belongs. The web property ID is of the form UA-XXXXX-YY. This field is read-only. *)
+    winnerConfidenceLevel : float;
+    (** A floating-point number between 0 and 1. Specifies the necessary confidence level to choose a winner. This field may not be changed for an experiments whose status is ENDED. *)
+    winnerFound : bool;
+    (** Boolean specifying whether a winner has been found for this experiment. This field is read-only. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val editableInGaUi : (t, string) GapiLens.t
+  val endTime : (t, GapiDate.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val internalWebPropertyId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val minimumExperimentLengthInDays : (t, int) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val objectiveMetric : (t, string) GapiLens.t
+  val optimizationType : (t, string) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
+  val profileId : (t, string) GapiLens.t
+  val reasonExperimentEnded : (t, string) GapiLens.t
+  val rewriteVariationUrlsAsOriginal : (t, bool) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val servingFramework : (t, string) GapiLens.t
+  val snippet : (t, string) GapiLens.t
+  val startTime : (t, GapiDate.t) GapiLens.t
+  val status : (t, string) GapiLens.t
+  val trafficCoverage : (t, float) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val variations : (t, Variations.t list) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  val winnerConfidenceLevel : (t, float) GapiLens.t
+  val winnerFound : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Experiments :
+sig
+  type t = {
+    items : Experiment.t list;
+    (** A list of experiments. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this experiment collection. *)
+    previousLink : string;
+    (** Link to previous page for this experiment collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of resources in the result. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, Experiment.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
   
   val empty : t
   
@@ -649,7 +855,7 @@ sig
     parentLink : ParentLink.t;
     (** Parent link for this custom data source. Points to the web property to which this custom data source belongs. *)
     profilesLinked : string list;
-    (**  *)
+    (** IDs of profiles linked to the custom data source. *)
     selfLink : string;
     (** Link for this Analytics custom data source. *)
     updated : GapiDate.t;
@@ -740,7 +946,7 @@ sig
     defaultPage : string;
     (** Default page for this profile. *)
     eCommerceTracking : bool;
-    (** E-commerce tracking parameter for this profile. *)
+    (** Indicates whether ecommerce tracking is enabled for this profile. *)
     excludeQueryParameters : string;
     (** The query parameters that are excluded from this profile. *)
     id : string;
@@ -854,9 +1060,9 @@ sig
   sig
     type t = {
       change : string;
-      (**  *)
+      (** The type of change: APPEND, RESET, or DELETE. *)
       time : GapiDate.t;
-      (**  *)
+      (** The time when the change occurred. *)
       
     }
     

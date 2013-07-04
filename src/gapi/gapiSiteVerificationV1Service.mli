@@ -5,7 +5,7 @@
   Lets you programatically verify ownership of websites or domains with Google..
   
   For more information about this service, see the
-  {{:http://code.google.com/apis/siteverification/}API Documentation}.
+  {{:https://developers.google.com/site-verification/}API Documentation}.
   *)
 
 module Scope :

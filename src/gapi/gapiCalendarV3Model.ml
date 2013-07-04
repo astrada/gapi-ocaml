@@ -809,6 +809,56 @@ end
 
 module Event =
 struct
+  module Source =
+  struct
+    type t = {
+      title : string;
+      url : string;
+      
+    }
+    
+    let title = {
+      GapiLens.get = (fun x -> x.title);
+      GapiLens.set = (fun v x -> { x with title = v });
+    }
+    let url = {
+      GapiLens.get = (fun x -> x.url);
+      GapiLens.set = (fun v x -> { x with url = v });
+    }
+    
+    let empty = {
+      title = "";
+      url = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "title" x.title;
+        GapiJson.render_string_value "url" x.url;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with title = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with url = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCalendarV3Model.Source.parse" e x
+    
+  end
+  
   module Reminders =
   struct
     type t = {
@@ -1243,6 +1293,7 @@ struct
     recurringEventId : string;
     reminders : Reminders.t;
     sequence : int;
+    source : Source.t;
     start : EventDateTime.t;
     status : string;
     summary : string;
@@ -1368,6 +1419,10 @@ struct
     GapiLens.get = (fun x -> x.sequence);
     GapiLens.set = (fun v x -> { x with sequence = v });
   }
+  let source = {
+    GapiLens.get = (fun x -> x.source);
+    GapiLens.set = (fun v x -> { x with source = v });
+  }
   let start = {
     GapiLens.get = (fun x -> x.start);
     GapiLens.set = (fun v x -> { x with start = v });
@@ -1423,6 +1478,7 @@ struct
     recurringEventId = "";
     reminders = Reminders.empty;
     sequence = 0;
+    source = Source.empty;
     start = EventDateTime.empty;
     status = "";
     summary = "";
@@ -1463,6 +1519,7 @@ struct
       GapiJson.render_string_value "recurringEventId" x.recurringEventId;
       (fun v -> GapiJson.render_object "reminders" (Reminders.render_content v)) x.reminders;
       GapiJson.render_int_value "sequence" x.sequence;
+      (fun v -> GapiJson.render_object "source" (Source.render_content v)) x.source;
       (fun v -> GapiJson.render_object "start" (EventDateTime.render_content v)) x.start;
       GapiJson.render_string_value "status" x.status;
       GapiJson.render_string_value "summary" x.summary;
@@ -1643,6 +1700,14 @@ struct
         ({ GapiJson.name = "sequence"; data_type = GapiJson.Scalar },
         `Int v) ->
       { x with sequence = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "source"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Source.parse
+        Source.empty
+        (fun v -> { x with source = v })
+        cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "start"; data_type = GapiJson.Object },
         cs) ->

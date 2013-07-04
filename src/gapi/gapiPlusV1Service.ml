@@ -621,7 +621,7 @@ struct
         ?(base_url = "https://www.googleapis.com/plus/v1/")
         ?std_params
         ?(language = "en-US")
-        ?(maxResults = 10)
+        ?(maxResults = 25)
         ?pageToken
         ~query
         session =

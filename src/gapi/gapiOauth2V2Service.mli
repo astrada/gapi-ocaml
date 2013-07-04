@@ -10,6 +10,9 @@
 
 module Scope :
 sig
+  val plus_login : string
+  (** Know your name, basic info, and list of people you're connected to on Google+ *)
+  
   val plus_me : string
   (** Know who you are on Google *)
   

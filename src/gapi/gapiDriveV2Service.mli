@@ -25,6 +25,9 @@ sig
   val drive_readonly : string
   (** View the files and documents in your Google Drive *)
   
+  val drive_scripts : string
+  (** Modify your Google Apps Script scripts' behavior *)
+  
   
 end
 (** Service Auth Scopes *)
@@ -672,12 +675,14 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
+    @param transferOwnership Whether changing a role to 'owner' should also downgrade the current owners to writers.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
     *)
   val patch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?transferOwnership:bool ->
     fileId:string ->
     permissionId:string ->
     GapiDriveV2Model.Permission.t ->
@@ -688,17 +693,124 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
+    @param transferOwnership Whether changing a role to 'owner' should also downgrade the current owners to writers.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
     *)
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?transferOwnership:bool ->
     fileId:string ->
     permissionId:string ->
     GapiDriveV2Model.Permission.t ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.Permission.t * GapiConversation.Session.t
+  
+  
+end
+
+module PropertiesResource :
+sig
+  
+  (** Deletes a property.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param visibility The visibility of the property.
+    @param fileId The ID of the file.
+    @param propertyKey The key of the property.
+    *)
+  val delete :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?visibility:string ->
+    fileId:string ->
+    propertyKey:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  (** Gets a property by its key.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
+    @param std_params Optional standard parameters.
+    @param visibility The visibility of the property.
+    @param fileId The ID of the file.
+    @param propertyKey The key of the property.
+    *)
+  val get :
+    ?base_url:string ->
+    ?etag:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?visibility:string ->
+    fileId:string ->
+    propertyKey:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Property.t * GapiConversation.Session.t
+  
+  (** Adds a property to a file.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    *)
+  val insert :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    GapiDriveV2Model.Property.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Property.t * GapiConversation.Session.t
+  
+  (** Lists a file's properties.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    *)
+  val list :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.PropertyList.t * GapiConversation.Session.t
+  
+  (** Updates a property. This method supports patch semantics.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param visibility The visibility of the property.
+    @param fileId The ID of the file.
+    @param propertyKey The key of the property.
+    *)
+  val patch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?visibility:string ->
+    fileId:string ->
+    propertyKey:string ->
+    GapiDriveV2Model.Property.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Property.t * GapiConversation.Session.t
+  
+  (** Updates a property.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param visibility The visibility of the property.
+    @param fileId The ID of the file.
+    @param propertyKey The key of the property.
+    *)
+  val update :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?visibility:string ->
+    fileId:string ->
+    propertyKey:string ->
+    GapiDriveV2Model.Property.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Property.t * GapiConversation.Session.t
   
   
 end

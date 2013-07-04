@@ -469,7 +469,7 @@ sig
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
     @param q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
-    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
+    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
     @param showHiddenInvitations Whether to include hidden invitations in the result. Optional. The default is False.
     @param singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
     @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.

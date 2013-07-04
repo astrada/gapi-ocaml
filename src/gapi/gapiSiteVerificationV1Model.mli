@@ -3,7 +3,7 @@
 (** Data definition for Google Site Verification API (v1).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/siteverification/}API Documentation}.
+  {{:https://developers.google.com/site-verification/}API Documentation}.
   *)
 
 module SiteVerificationWebResourceResource :
