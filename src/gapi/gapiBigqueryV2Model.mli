@@ -1092,13 +1092,13 @@ sig
       domain : string;
       (** [Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com". *)
       groupByEmail : string;
-      (** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups. *)
+      (** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in \@googlegroups.com) or a group managed by an enterprise version of Google Groups. *)
       role : string;
       (** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. *)
       specialGroup : string;
       (** [Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. *)
       userByEmail : string;
-      (** [Pick one] A fully qualified email address of a user to grant access to. For example: fred@example.com. *)
+      (** [Pick one] A fully qualified email address of a user to grant access to. For example: fred\@example.com. *)
       
     }
     

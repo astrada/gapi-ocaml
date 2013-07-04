@@ -11,6 +11,14 @@ let no_overwrite = ref false
 
 (* END Configuration *)
 
+(* Docs *)
+
+let to_escape_regexp = Str.regexp "[@{}]"
+
+let clean_doc s = Str.global_replace to_escape_regexp "\\\\\\0" s
+
+(* END Docs *)
+
 (* State monad implementation *)
 
 module GeneratorStateMonad =
@@ -1173,7 +1181,7 @@ let rec generate_schema_module_signature
                        "%s : %s;@,(** %s *)@,"
                        ocaml_name
                        ocaml_type
-                       (ComplexType.get_description field_type))
+                       (clean_doc (ComplexType.get_description field_type)))
                   fields;
                 Format.fprintf formatter
                   "@]@,}@\n@\n";
@@ -1283,7 +1291,7 @@ let rec generate_service_module_signature
          Format.fprintf formatter
            "| %s (** %s *)@,"
            constructor
-           description)
+           (clean_doc description))
       enum_module.EnumModule.values;
     Format.fprintf formatter "@]@,val to_string : t -> string@,@,val of_string : string -> t@,@]@\nend@\n";
   in
@@ -1316,7 +1324,7 @@ let rec generate_service_module_signature
           (* Documentation *)
           Format.fprintf formatter
             "@[<hov 2>(** %s@\n@\n@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n"
-            methd.Method.description
+            (clean_doc methd.Method.description)
             base_url;
           if methd.Method.original_name = "get" then begin
             Format.fprintf formatter

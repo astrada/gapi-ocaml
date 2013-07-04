@@ -1101,7 +1101,7 @@ sig
     objectType : string;
     (** The type of object this app creates (e.g. Chart). If empty, the app name should be used instead. *)
     openUrlTemplate : string;
-    (** The template url for opening files with this app. The template will contain {ids} and/or {exportIds} to be replaced by the actual file ids. *)
+    (** The template url for opening files with this app. The template will contain \{ids\} and/or \{exportIds\} to be replaced by the actual file ids. *)
     primaryFileExtensions : string list;
     (** The list of primary file extensions. *)
     primaryMimeTypes : string list;
