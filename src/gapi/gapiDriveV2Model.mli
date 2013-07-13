@@ -74,7 +74,7 @@ sig
 - domain 
 - anyone *)
     value : string;
-    (** The email address or domain name for the entity. This is not populated in responses. *)
+    (** The email address or domain name for the entity. This is used during inserts and is not populated in responses. *)
     withLink : bool;
     (** Whether the link is required for this permission. *)
     
@@ -391,6 +391,8 @@ sig
     (** The file extension used when downloading this file. This field is read only. To set the extension, include it in the title when creating the file. This is only populated for files with content stored in Drive. *)
     fileSize : int64;
     (** The size of the file in bytes. This is only populated for files with content stored in Drive. *)
+    headRevisionId : string;
+    (** The ID of the file's head revision. This will only be populated for files with content stored in Drive. *)
     iconLink : string;
     (** A link to the file's icon. *)
     id : string;
@@ -466,6 +468,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val exportLinks : (t, (string * string) list) GapiLens.t
   val fileExtension : (t, string) GapiLens.t
   val fileSize : (t, int64) GapiLens.t
+  val headRevisionId : (t, string) GapiLens.t
   val iconLink : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val imageMediaMetadata : (t, ImageMediaMetadata.t) GapiLens.t
@@ -1178,6 +1181,52 @@ sig
   val items : (t, Property.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Channel :
+sig
+  type t = {
+    address : string;
+    (** The address of the receiving entity where events are delivered. Specific to the channel type. *)
+    expiration : int64;
+    (** The expiration instant for this channel if it is defined. *)
+    id : string;
+    (** A UUID for the channel *)
+    kind : string;
+    (** A channel watching an API resource *)
+    params : (string * string) list;
+    (** Additional parameters controlling delivery channel behavior *)
+    resourceId : string;
+    (** An opaque id that identifies the resource that is being watched. Stable across different API versions *)
+    resourceUri : string;
+    (** The canonicalized ID of the watched resource. *)
+    token : string;
+    (** An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel. *)
+    _type : string;
+    (** The type of delivery mechanism used by this channel *)
+    
+  }
+  
+  val address : (t, string) GapiLens.t
+  val expiration : (t, int64) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val params : (t, (string * string) list) GapiLens.t
+  val resourceId : (t, string) GapiLens.t
+  val resourceUri : (t, string) GapiLens.t
+  val token : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
   
   val empty : t
   

@@ -245,6 +245,46 @@ struct
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response ChangeList.of_data_model) session 
     
+  let watch
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?(includeDeleted = true)
+        ?(includeSubscribed = true)
+        ?(maxResults = 100)
+        ?pageToken
+        ?startChangeId
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["changes"; "watch"] base_url in
+    let params = ChangesParameters.merge_parameters
+      ?standard_parameters:std_params ~includeDeleted ~includeSubscribed
+      ~maxResults ?pageToken ?startChangeId () in
+    let query_parameters = Option.map ChangesParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url
+      (GapiJson.parse_json_response Channel.of_data_model) session 
+    
+  
+end
+
+module ChannelsResource =
+struct
+  let stop
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["channels"; "stop"] base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url GapiRequest.parse_empty_response session 
+    
   
 end
 
@@ -582,6 +622,26 @@ struct
   
   end
   
+  module Visibility =
+  struct
+    type t =
+      | Default
+      | DEFAULT
+      | PRIVATE
+      
+    let to_string = function
+      | Default -> ""
+      | DEFAULT -> "DEFAULT"
+      | PRIVATE -> "PRIVATE"
+      
+    let of_string = function
+      | "" -> Default
+      | "DEFAULT" -> DEFAULT
+      | "PRIVATE" -> PRIVATE
+      | s -> failwith ("Unexpected value for Visibility:" ^ s)
+  
+  end
+  
   module FilesParameters =
   struct
     type t = {
@@ -606,6 +666,7 @@ struct
       timedTextTrackName : string;
       updateViewedDate : bool;
       useContentAsIndexableText : bool;
+      visibility : Visibility.t;
       
     }
     
@@ -629,6 +690,7 @@ struct
       timedTextTrackName = "";
       updateViewedDate = false;
       useContentAsIndexableText = false;
+      visibility = Visibility.Default;
       
     }
     
@@ -654,6 +716,7 @@ struct
       param (fun p -> p.timedTextTrackName) (fun x -> x) "timedTextTrackName";
       param (fun p -> p.updateViewedDate) string_of_bool "updateViewedDate";
       param (fun p -> p.useContentAsIndexableText) string_of_bool "useContentAsIndexableText";
+      param (fun p -> p.visibility) Visibility.to_string "visibility";
       
     ] |> List.concat
     
@@ -673,6 +736,7 @@ struct
         ?(timedTextTrackName = default.timedTextTrackName)
         ?(updateViewedDate = default.updateViewedDate)
         ?(useContentAsIndexableText = default.useContentAsIndexableText)
+        ?(visibility = default.visibility)
         () =
       let parameters = {
         fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -694,6 +758,7 @@ struct
         timedTextTrackName;
         updateViewedDate;
         useContentAsIndexableText;
+        visibility;
         
       } in
       if parameters = default then None else Some parameters
@@ -706,6 +771,7 @@ struct
         ?(convert = false)
         ?(ocr = false)
         ?(pinned = false)
+        ?(visibility = Visibility.Default)
         ?ocrLanguage
         ?timedTextLanguage
         ?timedTextTrackName
@@ -717,7 +783,7 @@ struct
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
-      ?timedTextLanguage ?timedTextTrackName () in
+      ?timedTextLanguage ?timedTextTrackName ~visibility () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -763,6 +829,7 @@ struct
         ?(ocr = false)
         ?(pinned = false)
         ?(useContentAsIndexableText = false)
+        ?(visibility = Visibility.Default)
         ?ocrLanguage
         ?timedTextLanguage
         ?timedTextTrackName
@@ -776,7 +843,8 @@ struct
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~convert ~ocr ?ocrLanguage ~pinned
-      ?timedTextLanguage ?timedTextTrackName ~useContentAsIndexableText () in
+      ?timedTextLanguage ?timedTextTrackName ~useContentAsIndexableText
+      ~visibility () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag ?media_source
@@ -904,6 +972,25 @@ struct
     GapiService.put ?query_parameters ?etag ?media_source
       ~data_to_post:(GapiJson.render_json File.to_data_model) ~data:file
       full_url (GapiJson.parse_json_response File.of_data_model) session 
+    
+  let watch
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?(updateViewedDate = false)
+        ?projection
+        ~fileId
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "watch"] base_url in
+    let params = FilesParameters.merge_parameters
+      ?standard_parameters:std_params ?projection ~updateViewedDate () in
+    let query_parameters = Option.map FilesParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url
+      (GapiJson.parse_json_response Channel.of_data_model) session 
     
   
 end
@@ -1308,6 +1395,26 @@ struct
       ~data_to_post:(GapiJson.render_json Property.to_data_model)
       ~data:property full_url
       (GapiJson.parse_json_response Property.of_data_model) session 
+    
+  
+end
+
+module RealtimeResource =
+struct
+  let get
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?etag
+        ?std_params
+        ~fileId
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "realtime"] base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.get ?query_parameters ?etag full_url
+      GapiRequest.parse_empty_response session 
     
   
 end

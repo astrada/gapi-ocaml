@@ -128,6 +128,46 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.ChangeList.t * GapiConversation.Session.t
   
+  (** Subscribe to changes for a user.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param includeDeleted Whether to include deleted items.
+    @param includeSubscribed Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.
+    @param maxResults Maximum number of changes to return.
+    @param pageToken Page token for changes.
+    @param startChangeId Change ID to start listing changes from.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?includeDeleted:bool ->
+    ?includeSubscribed:bool ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?startChangeId:int64 ->
+    GapiDriveV2Model.Channel.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Channel.t * GapiConversation.Session.t
+  
+  
+end
+
+module ChannelsResource :
+sig
+  
+  (** 
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    *)
+  val stop :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    GapiDriveV2Model.Channel.t ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
   
 end
 
@@ -312,6 +352,19 @@ end
 module FilesResource :
 sig
   
+  module Visibility :
+  sig
+    type t =
+      | Default
+      | DEFAULT (** The visibility of the new file is determined by the user's default visibility/sharing policies. *)
+      | PRIVATE (** The new file will be visible to only the owner. *)
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
+  
   module Projection :
   sig
     type t =
@@ -332,6 +385,7 @@ sig
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the new copy.
+    @param visibility The visibility of the new file. This parameter is only relevant when the source is not a native Google Doc and convert=false.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
@@ -343,6 +397,7 @@ sig
     ?convert:bool ->
     ?ocr:bool ->
     ?pinned:bool ->
+    ?visibility:Visibility.t ->
     ?ocrLanguage:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
@@ -391,6 +446,7 @@ sig
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the uploaded file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
+    @param visibility The visibility of the new file. This parameter is only relevant when convert=false.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
@@ -403,6 +459,7 @@ sig
     ?ocr:bool ->
     ?pinned:bool ->
     ?useContentAsIndexableText:bool ->
+    ?visibility:Visibility.t ->
     ?ocrLanguage:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
@@ -536,6 +593,24 @@ sig
     GapiDriveV2Model.File.t ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.File.t * GapiConversation.Session.t
+  
+  (** Subscribe to changes on a file
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param updateViewedDate Whether to update the view date after successfully retrieving the file.
+    @param projection This parameter is deprecated and has no function.
+    @param fileId The ID for the file in question.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?updateViewedDate:bool ->
+    ?projection:Projection.t ->
+    fileId:string ->
+    GapiDriveV2Model.Channel.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.Channel.t * GapiConversation.Session.t
   
   
 end
@@ -811,6 +886,27 @@ sig
     GapiDriveV2Model.Property.t ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.Property.t * GapiConversation.Session.t
+  
+  
+end
+
+module RealtimeResource :
+sig
+  
+  (** Exports the contents of the Realtime API data model associated with this file as JSON.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param etag Optional ETag.
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file that the Realtime API data model is associated with.
+    *)
+  val get :
+    ?base_url:string ->
+    ?etag:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
   
   
 end
