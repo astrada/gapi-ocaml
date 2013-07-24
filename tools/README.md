@@ -23,8 +23,8 @@ functionalities to query the Google RESTful services.
 ### Compiling
 
 To build the generator you will need
-[pa_monad](http://www.cas.mcmaster.ca/~carette/pa_monad/). After installing
-it, execute
+[pa_monad_custom](http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html).
+After installing it, execute
 
     $ ocaml setup.ml -configure --enable-generator
     $ ocaml setup.ml -build

@@ -81,7 +81,8 @@ privileges)
     $ ocaml setup.ml -install
 
 To build and run the tests (you will need
-[pa_monad](http://www.cas.mcmaster.ca/~carette/pa_monad/)), execute
+[pa_monad_custom](http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html),
+execute
 
     $ ocaml setup.ml -configure --enable-tests
     $ ocaml setup.ml -build
