@@ -127,7 +127,7 @@ Executable "serviceGenerator"
   Path: tools
   Install: false
   MainIs: serviceGenerator.ml
-  BuildDepends: gapi-ocaml, monad
+  BuildDepends: gapi-ocaml, monad-custom
 
 # Examples
 Executable "oauth2Flow"
@@ -164,7 +164,7 @@ Executable "test_suite"
   Path: src/test
   Install: false
   MainIs: testSuite.ml
-  BuildDepends: oUnit, gapi-ocaml.gdata, monad
+  BuildDepends: oUnit, gapi-ocaml.gdata, monad-custom
 
 Test core
   Run$: flag(tests) || flag(all)
