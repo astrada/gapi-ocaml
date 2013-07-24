@@ -47,7 +47,7 @@ You will need the following libraries:
 * [ExtLib][] >= 1.5.1
 * [Yojson][] >= 1.0.2
 * [Xmlm][] >= 1.0.2
-* [pa_monad][] >= 6.0 (syntax extension for Monads, optional)
+* [pa_monad_custom][] >= 6.0.0 (syntax extension for Monads, optional)
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
 This library was developed and tested on Ubuntu 12.04 LTS (64-bit).
@@ -60,7 +60,7 @@ This library was developed and tested on Ubuntu 12.04 LTS (64-bit).
 [ExtLib]: http://code.google.com/p/ocaml-extlib/
 [Yojson]: http://mjambon.com/yojson.html
 [Xmlm]: http://erratique.ch/software/xmlm/doc/Xmlm
-[pa_monad]: http://www.cas.mcmaster.ca/~carette/pa_monad/
+[pa_monad_custom]: http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html
 [OUnit]: http://ounit.forge.ocamlcore.org/
 
 ### Configuration and installation
