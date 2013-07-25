@@ -6,49 +6,6 @@
   {{:https://developers.google.com/accounts/docs/OAuth2}API Documentation}.
   *)
 
-module Tokeninfo :
-sig
-  type t = {
-    access_type : string;
-    (** The access type granted with this token. It can be offline or online. *)
-    audience : string;
-    (** Who is the intended audience for this token. In general the same as issued_to. *)
-    email : string;
-    (** The email address of the user. Present only if the email scope is present in the request. *)
-    expires_in : int;
-    (** The expiry time of the token, as number of seconds left until expiry. *)
-    issued_to : string;
-    (** To whom was the token issued to. In general the same as audience. *)
-    scope : string;
-    (** The space separated list of scopes granted to this token. *)
-    user_id : string;
-    (** The Gaia obfuscated user id. *)
-    verified_email : bool;
-    (** Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request. *)
-    
-  }
-  
-  val access_type : (t, string) GapiLens.t
-  val audience : (t, string) GapiLens.t
-  val email : (t, string) GapiLens.t
-  val expires_in : (t, int) GapiLens.t
-  val issued_to : (t, string) GapiLens.t
-  val scope : (t, string) GapiLens.t
-  val user_id : (t, string) GapiLens.t
-  val verified_email : (t, bool) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Userinfo :
 sig
   type t = {
@@ -93,6 +50,49 @@ sig
   val name : (t, string) GapiLens.t
   val picture : (t, string) GapiLens.t
   val timezone : (t, string) GapiLens.t
+  val verified_email : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Tokeninfo :
+sig
+  type t = {
+    access_type : string;
+    (** The access type granted with this token. It can be offline or online. *)
+    audience : string;
+    (** Who is the intended audience for this token. In general the same as issued_to. *)
+    email : string;
+    (** The email address of the user. Present only if the email scope is present in the request. *)
+    expires_in : int;
+    (** The expiry time of the token, as number of seconds left until expiry. *)
+    issued_to : string;
+    (** To whom was the token issued to. In general the same as audience. *)
+    scope : string;
+    (** The space separated list of scopes granted to this token. *)
+    user_id : string;
+    (** The Gaia obfuscated user id. *)
+    verified_email : bool;
+    (** Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request. *)
+    
+  }
+  
+  val access_type : (t, string) GapiLens.t
+  val audience : (t, string) GapiLens.t
+  val email : (t, string) GapiLens.t
+  val expires_in : (t, int) GapiLens.t
+  val issued_to : (t, string) GapiLens.t
+  val scope : (t, string) GapiLens.t
+  val user_id : (t, string) GapiLens.t
   val verified_email : (t, bool) GapiLens.t
   
   val empty : t

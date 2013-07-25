@@ -1,5 +1,171 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
+module AdClient =
+struct
+  type t = {
+    id : string;
+    kind : string;
+    productCode : string;
+    supportsReporting : bool;
+    
+  }
+  
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let productCode = {
+    GapiLens.get = (fun x -> x.productCode);
+    GapiLens.set = (fun v x -> { x with productCode = v });
+  }
+  let supportsReporting = {
+    GapiLens.get = (fun x -> x.supportsReporting);
+    GapiLens.set = (fun v x -> { x with supportsReporting = v });
+  }
+  
+  let empty = {
+    id = "";
+    kind = "";
+    productCode = "";
+    supportsReporting = false;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "productCode" x.productCode;
+      GapiJson.render_bool_value "supportsReporting" x.supportsReporting;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "productCode"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with productCode = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "supportsReporting"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with supportsReporting = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiAdsenseV1_1Model.AdClient.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module AdClients =
+struct
+  type t = {
+    etag : string;
+    items : AdClient.t list;
+    kind : string;
+    nextPageToken : string;
+    
+  }
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  
+  let empty = {
+    etag = "";
+    items = [];
+    kind = "";
+    nextPageToken = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_array "items" AdClient.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              AdClient.parse
+              AdClient.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiAdsenseV1_1Model.AdClients.parse.parse_collection" e x')
+        AdClient.empty
+        (fun v -> { x with items = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiAdsenseV1_1Model.AdClients.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module AdUnit =
 struct
   type t = {
@@ -80,6 +246,92 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiAdsenseV1_1Model.AdUnit.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module AdUnits =
+struct
+  type t = {
+    etag : string;
+    items : AdUnit.t list;
+    kind : string;
+    nextPageToken : string;
+    
+  }
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  
+  let empty = {
+    etag = "";
+    items = [];
+    kind = "";
+    nextPageToken = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_array "items" AdUnit.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children AdUnit.parse AdUnit.empty (fun v -> v) cs
+          | e ->
+            GapiJson.unexpected "GapiAdsenseV1_1Model.AdUnits.parse.parse_collection" e x')
+        AdUnit.empty
+        (fun v -> { x with items = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiAdsenseV1_1Model.AdUnits.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -250,92 +502,6 @@ struct
   
 end
 
-module AdUnits =
-struct
-  type t = {
-    etag : string;
-    items : AdUnit.t list;
-    kind : string;
-    nextPageToken : string;
-    
-  }
-  
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v });
-  }
-  let items = {
-    GapiLens.get = (fun x -> x.items);
-    GapiLens.set = (fun v x -> { x with items = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let nextPageToken = {
-    GapiLens.get = (fun x -> x.nextPageToken);
-    GapiLens.set = (fun v x -> { x with nextPageToken = v });
-  }
-  
-  let empty = {
-    etag = "";
-    items = [];
-    kind = "";
-    nextPageToken = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "items" AdUnit.render x.items;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with etag = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
-        cs) ->
-      GapiJson.parse_collection
-        (fun x' -> function
-          | GapiCore.AnnotatedTree.Node
-              ({ GapiJson.name = ""; data_type = GapiJson.Object },
-              cs) ->
-            GapiJson.parse_children AdUnit.parse AdUnit.empty (fun v -> v) cs
-          | e ->
-            GapiJson.unexpected "GapiAdsenseV1_1Model.AdUnits.parse.parse_collection" e x')
-        AdUnit.empty
-        (fun v -> { x with items = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with nextPageToken = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiAdsenseV1_1Model.AdUnits.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
 module UrlChannel =
 struct
   type t = {
@@ -394,172 +560,6 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiAdsenseV1_1Model.UrlChannel.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
-module AdClient =
-struct
-  type t = {
-    id : string;
-    kind : string;
-    productCode : string;
-    supportsReporting : bool;
-    
-  }
-  
-  let id = {
-    GapiLens.get = (fun x -> x.id);
-    GapiLens.set = (fun v x -> { x with id = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let productCode = {
-    GapiLens.get = (fun x -> x.productCode);
-    GapiLens.set = (fun v x -> { x with productCode = v });
-  }
-  let supportsReporting = {
-    GapiLens.get = (fun x -> x.supportsReporting);
-    GapiLens.set = (fun v x -> { x with supportsReporting = v });
-  }
-  
-  let empty = {
-    id = "";
-    kind = "";
-    productCode = "";
-    supportsReporting = false;
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "id" x.id;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "productCode" x.productCode;
-      GapiJson.render_bool_value "supportsReporting" x.supportsReporting;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with id = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "productCode"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with productCode = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "supportsReporting"; data_type = GapiJson.Scalar },
-        `Bool v) ->
-      { x with supportsReporting = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiAdsenseV1_1Model.AdClient.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
-module AdClients =
-struct
-  type t = {
-    etag : string;
-    items : AdClient.t list;
-    kind : string;
-    nextPageToken : string;
-    
-  }
-  
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v });
-  }
-  let items = {
-    GapiLens.get = (fun x -> x.items);
-    GapiLens.set = (fun v x -> { x with items = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let nextPageToken = {
-    GapiLens.get = (fun x -> x.nextPageToken);
-    GapiLens.set = (fun v x -> { x with nextPageToken = v });
-  }
-  
-  let empty = {
-    etag = "";
-    items = [];
-    kind = "";
-    nextPageToken = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "items" AdClient.render x.items;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with etag = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
-        cs) ->
-      GapiJson.parse_collection
-        (fun x' -> function
-          | GapiCore.AnnotatedTree.Node
-              ({ GapiJson.name = ""; data_type = GapiJson.Object },
-              cs) ->
-            GapiJson.parse_children
-              AdClient.parse
-              AdClient.empty
-              (fun v -> v)
-              cs
-          | e ->
-            GapiJson.unexpected "GapiAdsenseV1_1Model.AdClients.parse.parse_collection" e x')
-        AdClient.empty
-        (fun v -> { x with items = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with nextPageToken = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiAdsenseV1_1Model.AdClients.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -653,11 +653,11 @@ struct
   
 end
 
-module UrlChannels =
+module CustomChannels =
 struct
   type t = {
     etag : string;
-    items : UrlChannel.t list;
+    items : CustomChannel.t list;
     kind : string;
     nextPageToken : string;
     
@@ -691,7 +691,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "items" UrlChannel.render x.items;
+      GapiJson.render_array "items" CustomChannel.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
@@ -713,13 +713,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              UrlChannel.parse
-              UrlChannel.empty
+              CustomChannel.parse
+              CustomChannel.empty
               (fun v -> v)
               cs
           | e ->
-            GapiJson.unexpected "GapiAdsenseV1_1Model.UrlChannels.parse.parse_collection" e x')
-        UrlChannel.empty
+            GapiJson.unexpected "GapiAdsenseV1_1Model.CustomChannels.parse.parse_collection" e x')
+        CustomChannel.empty
         (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -735,7 +735,97 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiAdsenseV1_1Model.UrlChannels.parse" e x
+      GapiJson.unexpected "GapiAdsenseV1_1Model.CustomChannels.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module Accounts =
+struct
+  type t = {
+    etag : string;
+    items : Account.t list;
+    kind : string;
+    nextPageToken : string;
+    
+  }
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  
+  let empty = {
+    etag = "";
+    items = [];
+    kind = "";
+    nextPageToken = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_array "items" Account.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              Account.parse
+              Account.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiAdsenseV1_1Model.Accounts.parse.parse_collection" e x')
+        Account.empty
+        (fun v -> { x with items = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiAdsenseV1_1Model.Accounts.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -977,11 +1067,11 @@ struct
   
 end
 
-module CustomChannels =
+module UrlChannels =
 struct
   type t = {
     etag : string;
-    items : CustomChannel.t list;
+    items : UrlChannel.t list;
     kind : string;
     nextPageToken : string;
     
@@ -1015,7 +1105,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "items" CustomChannel.render x.items;
+      GapiJson.render_array "items" UrlChannel.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
@@ -1037,13 +1127,13 @@ struct
               ({ GapiJson.name = ""; data_type = GapiJson.Object },
               cs) ->
             GapiJson.parse_children
-              CustomChannel.parse
-              CustomChannel.empty
+              UrlChannel.parse
+              UrlChannel.empty
               (fun v -> v)
               cs
           | e ->
-            GapiJson.unexpected "GapiAdsenseV1_1Model.CustomChannels.parse.parse_collection" e x')
-        CustomChannel.empty
+            GapiJson.unexpected "GapiAdsenseV1_1Model.UrlChannels.parse.parse_collection" e x')
+        UrlChannel.empty
         (fun v -> { x with items = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
@@ -1059,97 +1149,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiAdsenseV1_1Model.CustomChannels.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
-module Accounts =
-struct
-  type t = {
-    etag : string;
-    items : Account.t list;
-    kind : string;
-    nextPageToken : string;
-    
-  }
-  
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v });
-  }
-  let items = {
-    GapiLens.get = (fun x -> x.items);
-    GapiLens.set = (fun v x -> { x with items = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let nextPageToken = {
-    GapiLens.get = (fun x -> x.nextPageToken);
-    GapiLens.set = (fun v x -> { x with nextPageToken = v });
-  }
-  
-  let empty = {
-    etag = "";
-    items = [];
-    kind = "";
-    nextPageToken = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "items" Account.render x.items;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with etag = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
-        cs) ->
-      GapiJson.parse_collection
-        (fun x' -> function
-          | GapiCore.AnnotatedTree.Node
-              ({ GapiJson.name = ""; data_type = GapiJson.Object },
-              cs) ->
-            GapiJson.parse_children
-              Account.parse
-              Account.empty
-              (fun v -> v)
-              cs
-          | e ->
-            GapiJson.unexpected "GapiAdsenseV1_1Model.Accounts.parse.parse_collection" e x')
-        Account.empty
-        (fun v -> { x with items = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with nextPageToken = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiAdsenseV1_1Model.Accounts.parse" e x
+      GapiJson.unexpected "GapiAdsenseV1_1Model.UrlChannels.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

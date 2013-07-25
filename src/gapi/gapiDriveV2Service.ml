@@ -7,6 +7,8 @@ module Scope =
 struct
   let drive = "https://www.googleapis.com/auth/drive"
   
+  let drive_appdata = "https://www.googleapis.com/auth/drive.appdata"
+  
   let drive_apps_readonly = "https://www.googleapis.com/auth/drive.apps.readonly"
   
   let drive_file = "https://www.googleapis.com/auth/drive.file"

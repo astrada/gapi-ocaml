@@ -98,6 +98,96 @@ struct
   
 end
 
+module TaskLists =
+struct
+  type t = {
+    etag : string;
+    items : TaskList.t list;
+    kind : string;
+    nextPageToken : string;
+    
+  }
+  
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let items = {
+    GapiLens.get = (fun x -> x.items);
+    GapiLens.set = (fun v x -> { x with items = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  
+  let empty = {
+    etag = "";
+    items = [];
+    kind = "";
+    nextPageToken = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_array "items" TaskList.render x.items;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              TaskList.parse
+              TaskList.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse.parse_collection" e x')
+        TaskList.empty
+        (fun v -> { x with items = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module Task =
 struct
   module Links =
@@ -359,96 +449,6 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiTasksV1Model.Task.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
-module TaskLists =
-struct
-  type t = {
-    etag : string;
-    items : TaskList.t list;
-    kind : string;
-    nextPageToken : string;
-    
-  }
-  
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v });
-  }
-  let items = {
-    GapiLens.get = (fun x -> x.items);
-    GapiLens.set = (fun v x -> { x with items = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let nextPageToken = {
-    GapiLens.get = (fun x -> x.nextPageToken);
-    GapiLens.set = (fun v x -> { x with nextPageToken = v });
-  }
-  
-  let empty = {
-    etag = "";
-    items = [];
-    kind = "";
-    nextPageToken = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_array "items" TaskList.render x.items;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with etag = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "items"; data_type = GapiJson.Array },
-        cs) ->
-      GapiJson.parse_collection
-        (fun x' -> function
-          | GapiCore.AnnotatedTree.Node
-              ({ GapiJson.name = ""; data_type = GapiJson.Object },
-              cs) ->
-            GapiJson.parse_children
-              TaskList.parse
-              TaskList.empty
-              (fun v -> v)
-              cs
-          | e ->
-            GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse.parse_collection" e x')
-        TaskList.empty
-        (fun v -> { x with items = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with nextPageToken = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiTasksV1Model.TaskLists.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

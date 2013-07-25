@@ -1,254 +1,5 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-module Promotion =
-struct
-  module Image =
-  struct
-    type t = {
-      height : int;
-      source : string;
-      width : int;
-      
-    }
-    
-    let height = {
-      GapiLens.get = (fun x -> x.height);
-      GapiLens.set = (fun v x -> { x with height = v });
-    }
-    let source = {
-      GapiLens.get = (fun x -> x.source);
-      GapiLens.set = (fun v x -> { x with source = v });
-    }
-    let width = {
-      GapiLens.get = (fun x -> x.width);
-      GapiLens.set = (fun v x -> { x with width = v });
-    }
-    
-    let empty = {
-      height = 0;
-      source = "";
-      width = 0;
-      
-    }
-    
-    let rec render_content x = 
-       [
-        GapiJson.render_int_value "height" x.height;
-        GapiJson.render_string_value "source" x.source;
-        GapiJson.render_int_value "width" x.width;
-        
-      ]
-    and render x = 
-      GapiJson.render_object "" (render_content x)
-    
-    let rec parse x = function
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "height"; data_type = GapiJson.Scalar },
-          `Int v) ->
-        { x with height = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "source"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with source = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "width"; data_type = GapiJson.Scalar },
-          `Int v) ->
-        { x with width = v }
-      | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = ""; data_type = GapiJson.Object },
-        cs) ->
-        GapiJson.parse_children parse empty (fun x -> x) cs
-      | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.Image.parse" e x
-    
-  end
-  
-  module BodyLines =
-  struct
-    type t = {
-      htmlTitle : string;
-      link : string;
-      title : string;
-      url : string;
-      
-    }
-    
-    let htmlTitle = {
-      GapiLens.get = (fun x -> x.htmlTitle);
-      GapiLens.set = (fun v x -> { x with htmlTitle = v });
-    }
-    let link = {
-      GapiLens.get = (fun x -> x.link);
-      GapiLens.set = (fun v x -> { x with link = v });
-    }
-    let title = {
-      GapiLens.get = (fun x -> x.title);
-      GapiLens.set = (fun v x -> { x with title = v });
-    }
-    let url = {
-      GapiLens.get = (fun x -> x.url);
-      GapiLens.set = (fun v x -> { x with url = v });
-    }
-    
-    let empty = {
-      htmlTitle = "";
-      link = "";
-      title = "";
-      url = "";
-      
-    }
-    
-    let rec render_content x = 
-       [
-        GapiJson.render_string_value "htmlTitle" x.htmlTitle;
-        GapiJson.render_string_value "link" x.link;
-        GapiJson.render_string_value "title" x.title;
-        GapiJson.render_string_value "url" x.url;
-        
-      ]
-    and render x = 
-      GapiJson.render_object "" (render_content x)
-    
-    let rec parse x = function
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with htmlTitle = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with link = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with title = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with url = v }
-      | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = ""; data_type = GapiJson.Object },
-        cs) ->
-        GapiJson.parse_children parse empty (fun x -> x) cs
-      | e ->
-        GapiJson.unexpected "GapiCustomsearchV1Model.BodyLines.parse" e x
-    
-  end
-  
-  type t = {
-    bodyLines : BodyLines.t list;
-    displayLink : string;
-    htmlTitle : string;
-    image : Image.t;
-    link : string;
-    title : string;
-    
-  }
-  
-  let bodyLines = {
-    GapiLens.get = (fun x -> x.bodyLines);
-    GapiLens.set = (fun v x -> { x with bodyLines = v });
-  }
-  let displayLink = {
-    GapiLens.get = (fun x -> x.displayLink);
-    GapiLens.set = (fun v x -> { x with displayLink = v });
-  }
-  let htmlTitle = {
-    GapiLens.get = (fun x -> x.htmlTitle);
-    GapiLens.set = (fun v x -> { x with htmlTitle = v });
-  }
-  let image = {
-    GapiLens.get = (fun x -> x.image);
-    GapiLens.set = (fun v x -> { x with image = v });
-  }
-  let link = {
-    GapiLens.get = (fun x -> x.link);
-    GapiLens.set = (fun v x -> { x with link = v });
-  }
-  let title = {
-    GapiLens.get = (fun x -> x.title);
-    GapiLens.set = (fun v x -> { x with title = v });
-  }
-  
-  let empty = {
-    bodyLines = [];
-    displayLink = "";
-    htmlTitle = "";
-    image = Image.empty;
-    link = "";
-    title = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_array "bodyLines" BodyLines.render x.bodyLines;
-      GapiJson.render_string_value "displayLink" x.displayLink;
-      GapiJson.render_string_value "htmlTitle" x.htmlTitle;
-      (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
-      GapiJson.render_string_value "link" x.link;
-      GapiJson.render_string_value "title" x.title;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "bodyLines"; data_type = GapiJson.Array },
-        cs) ->
-      GapiJson.parse_collection
-        (fun x' -> function
-          | GapiCore.AnnotatedTree.Node
-              ({ GapiJson.name = ""; data_type = GapiJson.Object },
-              cs) ->
-            GapiJson.parse_children
-              BodyLines.parse
-              BodyLines.empty
-              (fun v -> v)
-              cs
-          | e ->
-            GapiJson.unexpected "GapiCustomsearchV1Model.Promotion.parse.parse_collection" e x')
-        BodyLines.empty
-        (fun v -> { x with bodyLines = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "displayLink"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with displayLink = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with htmlTitle = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "image"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        Image.parse
-        Image.empty
-        (fun v -> { x with image = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with link = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with title = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiCustomsearchV1Model.Promotion.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
 module Query =
 struct
   type t = {
@@ -1205,6 +956,255 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCustomsearchV1Model.Result.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module Promotion =
+struct
+  module Image =
+  struct
+    type t = {
+      height : int;
+      source : string;
+      width : int;
+      
+    }
+    
+    let height = {
+      GapiLens.get = (fun x -> x.height);
+      GapiLens.set = (fun v x -> { x with height = v });
+    }
+    let source = {
+      GapiLens.get = (fun x -> x.source);
+      GapiLens.set = (fun v x -> { x with source = v });
+    }
+    let width = {
+      GapiLens.get = (fun x -> x.width);
+      GapiLens.set = (fun v x -> { x with width = v });
+    }
+    
+    let empty = {
+      height = 0;
+      source = "";
+      width = 0;
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_int_value "height" x.height;
+        GapiJson.render_string_value "source" x.source;
+        GapiJson.render_int_value "width" x.width;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "height"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with height = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "source"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with source = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "width"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with width = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCustomsearchV1Model.Image.parse" e x
+    
+  end
+  
+  module BodyLines =
+  struct
+    type t = {
+      htmlTitle : string;
+      link : string;
+      title : string;
+      url : string;
+      
+    }
+    
+    let htmlTitle = {
+      GapiLens.get = (fun x -> x.htmlTitle);
+      GapiLens.set = (fun v x -> { x with htmlTitle = v });
+    }
+    let link = {
+      GapiLens.get = (fun x -> x.link);
+      GapiLens.set = (fun v x -> { x with link = v });
+    }
+    let title = {
+      GapiLens.get = (fun x -> x.title);
+      GapiLens.set = (fun v x -> { x with title = v });
+    }
+    let url = {
+      GapiLens.get = (fun x -> x.url);
+      GapiLens.set = (fun v x -> { x with url = v });
+    }
+    
+    let empty = {
+      htmlTitle = "";
+      link = "";
+      title = "";
+      url = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "htmlTitle" x.htmlTitle;
+        GapiJson.render_string_value "link" x.link;
+        GapiJson.render_string_value "title" x.title;
+        GapiJson.render_string_value "url" x.url;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with htmlTitle = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with link = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with title = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with url = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCustomsearchV1Model.BodyLines.parse" e x
+    
+  end
+  
+  type t = {
+    bodyLines : BodyLines.t list;
+    displayLink : string;
+    htmlTitle : string;
+    image : Image.t;
+    link : string;
+    title : string;
+    
+  }
+  
+  let bodyLines = {
+    GapiLens.get = (fun x -> x.bodyLines);
+    GapiLens.set = (fun v x -> { x with bodyLines = v });
+  }
+  let displayLink = {
+    GapiLens.get = (fun x -> x.displayLink);
+    GapiLens.set = (fun v x -> { x with displayLink = v });
+  }
+  let htmlTitle = {
+    GapiLens.get = (fun x -> x.htmlTitle);
+    GapiLens.set = (fun v x -> { x with htmlTitle = v });
+  }
+  let image = {
+    GapiLens.get = (fun x -> x.image);
+    GapiLens.set = (fun v x -> { x with image = v });
+  }
+  let link = {
+    GapiLens.get = (fun x -> x.link);
+    GapiLens.set = (fun v x -> { x with link = v });
+  }
+  let title = {
+    GapiLens.get = (fun x -> x.title);
+    GapiLens.set = (fun v x -> { x with title = v });
+  }
+  
+  let empty = {
+    bodyLines = [];
+    displayLink = "";
+    htmlTitle = "";
+    image = Image.empty;
+    link = "";
+    title = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_array "bodyLines" BodyLines.render x.bodyLines;
+      GapiJson.render_string_value "displayLink" x.displayLink;
+      GapiJson.render_string_value "htmlTitle" x.htmlTitle;
+      (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
+      GapiJson.render_string_value "link" x.link;
+      GapiJson.render_string_value "title" x.title;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "bodyLines"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              BodyLines.parse
+              BodyLines.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiCustomsearchV1Model.Promotion.parse.parse_collection" e x')
+        BodyLines.empty
+        (fun v -> { x with bodyLines = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "displayLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with displayLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "htmlTitle"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with htmlTitle = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "image"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Image.parse
+        Image.empty
+        (fun v -> { x with image = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "link"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with link = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with title = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCustomsearchV1Model.Promotion.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

@@ -25,7 +25,7 @@ sig
   module Mcf :
   sig
     
-    (** Returns Analytics Multi-Channel Funnels data for a profile.
+    (** Returns Analytics Multi-Channel Funnels data for a view (profile).
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
       @param etag Optional ETag.
@@ -35,7 +35,7 @@ sig
       @param max_results The maximum number of entries to include in this feed.
       @param sort A comma-separated list of dimensions or metrics that determine the sort order for the Analytics data.
       @param start_index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-      @param ids Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.
+      @param ids Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
       @param start_date Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.
       @param end_date End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.
       @param metrics A comma-separated list of Multi-Channel Funnels metrics. E.g., 'mcf:totalConversions,mcf:totalConversionValue'. At least one metric must be specified.
@@ -62,7 +62,7 @@ sig
   module Ga :
   sig
     
-    (** Returns Analytics data for a profile.
+    (** Returns Analytics data for a view (profile).
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
       @param etag Optional ETag.
@@ -73,7 +73,7 @@ sig
       @param segment An Analytics advanced segment to be applied to data.
       @param sort A comma-separated list of dimensions or metrics that determine the sort order for Analytics data.
       @param start_index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-      @param ids Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.
+      @param ids Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
       @param start_date Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.
       @param end_date End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.
       @param metrics A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified.
@@ -151,14 +151,14 @@ sig
   module Profiles :
   sig
     
-    (** Lists profiles to which the user has access.
+    (** Lists views (profiles) to which the user has access.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
       @param std_params Optional standard parameters.
-      @param max_results The maximum number of profiles to include in this response.
+      @param max_results The maximum number of views (profiles) to include in this response.
       @param start_index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-      @param accountId Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.
-      @param webPropertyId Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.
+      @param accountId Account ID for the view (profiles) to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.
+      @param webPropertyId Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.
       *)
     val list :
       ?base_url:string ->
@@ -184,7 +184,7 @@ sig
       @param start_index An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
       @param accountId Account ID to retrieve goals for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.
       @param webPropertyId Web property ID to retrieve goals for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.
-      @param profileId Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.
+      @param profileId View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or '~all', which refers to all the views (profiles) that user has access to.
       *)
     val list :
       ?base_url:string ->
@@ -209,7 +209,7 @@ sig
       @param std_params Optional standard parameters.
       @param accountId Account ID to which the experiment belongs
       @param webPropertyId Web property ID to which the experiment belongs
-      @param profileId Profile ID to which the experiment belongs
+      @param profileId View (Profile) ID to which the experiment belongs
       @param experimentId ID of the experiment to delete
       *)
     val delete :
@@ -229,7 +229,7 @@ sig
       @param std_params Optional standard parameters.
       @param accountId Account ID to retrieve the experiment for.
       @param webPropertyId Web property ID to retrieve the experiment for.
-      @param profileId Profile ID to retrieve the experiment for.
+      @param profileId View (Profile) ID to retrieve the experiment for.
       @param experimentId Experiment ID to retrieve the experiment for.
       *)
     val get :
@@ -249,7 +249,7 @@ sig
       @param std_params Optional standard parameters.
       @param accountId Account ID to create the experiment for.
       @param webPropertyId Web property ID to create the experiment for.
-      @param profileId Profile ID to create the experiment for.
+      @param profileId View (Profile) ID to create the experiment for.
       *)
     val insert :
       ?base_url:string ->
@@ -269,7 +269,7 @@ sig
       @param start_index An index of the first experiment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
       @param accountId Account ID to retrieve experiments for.
       @param webPropertyId Web property ID to retrieve experiments for.
-      @param profileId Profile ID to retrieve experiments for.
+      @param profileId View (Profile) ID to retrieve experiments for.
       *)
     val list :
       ?base_url:string ->
@@ -288,7 +288,7 @@ sig
       @param std_params Optional standard parameters.
       @param accountId Account ID of the experiment to update.
       @param webPropertyId Web property ID of the experiment to update.
-      @param profileId Profile ID of the experiment to update.
+      @param profileId View (Profile) ID of the experiment to update.
       @param experimentId Experiment ID of the experiment to update.
       *)
     val patch :
@@ -308,7 +308,7 @@ sig
       @param std_params Optional standard parameters.
       @param accountId Account ID of the experiment to update.
       @param webPropertyId Web property ID of the experiment to update.
-      @param profileId Profile ID of the experiment to update.
+      @param profileId View (Profile) ID of the experiment to update.
       @param experimentId Experiment ID of the experiment to update.
       *)
     val update :

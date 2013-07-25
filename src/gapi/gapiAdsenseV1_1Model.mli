@@ -6,6 +6,68 @@
   {{:https://developers.google.com/adsense/management/}API Documentation}.
   *)
 
+module AdClient :
+sig
+  type t = {
+    id : string;
+    (** Unique identifier of this ad client. *)
+    kind : string;
+    (** Kind of resource this is, in this case adsense#adClient. *)
+    productCode : string;
+    (** This ad client's product code, which corresponds to the PRODUCT_CODE report dimension. *)
+    supportsReporting : bool;
+    (** Whether this ad client supports being reported on. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val productCode : (t, string) GapiLens.t
+  val supportsReporting : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AdClients :
+sig
+  type t = {
+    etag : string;
+    (** ETag of this response for caching purposes. *)
+    items : AdClient.t list;
+    (** The ad clients returned in this list response. *)
+    kind : string;
+    (** Kind of list this is, in this case adsense#adClients. *)
+    nextPageToken : string;
+    (** Continuation token used to page through ad clients. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, AdClient.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module AdUnit :
 sig
   type t = {
@@ -32,6 +94,37 @@ INACTIVE: Indicates that there has been no activity on this ad unit in the last 
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val status : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AdUnits :
+sig
+  type t = {
+    etag : string;
+    (** ETag of this response for caching purposes. *)
+    items : AdUnit.t list;
+    (** The ad units returned in this list response. *)
+    kind : string;
+    (** Kind of list this is, in this case adsense#adUnits. *)
+    nextPageToken : string;
+    (** Continuation token used to page through ad units. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, AdUnit.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -106,37 +199,6 @@ sig
   
 end
 
-module AdUnits :
-sig
-  type t = {
-    etag : string;
-    (** ETag of this response for caching purposes. *)
-    items : AdUnit.t list;
-    (** The ad units returned in this list response. *)
-    kind : string;
-    (** Kind of list this is, in this case adsense#adUnits. *)
-    nextPageToken : string;
-    (** Continuation token used to page through ad units. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val items : (t, AdUnit.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val nextPageToken : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module UrlChannel :
 sig
   type t = {
@@ -152,68 +214,6 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val urlPattern : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module AdClient :
-sig
-  type t = {
-    id : string;
-    (** Unique identifier of this ad client. *)
-    kind : string;
-    (** Kind of resource this is, in this case adsense#adClient. *)
-    productCode : string;
-    (** This ad client's product code, which corresponds to the PRODUCT_CODE report dimension. *)
-    supportsReporting : bool;
-    (** Whether this ad client supports being reported on. *)
-    
-  }
-  
-  val id : (t, string) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val productCode : (t, string) GapiLens.t
-  val supportsReporting : (t, bool) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module AdClients :
-sig
-  type t = {
-    etag : string;
-    (** ETag of this response for caching purposes. *)
-    items : AdClient.t list;
-    (** The ad clients returned in this list response. *)
-    kind : string;
-    (** Kind of list this is, in this case adsense#adClients. *)
-    nextPageToken : string;
-    (** Continuation token used to page through ad clients. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val items : (t, AdClient.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -258,22 +258,53 @@ sig
   
 end
 
-module UrlChannels :
+module CustomChannels :
 sig
   type t = {
     etag : string;
     (** ETag of this response for caching purposes. *)
-    items : UrlChannel.t list;
-    (** The URL channels returned in this list response. *)
+    items : CustomChannel.t list;
+    (** The custom channels returned in this list response. *)
     kind : string;
-    (** Kind of list this is, in this case adsense#urlChannels. *)
+    (** Kind of list this is, in this case adsense#customChannels. *)
     nextPageToken : string;
-    (** Continuation token used to page through URL channels. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
+    (** Continuation token used to page through custom channels. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
     
   }
   
   val etag : (t, string) GapiLens.t
-  val items : (t, UrlChannel.t list) GapiLens.t
+  val items : (t, CustomChannel.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Accounts :
+sig
+  type t = {
+    etag : string;
+    (** ETag of this response for caching purposes. *)
+    items : Account.t list;
+    (** The accounts returned in this list response. *)
+    kind : string;
+    (** Kind of list this is, in this case adsense#accounts. *)
+    nextPageToken : string;
+    (** Continuation token used to page through accounts. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, Account.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   
@@ -353,53 +384,22 @@ sig
   
 end
 
-module CustomChannels :
+module UrlChannels :
 sig
   type t = {
     etag : string;
     (** ETag of this response for caching purposes. *)
-    items : CustomChannel.t list;
-    (** The custom channels returned in this list response. *)
+    items : UrlChannel.t list;
+    (** The URL channels returned in this list response. *)
     kind : string;
-    (** Kind of list this is, in this case adsense#customChannels. *)
+    (** Kind of list this is, in this case adsense#urlChannels. *)
     nextPageToken : string;
-    (** Continuation token used to page through custom channels. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
+    (** Continuation token used to page through URL channels. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
     
   }
   
   val etag : (t, string) GapiLens.t
-  val items : (t, CustomChannel.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val nextPageToken : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module Accounts :
-sig
-  type t = {
-    etag : string;
-    (** ETag of this response for caching purposes. *)
-    items : Account.t list;
-    (** The accounts returned in this list response. *)
-    kind : string;
-    (** Kind of list this is, in this case adsense#accounts. *)
-    nextPageToken : string;
-    (** Continuation token used to page through accounts. To retrieve the next page of results, set the next request's "pageToken" value to this. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val items : (t, Account.t list) GapiLens.t
+  val items : (t, UrlChannel.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   

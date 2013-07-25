@@ -43,6 +43,37 @@ sig
   
 end
 
+module TaskLists :
+sig
+  type t = {
+    etag : string;
+    (** ETag of the resource. *)
+    items : TaskList.t list;
+    (** Collection of task lists. *)
+    kind : string;
+    (** Type of the resource. This is always "tasks#taskLists". *)
+    nextPageToken : string;
+    (** Token that can be used to request the next page of this result. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, TaskList.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Task :
 sig
   module Links :
@@ -118,37 +149,6 @@ sig
   val status : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module TaskLists :
-sig
-  type t = {
-    etag : string;
-    (** ETag of the resource. *)
-    items : TaskList.t list;
-    (** Collection of task lists. *)
-    kind : string;
-    (** Type of the resource. This is always "tasks#taskLists". *)
-    nextPageToken : string;
-    (** Token that can be used to request the next page of this result. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val items : (t, TaskList.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   

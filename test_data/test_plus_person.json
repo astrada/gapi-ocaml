@@ -3,13 +3,6 @@
   "birthday": "string",
   "currentLocation": "string",
   "displayName": "string",
-  "emails": [
-    {
-      "primary": true,
-      "type": "string",
-      "value": "string"
-    }
-  ],
   "gender": "string",
   "id": "string",
   "image": {

@@ -100,6 +100,106 @@ sig
   
 end
 
+module DirectoryList :
+sig
+  module Items :
+  sig
+    module Icons :
+    sig
+      type t = {
+        x16 : string;
+        (** The URL of the 16x16 icon. *)
+        x32 : string;
+        (** The URL of the 32x32 icon. *)
+        
+      }
+      
+      val x16 : (t, string) GapiLens.t
+      val x32 : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      description : string;
+      (** The description of this API. *)
+      discoveryLink : string;
+      (** A link to the discovery document. *)
+      discoveryRestUrl : string;
+      (** The URL for the discovery REST document. *)
+      documentationLink : string;
+      (** A link to human readable documentation for the API. *)
+      icons : Icons.t;
+      (** Links to 16x16 and 32x32 icons representing the API. *)
+      id : string;
+      (** The id of this API. *)
+      kind : string;
+      (** The kind for this response. *)
+      labels : string list;
+      (** Labels for the status of this API, such as labs or deprecated. *)
+      name : string;
+      (** The name of the API. *)
+      preferred : bool;
+      (** True if this version is the preferred version to use. *)
+      title : string;
+      (** The title of this API. *)
+      version : string;
+      (** The version of the API. *)
+      
+    }
+    
+    val description : (t, string) GapiLens.t
+    val discoveryLink : (t, string) GapiLens.t
+    val discoveryRestUrl : (t, string) GapiLens.t
+    val documentationLink : (t, string) GapiLens.t
+    val icons : (t, Icons.t) GapiLens.t
+    val id : (t, string) GapiLens.t
+    val kind : (t, string) GapiLens.t
+    val labels : (t, string list) GapiLens.t
+    val name : (t, string) GapiLens.t
+    val preferred : (t, bool) GapiLens.t
+    val title : (t, string) GapiLens.t
+    val version : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    discoveryVersion : string;
+    (** Indicate the version of the Discovery API used to generate this doc. *)
+    items : Items.t list;
+    (** The individual directory entries. One entry per api/version pair. *)
+    kind : string;
+    (** The kind for this response. *)
+    
+  }
+  
+  val discoveryVersion : (t, string) GapiLens.t
+  val items : (t, Items.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module RestMethod :
 sig
   module Response :
@@ -125,10 +225,13 @@ sig
     type t = {
       _ref : string;
       (** Schema ID for the request schema. *)
+      parameterName : string;
+      (** parameter name. *)
       
     }
     
     val _ref : (t, string) GapiLens.t
+    val parameterName : (t, string) GapiLens.t
     
     val empty : t
     
@@ -474,106 +577,6 @@ sig
   val servicePath : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val version : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module DirectoryList :
-sig
-  module Items :
-  sig
-    module Icons :
-    sig
-      type t = {
-        x16 : string;
-        (** The URL of the 16x16 icon. *)
-        x32 : string;
-        (** The URL of the 32x32 icon. *)
-        
-      }
-      
-      val x16 : (t, string) GapiLens.t
-      val x32 : (t, string) GapiLens.t
-      
-      val empty : t
-      
-      val render : t -> GapiJson.json_data_model list
-      
-      val parse : t -> GapiJson.json_data_model -> t
-      
-    end
-    
-    type t = {
-      description : string;
-      (** The description of this API. *)
-      discoveryLink : string;
-      (** A link to the discovery document. *)
-      discoveryRestUrl : string;
-      (** The URL for the discovery REST document. *)
-      documentationLink : string;
-      (** A link to human readable documentation for the API. *)
-      icons : Icons.t;
-      (** Links to 16x16 and 32x32 icons representing the API. *)
-      id : string;
-      (** The id of this API. *)
-      kind : string;
-      (** The kind for this response. *)
-      labels : string list;
-      (** Labels for the status of this API, such as labs or deprecated. *)
-      name : string;
-      (** The name of the API. *)
-      preferred : bool;
-      (** True if this version is the preferred version to use. *)
-      title : string;
-      (** The title of this API. *)
-      version : string;
-      (** The version of the API. *)
-      
-    }
-    
-    val description : (t, string) GapiLens.t
-    val discoveryLink : (t, string) GapiLens.t
-    val discoveryRestUrl : (t, string) GapiLens.t
-    val documentationLink : (t, string) GapiLens.t
-    val icons : (t, Icons.t) GapiLens.t
-    val id : (t, string) GapiLens.t
-    val kind : (t, string) GapiLens.t
-    val labels : (t, string list) GapiLens.t
-    val name : (t, string) GapiLens.t
-    val preferred : (t, bool) GapiLens.t
-    val title : (t, string) GapiLens.t
-    val version : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
-  type t = {
-    discoveryVersion : string;
-    (** Indicate the version of the Discovery API used to generate this doc. *)
-    items : Items.t list;
-    (** The individual directory entries. One entry per api/version pair. *)
-    kind : string;
-    (** The kind for this response. *)
-    
-  }
-  
-  val discoveryVersion : (t, string) GapiLens.t
-  val items : (t, Items.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
   
   val empty : t
   

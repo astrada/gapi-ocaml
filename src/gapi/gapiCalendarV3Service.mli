@@ -318,6 +318,24 @@ sig
   
 end
 
+module ChannelsResource :
+sig
+  
+  (** 
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param std_params Optional standard parameters.
+    *)
+  val stop :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    GapiCalendarV3Model.Channel.t ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  
+end
+
 module ColorsResource :
 sig
   
@@ -393,7 +411,7 @@ sig
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Event.t * GapiConversation.Session.t
   
-  (** Imports an event.
+  (** Imports an event. This operation is used to add a private copy of an existing event to a calendar.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -578,6 +596,48 @@ sig
     GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Event.t * GapiConversation.Session.t
+  
+  (** Subscribe to changes in events collection
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param std_params Optional standard parameters.
+    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param iCalUID Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.
+    @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
+    @param maxResults Maximum number of events returned on one result page. Optional.
+    @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
+    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
+    @param showHiddenInvitations Whether to include hidden invitations in the result. Optional. The default is False.
+    @param singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
+    @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
+    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.
+    @param calendarId Calendar identifier.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?alwaysIncludeEmail:bool ->
+    ?iCalUID:string ->
+    ?maxAttendees:int ->
+    ?maxResults:int ->
+    ?orderBy:OrderBy.t ->
+    ?pageToken:string ->
+    ?q:string ->
+    ?showDeleted:bool ->
+    ?showHiddenInvitations:bool ->
+    ?singleEvents:bool ->
+    ?timeMax:GapiDate.t ->
+    ?timeMin:GapiDate.t ->
+    ?timeZone:string ->
+    ?updatedMin:GapiDate.t ->
+    calendarId:string ->
+    GapiCalendarV3Model.Channel.t ->
+    GapiConversation.Session.t ->
+    GapiCalendarV3Model.Channel.t * GapiConversation.Session.t
   
   
 end

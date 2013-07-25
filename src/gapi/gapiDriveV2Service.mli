@@ -13,6 +13,9 @@ sig
   val drive : string
   (** View and manage the files and documents in your Google Drive *)
   
+  val drive_appdata : string
+  (** View and manage its own configuration data in your Google Drive *)
+  
   val drive_apps_readonly : string
   (** View your Google Drive apps *)
   

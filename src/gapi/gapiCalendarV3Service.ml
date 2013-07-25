@@ -428,6 +428,25 @@ struct
   
 end
 
+module ChannelsResource =
+struct
+  let stop
+        ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?std_params
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["channels"; "stop"] base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url GapiRequest.parse_empty_response session 
+    
+  
+end
+
 module ColorsResource =
 struct
   let get
@@ -817,6 +836,40 @@ struct
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Event.to_data_model) ~data:event
       full_url (GapiJson.parse_json_response Event.of_data_model) session 
+    
+  let watch
+        ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?std_params
+        ?alwaysIncludeEmail
+        ?iCalUID
+        ?maxAttendees
+        ?maxResults
+        ?orderBy
+        ?pageToken
+        ?q
+        ?showDeleted
+        ?showHiddenInvitations
+        ?singleEvents
+        ?timeMax
+        ?timeMin
+        ?timeZone
+        ?updatedMin
+        ~calendarId
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "events"; "watch"] base_url in
+    let params = EventsParameters.merge_parameters
+      ?standard_parameters:std_params ?alwaysIncludeEmail ?iCalUID
+      ?maxAttendees ?maxResults ?orderBy ?pageToken ?q ?showDeleted
+      ?showHiddenInvitations ?singleEvents ?timeMax ?timeMin ?timeZone
+      ?updatedMin () in
+    let query_parameters = Option.map EventsParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url
+      (GapiJson.parse_json_response Channel.of_data_model) session 
     
   
 end

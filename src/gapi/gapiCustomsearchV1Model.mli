@@ -6,94 +6,6 @@
   {{:https://developers.google.com/custom-search/v1/using_rest}API Documentation}.
   *)
 
-module Promotion :
-sig
-  module Image :
-  sig
-    type t = {
-      height : int;
-      (**  *)
-      source : string;
-      (**  *)
-      width : int;
-      (**  *)
-      
-    }
-    
-    val height : (t, int) GapiLens.t
-    val source : (t, string) GapiLens.t
-    val width : (t, int) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
-  module BodyLines :
-  sig
-    type t = {
-      htmlTitle : string;
-      (**  *)
-      link : string;
-      (**  *)
-      title : string;
-      (**  *)
-      url : string;
-      (**  *)
-      
-    }
-    
-    val htmlTitle : (t, string) GapiLens.t
-    val link : (t, string) GapiLens.t
-    val title : (t, string) GapiLens.t
-    val url : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
-  type t = {
-    bodyLines : BodyLines.t list;
-    (**  *)
-    displayLink : string;
-    (**  *)
-    htmlTitle : string;
-    (**  *)
-    image : Image.t;
-    (**  *)
-    link : string;
-    (**  *)
-    title : string;
-    (**  *)
-    
-  }
-  
-  val bodyLines : (t, BodyLines.t list) GapiLens.t
-  val displayLink : (t, string) GapiLens.t
-  val htmlTitle : (t, string) GapiLens.t
-  val image : (t, Image.t) GapiLens.t
-  val link : (t, string) GapiLens.t
-  val title : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Query :
 sig
   type t = {
@@ -377,6 +289,94 @@ sig
   val mime : (t, string) GapiLens.t
   val pagemap : (t, (string * (string * string) list list) list) GapiLens.t
   val snippet : (t, string) GapiLens.t
+  val title : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Promotion :
+sig
+  module Image :
+  sig
+    type t = {
+      height : int;
+      (**  *)
+      source : string;
+      (**  *)
+      width : int;
+      (**  *)
+      
+    }
+    
+    val height : (t, int) GapiLens.t
+    val source : (t, string) GapiLens.t
+    val width : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module BodyLines :
+  sig
+    type t = {
+      htmlTitle : string;
+      (**  *)
+      link : string;
+      (**  *)
+      title : string;
+      (**  *)
+      url : string;
+      (**  *)
+      
+    }
+    
+    val htmlTitle : (t, string) GapiLens.t
+    val link : (t, string) GapiLens.t
+    val title : (t, string) GapiLens.t
+    val url : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    bodyLines : BodyLines.t list;
+    (**  *)
+    displayLink : string;
+    (**  *)
+    htmlTitle : string;
+    (**  *)
+    image : Image.t;
+    (**  *)
+    link : string;
+    (**  *)
+    title : string;
+    (**  *)
+    
+  }
+  
+  val bodyLines : (t, BodyLines.t list) GapiLens.t
+  val displayLink : (t, string) GapiLens.t
+  val htmlTitle : (t, string) GapiLens.t
+  val image : (t, Image.t) GapiLens.t
+  val link : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   
   val empty : t

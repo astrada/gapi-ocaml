@@ -6,18 +6,15 @@
   {{:https://developers.google.com/google-apps/calendar/firstapp}API Documentation}.
   *)
 
-module ColorDefinition :
+module FreeBusyRequestItem :
 sig
   type t = {
-    background : string;
-    (** The background color associated with this color definition. *)
-    foreground : string;
-    (** The foreground color that can be used to write on top of a background with 'background' color. *)
+    id : string;
+    (** The identifier of a calendar or a group. *)
     
   }
   
-  val background : (t, string) GapiLens.t
-  val foreground : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
   
   val empty : t
   
@@ -31,24 +28,30 @@ sig
   
 end
 
-module Colors :
+module FreeBusyRequest :
 sig
   type t = {
-    calendar : (string * ColorDefinition.t) list;
-    (** Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only. *)
-    event : (string * ColorDefinition.t) list;
-    (** Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only. *)
-    kind : string;
-    (** Type of the resource ("calendar#colors"). *)
-    updated : GapiDate.t;
-    (** Last modification time of the color palette (as a RFC 3339 timestamp). Read-only. *)
+    calendarExpansionMax : int;
+    (** Maximal number of calendars for which FreeBusy information is to be provided. Optional. *)
+    groupExpansionMax : int;
+    (** Maximal number of calendar identifiers to be provided for a single group. Optional. An error will be returned for a group with more members than this value. *)
+    items : FreeBusyRequestItem.t list;
+    (** List of calendars and/or groups to query. *)
+    timeMax : GapiDate.t;
+    (** The end of the interval for the query. *)
+    timeMin : GapiDate.t;
+    (** The start of the interval for the query. *)
+    timeZone : string;
+    (** Time zone used in the response. Optional. The default is UTC. *)
     
   }
   
-  val calendar : (t, (string * ColorDefinition.t) list) GapiLens.t
-  val event : (t, (string * ColorDefinition.t) list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val updated : (t, GapiDate.t) GapiLens.t
+  val calendarExpansionMax : (t, int) GapiLens.t
+  val groupExpansionMax : (t, int) GapiLens.t
+  val items : (t, FreeBusyRequestItem.t list) GapiLens.t
+  val timeMax : (t, GapiDate.t) GapiLens.t
+  val timeMin : (t, GapiDate.t) GapiLens.t
+  val timeZone : (t, string) GapiLens.t
   
   val empty : t
   
@@ -80,6 +83,296 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val value : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Settings :
+sig
+  type t = {
+    etag : string;
+    (** Etag of the collection. *)
+    items : Setting.t list;
+    (** List of user settings. *)
+    kind : string;
+    (** Type of the collection ("calendar#settings"). *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, Setting.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module EventAttendee :
+sig
+  type t = {
+    additionalGuests : int;
+    (** Number of additional guests. Optional. The default is 0. *)
+    comment : string;
+    (** The attendee's response comment. Optional. *)
+    displayName : string;
+    (** The attendee's name, if available. Optional. *)
+    email : string;
+    (** The attendee's email address, if available. This field must be present when adding an attendee. *)
+    id : string;
+    (** The attendee's Profile ID, if available. *)
+    optional : bool;
+    (** Whether this is an optional attendee. Optional. The default is False. *)
+    organizer : bool;
+    (** Whether the attendee is the organizer of the event. Read-only. The default is False. *)
+    resource : bool;
+    (** Whether the attendee is a resource. Read-only. The default is False. *)
+    responseStatus : string;
+    (** The attendee's response status. Possible values are:  
+- "needsAction" - The attendee has not responded to the invitation. 
+- "declined" - The attendee has declined the invitation. 
+- "tentative" - The attendee has tentatively accepted the invitation. 
+- "accepted" - The attendee has accepted the invitation. *)
+    self : bool;
+    (** Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False. *)
+    
+  }
+  
+  val additionalGuests : (t, int) GapiLens.t
+  val comment : (t, string) GapiLens.t
+  val displayName : (t, string) GapiLens.t
+  val email : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val optional : (t, bool) GapiLens.t
+  val organizer : (t, bool) GapiLens.t
+  val resource : (t, bool) GapiLens.t
+  val responseStatus : (t, string) GapiLens.t
+  val self : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Error :
+sig
+  type t = {
+    domain : string;
+    (** Domain, or broad category, of the error. *)
+    reason : string;
+    (** Specific reason for the error. Some of the possible values are:  
+- "groupTooBig" - The group of users requested is too large for a single query. 
+- "tooManyCalendarsRequested" - The number of calendars requested is too large for a single query. 
+- "notFound" - The requested resource was not found. 
+- "internalError" - The API service has encountered an internal error.  Additional error types may be added in the future, so clients should gracefully handle additional error statuses not included in this list. *)
+    
+  }
+  
+  val domain : (t, string) GapiLens.t
+  val reason : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ColorDefinition :
+sig
+  type t = {
+    background : string;
+    (** The background color associated with this color definition. *)
+    foreground : string;
+    (** The foreground color that can be used to write on top of a background with 'background' color. *)
+    
+  }
+  
+  val background : (t, string) GapiLens.t
+  val foreground : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module FreeBusyGroup :
+sig
+  type t = {
+    calendars : string list;
+    (** List of calendars' identifiers within a group. *)
+    errors : Error.t list;
+    (** Optional error(s) (if computation for the group failed). *)
+    
+  }
+  
+  val calendars : (t, string list) GapiLens.t
+  val errors : (t, Error.t list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module EventReminder :
+sig
+  type t = {
+    _method : string;
+    (** The method used by this reminder. Possible values are:  
+- "email" - Reminders are sent via email. 
+- "sms" - Reminders are sent via SMS. 
+- "popup" - Reminders are sent via a UI popup. *)
+    minutes : int;
+    (** Number of minutes before the start of the event when the reminder should trigger. *)
+    
+  }
+  
+  val _method : (t, string) GapiLens.t
+  val minutes : (t, int) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CalendarListEntry :
+sig
+  type t = {
+    accessRole : string;
+    (** The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  
+- "freeBusyReader" - Provides read access to free/busy information. 
+- "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
+- "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
+- "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
+    backgroundColor : string;
+    (** The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional. *)
+    colorId : string;
+    (** The color of the calendar. This is an ID referring to an entry in the "calendar" section of the colors definition (see the "colors" endpoint). Optional. *)
+    defaultReminders : EventReminder.t list;
+    (** The default reminders that the authenticated user has for this calendar. *)
+    description : string;
+    (** Description of the calendar. Optional. Read-only. *)
+    etag : string;
+    (** ETag of the resource. *)
+    foregroundColor : string;
+    (** The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional. *)
+    hidden : bool;
+    (** Whether the calendar has been hidden from the list. Optional. The default is False. *)
+    id : string;
+    (** Identifier of the calendar. *)
+    kind : string;
+    (** Type of the resource ("calendar#calendarListEntry"). *)
+    location : string;
+    (** Geographic location of the calendar as free-form text. Optional. Read-only. *)
+    primary : bool;
+    (** Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False. *)
+    selected : bool;
+    (** Whether the calendar content shows up in the calendar UI. Optional. The default is False. *)
+    summary : string;
+    (** Title of the calendar. Read-only. *)
+    summaryOverride : string;
+    (** The summary that the authenticated user has set for this calendar. Optional. *)
+    timeZone : string;
+    (** The time zone of the calendar. Optional. Read-only. *)
+    
+  }
+  
+  val accessRole : (t, string) GapiLens.t
+  val backgroundColor : (t, string) GapiLens.t
+  val colorId : (t, string) GapiLens.t
+  val defaultReminders : (t, EventReminder.t list) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val foregroundColor : (t, string) GapiLens.t
+  val hidden : (t, bool) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val location : (t, string) GapiLens.t
+  val primary : (t, bool) GapiLens.t
+  val selected : (t, bool) GapiLens.t
+  val summary : (t, string) GapiLens.t
+  val summaryOverride : (t, string) GapiLens.t
+  val timeZone : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CalendarList :
+sig
+  type t = {
+    etag : string;
+    (** ETag of the collection. *)
+    items : CalendarListEntry.t list;
+    (** Calendars that are present on the user's calendar list. *)
+    kind : string;
+    (** Type of the collection ("calendar#calendarList"). *)
+    nextPageToken : string;
+    (** Token used to access the next page of this result. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val items : (t, CalendarListEntry.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -157,22 +450,33 @@ sig
   
 end
 
-module Error :
+module Calendar :
 sig
   type t = {
-    domain : string;
-    (** Domain, or broad category, of the error. *)
-    reason : string;
-    (** Specific reason for the error. Some of the possible values are:  
-- "groupTooBig" - The group of users requested is too large for a single query. 
-- "tooManyCalendarsRequested" - The number of calendars requested is too large for a single query. 
-- "notFound" - The requested resource was not found. 
-- "internalError" - The API service has encountered an internal error.  Additional error types may be added in the future, so clients should gracefully handle additional error statuses not included in this list. *)
+    description : string;
+    (** Description of the calendar. Optional. *)
+    etag : string;
+    (** ETag of the resource. *)
+    id : string;
+    (** Identifier of the calendar. *)
+    kind : string;
+    (** Type of the resource ("calendar#calendar"). *)
+    location : string;
+    (** Geographic location of the calendar as free-form text. Optional. *)
+    summary : string;
+    (** Title of the calendar. *)
+    timeZone : string;
+    (** The time zone of the calendar. Optional. *)
     
   }
   
-  val domain : (t, string) GapiLens.t
-  val reason : (t, string) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val location : (t, string) GapiLens.t
+  val summary : (t, string) GapiLens.t
+  val timeZone : (t, string) GapiLens.t
   
   val empty : t
   
@@ -186,17 +490,42 @@ sig
   
 end
 
-module FreeBusyGroup :
+module TimePeriod :
 sig
   type t = {
-    calendars : string list;
-    (** List of calendars' identifiers within a group. *)
-    errors : Error.t list;
-    (** Optional error(s) (if computation for the group failed). *)
+    _end : GapiDate.t;
+    (** The (exclusive) end of the time period. *)
+    start : GapiDate.t;
+    (** The (inclusive) start of the time period. *)
     
   }
   
-  val calendars : (t, string list) GapiLens.t
+  val _end : (t, GapiDate.t) GapiLens.t
+  val start : (t, GapiDate.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module FreeBusyCalendar :
+sig
+  type t = {
+    busy : TimePeriod.t list;
+    (** List of time ranges during which this calendar should be regarded as busy. *)
+    errors : Error.t list;
+    (** Optional error(s) (if computation for the calendar failed). *)
+    
+  }
+  
+  val busy : (t, TimePeriod.t list) GapiLens.t
   val errors : (t, Error.t list) GapiLens.t
   
   val empty : t
@@ -211,68 +540,27 @@ sig
   
 end
 
-module FreeBusyRequestItem :
+module FreeBusyResponse :
 sig
   type t = {
-    id : string;
-    (** The identifier of a calendar or a group. *)
+    calendars : (string * FreeBusyCalendar.t) list;
+    (** List of free/busy information for calendars. *)
+    groups : (string * FreeBusyGroup.t) list;
+    (** Expansion of groups. *)
+    kind : string;
+    (** Type of the resource ("calendar#freeBusy"). *)
+    timeMax : GapiDate.t;
+    (** The end of the interval. *)
+    timeMin : GapiDate.t;
+    (** The start of the interval. *)
     
   }
   
-  val id : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module EventAttendee :
-sig
-  type t = {
-    additionalGuests : int;
-    (** Number of additional guests. Optional. The default is 0. *)
-    comment : string;
-    (** The attendee's response comment. Optional. *)
-    displayName : string;
-    (** The attendee's name, if available. Optional. *)
-    email : string;
-    (** The attendee's email address, if available. This field must be present when adding an attendee. *)
-    id : string;
-    (** The attendee's Profile ID, if available. *)
-    optional : bool;
-    (** Whether this is an optional attendee. Optional. The default is False. *)
-    organizer : bool;
-    (** Whether the attendee is the organizer of the event. Read-only. The default is False. *)
-    resource : bool;
-    (** Whether the attendee is a resource. Read-only. The default is False. *)
-    responseStatus : string;
-    (** The attendee's response status. Possible values are:  
-- "needsAction" - The attendee has not responded to the invitation. 
-- "declined" - The attendee has declined the invitation. 
-- "tentative" - The attendee has tentatively accepted the invitation. 
-- "accepted" - The attendee has accepted the invitation. *)
-    self : bool;
-    (** Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False. *)
-    
-  }
-  
-  val additionalGuests : (t, int) GapiLens.t
-  val comment : (t, string) GapiLens.t
-  val displayName : (t, string) GapiLens.t
-  val email : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
-  val optional : (t, bool) GapiLens.t
-  val organizer : (t, bool) GapiLens.t
-  val resource : (t, bool) GapiLens.t
-  val responseStatus : (t, string) GapiLens.t
-  val self : (t, bool) GapiLens.t
+  val calendars : (t, (string * FreeBusyCalendar.t) list) GapiLens.t
+  val groups : (t, (string * FreeBusyGroup.t) list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val timeMax : (t, GapiDate.t) GapiLens.t
+  val timeMin : (t, GapiDate.t) GapiLens.t
   
   val empty : t
   
@@ -301,34 +589,6 @@ sig
   val date : (t, GapiDate.t) GapiLens.t
   val dateTime : (t, GapiDate.t) GapiLens.t
   val timeZone : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module EventReminder :
-sig
-  type t = {
-    _method : string;
-    (** The method used by this reminder. Possible values are:  
-- "email" - Reminders are sent via email. 
-- "sms" - Reminders are sent via SMS. 
-- "popup" - Reminders are sent via a UI popup. *)
-    minutes : int;
-    (** Number of minutes before the start of the event when the reminder should trigger. *)
-    
-  }
-  
-  val _method : (t, string) GapiLens.t
-  val minutes : (t, int) GapiLens.t
   
   val empty : t
   
@@ -636,43 +896,6 @@ sig
   
 end
 
-module FreeBusyRequest :
-sig
-  type t = {
-    calendarExpansionMax : int;
-    (** Maximal number of calendars for which FreeBusy information is to be provided. Optional. *)
-    groupExpansionMax : int;
-    (** Maximal number of calendar identifiers to be provided for a single group. Optional. An error will be returned for a group with more members than this value. *)
-    items : FreeBusyRequestItem.t list;
-    (** List of calendars and/or groups to query. *)
-    timeMax : GapiDate.t;
-    (** The end of the interval for the query. *)
-    timeMin : GapiDate.t;
-    (** The start of the interval for the query. *)
-    timeZone : string;
-    (** Time zone used in the response. Optional. The default is UTC. *)
-    
-  }
-  
-  val calendarExpansionMax : (t, int) GapiLens.t
-  val groupExpansionMax : (t, int) GapiLens.t
-  val items : (t, FreeBusyRequestItem.t list) GapiLens.t
-  val timeMax : (t, GapiDate.t) GapiLens.t
-  val timeMin : (t, GapiDate.t) GapiLens.t
-  val timeZone : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Acl :
 sig
   type t = {
@@ -758,61 +981,39 @@ sig
   
 end
 
-module Settings :
+module Channel :
 sig
   type t = {
-    etag : string;
-    (** Etag of the collection. *)
-    items : Setting.t list;
-    (** List of user settings. *)
-    kind : string;
-    (** Type of the collection ("calendar#settings"). *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val items : (t, Setting.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module Calendar :
-sig
-  type t = {
-    description : string;
-    (** Description of the calendar. Optional. *)
-    etag : string;
-    (** ETag of the resource. *)
+    address : string;
+    (** The address of the receiving entity where events are delivered. Specific to the channel type. *)
+    expiration : int64;
+    (** The expiration instant for this channel if it is defined. *)
     id : string;
-    (** Identifier of the calendar. *)
+    (** A UUID for the channel *)
     kind : string;
-    (** Type of the resource ("calendar#calendar"). *)
-    location : string;
-    (** Geographic location of the calendar as free-form text. Optional. *)
-    summary : string;
-    (** Title of the calendar. *)
-    timeZone : string;
-    (** The time zone of the calendar. Optional. *)
+    (** A channel watching an API resource *)
+    params : (string * string) list;
+    (** Additional parameters controlling delivery channel behavior *)
+    resourceId : string;
+    (** An opaque id that identifies the resource that is being watched. Stable across different API versions *)
+    resourceUri : string;
+    (** The canonicalized ID of the watched resource. *)
+    token : string;
+    (** An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel. *)
+    _type : string;
+    (** The type of delivery mechanism used by this channel *)
     
   }
   
-  val description : (t, string) GapiLens.t
-  val etag : (t, string) GapiLens.t
+  val address : (t, string) GapiLens.t
+  val expiration : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val location : (t, string) GapiLens.t
-  val summary : (t, string) GapiLens.t
-  val timeZone : (t, string) GapiLens.t
+  val params : (t, (string * string) list) GapiLens.t
+  val resourceId : (t, string) GapiLens.t
+  val resourceUri : (t, string) GapiLens.t
+  val token : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
   
   val empty : t
   
@@ -826,179 +1027,24 @@ sig
   
 end
 
-module TimePeriod :
+module Colors :
 sig
   type t = {
-    _end : GapiDate.t;
-    (** The (exclusive) end of the time period. *)
-    start : GapiDate.t;
-    (** The (inclusive) start of the time period. *)
-    
-  }
-  
-  val _end : (t, GapiDate.t) GapiLens.t
-  val start : (t, GapiDate.t) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module CalendarListEntry :
-sig
-  type t = {
-    accessRole : string;
-    (** The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  
-- "freeBusyReader" - Provides read access to free/busy information. 
-- "reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. 
-- "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
-- "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
-    backgroundColor : string;
-    (** The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional. *)
-    colorId : string;
-    (** The color of the calendar. This is an ID referring to an entry in the "calendar" section of the colors definition (see the "colors" endpoint). Optional. *)
-    defaultReminders : EventReminder.t list;
-    (** The default reminders that the authenticated user has for this calendar. *)
-    description : string;
-    (** Description of the calendar. Optional. Read-only. *)
-    etag : string;
-    (** ETag of the resource. *)
-    foregroundColor : string;
-    (** The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional. *)
-    hidden : bool;
-    (** Whether the calendar has been hidden from the list. Optional. The default is False. *)
-    id : string;
-    (** Identifier of the calendar. *)
+    calendar : (string * ColorDefinition.t) list;
+    (** Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only. *)
+    event : (string * ColorDefinition.t) list;
+    (** Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only. *)
     kind : string;
-    (** Type of the resource ("calendar#calendarListEntry"). *)
-    location : string;
-    (** Geographic location of the calendar as free-form text. Optional. Read-only. *)
-    primary : bool;
-    (** Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False. *)
-    selected : bool;
-    (** Whether the calendar content shows up in the calendar UI. Optional. The default is False. *)
-    summary : string;
-    (** Title of the calendar. Read-only. *)
-    summaryOverride : string;
-    (** The summary that the authenticated user has set for this calendar. Optional. *)
-    timeZone : string;
-    (** The time zone of the calendar. Optional. Read-only. *)
+    (** Type of the resource ("calendar#colors"). *)
+    updated : GapiDate.t;
+    (** Last modification time of the color palette (as a RFC 3339 timestamp). Read-only. *)
     
   }
   
-  val accessRole : (t, string) GapiLens.t
-  val backgroundColor : (t, string) GapiLens.t
-  val colorId : (t, string) GapiLens.t
-  val defaultReminders : (t, EventReminder.t list) GapiLens.t
-  val description : (t, string) GapiLens.t
-  val etag : (t, string) GapiLens.t
-  val foregroundColor : (t, string) GapiLens.t
-  val hidden : (t, bool) GapiLens.t
-  val id : (t, string) GapiLens.t
+  val calendar : (t, (string * ColorDefinition.t) list) GapiLens.t
+  val event : (t, (string * ColorDefinition.t) list) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val location : (t, string) GapiLens.t
-  val primary : (t, bool) GapiLens.t
-  val selected : (t, bool) GapiLens.t
-  val summary : (t, string) GapiLens.t
-  val summaryOverride : (t, string) GapiLens.t
-  val timeZone : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module FreeBusyCalendar :
-sig
-  type t = {
-    busy : TimePeriod.t list;
-    (** List of time ranges during which this calendar should be regarded as busy. *)
-    errors : Error.t list;
-    (** Optional error(s) (if computation for the calendar failed). *)
-    
-  }
-  
-  val busy : (t, TimePeriod.t list) GapiLens.t
-  val errors : (t, Error.t list) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module FreeBusyResponse :
-sig
-  type t = {
-    calendars : (string * FreeBusyCalendar.t) list;
-    (** List of free/busy information for calendars. *)
-    groups : (string * FreeBusyGroup.t) list;
-    (** Expansion of groups. *)
-    kind : string;
-    (** Type of the resource ("calendar#freeBusy"). *)
-    timeMax : GapiDate.t;
-    (** The end of the interval. *)
-    timeMin : GapiDate.t;
-    (** The start of the interval. *)
-    
-  }
-  
-  val calendars : (t, (string * FreeBusyCalendar.t) list) GapiLens.t
-  val groups : (t, (string * FreeBusyGroup.t) list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val timeMax : (t, GapiDate.t) GapiLens.t
-  val timeMin : (t, GapiDate.t) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module CalendarList :
-sig
-  type t = {
-    etag : string;
-    (** ETag of the collection. *)
-    items : CalendarListEntry.t list;
-    (** Calendars that are present on the user's calendar list. *)
-    kind : string;
-    (** Type of the collection ("calendar#calendarList"). *)
-    nextPageToken : string;
-    (** Token used to access the next page of this result. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val items : (t, CalendarListEntry.t list) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val nextPageToken : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
   
   val empty : t
   

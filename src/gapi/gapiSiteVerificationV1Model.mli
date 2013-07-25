@@ -6,6 +6,52 @@
   {{:https://developers.google.com/site-verification/}API Documentation}.
   *)
 
+module SiteVerificationWebResourceGettokenRequest :
+sig
+  module Site :
+  sig
+    type t = {
+      identifier : string;
+      (** The site identifier. If the type is set to SITE, the identifier is a URL. If the type is set to INET_DOMAIN, the site identifier is a domain name. *)
+      _type : string;
+      (** The type of resource to be verified. Can be SITE or INET_DOMAIN (domain name). *)
+      
+    }
+    
+    val identifier : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    site : Site.t;
+    (** The site for which a verification token will be generated. *)
+    verificationMethod : string;
+    (** The verification method that will be used to verify this site. For sites, 'FILE' or 'META' methods may be used. For domains, only 'DNS' may be used. *)
+    
+  }
+  
+  val site : (t, Site.t) GapiLens.t
+  val verificationMethod : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module SiteVerificationWebResourceResource :
 sig
   module Site :
@@ -55,31 +101,6 @@ sig
   
 end
 
-module SiteVerificationWebResourceGettokenResponse :
-sig
-  type t = {
-    _method : string;
-    (** The verification method to use in conjunction with this token. For FILE, the token should be placed in the top-level directory of the site, stored inside a file of the same name. For META, the token should be placed in the HEAD tag of the default page that is loaded for the site. For DNS, the token should be placed in a TXT record of the domain. *)
-    token : string;
-    (** The verification token. The token must be placed appropriately in order for verification to succeed. *)
-    
-  }
-  
-  val _method : (t, string) GapiLens.t
-  val token : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module SiteVerificationWebResourceListResponse :
 sig
   type t = {
@@ -102,39 +123,18 @@ sig
   
 end
 
-module SiteVerificationWebResourceGettokenRequest :
+module SiteVerificationWebResourceGettokenResponse :
 sig
-  module Site :
-  sig
-    type t = {
-      identifier : string;
-      (** The site identifier. If the type is set to SITE, the identifier is a URL. If the type is set to INET_DOMAIN, the site identifier is a domain name. *)
-      _type : string;
-      (** The type of resource to be verified. Can be SITE or INET_DOMAIN (domain name). *)
-      
-    }
-    
-    val identifier : (t, string) GapiLens.t
-    val _type : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
   type t = {
-    site : Site.t;
-    (** The site for which a verification token will be generated. *)
-    verificationMethod : string;
-    (** The verification method that will be used to verify this site. For sites, 'FILE' or 'META' methods may be used. For domains, only 'DNS' may be used. *)
+    _method : string;
+    (** The verification method to use in conjunction with this token. For FILE, the token should be placed in the top-level directory of the site, stored inside a file of the same name. For META, the token should be placed in the HEAD tag of the default page that is loaded for the site. For DNS, the token should be placed in a TXT record of the domain. *)
+    token : string;
+    (** The verification token. The token must be placed appropriately in order for verification to succeed. *)
     
   }
   
-  val site : (t, Site.t) GapiLens.t
-  val verificationMethod : (t, string) GapiLens.t
+  val _method : (t, string) GapiLens.t
+  val token : (t, string) GapiLens.t
   
   val empty : t
   
