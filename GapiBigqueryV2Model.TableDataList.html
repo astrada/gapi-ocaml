@@ -5,7 +5,7 @@
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiBigqueryV2Model.TableRow.html">
-<link rel="next" href="GapiBigqueryV2Model.JobStatistics3.html">
+<link rel="next" href="GapiBigqueryV2Model.JobReference.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,47 +72,46 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.TableDataList</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBigqueryV2Model.TableRow.html">Previous</a>
-&nbsp;<a href="GapiBigqueryV2Model.html">Up</a>
-&nbsp;<a href="GapiBigqueryV2Model.JobStatistics3.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.TableRow.html" title="GapiBigqueryV2Model.TableRow">Previous</a>
+&nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Model.JobReference.html" title="GapiBigqueryV2Model.JobReference">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBigqueryV2Model.TableDataList.html">GapiBigqueryV2Model.TableDataList</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBigqueryV2Model.TableDataList.html">GapiBigqueryV2Model.TableDataList</a></h1>
 <pre><span class="keyword">module</span> TableDataList: <code class="code">sig</code> <a href="GapiBigqueryV2Model.TableDataList.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A hash of this page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The resource type of the response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>pageToken&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.pageToken">pageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>rows&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.rows">rows</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Rows of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totalRows&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.totalRows">totalRows</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of rows in the complete table.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

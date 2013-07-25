@@ -72,137 +72,138 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAuth</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiOAuth2.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiRequest.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiOAuth2.html" title="GapiOAuth2">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiRequest.html" title="GapiRequest">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAuth.html">GapiAuth</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiAuth: <code class="code">sig</code> <a href="GapiAuth.html">..</a> <code class="code">end</code></pre>Stores data used to authorize requests.<br>
+<h1>Module <a href="type_GapiAuth.html">GapiAuth</a></h1>
+<pre><span class="keyword">module</span> GapiAuth: <code class="code">sig</code> <a href="GapiAuth.html">..</a> <code class="code">end</code></pre><div class="info">
+Stores data used to authorize requests.<br>
+</div>
 <hr width="100%">
-<br><code><span id="TYPEoauth1_data"><span class="keyword">type</span> <code class="type"></code>oauth1_data</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth1_data"><span class="keyword">type</span> <code class="type"></code>oauth1_data</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>signature_method&nbsp;: <code class="type"><a href="GapiCore.SignatureMethod.html#TYPEt">GapiCore.SignatureMethod.t</a></code>;</code></td>
+<code><span id="TYPEELToauth1_data.signature_method">signature_method</span>&nbsp;:<code class="type"><a href="GapiCore.SignatureMethod.html#TYPEt">GapiCore.SignatureMethod.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>consumer_key&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_data.consumer_key">consumer_key</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>consumer_secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_data.consumer_secret">consumer_secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_data.token">token</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_data.secret">secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
 
-<br><code><span id="TYPEoauth1_params"><span class="keyword">type</span> <code class="type"></code>oauth1_params</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth1_params"><span class="keyword">type</span> <code class="type"></code>oauth1_params</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>http_method&nbsp;: <code class="type"><a href="GapiCore.HttpMethod.html#TYPEt">GapiCore.HttpMethod.t</a></code>;</code></td>
+<code><span id="TYPEELToauth1_params.http_method">http_method</span>&nbsp;:<code class="type"><a href="GapiCore.HttpMethod.html#TYPEt">GapiCore.HttpMethod.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>url&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_params.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>post_fields_to_sign&nbsp;: <code class="type">(string * string) list</code>;</code></td>
+<code><span id="TYPEELToauth1_params.post_fields_to_sign">post_fields_to_sign</span>&nbsp;:<code class="type">(string * string) list</code>;</code></td>
 
 </tr></table>
 }
 
 
-<br><code><span id="TYPEoauth2_data"><span class="keyword">type</span> <code class="type"></code>oauth2_data</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth2_data"><span class="keyword">type</span> <code class="type"></code>oauth2_data</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>client_id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_data.client_id">client_id</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>client_secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_data.client_secret">client_secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>oauth2_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_data.oauth2_token">oauth2_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>refresh_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_data.refresh_token">refresh_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
 
-<br><code><span id="TYPEauthentication"><span class="keyword">type</span> <code class="type"></code>authentication</span> = </code><table class="typetable">
+<pre><code><span id="TYPEauthentication"><span class="keyword">type</span> <code class="type"></code>authentication</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">NoAuth</span></code></td>
+<code><span id="TYPEELTauthentication.NoAuth"><span class="constructor">NoAuth</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">ClientLogin</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+<code><span id="TYPEELTauthentication.ClientLogin"><span class="constructor">ClientLogin</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">OAuth1</span> <span class="keyword">of</span> <code class="type"><a href="GapiAuth.html#TYPEoauth1_data">oauth1_data</a></code></code></td>
+<code><span id="TYPEELTauthentication.OAuth1"><span class="constructor">OAuth1</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiAuth.html#TYPEoauth1_data">oauth1_data</a></code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">OAuth2</span> <span class="keyword">of</span> <code class="type"><a href="GapiAuth.html#TYPEoauth2_data">oauth2_data</a></code></code></td>
+<code><span id="TYPEELTauthentication.OAuth2"><span class="constructor">OAuth2</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiAuth.html#TYPEoauth2_data">oauth2_data</a></code></code></td>
 
 </tr></table>
 

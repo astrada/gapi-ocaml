@@ -72,20 +72,19 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Service.ManagementResource.Profiles</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAnalyticsV3Service.ManagementResource.Segments.html">Previous</a>
-&nbsp;<a href="GapiAnalyticsV3Service.ManagementResource.html">Up</a>
-&nbsp;<a href="GapiAnalyticsV3Service.ManagementResource.Goals.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Service.ManagementResource.Segments.html" title="GapiAnalyticsV3Service.ManagementResource.Segments">Previous</a>
+&nbsp;<a class="up" href="GapiAnalyticsV3Service.ManagementResource.html" title="GapiAnalyticsV3Service.ManagementResource">Up</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Service.ManagementResource.Goals.html" title="GapiAnalyticsV3Service.ManagementResource.Goals">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAnalyticsV3Service.ManagementResource.Profiles.html">GapiAnalyticsV3Service.ManagementResource.Profiles</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAnalyticsV3Service.ManagementResource.Profiles.html">GapiAnalyticsV3Service.ManagementResource.Profiles</a></h1>
 <pre><span class="keyword">module</span> Profiles: <code class="code">sig</code> <a href="GapiAnalyticsV3Service.ManagementResource.Profiles.html">..</a> <code class="code">end</code></pre><hr width="100%">
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?max_results:int -><br>       ?start_index:int -><br>       accountId:string -><br>       webPropertyId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Profiles.html#TYPEt">GapiAnalyticsV3Model.Profiles.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
-Lists profiles to which the user has access.<br>
+Lists views (profiles) to which the user has access.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/analytics/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">max_results</code> : The maximum number of profiles to include in this response.</div>
+<div class="param_info"><code class="code">max_results</code> : The maximum number of views (profiles) to include in this response.</div>
 <div class="param_info"><code class="code">start_index</code> : An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.</div>
-<div class="param_info"><code class="code">accountId</code> : Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.</div>
-<div class="param_info"><code class="code">webPropertyId</code> : Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.</div>
+<div class="param_info"><code class="code">accountId</code> : Account ID for the view (profiles) to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.</div>
+<div class="param_info"><code class="code">webPropertyId</code> : Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.</div>
 </body></html>

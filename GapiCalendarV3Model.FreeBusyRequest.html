@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiCalendarV3Model.Event.html">
-<link rel="next" href="GapiCalendarV3Model.Acl.html">
+<link rel="previous" href="GapiCalendarV3Model.FreeBusyRequestItem.html">
+<link rel="next" href="GapiCalendarV3Model.Setting.html">
 <link rel="Up" href="GapiCalendarV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,54 +72,53 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCalendarV3Model.FreeBusyRequest</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCalendarV3Model.Event.html">Previous</a>
-&nbsp;<a href="GapiCalendarV3Model.html">Up</a>
-&nbsp;<a href="GapiCalendarV3Model.Acl.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiCalendarV3Model.FreeBusyRequestItem.html" title="GapiCalendarV3Model.FreeBusyRequestItem">Previous</a>
+&nbsp;<a class="up" href="GapiCalendarV3Model.html" title="GapiCalendarV3Model">Up</a>
+&nbsp;<a class="post" href="GapiCalendarV3Model.Setting.html" title="GapiCalendarV3Model.Setting">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiCalendarV3Model.FreeBusyRequest.html">GapiCalendarV3Model.FreeBusyRequest</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiCalendarV3Model.FreeBusyRequest.html">GapiCalendarV3Model.FreeBusyRequest</a></h1>
 <pre><span class="keyword">module</span> FreeBusyRequest: <code class="code">sig</code> <a href="GapiCalendarV3Model.FreeBusyRequest.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>calendarExpansionMax&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.calendarExpansionMax">calendarExpansionMax</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Maximal number of calendars for which FreeBusy information is to be provided. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>groupExpansionMax&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.groupExpansionMax">groupExpansionMax</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Maximal number of calendar identifiers to be provided for a single group. Optional. An error will be returned for a group with more members than this value.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>items&nbsp;: <code class="type"><a href="GapiCalendarV3Model.FreeBusyRequestItem.html#TYPEt">GapiCalendarV3Model.FreeBusyRequestItem.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.FreeBusyRequestItem.html#TYPEt">GapiCalendarV3Model.FreeBusyRequestItem.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of calendars and/or groups to query.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>timeMax&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.timeMax">timeMax</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The end of the interval for the query.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>timeMin&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.timeMin">timeMin</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The start of the interval for the query.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>timeZone&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.timeZone">timeZone</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time zone used in the response. Optional. The default is UTC.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

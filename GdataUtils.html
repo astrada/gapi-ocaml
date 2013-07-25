@@ -72,11 +72,10 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataUtils</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiDriveV2Service.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GdataCore.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiDriveV2Service.html" title="GapiDriveV2Service">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GdataCore.html" title="GdataCore">Next</a>
 </div>
-<center><h1>Module <a href="type_GdataUtils.html">GdataUtils</a></h1></center>
-<br>
+<h1>Module <a href="type_GdataUtils.html">GdataUtils</a></h1>
 <pre><span class="keyword">module</span> GdataUtils: <code class="code">sig</code> <a href="GdataUtils.html">..</a> <code class="code">end</code></pre><hr width="100%">
 <pre><span id="VALstring_to_option"><span class="keyword">val</span> string_to_option</span> : <code class="type">string -> string option</code></pre><pre><span id="VALunexpected"><span class="keyword">val</span> unexpected</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> 'a</code></pre><pre><span id="VALbuild_namespace_table"><span class="keyword">val</span> build_namespace_table</span> : <code class="type">(string -> string) -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> (string * string) list</code></pre><pre><span id="VALappend_namespaces"><span class="keyword">val</span> append_namespaces</span> : <code class="type">(string * string) list -><br>       <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a></code></pre><pre><span id="VALrender_xml"><span class="keyword">val</span> render_xml</span> : <code class="type">Buffer.t -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> unit</code></pre><pre><span id="VALdata_to_xml_string"><span class="keyword">val</span> data_to_xml_string</span> : <code class="type">?buffer_size:int -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> string</code></pre><pre><span id="VALparse_xml"><span class="keyword">val</span> parse_xml</span> : <code class="type">(unit -> int) -> (<a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> 'a) -> 'a</code></pre><pre><span id="VALparse_xml_response"><span class="keyword">val</span> parse_xml_response</span> : <code class="type">(<a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> 'a) -> <a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> 'a</code></pre></body></html>

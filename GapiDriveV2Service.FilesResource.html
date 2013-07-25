@@ -72,14 +72,13 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiDriveV2Service.FilesResource</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiDriveV2Service.CommentsResource.html">Previous</a>
-&nbsp;<a href="GapiDriveV2Service.html">Up</a>
-&nbsp;<a href="GapiDriveV2Service.ParentsResource.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiDriveV2Service.CommentsResource.html" title="GapiDriveV2Service.CommentsResource">Previous</a>
+&nbsp;<a class="up" href="GapiDriveV2Service.html" title="GapiDriveV2Service">Up</a>
+&nbsp;<a class="post" href="GapiDriveV2Service.ParentsResource.html" title="GapiDriveV2Service.ParentsResource">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiDriveV2Service.FilesResource.html">GapiDriveV2Service.FilesResource</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiDriveV2Service.FilesResource.html">GapiDriveV2Service.FilesResource</a></h1>
 <pre><span class="keyword">module</span> FilesResource: <code class="code">sig</code> <a href="GapiDriveV2Service.FilesResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDriveV2Service.FilesResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiDriveV2Service.FilesResource.Projection.html">..</a> <code class="code">end</code></pre><pre><span id="VALcopy"><span class="keyword">val</span> copy</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?convert:bool -><br>       ?ocr:bool -><br>       ?pinned:bool -><br>       ?ocrLanguage:string -><br>       ?timedTextLanguage:string -><br>       ?timedTextTrackName:string -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Service.FilesResource.Visibility.html">Visibility</a>: <code class="code">sig</code> <a href="GapiDriveV2Service.FilesResource.Visibility.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiDriveV2Service.FilesResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiDriveV2Service.FilesResource.Projection.html">..</a> <code class="code">end</code></pre><pre><span id="VALcopy"><span class="keyword">val</span> copy</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?convert:bool -><br>       ?ocr:bool -><br>       ?pinned:bool -><br>       ?visibility:<a href="GapiDriveV2Service.FilesResource.Visibility.html#TYPEt">Visibility.t</a> -><br>       ?ocrLanguage:string -><br>       ?timedTextLanguage:string -><br>       ?timedTextTrackName:string -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Creates a copy of the specified file.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -87,6 +86,7 @@ Creates a copy of the specified file.<br>
 <div class="param_info"><code class="code">convert</code> : Whether to convert this file to the corresponding Google Docs format.</div>
 <div class="param_info"><code class="code">ocr</code> : Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.</div>
 <div class="param_info"><code class="code">pinned</code> : Whether to pin the head revision of the new copy.</div>
+<div class="param_info"><code class="code">visibility</code> : The visibility of the new file. This parameter is only relevant when the source is not a native Google Doc and convert=false.</div>
 <div class="param_info"><code class="code">ocrLanguage</code> : If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.</div>
 <div class="param_info"><code class="code">timedTextLanguage</code> : The language of the timed text.</div>
 <div class="param_info"><code class="code">timedTextTrackName</code> : The timed text track name.</div>
@@ -106,7 +106,7 @@ Gets a file's metadata by ID.<br>
 <div class="param_info"><code class="code">updateViewedDate</code> : Whether to update the view date after successfully retrieving the file.</div>
 <div class="param_info"><code class="code">projection</code> : This parameter is deprecated and has no function.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file in question.</div>
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       ?convert:bool -><br>       ?ocr:bool -><br>       ?pinned:bool -><br>       ?useContentAsIndexableText:bool -><br>       ?ocrLanguage:string -><br>       ?timedTextLanguage:string -><br>       ?timedTextTrackName:string -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       ?convert:bool -><br>       ?ocr:bool -><br>       ?pinned:bool -><br>       ?useContentAsIndexableText:bool -><br>       ?visibility:<a href="GapiDriveV2Service.FilesResource.Visibility.html#TYPEt">Visibility.t</a> -><br>       ?ocrLanguage:string -><br>       ?timedTextLanguage:string -><br>       ?timedTextTrackName:string -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.File.html#TYPEt">GapiDriveV2Model.File.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Insert a new file.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -115,6 +115,7 @@ Insert a new file.<br>
 <div class="param_info"><code class="code">ocr</code> : Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.</div>
 <div class="param_info"><code class="code">pinned</code> : Whether to pin the head revision of the uploaded file.</div>
 <div class="param_info"><code class="code">useContentAsIndexableText</code> : Whether to use the content as indexable text.</div>
+<div class="param_info"><code class="code">visibility</code> : The visibility of the new file. This parameter is only relevant when convert=false.</div>
 <div class="param_info"><code class="code">ocrLanguage</code> : If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.</div>
 <div class="param_info"><code class="code">timedTextLanguage</code> : The language of the timed text.</div>
 <div class="param_info"><code class="code">timedTextTrackName</code> : The timed text track name.</div>
@@ -177,4 +178,12 @@ Updates file metadata and/or content.<br>
 <div class="param_info"><code class="code">timedTextLanguage</code> : The language of the timed text.</div>
 <div class="param_info"><code class="code">timedTextTrackName</code> : The timed text track name.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID of the file to update.</div>
+<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?updateViewedDate:bool -><br>       ?projection:<a href="GapiDriveV2Service.FilesResource.Projection.html#TYPEt">Projection.t</a> -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+Subscribe to changes on a file<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">updateViewedDate</code> : Whether to update the view date after successfully retrieving the file.</div>
+<div class="param_info"><code class="code">projection</code> : This parameter is deprecated and has no function.</div>
+<div class="param_info"><code class="code">fileId</code> : The ID for the file in question.</div>
 </body></html>

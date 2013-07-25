@@ -70,80 +70,79 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiPagespeedonlineV1Model.Result</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GapiPagespeedonlineV1Model.html">Up</a>
+<div class="navbar">&nbsp;<a class="up" href="GapiPagespeedonlineV1Model.html" title="GapiPagespeedonlineV1Model">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_GapiPagespeedonlineV1Model.Result.html">GapiPagespeedonlineV1Model.Result</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiPagespeedonlineV1Model.Result.html">GapiPagespeedonlineV1Model.Result</a></h1>
 <pre><span class="keyword">module</span> Result: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Version.html">Version</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Version.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">Screenshot</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.PageStats.html">PageStats</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.PageStats.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html">FormattedResults</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Version.html">Version</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Version.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">Screenshot</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.PageStats.html">PageStats</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.PageStats.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html">FormattedResults</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>formattedResults&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html#TYPEt">FormattedResults.t</a></code>;</code></td>
+<code><span id="TYPEELTt.formattedResults">formattedResults</span>&nbsp;:<code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html#TYPEt">FormattedResults.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Localized Page Speed results. Contains a ruleResults entry for each Page Speed rule instantiated and run by the server.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Canonicalized and final URL for the document, after following page redirects (if any).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>invalidRules&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.invalidRules">invalidRules</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of rules that were specified in the request, but which the server did not know how to instantiate.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Kind of result.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>pageStats&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.PageStats.html#TYPEt">PageStats.t</a></code>;</code></td>
+<code><span id="TYPEELTt.pageStats">pageStats</span>&nbsp;:<code class="type"><a href="GapiPagespeedonlineV1Model.Result.PageStats.html#TYPEt">PageStats.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Summary statistics for the page, such as number of JavaScript bytes, number of HTML bytes, etc.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>responseCode&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.responseCode">responseCode</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>score&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.score">score</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The Page Speed Score (0-100), which indicates how much faster a page could be. A high score indicates little room for improvement, while a lower score indicates more room for improvement.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>screenshot&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">Screenshot.t</a></code>;</code></td>
+<code><span id="TYPEELTt.screenshot">screenshot</span>&nbsp;:<code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">Screenshot.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Base64 encoded screenshot of the page that was analyzed.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>title&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.title">title</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Title of the page, as displayed in the browser's title bar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>version&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Version.html#TYPEt">Version.t</a></code>;</code></td>
+<code><span id="TYPEELTt.version">version</span>&nbsp;:<code class="type"><a href="GapiPagespeedonlineV1Model.Result.Version.html#TYPEt">Version.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The version of the Page Speed SDK used to generate these results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

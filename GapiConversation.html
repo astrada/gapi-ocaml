@@ -72,13 +72,14 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiConversation</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiConfig.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiAuthResponse.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiConfig.html" title="GapiConfig">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiAuthResponse.html" title="GapiAuthResponse">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiConversation.html">GapiConversation</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiConversation: <code class="code">sig</code> <a href="GapiConversation.html">..</a> <code class="code">end</code></pre>Server conversation manager.<br>
+<h1>Module <a href="type_GapiConversation.html">GapiConversation</a></h1>
+<pre><span class="keyword">module</span> GapiConversation: <code class="code">sig</code> <a href="GapiConversation.html">..</a> <code class="code">end</code></pre><div class="info">
+Server conversation manager.<br>
+</div>
 <hr width="100%">
 <pre><span class="keyword">module</span> <a href="GapiConversation.Session.html">Session</a>: <code class="code">sig</code> <a href="GapiConversation.Session.html">..</a> <code class="code">end</code></pre><div class="info">
 Defines the session that stores the current state of a conversation.
@@ -98,26 +99,26 @@ Initializes a new connection to the server and executes a batch of requests.
 </div>
 <div class="param_info"><code class="code">auth_context</code> : Optional current authorization context. Defaults to <code class="code">NoAuth</code>.</div>
 <pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> string</code></pre><pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> int -> 'a</code></pre><pre><span id="EXCEPTIONConversationException"><span class="keyword">exception</span> ConversationException</span> <span class="keyword">of</span> <code class="type">string</code></pre>
-<br><code><span id="TYPEiter"><span class="keyword">type</span> <code class="type">('a, 'b)</code> iter</span> = </code><table class="typetable">
+<pre><code><span id="TYPEiter"><span class="keyword">type</span> <code class="type">('a, 'b)</code> iter</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Done</span> <span class="keyword">of</span> <code class="type">'b</code></code></td>
+<code><span id="TYPEELTiter.Done"><span class="constructor">Done</span></span> <span class="keyword">of</span> <code class="type">'b</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Continue</span> <span class="keyword">of</span> <code class="type">('a -> ('a, 'b) <a href="GapiConversation.html#TYPEiter">iter</a>)</code></code></td>
+<code><span id="TYPEELTiter.Continue"><span class="constructor">Continue</span></span> <span class="keyword">of</span> <code class="type">('a -> ('a, 'b) <a href="GapiConversation.html#TYPEiter">iter</a>)</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Error</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+<code><span id="TYPEELTiter.Error"><span class="constructor">Error</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
 
 </tr></table>
 

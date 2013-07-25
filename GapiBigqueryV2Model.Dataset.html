@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBigqueryV2Model.TableList.html">
-<link rel="next" href="GapiBigqueryV2Model.QueryResponse.html">
+<link rel="previous" href="GapiBigqueryV2Model.ProjectList.html">
+<link rel="next" href="GapiBigqueryV2Model.Table.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,19 +72,18 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.Dataset</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBigqueryV2Model.TableList.html">Previous</a>
-&nbsp;<a href="GapiBigqueryV2Model.html">Up</a>
-&nbsp;<a href="GapiBigqueryV2Model.QueryResponse.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.ProjectList.html" title="GapiBigqueryV2Model.ProjectList">Previous</a>
+&nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Model.Table.html" title="GapiBigqueryV2Model.Table">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBigqueryV2Model.Dataset.html">GapiBigqueryV2Model.Dataset</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBigqueryV2Model.Dataset.html">GapiBigqueryV2Model.Dataset</a></h1>
 <pre><span class="keyword">module</span> Dataset: <code class="code">sig</code> <a href="GapiBigqueryV2Model.Dataset.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBigqueryV2Model.Dataset.Access.html">Access</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Model.Dataset.Access.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiBigqueryV2Model.Dataset.Access.html">Access</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Model.Dataset.Access.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>access&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">Access.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.access">access</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">Access.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
 Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
@@ -95,63 +94,63 @@ Each access object can have only one of the following members: userByEmail, grou
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>creationTime&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.creationTime">creationTime</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> The time when this dataset was created, in milliseconds since the epoch.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>datasetReference&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.DatasetReference.html#TYPEt">GapiBigqueryV2Model.DatasetReference.t</a></code>;</code></td>
+<code><span id="TYPEELTt.datasetReference">datasetReference</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.DatasetReference.html#TYPEt">GapiBigqueryV2Model.DatasetReference.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> Reference identifying dataset.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> A user-friendly string description for the dataset. This might be shown in BigQuery UI for browsing the dataset.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> A hash of this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>friendlyName&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.friendlyName">friendlyName</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> A descriptive name for this dataset, which might be shown in any BigQuery user interfaces for browsing the dataset. Use datasetId for making API calls.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> The fully-qualified unique name of this dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> The resource type.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>lastModifiedTime&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.lastModifiedTime">lastModifiedTime</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> The date when this dataset or any of its tables was last modified, in milliseconds since the epoch.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

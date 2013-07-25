@@ -69,6 +69,7 @@
 <body>
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">NotModified</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Unauthorized</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">PermissionDenied</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Forbidden</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">NotFound</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
@@ -76,6 +77,7 @@
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Conflict</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">Gone</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">PreconditionFailed</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">ServiceUnavailable</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">exception</span>&nbsp;<span class="constructor">RefreshTokenFailed</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;request_type&nbsp;=&nbsp;<span class="constructor">Query</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Create</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Update</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Patch</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Delete</span><br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse_empty_response&nbsp;:&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>

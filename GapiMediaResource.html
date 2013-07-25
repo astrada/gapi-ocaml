@@ -72,169 +72,168 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiMediaResource</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiLens.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiCalendarV3Model.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiLens.html" title="GapiLens">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiCalendarV3Model.html" title="GapiCalendarV3Model">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiMediaResource.html">GapiMediaResource</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiMediaResource.html">GapiMediaResource</a></h1>
 <pre><span class="keyword">module</span> GapiMediaResource: <code class="code">sig</code> <a href="GapiMediaResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEdestination"><span class="keyword">type</span> <code class="type"></code>destination</span> = </code><table class="typetable">
+<pre><code><span id="TYPEdestination"><span class="keyword">type</span> <code class="type"></code>destination</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">TargetFile</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+<code><span id="TYPEELTdestination.TargetFile"><span class="constructor">TargetFile</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">StringBuffer</span> <span class="keyword">of</span> <code class="type">Buffer.t</code></code></td>
+<code><span id="TYPEELTdestination.StringBuffer"><span class="constructor">StringBuffer</span></span> <span class="keyword">of</span> <code class="type">Buffer.t</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">ArrayBuffer</span> <span class="keyword">of</span> <code class="type">(char, Bigarray.int8_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t</code></code></td>
+<code><span id="TYPEELTdestination.ArrayBuffer"><span class="constructor">ArrayBuffer</span></span> <span class="keyword">of</span> <code class="type">(char, Bigarray.int8_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t</code></code></td>
 
 </tr></table>
 
 
-<br><code><span id="TYPEdownload"><span class="keyword">type</span> <code class="type"></code>download</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEdownload"><span class="keyword">type</span> <code class="type"></code>download</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>destination&nbsp;: <code class="type"><a href="GapiMediaResource.html#TYPEdestination">destination</a></code>;</code></td>
+<code><span id="TYPEELTdownload.destination">destination</span>&nbsp;:<code class="type"><a href="GapiMediaResource.html#TYPEdestination">destination</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>range_spec&nbsp;: <code class="type">string</code>;</code></td>
-
-</tr></table>
-}
-
-
-<pre><span id="VALdestination"><span class="keyword">val</span> destination</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEdownload">download</a>, <a href="GapiMediaResource.html#TYPEdestination">destination</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrange_spec"><span class="keyword">val</span> range_spec</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEdownload">download</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreate_out_channel"><span class="keyword">val</span> create_out_channel</span> : <code class="type"><a href="GapiMediaResource.html#TYPEdownload">download</a> -> Netchannels.out_obj_channel</code></pre><pre><span id="VALgenerate_download_headers"><span class="keyword">val</span> generate_download_headers</span> : <code class="type"><a href="GapiMediaResource.html#TYPEdownload">download</a> -> <a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list</code></pre><pre><span id="VALgenerate_range_spec"><span class="keyword">val</span> generate_range_spec</span> : <code class="type">(int64 option * int64 option) list -> string</code></pre><br><code><span id="TYPEsource"><span class="keyword">type</span> <code class="type"></code>source</span> = </code><table class="typetable">
-<tr>
-<td align="left" valign="top" >
-<code><span class="keyword">|</span></code></td>
-<td align="left" valign="top" >
-<code><span class="constructor">File</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code><span class="keyword">|</span></code></td>
-<td align="left" valign="top" >
-<code><span class="constructor">String</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code><span class="keyword">|</span></code></td>
-<td align="left" valign="top" >
-<code><span class="constructor">Buffer</span> <span class="keyword">of</span> <code class="type">(char, Bigarray.int8_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t</code></code></td>
-
-</tr></table>
-
-
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>source&nbsp;: <code class="type"><a href="GapiMediaResource.html#TYPEsource">source</a></code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>name&nbsp;: <code class="type">string</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>content_type&nbsp;: <code class="type">string</code>;</code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code>content_length&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTdownload.range_spec">range_spec</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALsource"><span class="keyword">val</span> source</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, <a href="GapiMediaResource.html#TYPEsource">source</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent_type"><span class="keyword">val</span> content_type</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent_length"><span class="keyword">val</span> content_length</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEstate"><span class="keyword">type</span> <code class="type"></code>state</span> = </code><table class="typetable">
+<pre><span id="VALdestination"><span class="keyword">val</span> destination</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEdownload">download</a>, <a href="GapiMediaResource.html#TYPEdestination">destination</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrange_spec"><span class="keyword">val</span> range_spec</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEdownload">download</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreate_out_channel"><span class="keyword">val</span> create_out_channel</span> : <code class="type"><a href="GapiMediaResource.html#TYPEdownload">download</a> -> Netchannels.out_obj_channel</code></pre><pre><span id="VALgenerate_download_headers"><span class="keyword">val</span> generate_download_headers</span> : <code class="type"><a href="GapiMediaResource.html#TYPEdownload">download</a> -> <a href="GapiCore.Header.html#TYPEt">GapiCore.Header.t</a> list</code></pre><pre><span id="VALgenerate_range_spec"><span class="keyword">val</span> generate_range_spec</span> : <code class="type">(int64 option * int64 option) list -> string</code></pre><pre><code><span id="TYPEsource"><span class="keyword">type</span> <code class="type"></code>source</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Request</span></code></td>
+<code><span id="TYPEELTsource.File"><span class="constructor">File</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Uploading</span></code></td>
+<code><span id="TYPEELTsource.String"><span class="constructor">String</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Done</span></code></td>
-
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code><span class="keyword">|</span></code></td>
-<td align="left" valign="top" >
-<code><span class="constructor">Error</span></code></td>
+<code><span id="TYPEELTsource.Buffer"><span class="constructor">Buffer</span></span> <span class="keyword">of</span> <code class="type">(char, Bigarray.int8_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t</code></code></td>
 
 </tr></table>
 
 
-<br><code><span id="TYPEupload_state"><span class="keyword">type</span> <code class="type"></code>upload_state</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>state&nbsp;: <code class="type"><a href="GapiMediaResource.html#TYPEstate">state</a></code>;</code></td>
+<code><span id="TYPEELTt.source">source</span>&nbsp;:<code class="type"><a href="GapiMediaResource.html#TYPEsource">source</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>resource&nbsp;: <code class="type"><a href="GapiMediaResource.html#TYPEt">t</a></code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>chunk_size&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.content_type">content_type</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>current_offset&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.content_length">content_length</span>&nbsp;:<code class="type">int64</code>;</code></td>
+
+</tr></table>
+}
+
+
+<pre><span id="VALsource"><span class="keyword">val</span> source</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, <a href="GapiMediaResource.html#TYPEsource">source</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent_type"><span class="keyword">val</span> content_type</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent_length"><span class="keyword">val</span> content_length</span> : <code class="type">(<a href="GapiMediaResource.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><code><span id="TYPEstate"><span class="keyword">type</span> <code class="type"></code>state</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTstate.Request"><span class="constructor">Request</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTstate.Uploading"><span class="constructor">Uploading</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTstate.Done"><span class="constructor">Done</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTstate.Error"><span class="constructor">Error</span></span></code></td>
+
+</tr></table>
+
+
+<pre><code><span id="TYPEupload_state"><span class="keyword">type</span> <code class="type"></code>upload_state</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTupload_state.state">state</span>&nbsp;:<code class="type"><a href="GapiMediaResource.html#TYPEstate">state</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTupload_state.resource">resource</span>&nbsp;:<code class="type"><a href="GapiMediaResource.html#TYPEt">t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTupload_state.chunk_size">chunk_size</span>&nbsp;:<code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTupload_state.current_offset">current_offset</span>&nbsp;:<code class="type">int64</code>;</code></td>
 
 </tr></table>
 }

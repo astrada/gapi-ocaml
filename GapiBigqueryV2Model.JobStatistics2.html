@@ -72,33 +72,32 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.JobStatistics2</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBigqueryV2Model.JobStatistics3.html">Previous</a>
-&nbsp;<a href="GapiBigqueryV2Model.html">Up</a>
-&nbsp;<a href="GapiBigqueryV2Model.JobStatistics.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.JobStatistics3.html" title="GapiBigqueryV2Model.JobStatistics3">Previous</a>
+&nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Model.JobStatistics.html" title="GapiBigqueryV2Model.JobStatistics">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBigqueryV2Model.JobStatistics2.html">GapiBigqueryV2Model.JobStatistics2</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBigqueryV2Model.JobStatistics2.html">GapiBigqueryV2Model.JobStatistics2</a></h1>
 <pre><span class="keyword">module</span> JobStatistics2: <code class="code">sig</code> <a href="GapiBigqueryV2Model.JobStatistics2.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>cacheHit&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.cacheHit">cacheHit</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Whether the query result was fetched from the query cache.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>completionRatio&nbsp;: <code class="type">float</code>;</code></td>
+<code><span id="TYPEELTt.completionRatio">completionRatio</span>&nbsp;:<code class="type">float</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-Only</code> Approximate fraction of data processed for this query. This will be 1.0 unless min_completion_ratio for the query was set to something other than 1.0.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totalBytesProcessed&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.totalBytesProcessed">totalBytesProcessed</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Total bytes processed for this job.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

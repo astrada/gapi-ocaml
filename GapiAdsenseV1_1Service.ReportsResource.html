@@ -72,12 +72,11 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAdsenseV1_1Service.ReportsResource</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAdsenseV1_1Service.CustomchannelsResource.html">Previous</a>
-&nbsp;<a href="GapiAdsenseV1_1Service.html">Up</a>
-&nbsp;<a href="GapiAdsenseV1_1Service.UrlchannelsResource.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAdsenseV1_1Service.CustomchannelsResource.html" title="GapiAdsenseV1_1Service.CustomchannelsResource">Previous</a>
+&nbsp;<a class="up" href="GapiAdsenseV1_1Service.html" title="GapiAdsenseV1_1Service">Up</a>
+&nbsp;<a class="post" href="GapiAdsenseV1_1Service.UrlchannelsResource.html" title="GapiAdsenseV1_1Service.UrlchannelsResource">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAdsenseV1_1Service.ReportsResource.html">GapiAdsenseV1_1Service.ReportsResource</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAdsenseV1_1Service.ReportsResource.html">GapiAdsenseV1_1Service.ReportsResource</a></h1>
 <pre><span class="keyword">module</span> ReportsResource: <code class="code">sig</code> <a href="GapiAdsenseV1_1Service.ReportsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
 <pre><span id="VALgenerate"><span class="keyword">val</span> generate</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?accountId:string list -><br>       ?currency:string -><br>       ?dimension:string list -><br>       ?filter:string list -><br>       ?locale:string -><br>       ?maxResults:int -><br>       ?metric:string list -><br>       ?sort:string list -><br>       ?startIndex:int -><br>       startDate:string -><br>       endDate:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.t</a> *<br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify "alt=csv" as a query parameter.<br>

@@ -72,30 +72,31 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiConfig</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiPipe.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiConversation.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiPipe.html" title="GapiPipe">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiConversation.html" title="GapiConversation">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiConfig.html">GapiConfig</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiConfig: <code class="code">sig</code> <a href="GapiConfig.html">..</a> <code class="code">end</code></pre>Configuration module.
+<h1>Module <a href="type_GapiConfig.html">GapiConfig</a></h1>
+<pre><span class="keyword">module</span> GapiConfig: <code class="code">sig</code> <a href="GapiConfig.html">..</a> <code class="code">end</code></pre><div class="info">
+Configuration module.
 <p>
 
   Configures Ocurl and authorization method.<br>
+</div>
 <hr width="100%">
-<br><code><span id="TYPEdebug_function"><span class="keyword">type</span> <code class="type"></code>debug_function</span> = </code><table class="typetable">
+<pre><code><span id="TYPEdebug_function"><span class="keyword">type</span> <code class="type"></code>debug_function</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Standard</span></code></td>
+<code><span id="TYPEELTdebug_function.Standard"><span class="constructor">Standard</span></span></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Standard debug function that prints everything on standard output.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Custom</span> <span class="keyword">of</span> <code class="type">(Curl.t -> Curl.curlDebugType -> string -> unit)</code></code></td>
+<code><span id="TYPEELTdebug_function.Custom"><span class="constructor">Custom</span></span> <span class="keyword">of</span> <code class="type">(Curl.t -> Curl.curlDebugType -> string -> unit)</code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Custom debug function.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 
@@ -103,19 +104,19 @@
 Curl debug function used to log server interactions.<br>
 </div>
 
-<br><code><span id="TYPEclient_login_config"><span class="keyword">type</span> <code class="type"></code>client_login_config</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEclient_login_config"><span class="keyword">type</span> <code class="type"></code>client_login_config</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>username&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTclient_login_config.username">username</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Username of the Google account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>password&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTclient_login_config.password">password</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Password of the Google account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -130,26 +131,26 @@ Client Login username lens.<br>
 <pre><span id="VALpassword"><span class="keyword">val</span> password</span> : <code class="type">(<a href="GapiConfig.html#TYPEclient_login_config">client_login_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 Client Login password lens.<br>
 </div>
-<br><code><span id="TYPEoauth1_config"><span class="keyword">type</span> <code class="type"></code>oauth1_config</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth1_config"><span class="keyword">type</span> <code class="type"></code>oauth1_config</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>signature_method&nbsp;: <code class="type"><a href="GapiCore.SignatureMethod.html#TYPEt">GapiCore.SignatureMethod.t</a></code>;</code></td>
+<code><span id="TYPEELToauth1_config.signature_method">signature_method</span>&nbsp;:<code class="type"><a href="GapiCore.SignatureMethod.html#TYPEt">GapiCore.SignatureMethod.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Signature method used to sign requests. (<code class="code">HMAC_SHA1</code> is the only supported method)</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>consumer_key&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_config.consumer_key">consumer_key</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Consumer key.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>consumer_secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_config.consumer_secret">consumer_secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Consumer secret.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -167,19 +168,19 @@ OAuth1 consumer key lens.<br>
 <pre><span id="VALconsumer_secret"><span class="keyword">val</span> consumer_secret</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth1_config">oauth1_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 OAuth1 consumer secret lens.<br>
 </div>
-<br><code><span id="TYPEoauth2_config"><span class="keyword">type</span> <code class="type"></code>oauth2_config</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth2_config"><span class="keyword">type</span> <code class="type"></code>oauth2_config</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>client_id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_config.client_id">client_id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Client ID.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>client_secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_config.client_secret">client_secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Client secret.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -194,33 +195,33 @@ OAuth2 client ID lens.<br>
 <pre><span id="VALclient_secret"><span class="keyword">val</span> client_secret</span> : <code class="type">(<a href="GapiConfig.html#TYPEoauth2_config">oauth2_config</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 OAuth2 client secret lens.<br>
 </div>
-<br><code><span id="TYPEauth_config"><span class="keyword">type</span> <code class="type"></code>auth_config</span> = </code><table class="typetable">
+<pre><code><span id="TYPEauth_config"><span class="keyword">type</span> <code class="type"></code>auth_config</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">NoAuth</span></code></td>
+<code><span id="TYPEELTauth_config.NoAuth"><span class="constructor">NoAuth</span></span></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >No authorization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">ClientLogin</span> <span class="keyword">of</span> <code class="type"><a href="GapiConfig.html#TYPEclient_login_config">client_login_config</a></code></code></td>
+<code><span id="TYPEELTauth_config.ClientLogin"><span class="constructor">ClientLogin</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiConfig.html#TYPEclient_login_config">client_login_config</a></code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Client Login.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">OAuth1</span> <span class="keyword">of</span> <code class="type"><a href="GapiConfig.html#TYPEoauth1_config">oauth1_config</a></code></code></td>
+<code><span id="TYPEELTauth_config.OAuth1"><span class="constructor">OAuth1</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiConfig.html#TYPEoauth1_config">oauth1_config</a></code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth1.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">OAuth2</span> <span class="keyword">of</span> <code class="type"><a href="GapiConfig.html#TYPEoauth2_config">oauth2_config</a></code></code></td>
+<code><span id="TYPEELTauth_config.OAuth2"><span class="constructor">OAuth2</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiConfig.html#TYPEoauth2_config">oauth2_config</a></code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth2.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 
@@ -228,54 +229,54 @@ OAuth2 client secret lens.<br>
 Authorization method.<br>
 </div>
 
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>application_name&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.application_name">application_name</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Application name, used to build User-Agent HTTP header.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>debug&nbsp;: <code class="type"><a href="GapiConfig.html#TYPEdebug_function">debug_function</a> option</code>;</code></td>
+<code><span id="TYPEELTt.debug">debug</span>&nbsp;:<code class="type"><a href="GapiConfig.html#TYPEdebug_function">debug_function</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Debug function used to dump HTTP session. Use <code class="code">None</code> to disable debug output.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>timeout&nbsp;: <code class="type">int option</code>;</code></td>
+<code><span id="TYPEELTt.timeout">timeout</span>&nbsp;:<code class="type">int option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Global timeout. <code class="code">None</code> defaults to no timeout.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>connect_timeout&nbsp;: <code class="type">int option</code>;</code></td>
+<code><span id="TYPEELTt.connect_timeout">connect_timeout</span>&nbsp;:<code class="type">int option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Connection timeout. <code class="code">None</code> defaults to 300 seconds.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>compress&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.compress">compress</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Compress requests. (Not yet supported)</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>auth&nbsp;: <code class="type"><a href="GapiConfig.html#TYPEauth_config">auth_config</a></code>;</code></td>
+<code><span id="TYPEELTt.auth">auth</span>&nbsp;:<code class="type"><a href="GapiConfig.html#TYPEauth_config">auth_config</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Authorization configuration.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>upload_chunk_size&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.upload_chunk_size">upload_chunk_size</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Chunk default size (in bytes) used by resumable upload. Should be a multiple of 512KB.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -309,7 +310,7 @@ Upload chunk size lens.<br>
 Default configuration.
 <p>
 
- <pre><code class="code">let default = {
+ <pre class="codepre"><code class="code">let default = {
   application_name = "gapi-ocaml";
   debug = None;
   timeout = None;
@@ -323,7 +324,7 @@ Default configuration.
 Default configuration with debug output enabled.
 <p>
 
- <pre><code class="code">let default_debug = {
+ <pre class="codepre"><code class="code">let default_debug = {
   application_name = "gapi-ocaml";
   debug = Some Standard;
   timeout = None;

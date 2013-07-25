@@ -71,88 +71,87 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBloggerV2Model.Blog</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GapiBloggerV2Model.html">Up</a>
-&nbsp;<a href="GapiBloggerV2Model.BlogList.html">Next</a>
+<div class="navbar">&nbsp;<a class="up" href="GapiBloggerV2Model.html" title="GapiBloggerV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBloggerV2Model.BlogList.html" title="GapiBloggerV2Model.BlogList">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBloggerV2Model.Blog.html">GapiBloggerV2Model.Blog</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBloggerV2Model.Blog.html">GapiBloggerV2Model.Blog</a></h1>
 <pre><span class="keyword">module</span> Blog: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Blog.Posts.html">Posts</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.Posts.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Blog.Pages.html">Pages</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.Pages.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Blog.Locale.html">Locale</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.Locale.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Blog.Posts.html">Posts</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.Posts.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Blog.Pages.html">Pages</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.Pages.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Blog.Locale.html">Locale</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Blog.Locale.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The description of this blog. This is displayed underneath the title.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The identifier for this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The kind of this entry. Always blogger#blog</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>locale&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Blog.Locale.html#TYPEt">Locale.t</a></code>;</code></td>
+<code><span id="TYPEELTt.locale">locale</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Blog.Locale.html#TYPEt">Locale.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The locale this Blog is set to.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>name&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of this blog. This is displayed as the title.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>pages&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Blog.Pages.html#TYPEt">Pages.t</a></code>;</code></td>
+<code><span id="TYPEELTt.pages">pages</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Blog.Pages.html#TYPEt">Pages.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The container of pages in this blog.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>posts&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Blog.Posts.html#TYPEt">Posts.t</a></code>;</code></td>
+<code><span id="TYPEELTt.posts">posts</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Blog.Posts.html#TYPEt">Posts.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The container of posts in this blog.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>published&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.published">published</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >RFC 3339 date-time when this blog was published.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The API REST URL to fetch this resource from.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>updated&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >RFC 3339 date-time when this blog was last updated.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>url&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The URL where this blog is published.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiCustomsearchV1Model.Result.html">
+<link rel="previous" href="GapiCustomsearchV1Model.Promotion.html">
 <link rel="Up" href="GapiCustomsearchV1Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -71,67 +71,66 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCustomsearchV1Model.Search</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCustomsearchV1Model.Result.html">Previous</a>
-&nbsp;<a href="GapiCustomsearchV1Model.html">Up</a>
+<div class="navbar"><a class="pre" href="GapiCustomsearchV1Model.Promotion.html" title="GapiCustomsearchV1Model.Promotion">Previous</a>
+&nbsp;<a class="up" href="GapiCustomsearchV1Model.html" title="GapiCustomsearchV1Model">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_GapiCustomsearchV1Model.Search.html">GapiCustomsearchV1Model.Search</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiCustomsearchV1Model.Search.html">GapiCustomsearchV1Model.Search</a></h1>
 <pre><span class="keyword">module</span> Search: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Search.Url.html">Url</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.Url.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Search.Spelling.html">Spelling</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.Spelling.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Search.SearchInformation.html">SearchInformation</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.SearchInformation.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Search.Url.html">Url</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.Url.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Search.Spelling.html">Spelling</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.Spelling.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCustomsearchV1Model.Search.SearchInformation.html">SearchInformation</a>: <code class="code">sig</code> <a href="GapiCustomsearchV1Model.Search.SearchInformation.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>context&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Context.html#TYPEt">GapiCustomsearchV1Model.Context.t</a></code>;</code></td>
+<code><span id="TYPEELTt.context">context</span>&nbsp;:<code class="type"><a href="GapiCustomsearchV1Model.Context.html#TYPEt">GapiCustomsearchV1Model.Context.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>items&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">GapiCustomsearchV1Model.Result.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiCustomsearchV1Model.Result.html#TYPEt">GapiCustomsearchV1Model.Result.t</a> list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>promotions&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Promotion.html#TYPEt">GapiCustomsearchV1Model.Promotion.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.promotions">promotions</span>&nbsp;:<code class="type"><a href="GapiCustomsearchV1Model.Promotion.html#TYPEt">GapiCustomsearchV1Model.Promotion.t</a> list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>queries&nbsp;: <code class="type">(string * <a href="GapiCustomsearchV1Model.Query.html#TYPEt">GapiCustomsearchV1Model.Query.t</a> list) list</code>;</code></td>
+<code><span id="TYPEELTt.queries">queries</span>&nbsp;:<code class="type">(string * <a href="GapiCustomsearchV1Model.Query.html#TYPEt">GapiCustomsearchV1Model.Query.t</a> list) list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>searchInformation&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Search.SearchInformation.html#TYPEt">SearchInformation.t</a></code>;</code></td>
+<code><span id="TYPEELTt.searchInformation">searchInformation</span>&nbsp;:<code class="type"><a href="GapiCustomsearchV1Model.Search.SearchInformation.html#TYPEt">SearchInformation.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>spelling&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Search.Spelling.html#TYPEt">Spelling.t</a></code>;</code></td>
+<code><span id="TYPEELTt.spelling">spelling</span>&nbsp;:<code class="type"><a href="GapiCustomsearchV1Model.Search.Spelling.html#TYPEt">Spelling.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>url&nbsp;: <code class="type"><a href="GapiCustomsearchV1Model.Search.Url.html#TYPEt">Url.t</a></code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type"><a href="GapiCustomsearchV1Model.Search.Url.html#TYPEt">Url.t</a></code>;</code></td>
 
 </tr></table>
 }

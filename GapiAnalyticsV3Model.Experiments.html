@@ -5,7 +5,7 @@
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiAnalyticsV3Model.Experiment.html">
-<link rel="next" href="GapiAnalyticsV3Model.CustomDataSource.html">
+<link rel="next" href="GapiAnalyticsV3Model.Profile.html">
 <link rel="Up" href="GapiAnalyticsV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,68 +72,67 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Model.Experiments</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAnalyticsV3Model.Experiment.html">Previous</a>
-&nbsp;<a href="GapiAnalyticsV3Model.html">Up</a>
-&nbsp;<a href="GapiAnalyticsV3Model.CustomDataSource.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Model.Experiment.html" title="GapiAnalyticsV3Model.Experiment">Previous</a>
+&nbsp;<a class="up" href="GapiAnalyticsV3Model.html" title="GapiAnalyticsV3Model">Up</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Model.Profile.html" title="GapiAnalyticsV3Model.Profile">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAnalyticsV3Model.Experiments.html">GapiAnalyticsV3Model.Experiments</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAnalyticsV3Model.Experiments.html">GapiAnalyticsV3Model.Experiments</a></h1>
 <pre><span class="keyword">module</span> Experiments: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Experiments.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>items&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A list of experiments.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>itemsPerPage&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.itemsPerPage">itemsPerPage</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Collection type.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>nextLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextLink">nextLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to next page for this experiment collection.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>previousLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.previousLink">previousLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to previous page for this experiment collection.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>startIndex&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.startIndex">startIndex</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totalResults&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.totalResults">totalResults</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of results for the query, regardless of the number of resources in the result.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>username&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.username">username</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Email ID of the authenticated user</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

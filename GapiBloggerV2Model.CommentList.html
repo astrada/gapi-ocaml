@@ -5,7 +5,7 @@
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiBloggerV2Model.Comment.html">
-<link rel="next" href="GapiBloggerV2Model.PostList.html">
+<link rel="next" href="GapiBloggerV2Model.Page.html">
 <link rel="Up" href="GapiBloggerV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,40 +72,39 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBloggerV2Model.CommentList</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBloggerV2Model.Comment.html">Previous</a>
-&nbsp;<a href="GapiBloggerV2Model.html">Up</a>
-&nbsp;<a href="GapiBloggerV2Model.PostList.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBloggerV2Model.Comment.html" title="GapiBloggerV2Model.Comment">Previous</a>
+&nbsp;<a class="up" href="GapiBloggerV2Model.html" title="GapiBloggerV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBloggerV2Model.Page.html" title="GapiBloggerV2Model.Page">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBloggerV2Model.CommentList.html">GapiBloggerV2Model.CommentList</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBloggerV2Model.CommentList.html">GapiBloggerV2Model.CommentList</a></h1>
 <pre><span class="keyword">module</span> CommentList: <code class="code">sig</code> <a href="GapiBloggerV2Model.CommentList.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>items&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Comment.html#TYPEt">GapiBloggerV2Model.Comment.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Comment.html#TYPEt">GapiBloggerV2Model.Comment.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The List of Comments for a Post.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The kind of this entry. Always blogger#commentList</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>nextPageToken&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Pagination token to fetch the next page, if one exists.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>prevPageToken&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.prevPageToken">prevPageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Pagination token to fetch the previous page, if one exists.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

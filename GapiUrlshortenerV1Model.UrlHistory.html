@@ -71,46 +71,45 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiUrlshortenerV1Model.UrlHistory</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiUrlshortenerV1Model.Url.html">Previous</a>
-&nbsp;<a href="GapiUrlshortenerV1Model.html">Up</a>
+<div class="navbar"><a class="pre" href="GapiUrlshortenerV1Model.Url.html" title="GapiUrlshortenerV1Model.Url">Previous</a>
+&nbsp;<a class="up" href="GapiUrlshortenerV1Model.html" title="GapiUrlshortenerV1Model">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_GapiUrlshortenerV1Model.UrlHistory.html">GapiUrlshortenerV1Model.UrlHistory</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiUrlshortenerV1Model.UrlHistory.html">GapiUrlshortenerV1Model.UrlHistory</a></h1>
 <pre><span class="keyword">module</span> UrlHistory: <code class="code">sig</code> <a href="GapiUrlshortenerV1Model.UrlHistory.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>items&nbsp;: <code class="type"><a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiUrlshortenerV1Model.Url.html#TYPEt">GapiUrlshortenerV1Model.Url.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A list of URL resources.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>itemsPerPage&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.itemsPerPage">itemsPerPage</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Number of items returned with each full "page" of results. Note that the last page could have fewer items than the "itemsPerPage" value.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The fixed string "urlshortener#urlHistory".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>nextPageToken&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A token to provide to get the next page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totalItems&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.totalItems">totalItems</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Total number of short URLs associated with this user (may be approximate).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

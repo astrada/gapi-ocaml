@@ -72,54 +72,53 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiUrlshortenerV1Model.AnalyticsSnapshot</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiUrlshortenerV1Model.StringCount.html">Previous</a>
-&nbsp;<a href="GapiUrlshortenerV1Model.html">Up</a>
-&nbsp;<a href="GapiUrlshortenerV1Model.AnalyticsSummary.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiUrlshortenerV1Model.StringCount.html" title="GapiUrlshortenerV1Model.StringCount">Previous</a>
+&nbsp;<a class="up" href="GapiUrlshortenerV1Model.html" title="GapiUrlshortenerV1Model">Up</a>
+&nbsp;<a class="post" href="GapiUrlshortenerV1Model.AnalyticsSummary.html" title="GapiUrlshortenerV1Model.AnalyticsSummary">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiUrlshortenerV1Model.AnalyticsSnapshot.html">GapiUrlshortenerV1Model.AnalyticsSnapshot</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiUrlshortenerV1Model.AnalyticsSnapshot.html">GapiUrlshortenerV1Model.AnalyticsSnapshot</a></h1>
 <pre><span class="keyword">module</span> AnalyticsSnapshot: <code class="code">sig</code> <a href="GapiUrlshortenerV1Model.AnalyticsSnapshot.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>browsers&nbsp;: <code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.browsers">browsers</span>&nbsp;:<code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Top browsers, e.g. "Chrome"; sorted by (descending) click counts. Only present if this data is available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>countries&nbsp;: <code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.countries">countries</span>&nbsp;:<code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Top countries (expressed as country codes), e.g. "US" or "DE"; sorted by (descending) click counts. Only present if this data is available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>longUrlClicks&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.longUrlClicks">longUrlClicks</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Number of clicks on all goo.gl short URLs pointing to this long URL.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>platforms&nbsp;: <code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.platforms">platforms</span>&nbsp;:<code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Top platforms or OSes, e.g. "Windows"; sorted by (descending) click counts. Only present if this data is available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>referrers&nbsp;: <code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.referrers">referrers</span>&nbsp;:<code class="type"><a href="GapiUrlshortenerV1Model.StringCount.html#TYPEt">GapiUrlshortenerV1Model.StringCount.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Top referring hosts, e.g. "www.google.com"; sorted by (descending) click counts. Only present if this data is available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>shortUrlClicks&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.shortUrlClicks">shortUrlClicks</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Number of clicks on this short URL.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

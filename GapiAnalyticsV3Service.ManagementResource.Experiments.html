@@ -72,12 +72,11 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Service.ManagementResource.Experiments</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAnalyticsV3Service.ManagementResource.Goals.html">Previous</a>
-&nbsp;<a href="GapiAnalyticsV3Service.ManagementResource.html">Up</a>
-&nbsp;<a href="GapiAnalyticsV3Service.ManagementResource.DailyUploads.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Service.ManagementResource.Goals.html" title="GapiAnalyticsV3Service.ManagementResource.Goals">Previous</a>
+&nbsp;<a class="up" href="GapiAnalyticsV3Service.ManagementResource.html" title="GapiAnalyticsV3Service.ManagementResource">Up</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Service.ManagementResource.DailyUploads.html" title="GapiAnalyticsV3Service.ManagementResource.DailyUploads">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAnalyticsV3Service.ManagementResource.Experiments.html">GapiAnalyticsV3Service.ManagementResource.Experiments</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAnalyticsV3Service.ManagementResource.Experiments.html">GapiAnalyticsV3Service.ManagementResource.Experiments</a></h1>
 <pre><span class="keyword">module</span> Experiments: <code class="code">sig</code> <a href="GapiAnalyticsV3Service.ManagementResource.Experiments.html">..</a> <code class="code">end</code></pre><hr width="100%">
 <pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       profileId:string -><br>       experimentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Delete an experiment.<br>
@@ -86,7 +85,7 @@ Delete an experiment.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID to which the experiment belongs</div>
 <div class="param_info"><code class="code">webPropertyId</code> : Web property ID to which the experiment belongs</div>
-<div class="param_info"><code class="code">profileId</code> : Profile ID to which the experiment belongs</div>
+<div class="param_info"><code class="code">profileId</code> : View (Profile) ID to which the experiment belongs</div>
 <div class="param_info"><code class="code">experimentId</code> : ID of the experiment to delete</div>
 <pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       profileId:string -><br>       experimentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Returns an experiment to which the user has access.<br>
@@ -96,7 +95,7 @@ Returns an experiment to which the user has access.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID to retrieve the experiment for.</div>
 <div class="param_info"><code class="code">webPropertyId</code> : Web property ID to retrieve the experiment for.</div>
-<div class="param_info"><code class="code">profileId</code> : Profile ID to retrieve the experiment for.</div>
+<div class="param_info"><code class="code">profileId</code> : View (Profile) ID to retrieve the experiment for.</div>
 <div class="param_info"><code class="code">experimentId</code> : Experiment ID to retrieve the experiment for.</div>
 <pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       profileId:string -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Create a new experiment.<br>
@@ -105,7 +104,7 @@ Create a new experiment.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID to create the experiment for.</div>
 <div class="param_info"><code class="code">webPropertyId</code> : Web property ID to create the experiment for.</div>
-<div class="param_info"><code class="code">profileId</code> : Profile ID to create the experiment for.</div>
+<div class="param_info"><code class="code">profileId</code> : View (Profile) ID to create the experiment for.</div>
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?max_results:int -><br>       ?start_index:int -><br>       accountId:string -><br>       webPropertyId:string -><br>       profileId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Experiments.html#TYPEt">GapiAnalyticsV3Model.Experiments.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Lists experiments to which the user has access.<br>
 </div>
@@ -115,7 +114,7 @@ Lists experiments to which the user has access.<br>
 <div class="param_info"><code class="code">start_index</code> : An index of the first experiment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID to retrieve experiments for.</div>
 <div class="param_info"><code class="code">webPropertyId</code> : Web property ID to retrieve experiments for.</div>
-<div class="param_info"><code class="code">profileId</code> : Profile ID to retrieve experiments for.</div>
+<div class="param_info"><code class="code">profileId</code> : View (Profile) ID to retrieve experiments for.</div>
 <pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       profileId:string -><br>       experimentId:string -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Update an existing experiment. This method supports patch semantics.<br>
 </div>
@@ -123,7 +122,7 @@ Update an existing experiment. This method supports patch semantics.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID of the experiment to update.</div>
 <div class="param_info"><code class="code">webPropertyId</code> : Web property ID of the experiment to update.</div>
-<div class="param_info"><code class="code">profileId</code> : Profile ID of the experiment to update.</div>
+<div class="param_info"><code class="code">profileId</code> : View (Profile) ID of the experiment to update.</div>
 <div class="param_info"><code class="code">experimentId</code> : Experiment ID of the experiment to update.</div>
 <pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       profileId:string -><br>       experimentId:string -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Experiment.html#TYPEt">GapiAnalyticsV3Model.Experiment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Update an existing experiment.<br>
@@ -132,6 +131,6 @@ Update an existing experiment.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID of the experiment to update.</div>
 <div class="param_info"><code class="code">webPropertyId</code> : Web property ID of the experiment to update.</div>
-<div class="param_info"><code class="code">profileId</code> : Profile ID of the experiment to update.</div>
+<div class="param_info"><code class="code">profileId</code> : View (Profile) ID of the experiment to update.</div>
 <div class="param_info"><code class="code">experimentId</code> : Experiment ID of the experiment to update.</div>
 </body></html>

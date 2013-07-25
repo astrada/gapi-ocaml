@@ -72,15 +72,17 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiRequest</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAuth.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiMonad.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAuth.html" title="GapiAuth">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiMonad.html" title="GapiMonad">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiRequest.html">GapiRequest</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiRequest: <code class="code">sig</code> <a href="GapiRequest.html">..</a> <code class="code">end</code></pre>Basic request to services.<br>
+<h1>Module <a href="type_GapiRequest.html">GapiRequest</a></h1>
+<pre><span class="keyword">module</span> GapiRequest: <code class="code">sig</code> <a href="GapiRequest.html">..</a> <code class="code">end</code></pre><div class="info">
+Basic request to services.<br>
+</div>
 <hr width="100%">
 <pre><span id="EXCEPTIONNotModified"><span class="keyword">exception</span> NotModified</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
+<pre><span id="EXCEPTIONUnauthorized"><span class="keyword">exception</span> Unauthorized</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
 <pre><span id="EXCEPTIONPermissionDenied"><span class="keyword">exception</span> PermissionDenied</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
 <pre><span id="EXCEPTIONForbidden"><span class="keyword">exception</span> Forbidden</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
 <pre><span id="EXCEPTIONNotFound"><span class="keyword">exception</span> NotFound</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
@@ -88,41 +90,42 @@
 <pre><span id="EXCEPTIONConflict"><span class="keyword">exception</span> Conflict</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
 <pre><span id="EXCEPTIONGone"><span class="keyword">exception</span> Gone</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
 <pre><span id="EXCEPTIONPreconditionFailed"><span class="keyword">exception</span> PreconditionFailed</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
+<pre><span id="EXCEPTIONServiceUnavailable"><span class="keyword">exception</span> ServiceUnavailable</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
 <pre><span id="EXCEPTIONRefreshTokenFailed"><span class="keyword">exception</span> RefreshTokenFailed</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre>
-<br><code><span id="TYPErequest_type"><span class="keyword">type</span> <code class="type"></code>request_type</span> = </code><table class="typetable">
+<pre><code><span id="TYPErequest_type"><span class="keyword">type</span> <code class="type"></code>request_type</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Query</span></code></td>
+<code><span id="TYPEELTrequest_type.Query"><span class="constructor">Query</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Create</span></code></td>
+<code><span id="TYPEELTrequest_type.Create"><span class="constructor">Create</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Update</span></code></td>
+<code><span id="TYPEELTrequest_type.Update"><span class="constructor">Update</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Patch</span></code></td>
+<code><span id="TYPEELTrequest_type.Patch"><span class="constructor">Patch</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Delete</span></code></td>
+<code><span id="TYPEELTrequest_type.Delete"><span class="constructor">Delete</span></span></code></td>
 
 </tr></table>
 

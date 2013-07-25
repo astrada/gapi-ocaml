@@ -72,13 +72,14 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiMonad</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiRequest.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiError.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiRequest.html" title="GapiRequest">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiError.html" title="GapiError">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiMonad.html">GapiMonad</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiMonad: <code class="code">sig</code> <a href="GapiMonad.html">..</a> <code class="code">end</code></pre>Defines the monad interface and provides implementations of some monads.<br>
+<h1>Module <a href="type_GapiMonad.html">GapiMonad</a></h1>
+<pre><span class="keyword">module</span> GapiMonad: <code class="code">sig</code> <a href="GapiMonad.html">..</a> <code class="code">end</code></pre><div class="info">
+Defines the monad interface and provides implementations of some monads.<br>
+</div>
 <hr width="100%">
 <pre><span class="keyword">module type</span> <a href="GapiMonad.Monad.html">Monad</a> = <code class="code">sig</code> <a href="GapiMonad.Monad.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module type</span> <a href="GapiMonad.MonadCombinators.html">MonadCombinators</a> = <code class="code">sig</code> <a href="GapiMonad.MonadCombinators.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiMonad.MakeMonadCombinators.html">MakeMonadCombinators</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">M</code><code class="code"> : </code><code class="type"><a href="GapiMonad.Monad.html">Monad</a></code><code class="code">) -&gt; </code><code class="type"><a href="GapiMonad.MonadCombinators.html">MonadCombinators</a></code><code class="type"> 
     with type 'a m = 'a M.t</code></div></pre><pre><span class="keyword">module type</span> <a href="GapiMonad.StateMonad.html">StateMonad</a> = <code class="code">sig</code> <a href="GapiMonad.StateMonad.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiMonad.MakeStateMonad.html">MakeStateMonad</a>: <div class="sig_block"><code class="code">functor (</code><code class="code">T</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span id="TYPEs"><span class="keyword">type</span> <code class="type"></code>s</span> </pre>

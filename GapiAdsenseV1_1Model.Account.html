@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiAdsenseV1_1Model.AdClients.html">
-<link rel="next" href="GapiAdsenseV1_1Model.UrlChannels.html">
+<link rel="previous" href="GapiAdsenseV1_1Model.UrlChannel.html">
+<link rel="next" href="GapiAdsenseV1_1Model.CustomChannels.html">
 <link rel="Up" href="GapiAdsenseV1_1Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,40 +72,39 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAdsenseV1_1Model.Account</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAdsenseV1_1Model.AdClients.html">Previous</a>
-&nbsp;<a href="GapiAdsenseV1_1Model.html">Up</a>
-&nbsp;<a href="GapiAdsenseV1_1Model.UrlChannels.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAdsenseV1_1Model.UrlChannel.html" title="GapiAdsenseV1_1Model.UrlChannel">Previous</a>
+&nbsp;<a class="up" href="GapiAdsenseV1_1Model.html" title="GapiAdsenseV1_1Model">Up</a>
+&nbsp;<a class="post" href="GapiAdsenseV1_1Model.CustomChannels.html" title="GapiAdsenseV1_1Model.CustomChannels">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAdsenseV1_1Model.Account.html">GapiAdsenseV1_1Model.Account</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAdsenseV1_1Model.Account.html">GapiAdsenseV1_1Model.Account</a></h1>
 <pre><span class="keyword">module</span> Account: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.Account.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Unique identifier of this account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Kind of resource this is, in this case adsense#account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>name&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Name of this account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>subAccounts&nbsp;: <code class="type"><a href="GapiAdsenseV1_1Model.Account.html#TYPEt">t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.subAccounts">subAccounts</span>&nbsp;:<code class="type"><a href="GapiAdsenseV1_1Model.Account.html#TYPEt">t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Sub accounts of the this account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

@@ -5,7 +5,7 @@
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiCalendarV3Model.Acl.html">
-<link rel="next" href="GapiCalendarV3Model.Settings.html">
+<link rel="next" href="GapiCalendarV3Model.Channel.html">
 <link rel="Up" href="GapiCalendarV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,19 +72,18 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCalendarV3Model.Events</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCalendarV3Model.Acl.html">Previous</a>
-&nbsp;<a href="GapiCalendarV3Model.html">Up</a>
-&nbsp;<a href="GapiCalendarV3Model.Settings.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiCalendarV3Model.Acl.html" title="GapiCalendarV3Model.Acl">Previous</a>
+&nbsp;<a class="up" href="GapiCalendarV3Model.html" title="GapiCalendarV3Model">Up</a>
+&nbsp;<a class="post" href="GapiCalendarV3Model.Channel.html" title="GapiCalendarV3Model.Channel">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiCalendarV3Model.Events.html">GapiCalendarV3Model.Events</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiCalendarV3Model.Events.html">GapiCalendarV3Model.Events</a></h1>
 <pre><span class="keyword">module</span> Events: <code class="code">sig</code> <a href="GapiCalendarV3Model.Events.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>accessRole&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.accessRole">accessRole</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user's access role for this calendar. Read-only. Possible values are:  <ul>
 <li>"none" - The user has no access. </li>
 <li>"freeBusyReader" - The user has read access to free/busy information. </li>
@@ -98,63 +97,63 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>defaultReminders&nbsp;: <code class="type"><a href="GapiCalendarV3Model.EventReminder.html#TYPEt">GapiCalendarV3Model.EventReminder.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.defaultReminders">defaultReminders</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.EventReminder.html#TYPEt">GapiCalendarV3Model.EventReminder.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The default reminders on the calendar for the authenticated user. These reminders apply to all events on this calendar that do not explicitly override them (i.e. do not have 'reminders.useDefault' set to 'true').</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Description of the calendar. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of the collection.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>items&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.html#TYPEt">GapiCalendarV3Model.Event.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of events on the calendar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the collection ("calendar#events").</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>nextPageToken&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Token used to access the next page of this result. Omitted if no further results are available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>summary&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.summary">summary</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Title of the calendar. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>timeZone&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.timeZone">timeZone</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The time zone of the calendar. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>updated&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Last modification time of the calendar (as a RFC 3339 timestamp). Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

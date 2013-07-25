@@ -72,13 +72,14 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiClientLogin</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAuthResponse.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiOAuth1.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAuthResponse.html" title="GapiAuthResponse">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiOAuth1.html" title="GapiOAuth1">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiClientLogin.html">GapiClientLogin</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiClientLogin: <code class="code">sig</code> <a href="GapiClientLogin.html">..</a> <code class="code">end</code></pre>Client Login authorization API implementation.<br>
+<h1>Module <a href="type_GapiClientLogin.html">GapiClientLogin</a></h1>
+<pre><span class="keyword">module</span> GapiClientLogin: <code class="code">sig</code> <a href="GapiClientLogin.html">..</a> <code class="code">end</code></pre><div class="info">
+Client Login authorization API implementation.<br>
+</div>
 <hr width="100%">
 <pre><span class="keyword">module</span> <a href="GapiClientLogin.Error.html">Error</a>: <code class="code">sig</code> <a href="GapiClientLogin.Error.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiClientLogin.Service.html">Service</a>: <code class="code">sig</code> <a href="GapiClientLogin.Service.html">..</a> <code class="code">end</code></pre><pre><span id="EXCEPTIONLoginException"><span class="keyword">exception</span> LoginException</span> <span class="keyword">of</span> <code class="type"><a href="GapiClientLogin.Error.html#TYPEt">Error.t</a></code></pre>
 <pre><span id="VALget_auth_token"><span class="keyword">val</span> get_auth_token</span> : <code class="type">?account_type:string -><br>       ?url:string -><br>       email:string -><br>       password:string -><br>       source:string -><br>       service:<a href="GapiClientLogin.Service.html#TYPEt">Service.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre></body></html>

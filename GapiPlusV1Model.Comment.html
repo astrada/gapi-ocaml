@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiPlusV1Model.MomentsFeed.html">
 <link rel="next" href="GapiPlusV1Model.CommentFeed.html">
 <link rel="Up" href="GapiPlusV1Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,89 +71,87 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiPlusV1Model.Comment</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiPlusV1Model.MomentsFeed.html">Previous</a>
-&nbsp;<a href="GapiPlusV1Model.html">Up</a>
-&nbsp;<a href="GapiPlusV1Model.CommentFeed.html">Next</a>
+<div class="navbar">&nbsp;<a class="up" href="GapiPlusV1Model.html" title="GapiPlusV1Model">Up</a>
+&nbsp;<a class="post" href="GapiPlusV1Model.CommentFeed.html" title="GapiPlusV1Model.CommentFeed">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiPlusV1Model.Comment.html">GapiPlusV1Model.Comment</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiPlusV1Model.Comment.html">GapiPlusV1Model.Comment</a></h1>
 <pre><span class="keyword">module</span> Comment: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.Plusoners.html">Plusoners</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Plusoners.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.Object.html">Object</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Object.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.InReplyTo.html">InReplyTo</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.InReplyTo.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.Actor.html">Actor</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Actor.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.Plusoners.html">Plusoners</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Plusoners.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.Object.html">Object</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Object.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.InReplyTo.html">InReplyTo</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.InReplyTo.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Comment.Actor.html">Actor</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Actor.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>actor&nbsp;: <code class="type"><a href="GapiPlusV1Model.Comment.Actor.html#TYPEt">Actor.t</a></code>;</code></td>
+<code><span id="TYPEELTt.actor">actor</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Comment.Actor.html#TYPEt">Actor.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The person who posted this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of this response for caching purposes.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>inReplyTo&nbsp;: <code class="type"><a href="GapiPlusV1Model.Comment.InReplyTo.html#TYPEt">InReplyTo.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.inReplyTo">inReplyTo</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Comment.InReplyTo.html#TYPEt">InReplyTo.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The activity this comment replied to.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifies this resource as a comment. Value: "plus#comment".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>_object&nbsp;: <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">Object.t</a></code>;</code></td>
+<code><span id="TYPEELTt._object">_object</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">Object.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The object of this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>plusoners&nbsp;: <code class="type"><a href="GapiPlusV1Model.Comment.Plusoners.html#TYPEt">Plusoners.t</a></code>;</code></td>
+<code><span id="TYPEELTt.plusoners">plusoners</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Comment.Plusoners.html#TYPEt">Plusoners.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >People who +1'd this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>published&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.published">published</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The time at which this comment was initially published. Formatted as an RFC 3339 timestamp.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to this comment resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>updated&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The time at which this comment was last updated. Formatted as an RFC 3339 timestamp.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>verb&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.verb">verb</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >This comment's verb, indicating what action was performed. Possible values are:  <ul>
 <li>"post" - Publish content to the stream.</li>
 </ul>

@@ -72,43 +72,44 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCurl</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCore.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiPipe.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiCore.html" title="GapiCore">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiPipe.html" title="GapiPipe">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiCurl.html">GapiCurl</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiCurl: <code class="code">sig</code> <a href="GapiCurl.html">..</a> <code class="code">end</code></pre>Ocurl wrapper module.<br>
+<h1>Module <a href="type_GapiCurl.html">GapiCurl</a></h1>
+<pre><span class="keyword">module</span> GapiCurl: <code class="code">sig</code> <a href="GapiCurl.html">..</a> <code class="code">end</code></pre><div class="info">
+Ocurl wrapper module.<br>
+</div>
 <hr width="100%">
 <pre><span id="TYPEcurl_context"><span class="keyword">type</span> <code class="type"></code>curl_context</span> </pre>
 
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">'a</code> t</span> = </code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">'a</code> t</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Initialized</span></code></td>
+<code><span id="TYPEELTt.Initialized"><span class="constructor">Initialized</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Created</span> <span class="keyword">of</span> <code class="type"><a href="GapiCurl.html#TYPEcurl_context">curl_context</a></code></code></td>
+<code><span id="TYPEELTt.Created"><span class="constructor">Created</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiCurl.html#TYPEcurl_context">curl_context</a></code></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Destroyed</span></code></td>
+<code><span id="TYPEELTt.Destroyed"><span class="constructor">Destroyed</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Uninitialized</span></code></td>
+<code><span id="TYPEELTt.Uninitialized"><span class="constructor">Uninitialized</span></span></code></td>
 
 </tr></table>
 

@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiAdsenseV1_1Model.UrlChannels.html">
-<link rel="next" href="GapiAdsenseV1_1Model.CustomChannels.html">
+<link rel="previous" href="GapiAdsenseV1_1Model.Accounts.html">
+<link rel="next" href="GapiAdsenseV1_1Model.UrlChannels.html">
 <link rel="Up" href="GapiAdsenseV1_1Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,61 +72,60 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAdsenseV1_1Model.UrlChannels.html">Previous</a>
-&nbsp;<a href="GapiAdsenseV1_1Model.html">Up</a>
-&nbsp;<a href="GapiAdsenseV1_1Model.CustomChannels.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAdsenseV1_1Model.Accounts.html" title="GapiAdsenseV1_1Model.Accounts">Previous</a>
+&nbsp;<a class="up" href="GapiAdsenseV1_1Model.html" title="GapiAdsenseV1_1Model">Up</a>
+&nbsp;<a class="post" href="GapiAdsenseV1_1Model.UrlChannels.html" title="GapiAdsenseV1_1Model.UrlChannels">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html">GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html">GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse</a></h1>
 <pre><span class="keyword">module</span> AdsenseReportsGenerateResponse: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">Headers</a>: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">Headers</a>: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>averages&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.averages">averages</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The averages of the report. This is the same length as any other row in the report; cells corresponding to dimension columns are empty.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>headers&nbsp;: <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html#TYPEt">Headers.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.headers">headers</span>&nbsp;:<code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html#TYPEt">Headers.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The header information of the columns requested in the report. This is a list of headers; one for each dimension in the request, followed by one for each metric in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Kind this is, in this case adsense#report.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>rows&nbsp;: <code class="type">string list list</code>;</code></td>
+<code><span id="TYPEELTt.rows">rows</span>&nbsp;:<code class="type">string list list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The output rows of the report. Each row is a list of cells; one for each dimension in the request, followed by one for each metric in the request. The dimension cells contain strings, and the metric cells contain numbers.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totalMatchedRows&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.totalMatchedRows">totalMatchedRows</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of rows matched by the report request. Fewer rows may be returned in the response due to being limited by the row count requested or the report row limit.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totals&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.totals">totals</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The totals of the report. This is the same length as any other row in the report; cells corresponding to dimension columns are empty.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>warnings&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.warnings">warnings</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Any warnings associated with generation of the report.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

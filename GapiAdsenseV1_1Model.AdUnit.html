@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="next" href="GapiAdsenseV1_1Model.CustomChannel.html">
+<link rel="previous" href="GapiAdsenseV1_1Model.AdClients.html">
+<link rel="next" href="GapiAdsenseV1_1Model.AdUnits.html">
 <link rel="Up" href="GapiAdsenseV1_1Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -71,46 +72,46 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAdsenseV1_1Model.AdUnit</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GapiAdsenseV1_1Model.html">Up</a>
-&nbsp;<a href="GapiAdsenseV1_1Model.CustomChannel.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAdsenseV1_1Model.AdClients.html" title="GapiAdsenseV1_1Model.AdClients">Previous</a>
+&nbsp;<a class="up" href="GapiAdsenseV1_1Model.html" title="GapiAdsenseV1_1Model">Up</a>
+&nbsp;<a class="post" href="GapiAdsenseV1_1Model.AdUnits.html" title="GapiAdsenseV1_1Model.AdUnits">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAdsenseV1_1Model.AdUnit.html">GapiAdsenseV1_1Model.AdUnit</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAdsenseV1_1Model.AdUnit.html">GapiAdsenseV1_1Model.AdUnit</a></h1>
 <pre><span class="keyword">module</span> AdUnit: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdUnit.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>code&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.code">code</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identity code of this ad unit, not necessarily unique across ad clients.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Unique identifier of this ad unit. This should be considered an opaque identifier; it is not safe to rely on it being in any particular format.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Kind of resource this is, in this case adsense#adUnit.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>name&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Name of this ad unit.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>status&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.status">status</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Status of this ad unit. Possible values are:
 NEW: Indicates that the ad unit was created within the last seven days and does not yet have any activity associated with it.
 <p>

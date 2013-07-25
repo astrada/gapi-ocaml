@@ -72,47 +72,46 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Model.Goal.UrlDestinationDetails</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html">Previous</a>
-&nbsp;<a href="GapiAnalyticsV3Model.Goal.html">Up</a>
-&nbsp;<a href="GapiAnalyticsV3Model.Goal.ParentLink.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html" title="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails">Previous</a>
+&nbsp;<a class="up" href="GapiAnalyticsV3Model.Goal.html" title="GapiAnalyticsV3Model.Goal">Up</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Model.Goal.ParentLink.html" title="GapiAnalyticsV3Model.Goal.ParentLink">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">GapiAnalyticsV3Model.Goal.UrlDestinationDetails</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">GapiAnalyticsV3Model.Goal.UrlDestinationDetails</a></h1>
 <pre><span class="keyword">module</span> UrlDestinationDetails: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.Steps.html">Steps</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.Steps.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.Steps.html">Steps</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.Steps.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>caseSensitive&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.caseSensitive">caseSensitive</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Determines if the goal URL must exactly match the capitalization of visited URLs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>firstStepRequired&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.firstStepRequired">firstStepRequired</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Determines if the first step in this goal is required.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>matchType&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.matchType">matchType</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Match type for the goal URL. Possible values are HEAD, EXACT, or REGEX.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>steps&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.Steps.html#TYPEt">Steps.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.steps">steps</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.Steps.html#TYPEt">Steps.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of steps configured for this goal funnel.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>url&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >URL for this goal.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

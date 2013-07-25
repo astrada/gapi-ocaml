@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiPlusV1Model.Place.html">
+<link rel="previous" href="GapiPlusV1Model.Activity.html">
 <link rel="next" href="GapiPlusV1Model.Moment.html">
 <link rel="Up" href="GapiPlusV1Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,397 +72,396 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiPlusV1Model.ItemScope</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiPlusV1Model.Place.html">Previous</a>
-&nbsp;<a href="GapiPlusV1Model.html">Up</a>
-&nbsp;<a href="GapiPlusV1Model.Moment.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiPlusV1Model.Activity.html" title="GapiPlusV1Model.Activity">Previous</a>
+&nbsp;<a class="up" href="GapiPlusV1Model.html" title="GapiPlusV1Model">Up</a>
+&nbsp;<a class="post" href="GapiPlusV1Model.Moment.html" title="GapiPlusV1Model.Moment">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiPlusV1Model.ItemScope.html">GapiPlusV1Model.ItemScope</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiPlusV1Model.ItemScope.html">GapiPlusV1Model.ItemScope</a></h1>
 <pre><span class="keyword">module</span> ItemScope: <code class="code">sig</code> <a href="GapiPlusV1Model.ItemScope.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>about&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.about">about</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The subject matter of the content.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>additionalName&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.additionalName">additionalName</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An additional name for a Person, can be used for a middle name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>address&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.address">address</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Postal address.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>addressCountry&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.addressCountry">addressCountry</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Address country.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>addressLocality&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.addressLocality">addressLocality</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Address locality.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>addressRegion&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.addressRegion">addressRegion</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Address region.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>associated_media&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.associated_media">associated_media</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The encoding.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>attendeeCount&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.attendeeCount">attendeeCount</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Number of attendees.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>attendees&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.attendees">attendees</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A person attending the event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>audio&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.audio">audio</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >From http://schema.org/MusicRecording, the audio file.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>author&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.author">author</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The person or persons who created this result. In the example of restaurant reviews, this might be the reviewer's name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>bestRating&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.bestRating">bestRating</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Best possible rating value that a result might obtain. This property defines the upper bound for the ratingValue. For example, you might have a 5 star rating scale, you would provide 5 as the value for this property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>birthDate&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.birthDate">birthDate</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Date of birth.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>byArtist&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.byArtist">byArtist</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >From http://schema.org/MusicRecording, the artist that performed this recording.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>caption&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.caption">caption</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The caption for this object.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>contentSize&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.contentSize">contentSize</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >File size in (mega/kilo) bytes.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>contentUrl&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.contentUrl">contentUrl</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Actual bytes of the media object, for example the image file or video file.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>contributor&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.contributor">contributor</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A list of contributors to this result.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>dateCreated&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.dateCreated">dateCreated</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The date the result was created such as the date that a review was first created.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>dateModified&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.dateModified">dateModified</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The date the result was last modified such as the date that a review was last edited.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>datePublished&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.datePublished">datePublished</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The initial date that the result was published. For example, a user writes a comment on a blog, which has a result.dateCreated of when they submit it. If the blog users comment moderation, the result.datePublished value would match the date when the owner approved the message.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The string that describes the content of the result.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>duration&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.duration">duration</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The duration of the item (movie, audio recording, event, etc.) in ISO 8601 date format.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>embedUrl&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.embedUrl">embedUrl</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A URL pointing to a player for a specific video. In general, this is the information in the src element of an embed tag and should not be the same as the content of the loc tag.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>endDate&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.endDate">endDate</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The end date and time of the event (in ISO 8601 date format).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>familyName&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.familyName">familyName</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Family name. This property can be used with givenName instead of the name property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>gender&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.gender">gender</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Gender of the person.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>geo&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.geo">geo</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Geo coordinates.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>givenName&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.givenName">givenName</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Given name. This property can be used with familyName instead of the name property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>height&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.height">height</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The height of the media object.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An identifier for the target. Your app can choose how to identify targets. The target.id is required if you are writing an activity that does not have a corresponding web page or target.url property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>image&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.image">image</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A URL to the image that represents this result. For example, if a user writes a review of a restaurant and attaches a photo of their meal, you might use that photo as the result.image.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>inAlbum&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.inAlbum">inAlbum</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >From http://schema.org/MusicRecording, which album a song is in.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifies this resource as an itemScope.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>latitude&nbsp;: <code class="type">float</code>;</code></td>
+<code><span id="TYPEELTt.latitude">latitude</span>&nbsp;:<code class="type">float</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Latitude.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>location&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The location of the event or organization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>longitude&nbsp;: <code class="type">float</code>;</code></td>
+<code><span id="TYPEELTt.longitude">longitude</span>&nbsp;:<code class="type">float</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Longitude.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>name&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of the result. In the example of a restaurant review, this might be the summary the user gave their review such as "Great ambiance, but overpriced."</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>partOfTVSeries&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.partOfTVSeries">partOfTVSeries</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Property of http://schema.org/TVEpisode indicating which series the episode belongs to.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>performers&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.performers">performers</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The main performer or performers of the event-for example, a presenter, musician, or actor.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>playerType&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.playerType">playerType</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Player type that is required. For example: Flash or Silverlight.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>postOfficeBoxNumber&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.postOfficeBoxNumber">postOfficeBoxNumber</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Post office box number.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>postalCode&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.postalCode">postalCode</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Postal code.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>ratingValue&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.ratingValue">ratingValue</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Rating value.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>reviewRating&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.reviewRating">reviewRating</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Review rating.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>startDate&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.startDate">startDate</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The start date and time of the event (in ISO 8601 date format).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>streetAddress&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.streetAddress">streetAddress</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Street address.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>text&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.text">text</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The text that is the result of the app activity. For example, if a user leaves a review of a restaurant, this might be the text of the review.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>thumbnail&nbsp;: <code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.thumbnail">thumbnail</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.ItemScope.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Thumbnail image for an image or video.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>thumbnailUrl&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.thumbnailUrl">thumbnailUrl</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A URL to a thumbnail image that represents this result.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>tickerSymbol&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.tickerSymbol">tickerSymbol</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we reccommend using the controlled vocaulary of Market Identifier Codes (MIC) specified in ISO15022.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>_type&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._type">_type</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The schema.org URL that best describes the referenced target and matches the type of moment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>url&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The URL that points to the result object. For example, a permalink directly to a restaurant reviewer's comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>width&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.width">width</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The width of the media object.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>worstRating&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.worstRating">worstRating</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Worst possible rating value that a result might obtain. This property defines the lower bound for the ratingValue.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

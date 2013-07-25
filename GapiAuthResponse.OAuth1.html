@@ -72,69 +72,68 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAuthResponse.OAuth1</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAuthResponse.ClientLogin.html">Previous</a>
-&nbsp;<a href="GapiAuthResponse.html">Up</a>
-&nbsp;<a href="GapiAuthResponse.AuthSub.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiAuthResponse.ClientLogin.html" title="GapiAuthResponse.ClientLogin">Previous</a>
+&nbsp;<a class="up" href="GapiAuthResponse.html" title="GapiAuthResponse">Up</a>
+&nbsp;<a class="post" href="GapiAuthResponse.AuthSub.html" title="GapiAuthResponse.AuthSub">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiAuthResponse.OAuth1.html">GapiAuthResponse.OAuth1</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAuthResponse.OAuth1.html">GapiAuthResponse.OAuth1</a></h1>
 <pre><span class="keyword">module</span> OAuth1: <code class="code">sig</code> <a href="GapiAuthResponse.OAuth1.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPErequest_token"><span class="keyword">type</span> <code class="type"></code>request_token</span> = {</code><table class="typetable">
+<pre><code><span id="TYPErequest_token"><span class="keyword">type</span> <code class="type"></code>request_token</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>request_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTrequest_token.request_token">request_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>request_token_secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTrequest_token.request_token_secret">request_token_secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>callback_confirmed&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTrequest_token.callback_confirmed">callback_confirmed</span>&nbsp;:<code class="type">bool</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALrequest_token"><span class="keyword">val</span> request_token</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPErequest_token">request_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrequest_token_secret"><span class="keyword">val</span> request_token_secret</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPErequest_token">request_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcallback_confirmed"><span class="keyword">val</span> callback_confirmed</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPErequest_token">request_token</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEauth_token"><span class="keyword">type</span> <code class="type"></code>auth_token</span> = {</code><table class="typetable">
+<pre><span id="VALrequest_token"><span class="keyword">val</span> request_token</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPErequest_token">request_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrequest_token_secret"><span class="keyword">val</span> request_token_secret</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPErequest_token">request_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcallback_confirmed"><span class="keyword">val</span> callback_confirmed</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPErequest_token">request_token</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><code><span id="TYPEauth_token"><span class="keyword">type</span> <code class="type"></code>auth_token</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>auth_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTauth_token.auth_token">auth_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>verifier&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTauth_token.verifier">verifier</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALauth_token"><span class="keyword">val</span> auth_token</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPEauth_token">auth_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALverifier"><span class="keyword">val</span> verifier</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPEauth_token">auth_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><br><code><span id="TYPEaccess_token"><span class="keyword">type</span> <code class="type"></code>access_token</span> = {</code><table class="typetable">
+<pre><span id="VALauth_token"><span class="keyword">val</span> auth_token</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPEauth_token">auth_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALverifier"><span class="keyword">val</span> verifier</span> : <code class="type">(<a href="GapiAuthResponse.OAuth1.html#TYPEauth_token">auth_token</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><code><span id="TYPEaccess_token"><span class="keyword">type</span> <code class="type"></code>access_token</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>access_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTaccess_token.access_token">access_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>access_token_secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTaccess_token.access_token_secret">access_token_secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr></table>
 }

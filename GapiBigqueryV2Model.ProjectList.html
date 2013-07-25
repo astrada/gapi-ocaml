@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBigqueryV2Model.ProjectReference.html">
-<link rel="next" href="GapiBigqueryV2Model.JobList.html">
+<link rel="previous" href="GapiBigqueryV2Model.JobList.html">
+<link rel="next" href="GapiBigqueryV2Model.Dataset.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,47 +72,46 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.ProjectList</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBigqueryV2Model.ProjectReference.html">Previous</a>
-&nbsp;<a href="GapiBigqueryV2Model.html">Up</a>
-&nbsp;<a href="GapiBigqueryV2Model.JobList.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.JobList.html" title="GapiBigqueryV2Model.JobList">Previous</a>
+&nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Model.Dataset.html" title="GapiBigqueryV2Model.Dataset">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBigqueryV2Model.ProjectList.html">GapiBigqueryV2Model.ProjectList</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBigqueryV2Model.ProjectList.html">GapiBigqueryV2Model.ProjectList</a></h1>
 <pre><span class="keyword">module</span> ProjectList: <code class="code">sig</code> <a href="GapiBigqueryV2Model.ProjectList.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBigqueryV2Model.ProjectList.Projects.html">Projects</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Model.ProjectList.Projects.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiBigqueryV2Model.ProjectList.Projects.html">Projects</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Model.ProjectList.Projects.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A hash of the page of results</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of list.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>nextPageToken&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A token to request the next page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>projects&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.ProjectList.Projects.html#TYPEt">Projects.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.projects">projects</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.ProjectList.Projects.html#TYPEt">Projects.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Projects to which you have at least READ access.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>totalItems&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.totalItems">totalItems</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of projects in the list.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

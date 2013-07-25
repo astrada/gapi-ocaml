@@ -72,12 +72,13 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiOAuth2</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiOAuth1.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiAuth.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiOAuth1.html" title="GapiOAuth1">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiAuth.html" title="GapiAuth">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiOAuth2.html">GapiOAuth2</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiOAuth2: <code class="code">sig</code> <a href="GapiOAuth2.html">..</a> <code class="code">end</code></pre>OAuth 2.0 authorization API implementation.<br>
+<h1>Module <a href="type_GapiOAuth2.html">GapiOAuth2</a></h1>
+<pre><span class="keyword">module</span> GapiOAuth2: <code class="code">sig</code> <a href="GapiOAuth2.html">..</a> <code class="code">end</code></pre><div class="info">
+OAuth 2.0 authorization API implementation.<br>
+</div>
 <hr width="100%">
 <pre><span id="VALauthorization_code_url"><span class="keyword">val</span> authorization_code_url</span> : <code class="type">?base_url:string -><br>       ?access_type:string -><br>       ?approval_prompt:string -><br>       ?state:string -><br>       redirect_uri:string -><br>       scope:string list -> response_type:string -> string -> string</code></pre><pre><span id="VALget_access_token"><span class="keyword">val</span> get_access_token</span> : <code class="type">?url:string -><br>       ?grant_type:string -><br>       client_id:string -><br>       client_secret:string -><br>       code:string -><br>       redirect_uri:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALrefresh_access_token"><span class="keyword">val</span> refresh_access_token</span> : <code class="type">?url:string -><br>       ?grant_type:string -><br>       client_id:string -><br>       client_secret:string -><br>       refresh_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GapiAuthResponse.html#TYPEt">GapiAuthResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALrevoke_token"><span class="keyword">val</span> revoke_token</span> : <code class="type">?url:string -><br>       refresh_token:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre></body></html>

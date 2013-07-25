@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBloggerV2Model.Post.html">
+<link rel="previous" href="GapiBloggerV2Model.User.html">
 <link rel="next" href="GapiBloggerV2Model.CommentList.html">
 <link rel="Up" href="GapiBloggerV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,82 +72,81 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBloggerV2Model.Comment</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBloggerV2Model.Post.html">Previous</a>
-&nbsp;<a href="GapiBloggerV2Model.html">Up</a>
-&nbsp;<a href="GapiBloggerV2Model.CommentList.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBloggerV2Model.User.html" title="GapiBloggerV2Model.User">Previous</a>
+&nbsp;<a class="up" href="GapiBloggerV2Model.html" title="GapiBloggerV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBloggerV2Model.CommentList.html" title="GapiBloggerV2Model.CommentList">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBloggerV2Model.Comment.html">GapiBloggerV2Model.Comment</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBloggerV2Model.Comment.html">GapiBloggerV2Model.Comment</a></h1>
 <pre><span class="keyword">module</span> Comment: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.Post.html">Post</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.Post.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.InReplyTo.html">InReplyTo</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.InReplyTo.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.Blog.html">Blog</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.Blog.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.Author.html">Author</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.Author.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.Post.html">Post</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.Post.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.InReplyTo.html">InReplyTo</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.InReplyTo.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.Blog.html">Blog</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.Blog.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Comment.Author.html">Author</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Comment.Author.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>author&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Comment.Author.html#TYPEt">Author.t</a></code>;</code></td>
+<code><span id="TYPEELTt.author">author</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Comment.Author.html#TYPEt">Author.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The author of this Comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>blog&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Comment.Blog.html#TYPEt">Blog.t</a></code>;</code></td>
+<code><span id="TYPEELTt.blog">blog</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Comment.Blog.html#TYPEt">Blog.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Data about the blog containing this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>content&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.content">content</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The actual content of the comment. May include HTML markup.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The identifier for this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>inReplyTo&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Comment.InReplyTo.html#TYPEt">InReplyTo.t</a></code>;</code></td>
+<code><span id="TYPEELTt.inReplyTo">inReplyTo</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Comment.InReplyTo.html#TYPEt">InReplyTo.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Data about the comment this is in reply to.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The kind of this entry. Always blogger#comment</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>post&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Comment.Post.html#TYPEt">Post.t</a></code>;</code></td>
+<code><span id="TYPEELTt.post">post</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Comment.Post.html#TYPEt">Post.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Data about the post containing this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>published&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.published">published</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >RFC 3339 date-time when this comment was published.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The API REST URL to fetch this resource from.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>updated&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >RFC 3339 date-time when this comment was last updated.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

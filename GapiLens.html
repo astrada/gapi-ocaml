@@ -77,13 +77,13 @@
 <title>GapiLens</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiJson.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiMediaResource.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiJson.html" title="GapiJson">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiMediaResource.html" title="GapiMediaResource">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiLens.html">GapiLens</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiLens: <code class="code">sig</code> <a href="GapiLens.html">..</a> <code class="code">end</code></pre>Functional lenses.
+<h1>Module <a href="type_GapiLens.html">GapiLens</a></h1>
+<pre><span class="keyword">module</span> GapiLens: <code class="code">sig</code> <a href="GapiLens.html">..</a> <code class="code">end</code></pre><div class="info">
+Functional lenses.
 <p>
 
   Based on F# implementation in <a href="https://github.com/fsharp/fsharpx">FSharpx</a>
@@ -94,20 +94,21 @@
 <li><a href="http://www.youtube.com/watch?v=efv0SQNde5Q">Functional lenses for Scala by Edward Kmett on YouTube</a></li>
 <li><a href="http://patternsinfp.wordpress.com/2011/01/31/lenses-are-the-coalgebras-for-the-costate-comonad/">Lenses are the coalgebras for the costate comonad by Jeremy Gibbons</a></li>
 </ul>
+</div>
 <hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">('a, 'b)</code> t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">('a, 'b)</code> t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>get&nbsp;: <code class="type">'a -> 'b</code>;</code></td>
+<code><span id="TYPEELTt.get">get</span>&nbsp;:<code class="type">'a -> 'b</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Functional getter</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>set&nbsp;: <code class="type">'b -> 'a -> 'a</code>;</code></td>
+<code><span id="TYPEELTt.set">set</span>&nbsp;:<code class="type">'b -> 'a -> 'a</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Functional setter</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -120,7 +121,7 @@ Lens type definition<br>
 Updates a value through a lens<br>
 </div>
 <br>
-<span id="3_Combinators"><h3>Combinators</h3></span><br>
+<h3 id="3_Combinators">Combinators</h3><br>
 <pre><span id="VALcompose"><span class="keyword">val</span> compose</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'a) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
 Sequentially composes two lenses<br>
 </div>
@@ -134,7 +135,7 @@ Selects a lens checking a predicate.
   <code class="code">cond pred lensTrue lensFalse</code>: <code class="code">pred</code> is applied to source. If <code class="code">true</code>, <code class="code">lensTrue</code> is selected. If <code class="code">false</code>, <code class="code">lensFalse</code> is selected.<br>
 </div>
 <br>
-<span id="3_Statemonadintegration"><h3>State monad integration</h3></span><br>
+<h3 id="3_Statemonadintegration">State monad integration</h3><br>
 <pre><span id="VALget_state"><span class="keyword">val</span> get_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> 'a -> 'b * 'a</code></pre><div class="info">
 Gets a value from the state monad.<br>
 </div>
@@ -145,7 +146,7 @@ Puts a value in the state monad.<br>
 Modifies a value in the state monad.<br>
 </div>
 <br>
-<span id="3_Stocklenses"><h3>Stock lenses</h3></span><br>
+<h3 id="3_Stocklenses">Stock lenses</h3><br>
 <pre><span id="VALignore"><span class="keyword">val</span> ignore</span> : <code class="type">('a, unit) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
 Trivial lens<br>
 </div>
@@ -180,12 +181,12 @@ Lens for a particular position in a list<br>
 Lens for extracting the value from an option type (same as Option.get)<br>
 </div>
 <br>
-<span id="3_Listcombinators"><h3>List combinators</h3></span><br>
+<h3 id="3_Listcombinators">List combinators</h3><br>
 <pre><span id="VALlist_map"><span class="keyword">val</span> list_map</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a list, 'b list) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
 Creates a lens that maps the given lens in a list<br>
 </div>
 <br>
-<span id="3_Isomorphism"><h3>Isomorphism</h3></span><br>
+<h3 id="3_Isomorphism">Isomorphism</h3><br>
 <pre><span id="VALxmap"><span class="keyword">val</span> xmap</span> : <code class="type">('a -> 'b) -> ('b -> 'a) -> ('c, 'a) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
 Applies an isomorphism to the value viewed through a lens<br>
 </div>

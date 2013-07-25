@@ -72,12 +72,11 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Service.DatasetsResource</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBigqueryV2Service.Scope.html">Previous</a>
-&nbsp;<a href="GapiBigqueryV2Service.html">Up</a>
-&nbsp;<a href="GapiBigqueryV2Service.JobsResource.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Service.Scope.html" title="GapiBigqueryV2Service.Scope">Previous</a>
+&nbsp;<a class="up" href="GapiBigqueryV2Service.html" title="GapiBigqueryV2Service">Up</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Service.JobsResource.html" title="GapiBigqueryV2Service.JobsResource">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBigqueryV2Service.DatasetsResource.html">GapiBigqueryV2Service.DatasetsResource</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBigqueryV2Service.DatasetsResource.html">GapiBigqueryV2Service.DatasetsResource</a></h1>
 <pre><span class="keyword">module</span> DatasetsResource: <code class="code">sig</code> <a href="GapiBigqueryV2Service.DatasetsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
 <pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?deleteContents:bool -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
 Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.<br>

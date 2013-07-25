@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiCalendarV3Model.Settings.html">
+<link rel="previous" href="GapiCalendarV3Model.AclRule.html">
 <link rel="next" href="GapiCalendarV3Model.TimePeriod.html">
 <link rel="Up" href="GapiCalendarV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,61 +72,60 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCalendarV3Model.Calendar</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCalendarV3Model.Settings.html">Previous</a>
-&nbsp;<a href="GapiCalendarV3Model.html">Up</a>
-&nbsp;<a href="GapiCalendarV3Model.TimePeriod.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiCalendarV3Model.AclRule.html" title="GapiCalendarV3Model.AclRule">Previous</a>
+&nbsp;<a class="up" href="GapiCalendarV3Model.html" title="GapiCalendarV3Model">Up</a>
+&nbsp;<a class="post" href="GapiCalendarV3Model.TimePeriod.html" title="GapiCalendarV3Model.TimePeriod">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiCalendarV3Model.Calendar.html">GapiCalendarV3Model.Calendar</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiCalendarV3Model.Calendar.html">GapiCalendarV3Model.Calendar</a></h1>
 <pre><span class="keyword">module</span> Calendar: <code class="code">sig</code> <a href="GapiCalendarV3Model.Calendar.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Description of the calendar. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of the resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifier of the calendar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the resource ("calendar#calendar").</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>location&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Geographic location of the calendar as free-form text. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>summary&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.summary">summary</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Title of the calendar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>timeZone&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.timeZone">timeZone</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The time zone of the calendar. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

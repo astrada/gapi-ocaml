@@ -72,51 +72,52 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiJson</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiDate.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GapiLens.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiDate.html" title="GapiDate">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GapiLens.html" title="GapiLens">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiJson.html">GapiJson</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GapiJson: <code class="code">sig</code> <a href="GapiJson.html">..</a> <code class="code">end</code></pre>Utilities to manipulate JSON documents.<br>
+<h1>Module <a href="type_GapiJson.html">GapiJson</a></h1>
+<pre><span class="keyword">module</span> GapiJson: <code class="code">sig</code> <a href="GapiJson.html">..</a> <code class="code">end</code></pre><div class="info">
+Utilities to manipulate JSON documents.<br>
+</div>
 <hr width="100%">
-<br><code><span id="TYPEjson_data_type"><span class="keyword">type</span> <code class="type"></code>json_data_type</span> = </code><table class="typetable">
+<pre><code><span id="TYPEjson_data_type"><span class="keyword">type</span> <code class="type"></code>json_data_type</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Object</span></code></td>
+<code><span id="TYPEELTjson_data_type.Object"><span class="constructor">Object</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Array</span></code></td>
+<code><span id="TYPEELTjson_data_type.Array"><span class="constructor">Array</span></span></code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">Scalar</span></code></td>
+<code><span id="TYPEELTjson_data_type.Scalar"><span class="constructor">Scalar</span></span></code></td>
 
 </tr></table>
 
 
-<pre><span id="VALjson_data_type_to_string"><span class="keyword">val</span> json_data_type_to_string</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_type">json_data_type</a> -> string</code></pre><br><code><span id="TYPEjson_metadata"><span class="keyword">type</span> <code class="type"></code>json_metadata</span> = {</code><table class="typetable">
+<pre><span id="VALjson_data_type_to_string"><span class="keyword">val</span> json_data_type_to_string</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_type">json_data_type</a> -> string</code></pre><pre><code><span id="TYPEjson_metadata"><span class="keyword">type</span> <code class="type"></code>json_metadata</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>name&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTjson_metadata.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>data_type&nbsp;: <code class="type"><a href="GapiJson.html#TYPEjson_data_type">json_data_type</a></code>;</code></td>
+<code><span id="TYPEELTjson_metadata.data_type">data_type</span>&nbsp;:<code class="type"><a href="GapiJson.html#TYPEjson_data_type">json_data_type</a></code>;</code></td>
 
 </tr></table>
 }

@@ -71,33 +71,34 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiError.RequestError</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiError.SingleError.html">Previous</a>
-&nbsp;<a href="GapiError.html">Up</a>
+<div class="navbar"><a class="pre" href="GapiError.SingleError.html" title="GapiError.SingleError">Previous</a>
+&nbsp;<a class="up" href="GapiError.html" title="GapiError">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_GapiError.RequestError.html">GapiError.RequestError</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> RequestError: <code class="code">sig</code> <a href="GapiError.RequestError.html">..</a> <code class="code">end</code></pre>Collection of server errors<br>
+<h1>Module <a href="type_GapiError.RequestError.html">GapiError.RequestError</a></h1>
+<pre><span class="keyword">module</span> RequestError: <code class="code">sig</code> <a href="GapiError.RequestError.html">..</a> <code class="code">end</code></pre><div class="info">
+Collection of server errors<br>
+</div>
 <hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>errors&nbsp;: <code class="type"><a href="GapiError.SingleError.html#TYPEt">GapiError.SingleError.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.errors">errors</span>&nbsp;:<code class="type"><a href="GapiError.SingleError.html#TYPEt">GapiError.SingleError.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Contains a list of all errors</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>code&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.code">code</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The error code returned</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>message&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.message">message</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The error message returned</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

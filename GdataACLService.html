@@ -72,12 +72,13 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataACLService</title>
 </head>
 <body>
-<div class="navbar"><a href="GdataACL.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GdataDocumentsV3Model.html">Next</a>
+<div class="navbar"><a class="pre" href="GdataACL.html" title="GdataACL">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GdataDocumentsV3Model.html" title="GdataDocumentsV3Model">Next</a>
 </div>
-<center><h1>Module <a href="type_GdataACLService.html">GdataACLService</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GdataACLService: <code class="code">sig</code> <a href="GdataACLService.html">..</a> <code class="code">end</code></pre>Managing sharing permissions of resources via Google Data Protocol Access Control Lists (ACLs).<br>
+<h1>Module <a href="type_GdataACLService.html">GdataACLService</a></h1>
+<pre><span class="keyword">module</span> GdataACLService: <code class="code">sig</code> <a href="GdataACLService.html">..</a> <code class="code">end</code></pre><div class="info">
+Managing sharing permissions of resources via Google Data Protocol Access Control Lists (ACLs).<br>
+</div>
 <hr width="100%">
 <pre><span id="VALget_acl"><span class="keyword">val</span> get_acl</span> : <code class="type">?version:string -><br>       ?etag:string -><br>       string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> GdataACL.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALrefresh_acl"><span class="keyword">val</span> refresh_acl</span> : <code class="type">?version:string -><br>       <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALcreate_acl"><span class="keyword">val</span> create_acl</span> : <code class="type">?version:string -><br>       ?query_parameters:(string * string) list -><br>       <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALupdate_acl"><span class="keyword">val</span> update_acl</span> : <code class="type">?version:string -><br>       <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALdelete_acl"><span class="keyword">val</span> delete_acl</span> : <code class="type">?version:string -><br>       <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><pre><span id="VALacl_batch_request"><span class="keyword">val</span> acl_batch_request</span> : <code class="type">?version:string -><br>       GdataACL.Feed.t -><br>       GdataACL.Feed.t -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> GdataACL.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre></body></html>

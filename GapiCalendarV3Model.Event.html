@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiCalendarV3Model.EventReminder.html">
-<link rel="next" href="GapiCalendarV3Model.FreeBusyRequest.html">
+<link rel="previous" href="GapiCalendarV3Model.EventDateTime.html">
+<link rel="next" href="GapiCalendarV3Model.Acl.html">
 <link rel="Up" href="GapiCalendarV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,236 +72,235 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCalendarV3Model.Event</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCalendarV3Model.EventReminder.html">Previous</a>
-&nbsp;<a href="GapiCalendarV3Model.html">Up</a>
-&nbsp;<a href="GapiCalendarV3Model.FreeBusyRequest.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiCalendarV3Model.EventDateTime.html" title="GapiCalendarV3Model.EventDateTime">Previous</a>
+&nbsp;<a class="up" href="GapiCalendarV3Model.html" title="GapiCalendarV3Model">Up</a>
+&nbsp;<a class="post" href="GapiCalendarV3Model.Acl.html" title="GapiCalendarV3Model.Acl">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiCalendarV3Model.Event.html">GapiCalendarV3Model.Event</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiCalendarV3Model.Event.html">GapiCalendarV3Model.Event</a></h1>
 <pre><span class="keyword">module</span> Event: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Source.html">Source</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Source.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Reminders.html">Reminders</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Reminders.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Organizer.html">Organizer</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Organizer.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Gadget.html">Gadget</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Gadget.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.ExtendedProperties.html">ExtendedProperties</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.ExtendedProperties.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Creator.html">Creator</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Creator.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Source.html">Source</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Source.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Reminders.html">Reminders</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Reminders.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Organizer.html">Organizer</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Organizer.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Gadget.html">Gadget</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Gadget.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.ExtendedProperties.html">ExtendedProperties</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.ExtendedProperties.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.Event.Creator.html">Creator</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Creator.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>anyoneCanAddSelf&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.anyoneCanAddSelf">anyoneCanAddSelf</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether anyone can invite themselves to the event. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>attendees&nbsp;: <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">GapiCalendarV3Model.EventAttendee.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.attendees">attendees</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">GapiCalendarV3Model.EventAttendee.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The attendees of the event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>attendeesOmitted&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.attendeesOmitted">attendeesOmitted</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>colorId&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.colorId">colorId</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The color of the event. This is an ID referring to an entry in the "event" section of the colors definition (see the "colors" endpoint). Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>created&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.created">created</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Creation time of the event (as a RFC 3339 timestamp). Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>creator&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.Creator.html#TYPEt">Creator.t</a></code>;</code></td>
+<code><span id="TYPEELTt.creator">creator</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.Creator.html#TYPEt">Creator.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The creator of the event. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>description&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Description of the event. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>_end&nbsp;: <code class="type"><a href="GapiCalendarV3Model.EventDateTime.html#TYPEt">GapiCalendarV3Model.EventDateTime.t</a></code>;</code></td>
+<code><span id="TYPEELTt._end">_end</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.EventDateTime.html#TYPEt">GapiCalendarV3Model.EventDateTime.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>endTimeUnspecified&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.endTimeUnspecified">endTimeUnspecified</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of the resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>extendedProperties&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.ExtendedProperties.html#TYPEt">ExtendedProperties.t</a></code>;</code></td>
+<code><span id="TYPEELTt.extendedProperties">extendedProperties</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.ExtendedProperties.html#TYPEt">ExtendedProperties.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Extended properties of the event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>gadget&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.Gadget.html#TYPEt">Gadget.t</a></code>;</code></td>
+<code><span id="TYPEELTt.gadget">gadget</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.Gadget.html#TYPEt">Gadget.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A gadget that extends this event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>guestsCanInviteOthers&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.guestsCanInviteOthers">guestsCanInviteOthers</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether attendees other than the organizer can invite others to the event. Optional. The default is True.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>guestsCanModify&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.guestsCanModify">guestsCanModify</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether attendees other than the organizer can modify the event. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>guestsCanSeeOtherGuests&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.guestsCanSeeOtherGuests">guestsCanSeeOtherGuests</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>hangoutLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.hangoutLink">hangoutLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An absolute link to the Google+ hangout associated with this event. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>htmlLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.htmlLink">htmlLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An absolute link to this event in the Google Calendar Web UI. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>iCalUID&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.iCalUID">iCalUID</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Event ID in the iCalendar format.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifier of the event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the resource ("calendar#event").</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>location&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Geographic location of the event as free-form text. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>locked&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.locked">locked</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False. Read-Only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>organizer&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.Organizer.html#TYPEt">Organizer.t</a></code>;</code></td>
+<code><span id="TYPEELTt.organizer">organizer</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.Organizer.html#TYPEt">Organizer.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the "move" operation. Read-only, except when importing an event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>originalStartTime&nbsp;: <code class="type"><a href="GapiCalendarV3Model.EventDateTime.html#TYPEt">GapiCalendarV3Model.EventDateTime.t</a></code>;</code></td>
+<code><span id="TYPEELTt.originalStartTime">originalStartTime</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.EventDateTime.html#TYPEt">GapiCalendarV3Model.EventDateTime.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>privateCopy&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.privateCopy">privateCopy</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>recurrence&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.recurrence">recurrence</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event. This field is omitted for single events or instances of recurring events.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>recurringEventId&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.recurringEventId">recurringEventId</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >For an instance of a recurring event, this is the event ID of the recurring event itself. Immutable.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>reminders&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.Reminders.html#TYPEt">Reminders.t</a></code>;</code></td>
+<code><span id="TYPEELTt.reminders">reminders</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.Reminders.html#TYPEt">Reminders.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Information about the event's reminders for the authenticated user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>sequence&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.sequence">sequence</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Sequence number as per iCalendar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>source&nbsp;: <code class="type"><a href="GapiCalendarV3Model.Event.Source.html#TYPEt">Source.t</a></code>;</code></td>
+<code><span id="TYPEELTt.source">source</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.Event.Source.html#TYPEt">Source.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Source of an event from which it was created; for example a web page, an email message or any document identifiable by an URL using HTTP/HTTPS protocol. Accessible only by the creator of the event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>start&nbsp;: <code class="type"><a href="GapiCalendarV3Model.EventDateTime.html#TYPEt">GapiCalendarV3Model.EventDateTime.t</a></code>;</code></td>
+<code><span id="TYPEELTt.start">start</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.EventDateTime.html#TYPEt">GapiCalendarV3Model.EventDateTime.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>status&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.status">status</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Status of the event. Optional. Possible values are:  <ul>
 <li>"confirmed" - The event is confirmed. This is the default status. </li>
 <li>"tentative" - The event is tentatively confirmed. </li>
@@ -313,14 +312,14 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>summary&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.summary">summary</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Title of the event.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>transparency&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.transparency">transparency</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the event blocks time on the calendar. Optional. Possible values are:  <ul>
 <li>"opaque" - The event blocks time on the calendar. This is the default value. </li>
 <li>"transparent" - The event does not block time on the calendar.</li>
@@ -331,14 +330,14 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>updated&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Last modification time of the event (as a RFC 3339 timestamp). Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>visibility&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.visibility">visibility</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Visibility of the event. Optional. Possible values are:  <ul>
 <li>"default" - Uses the default visibility for events on the calendar. This is the default value. </li>
 <li>"public" - The event is public and event details are visible to all readers of the calendar. </li>

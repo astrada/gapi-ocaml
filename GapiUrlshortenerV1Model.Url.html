@@ -72,54 +72,53 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiUrlshortenerV1Model.Url</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiUrlshortenerV1Model.AnalyticsSummary.html">Previous</a>
-&nbsp;<a href="GapiUrlshortenerV1Model.html">Up</a>
-&nbsp;<a href="GapiUrlshortenerV1Model.UrlHistory.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiUrlshortenerV1Model.AnalyticsSummary.html" title="GapiUrlshortenerV1Model.AnalyticsSummary">Previous</a>
+&nbsp;<a class="up" href="GapiUrlshortenerV1Model.html" title="GapiUrlshortenerV1Model">Up</a>
+&nbsp;<a class="post" href="GapiUrlshortenerV1Model.UrlHistory.html" title="GapiUrlshortenerV1Model.UrlHistory">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiUrlshortenerV1Model.Url.html">GapiUrlshortenerV1Model.Url</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiUrlshortenerV1Model.Url.html">GapiUrlshortenerV1Model.Url</a></h1>
 <pre><span class="keyword">module</span> Url: <code class="code">sig</code> <a href="GapiUrlshortenerV1Model.Url.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>analytics&nbsp;: <code class="type"><a href="GapiUrlshortenerV1Model.AnalyticsSummary.html#TYPEt">GapiUrlshortenerV1Model.AnalyticsSummary.t</a></code>;</code></td>
+<code><span id="TYPEELTt.analytics">analytics</span>&nbsp;:<code class="type"><a href="GapiUrlshortenerV1Model.AnalyticsSummary.html#TYPEt">GapiUrlshortenerV1Model.AnalyticsSummary.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A summary of the click analytics for the short and long URL. Might not be present if not requested or currently unavailable.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>created&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.created">created</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time the short URL was created; ISO 8601 representation using the yyyy-MM-dd'T'HH:mm:ss.SSSZZ format, e.g. "2010-10-14T19:01:24.944+00:00".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Short URL, e.g. "http://goo.gl/l6MS".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The fixed string "urlshortener#url".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>longUrl&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.longUrl">longUrl</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Long URL, e.g. "http://www.google.com/". Might not be present if the status is "REMOVED".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>status&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.status">status</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Status of the target URL. Possible values: "OK", "MALWARE", "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was flagged as spam, for example.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

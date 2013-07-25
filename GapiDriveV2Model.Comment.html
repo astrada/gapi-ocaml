@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiDriveV2Model.CommentReply.html">
+<link rel="previous" href="GapiDriveV2Model.Revision.html">
 <link rel="next" href="GapiDriveV2Model.CommentList.html">
 <link rel="Up" href="GapiDriveV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,117 +72,116 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiDriveV2Model.Comment</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiDriveV2Model.CommentReply.html">Previous</a>
-&nbsp;<a href="GapiDriveV2Model.html">Up</a>
-&nbsp;<a href="GapiDriveV2Model.CommentList.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiDriveV2Model.Revision.html" title="GapiDriveV2Model.Revision">Previous</a>
+&nbsp;<a class="up" href="GapiDriveV2Model.html" title="GapiDriveV2Model">Up</a>
+&nbsp;<a class="post" href="GapiDriveV2Model.CommentList.html" title="GapiDriveV2Model.CommentList">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiDriveV2Model.Comment.html">GapiDriveV2Model.Comment</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiDriveV2Model.Comment.html">GapiDriveV2Model.Comment</a></h1>
 <pre><span class="keyword">module</span> Comment: <code class="code">sig</code> <a href="GapiDriveV2Model.Comment.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.Comment.Context.html">Context</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.Comment.Context.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.Comment.Context.html">Context</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.Comment.Context.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>anchor&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.anchor">anchor</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A region of the document represented as a JSON string. See anchor documentation for details on how to define and interpret anchor properties.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>author&nbsp;: <code class="type"><a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a></code>;</code></td>
+<code><span id="TYPEELTt.author">author</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user who wrote this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>commentId&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.commentId">commentId</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>content&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.content">content</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The plain text content used to create this comment. This is not HTML safe and should only be used as a starting point to make edits to a comment's content.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>context&nbsp;: <code class="type"><a href="GapiDriveV2Model.Comment.Context.html#TYPEt">Context.t</a></code>;</code></td>
+<code><span id="TYPEELTt.context">context</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.Comment.Context.html#TYPEt">Context.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The context of the file which is being commented on.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>createdDate&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.createdDate">createdDate</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The date when this comment was first created.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>deleted&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.deleted">deleted</span>&nbsp;:<code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>fileId&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.fileId">fileId</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The file which this comment is addressing.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>fileTitle&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.fileTitle">fileTitle</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of the file which this comment is addressing.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>htmlContent&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.htmlContent">htmlContent</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >HTML formatted content for this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >This is always drive#comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>modifiedDate&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.modifiedDate">modifiedDate</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The date when this comment or any of its replies were last modified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>replies&nbsp;: <code class="type"><a href="GapiDriveV2Model.CommentReply.html#TYPEt">GapiDriveV2Model.CommentReply.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.replies">replies</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.CommentReply.html#TYPEt">GapiDriveV2Model.CommentReply.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Replies to this post.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A link back to this comment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>status&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.status">status</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The status of this comment. Status can be changed by posting a reply to a comment with the desired status.  <ul>
 <li>"open" - The comment is still open. </li>
 <li>"resolved" - The comment has been resolved by one of its replies.</li>

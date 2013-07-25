@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBigqueryV2Model.JobConfigurationExtract.html">
-<link rel="next" href="GapiBigqueryV2Model.DatasetReference.html">
+<link rel="previous" href="GapiBigqueryV2Model.JobConfigurationLoad.html">
+<link rel="next" href="GapiBigqueryV2Model.JobConfiguration.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -72,40 +72,39 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.JobConfigurationTableCopy</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBigqueryV2Model.JobConfigurationExtract.html">Previous</a>
-&nbsp;<a href="GapiBigqueryV2Model.html">Up</a>
-&nbsp;<a href="GapiBigqueryV2Model.DatasetReference.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.JobConfigurationLoad.html" title="GapiBigqueryV2Model.JobConfigurationLoad">Previous</a>
+&nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Model.JobConfiguration.html" title="GapiBigqueryV2Model.JobConfiguration">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiBigqueryV2Model.JobConfigurationTableCopy.html">GapiBigqueryV2Model.JobConfigurationTableCopy</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiBigqueryV2Model.JobConfigurationTableCopy.html">GapiBigqueryV2Model.JobConfigurationTableCopy</a></h1>
 <pre><span class="keyword">module</span> JobConfigurationTableCopy: <code class="code">sig</code> <a href="GapiBigqueryV2Model.JobConfigurationTableCopy.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>createDisposition&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.createDisposition">createDisposition</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Whether or not to create a new table, if none exists.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>destinationTable&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
+<code><span id="TYPEELTt.destinationTable">destinationTable</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> The destination table</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>sourceTable&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
+<code><span id="TYPEELTt.sourceTable">sourceTable</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> Source table to copy.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>writeDisposition&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.writeDisposition">writeDisposition</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Whether or not to append or require the table to be empty.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

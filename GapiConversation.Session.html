@@ -70,25 +70,26 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiConversation.Session</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GapiConversation.html">Up</a>
+<div class="navbar">&nbsp;<a class="up" href="GapiConversation.html" title="GapiConversation">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_GapiConversation.Session.html">GapiConversation.Session</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> Session: <code class="code">sig</code> <a href="GapiConversation.Session.html">..</a> <code class="code">end</code></pre>Defines the session that stores the current state of a conversation.<br>
+<h1>Module <a href="type_GapiConversation.Session.html">GapiConversation.Session</a></h1>
+<pre><span class="keyword">module</span> Session: <code class="code">sig</code> <a href="GapiConversation.Session.html">..</a> <code class="code">end</code></pre><div class="info">
+Defines the session that stores the current state of a conversation.<br>
+</div>
 <hr width="100%">
-<br><code><span id="TYPEoauth1_context"><span class="keyword">type</span> <code class="type"></code>oauth1_context</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth1_context"><span class="keyword">type</span> <code class="type"></code>oauth1_context</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_context.token">token</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth1 authorized token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>secret&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth1_context.secret">secret</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth1 secret associated with the authorized token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -103,19 +104,19 @@ OAuth1 token lens.<br>
 <pre><span id="VALsecret"><span class="keyword">val</span> secret</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEoauth1_context">oauth1_context</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 OAuth1 secret lens.<br>
 </div>
-<br><code><span id="TYPEoauth2_context"><span class="keyword">type</span> <code class="type"></code>oauth2_context</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEoauth2_context"><span class="keyword">type</span> <code class="type"></code>oauth2_context</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>oauth2_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_context.oauth2_token">oauth2_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth2 authorized token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>refresh_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELToauth2_context.refresh_token">refresh_token</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth2 refresh token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
@@ -130,33 +131,33 @@ OAuth2 token lens.<br>
 <pre><span id="VALrefresh_token"><span class="keyword">val</span> refresh_token</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 OAuth2 refresh token lens.<br>
 </div>
-<br><code><span id="TYPEauth_context"><span class="keyword">type</span> <code class="type"></code>auth_context</span> = </code><table class="typetable">
+<pre><code><span id="TYPEauth_context"><span class="keyword">type</span> <code class="type"></code>auth_context</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">NoAuth</span></code></td>
+<code><span id="TYPEELTauth_context.NoAuth"><span class="constructor">NoAuth</span></span></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >No authorization.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">ClientLogin</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+<code><span id="TYPEELTauth_context.ClientLogin"><span class="constructor">ClientLogin</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Client Login authorized token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">OAuth1</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEoauth1_context">oauth1_context</a></code></code></td>
+<code><span id="TYPEELTauth_context.OAuth1"><span class="constructor">OAuth1</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEoauth1_context">oauth1_context</a></code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth1 context.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
-<code><span class="constructor">OAuth2</span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a></code></code></td>
+<code><span id="TYPEELTauth_context.OAuth2"><span class="constructor">OAuth2</span></span> <span class="keyword">of</span> <code class="type"><a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a></code></code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth2 context.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 
@@ -176,40 +177,40 @@ OAuth1 context lens.<br>
 <pre><span id="VALoauth2"><span class="keyword">val</span> oauth2</span> : <code class="type">(<a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a>,<br>        <a href="GapiConversation.Session.html#TYPEoauth2_context">oauth2_context</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
 OAuth2 context lens.<br>
 </div>
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>curl&nbsp;: <code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">GapiCurl.t</a></code>;</code></td>
+<code><span id="TYPEELTt.curl">curl</span>&nbsp;:<code class="type">[ `Created ] <a href="GapiCurl.html#TYPEt">GapiCurl.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Curl state.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>config&nbsp;: <code class="type"><a href="GapiConfig.html#TYPEt">GapiConfig.t</a></code>;</code></td>
+<code><span id="TYPEELTt.config">config</span>&nbsp;:<code class="type"><a href="GapiConfig.html#TYPEt">GapiConfig.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Library configuration.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>auth&nbsp;: <code class="type"><a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a></code>;</code></td>
+<code><span id="TYPEELTt.auth">auth</span>&nbsp;:<code class="type"><a href="GapiConversation.Session.html#TYPEauth_context">auth_context</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Current authorization context.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>cookies&nbsp;: <code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.cookies">cookies</span>&nbsp;:<code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Cookies received from the server.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>etag&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Current resource ETag (received from the server).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

@@ -70,10 +70,9 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataComments.Make</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="GdataComments.html">Up</a>
+<div class="navbar">&nbsp;<a class="up" href="GdataComments.html" title="GdataComments">Up</a>
 &nbsp;</div>
-<center><h1>Functor <a href="type_GdataComments.Make.html">GdataComments.Make</a></h1></center>
-<br>
+<h1>Functor <a href="type_GdataComments.Make.html">GdataComments.Make</a></h1>
 <pre><span class="keyword">module</span> Make: <div class="sig_block"><code class="code">functor (</code><code class="code">Link</code><code class="code"> : </code><code class="type"><a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></code><code class="code">) -&gt; </code><code class="type"><a href="GdataComments.Comments.html">Comments</a></code><code class="type"> 
     with type link_t = Link.t</code></div></pre><table border="0" cellpadding="3" width="100%">
 <tr>
@@ -94,40 +93,40 @@
 
 <pre><span class="keyword">module</span> <a href="GdataComments.Comments.Entry.html">Entry</a>: <code class="code">sig</code> <a href="GdataComments.Comments.Entry.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GdataComments.Comments.Feed.html">Feed</a>: <code class="type"><a href="GdataAtom.Feed.html">GdataAtom.Feed</a></code><code class="type"> 
       with type entry_t = Entry.t
-        and type link_t = link_t</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+        and type link_t = link_t</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>countHint&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.countHint">countHint</span>&nbsp;:<code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>href&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.href">href</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>readOnly&nbsp;: <code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.readOnly">readOnly</span>&nbsp;:<code class="type">bool</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>rel&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.rel">rel</span>&nbsp;:<code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>commentFeed&nbsp;: <code class="type">Feed.t</code>;</code></td>
+<code><span id="TYPEELTt.commentFeed">commentFeed</span>&nbsp;:<code class="type">Feed.t</code>;</code></td>
 
 </tr></table>
 }

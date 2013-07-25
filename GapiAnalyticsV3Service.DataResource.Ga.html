@@ -71,14 +71,13 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Service.DataResource.Ga</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiAnalyticsV3Service.DataResource.Mcf.html">Previous</a>
-&nbsp;<a href="GapiAnalyticsV3Service.DataResource.html">Up</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Service.DataResource.Mcf.html" title="GapiAnalyticsV3Service.DataResource.Mcf">Previous</a>
+&nbsp;<a class="up" href="GapiAnalyticsV3Service.DataResource.html" title="GapiAnalyticsV3Service.DataResource">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_GapiAnalyticsV3Service.DataResource.Ga.html">GapiAnalyticsV3Service.DataResource.Ga</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiAnalyticsV3Service.DataResource.Ga.html">GapiAnalyticsV3Service.DataResource.Ga</a></h1>
 <pre><span class="keyword">module</span> Ga: <code class="code">sig</code> <a href="GapiAnalyticsV3Service.DataResource.Ga.html">..</a> <code class="code">end</code></pre><hr width="100%">
 <pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?dimensions:string -><br>       ?filters:string -><br>       ?max_results:int -><br>       ?segment:string -><br>       ?sort:string -><br>       ?start_index:int -><br>       ids:string -><br>       start_date:string -><br>       end_date:string -><br>       metrics:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.GaData.html#TYPEt">GapiAnalyticsV3Model.GaData.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
-Returns Analytics data for a profile.<br>
+Returns Analytics data for a view (profile).<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/analytics/v3/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
@@ -89,7 +88,7 @@ Returns Analytics data for a profile.<br>
 <div class="param_info"><code class="code">segment</code> : An Analytics advanced segment to be applied to data.</div>
 <div class="param_info"><code class="code">sort</code> : A comma-separated list of dimensions or metrics that determine the sort order for Analytics data.</div>
 <div class="param_info"><code class="code">start_index</code> : An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.</div>
-<div class="param_info"><code class="code">ids</code> : Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.</div>
+<div class="param_info"><code class="code">ids</code> : Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.</div>
 <div class="param_info"><code class="code">start_date</code> : Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.</div>
 <div class="param_info"><code class="code">end_date</code> : End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.</div>
 <div class="param_info"><code class="code">metrics</code> : A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified.</div>

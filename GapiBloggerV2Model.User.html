@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBloggerV2Model.PageList.html">
+<link rel="previous" href="GapiBloggerV2Model.BlogList.html">
+<link rel="next" href="GapiBloggerV2Model.Comment.html">
 <link rel="Up" href="GapiBloggerV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -71,74 +72,74 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBloggerV2Model.User</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiBloggerV2Model.PageList.html">Previous</a>
-&nbsp;<a href="GapiBloggerV2Model.html">Up</a>
-&nbsp;</div>
-<center><h1>Module <a href="type_GapiBloggerV2Model.User.html">GapiBloggerV2Model.User</a></h1></center>
-<br>
+<div class="navbar"><a class="pre" href="GapiBloggerV2Model.BlogList.html" title="GapiBloggerV2Model.BlogList">Previous</a>
+&nbsp;<a class="up" href="GapiBloggerV2Model.html" title="GapiBloggerV2Model">Up</a>
+&nbsp;<a class="post" href="GapiBloggerV2Model.Comment.html" title="GapiBloggerV2Model.Comment">Next</a>
+</div>
+<h1>Module <a href="type_GapiBloggerV2Model.User.html">GapiBloggerV2Model.User</a></h1>
 <pre><span class="keyword">module</span> User: <code class="code">sig</code> <a href="GapiBloggerV2Model.User.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.User.Locale.html">Locale</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.User.Locale.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.User.Blogs.html">Blogs</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.User.Blogs.html">..</a> <code class="code">end</code></pre><br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.User.Locale.html">Locale</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.User.Locale.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.User.Blogs.html">Blogs</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.User.Blogs.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>about&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.about">about</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Profile summary information.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>blogs&nbsp;: <code class="type"><a href="GapiBloggerV2Model.User.Blogs.html#TYPEt">Blogs.t</a></code>;</code></td>
+<code><span id="TYPEELTt.blogs">blogs</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.User.Blogs.html#TYPEt">Blogs.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The container of blogs for this user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>created&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.created">created</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The timestamp of when this profile was created, in seconds since epoch.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>displayName&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The display name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The identifier for this User.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>kind&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The kind of this entity. Always blogger#user</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>locale&nbsp;: <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">Locale.t</a></code>;</code></td>
+<code><span id="TYPEELTt.locale">locale</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">Locale.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >This user's locale</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>selfLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The API REST URL to fetch this resource from.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>url&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user's profile page.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }

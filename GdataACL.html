@@ -72,13 +72,14 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GdataACL</title>
 </head>
 <body>
-<div class="navbar"><a href="GdataService.html">Previous</a>
-&nbsp;<a href="index.html">Up</a>
-&nbsp;<a href="GdataACLService.html">Next</a>
+<div class="navbar"><a class="pre" href="GdataService.html" title="GdataService">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="GdataACLService.html" title="GdataACLService">Next</a>
 </div>
-<center><h1>Module <a href="type_GdataACL.html">GdataACL</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> GdataACL: <code class="code">sig</code> <a href="GdataACL.html">..</a> <code class="code">end</code></pre>Google Data Protocol ACLs data model.<br>
+<h1>Module <a href="type_GdataACL.html">GdataACL</a></h1>
+<pre><span class="keyword">module</span> GdataACL: <code class="code">sig</code> <a href="GdataACL.html">..</a> <code class="code">end</code></pre><div class="info">
+Google Data Protocol ACLs data model.<br>
+</div>
 <hr width="100%">
 <pre><span id="VALns_gAcl"><span class="keyword">val</span> ns_gAcl</span> : <code class="type">string</code></pre><pre><span class="keyword">module</span> <a href="GdataACL.RoleWithKey.html">RoleWithKey</a>: <code class="code">sig</code> <a href="GdataACL.RoleWithKey.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GdataACL.Scope.html">Scope</a>: <code class="code">sig</code> <a href="GdataACL.Scope.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GdataACL.Entry.html">Entry</a>: <code class="code">sig</code> <a href="GdataACL.Entry.html">..</a> <code class="code">end</code></pre><pre><span id="VALparse_entry"><span class="keyword">val</span> parse_entry</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> <a href="GdataACL.Entry.html#TYPEt">Entry.t</a></code></pre><pre><span id="VALentry_to_data_model"><span class="keyword">val</span> entry_to_data_model</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">Entry.t</a> -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a></code></pre><pre><span class="keyword">module</span> <a href="GdataACL.Feed.html">Feed</a>: <code class="type"><a href="GdataAtom.Feed.html">GdataAtom.Feed</a></code><code class="type"> 
   with type entry_t = Entry.t

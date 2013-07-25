@@ -72,19 +72,18 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiCalendarV3Model.Event.Gadget</title>
 </head>
 <body>
-<div class="navbar"><a href="GapiCalendarV3Model.Event.Organizer.html">Previous</a>
-&nbsp;<a href="GapiCalendarV3Model.Event.html">Up</a>
-&nbsp;<a href="GapiCalendarV3Model.Event.ExtendedProperties.html">Next</a>
+<div class="navbar"><a class="pre" href="GapiCalendarV3Model.Event.Organizer.html" title="GapiCalendarV3Model.Event.Organizer">Previous</a>
+&nbsp;<a class="up" href="GapiCalendarV3Model.Event.html" title="GapiCalendarV3Model.Event">Up</a>
+&nbsp;<a class="post" href="GapiCalendarV3Model.Event.ExtendedProperties.html" title="GapiCalendarV3Model.Event.ExtendedProperties">Next</a>
 </div>
-<center><h1>Module <a href="type_GapiCalendarV3Model.Event.Gadget.html">GapiCalendarV3Model.Event.Gadget</a></h1></center>
-<br>
+<h1>Module <a href="type_GapiCalendarV3Model.Event.Gadget.html">GapiCalendarV3Model.Event.Gadget</a></h1>
 <pre><span class="keyword">module</span> Gadget: <code class="code">sig</code> <a href="GapiCalendarV3Model.Event.Gadget.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<br><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code><table class="typetable">
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>display&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.display">display</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's display mode. Optional. Possible values are:  <ul>
 <li>"icon" - The gadget displays next to the event's title in the calendar view. </li>
 <li>"chip" - The gadget displays when the event is clicked.</li>
@@ -95,49 +94,49 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>height&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.height">height</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's height in pixels. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>iconLink&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.iconLink">iconLink</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's icon URL.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>link&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.link">link</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's URL.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>preferences&nbsp;: <code class="type">(string * string) list</code>;</code></td>
+<code><span id="TYPEELTt.preferences">preferences</span>&nbsp;:<code class="type">(string * string) list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Preferences.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>title&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.title">title</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's title.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>_type&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._type">_type</span>&nbsp;:<code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's type.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>width&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.width">width</span>&nbsp;:<code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The gadget's width in pixels. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
