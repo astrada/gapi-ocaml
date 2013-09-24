@@ -868,6 +868,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                 (response_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name)
             else
               Format.fprintf formatter "~data:()@ "
+          end else if rest_method.RestMethod.httpMethod = "PUT" then begin
+            Format.fprintf formatter
+              "~data_to_post:(fun _ -> GapiCore.PostData.empty)@ ~data:()@ "
           end);
         lift_io (
           Format.fprintf formatter "full_url@ ";
