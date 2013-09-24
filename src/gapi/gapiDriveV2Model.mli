@@ -516,6 +516,31 @@ sig
   
 end
 
+module PermissionId :
+sig
+  type t = {
+    id : string;
+    (** The permission ID. *)
+    kind : string;
+    (** This is always drive#permissionId. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Revision :
 sig
   type t = {
@@ -717,6 +742,10 @@ sig
     (** Additional roles for this user. Only commenter is currently allowed. *)
     authKey : string;
     (** The authkey parameter required for this permission. *)
+    domain : string;
+    (** The domain name of the entity this permission refers to. This is an output-only field which is populated when the permission type is "user", "group" or "domain". *)
+    emailAddress : string;
+    (** The email address of the user this permission refers to. This is an output-only field which is populated when the permission type is "user" and the given user's Google+ profile privacy settings allow exposing their email address. *)
     etag : string;
     (** The ETag of the permission. *)
     id : string;
@@ -749,6 +778,8 @@ sig
   
   val additionalRoles : (t, string list) GapiLens.t
   val authKey : (t, string) GapiLens.t
+  val domain : (t, string) GapiLens.t
+  val emailAddress : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -759,6 +790,43 @@ sig
   val _type : (t, string) GapiLens.t
   val value : (t, string) GapiLens.t
   val withLink : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Property :
+sig
+  type t = {
+    etag : string;
+    (** ETag of the property. *)
+    key : string;
+    (** The key of this property. *)
+    kind : string;
+    (** This is always drive#property. *)
+    selfLink : string;
+    (** The link back to this property. *)
+    value : string;
+    (** The value of this property. *)
+    visibility : string;
+    (** The visibility of this property. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val key : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
+  val visibility : (t, string) GapiLens.t
   
   val empty : t
   
@@ -833,7 +901,7 @@ sig
   sig
     type t = {
       hidden : bool;
-      (** Whether this file is hidden from the user. *)
+      (** Deprecated. *)
       restricted : bool;
       (** Whether viewers are prevented from downloading this file. *)
       starred : bool;
@@ -984,6 +1052,8 @@ sig
     (** A link for opening the file in using a relevant Google editor or viewer. *)
     appDataContents : bool;
     (** Whether this file is in the appdata folder. *)
+    copyable : bool;
+    (** Whether the file can be copied by the current user. *)
     createdDate : GapiDate.t;
     (** Create time for this file (formatted ISO8601 timestamp). *)
     defaultOpenWithLink : string;
@@ -1045,6 +1115,8 @@ sig
     parents : ParentReference.t list;
     (** Collection of parent folders which contain this file.
 Setting this field will put the file in all of the provided folders. On insert, if no folders are provided, the file will be placed in the default root folder. *)
+    properties : Property.t list;
+    (** The list of properties. *)
     quotaBytesUsed : int64;
     (** The number of quota bytes used by this file. *)
     selfLink : string;
@@ -1072,6 +1144,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   
   val alternateLink : (t, string) GapiLens.t
   val appDataContents : (t, bool) GapiLens.t
+  val copyable : (t, bool) GapiLens.t
   val createdDate : (t, GapiDate.t) GapiLens.t
   val defaultOpenWithLink : (t, string) GapiLens.t
   val description : (t, string) GapiLens.t
@@ -1102,6 +1175,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val ownerNames : (t, string list) GapiLens.t
   val owners : (t, User.t list) GapiLens.t
   val parents : (t, ParentReference.t list) GapiLens.t
+  val properties : (t, Property.t list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val shared : (t, bool) GapiLens.t
@@ -1231,43 +1305,6 @@ sig
   
 end
 
-module Property :
-sig
-  type t = {
-    etag : string;
-    (** ETag of the property. *)
-    key : string;
-    (** The key of this property. *)
-    kind : string;
-    (** This is always drive#property. *)
-    selfLink : string;
-    (** The link back to this property. *)
-    value : string;
-    (** The value of this property. *)
-    visibility : string;
-    (** The visibility of this property. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val key : (t, string) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
-  val value : (t, string) GapiLens.t
-  val visibility : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module PropertyList :
 sig
   type t = {
@@ -1374,23 +1411,25 @@ module Channel :
 sig
   type t = {
     address : string;
-    (** The address of the receiving entity where events are delivered. Specific to the channel type. *)
+    (** The address where notifications are delivered for this channel. *)
     expiration : int64;
-    (** The expiration instant for this channel if it is defined. *)
+    (** Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional. *)
     id : string;
-    (** A UUID for the channel *)
+    (** A UUID or similar unique string that identifies this channel. *)
     kind : string;
-    (** A channel watching an API resource *)
+    (** Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string "api#channel". *)
     params : (string * string) list;
-    (** Additional parameters controlling delivery channel behavior *)
+    (** Additional parameters controlling delivery channel behavior. Optional. *)
+    payload : bool;
+    (** A Boolean value to indicate whether payload is wanted. Optional. *)
     resourceId : string;
-    (** An opaque id that identifies the resource that is being watched. Stable across different API versions *)
+    (** An opaque ID that identifies the resource being watched on this channel. Stable across different API versions. *)
     resourceUri : string;
-    (** The canonicalized ID of the watched resource. *)
+    (** A version-specific identifier for the watched resource. *)
     token : string;
-    (** An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel. *)
+    (** An arbitrary string delivered to the target address with each notification delivered over this channel. Optional. *)
     _type : string;
-    (** The type of delivery mechanism used by this channel *)
+    (** The type of delivery mechanism used for this channel. *)
     
   }
   
@@ -1399,6 +1438,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val params : (t, (string * string) list) GapiLens.t
+  val payload : (t, bool) GapiLens.t
   val resourceId : (t, string) GapiLens.t
   val resourceUri : (t, string) GapiLens.t
   val token : (t, string) GapiLens.t

@@ -159,7 +159,7 @@ end
 module ChannelsResource :
 sig
   
-  (** 
+  (** Stop watching resources through this channel
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
@@ -718,6 +718,19 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.Permission.t * GapiConversation.Session.t
   
+  (** Returns the permission ID for an email address.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param email The email address for which to return a permission ID
+    *)
+  val getIdForEmail :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    email:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.PermissionId.t * GapiConversation.Session.t
+  
   (** Inserts a permission for a file.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
@@ -907,6 +920,22 @@ sig
     ?base_url:string ->
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  (** Overwrites the Realtime API data model associated with this file with the provided JSON data model.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param baseRevision The revision of the model to diff the uploaded model against. If set, the uploaded model is diffed against the provided revision and those differences are merged with any changes made to the model after the provided revision. If not set, the uploaded model replaces the current model on the server.
+    @param fileId The ID of the file that the Realtime API data model is associated with.
+    *)
+  val update :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?media_source:GapiMediaResource.t ->
+    ?baseRevision:string ->
     fileId:string ->
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t

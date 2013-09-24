@@ -1160,6 +1160,20 @@ struct
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
     
+  let getIdForEmail
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ~email
+        session =
+    let full_url = GapiUtils.add_path_to_url ["permissionIds";
+      ((fun x -> x) email)] base_url in
+    let params = PermissionsParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map PermissionsParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters full_url
+      (GapiJson.parse_json_response PermissionId.of_data_model) session 
+    
   let insert
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
@@ -1403,6 +1417,59 @@ end
 
 module RealtimeResource =
 struct
+  module RealtimeParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* realtime-specific query parameters *)
+      baseRevision : string;
+      
+    }
+    
+    let default = {
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      baseRevision = "";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.baseRevision) (fun x -> x) "baseRevision";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(baseRevision = default.baseRevision)
+        () =
+      let parameters = {
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        baseRevision;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?etag
@@ -1411,11 +1478,32 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "realtime"] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = RealtimeParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map RealtimeParameters.to_key_value_list
+      params in
     GapiService.get ?query_parameters ?etag full_url
+      GapiRequest.parse_empty_response session 
+    
+  let update
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?media_source
+        ?baseRevision
+        ~fileId
+        session =
+    let base_path = ["files"; ((fun x -> x) fileId); "realtime"] in
+    let media_path = [""; "resumable"; "upload"; "drive"; "v2"; "files";
+      ((fun x -> x) fileId); "realtime"] in
+    let path_to_add = if Option.is_some media_source then media_path
+      else base_path in
+    let full_url = GapiUtils.add_path_to_url path_to_add base_url in
+    let params = RealtimeParameters.merge_parameters
+      ?standard_parameters:std_params ?baseRevision () in
+    let query_parameters = Option.map RealtimeParameters.to_key_value_list
+      params in
+    GapiService.put ?query_parameters ?media_source
+      ~data_to_post:(fun _ -> GapiCore.PostData.empty) ~data:() full_url
       GapiRequest.parse_empty_response session 
     
   
