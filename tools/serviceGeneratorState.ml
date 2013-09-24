@@ -890,7 +890,7 @@ struct
               type_t;
               inner_modules;
             }
-      | ComplexType.Reference type_name ->
+      | ComplexType.Reference _ ->
           let module_name =
             ComplexType.get_module_name ocaml_name complex_type in
           let type_t = Alias module_name in
@@ -899,13 +899,22 @@ struct
               type_t;
               inner_modules = [];
             }
-      | ComplexType.Dictionary { ComplexType.data_type = ComplexType.Scalar { ScalarType.data_type = ScalarType.String } } ->
+      | ComplexType.Dictionary { ComplexType.data_type = ComplexType.Scalar { ScalarType.data_type = ScalarType.String } }
+      | ComplexType.Dictionary { ComplexType.data_type = ComplexType.Reference _ } ->
           { original_name = complex_type.ComplexType.id;
             ocaml_name;
             type_t = Alias "GapiJson.StringDictionary";
             inner_modules = [];
           }
-      | _ -> failwith "Unsupported complex_type in Record.create"
+      | ComplexType.Scalar { ScalarType.original_type = "any" } ->
+          { original_name = complex_type.ComplexType.id;
+            ocaml_name;
+            type_t = Alias "String";
+            inner_modules = [];
+          }
+      | _ -> failwith
+               ("Unsupported complex_type in Record.create (id = "
+                 ^ complex_type.ComplexType.id ^ ")")
 
 end
 
