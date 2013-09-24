@@ -1,6 +1,6 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-(** Data definition for Page Speed Online API (v1).
+(** Data definition for PageSpeed Insights API (v1).
   
   For more information about this data model, see the
   {{:https://developers.google.com/speed/docs/insights/v1/getting_started}API Documentation}.
@@ -47,6 +47,30 @@ sig
     val height : (t, int) GapiLens.t
     val mime_type : (t, string) GapiLens.t
     val width : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module Request :
+  sig
+    type t = {
+      filter_third_party_resources : string;
+      (**  *)
+      strategy : string;
+      (**  *)
+      url : string;
+      (**  *)
+      
+    }
+    
+    val filter_third_party_resources : (t, string) GapiLens.t
+    val strategy : (t, string) GapiLens.t
+    val url : (t, string) GapiLens.t
     
     val empty : t
     
@@ -337,6 +361,8 @@ sig
     (** Kind of result. *)
     pageStats : PageStats.t;
     (** Summary statistics for the page, such as number of JavaScript bytes, number of HTML bytes, etc. *)
+    request : Request.t;
+    (** Echo of certain request parameters. *)
     responseCode : int;
     (** Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error. *)
     score : int;
@@ -355,6 +381,7 @@ sig
   val invalidRules : (t, string list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val pageStats : (t, PageStats.t) GapiLens.t
+  val request : (t, Request.t) GapiLens.t
   val responseCode : (t, int) GapiLens.t
   val score : (t, int) GapiLens.t
   val screenshot : (t, Screenshot.t) GapiLens.t

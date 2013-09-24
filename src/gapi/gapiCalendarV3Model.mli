@@ -71,11 +71,11 @@ sig
     etag : string;
     (** ETag of the resource. *)
     id : string;
-    (** Name of the user setting. *)
+    (** The id of the user setting. *)
     kind : string;
     (** Type of the resource ("calendar#setting"). *)
     value : string;
-    (** Value of the user setting. The format of the value depends on the ID of the setting. *)
+    (** Value of the user setting. The format of the value depends on the ID of the setting. It must always be any UTF-8 string of length up to 1024 characters. *)
     
   }
   
@@ -985,23 +985,25 @@ module Channel :
 sig
   type t = {
     address : string;
-    (** The address of the receiving entity where events are delivered. Specific to the channel type. *)
+    (** The address where notifications are delivered for this channel. *)
     expiration : int64;
-    (** The expiration instant for this channel if it is defined. *)
+    (** Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional. *)
     id : string;
-    (** A UUID for the channel *)
+    (** A UUID or similar unique string that identifies this channel. *)
     kind : string;
-    (** A channel watching an API resource *)
+    (** Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string "api#channel". *)
     params : (string * string) list;
-    (** Additional parameters controlling delivery channel behavior *)
+    (** Additional parameters controlling delivery channel behavior. Optional. *)
+    payload : bool;
+    (** A Boolean value to indicate whether payload is wanted. Optional. *)
     resourceId : string;
-    (** An opaque id that identifies the resource that is being watched. Stable across different API versions *)
+    (** An opaque ID that identifies the resource being watched on this channel. Stable across different API versions. *)
     resourceUri : string;
-    (** The canonicalized ID of the watched resource. *)
+    (** A version-specific identifier for the watched resource. *)
     token : string;
-    (** An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel. *)
+    (** An arbitrary string delivered to the target address with each notification delivered over this channel. Optional. *)
     _type : string;
-    (** The type of delivery mechanism used by this channel *)
+    (** The type of delivery mechanism used for this channel. *)
     
   }
   
@@ -1010,6 +1012,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val params : (t, (string * string) list) GapiLens.t
+  val payload : (t, bool) GapiLens.t
   val resourceId : (t, string) GapiLens.t
   val resourceUri : (t, string) GapiLens.t
   val token : (t, string) GapiLens.t

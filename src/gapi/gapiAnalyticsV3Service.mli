@@ -22,6 +22,37 @@ end
 
 module DataResource :
 sig
+  module Realtime :
+  sig
+    
+    (** Returns real time data for a view (profile).
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param etag Optional ETag.
+      @param std_params Optional standard parameters.
+      @param dimensions A comma-separated list of real time dimensions. E.g., 'ga:medium,ga:city'.
+      @param filters A comma-separated list of dimension or metric filters to be applied to real time data.
+      @param max_results The maximum number of entries to include in this feed.
+      @param sort A comma-separated list of dimensions or metrics that determine the sort order for real time data.
+      @param ids Unique table ID for retrieving real time data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+      @param metrics A comma-separated list of real time metrics. E.g., 'ga:activeVisitors'. At least one metric must be specified.
+      *)
+    val get :
+      ?base_url:string ->
+      ?etag:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      ?dimensions:string ->
+      ?filters:string ->
+      ?max_results:int ->
+      ?sort:string ->
+      ids:string ->
+      metrics:string ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.RealtimeData.t * GapiConversation.Session.t
+    
+    
+  end
+  
   module Mcf :
   sig
     
@@ -457,6 +488,31 @@ sig
       ?start_index:int ->
       GapiConversation.Session.t ->
       GapiAnalyticsV3Model.Accounts.t * GapiConversation.Session.t
+    
+    
+  end
+  
+  
+  
+end
+
+module MetadataResource :
+sig
+  module Columns :
+  sig
+    
+    (** Lists all columns for a report type
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param reportType Report type. Allowed Values: 'ga'. Where 'ga' corresponds to the Core Reporting API
+      *)
+    val list :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      reportType:string ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.Columns.t * GapiConversation.Session.t
     
     
   end

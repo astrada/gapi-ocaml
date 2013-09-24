@@ -35,6 +35,7 @@ struct
       userIp : string;
       key : string;
       (* pagespeedapi-specific query parameters *)
+      filter_third_party_resources : bool;
       locale : string;
       rule : string list;
       screenshot : bool;
@@ -49,6 +50,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      filter_third_party_resources = false;
       locale = "";
       rule = [];
       screenshot = false;
@@ -65,6 +67,7 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.filter_third_party_resources) string_of_bool "filter_third_party_resources";
       param (fun p -> p.locale) (fun x -> x) "locale";
       GapiService.build_params qp (fun p -> p.rule) (fun x -> x) "rule";
       param (fun p -> p.screenshot) string_of_bool "screenshot";
@@ -75,6 +78,7 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(filter_third_party_resources = default.filter_third_party_resources)
         ?(locale = default.locale)
         ?(rule = default.rule)
         ?(screenshot = default.screenshot)
@@ -87,6 +91,7 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        filter_third_party_resources;
         locale;
         rule;
         screenshot;
@@ -101,6 +106,7 @@ struct
   let runpagespeed
         ?(base_url = "https://www.googleapis.com/pagespeedonline/v1/")
         ?std_params
+        ?(filter_third_party_resources = false)
         ?(screenshot = false)
         ?locale
         ?rule
@@ -109,8 +115,8 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["runPagespeed"] base_url in
     let params = PagespeedapiParameters.merge_parameters
-      ?standard_parameters:std_params ?locale ?rule ~screenshot ?strategy
-      ~url () in
+      ?standard_parameters:std_params ~filter_third_party_resources ?locale
+      ?rule ~screenshot ?strategy ~url () in
     let query_parameters = Option.map
       PagespeedapiParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url

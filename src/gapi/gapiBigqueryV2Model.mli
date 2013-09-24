@@ -6,31 +6,6 @@
   {{:https://developers.google.com/bigquery/docs/overview}API Documentation}.
   *)
 
-module DatasetReference :
-sig
-  type t = {
-    datasetId : string;
-    (** [Required] A unique ID for this dataset, without the project name. *)
-    projectId : string;
-    (** [Optional] The ID of the container project. *)
-    
-  }
-  
-  val datasetId : (t, string) GapiLens.t
-  val projectId : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module TableReference :
 sig
   type t = {
@@ -59,6 +34,31 @@ sig
   
 end
 
+module DatasetReference :
+sig
+  type t = {
+    datasetId : string;
+    (** [Required] A unique ID for this dataset, without the project name. *)
+    projectId : string;
+    (** [Optional] The ID of the container project. *)
+    
+  }
+  
+  val datasetId : (t, string) GapiLens.t
+  val projectId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module JobConfigurationQuery :
 sig
   type t = {
@@ -70,8 +70,6 @@ sig
     (** [Optional] Specifies the default dataset to assume for unqualified table names in the query. *)
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
-    minCompletionRatio : float;
-    (** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. *)
     preserveNulls : bool;
     (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
     priority : string;
@@ -89,7 +87,6 @@ sig
   val createDisposition : (t, string) GapiLens.t
   val defaultDataset : (t, DatasetReference.t) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
-  val minCompletionRatio : (t, float) GapiLens.t
   val preserveNulls : (t, bool) GapiLens.t
   val priority : (t, string) GapiLens.t
   val query : (t, string) GapiLens.t
@@ -203,15 +200,12 @@ sig
   type t = {
     cacheHit : bool;
     (** [Output-only] Whether the query result was fetched from the query cache. *)
-    completionRatio : float;
-    (** [Output-Only] Approximate fraction of data processed for this query. This will be 1.0 unless min_completion_ratio for the query was set to something other than 1.0. *)
     totalBytesProcessed : int64;
     (** [Output-only] Total bytes processed for this job. *)
     
   }
   
   val cacheHit : (t, bool) GapiLens.t
-  val completionRatio : (t, float) GapiLens.t
   val totalBytesProcessed : (t, int64) GapiLens.t
   
   val empty : t
@@ -229,19 +223,22 @@ end
 module JobStatistics :
 sig
   type t = {
+    creationTime : int64;
+    (** [Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs. *)
     endTime : int64;
-    (** [Output-only] End time of this job, in milliseconds since the epoch. *)
+    (** [Output-only] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state. *)
     load : JobStatistics3.t;
     (** [Output-only] Statistics for a load job. *)
     query : JobStatistics2.t;
     (** [Output-only] Statistics for a query job. *)
     startTime : int64;
-    (** [Output-only] Start time of this job, in milliseconds since the epoch. *)
+    (** [Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE. *)
     totalBytesProcessed : int64;
     (** [Output-only] [Deprecated] Use the bytes processed in the query statistics instead. *)
     
   }
   
+  val creationTime : (t, int64) GapiLens.t
   val endTime : (t, int64) GapiLens.t
   val load : (t, JobStatistics3.t) GapiLens.t
   val query : (t, JobStatistics2.t) GapiLens.t
@@ -656,6 +653,10 @@ sig
   
 end
 
+module JsonValue : module type of String
+
+module JsonObject : module type of GapiJson.StringDictionary
+
 module JobConfigurationLoad :
 sig
   type t = {
@@ -1066,6 +1067,52 @@ sig
   
 end
 
+module TableDataInsertAllResponse :
+sig
+  module InsertErrors :
+  sig
+    type t = {
+      errors : ErrorProto.t list;
+      (**  *)
+      index : int;
+      (**  *)
+      
+    }
+    
+    val errors : (t, ErrorProto.t list) GapiLens.t
+    val index : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    insertErrors : InsertErrors.t list;
+    (** Rows of results. *)
+    kind : string;
+    (** The resource type of the response. *)
+    
+  }
+  
+  val insertErrors : (t, InsertErrors.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module DatasetList :
 sig
   module Datasets :
@@ -1128,23 +1175,21 @@ module QueryRequest :
 sig
   type t = {
     defaultDataset : DatasetReference.t;
-    (** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be fully-qualified in the format projectId:datasetId.tableid. *)
+    (** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'. *)
     dryRun : bool;
-    (** [Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. *)
+    (** [Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. The default value is false. *)
     kind : string;
     (** The resource type of the request. *)
     maxResults : int;
-    (** [Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size. *)
-    minCompletionRatio : float;
-    (** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. *)
+    (** [Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies. *)
     preserveNulls : bool;
-    (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
+    (** [Deprecated] If set to false, maps null values in the query response to the column's default value. Only specify if you have older code that can not handle null values in the query response. The default value is true. This flag is deprecated and will be ignored in a future version of BigQuery. *)
     query : string;
-    (** [Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId. *)
+    (** [Required] A query string, following the BigQuery query syntax, of the query to execute. Example: "SELECT count(f1) FROM [myProjectId:myDatasetId.myTableId]". *)
     timeoutMs : int;
-    (** [Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error. *)
+    (** [Optional] How long to wait for the query to complete, in milliseconds, before the request times out and returns. Note that this is only a timeout for the request, not the query. If the query takes longer to run than the timeout value, the call returns without any results and with the 'jobComplete' flag set to false. You can call GetQueryResults() to wait for the query to complete and read the results. The default value is 10000 milliseconds (10 seconds). *)
     useQueryCache : bool;
-    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. *)
+    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true. *)
     
   }
   
@@ -1152,7 +1197,6 @@ sig
   val dryRun : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val maxResults : (t, int) GapiLens.t
-  val minCompletionRatio : (t, float) GapiLens.t
   val preserveNulls : (t, bool) GapiLens.t
   val query : (t, string) GapiLens.t
   val timeoutMs : (t, int) GapiLens.t
@@ -1200,6 +1244,52 @@ sig
   val selfLink : (t, string) GapiLens.t
   val statistics : (t, JobStatistics.t) GapiLens.t
   val status : (t, JobStatus.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module TableDataInsertAllRequest :
+sig
+  module Rows :
+  sig
+    type t = {
+      insertId : string;
+      (**  *)
+      json : JsonObject.t;
+      (**  *)
+      
+    }
+    
+    val insertId : (t, string) GapiLens.t
+    val json : (t, JsonObject.t) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    kind : string;
+    (** The resource type of the response. *)
+    rows : Rows.t list;
+    (** Rows to insert. *)
+    
+  }
+  
+  val kind : (t, string) GapiLens.t
+  val rows : (t, Rows.t list) GapiLens.t
   
   val empty : t
   

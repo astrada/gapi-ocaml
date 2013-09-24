@@ -1,6 +1,6 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-(** Service definition for Page Speed Online API (v1).
+(** Service definition for PageSpeed Insights API (v1).
   
   Lets you analyze the performance of a web page and get tailored suggestions to make that page faster..
   
@@ -28,6 +28,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/pagespeedonline/v1/"]).
     @param std_params Optional standard parameters.
+    @param filter_third_party_resources Indicates if third party resources should be filtered out before PageSpeed analysis.
     @param screenshot Indicates if binary data containing a screenshot should be included
     @param locale The locale used to localize formatted results
     @param rule A Page Speed rule to run; if none are given, all rules are run
@@ -37,6 +38,7 @@ sig
   val runpagespeed :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?filter_third_party_resources:bool ->
     ?screenshot:bool ->
     ?locale:string ->
     ?rule:string list ->

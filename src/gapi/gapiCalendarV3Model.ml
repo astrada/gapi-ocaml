@@ -2768,6 +2768,7 @@ struct
     id : string;
     kind : string;
     params : (string * string) list;
+    payload : bool;
     resourceId : string;
     resourceUri : string;
     token : string;
@@ -2795,6 +2796,10 @@ struct
     GapiLens.get = (fun x -> x.params);
     GapiLens.set = (fun v x -> { x with params = v });
   }
+  let payload = {
+    GapiLens.get = (fun x -> x.payload);
+    GapiLens.set = (fun v x -> { x with payload = v });
+  }
   let resourceId = {
     GapiLens.get = (fun x -> x.resourceId);
     GapiLens.set = (fun v x -> { x with resourceId = v });
@@ -2818,6 +2823,7 @@ struct
     id = "";
     kind = "";
     params = [];
+    payload = false;
     resourceId = "";
     resourceUri = "";
     token = "";
@@ -2832,6 +2838,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_collection "params" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.params;
+      GapiJson.render_bool_value "payload" x.payload;
       GapiJson.render_string_value "resourceId" x.resourceId;
       GapiJson.render_string_value "resourceUri" x.resourceUri;
       GapiJson.render_string_value "token" x.token;
@@ -2872,6 +2879,10 @@ struct
         ("", "")
         (fun v -> { x with params = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "payload"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with payload = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "resourceId"; data_type = GapiJson.Scalar },
         `String v) ->

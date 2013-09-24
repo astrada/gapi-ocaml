@@ -6,6 +6,68 @@
   {{:https://developers.google.com/analytics/}API Documentation}.
   *)
 
+module Column :
+sig
+  type t = {
+    attributes : (string * string) list;
+    (** Map of attribute name and value for this column. *)
+    id : string;
+    (** Column id. *)
+    kind : string;
+    (** Resource type for Analytics column. *)
+    
+  }
+  
+  val attributes : (t, (string * string) list) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Columns :
+sig
+  type t = {
+    attributeNames : string list;
+    (** List of attributes names returned by columns. *)
+    etag : string;
+    (** Etag of collection. This etag can be compared with the last response etag to check if response has changed. *)
+    items : Column.t list;
+    (** List of columns for a report type. *)
+    kind : string;
+    (** Collection type. *)
+    totalResults : int;
+    (** Total number of columns returned in the response. *)
+    
+  }
+  
+  val attributeNames : (t, string list) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val items : (t, Column.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Segment :
 sig
   type t = {
@@ -720,9 +782,9 @@ sig
   sig
     type t = {
       href : string;
-      (** Link to the list of daily uploads for this custom data source. *)
+      (** Link to the list of daily uploads for this custom data source. Link to the list of uploads for this custom data source. *)
       _type : string;
-      (** Value is "analytics#dailyUploads". *)
+      (** Value is "analytics#dailyUploads". Value is "analytics#uploads". *)
       
     }
     
@@ -741,7 +803,7 @@ sig
     accountId : string;
     (** Account ID to which this custom data source belongs. *)
     childLink : ChildLink.t;
-    (** Child link for this custom data source. Points to the list of daily uploads for this custom data source. *)
+    (**  *)
     created : GapiDate.t;
     (** Time this custom data source was created. *)
     description : string;
@@ -758,6 +820,8 @@ sig
     (** IDs of views (profiles) linked to the custom data source. *)
     selfLink : string;
     (** Link for this Analytics custom data source. *)
+    _type : string;
+    (** Type of the custom data source. *)
     updated : GapiDate.t;
     (** Time this custom data source was last modified. *)
     webPropertyId : string;
@@ -775,6 +839,7 @@ sig
   val parentLink : (t, ParentLink.t) GapiLens.t
   val profilesLinked : (t, string list) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   val webPropertyId : (t, string) GapiLens.t
   
@@ -1364,6 +1429,142 @@ sig
   val profileInfo : (t, ProfileInfo.t) GapiLens.t
   val query : (t, Query.t) GapiLens.t
   val rows : (t, Rows.t list list) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val totalsForAllResults : (t, (string * string) list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module RealtimeData :
+sig
+  module Query :
+  sig
+    type t = {
+      dimensions : string;
+      (** List of real time dimensions. *)
+      filters : string;
+      (** Comma-separated list of dimension or metric filters. *)
+      ids : string;
+      (** Unique table ID. *)
+      max_results : int;
+      (** Maximum results per page. *)
+      metrics : string list;
+      (** List of real time metrics. *)
+      sort : string list;
+      (** List of dimensions or metrics based on which real time data is sorted. *)
+      
+    }
+    
+    val dimensions : (t, string) GapiLens.t
+    val filters : (t, string) GapiLens.t
+    val ids : (t, string) GapiLens.t
+    val max_results : (t, int) GapiLens.t
+    val metrics : (t, string list) GapiLens.t
+    val sort : (t, string list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ProfileInfo :
+  sig
+    type t = {
+      accountId : string;
+      (** Account ID to which this view (profile) belongs. *)
+      internalWebPropertyId : string;
+      (** Internal ID for the web property to which this view (profile) belongs. *)
+      profileId : string;
+      (** View (Profile) ID. *)
+      profileName : string;
+      (** View (Profile) name. *)
+      tableId : string;
+      (** Table ID for view (profile). *)
+      webPropertyId : string;
+      (** Web Property ID to which this view (profile) belongs. *)
+      
+    }
+    
+    val accountId : (t, string) GapiLens.t
+    val internalWebPropertyId : (t, string) GapiLens.t
+    val profileId : (t, string) GapiLens.t
+    val profileName : (t, string) GapiLens.t
+    val tableId : (t, string) GapiLens.t
+    val webPropertyId : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ColumnHeaders :
+  sig
+    type t = {
+      columnType : string;
+      (** Column Type. Either DIMENSION or METRIC. *)
+      dataType : string;
+      (** Data type. Dimension column headers have only STRING as the data type. Metric column headers have data types for metric values such as INTEGER, DOUBLE, CURRENCY etc. *)
+      name : string;
+      (** Column name. *)
+      
+    }
+    
+    val columnType : (t, string) GapiLens.t
+    val dataType : (t, string) GapiLens.t
+    val name : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    columnHeaders : ColumnHeaders.t list;
+    (** Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request. *)
+    id : string;
+    (** Unique ID for this data response. *)
+    kind : string;
+    (** Resource type. *)
+    profileInfo : ProfileInfo.t;
+    (** Information for the view (profile), for which the real time data was requested. *)
+    query : Query.t;
+    (** Real time data request query parameters. *)
+    rows : string list list;
+    (** Real time data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request. *)
+    selfLink : string;
+    (** Link to this page. *)
+    totalResults : int;
+    (** The total number of rows for the query, regardless of the number of rows in the response. *)
+    totalsForAllResults : (string * string) list;
+    (** Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request. *)
+    
+  }
+  
+  val columnHeaders : (t, ColumnHeaders.t list) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val profileInfo : (t, ProfileInfo.t) GapiLens.t
+  val query : (t, Query.t) GapiLens.t
+  val rows : (t, string list list) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val totalsForAllResults : (t, (string * string) list) GapiLens.t

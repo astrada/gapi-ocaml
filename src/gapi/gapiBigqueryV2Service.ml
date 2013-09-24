@@ -563,6 +563,27 @@ struct
     
   end
   
+  let insertAll
+        ?(base_url = "https://www.googleapis.com/bigquery/v2/")
+        ?std_params
+        ~projectId
+        ~datasetId
+        ~tableId
+        tableDataInsertAllRequest
+        session =
+    let full_url = GapiUtils.add_path_to_url ["projects";
+      ((fun x -> x) projectId); "datasets"; ((fun x -> x) datasetId);
+      "tables"; ((fun x -> x) tableId); "insertAll"] base_url in
+    let params = TabledataParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map TabledataParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json TableDataInsertAllRequest.to_data_model)
+      ~data:tableDataInsertAllRequest full_url
+      (GapiJson.parse_json_response TableDataInsertAllResponse.of_data_model)
+      session 
+    
   let list
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?std_params

@@ -78,7 +78,7 @@ sig
     sig
       type t = {
         url : string;
-        (** The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
+        (** The URL of the actor's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
         
       }
       
@@ -100,7 +100,7 @@ sig
       image : Image.t;
       (** The image representation of this actor. *)
       url : string;
-      (** A link to the person resource for this actor. *)
+      (** A link to the Person resource for this actor. *)
       
     }
     
@@ -219,11 +219,11 @@ sig
       label : string;
       (** The label of the URL. *)
       _type : string;
-      (** The type of URL. Possible values include (but are not limited to):  
+      (** The type of URL. Possible values include, but are not limited to, the following values:  
 - "otherProfile" - URL for another profile. 
-- "contributor" - URL for which this person is a contributor to. 
+- "contributor" - URL to a site for which this person is a contributor. 
 - "website" - URL for this Google+ Page's primary website. 
-- "other" - Other. *)
+- "other" - Other URL. *)
       value : string;
       (** The URL value. *)
       
@@ -270,19 +270,19 @@ sig
       description : string;
       (** A short description of the person's role in this organization. Deprecated. *)
       endDate : string;
-      (** The date the person left this organization. *)
+      (** The date that the person left this organization. *)
       location : string;
       (** The location of this organization. Deprecated. *)
       name : string;
       (** The name of the organization. *)
       primary : bool;
-      (** If "true", indicates this organization is the person's primary one (typically interpreted as current one). *)
+      (** If "true", indicates this organization is the person's primary one, which is typically interpreted as the current one. *)
       startDate : string;
-      (** The date the person joined this organization. *)
+      (** The date that the person joined this organization. *)
       title : string;
       (** The person's job title or role within the organization. *)
       _type : string;
-      (** The type of organization. Possible values include (but are not limited to):  
+      (** The type of organization. Possible values include, but are not limited to, the following values:  
 - "work" - Work. 
 - "school" - School. *)
       
@@ -343,7 +343,7 @@ sig
   sig
     type t = {
       url : string;
-      (** The URL of the person's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
+      (** The URL of the person's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
       
     }
     
@@ -363,11 +363,11 @@ sig
     sig
       type t = {
         height : int;
-        (** The height to the image. *)
+        (** The height of the image. *)
         url : string;
-        (** The url to the image. *)
+        (** The URL of the image. *)
         width : int;
-        (** The width to the image. *)
+        (** The width of the image. *)
         
       }
       
@@ -387,9 +387,9 @@ sig
     sig
       type t = {
         leftImageOffset : int;
-        (** The difference between the left position of the image cover and the actual displayed cover image. Only valid for BANNER layout. *)
+        (** The difference between the left position of the cover image and the actual displayed cover image. Only valid for banner layout. *)
         topImageOffset : int;
-        (** The difference between the top position of the image cover and the actual displayed cover image. Only valid for BANNER layout. *)
+        (** The difference between the top position of the cover image and the actual displayed cover image. Only valid for banner layout. *)
         
       }
       
@@ -410,7 +410,7 @@ sig
       coverPhoto : CoverPhoto.t;
       (** The person's primary cover image. *)
       layout : string;
-      (** The layout of the cover art. Possible values include (but are not limited to):  
+      (** The layout of the cover art. Possible values include, but are not limited to, the following values:  
 - "banner" - One large image banner. *)
       
     }
@@ -464,11 +464,11 @@ sig
     currentLocation : string;
     (** The current location for this person. *)
     displayName : string;
-    (** The name of this person, suitable for display. *)
+    (** The name of this person, which is suitable for display. *)
     etag : string;
     (** ETag of this response for caching purposes. *)
     gender : string;
-    (** The person's gender. Possible values include (but are not limited to):  
+    (** The person's gender. Possible values include, but are not limited to, the following values:  
 - "male" - Male gender. 
 - "female" - Female gender. 
 - "other" - Other. *)
@@ -487,7 +487,7 @@ sig
     nickname : string;
     (** The nickname of this person. *)
     objectType : string;
-    (** Type of person within Google+. Possible values include (but are not limited to):  
+    (** Type of person within Google+. Possible values include, but are not limited to, the following values:  
 - "person" - represents an actual person. 
 - "page" - represents a page. *)
     organizations : Organizations.t list;
@@ -495,9 +495,9 @@ sig
     placesLived : PlacesLived.t list;
     (** A list of places where this person has lived. *)
     plusOneCount : int;
-    (** If a Google+ Page, the number of people who have +1'ed this page. *)
+    (** If a Google+ Page, the number of people who have +1'd this page. *)
     relationshipStatus : string;
-    (** The person's relationship status. Possible values include (but are not limited to):  
+    (** The person's relationship status. Possible values include, but are not limited to, the following values:  
 - "single" - Person is single. 
 - "in_a_relationship" - Person is in a relationship. 
 - "engaged" - Person is engaged. 
@@ -569,7 +569,7 @@ sig
 - "person" - Access to an individual. 
 - "circle" - Access to members of a circle. 
 - "myCircles" - Access to members of all the person's circles. 
-- "extendedCircles" - Access to members of everyone in a person's circles, plus all of the people in their circles. 
+- "extendedCircles" - Access to members of all the person's circles, plus all of the people in their circles. 
 - "domain" - Access to members of the person's Google Apps domain. 
 - "public" - Access to anyone on the web. *)
     
@@ -811,7 +811,7 @@ sig
           image : Image.t;
           (** Image resource. *)
           url : string;
-          (** URL to the webpage containing the image. *)
+          (** URL of the webpage containing the image. *)
           
         }
         
@@ -835,7 +835,7 @@ sig
           _type : string;
           (** Media type of the link. *)
           url : string;
-          (** Image url. *)
+          (** Image URL. *)
           width : int;
           (** The width, in pixels, of the linked resource. *)
           
@@ -862,7 +862,7 @@ sig
           _type : string;
           (** Media type of the link. *)
           url : string;
-          (** URL to the image. *)
+          (** URL of the image. *)
           width : int;
           (** The width, in pixels, of the linked resource. *)
           
@@ -906,7 +906,7 @@ sig
         content : string;
         (** If the attachment is an article, this property contains a snippet of text from the article. It can also include descriptions for other types. *)
         displayName : string;
-        (** The title of the attachment (such as a photo caption or an article title). *)
+        (** The title of the attachment, such as a photo caption or an article title. *)
         embed : Embed.t;
         (** If the attachment is a video, the embeddable link. *)
         fullImage : FullImage.t;
@@ -916,15 +916,15 @@ sig
         image : Image.t;
         (** The preview image for photos or videos. *)
         objectType : string;
-        (** The type of media object. Possible values include (but are not limited to):  
+        (** The type of media object. Possible values include, but are not limited to, the following values:  
 - "photo" - A photo. 
 - "album" - A photo album. 
 - "video" - A video. 
 - "article" - An article, specified by a link. *)
         thumbnails : Thumbnails.t list;
-        (** If the attachment is an album, potential additional thumbnails from the album. *)
+        (** If the attachment is an album, this property is a list of potential additional thumbnails from the album. *)
         url : string;
-        (** The link to the attachment, should be of type text/html. *)
+        (** The link to the attachment; should be of type text/html. *)
         
       }
       
@@ -968,7 +968,7 @@ sig
       
       type t = {
         displayName : string;
-        (** The original actor's name, suitable for display. *)
+        (** The original actor's name, which is suitable for display. *)
         id : string;
         (** ID of the original actor. *)
         image : Image.t;
@@ -993,19 +993,19 @@ sig
     
     type t = {
       actor : Actor.t;
-      (** If this activity's object is itself another activity (for example, when a person reshares an activity), this property specifies the original activity's actor. *)
+      (** If this activity's object is itself another activity, such as when a person reshares an activity, this property specifies the original activity's actor. *)
       attachments : Attachments.t list;
       (** The media objects attached to this activity. *)
       content : string;
-      (** The HTML-formatted content, suitable for display. *)
+      (** The HTML-formatted content, which is suitable for display. *)
       id : string;
-      (** The ID of the object. When resharing an activity, this is the ID of the activity being reshared. *)
+      (** The ID of the object. When resharing an activity, this is the ID of the activity that is being reshared. *)
       objectType : string;
-      (** The type of the object. Possible values include (but are not limited to):  
+      (** The type of the object. Possible values include, but are not limited to, the following values:  
 - "note" - Textual content. 
 - "activity" - A Google+ activity. *)
       originalContent : string;
-      (** The content (text) as provided by the author, stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request. *)
+      (** The content (text) as provided by the author, which is stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request. *)
       plusoners : Plusoners.t;
       (** People who +1'd this activity. *)
       replies : Replies.t;
@@ -1042,9 +1042,9 @@ sig
     sig
       type t = {
         familyName : string;
-        (** The family name (last name) of the actor. *)
+        (** The family name ("last name") of the actor. *)
         givenName : string;
-        (** The given name (first name) of the actor. *)
+        (** The given name ("first name") of the actor. *)
         
       }
       
@@ -1063,7 +1063,7 @@ sig
     sig
       type t = {
         url : string;
-        (** The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
+        (** The URL of the actor's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
         
       }
       
@@ -1081,7 +1081,7 @@ sig
       displayName : string;
       (** The name of the actor, suitable for display. *)
       id : string;
-      (** The ID of the actor's person resource. *)
+      (** The ID of the actor's Person resource. *)
       image : Image.t;
       (** The image representation of the actor. *)
       name : Name.t;
@@ -1145,7 +1145,7 @@ sig
     url : string;
     (** The link to this activity. *)
     verb : string;
-    (** This activity's verb, indicating what action was performed. Possible values include (but are not limited to):  
+    (** This activity's verb, which indicates the action that was performed. Possible values include, but are not limited to, the following values:  
 - "post" - Publish content to the stream. 
 - "share" - Reshare an activity. *)
     
@@ -1504,9 +1504,9 @@ sig
     nextPageToken : string;
     (** The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     selfLink : string;
-    (** Link to this activity resource. *)
+    (** Link to this activities resource. *)
     title : string;
-    (** The title of this collection of activities. *)
+    (** The title of this collection of activities, which is a truncated portion of the content. *)
     updated : GapiDate.t;
     (** The time at which this collection of activities was last updated. Formatted as an RFC 3339 timestamp. *)
     

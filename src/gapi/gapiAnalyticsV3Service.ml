@@ -262,6 +262,110 @@ struct
     
   end
   
+  module Realtime =
+  struct
+    module RealtimeParameters =
+    struct
+      type t = {
+        (* Standard query parameters *)
+        fields : string;
+        prettyPrint : bool;
+        quotaUser : string;
+        userIp : string;
+        key : string;
+        (* realtime-specific query parameters *)
+        dimensions : string;
+        filters : string;
+        ids : string;
+        max_results : int;
+        metrics : string;
+        sort : string;
+        
+      }
+      
+      let default = {
+        fields = "";
+        prettyPrint = true;
+        quotaUser = "";
+        userIp = "";
+        key = "";
+        dimensions = "";
+        filters = "";
+        ids = "";
+        max_results = 0;
+        metrics = "";
+        sort = "";
+        
+      }
+      
+      let to_key_value_list qp =
+        let param get_value to_string name =
+          GapiService.build_param default qp get_value to_string name in [
+        param (fun p -> p.fields) (fun x -> x) "fields";
+        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+        param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+        param (fun p -> p.userIp) (fun x -> x) "userIp";
+        param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.dimensions) (fun x -> x) "dimensions";
+        param (fun p -> p.filters) (fun x -> x) "filters";
+        param (fun p -> p.ids) (fun x -> x) "ids";
+        param (fun p -> p.max_results) string_of_int "max-results";
+        param (fun p -> p.metrics) (fun x -> x) "metrics";
+        param (fun p -> p.sort) (fun x -> x) "sort";
+        
+      ] |> List.concat
+      
+      let merge_parameters
+          ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(dimensions = default.dimensions)
+          ?(filters = default.filters)
+          ?(ids = default.ids)
+          ?(max_results = default.max_results)
+          ?(metrics = default.metrics)
+          ?(sort = default.sort)
+          () =
+        let parameters = {
+          fields = standard_parameters.GapiService.StandardParameters.fields;
+          prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+          quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+          userIp = standard_parameters.GapiService.StandardParameters.userIp;
+          key = standard_parameters.GapiService.StandardParameters.key;
+          dimensions;
+          filters;
+          ids;
+          max_results;
+          metrics;
+          sort;
+          
+        } in
+        if parameters = default then None else Some parameters
+      
+    end
+    
+    let get
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?etag
+          ?std_params
+          ?dimensions
+          ?filters
+          ?max_results
+          ?sort
+          ~ids
+          ~metrics
+          session =
+      let full_url = GapiUtils.add_path_to_url ["data"; "realtime"] base_url
+        in
+      let params = RealtimeParameters.merge_parameters
+        ?standard_parameters:std_params ?dimensions ?filters ~ids
+        ?max_results ~metrics ?sort () in
+      let query_parameters = Option.map RealtimeParameters.to_key_value_list
+        params in
+      GapiService.get ?query_parameters ?etag full_url
+        (GapiJson.parse_json_response RealtimeData.of_data_model) session 
+      
+    
+  end
+  
   
 end
 
@@ -1113,6 +1217,30 @@ struct
         WebpropertiesParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response Webproperties.of_data_model) session 
+      
+    
+  end
+  
+  
+end
+
+module MetadataResource =
+struct
+  module Columns =
+  struct
+    let list
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~reportType
+          session =
+      let full_url = GapiUtils.add_path_to_url ["metadata";
+        ((fun x -> x) reportType); "columns"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response Columns.of_data_model) session 
       
     
   end

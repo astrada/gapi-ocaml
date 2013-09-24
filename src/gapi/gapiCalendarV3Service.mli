@@ -321,7 +321,7 @@ end
 module ChannelsResource :
 sig
   
-  (** 
+  (** Stop watching resources through this channel
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -597,7 +597,7 @@ sig
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Event.t * GapiConversation.Session.t
   
-  (** Subscribe to changes in events collection
+  (** Watch for changes to Events resources.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -668,7 +668,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param setting Name of the user setting.
+    @param setting The id of the user setting.
     *)
   val get :
     ?base_url:string ->

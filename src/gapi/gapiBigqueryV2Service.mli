@@ -14,7 +14,7 @@ sig
   (** View and manage your data in Google BigQuery *)
   
   val cloud_platform : string
-  (** MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services *)
+  (** View and manage your data across Google Cloud Platform services *)
   
   val devstorage_full_control : string
   (** Manage your data and permissions in Google Cloud Storage *)
@@ -280,6 +280,24 @@ end
 
 module TabledataResource :
 sig
+  
+  (** Inserts the supplied rows into the table.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
+    @param std_params Optional standard parameters.
+    @param projectId Project ID of the destination table.
+    @param datasetId Dataset ID of the destination table.
+    @param tableId Table ID of the destination table.
+    *)
+  val insertAll :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    projectId:string ->
+    datasetId:string ->
+    tableId:string ->
+    GapiBigqueryV2Model.TableDataInsertAllRequest.t ->
+    GapiConversation.Session.t ->
+    GapiBigqueryV2Model.TableDataInsertAllResponse.t * GapiConversation.Session.t
   
   (** Retrieves table data from a specified set of rows.
     
