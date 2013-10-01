@@ -22,6 +22,7 @@ type request_type =
   | Update
   | Patch
   | Delete
+  | QueryMeta
 
 let parse_empty_response _ =
   ()
@@ -54,13 +55,13 @@ let parse_response
         200 (* OK *) ->
           let location = get_location () in
             if location = "" then
-              parse_output pipe
+              parse_output pipe headers
             else
               raise (StartUpload (location, session))
       | 201 (* Created *)
       | 204 (* No Content *)
       | 206 (* Partial Content *) ->
-          parse_output pipe
+          parse_output pipe headers
       | 302 (* Found *) ->
           let url = get_location () in
             raise (Redirect (url, session))
@@ -166,7 +167,8 @@ let single_request
       | Create -> GapiCore.HttpMethod.POST
       | Update -> GapiCore.HttpMethod.PUT
       | Patch -> GapiCore.HttpMethod.PATCH
-      | Delete -> GapiCore.HttpMethod.DELETE in
+      | Delete -> GapiCore.HttpMethod.DELETE
+      | QueryMeta -> GapiCore.HttpMethod.HEAD in
   let oauth1_params =
     match auth_data with
         GapiAuth.NoAuth
@@ -190,7 +192,8 @@ let single_request
   let etag_header =
     Option.map (fun e ->
                   match request_type with
-                      Query ->
+                      Query
+                    | QueryMeta ->
                         Some (GapiCore.Header.IfNoneMatch e)
                     | Update
                     | Patch

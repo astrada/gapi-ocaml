@@ -51,6 +51,7 @@ struct
     | PUT
     | DELETE
     | PATCH
+    | HEAD
 
   let to_string m =
     match m with
@@ -59,6 +60,7 @@ struct
       | PUT -> "PUT"
       | DELETE -> "DELETE"
       | PATCH -> "PATCH"
+      | HEAD -> "HEAD"
 
 end
 
@@ -90,6 +92,7 @@ struct
     | UploadContentType of string
     | UploadContentLength of string
     | Slug of string
+    | ContentLength of string
     | KeyValueHeader of string * string
     | OtherHeader of string
 
@@ -121,6 +124,8 @@ struct
           "X-Upload-Content-Length: " ^ value
       | Slug value ->
           "Slug: " ^ value
+      | ContentLength value ->
+          "Content-Length: " ^ value
       | KeyValueHeader (name, value) ->
           name ^ ": " ^ value
       | OtherHeader header ->
@@ -155,6 +160,8 @@ struct
               UploadContentLength value
           | "Slug" ->
               Slug value
+          | "Content-Length" ->
+              ContentLength value
           | _ ->
               KeyValueHeader (key, value)
     else

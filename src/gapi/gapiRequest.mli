@@ -19,6 +19,7 @@ type request_type =
   | Update
   | Patch
   | Delete
+  | QueryMeta
 
 val parse_empty_response : 'a -> unit
 
@@ -31,7 +32,7 @@ val gapi_request :
   ?parse_error:(GapiPipe.OcamlnetPipe.t -> int -> 'a) ->
   request_type ->
   string ->
-  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 

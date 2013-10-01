@@ -16,7 +16,7 @@ let query
     ?query_parameters
     ~request_type:GapiRequest.Query
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let create
@@ -36,7 +36,7 @@ let create
     ?media_source
     data
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let read
@@ -51,7 +51,7 @@ let read
       ?version
       ?etag
       url
-      parse_response
+      (fun pipe _ -> parse_response pipe)
       session
   with GapiRequest.NotModified new_session ->
     (data, new_session)
@@ -75,7 +75,7 @@ let update
     ?media_source
     data
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let patch
@@ -97,7 +97,7 @@ let patch
     ?media_source
     data
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let delete
@@ -112,7 +112,7 @@ let delete
     ?query_parameters
     ~request_type:GapiRequest.Delete
     url
-    GapiRequest.parse_empty_response
+    (fun pipe _ -> GapiRequest.parse_empty_response pipe)
     session
 
 let batch_request
@@ -128,6 +128,6 @@ let batch_request
     ?version
     data
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 

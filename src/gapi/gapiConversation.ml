@@ -163,6 +163,9 @@ let request
       | GapiCore.HttpMethod.DELETE ->
           GapiCurl.set_upload false session.Session.curl;
           GapiCurl.set_nobody true session.Session.curl
+      | GapiCore.HttpMethod.HEAD ->
+          GapiCurl.set_upload false session.Session.curl;
+          GapiCurl.set_nobody true session.Session.curl
     end;
     begin match http_method with
         GapiCore.HttpMethod.PATCH

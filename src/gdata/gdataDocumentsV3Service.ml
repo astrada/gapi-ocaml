@@ -436,7 +436,7 @@ let resumable_upload
       ~request_type:GapiRequest.Create
       ?query_parameters
       url
-      parse_document_entry
+      (fun pipe _ -> parse_document_entry pipe)
       session
 
 (* Download *)

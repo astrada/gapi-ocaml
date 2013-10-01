@@ -41,6 +41,7 @@ sig
     | PUT
     | DELETE
     | PATCH
+    | HEAD
 
   val to_string : t -> string
 
@@ -72,6 +73,7 @@ sig
     | UploadContentType of string
     | UploadContentLength of string
     | Slug of string
+    | ContentLength of string
     | KeyValueHeader of string * string
     | OtherHeader of string
 

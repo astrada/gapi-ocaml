@@ -12,7 +12,7 @@ val service_request :
   ?media_download:GapiMediaResource.download ->
   ?request_type:GapiRequest.request_type ->
   string ->
-  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
@@ -26,7 +26,7 @@ val service_request_with_data :
   ?media_download:GapiMediaResource.download ->
   'a ->
   string ->
-  (GapiPipe.OcamlnetPipe.t -> 'a) ->
+  (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
 
@@ -69,6 +69,15 @@ sig
   val merge_parameters : ?standard_parameters:t -> unit -> t option
 
 end
+
+val head :
+  ?etag:string ->
+  ?query_parameters:(string * string) list ->
+  ?media_download:GapiMediaResource.download ->
+  string ->
+  (GapiCore.Header.t list -> 'a) ->
+  GapiConversation.Session.t ->
+  'a * GapiConversation.Session.t
 
 val get :
   ?etag:string ->

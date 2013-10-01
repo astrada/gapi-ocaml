@@ -88,7 +88,7 @@ let download_resource
       ?version
       ~request_type:GapiRequest.Query
       url
-      GapiRequest.parse_empty_response
+      (fun pipe _ -> GapiRequest.parse_empty_response pipe)
       session
 
 let build_param default_params params get_value to_string name = 
@@ -136,6 +136,22 @@ struct
 
 end
 
+let head
+      ?etag
+      ?query_parameters
+      ?media_download
+      url
+      parse_headers
+      session =
+  service_request
+    ?etag
+    ?query_parameters
+    ?media_download
+    ~request_type:GapiRequest.QueryMeta
+    url
+    (fun _ headers -> parse_headers headers)
+    session
+
 let get
       ?etag
       ?query_parameters
@@ -149,7 +165,7 @@ let get
     ?media_download
     ~request_type:GapiRequest.Query
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let post
@@ -169,7 +185,7 @@ let post
       ?media_source
       ~request_type:GapiRequest.Create
       url
-      parse_response
+      (fun pipe _ -> parse_response pipe)
       session
 
 let put
@@ -189,7 +205,7 @@ let put
     ?media_source
     data
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let put'
@@ -209,7 +225,7 @@ let put'
       ?media_source
       ~request_type:GapiRequest.Update
       url
-      parse_response
+      (fun pipe _ -> parse_response pipe)
       session
 
 let patch
@@ -229,7 +245,7 @@ let patch
     ?media_source
     data
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 
 let patch'
@@ -249,7 +265,7 @@ let patch'
       ?media_source
       ~request_type:GapiRequest.Patch
       url
-      parse_response
+      (fun pipe _ -> parse_response pipe)
       session
 
 let delete
@@ -263,6 +279,6 @@ let delete
     ?query_parameters
     ~request_type:GapiRequest.Delete
     url
-    parse_response
+    (fun pipe _ -> parse_response pipe)
     session
 

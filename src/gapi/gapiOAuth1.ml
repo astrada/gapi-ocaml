@@ -90,9 +90,10 @@ let oauth_request
   let post_data =
     match http_method with
         GapiCore.HttpMethod.GET
-      | GapiCore.HttpMethod.PUT (* TODO: verify *)
-      | GapiCore.HttpMethod.PATCH (* TODO: verify *)
-      | GapiCore.HttpMethod.DELETE -> None
+      | GapiCore.HttpMethod.PUT
+      | GapiCore.HttpMethod.PATCH
+      | GapiCore.HttpMethod.DELETE
+      | GapiCore.HttpMethod.HEAD -> None
       | GapiCore.HttpMethod.POST -> Some (GapiCore.PostData.Fields post_fields_to_sign)
   in
     GapiConversation.request
