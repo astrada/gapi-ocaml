@@ -75,94 +75,112 @@
 &nbsp;<a class="up" href="GdataDocumentsV3Model.Archive.html" title="GdataDocumentsV3Model.Archive">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GdataDocumentsV3Model.Archive.Entry.html">GdataDocumentsV3Model.Archive.Entry</a></h1>
+
 <pre><span class="keyword">module</span> Entry: <code class="code">sig</code> <a href="GdataDocumentsV3Model.Archive.Entry.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.common">common</span>&nbsp;:<code class="type"><a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a></code>;</code></td>
+<code><span id="TYPEELTt.common">common</span>&nbsp;: <code class="type"><a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveNotify">archiveNotify</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.archiveNotify">archiveNotify</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveStatus">archiveStatus</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.archiveStatus">archiveStatus</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;: <code class="type">int64</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveNotifyStatus">archiveNotifyStatus</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.archiveNotifyStatus">archiveNotifyStatus</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveComplete">archiveComplete</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.archiveComplete">archiveComplete</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveTotal">archiveTotal</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.archiveTotal">archiveTotal</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveTotalComplete">archiveTotalComplete</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.archiveTotalComplete">archiveTotalComplete</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveTotalFailure">archiveTotalFailure</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.archiveTotalFailure">archiveTotalFailure</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveResourceIds">archiveResourceIds</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.archiveResourceIds">archiveResourceIds</span>&nbsp;: <code class="type">string list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.archiveConversions">archiveConversions</span>&nbsp;:<code class="type">Conversion.t list</code>;</code></td>
+<code><span id="TYPEELTt.archiveConversions">archiveConversions</span>&nbsp;: <code class="type">Conversion.t list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;:<code class="type">GdataAtom.GenericExtensions.t</code>;</code></td>
+<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;: <code class="type">GdataAtom.GenericExtensions.t</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALcommon"><span class="keyword">val</span> common</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, <a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveNotify"><span class="keyword">val</span> archiveNotify</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveStatus"><span class="keyword">val</span> archiveStatus</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveNotifyStatus"><span class="keyword">val</span> archiveNotifyStatus</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveComplete"><span class="keyword">val</span> archiveComplete</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveTotal"><span class="keyword">val</span> archiveTotal</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveTotalComplete"><span class="keyword">val</span> archiveTotalComplete</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveTotalFailure"><span class="keyword">val</span> archiveTotalFailure</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveResourceIds"><span class="keyword">val</span> archiveResourceIds</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALarchiveConversions"><span class="keyword">val</span> archiveConversions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, Conversion.t list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, GdataAtom.GenericExtensions.t)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, <a href="GdataAtom.Link.html#TYPEt">GdataAtom.Link.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, GdataAtom.Content.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+
+<pre><span id="VALcommon"><span class="keyword">val</span> common</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, <a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveNotify"><span class="keyword">val</span> archiveNotify</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveStatus"><span class="keyword">val</span> archiveStatus</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveNotifyStatus"><span class="keyword">val</span> archiveNotifyStatus</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveComplete"><span class="keyword">val</span> archiveComplete</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveTotal"><span class="keyword">val</span> archiveTotal</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveTotalComplete"><span class="keyword">val</span> archiveTotalComplete</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveTotalFailure"><span class="keyword">val</span> archiveTotalFailure</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveResourceIds"><span class="keyword">val</span> archiveResourceIds</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALarchiveConversions"><span class="keyword">val</span> archiveConversions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, Conversion.t list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, GdataAtom.GenericExtensions.t)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, <a href="GdataAtom.Link.html#TYPEt">GdataAtom.Link.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">t</a>, GdataAtom.Content.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
 </body></html>

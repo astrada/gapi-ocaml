@@ -77,15 +77,18 @@
 &nbsp;<a class="post" href="GapiDriveV2Service.PropertiesResource.html" title="GapiDriveV2Service.PropertiesResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiDriveV2Service.PermissionsResource.html">GapiDriveV2Service.PermissionsResource</a></h1>
+
 <pre><span class="keyword">module</span> PermissionsResource: <code class="code">sig</code> <a href="GapiDriveV2Service.PermissionsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes a permission from a file.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
 <div class="param_info"><code class="code">permissionId</code> : The ID for the permission.</div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets a permission by ID.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -93,7 +96,15 @@ Gets a permission by ID.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
 <div class="param_info"><code class="code">permissionId</code> : The ID for the permission.</div>
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?sendNotificationEmails:bool -><br>       ?emailMessage:string -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALgetIdForEmail"><span class="keyword">val</span> getIdForEmail</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       email:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.PermissionId.html#TYPEt">GapiDriveV2Model.PermissionId.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Returns the permission ID for an email address.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">email</code> : The email address for which to return a permission ID</div>
+
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?sendNotificationEmails:bool -><br>       ?emailMessage:string -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Inserts a permission for a file.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -101,13 +112,15 @@ Inserts a permission for a file.<br>
 <div class="param_info"><code class="code">sendNotificationEmails</code> : Whether to send notification emails when sharing to users or groups.</div>
 <div class="param_info"><code class="code">emailMessage</code> : A custom message to include in notification emails.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.PermissionList.html#TYPEt">GapiDriveV2Model.PermissionList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.PermissionList.html#TYPEt">GapiDriveV2Model.PermissionList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists a file's permissions.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
-<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?transferOwnership:bool -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?transferOwnership:bool -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates a permission. This method supports patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -115,7 +128,8 @@ Updates a permission. This method supports patch semantics.<br>
 <div class="param_info"><code class="code">transferOwnership</code> : Whether changing a role to 'owner' should also downgrade the current owners to writers.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
 <div class="param_info"><code class="code">permissionId</code> : The ID for the permission.</div>
-<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?transferOwnership:bool -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?transferOwnership:bool -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates a permission.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>

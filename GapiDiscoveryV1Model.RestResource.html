@@ -77,23 +77,32 @@
 &nbsp;<a class="post" href="GapiDiscoveryV1Model.RestDescription.html" title="GapiDiscoveryV1Model.RestDescription">Next</a>
 </div>
 <h1>Module <a href="type_GapiDiscoveryV1Model.RestResource.html">GapiDiscoveryV1Model.RestResource</a></h1>
+
 <pre><span class="keyword">module</span> RestResource: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.methods">methods</span>&nbsp;:<code class="type">(string * <a href="GapiDiscoveryV1Model.RestMethod.html#TYPEt">GapiDiscoveryV1Model.RestMethod.t</a>) list</code>;</code></td>
+<code><span id="TYPEELTt.methods">methods</span>&nbsp;: <code class="type">(string * <a href="GapiDiscoveryV1Model.RestMethod.html#TYPEt">GapiDiscoveryV1Model.RestMethod.t</a>) list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Methods on this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.resources">resources</span>&nbsp;:<code class="type">(string * <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>) list</code>;</code></td>
+<code><span id="TYPEELTt.resources">resources</span>&nbsp;: <code class="type">(string * <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>) list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Sub-resources on this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALmethods"><span class="keyword">val</span> methods</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>,<br>        (string * <a href="GapiDiscoveryV1Model.RestMethod.html#TYPEt">GapiDiscoveryV1Model.RestMethod.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALresources"><span class="keyword">val</span> resources</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>,<br>        (string * <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALmethods"><span class="keyword">val</span> methods</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>,<br>        (string * <a href="GapiDiscoveryV1Model.RestMethod.html#TYPEt">GapiDiscoveryV1Model.RestMethod.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALresources"><span class="keyword">val</span> resources</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>,<br>        (string * <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestResource.html#TYPEt">t</a></code></pre></body></html>

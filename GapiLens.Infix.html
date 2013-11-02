@@ -77,30 +77,39 @@
 &nbsp;<a class="post" href="GapiLens.StateInfix.html" title="GapiLens.StateInfix">Next</a>
 </div>
 <h1>Module <a href="type_GapiLens.Infix.html">GapiLens.Infix</a></h1>
-<pre><span class="keyword">module</span> Infix: <code class="code">sig</code> <a href="GapiLens.Infix.html">..</a> <code class="code">end</code></pre><div class="info">
+
+<pre><span class="keyword">module</span> Infix: <code class="code">sig</code> <a href="GapiLens.Infix.html">..</a> <code class="code">end</code></pre><div class="info module top">
 Infix operators<br>
 </div>
 <hr width="100%">
-<pre><span id="VAL(|.)"><span class="keyword">val</span> (|.)</span> : <code class="type">'a -> ('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> 'b</code></pre><div class="info">
+
+<pre><span id="VAL(|.)"><span class="keyword">val</span> (|.)</span> : <code class="type">'a -> ('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> 'b</code></pre><div class="info ">
 Get operator<br>
 </div>
-<pre><span id="VAL(^=)"><span class="keyword">val</span> (^=)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> 'b -> 'a -> 'a</code></pre><div class="info">
+
+<pre><span id="VAL(^=)"><span class="keyword">val</span> (^=)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> 'b -> 'a -> 'a</code></pre><div class="info ">
 Set operator<br>
 </div>
-<pre><span id="VAL(^%=)"><span class="keyword">val</span> (^%=)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('b -> 'b) -> 'a -> 'a</code></pre><div class="info">
+
+<pre><span id="VAL(^%=)"><span class="keyword">val</span> (^%=)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('b -> 'b) -> 'a -> 'a</code></pre><div class="info ">
 Mod operator<br>
 </div>
 <br>
 <h3 id="3_Composition">Composition</h3><br>
-<pre><span id="VAL(|--)"><span class="keyword">val</span> (|--)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('b, 'c) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('a, 'c) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
+
+<pre><span id="VAL(|--)"><span class="keyword">val</span> (|--)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('b, 'c) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('a, 'c) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info ">
 Flipped compose operator<br>
 </div>
-<pre><span id="VAL(--|)"><span class="keyword">val</span> (--|)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('c, 'a) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
+
+<pre><span id="VAL(--|)"><span class="keyword">val</span> (--|)</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('c, 'a) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info ">
 Compose operator<br>
 </div>
-<pre><span id="VAL( *** )"><span class="keyword">val</span> ( *** )</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('c, 'd) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('a * 'c, 'b * 'd) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info">
+
+<pre><span id="VAL( *** )"><span class="keyword">val</span> ( *** )</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('c, 'd) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> ('a * 'c, 'b * 'd) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><div class="info ">
 Pair operator<br>
 </div>
 <br>
 <h3 id="3_Pseudoimperatives">Pseudo-imperatives</h3><br>
-<pre><span id="VAL(+=)"><span class="keyword">val</span> (+=)</span> : <code class="type">('a, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> int -> 'a -> 'a</code></pre><pre><span id="VAL(-=)"><span class="keyword">val</span> (-=)</span> : <code class="type">('a, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> int -> 'a -> 'a</code></pre></body></html>
+
+<pre><span id="VAL(+=)"><span class="keyword">val</span> (+=)</span> : <code class="type">('a, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> int -> 'a -> 'a</code></pre>
+<pre><span id="VAL(-=)"><span class="keyword">val</span> (-=)</span> : <code class="type">('a, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a> -> int -> 'a -> 'a</code></pre></body></html>

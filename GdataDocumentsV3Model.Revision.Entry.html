@@ -75,45 +75,56 @@
 &nbsp;<a class="post" href="GdataDocumentsV3Model.Revision.Feed.html" title="GdataDocumentsV3Model.Revision.Feed">Next</a>
 </div>
 <h1>Module <a href="type_GdataDocumentsV3Model.Revision.Entry.html">GdataDocumentsV3Model.Revision.Entry</a></h1>
+
 <pre><span class="keyword">module</span> Entry: <code class="code">sig</code> <a href="GdataDocumentsV3Model.Revision.Entry.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.common">common</span>&nbsp;:<code class="type"><a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a></code>;</code></td>
+<code><span id="TYPEELTt.common">common</span>&nbsp;: <code class="type"><a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.publish">publish</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.publish">publish</span>&nbsp;: <code class="type">bool</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.publishAuto">publishAuto</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.publishAuto">publishAuto</span>&nbsp;: <code class="type">bool</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.publishOutsideDomain">publishOutsideDomain</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.publishOutsideDomain">publishOutsideDomain</span>&nbsp;: <code class="type">bool</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;:<code class="type">GdataAtom.GenericExtensions.t</code>;</code></td>
+<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;: <code class="type">GdataAtom.GenericExtensions.t</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALcommon"><span class="keyword">val</span> common</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, <a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpublish"><span class="keyword">val</span> publish</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpublishAuto"><span class="keyword">val</span> publishAuto</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpublishOutsideDomain"><span class="keyword">val</span> publishOutsideDomain</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, GdataAtom.GenericExtensions.t)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, GdataAtom.Content.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, <a href="GdataAtom.Link.html#TYPEt">GdataAtom.Link.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+
+<pre><span id="VALcommon"><span class="keyword">val</span> common</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, <a href="GdataAtom.BasicEntry.html#TYPEt">GdataAtom.BasicEntry.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpublish"><span class="keyword">val</span> publish</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpublishAuto"><span class="keyword">val</span> publishAuto</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpublishOutsideDomain"><span class="keyword">val</span> publishOutsideDomain</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, GdataAtom.GenericExtensions.t)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, GdataAtom.Content.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">t</a>, <a href="GdataAtom.Link.html#TYPEt">GdataAtom.Link.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
 </body></html>

@@ -77,15 +77,18 @@
 &nbsp;<a class="post" href="GapiDriveV2Service.FilesResource.html" title="GapiDriveV2Service.FilesResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiDriveV2Service.CommentsResource.html">GapiDriveV2Service.CommentsResource</a></h1>
+
 <pre><span class="keyword">module</span> CommentsResource: <code class="code">sig</code> <a href="GapiDriveV2Service.CommentsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes a comment.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID of the file.</div>
 <div class="param_info"><code class="code">commentId</code> : The ID of the comment.</div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets a comment by ID.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -94,13 +97,15 @@ Gets a comment by ID.<br>
 <div class="param_info"><code class="code">includeDeleted</code> : If set, this will succeed when retrieving a deleted comment, and will include any deleted replies.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID of the file.</div>
 <div class="param_info"><code class="code">commentId</code> : The ID of the comment.</div>
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Creates a new comment on the given file.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID of the file.</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?updatedMin:string -><br>       fileId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.CommentList.html#TYPEt">GapiDriveV2Model.CommentList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?updatedMin:string -><br>       fileId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.CommentList.html#TYPEt">GapiDriveV2Model.CommentList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists a file's comments.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -110,14 +115,16 @@ Lists a file's comments.<br>
 <div class="param_info"><code class="code">pageToken</code> : The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.</div>
 <div class="param_info"><code class="code">updatedMin</code> : Only discussions that were updated after this timestamp will be returned. Formatted as an RFC 3339 timestamp.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID of the file.</div>
-<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates an existing comment. This method supports patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID of the file.</div>
 <div class="param_info"><code class="code">commentId</code> : The ID of the comment.</div>
-<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       fileId:string -><br>       commentId:string -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Comment.html#TYPEt">GapiDriveV2Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates an existing comment.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>

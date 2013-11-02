@@ -77,41 +77,43 @@
 &nbsp;<a class="post" href="GapiAdsenseV1_1Model.AdUnits.html" title="GapiAdsenseV1_1Model.AdUnits">Next</a>
 </div>
 <h1>Module <a href="type_GapiAdsenseV1_1Model.AdUnit.html">GapiAdsenseV1_1Model.AdUnit</a></h1>
+
 <pre><span class="keyword">module</span> AdUnit: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdUnit.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.code">code</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.code">code</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identity code of this ad unit, not necessarily unique across ad clients.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Unique identifier of this ad unit. This should be considered an opaque identifier; it is not safe to rely on it being in any particular format.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Kind of resource this is, in this case adsense#adUnit.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Name of this ad unit.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.status">status</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.status">status</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Status of this ad unit. Possible values are:
 NEW: Indicates that the ad unit was created within the last seven days and does not yet have any activity associated with it.
 <p>
@@ -124,4 +126,14 @@ INACTIVE: Indicates that there has been no activity on this ad unit in the last 
 }
 
 
-<pre><span id="VALcode"><span class="keyword">val</span> code</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALstatus"><span class="keyword">val</span> status</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcode"><span class="keyword">val</span> code</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALstatus"><span class="keyword">val</span> status</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAdsenseV1_1Model.AdUnit.html#TYPEt">t</a></code></pre></body></html>

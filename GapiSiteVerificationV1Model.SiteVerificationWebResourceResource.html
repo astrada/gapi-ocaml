@@ -77,30 +77,41 @@
 &nbsp;<a class="post" href="GapiSiteVerificationV1Model.SiteVerificationWebResourceListResponse.html" title="GapiSiteVerificationV1Model.SiteVerificationWebResourceListResponse">Next</a>
 </div>
 <h1>Module <a href="type_GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html">GapiSiteVerificationV1Model.SiteVerificationWebResourceResource</a></h1>
+
 <pre><span class="keyword">module</span> SiteVerificationWebResourceResource: <code class="code">sig</code> <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html">Site</a>: <code class="code">sig</code> <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html">Site</a>: <code class="code">sig</code> <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The string used to identify this site. This value should be used in the "id" portion of the REST URL for the Get, Update, and Delete operations.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.owners">owners</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.owners">owners</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The email addresses of all verified owners.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.site">site</span>&nbsp;:<code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html#TYPEt">Site.t</a></code>;</code></td>
+<code><span id="TYPEELTt.site">site</span>&nbsp;: <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html#TYPEt">Site.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The address and type of a site that is verified or will be verified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a>, string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALowners"><span class="keyword">val</span> owners</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a>,<br>        string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsite"><span class="keyword">val</span> site</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a>,<br>        <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html#TYPEt">Site.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a>, string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALowners"><span class="keyword">val</span> owners</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a>,<br>        string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsite"><span class="keyword">val</span> site</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a>,<br>        <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.Site.html#TYPEt">Site.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceResource.html#TYPEt">t</a></code></pre></body></html>

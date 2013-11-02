@@ -77,79 +77,98 @@
 &nbsp;<a class="post" href="GapiBloggerV2Model.Post.html" title="GapiBloggerV2Model.Post">Next</a>
 </div>
 <h1>Module <a href="type_GapiBloggerV2Model.Page.html">GapiBloggerV2Model.Page</a></h1>
+
 <pre><span class="keyword">module</span> Page: <code class="code">sig</code> <a href="GapiBloggerV2Model.Page.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Page.Blog.html">Blog</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Page.Blog.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Page.Author.html">Author</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Page.Author.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Page.Blog.html">Blog</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Page.Blog.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiBloggerV2Model.Page.Author.html">Author</a>: <code class="code">sig</code> <a href="GapiBloggerV2Model.Page.Author.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.author">author</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Page.Author.html#TYPEt">Author.t</a></code>;</code></td>
+<code><span id="TYPEELTt.author">author</span>&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Page.Author.html#TYPEt">Author.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The author of this Page.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.blog">blog</span>&nbsp;:<code class="type"><a href="GapiBloggerV2Model.Page.Blog.html#TYPEt">Blog.t</a></code>;</code></td>
+<code><span id="TYPEELTt.blog">blog</span>&nbsp;: <code class="type"><a href="GapiBloggerV2Model.Page.Blog.html#TYPEt">Blog.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Data about the blog containing this Page.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.content">content</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.content">content</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The body content of this Page, in HTML.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The identifier for this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The kind of this entity. Always blogger#page</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.published">published</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.published">published</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >RFC 3339 date-time when this Page was published.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The API REST URL to fetch this resource from.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.title">title</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.title">title</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of this entity. This is the name displayed in the Admin user interface.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >RFC 3339 date-time when this Page was last updated.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The URL that this Page is displayed at.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALauthor"><span class="keyword">val</span> author</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiBloggerV2Model.Page.Author.html#TYPEt">Author.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALblog"><span class="keyword">val</span> blog</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiBloggerV2Model.Page.Blog.html#TYPEt">Blog.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpublished"><span class="keyword">val</span> published</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBloggerV2Model.Page.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBloggerV2Model.Page.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALauthor"><span class="keyword">val</span> author</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiBloggerV2Model.Page.Author.html#TYPEt">Author.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALblog"><span class="keyword">val</span> blog</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiBloggerV2Model.Page.Blog.html#TYPEt">Blog.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpublished"><span class="keyword">val</span> published</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiBloggerV2Model.Page.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBloggerV2Model.Page.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBloggerV2Model.Page.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBloggerV2Model.Page.html#TYPEt">t</a></code></pre></body></html>

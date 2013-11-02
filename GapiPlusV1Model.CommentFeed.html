@@ -77,65 +77,80 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Person.html" title="GapiPlusV1Model.Person">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.CommentFeed.html">GapiPlusV1Model.CommentFeed</a></h1>
+
 <pre><span class="keyword">module</span> CommentFeed: <code class="code">sig</code> <a href="GapiPlusV1Model.CommentFeed.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of this response for caching purposes.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of this collection of comments.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The comments in this page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifies this resource as a collection of comments. Value: "plus#commentFeed".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.nextLink">nextLink</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextLink">nextLink</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to the next page of activities.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.title">title</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.title">title</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of this collection of comments.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The time at which this collection of comments was last updated. Formatted as an RFC 3339 timestamp.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALitems"><span class="keyword">val</span> items</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALnextLink"><span class="keyword">val</span> nextLink</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALnextPageToken"><span class="keyword">val</span> nextPageToken</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALitems"><span class="keyword">val</span> items</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALnextLink"><span class="keyword">val</span> nextLink</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALnextPageToken"><span class="keyword">val</span> nextPageToken</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">t</a></code></pre></body></html>

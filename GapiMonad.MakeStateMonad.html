@@ -77,7 +77,9 @@
 &nbsp;<a class="post" href="GapiMonad.SessionM.html" title="GapiMonad.SessionM">Next</a>
 </div>
 <h1>Functor <a href="type_GapiMonad.MakeStateMonad.html">GapiMonad.MakeStateMonad</a></h1>
-<pre><span class="keyword">module</span> MakeStateMonad: <div class="sig_block"><code class="code">functor (</code><code class="code">T</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span id="TYPEs"><span class="keyword">type</span> <code class="type"></code>s</span> </pre>
+
+<pre><span class="keyword">module</span> MakeStateMonad: <div class="sig_block"><code class="code">functor (</code><code class="code">T</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block">
+<pre><span id="TYPEs"><span class="keyword">type</span> <code class="type"></code>s</span> </pre>
 
 </div><code class="code">end</code><code class="code">) -&gt; </code><code class="type"><a href="GapiMonad.StateMonad.html">StateMonad</a></code><code class="type"> 
     with type 'a t = T.s -> 'a * T.s</code></div></pre><table border="0" cellpadding="3" width="100%">
@@ -95,5 +97,8 @@
 </tr>
 </table>
 <hr width="100%">
+
 <pre><span class="keyword">include</span> <a href="GapiMonad.Monad.html">GapiMonad.Monad</a></pre>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">'a -> 'a * 'a</code></pre><pre><span id="VALput"><span class="keyword">val</span> put</span> : <code class="type">'a -> 'b -> unit * 'a</code></pre></body></html>
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">'a -> 'a * 'a</code></pre>
+<pre><span id="VALput"><span class="keyword">val</span> put</span> : <code class="type">'a -> 'b -> unit * 'a</code></pre></body></html>

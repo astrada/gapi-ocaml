@@ -77,69 +77,71 @@
 &nbsp;<a class="post" href="GapiCalendarV3Model.Error.html" title="GapiCalendarV3Model.Error">Next</a>
 </div>
 <h1>Module <a href="type_GapiCalendarV3Model.EventAttendee.html">GapiCalendarV3Model.EventAttendee</a></h1>
+
 <pre><span class="keyword">module</span> EventAttendee: <code class="code">sig</code> <a href="GapiCalendarV3Model.EventAttendee.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.additionalGuests">additionalGuests</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.additionalGuests">additionalGuests</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Number of additional guests. Optional. The default is 0.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.comment">comment</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.comment">comment</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The attendee's response comment. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The attendee's name, if available. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.email">email</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.email">email</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The attendee's email address, if available. This field must be present when adding an attendee.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The attendee's Profile ID, if available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.optional">optional</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.optional">optional</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this is an optional attendee. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.organizer">organizer</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.organizer">organizer</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the attendee is the organizer of the event. Read-only. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.resource">resource</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.resource">resource</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the attendee is a resource. Read-only. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.responseStatus">responseStatus</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.responseStatus">responseStatus</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The attendee's response status. Possible values are:  <ul>
 <li>"needsAction" - The attendee has not responded to the invitation. </li>
 <li>"declined" - The attendee has declined the invitation. </li>
@@ -152,10 +154,25 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.self">self</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.self">self</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALadditionalGuests"><span class="keyword">val</span> additionalGuests</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcomment"><span class="keyword">val</span> comment</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALemail"><span class="keyword">val</span> email</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALoptional"><span class="keyword">val</span> optional</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALorganizer"><span class="keyword">val</span> organizer</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALresource"><span class="keyword">val</span> resource</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALresponseStatus"><span class="keyword">val</span> responseStatus</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALself"><span class="keyword">val</span> self</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALadditionalGuests"><span class="keyword">val</span> additionalGuests</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcomment"><span class="keyword">val</span> comment</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALemail"><span class="keyword">val</span> email</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALoptional"><span class="keyword">val</span> optional</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALorganizer"><span class="keyword">val</span> organizer</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALresource"><span class="keyword">val</span> resource</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALresponseStatus"><span class="keyword">val</span> responseStatus</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALself"><span class="keyword">val</span> self</span> : <code class="type">(<a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.EventAttendee.html#TYPEt">t</a></code></pre></body></html>

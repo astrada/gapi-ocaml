@@ -75,54 +75,65 @@
 &nbsp;<a class="post" href="GapiError.RequestError.html" title="GapiError.RequestError">Next</a>
 </div>
 <h1>Module <a href="type_GapiError.SingleError.html">GapiError.SingleError</a></h1>
-<pre><span class="keyword">module</span> SingleError: <code class="code">sig</code> <a href="GapiError.SingleError.html">..</a> <code class="code">end</code></pre><div class="info">
+
+<pre><span class="keyword">module</span> SingleError: <code class="code">sig</code> <a href="GapiError.SingleError.html">..</a> <code class="code">end</code></pre><div class="info module top">
 A single server error<br>
 </div>
 <hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.domain">domain</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.domain">domain</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The domain in which the error occured</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.reason">reason</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.reason">reason</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The reason the error was thrown</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.message">message</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.message">message</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The error message</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.locationType">locationType</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.locationType">locationType</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the location</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Location where the error was thrown</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.extendedHelp">extendedHelp</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.extendedHelp">extendedHelp</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALreason"><span class="keyword">val</span> reason</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmessage"><span class="keyword">val</span> message</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlocationType"><span class="keyword">val</span> locationType</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALextendedHelp"><span class="keyword">val</span> extendedHelp</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiError.SingleError.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiError.SingleError.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiError.SingleError.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiError.SingleError.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALreason"><span class="keyword">val</span> reason</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmessage"><span class="keyword">val</span> message</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlocationType"><span class="keyword">val</span> locationType</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALextendedHelp"><span class="keyword">val</span> extendedHelp</span> : <code class="type">(<a href="GapiError.SingleError.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiError.SingleError.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiError.SingleError.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiError.SingleError.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiError.SingleError.html#TYPEt">t</a></code></pre></body></html>

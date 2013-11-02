@@ -77,15 +77,18 @@
 &nbsp;<a class="post" href="GapiDriveV2Service.ChannelsResource.html" title="GapiDriveV2Service.ChannelsResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiDriveV2Service.ChangesResource.html">GapiDriveV2Service.ChangesResource</a></h1>
+
 <pre><span class="keyword">module</span> ChangesResource: <code class="code">sig</code> <a href="GapiDriveV2Service.ChangesResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       changeId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Change.html#TYPEt">GapiDriveV2Model.Change.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       changeId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Change.html#TYPEt">GapiDriveV2Model.Change.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets a specific change.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">changeId</code> : The ID of the change.</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.ChangeList.html#TYPEt">GapiDriveV2Model.ChangeList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.ChangeList.html#TYPEt">GapiDriveV2Model.ChangeList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists the changes for a user.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -95,7 +98,8 @@ Lists the changes for a user.<br>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of changes to return.</div>
 <div class="param_info"><code class="code">pageToken</code> : Page token for changes.</div>
 <div class="param_info"><code class="code">startChangeId</code> : Change ID to start listing changes from.</div>
-<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Subscribe to changes for a user.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>

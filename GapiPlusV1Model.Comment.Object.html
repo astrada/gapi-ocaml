@@ -77,20 +77,22 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Comment.InReplyTo.html" title="GapiPlusV1Model.Comment.InReplyTo">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.Comment.Object.html">GapiPlusV1Model.Comment.Object</a></h1>
+
 <pre><span class="keyword">module</span> Object: <code class="code">sig</code> <a href="GapiPlusV1Model.Comment.Object.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.content">content</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.content">content</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The HTML-formatted content, suitable for display.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The object type of this comment. Possible values are:  <ul>
 <li>"comment" - A comment in reply to an activity.</li>
 </ul>
@@ -100,10 +102,16 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.originalContent">originalContent</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.originalContent">originalContent</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The content (text) as provided by the author, stored without any HTML formatting. When creating or updating a comment, this value must be supplied as plain text in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALoriginalContent"><span class="keyword">val</span> originalContent</span> : <code class="type">(<a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALoriginalContent"><span class="keyword">val</span> originalContent</span> : <code class="type">(<a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Comment.Object.html#TYPEt">t</a></code></pre></body></html>

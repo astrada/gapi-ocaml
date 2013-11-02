@@ -75,23 +75,32 @@
 &nbsp;<a class="up" href="GapiSiteVerificationV1Model.html" title="GapiSiteVerificationV1Model">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html">GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse</a></h1>
+
 <pre><span class="keyword">module</span> SiteVerificationWebResourceGettokenResponse: <code class="code">sig</code> <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt._method">_method</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._method">_method</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The verification method to use in conjunction with this token. For FILE, the token should be placed in the top-level directory of the site, stored inside a file of the same name. For META, the token should be placed in the HEAD tag of the default page that is loaded for the site. For DNS, the token should be placed in a TXT record of the domain.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.token">token</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.token">token</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The verification token. The token must be placed appropriately in order for verification to succeed.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VAL_method"><span class="keyword">val</span> _method</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a>,<br>        string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtoken"><span class="keyword">val</span> token</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a>,<br>        string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VAL_method"><span class="keyword">val</span> _method</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a>,<br>        string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtoken"><span class="keyword">val</span> token</span> : <code class="type">(<a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a>,<br>        string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiSiteVerificationV1Model.SiteVerificationWebResourceGettokenResponse.html#TYPEt">t</a></code></pre></body></html>

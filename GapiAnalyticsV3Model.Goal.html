@@ -77,135 +77,165 @@
 &nbsp;<a class="post" href="GapiAnalyticsV3Model.Goals.html" title="GapiAnalyticsV3Model.Goals">Next</a>
 </div>
 <h1>Module <a href="type_GapiAnalyticsV3Model.Goal.html">GapiAnalyticsV3Model.Goal</a></h1>
+
 <pre><span class="keyword">module</span> Goal: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html">VisitTimeOnSiteDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html">VisitNumPagesDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">UrlDestinationDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.ParentLink.html">ParentLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.ParentLink.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html">EventDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html">VisitTimeOnSiteDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html">VisitNumPagesDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">UrlDestinationDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.ParentLink.html">ParentLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.ParentLink.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html">EventDetails</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.accountId">accountId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.accountId">accountId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Account ID to which this goal belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.active">active</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.active">active</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Determines whether this goal is active.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.created">created</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.created">created</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this goal was created.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.eventDetails">eventDetails</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">EventDetails.t</a></code>;</code></td>
+<code><span id="TYPEELTt.eventDetails">eventDetails</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">EventDetails.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Details for the goal of the type EVENT.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Goal ID.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.internalWebPropertyId">internalWebPropertyId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.internalWebPropertyId">internalWebPropertyId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Internal ID for the web property to which this goal belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Resource type for an Analytics goal.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Goal name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.parentLink">parentLink</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.ParentLink.html#TYPEt">ParentLink.t</a></code>;</code></td>
+<code><span id="TYPEELTt.parentLink">parentLink</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.ParentLink.html#TYPEt">ParentLink.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Parent link for a goal. Points to the view (profile) to which this goal belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.profileId">profileId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.profileId">profileId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >View (Profile) ID to which this goal belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link for this goal.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt._type">_type</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._type">_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Goal type. Possible values are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES, AND EVENT.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this goal was last modified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.urlDestinationDetails">urlDestinationDetails</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html#TYPEt">UrlDestinationDetails.t</a></code>;</code></td>
+<code><span id="TYPEELTt.urlDestinationDetails">urlDestinationDetails</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html#TYPEt">UrlDestinationDetails.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Details for the goal of the type URL_DESTINATION.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.value">value</span>&nbsp;:<code class="type">float</code>;</code></td>
+<code><span id="TYPEELTt.value">value</span>&nbsp;: <code class="type">float</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Goal value.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.visitNumPagesDetails">visitNumPagesDetails</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html#TYPEt">VisitNumPagesDetails.t</a></code>;</code></td>
+<code><span id="TYPEELTt.visitNumPagesDetails">visitNumPagesDetails</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html#TYPEt">VisitNumPagesDetails.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Details for the goal of the type VISIT_NUM_PAGES.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.visitTimeOnSiteDetails">visitTimeOnSiteDetails</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html#TYPEt">VisitTimeOnSiteDetails.t</a></code>;</code></td>
+<code><span id="TYPEELTt.visitTimeOnSiteDetails">visitTimeOnSiteDetails</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html#TYPEt">VisitTimeOnSiteDetails.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Details for the goal of the type VISIT_TIME_ON_SITE.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.webPropertyId">webPropertyId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.webPropertyId">webPropertyId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Web property ID to which this goal belongs. The web property ID is of the form UA-XXXXX-YY.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALactive"><span class="keyword">val</span> active</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreated"><span class="keyword">val</span> created</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALeventDetails"><span class="keyword">val</span> eventDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">EventDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALinternalWebPropertyId"><span class="keyword">val</span> internalWebPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.Goal.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprofileId"><span class="keyword">val</span> profileId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALurlDestinationDetails"><span class="keyword">val</span> urlDestinationDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html#TYPEt">UrlDestinationDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALvalue"><span class="keyword">val</span> value</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, float) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALvisitNumPagesDetails"><span class="keyword">val</span> visitNumPagesDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html#TYPEt">VisitNumPagesDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALvisitTimeOnSiteDetails"><span class="keyword">val</span> visitTimeOnSiteDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html#TYPEt">VisitTimeOnSiteDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwebPropertyId"><span class="keyword">val</span> webPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALactive"><span class="keyword">val</span> active</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcreated"><span class="keyword">val</span> created</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALeventDetails"><span class="keyword">val</span> eventDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">EventDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALinternalWebPropertyId"><span class="keyword">val</span> internalWebPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.Goal.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALprofileId"><span class="keyword">val</span> profileId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALurlDestinationDetails"><span class="keyword">val</span> urlDestinationDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.UrlDestinationDetails.html#TYPEt">UrlDestinationDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvalue"><span class="keyword">val</span> value</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, float) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvisitNumPagesDetails"><span class="keyword">val</span> visitNumPagesDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.VisitNumPagesDetails.html#TYPEt">VisitNumPagesDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvisitTimeOnSiteDetails"><span class="keyword">val</span> visitTimeOnSiteDetails</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.VisitTimeOnSiteDetails.html#TYPEt">VisitTimeOnSiteDetails.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwebPropertyId"><span class="keyword">val</span> webPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Goal.html#TYPEt">t</a></code></pre></body></html>

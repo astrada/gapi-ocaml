@@ -77,86 +77,106 @@
 &nbsp;<a class="post" href="GapiAnalyticsV3Model.DailyUploads.html" title="GapiAnalyticsV3Model.DailyUploads">Next</a>
 </div>
 <h1>Module <a href="type_GapiAnalyticsV3Model.DailyUpload.html">GapiAnalyticsV3Model.DailyUpload</a></h1>
+
 <pre><span class="keyword">module</span> DailyUpload: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.DailyUpload.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html">RecentChanges</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html">ParentLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html">RecentChanges</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html">ParentLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.accountId">accountId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.accountId">accountId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Account ID to which this daily upload belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.appendCount">appendCount</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.appendCount">appendCount</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Number of appends for this date.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.createdTime">createdTime</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.createdTime">createdTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this daily upload was created.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.customDataSourceId">customDataSourceId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.customDataSourceId">customDataSourceId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Custom data source ID to which this daily upload belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.date">date</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.date">date</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Date associated with daily upload.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Resource type for Analytics daily upload.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.modifiedTime">modifiedTime</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.modifiedTime">modifiedTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this daily upload was last modified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.parentLink">parentLink</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html#TYPEt">ParentLink.t</a></code>;</code></td>
+<code><span id="TYPEELTt.parentLink">parentLink</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html#TYPEt">ParentLink.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Parent link for a daily upload. Points to the custom data source to which this daily upload belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.recentChanges">recentChanges</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html#TYPEt">RecentChanges.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.recentChanges">recentChanges</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html#TYPEt">RecentChanges.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Change log for last 10 changes in chronological order.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link for this daily upload.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.webPropertyId">webPropertyId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.webPropertyId">webPropertyId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Web property ID of the form UA-XXXXX-YY to which this daily upload belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALappendCount"><span class="keyword">val</span> appendCount</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreatedTime"><span class="keyword">val</span> createdTime</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcustomDataSourceId"><span class="keyword">val</span> customDataSourceId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdate"><span class="keyword">val</span> date</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmodifiedTime"><span class="keyword">val</span> modifiedTime</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrecentChanges"><span class="keyword">val</span> recentChanges</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html#TYPEt">RecentChanges.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwebPropertyId"><span class="keyword">val</span> webPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALappendCount"><span class="keyword">val</span> appendCount</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcreatedTime"><span class="keyword">val</span> createdTime</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcustomDataSourceId"><span class="keyword">val</span> customDataSourceId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdate"><span class="keyword">val</span> date</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmodifiedTime"><span class="keyword">val</span> modifiedTime</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.DailyUpload.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrecentChanges"><span class="keyword">val</span> recentChanges</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.DailyUpload.RecentChanges.html#TYPEt">RecentChanges.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwebPropertyId"><span class="keyword">val</span> webPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.DailyUpload.html#TYPEt">t</a></code></pre></body></html>

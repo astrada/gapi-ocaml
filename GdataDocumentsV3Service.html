@@ -75,7 +75,8 @@
 &nbsp;<a class="up" href="index.html" title="Index">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GdataDocumentsV3Service.html">GdataDocumentsV3Service</a></h1>
-<pre><span class="keyword">module</span> GdataDocumentsV3Service: <code class="code">sig</code> <a href="GdataDocumentsV3Service.html">..</a> <code class="code">end</code></pre><div class="info">
+
+<pre><span class="keyword">module</span> GdataDocumentsV3Service: <code class="code">sig</code> <a href="GdataDocumentsV3Service.html">..</a> <code class="code">end</code></pre><div class="info module top">
 Service definition for Google Documents List API (v3). 
 <p>
 
@@ -86,121 +87,160 @@ Service definition for Google Documents List API (v3).
   <a href="https://developers.google.com/google-apps/documents-list/#batching_resource_operations_into_a_single_request">API Documentation</a>.<br>
 </div>
 <hr width="100%">
+
 <pre><span class="keyword">module</span> <a href="GdataDocumentsV3Service.QueryParameters.html">QueryParameters</a>: <code class="code">sig</code> <a href="GdataDocumentsV3Service.QueryParameters.html">..</a> <code class="code">end</code></pre><div class="info">
 Query parameters used by the services.
 </div>
-<pre><span id="VALfeed_scope"><span class="keyword">val</span> feed_scope</span> : <code class="type">string</code></pre><div class="info">
+
+<pre><span id="VALfeed_scope"><span class="keyword">val</span> feed_scope</span> : <code class="type">string</code></pre><div class="info ">
 Documents feed scope.<br>
 </div>
-<pre><span id="VALdocs_scope"><span class="keyword">val</span> docs_scope</span> : <code class="type">string</code></pre><div class="info">
+
+<pre><span id="VALdocs_scope"><span class="keyword">val</span> docs_scope</span> : <code class="type">string</code></pre><div class="info ">
 Scope allowing documents download.<br>
 </div>
-<pre><span id="VALspreadsheets_scope"><span class="keyword">val</span> spreadsheets_scope</span> : <code class="type">string</code></pre><div class="info">
+
+<pre><span id="VALspreadsheets_scope"><span class="keyword">val</span> spreadsheets_scope</span> : <code class="type">string</code></pre><div class="info ">
 Scope allowing spreadsheets download.<br>
 </div>
-<pre><span id="VALall_scopes"><span class="keyword">val</span> all_scopes</span> : <code class="type">string</code></pre><pre><span id="VALresumable_upload"><span class="keyword">val</span> resumable_upload</span> : <code class="type">?convert:bool -><br>       ?ocr:bool -><br>       ?ocr_language:string -><br>       ?sourceLanguage:string -><br>       ?targetLanguage:string -><br>       ?new_revision:bool -><br>       string -><br>       <a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALall_scopes"><span class="keyword">val</span> all_scopes</span> : <code class="type">string</code></pre>
+<pre><span id="VALresumable_upload"><span class="keyword">val</span> resumable_upload</span> : <code class="type">?convert:bool -><br>       ?ocr:bool -><br>       ?ocr_language:string -><br>       ?sourceLanguage:string -><br>       ?targetLanguage:string -><br>       ?new_revision:bool -><br>       string -><br>       <a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">resumable_upload url source session</code>: Uploads the document specified in <code class="code">source</code> to URL <code class="code">url</code> in session <code class="code">session</code>, using the resumable upload protocol.<br>
 </div>
-<pre><span id="VALpartial_download"><span class="keyword">val</span> partial_download</span> : <code class="type">?ranges:(int64 option * int64 option) list -><br>       string -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALpartial_download"><span class="keyword">val</span> partial_download</span> : <code class="type">?ranges:(int64 option * int64 option) list -><br>       string -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">partial_download url dest session</code>: Downloads a resource from URL <code class="code">url</code> to destination <code class="code">dest</code> in session <code class="code">session</code>.<br>
 </div>
 <div class="param_info"><code class="code">ranges</code> : Specifies a list of ranges (start-end byte ranges). If not provided, the document will be fully downloaded.</div>
-<pre><span id="VALdownload_content"><span class="keyword">val</span> download_content</span> : <code class="type">?format:string -><br>       ?gid:string -><br>       GdataAtom.Content.t -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdownload_content"><span class="keyword">val</span> download_content</span> : <code class="type">?format:string -><br>       ?gid:string -><br>       GdataAtom.Content.t -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">download_content content dest session</code>: Downloads a document extracting URL from <code class="code">content</code> to destination <code class="code">dest</code> in session <code class="code">session</code>.<br>
 </div>
-<pre><span id="VALquery_metadata"><span class="keyword">val</span> query_metadata</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Metadata.Entry.html#TYPEt">GdataDocumentsV3Model.Metadata.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALquery_metadata"><span class="keyword">val</span> query_metadata</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Metadata.Entry.html#TYPEt">GdataDocumentsV3Model.Metadata.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Queries the metadata feed for the currently authorized user.<br>
 </div>
-<pre><span id="VALquery_changes"><span class="keyword">val</span> query_changes</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALquery_changes"><span class="keyword">val</span> query_changes</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Queries the changes feed for the currently authorized user.<br>
 </div>
-<pre><span id="VALquery_documents_list"><span class="keyword">val</span> query_documents_list</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALquery_documents_list"><span class="keyword">val</span> query_documents_list</span> : <code class="type">?url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Queries the documents feed for the currently authorized user.<br>
 </div>
-<pre><span id="VALget_resumable_create_media_link"><span class="keyword">val</span> get_resumable_create_media_link</span> : <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> string * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget_resumable_create_media_link"><span class="keyword">val</span> get_resumable_create_media_link</span> : <code class="type"><a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> string * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets the resumable create media link from the documents feed.<br>
 </div>
-<pre><span id="VALget_document"><span class="keyword">val</span> get_document</span> : <code class="type">?base_url:string -><br>       string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget_document"><span class="keyword">val</span> get_document</span> : <code class="type">?base_url:string -><br>       string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets a document entry by its resource id.<br>
 </div>
-<pre><span id="VALrefresh_document"><span class="keyword">val</span> refresh_document</span> : <code class="type"><a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALrefresh_document"><span class="keyword">val</span> refresh_document</span> : <code class="type"><a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Reloads a document entry.<br>
 </div>
-<pre><span id="VALcreate_document"><span class="keyword">val</span> create_document</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALcreate_document"><span class="keyword">val</span> create_document</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Creates a new document on the server.<br>
 </div>
 <div class="param_info"><code class="code">media_source</code> : Document to upload. If not specified, a new empty document (with metadata only) will be created.</div>
-<pre><span id="VALcopy_document"><span class="keyword">val</span> copy_document</span> : <code class="type">?url:string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALcopy_document"><span class="keyword">val</span> copy_document</span> : <code class="type">?url:string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Duplicates a document in a user's Google Docs list.<br>
 </div>
-<pre><span id="VALupdate_document"><span class="keyword">val</span> update_document</span> : <code class="type">?new_revision:bool -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate_document"><span class="keyword">val</span> update_document</span> : <code class="type">?new_revision:bool -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates a document.<br>
 </div>
 <div class="param_info"><code class="code">media_source</code> : Document to upload, to replace the current one. If not specified, only metadata will be updated.</div>
-<pre><span id="VALdownload_document"><span class="keyword">val</span> download_document</span> : <code class="type">?format:string -><br>       ?gid:string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdownload_document"><span class="keyword">val</span> download_document</span> : <code class="type">?format:string -><br>       ?gid:string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">download_document entry dest session</code>: Downloads the document associated with entry <code class="code">entry</code> to destination <code class="code">dest</code> in session <code class="code">session</code>.<br>
 </div>
-<pre><span id="VALdelete_document"><span class="keyword">val</span> delete_document</span> : <code class="type">?delete:bool -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete_document"><span class="keyword">val</span> delete_document</span> : <code class="type">?delete:bool -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes a document.<br>
 </div>
-<pre><span id="VALdocuments_batch_request"><span class="keyword">val</span> documents_batch_request</span> : <code class="type">?url:string -><br>       GdataDocumentsV3Model.Document.Feed.t -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdocuments_batch_request"><span class="keyword">val</span> documents_batch_request</span> : <code class="type">?url:string -><br>       GdataDocumentsV3Model.Document.Feed.t -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Performs batch processing of operations on documents feed.<br>
 </div>
-<pre><span id="VALquery_revisions"><span class="keyword">val</span> query_revisions</span> : <code class="type">?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Revision.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALquery_revisions"><span class="keyword">val</span> query_revisions</span> : <code class="type">?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Revision.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Queries revisions feed of a document.<br>
 </div>
-<pre><span id="VALrefresh_revision"><span class="keyword">val</span> refresh_revision</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALrefresh_revision"><span class="keyword">val</span> refresh_revision</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Reloads a revision entry.<br>
 </div>
-<pre><span id="VALdownload_revision"><span class="keyword">val</span> download_revision</span> : <code class="type">?format:string -><br>       ?gid:string -><br>       <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdownload_revision"><span class="keyword">val</span> download_revision</span> : <code class="type">?format:string -><br>       ?gid:string -><br>       <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiMediaResource.html#TYPEdestination">GapiMediaResource.destination</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">download_revision entry dest session</code>: Downloads a specific revision (<code class="code">entry</code>) of a document to destination <code class="code">dest</code> in session <code class="code">session</code>.<br>
 </div>
-<pre><span id="VALupdate_revision"><span class="keyword">val</span> update_revision</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate_revision"><span class="keyword">val</span> update_revision</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates a revision entry.<br>
 </div>
-<pre><span id="VALdelete_revision"><span class="keyword">val</span> delete_revision</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete_revision"><span class="keyword">val</span> delete_revision</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">GdataDocumentsV3Model.Revision.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes a revision entry.<br>
 </div>
-<pre><span id="VALroot_folder_id"><span class="keyword">val</span> root_folder_id</span> : <code class="type">string</code></pre><div class="info">
+
+<pre><span id="VALroot_folder_id"><span class="keyword">val</span> root_folder_id</span> : <code class="type">string</code></pre><div class="info ">
 Root folder ID, used to query root folder content.<br>
 </div>
-<pre><span id="VALquery_folder_contents"><span class="keyword">val</span> query_folder_contents</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALquery_folder_contents"><span class="keyword">val</span> query_folder_contents</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       GdataDocumentsV3Model.Document.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">query_folder_contents folder_id session</code>: Queries the contents of folder <code class="code">folder_id</code>.<br>
 </div>
-<pre><span id="VALcreate_subfolder"><span class="keyword">val</span> create_subfolder</span> : <code class="type">?base_url:string -><br>       ?etag:'a -><br>       string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALcreate_subfolder"><span class="keyword">val</span> create_subfolder</span> : <code class="type">?base_url:string -><br>       ?etag:'a -><br>       string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">create_subfolder folder_id entry session</code>: Creates the new folder <code class="code">entry</code> in folder <code class="code">folder_id</code>.<br>
 </div>
-<pre><span id="VALadd_to_folder"><span class="keyword">val</span> add_to_folder</span> : <code class="type">?base_url:string -><br>       ?etag:'a -><br>       string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALadd_to_folder"><span class="keyword">val</span> add_to_folder</span> : <code class="type">?base_url:string -><br>       ?etag:'a -><br>       string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 <code class="code">add_to_folder folder_id entry session</code>: Adds document <code class="code">entry</code> to folder <code class="code">folder_id</code>.<br>
 </div>
-<pre><span id="VALget_acl"><span class="keyword">val</span> get_acl</span> : <code class="type">?etag:string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> GdataACL.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget_acl"><span class="keyword">val</span> get_acl</span> : <code class="type">?etag:string -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> GdataACL.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets the ACL for a document.<br>
 </div>
-<pre><span id="VALrefresh_acl"><span class="keyword">val</span> refresh_acl</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALrefresh_acl"><span class="keyword">val</span> refresh_acl</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Reloads the ACL for a document.<br>
 </div>
-<pre><span id="VALcreate_acl"><span class="keyword">val</span> create_acl</span> : <code class="type">?send_notification_emails:bool -><br>       <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALcreate_acl"><span class="keyword">val</span> create_acl</span> : <code class="type">?send_notification_emails:bool -><br>       <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GdataDocumentsV3Model.Document.Entry.html#TYPEt">GdataDocumentsV3Model.Document.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Creates a new ACL for a document.<br>
 </div>
-<pre><span id="VALupdate_acl"><span class="keyword">val</span> update_acl</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate_acl"><span class="keyword">val</span> update_acl</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> <a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates an ACL entry.<br>
 </div>
-<pre><span id="VALdelete_acl"><span class="keyword">val</span> delete_acl</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete_acl"><span class="keyword">val</span> delete_acl</span> : <code class="type"><a href="GdataACL.Entry.html#TYPEt">GdataACL.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes an ACL entry.<br>
 </div>
-<pre><span id="VALacl_batch_request"><span class="keyword">val</span> acl_batch_request</span> : <code class="type">GdataACL.Feed.t -><br>       GdataACL.Feed.t -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> GdataACL.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALacl_batch_request"><span class="keyword">val</span> acl_batch_request</span> : <code class="type">GdataACL.Feed.t -><br>       GdataACL.Feed.t -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> GdataACL.Feed.t * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Performs batch processing of operations on ACL feed.<br>
 </div>
-<pre><span id="VALcreate_archive"><span class="keyword">val</span> create_archive</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALcreate_archive"><span class="keyword">val</span> create_archive</span> : <code class="type">?url:string -><br>       ?parameters:<a href="GdataDocumentsV3Service.QueryParameters.html#TYPEt">QueryParameters.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 The archive feed can be used to export resources as a .zip file. The entry determines the desired export format for each type of resource.<br>
 </div>
-<pre><span id="VALrefresh_archive"><span class="keyword">val</span> refresh_archive</span> : <code class="type"><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALrefresh_archive"><span class="keyword">val</span> refresh_archive</span> : <code class="type"><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Reloads an archive entry.<br>
 </div>
-<pre><span id="VALupdate_archive"><span class="keyword">val</span> update_archive</span> : <code class="type"><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate_archive"><span class="keyword">val</span> update_archive</span> : <code class="type"><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates an archive entry.<br>
 </div>
-<pre><span id="VALdelete_archive"><span class="keyword">val</span> delete_archive</span> : <code class="type"><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete_archive"><span class="keyword">val</span> delete_archive</span> : <code class="type"><a href="GdataDocumentsV3Model.Archive.Entry.html#TYPEt">GdataDocumentsV3Model.Archive.Entry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes an archive entry.<br>
 </div>
 </body></html>

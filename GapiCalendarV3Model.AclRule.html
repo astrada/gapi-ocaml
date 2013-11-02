@@ -77,34 +77,37 @@
 &nbsp;<a class="post" href="GapiCalendarV3Model.Calendar.html" title="GapiCalendarV3Model.Calendar">Next</a>
 </div>
 <h1>Module <a href="type_GapiCalendarV3Model.AclRule.html">GapiCalendarV3Model.AclRule</a></h1>
+
 <pre><span class="keyword">module</span> AclRule: <code class="code">sig</code> <a href="GapiCalendarV3Model.AclRule.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.AclRule.Scope.html">Scope</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.AclRule.Scope.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiCalendarV3Model.AclRule.Scope.html">Scope</a>: <code class="code">sig</code> <a href="GapiCalendarV3Model.AclRule.Scope.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of the resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifier of the ACL rule.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the resource ("calendar#aclRule").</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.role">role</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.role">role</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The role assigned to the scope. Possible values are:  <ul>
 <li>"none" - Provides no access. </li>
 <li>"freeBusyReader" - Provides read access to free/busy information. </li>
@@ -118,10 +121,20 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.scope">scope</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.AclRule.Scope.html#TYPEt">Scope.t</a></code>;</code></td>
+<code><span id="TYPEELTt.scope">scope</span>&nbsp;: <code class="type"><a href="GapiCalendarV3Model.AclRule.Scope.html#TYPEt">Scope.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The scope of the rule.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrole"><span class="keyword">val</span> role</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALscope"><span class="keyword">val</span> scope</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, <a href="GapiCalendarV3Model.AclRule.Scope.html#TYPEt">Scope.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrole"><span class="keyword">val</span> role</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALscope"><span class="keyword">val</span> scope</span> : <code class="type">(<a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a>, <a href="GapiCalendarV3Model.AclRule.Scope.html#TYPEt">Scope.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.AclRule.html#TYPEt">t</a></code></pre></body></html>

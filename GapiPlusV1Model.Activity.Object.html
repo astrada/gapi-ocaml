@@ -77,42 +77,49 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Activity.Actor.html" title="GapiPlusV1Model.Activity.Actor">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.Activity.Object.html">GapiPlusV1Model.Activity.Object</a></h1>
+
 <pre><span class="keyword">module</span> Object: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Resharers.html">Resharers</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Resharers.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Replies.html">Replies</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Replies.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Plusoners.html">Plusoners</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Plusoners.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.html">Attachments</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Actor.html">Actor</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Actor.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Resharers.html">Resharers</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Resharers.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Replies.html">Replies</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Replies.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Plusoners.html">Plusoners</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Plusoners.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.html">Attachments</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Actor.html">Actor</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Actor.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.actor">actor</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Actor.html#TYPEt">Actor.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If this activity's object is itself another activity (for example, when a person reshares an activity), this property specifies the original activity's actor.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.actor">actor</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Actor.html#TYPEt">Actor.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If this activity's object is itself another activity, such as when a person reshares an activity, this property specifies the original activity's actor.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.attachments">attachments</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">Attachments.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.attachments">attachments</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">Attachments.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The media objects attached to this activity.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.content">content</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The HTML-formatted content, suitable for display.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.content">content</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The HTML-formatted content, which is suitable for display.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the object. When resharing an activity, this is the ID of the activity being reshared.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the object. When resharing an activity, this is the ID of the activity that is being reshared.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of the object. Possible values include (but are not limited to):  <ul>
+<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of the object. Possible values include, but are not limited to, the following values:  <ul>
 <li>"note" - Textual content. </li>
 <li>"activity" - A Google+ activity.</li>
 </ul>
@@ -122,38 +129,51 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.originalContent">originalContent</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The content (text) as provided by the author, stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.originalContent">originalContent</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The content (text) as provided by the author, which is stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.plusoners">plusoners</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Plusoners.html#TYPEt">Plusoners.t</a></code>;</code></td>
+<code><span id="TYPEELTt.plusoners">plusoners</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Plusoners.html#TYPEt">Plusoners.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >People who +1'd this activity.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.replies">replies</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Replies.html#TYPEt">Replies.t</a></code>;</code></td>
+<code><span id="TYPEELTt.replies">replies</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Replies.html#TYPEt">Replies.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Comments in reply to this activity.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.resharers">resharers</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Resharers.html#TYPEt">Resharers.t</a></code>;</code></td>
+<code><span id="TYPEELTt.resharers">resharers</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Resharers.html#TYPEt">Resharers.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >People who reshared this activity.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The URL that points to the linked resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALactor"><span class="keyword">val</span> actor</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Activity.Object.Actor.html#TYPEt">Actor.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALattachments"><span class="keyword">val</span> attachments</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">Attachments.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALoriginalContent"><span class="keyword">val</span> originalContent</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALplusoners"><span class="keyword">val</span> plusoners</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Plusoners.html#TYPEt">Plusoners.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALreplies"><span class="keyword">val</span> replies</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Replies.html#TYPEt">Replies.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALresharers"><span class="keyword">val</span> resharers</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Resharers.html#TYPEt">Resharers.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALactor"><span class="keyword">val</span> actor</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Activity.Object.Actor.html#TYPEt">Actor.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALattachments"><span class="keyword">val</span> attachments</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">Attachments.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALoriginalContent"><span class="keyword">val</span> originalContent</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALplusoners"><span class="keyword">val</span> plusoners</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Plusoners.html#TYPEt">Plusoners.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALreplies"><span class="keyword">val</span> replies</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Replies.html#TYPEt">Replies.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALresharers"><span class="keyword">val</span> resharers</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Resharers.html#TYPEt">Resharers.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Activity.Object.html#TYPEt">t</a></code></pre></body></html>

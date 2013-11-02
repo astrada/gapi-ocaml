@@ -77,32 +77,34 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Acl.html" title="GapiPlusV1Model.Acl">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.PlusAclentryResource.html">GapiPlusV1Model.PlusAclentryResource</a></h1>
+
 <pre><span class="keyword">module</span> PlusAclentryResource: <code class="code">sig</code> <a href="GapiPlusV1Model.PlusAclentryResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A descriptive name for this entry. Suitable for display.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the entry. For entries of type "person" or "circle", this is the ID of the resource. For other types, this property is not set.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt._type">_type</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._type">_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of entry describing to whom access is granted. Possible values are:  <ul>
 <li>"person" - Access to an individual. </li>
 <li>"circle" - Access to members of a circle. </li>
 <li>"myCircles" - Access to members of all the person's circles. </li>
-<li>"extendedCircles" - Access to members of everyone in a person's circles, plus all of the people in their circles. </li>
+<li>"extendedCircles" - Access to members of all the person's circles, plus all of the people in their circles. </li>
 <li>"domain" - Access to members of the person's Google Apps domain. </li>
 <li>"public" - Access to anyone on the web.</li>
 </ul>
@@ -111,4 +113,12 @@
 }
 
 
-<pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.PlusAclentryResource.html#TYPEt">t</a></code></pre></body></html>

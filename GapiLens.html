@@ -82,7 +82,8 @@
 &nbsp;<a class="post" href="GapiMediaResource.html" title="GapiMediaResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiLens.html">GapiLens</a></h1>
-<pre><span class="keyword">module</span> GapiLens: <code class="code">sig</code> <a href="GapiLens.html">..</a> <code class="code">end</code></pre><div class="info">
+
+<pre><span class="keyword">module</span> GapiLens: <code class="code">sig</code> <a href="GapiLens.html">..</a> <code class="code">end</code></pre><div class="info module top">
 Functional lenses.
 <p>
 
@@ -96,39 +97,44 @@ Functional lenses.
 </ul>
 </div>
 <hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">('a, 'b)</code> t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.get">get</span>&nbsp;:<code class="type">'a -> 'b</code>;</code></td>
+<code><span id="TYPEELTt.get">get</span>&nbsp;: <code class="type">'a -> 'b</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Functional getter</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.set">set</span>&nbsp;:<code class="type">'b -> 'a -> 'a</code>;</code></td>
+<code><span id="TYPEELTt.set">set</span>&nbsp;: <code class="type">'b -> 'a -> 'a</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Functional setter</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
-<div class="info">
+<div class="info ">
 Lens type definition<br>
 </div>
 
-<pre><span id="VALmodify"><span class="keyword">val</span> modify</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('b -> 'b) -> 'a -> 'a</code></pre><div class="info">
+
+<pre><span id="VALmodify"><span class="keyword">val</span> modify</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('b -> 'b) -> 'a -> 'a</code></pre><div class="info ">
 Updates a value through a lens<br>
 </div>
 <br>
 <h3 id="3_Combinators">Combinators</h3><br>
-<pre><span id="VALcompose"><span class="keyword">val</span> compose</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'a) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALcompose"><span class="keyword">val</span> compose</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'a) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Sequentially composes two lenses<br>
 </div>
-<pre><span id="VALpair"><span class="keyword">val</span> pair</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'd) <a href="GapiLens.html#TYPEt">t</a> -> ('a * 'c, 'b * 'd) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALpair"><span class="keyword">val</span> pair</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'd) <a href="GapiLens.html#TYPEt">t</a> -> ('a * 'c, 'b * 'd) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Pairs two lenses<br>
 </div>
-<pre><span id="VALcond"><span class="keyword">val</span> cond</span> : <code class="type">('a -> bool) -><br>       ('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALcond"><span class="keyword">val</span> cond</span> : <code class="type">('a -> bool) -><br>       ('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Selects a lens checking a predicate.
 <p>
 
@@ -136,63 +142,81 @@ Selects a lens checking a predicate.
 </div>
 <br>
 <h3 id="3_Statemonadintegration">State monad integration</h3><br>
-<pre><span id="VALget_state"><span class="keyword">val</span> get_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> 'a -> 'b * 'a</code></pre><div class="info">
+
+<pre><span id="VALget_state"><span class="keyword">val</span> get_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> 'a -> 'b * 'a</code></pre><div class="info ">
 Gets a value from the state monad.<br>
 </div>
-<pre><span id="VALput_state"><span class="keyword">val</span> put_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> 'b -> 'a -> unit * 'a</code></pre><div class="info">
+
+<pre><span id="VALput_state"><span class="keyword">val</span> put_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> 'b -> 'a -> unit * 'a</code></pre><div class="info ">
 Puts a value in the state monad.<br>
 </div>
-<pre><span id="VALmodify_state"><span class="keyword">val</span> modify_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('b -> 'b) -> 'a -> unit * 'a</code></pre><div class="info">
+
+<pre><span id="VALmodify_state"><span class="keyword">val</span> modify_state</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('b -> 'b) -> 'a -> unit * 'a</code></pre><div class="info ">
 Modifies a value in the state monad.<br>
 </div>
 <br>
 <h3 id="3_Stocklenses">Stock lenses</h3><br>
-<pre><span id="VALignore"><span class="keyword">val</span> ignore</span> : <code class="type">('a, unit) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALignore"><span class="keyword">val</span> ignore</span> : <code class="type">('a, unit) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Trivial lens<br>
 </div>
-<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">('a, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">('a, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Identity lens<br>
 </div>
-<pre><span id="VALfirst"><span class="keyword">val</span> first</span> : <code class="type">('a * 'b, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALfirst"><span class="keyword">val</span> first</span> : <code class="type">('a * 'b, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Gets/sets the first element in a pair<br>
 </div>
-<pre><span id="VALsecond"><span class="keyword">val</span> second</span> : <code class="type">('a * 'b, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALsecond"><span class="keyword">val</span> second</span> : <code class="type">('a * 'b, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Gets/sets the second element in a pair<br>
 </div>
-<pre><span id="VALhead"><span class="keyword">val</span> head</span> : <code class="type">('a list, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALhead"><span class="keyword">val</span> head</span> : <code class="type">('a list, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Gets/sets the first element in a list<br>
 </div>
-<pre><span id="VALtail"><span class="keyword">val</span> tail</span> : <code class="type">('a list, 'a list) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALtail"><span class="keyword">val</span> tail</span> : <code class="type">('a list, 'a list) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Gets/sets the tail of a list<br>
 </div>
-<pre><span id="VALfor_hash"><span class="keyword">val</span> for_hash</span> : <code class="type">'a -> (('a, 'b) Hashtbl.t, 'b option) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALfor_hash"><span class="keyword">val</span> for_hash</span> : <code class="type">'a -> (('a, 'b) Hashtbl.t, 'b option) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Lens for a particular key in a hashtable<br>
 </div>
-<pre><span id="VALfor_assoc"><span class="keyword">val</span> for_assoc</span> : <code class="type">'a -> (('a * 'b) list, 'b option) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALfor_assoc"><span class="keyword">val</span> for_assoc</span> : <code class="type">'a -> (('a * 'b) list, 'b option) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Lens for a particular key in an associative list<br>
 </div>
-<pre><span id="VALfor_array"><span class="keyword">val</span> for_array</span> : <code class="type">int -> ('a array, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALfor_array"><span class="keyword">val</span> for_array</span> : <code class="type">int -> ('a array, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Lens for a particular position in an array<br>
 </div>
-<pre><span id="VALfor_list"><span class="keyword">val</span> for_list</span> : <code class="type">int -> ('a list, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALfor_list"><span class="keyword">val</span> for_list</span> : <code class="type">int -> ('a list, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Lens for a particular position in a list<br>
 </div>
-<pre><span id="VALoption_get"><span class="keyword">val</span> option_get</span> : <code class="type">('a option, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALoption_get"><span class="keyword">val</span> option_get</span> : <code class="type">('a option, 'a) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Lens for extracting the value from an option type (same as Option.get)<br>
 </div>
 <br>
 <h3 id="3_Listcombinators">List combinators</h3><br>
-<pre><span id="VALlist_map"><span class="keyword">val</span> list_map</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a list, 'b list) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALlist_map"><span class="keyword">val</span> list_map</span> : <code class="type">('a, 'b) <a href="GapiLens.html#TYPEt">t</a> -> ('a list, 'b list) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Creates a lens that maps the given lens in a list<br>
 </div>
 <br>
 <h3 id="3_Isomorphism">Isomorphism</h3><br>
-<pre><span id="VALxmap"><span class="keyword">val</span> xmap</span> : <code class="type">('a -> 'b) -> ('b -> 'a) -> ('c, 'a) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info">
+
+<pre><span id="VALxmap"><span class="keyword">val</span> xmap</span> : <code class="type">('a -> 'b) -> ('b -> 'a) -> ('c, 'a) <a href="GapiLens.html#TYPEt">t</a> -> ('c, 'b) <a href="GapiLens.html#TYPEt">t</a></code></pre><div class="info ">
 Applies an isomorphism to the value viewed through a lens<br>
 </div>
+
 <pre><span class="keyword">module</span> <a href="GapiLens.Infix.html">Infix</a>: <code class="code">sig</code> <a href="GapiLens.Infix.html">..</a> <code class="code">end</code></pre><div class="info">
 Infix operators
 </div>
+
 <pre><span class="keyword">module</span> <a href="GapiLens.StateInfix.html">StateInfix</a>: <code class="code">sig</code> <a href="GapiLens.StateInfix.html">..</a> <code class="code">end</code></pre><div class="info">
 Infix operators for the state monad
 </div>

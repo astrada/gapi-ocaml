@@ -77,28 +77,32 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Person.AgeRange.html" title="GapiPlusV1Model.Person.AgeRange">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.Person.Cover.html">GapiPlusV1Model.Person.Cover</a></h1>
+
 <pre><span class="keyword">module</span> Cover: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Cover.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html">CoverPhoto</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Cover.CoverInfo.html">CoverInfo</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Cover.CoverInfo.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html">CoverPhoto</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Cover.CoverInfo.html">CoverInfo</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Cover.CoverInfo.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.coverInfo">coverInfo</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Person.Cover.CoverInfo.html#TYPEt">CoverInfo.t</a></code>;</code></td>
+<code><span id="TYPEELTt.coverInfo">coverInfo</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Person.Cover.CoverInfo.html#TYPEt">CoverInfo.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Extra information about the cover photo.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.coverPhoto">coverPhoto</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html#TYPEt">CoverPhoto.t</a></code>;</code></td>
+<code><span id="TYPEELTt.coverPhoto">coverPhoto</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html#TYPEt">CoverPhoto.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The person's primary cover image.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.layout">layout</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The layout of the cover art. Possible values include (but are not limited to):  <ul>
+<code><span id="TYPEELTt.layout">layout</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The layout of the cover art. Possible values include, but are not limited to, the following values:  <ul>
 <li>"banner" - One large image banner.</li>
 </ul>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
@@ -106,4 +110,10 @@
 }
 
 
-<pre><span id="VALcoverInfo"><span class="keyword">val</span> coverInfo</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Cover.CoverInfo.html#TYPEt">CoverInfo.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcoverPhoto"><span class="keyword">val</span> coverPhoto</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html#TYPEt">CoverPhoto.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlayout"><span class="keyword">val</span> layout</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcoverInfo"><span class="keyword">val</span> coverInfo</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Cover.CoverInfo.html#TYPEt">CoverInfo.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcoverPhoto"><span class="keyword">val</span> coverPhoto</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Cover.CoverPhoto.html#TYPEt">CoverPhoto.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlayout"><span class="keyword">val</span> layout</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Person.Cover.html#TYPEt">t</a></code></pre></body></html>

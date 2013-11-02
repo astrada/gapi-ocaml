@@ -77,8 +77,10 @@
 &nbsp;<a class="post" href="GapiBloggerV2Service.UsersResource.html" title="GapiBloggerV2Service.UsersResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiBloggerV2Service.PostsResource.html">GapiBloggerV2Service.PostsResource</a></h1>
+
 <pre><span class="keyword">module</span> PostsResource: <code class="code">sig</code> <a href="GapiBloggerV2Service.PostsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       blogId:string -><br>       postId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBloggerV2Model.Post.html#TYPEt">GapiBloggerV2Model.Post.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       blogId:string -><br>       postId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBloggerV2Model.Post.html#TYPEt">GapiBloggerV2Model.Post.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Get a post by id.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/blogger/v2/"</code>).</div>
@@ -86,7 +88,8 @@ Get a post by id.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">blogId</code> : ID of the blog to fetch the post from.</div>
 <div class="param_info"><code class="code">postId</code> : The ID of the post</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?fetchBodies:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startDate:<a href="GapiDate.html#TYPEt">GapiDate.t</a> -><br>       blogId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBloggerV2Model.PostList.html#TYPEt">GapiBloggerV2Model.PostList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?fetchBodies:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startDate:<a href="GapiDate.html#TYPEt">GapiDate.t</a> -><br>       blogId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBloggerV2Model.PostList.html#TYPEt">GapiBloggerV2Model.PostList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Retrieves a list of posts, possibly filtered.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/blogger/v2/"</code>).</div>

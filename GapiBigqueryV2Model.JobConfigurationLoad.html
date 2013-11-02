@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBigqueryV2Model.JobConfigurationLink.html">
+<link rel="previous" href="GapiBigqueryV2Model.JsonObject.html">
 <link rel="next" href="GapiBigqueryV2Model.JobConfigurationTableCopy.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,119 +72,141 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.JobConfigurationLoad</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.JobConfigurationLink.html" title="GapiBigqueryV2Model.JobConfigurationLink">Previous</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.JsonObject.html" title="GapiBigqueryV2Model.JsonObject">Previous</a>
 &nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
 &nbsp;<a class="post" href="GapiBigqueryV2Model.JobConfigurationTableCopy.html" title="GapiBigqueryV2Model.JobConfigurationTableCopy">Next</a>
 </div>
 <h1>Module <a href="type_GapiBigqueryV2Model.JobConfigurationLoad.html">GapiBigqueryV2Model.JobConfigurationLoad</a></h1>
+
 <pre><span class="keyword">module</span> JobConfigurationLoad: <code class="code">sig</code> <a href="GapiBigqueryV2Model.JobConfigurationLoad.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.allowJaggedRows">allowJaggedRows</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.allowJaggedRows">allowJaggedRows</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Accept rows that are missing trailing optional columns. The missing values are treated as nulls. Default is false which treats short rows as errors. Only applicable to CSV, ignored for other formats.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.allowQuotedNewlines">allowQuotedNewlines</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.allowQuotedNewlines">allowQuotedNewlines</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.createDisposition">createDisposition</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.createDisposition">createDisposition</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.destinationTable">destinationTable</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
+<code><span id="TYPEELTt.destinationTable">destinationTable</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> The destination table to load the data into.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.encoding">encoding</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.encoding">encoding</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.fieldDelimiter">fieldDelimiter</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.fieldDelimiter">fieldDelimiter</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (',').</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.maxBadRecords">maxBadRecords</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.maxBadRecords">maxBadRecords</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quote">quote</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.quote">quote</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.schema">schema</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a></code>;</code></td>
+<code><span id="TYPEELTt.schema">schema</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.schemaInline">schemaInline</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.schemaInline">schemaInline</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Deprecated</code> The inline schema. For CSV schemas, specify as "Field1:Type1<code class="code">,Field2:Type2</code>*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.schemaInlineFormat">schemaInlineFormat</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.schemaInlineFormat">schemaInlineFormat</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Deprecated</code> The format of the schemaInline property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.skipLeadingRows">skipLeadingRows</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.skipLeadingRows">skipLeadingRows</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.sourceFormat">sourceFormat</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.sourceFormat">sourceFormat</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.sourceUris">sourceUris</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.sourceUris">sourceUris</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> The fully-qualified URIs that point to your data on Google Cloud Storage.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.writeDisposition">writeDisposition</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.writeDisposition">writeDisposition</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALallowJaggedRows"><span class="keyword">val</span> allowJaggedRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALallowQuotedNewlines"><span class="keyword">val</span> allowQuotedNewlines</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcreateDisposition"><span class="keyword">val</span> createDisposition</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdestinationTable"><span class="keyword">val</span> destinationTable</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALencoding"><span class="keyword">val</span> encoding</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALfieldDelimiter"><span class="keyword">val</span> fieldDelimiter</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmaxBadRecords"><span class="keyword">val</span> maxBadRecords</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquote"><span class="keyword">val</span> quote</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALschema"><span class="keyword">val</span> schema</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALschemaInline"><span class="keyword">val</span> schemaInline</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALschemaInlineFormat"><span class="keyword">val</span> schemaInlineFormat</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALskipLeadingRows"><span class="keyword">val</span> skipLeadingRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsourceFormat"><span class="keyword">val</span> sourceFormat</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsourceUris"><span class="keyword">val</span> sourceUris</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwriteDisposition"><span class="keyword">val</span> writeDisposition</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALallowJaggedRows"><span class="keyword">val</span> allowJaggedRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALallowQuotedNewlines"><span class="keyword">val</span> allowQuotedNewlines</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcreateDisposition"><span class="keyword">val</span> createDisposition</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdestinationTable"><span class="keyword">val</span> destinationTable</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALencoding"><span class="keyword">val</span> encoding</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALfieldDelimiter"><span class="keyword">val</span> fieldDelimiter</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmaxBadRecords"><span class="keyword">val</span> maxBadRecords</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquote"><span class="keyword">val</span> quote</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALschema"><span class="keyword">val</span> schema</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALschemaInline"><span class="keyword">val</span> schemaInline</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALschemaInlineFormat"><span class="keyword">val</span> schemaInlineFormat</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALskipLeadingRows"><span class="keyword">val</span> skipLeadingRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsourceFormat"><span class="keyword">val</span> sourceFormat</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsourceUris"><span class="keyword">val</span> sourceUris</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwriteDisposition"><span class="keyword">val</span> writeDisposition</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.JobConfigurationLoad.html#TYPEt">t</a></code></pre></body></html>

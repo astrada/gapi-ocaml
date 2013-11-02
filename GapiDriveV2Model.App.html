@@ -77,149 +77,177 @@
 &nbsp;<a class="post" href="GapiDriveV2Model.AppList.html" title="GapiDriveV2Model.AppList">Next</a>
 </div>
 <h1>Module <a href="type_GapiDriveV2Model.App.html">GapiDriveV2Model.App</a></h1>
+
 <pre><span class="keyword">module</span> App: <code class="code">sig</code> <a href="GapiDriveV2Model.App.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.App.Icons.html">Icons</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.App.Icons.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.App.Icons.html">Icons</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.App.Icons.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.authorized">authorized</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.authorized">authorized</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the app is authorized to access data on the user's Drive.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.icons">icons</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">Icons.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.icons">icons</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">Icons.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The various icons for the app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.installed">installed</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.installed">installed</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the app is installed.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >This is always drive#app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.longDescription">longDescription</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.longDescription">longDescription</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A long description of the app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of the app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of object this app creates (e.g. Chart). If empty, the app name should be used instead.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.openUrlTemplate">openUrlTemplate</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.openUrlTemplate">openUrlTemplate</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The template url for opening files with this app. The template will contain {ids} and/or {exportIds} to be replaced by the actual file ids.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.primaryFileExtensions">primaryFileExtensions</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.primaryFileExtensions">primaryFileExtensions</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The list of primary file extensions.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.primaryMimeTypes">primaryMimeTypes</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.primaryMimeTypes">primaryMimeTypes</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The list of primary mime types.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.productId">productId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.productId">productId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the product listing for this app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.productUrl">productUrl</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.productUrl">productUrl</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A link to the product listing for this app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.secondaryFileExtensions">secondaryFileExtensions</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.secondaryFileExtensions">secondaryFileExtensions</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The list of secondary file extensions.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.secondaryMimeTypes">secondaryMimeTypes</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.secondaryMimeTypes">secondaryMimeTypes</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The list of secondary mime types.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.shortDescription">shortDescription</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.shortDescription">shortDescription</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A short description of the app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.supportsCreate">supportsCreate</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.supportsCreate">supportsCreate</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this app supports creating new objects.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.supportsImport">supportsImport</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.supportsImport">supportsImport</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this app supports importing Google Docs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.supportsMultiOpen">supportsMultiOpen</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.supportsMultiOpen">supportsMultiOpen</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this app supports opening more than one file.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.useByDefault">useByDefault</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.useByDefault">useByDefault</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the app is selected as the default handler for the types it supports.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALauthorized"><span class="keyword">val</span> authorized</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALicons"><span class="keyword">val</span> icons</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, <a href="GapiDriveV2Model.App.Icons.html#TYPEt">Icons.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALinstalled"><span class="keyword">val</span> installed</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlongDescription"><span class="keyword">val</span> longDescription</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALopenUrlTemplate"><span class="keyword">val</span> openUrlTemplate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprimaryFileExtensions"><span class="keyword">val</span> primaryFileExtensions</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprimaryMimeTypes"><span class="keyword">val</span> primaryMimeTypes</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALproductId"><span class="keyword">val</span> productId</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALproductUrl"><span class="keyword">val</span> productUrl</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsecondaryFileExtensions"><span class="keyword">val</span> secondaryFileExtensions</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsecondaryMimeTypes"><span class="keyword">val</span> secondaryMimeTypes</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALshortDescription"><span class="keyword">val</span> shortDescription</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsupportsCreate"><span class="keyword">val</span> supportsCreate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsupportsImport"><span class="keyword">val</span> supportsImport</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsupportsMultiOpen"><span class="keyword">val</span> supportsMultiOpen</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALuseByDefault"><span class="keyword">val</span> useByDefault</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALauthorized"><span class="keyword">val</span> authorized</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALicons"><span class="keyword">val</span> icons</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, <a href="GapiDriveV2Model.App.Icons.html#TYPEt">Icons.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALinstalled"><span class="keyword">val</span> installed</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlongDescription"><span class="keyword">val</span> longDescription</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALopenUrlTemplate"><span class="keyword">val</span> openUrlTemplate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALprimaryFileExtensions"><span class="keyword">val</span> primaryFileExtensions</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALprimaryMimeTypes"><span class="keyword">val</span> primaryMimeTypes</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALproductId"><span class="keyword">val</span> productId</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALproductUrl"><span class="keyword">val</span> productUrl</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsecondaryFileExtensions"><span class="keyword">val</span> secondaryFileExtensions</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsecondaryMimeTypes"><span class="keyword">val</span> secondaryMimeTypes</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALshortDescription"><span class="keyword">val</span> shortDescription</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsupportsCreate"><span class="keyword">val</span> supportsCreate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsupportsImport"><span class="keyword">val</span> supportsImport</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsupportsMultiOpen"><span class="keyword">val</span> supportsMultiOpen</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuseByDefault"><span class="keyword">val</span> useByDefault</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre></body></html>

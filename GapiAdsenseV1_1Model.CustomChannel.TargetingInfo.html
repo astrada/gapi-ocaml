@@ -73,37 +73,46 @@
 <div class="navbar">&nbsp;<a class="up" href="GapiAdsenseV1_1Model.CustomChannel.html" title="GapiAdsenseV1_1Model.CustomChannel">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html">GapiAdsenseV1_1Model.CustomChannel.TargetingInfo</a></h1>
+
 <pre><span class="keyword">module</span> TargetingInfo: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.adsAppearOn">adsAppearOn</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.adsAppearOn">adsAppearOn</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name used to describe this channel externally.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The external description of the channel.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The locations in which ads appear. (Only valid for content and mobile content ads). Acceptable values for content ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT, MULTIPLE_LOCATIONS. Acceptable values for mobile content ads are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.siteLanguage">siteLanguage</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.siteLanguage">siteLanguage</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The language of the sites ads will be displayed on.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALadsAppearOn"><span class="keyword">val</span> adsAppearOn</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsiteLanguage"><span class="keyword">val</span> siteLanguage</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALadsAppearOn"><span class="keyword">val</span> adsAppearOn</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsiteLanguage"><span class="keyword">val</span> siteLanguage</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiAdsenseV1_1Model.CustomChannel.TargetingInfo.html#TYPEt">t</a></code></pre></body></html>

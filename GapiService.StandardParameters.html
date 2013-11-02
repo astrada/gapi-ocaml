@@ -73,44 +73,49 @@
 <div class="navbar">&nbsp;<a class="up" href="GapiService.html" title="GapiService">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiService.StandardParameters.html">GapiService.StandardParameters</a></h1>
+
 <pre><span class="keyword">module</span> StandardParameters: <code class="code">sig</code> <a href="GapiService.StandardParameters.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.fields">fields</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.fields">fields</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Selector specifying which fields to include in a partial response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.prettyPrint">prettyPrint</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.prettyPrint">prettyPrint</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Returns response with indentations and line breaks.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaUser">quotaUser</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.quotaUser">quotaUser</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.userIp">userIp</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.userIp">userIp</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >IP address of the site where the request originates. Use this if you want to enforce per-user limits.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.key">key</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.key">key</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type"><a href="GapiService.StandardParameters.html#TYPEt">t</a></code></pre><pre><span id="VALto_key_value_list"><span class="keyword">val</span> to_key_value_list</span> : <code class="type"><a href="GapiService.StandardParameters.html#TYPEt">t</a> -> (string * string) list</code></pre><pre><span id="VALmerge_parameters"><span class="keyword">val</span> merge_parameters</span> : <code class="type">?standard_parameters:<a href="GapiService.StandardParameters.html#TYPEt">t</a> -><br>       unit -> <a href="GapiService.StandardParameters.html#TYPEt">t</a> option</code></pre></body></html>
+
+<pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type"><a href="GapiService.StandardParameters.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_key_value_list"><span class="keyword">val</span> to_key_value_list</span> : <code class="type"><a href="GapiService.StandardParameters.html#TYPEt">t</a> -> (string * string) list</code></pre>
+<pre><span id="VALmerge_parameters"><span class="keyword">val</span> merge_parameters</span> : <code class="type">?standard_parameters:<a href="GapiService.StandardParameters.html#TYPEt">t</a> -><br>       unit -> <a href="GapiService.StandardParameters.html#TYPEt">t</a> option</code></pre></body></html>

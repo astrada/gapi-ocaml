@@ -77,58 +77,73 @@
 &nbsp;<a class="post" href="GapiAdsenseV1_1Model.UrlChannels.html" title="GapiAdsenseV1_1Model.UrlChannels">Next</a>
 </div>
 <h1>Module <a href="type_GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html">GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse</a></h1>
+
 <pre><span class="keyword">module</span> AdsenseReportsGenerateResponse: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">Headers</a>: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">Headers</a>: <code class="code">sig</code> <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.averages">averages</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.averages">averages</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The averages of the report. This is the same length as any other row in the report; cells corresponding to dimension columns are empty.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.headers">headers</span>&nbsp;:<code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html#TYPEt">Headers.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.headers">headers</span>&nbsp;: <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html#TYPEt">Headers.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The header information of the columns requested in the report. This is a list of headers; one for each dimension in the request, followed by one for each metric in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Kind this is, in this case adsense#report.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.rows">rows</span>&nbsp;:<code class="type">string list list</code>;</code></td>
+<code><span id="TYPEELTt.rows">rows</span>&nbsp;: <code class="type">string list list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The output rows of the report. Each row is a list of cells; one for each dimension in the request, followed by one for each metric in the request. The dimension cells contain strings, and the metric cells contain numbers.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.totalMatchedRows">totalMatchedRows</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.totalMatchedRows">totalMatchedRows</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of rows matched by the report request. Fewer rows may be returned in the response due to being limited by the row count requested or the report row limit.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.totals">totals</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.totals">totals</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The totals of the report. This is the same length as any other row in the report; cells corresponding to dimension columns are empty.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.warnings">warnings</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.warnings">warnings</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Any warnings associated with generation of the report.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALaverages"><span class="keyword">val</span> averages</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALheaders"><span class="keyword">val</span> headers</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>,<br>        <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html#TYPEt">Headers.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtotalMatchedRows"><span class="keyword">val</span> totalMatchedRows</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtotals"><span class="keyword">val</span> totals</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwarnings"><span class="keyword">val</span> warnings</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALaverages"><span class="keyword">val</span> averages</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALheaders"><span class="keyword">val</span> headers</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>,<br>        <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.Headers.html#TYPEt">Headers.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtotalMatchedRows"><span class="keyword">val</span> totalMatchedRows</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtotals"><span class="keyword">val</span> totals</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwarnings"><span class="keyword">val</span> warnings</span> : <code class="type">(<a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a>, string list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiAdsenseV1_1Model.AdsenseReportsGenerateResponse.html#TYPEt">t</a></code></pre></body></html>

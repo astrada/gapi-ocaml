@@ -77,44 +77,56 @@
 &nbsp;<a class="post" href="GapiBigqueryV2Model.JobReference.html" title="GapiBigqueryV2Model.JobReference">Next</a>
 </div>
 <h1>Module <a href="type_GapiBigqueryV2Model.TableDataList.html">GapiBigqueryV2Model.TableDataList</a></h1>
+
 <pre><span class="keyword">module</span> TableDataList: <code class="code">sig</code> <a href="GapiBigqueryV2Model.TableDataList.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A hash of this page of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The resource type of the response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.pageToken">pageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.pageToken">pageToken</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.rows">rows</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.rows">rows</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Rows of results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.totalRows">totalRows</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.totalRows">totalRows</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of rows in the complete table.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpageToken"><span class="keyword">val</span> pageToken</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtotalRows"><span class="keyword">val</span> totalRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpageToken"><span class="keyword">val</span> pageToken</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtotalRows"><span class="keyword">val</span> totalRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">t</a></code></pre></body></html>

@@ -75,44 +75,56 @@
 &nbsp;<a class="up" href="GapiPlusV1Model.Activity.html" title="GapiPlusV1Model.Activity">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiPlusV1Model.Activity.Actor.html">GapiPlusV1Model.Activity.Actor</a></h1>
+
 <pre><span class="keyword">module</span> Actor: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Actor.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Actor.Name.html">Name</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Actor.Name.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Actor.Image.html">Image</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Actor.Image.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Actor.Name.html">Name</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Actor.Name.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Actor.Image.html">Image</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Actor.Image.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of the actor, suitable for display.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the actor's person resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the actor's Person resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.image">image</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Actor.Image.html#TYPEt">Image.t</a></code>;</code></td>
+<code><span id="TYPEELTt.image">image</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Actor.Image.html#TYPEt">Image.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The image representation of the actor.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Actor.Name.html#TYPEt">Name.t</a></code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Actor.Name.html#TYPEt">Name.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An object representation of the individual components of name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The link to the actor's Google profile.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALimage"><span class="keyword">val</span> image</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Activity.Actor.Image.html#TYPEt">Image.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Activity.Actor.Name.html#TYPEt">Name.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALimage"><span class="keyword">val</span> image</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Activity.Actor.Image.html#TYPEt">Image.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Activity.Actor.Name.html#TYPEt">Name.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Activity.Actor.html#TYPEt">t</a></code></pre></body></html>

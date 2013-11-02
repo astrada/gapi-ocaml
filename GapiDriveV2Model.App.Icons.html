@@ -73,13 +73,15 @@
 <div class="navbar">&nbsp;<a class="up" href="GapiDriveV2Model.App.html" title="GapiDriveV2Model.App">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiDriveV2Model.App.Icons.html">GapiDriveV2Model.App.Icons</a></h1>
+
 <pre><span class="keyword">module</span> Icons: <code class="code">sig</code> <a href="GapiDriveV2Model.App.Icons.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.category">category</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.category">category</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Category of the icon. Allowed values are:  <ul>
 <li>application - icon for the application </li>
 <li>document - icon for a file associated with the app </li>
@@ -91,17 +93,23 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.iconUrl">iconUrl</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.iconUrl">iconUrl</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >URL for the icon.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.size">size</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.size">size</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Size of the icon. Represented as the maximum of the width and height.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALcategory"><span class="keyword">val</span> category</span> : <code class="type">(<a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALiconUrl"><span class="keyword">val</span> iconUrl</span> : <code class="type">(<a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsize"><span class="keyword">val</span> size</span> : <code class="type">(<a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcategory"><span class="keyword">val</span> category</span> : <code class="type">(<a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALiconUrl"><span class="keyword">val</span> iconUrl</span> : <code class="type">(<a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsize"><span class="keyword">val</span> size</span> : <code class="type">(<a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.App.Icons.html#TYPEt">t</a></code></pre></body></html>

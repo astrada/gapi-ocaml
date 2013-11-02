@@ -75,25 +75,27 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Person.PlacesLived.html" title="GapiPlusV1Model.Person.PlacesLived">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.Person.Urls.html">GapiPlusV1Model.Person.Urls</a></h1>
+
 <pre><span class="keyword">module</span> Urls: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Urls.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.label">label</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.label">label</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The label of the URL.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt._type">_type</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of URL. Possible values include (but are not limited to):  <ul>
+<code><span id="TYPEELTt._type">_type</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of URL. Possible values include, but are not limited to, the following values:  <ul>
 <li>"otherProfile" - URL for another profile. </li>
-<li>"contributor" - URL for which this person is a contributor to. </li>
+<li>"contributor" - URL to a site for which this person is a contributor. </li>
 <li>"website" - URL for this Google+ Page's primary website. </li>
-<li>"other" - Other.</li>
+<li>"other" - Other URL.</li>
 </ul>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -101,10 +103,16 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.value">value</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.value">value</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The URL value.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALlabel"><span class="keyword">val</span> label</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALvalue"><span class="keyword">val</span> value</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALlabel"><span class="keyword">val</span> label</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvalue"><span class="keyword">val</span> value</span> : <code class="type">(<a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Person.Urls.html#TYPEt">t</a></code></pre></body></html>

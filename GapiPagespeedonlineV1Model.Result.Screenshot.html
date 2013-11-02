@@ -5,7 +5,7 @@
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiPagespeedonlineV1Model.Result.Version.html">
-<link rel="next" href="GapiPagespeedonlineV1Model.Result.PageStats.html">
+<link rel="next" href="GapiPagespeedonlineV1Model.Result.Request.html">
 <link rel="Up" href="GapiPagespeedonlineV1Model.Result.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -74,40 +74,49 @@
 <body>
 <div class="navbar"><a class="pre" href="GapiPagespeedonlineV1Model.Result.Version.html" title="GapiPagespeedonlineV1Model.Result.Version">Previous</a>
 &nbsp;<a class="up" href="GapiPagespeedonlineV1Model.Result.html" title="GapiPagespeedonlineV1Model.Result">Up</a>
-&nbsp;<a class="post" href="GapiPagespeedonlineV1Model.Result.PageStats.html" title="GapiPagespeedonlineV1Model.Result.PageStats">Next</a>
+&nbsp;<a class="post" href="GapiPagespeedonlineV1Model.Result.Request.html" title="GapiPagespeedonlineV1Model.Result.Request">Next</a>
 </div>
 <h1>Module <a href="type_GapiPagespeedonlineV1Model.Result.Screenshot.html">GapiPagespeedonlineV1Model.Result.Screenshot</a></h1>
+
 <pre><span class="keyword">module</span> Screenshot: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.data">data</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.data">data</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Image data base64 encoded.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.height">height</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.height">height</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Height of screenshot in pixels.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.mime_type">mime_type</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.mime_type">mime_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Mime type of image data. E.g. "image/jpeg".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.width">width</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.width">width</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Width of screenshot in pixels.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALdata"><span class="keyword">val</span> data</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALheight"><span class="keyword">val</span> height</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmime_type"><span class="keyword">val</span> mime_type</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALwidth"><span class="keyword">val</span> width</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALdata"><span class="keyword">val</span> data</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALheight"><span class="keyword">val</span> height</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmime_type"><span class="keyword">val</span> mime_type</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwidth"><span class="keyword">val</span> width</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">t</a></code></pre></body></html>

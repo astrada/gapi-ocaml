@@ -75,65 +75,80 @@
 &nbsp;<a class="up" href="GapiOauth2V2Model.html" title="GapiOauth2V2Model">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiOauth2V2Model.Tokeninfo.html">GapiOauth2V2Model.Tokeninfo</a></h1>
+
 <pre><span class="keyword">module</span> Tokeninfo: <code class="code">sig</code> <a href="GapiOauth2V2Model.Tokeninfo.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.access_type">access_type</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.access_type">access_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The access type granted with this token. It can be offline or online.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.audience">audience</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.audience">audience</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Who is the intended audience for this token. In general the same as issued_to.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.email">email</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.email">email</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The email address of the user. Present only if the email scope is present in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.expires_in">expires_in</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.expires_in">expires_in</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The expiry time of the token, as number of seconds left until expiry.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.issued_to">issued_to</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.issued_to">issued_to</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >To whom was the token issued to. In general the same as audience.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.scope">scope</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.scope">scope</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The space separated list of scopes granted to this token.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.user_id">user_id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.user_id">user_id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The Gaia obfuscated user id.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.verified_email">verified_email</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.verified_email">verified_email</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALaccess_type"><span class="keyword">val</span> access_type</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALaudience"><span class="keyword">val</span> audience</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALemail"><span class="keyword">val</span> email</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALexpires_in"><span class="keyword">val</span> expires_in</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALissued_to"><span class="keyword">val</span> issued_to</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALscope"><span class="keyword">val</span> scope</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALuser_id"><span class="keyword">val</span> user_id</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALverified_email"><span class="keyword">val</span> verified_email</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALaccess_type"><span class="keyword">val</span> access_type</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALaudience"><span class="keyword">val</span> audience</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALemail"><span class="keyword">val</span> email</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALexpires_in"><span class="keyword">val</span> expires_in</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALissued_to"><span class="keyword">val</span> issued_to</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALscope"><span class="keyword">val</span> scope</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuser_id"><span class="keyword">val</span> user_id</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALverified_email"><span class="keyword">val</span> verified_email</span> : <code class="type">(<a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiOauth2V2Model.Tokeninfo.html#TYPEt">t</a></code></pre></body></html>

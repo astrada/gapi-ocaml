@@ -75,142 +75,169 @@
 &nbsp;<a class="post" href="GapiDiscoveryV1Model.DirectoryList.html" title="GapiDiscoveryV1Model.DirectoryList">Next</a>
 </div>
 <h1>Module <a href="type_GapiDiscoveryV1Model.JsonSchema.html">GapiDiscoveryV1Model.JsonSchema</a></h1>
+
 <pre><span class="keyword">module</span> JsonSchema: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.JsonSchema.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html">Annotations</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html">Annotations</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt._ref">_ref</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._ref">_ref</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A reference to another schema. The value of this property is the "id" of another schema.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.additionalProperties">additionalProperties</span>&nbsp;:<code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.additionalProperties">additionalProperties</span>&nbsp;: <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If this is a schema for an object, this property is the schema for any additional properties with dynamic keys on this object.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.annotations">annotations</span>&nbsp;:<code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html#TYPEt">Annotations.t</a></code>;</code></td>
+<code><span id="TYPEELTt.annotations">annotations</span>&nbsp;: <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html#TYPEt">Annotations.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Additional information about this property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.default">default</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.default">default</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The default value of this property (if one exists).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A description of this object.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.enum">enum</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.enum">enum</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Values this parameter may take (if it is an enum).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.enumDescriptions">enumDescriptions</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.enumDescriptions">enumDescriptions</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The descriptions for the enums. Each position maps to the corresponding value in the "enum" array.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.format">format</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.format">format</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An additional regular expression or key that helps constrain the value. For more details see: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.23</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Unique identifier for this schema.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.items">items</span>&nbsp;:<code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option</code>;</code></td>
+<code><span id="TYPEELTt.items">items</span>&nbsp;: <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If this is a schema for an array, this property is the schema for each element in the array.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this parameter goes in the query or the path for REST requests.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.maximum">maximum</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.maximum">maximum</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The maximum value of this parameter.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.minimum">minimum</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.minimum">minimum</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The minimum value of this parameter.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.pattern">pattern</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.pattern">pattern</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The regular expression this parameter must conform to. Uses Java 6 regex format: http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.properties">properties</span>&nbsp;:<code class="type">(string * <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>) list</code>;</code></td>
+<code><span id="TYPEELTt.properties">properties</span>&nbsp;: <code class="type">(string * <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>) list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If this is a schema for an object, list the schema for each property of this object.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.readOnly">readOnly</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.readOnly">readOnly</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The value is read-only, generated by the service. The value cannot be modified by the client. If the value is included in a POST, PUT, or PATCH request, it is ignored by the service.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.repeated">repeated</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.repeated">repeated</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this parameter may appear multiple times.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.required">required</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.required">required</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the parameter is required.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt._type">_type</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt._type">_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The value type for this schema. A list of values can be found here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VAL_ref"><span class="keyword">val</span> _ref</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALadditionalProperties"><span class="keyword">val</span> additionalProperties</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALannotations"><span class="keyword">val</span> annotations</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html#TYPEt">Annotations.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALenum"><span class="keyword">val</span> enum</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALenumDescriptions"><span class="keyword">val</span> enumDescriptions</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALformat"><span class="keyword">val</span> format</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALitems"><span class="keyword">val</span> items</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmaximum"><span class="keyword">val</span> maximum</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALminimum"><span class="keyword">val</span> minimum</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpattern"><span class="keyword">val</span> pattern</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALproperties"><span class="keyword">val</span> properties</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>,<br>        (string * <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALreadOnly"><span class="keyword">val</span> readOnly</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrepeated"><span class="keyword">val</span> repeated</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrequired"><span class="keyword">val</span> required</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VAL_ref"><span class="keyword">val</span> _ref</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALadditionalProperties"><span class="keyword">val</span> additionalProperties</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALannotations"><span class="keyword">val</span> annotations</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html#TYPEt">Annotations.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdefault"><span class="keyword">val</span> default</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALenum"><span class="keyword">val</span> enum</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALenumDescriptions"><span class="keyword">val</span> enumDescriptions</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALformat"><span class="keyword">val</span> format</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALitems"><span class="keyword">val</span> items</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> option)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmaximum"><span class="keyword">val</span> maximum</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALminimum"><span class="keyword">val</span> minimum</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpattern"><span class="keyword">val</span> pattern</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALproperties"><span class="keyword">val</span> properties</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>,<br>        (string * <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALreadOnly"><span class="keyword">val</span> readOnly</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrepeated"><span class="keyword">val</span> repeated</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrequired"><span class="keyword">val</span> required</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre></body></html>

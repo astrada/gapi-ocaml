@@ -73,9 +73,17 @@
 <div class="navbar">&nbsp;<a class="up" href="GdataCore.html" title="GdataCore">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GdataCore.Metadata.html">GdataCore.Metadata</a></h1>
+
 <pre><span class="keyword">module</span> Metadata: <code class="code">sig</code> <a href="GdataCore.Metadata.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><span id="TYPExml_node_type"><span class="keyword">type</span> <code class="type"></code>xml_node_type</span> = <code class="type">[ `Attribute | `Cdata | `Element | `Text ]</code> </pre>
+
 
 <pre><span id="TYPExml"><span class="keyword">type</span> <code class="type"></code>xml</span> = <code class="type">[ `Attribute<br>       | `Cdata<br>       | `Element<br>       | `Name of string<br>       | `Namespace of string<br>       | `Prefix of string<br>       | `Text ] list</code> </pre>
 
-<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">[> `Name of 'a ] list -> 'a</code></pre><pre><span id="VALprefix"><span class="keyword">val</span> prefix</span> : <code class="type">[> `Prefix of 'a ] list -> 'a</code></pre><pre><span id="VALnamespace"><span class="keyword">val</span> namespace</span> : <code class="type">[> `Namespace of 'a ] list -> 'a</code></pre><pre><span id="VALnode_type"><span class="keyword">val</span> node_type</span> : <code class="type">([> <a href="GdataCore.Metadata.html#TYPExml_node_type">xml_node_type</a> ] as 'a) list -> 'a</code></pre><pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type"><a href="GdataCore.Metadata.html#TYPExml">xml</a> -> string</code></pre></body></html>
+
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">[> `Name of 'a ] list -> 'a</code></pre>
+<pre><span id="VALprefix"><span class="keyword">val</span> prefix</span> : <code class="type">[> `Prefix of 'a ] list -> 'a</code></pre>
+<pre><span id="VALnamespace"><span class="keyword">val</span> namespace</span> : <code class="type">[> `Namespace of 'a ] list -> 'a</code></pre>
+<pre><span id="VALnode_type"><span class="keyword">val</span> node_type</span> : <code class="type">([> <a href="GdataCore.Metadata.html#TYPExml_node_type">xml_node_type</a> ] as 'a) list -> 'a</code></pre>
+<pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type"><a href="GdataCore.Metadata.html#TYPExml">xml</a> -> string</code></pre></body></html>

@@ -75,23 +75,31 @@
 &nbsp;<a class="up" href="GapiAnalyticsV3Model.Goal.html" title="GapiAnalyticsV3Model.Goal">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiAnalyticsV3Model.Goal.EventDetails.html">GapiAnalyticsV3Model.Goal.EventDetails</a></h1>
+
 <pre><span class="keyword">module</span> EventDetails: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html">EventConditions</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html">EventConditions</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.eventConditions">eventConditions</span>&nbsp;:<code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html#TYPEt">EventConditions.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.eventConditions">eventConditions</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html#TYPEt">EventConditions.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of event conditions.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.useEventValue">useEventValue</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.useEventValue">useEventValue</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Determines if the event value should be used as the value for this goal.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALeventConditions"><span class="keyword">val</span> eventConditions</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html#TYPEt">EventConditions.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALuseEventValue"><span class="keyword">val</span> useEventValue</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALeventConditions"><span class="keyword">val</span> eventConditions</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Goal.EventDetails.EventConditions.html#TYPEt">EventConditions.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuseEventValue"><span class="keyword">val</span> useEventValue</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiAnalyticsV3Model.Goal.EventDetails.html#TYPEt">t</a></code></pre></body></html>

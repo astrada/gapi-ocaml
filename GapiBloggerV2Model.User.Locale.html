@@ -75,30 +75,38 @@
 &nbsp;<a class="post" href="GapiBloggerV2Model.User.Blogs.html" title="GapiBloggerV2Model.User.Blogs">Next</a>
 </div>
 <h1>Module <a href="type_GapiBloggerV2Model.User.Locale.html">GapiBloggerV2Model.User.Locale</a></h1>
+
 <pre><span class="keyword">module</span> Locale: <code class="code">sig</code> <a href="GapiBloggerV2Model.User.Locale.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.country">country</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.country">country</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user's country setting.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.language">language</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.language">language</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user's language setting.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.variant">variant</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.variant">variant</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user's language variant setting.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALcountry"><span class="keyword">val</span> country</span> : <code class="type">(<a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlanguage"><span class="keyword">val</span> language</span> : <code class="type">(<a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALvariant"><span class="keyword">val</span> variant</span> : <code class="type">(<a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcountry"><span class="keyword">val</span> country</span> : <code class="type">(<a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlanguage"><span class="keyword">val</span> language</span> : <code class="type">(<a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvariant"><span class="keyword">val</span> variant</span> : <code class="type">(<a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBloggerV2Model.User.Locale.html#TYPEt">t</a></code></pre></body></html>

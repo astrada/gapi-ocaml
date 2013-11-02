@@ -73,37 +73,47 @@
 <div class="navbar">&nbsp;<a class="up" href="GapiPagespeedonlineV1Model.Result.FormattedResults.html" title="GapiPagespeedonlineV1Model.Result.FormattedResults">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html">GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults</a></h1>
+
 <pre><span class="keyword">module</span> RuleResults: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html">UrlBlocks</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html">UrlBlocks</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.localizedRuleName">localizedRuleName</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.localizedRuleName">localizedRuleName</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Localized name of the rule, intended for presentation to a user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.ruleImpact">ruleImpact</span>&nbsp;:<code class="type">float</code>;</code></td>
+<code><span id="TYPEELTt.ruleImpact">ruleImpact</span>&nbsp;: <code class="type">float</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The impact (unbounded floating point value) that implementing the suggestions for this rule would have on making the page faster. Impact is comparable between rules to determine which rule's suggestions would have a higher or lower impact on making a page faster. For instance, if enabling compression would save 1MB, while optimizing images would save 500kB, the enable compression rule would have 2x the impact of the image optimization rule, all other things being equal.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.ruleScore">ruleScore</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.ruleScore">ruleScore</span>&nbsp;: <code class="type">int</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The score (0-100) for this rule. The rule score indicates how well a page implements the recommendations for the given rule. For instance, if none of the compressible resources on a page are compressed, the rule score would be 0, while if all of the compressible resources on a page are compressed, the rule score would be 100.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.urlBlocks">urlBlocks</span>&nbsp;:<code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html#TYPEt">UrlBlocks.t</a><br>       list</code>;</code></td>
+<code><span id="TYPEELTt.urlBlocks">urlBlocks</span>&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html#TYPEt">UrlBlocks.t</a><br>       list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of blocks of URLs. Each block may contain a heading and a list of URLs. Each URL may optionally include additional details.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALlocalizedRuleName"><span class="keyword">val</span> localizedRuleName</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>, string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALruleImpact"><span class="keyword">val</span> ruleImpact</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>, float)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALruleScore"><span class="keyword">val</span> ruleScore</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>, int)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALurlBlocks"><span class="keyword">val</span> urlBlocks</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>,<br>        <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html#TYPEt">UrlBlocks.t</a><br>        list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALlocalizedRuleName"><span class="keyword">val</span> localizedRuleName</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>, string)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALruleImpact"><span class="keyword">val</span> ruleImpact</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>, float)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALruleScore"><span class="keyword">val</span> ruleScore</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>, int)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALurlBlocks"><span class="keyword">val</span> urlBlocks</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a>,<br>        <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.UrlBlocks.html#TYPEt">UrlBlocks.t</a><br>        list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -><br>       <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.RuleResults.html#TYPEt">t</a></code></pre></body></html>

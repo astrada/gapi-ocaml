@@ -77,8 +77,15 @@
 &nbsp;<a class="post" href="GdataDocumentsV3Model.RevisionsFeedLink.html" title="GdataDocumentsV3Model.RevisionsFeedLink">Next</a>
 </div>
 <h1>Module <a href="type_GdataDocumentsV3Model.Revision.html">GdataDocumentsV3Model.Revision</a></h1>
+
 <pre><span class="keyword">module</span> Revision: <code class="code">sig</code> <a href="GdataDocumentsV3Model.Revision.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GdataDocumentsV3Model.Revision.Entry.html">Entry</a>: <code class="code">sig</code> <a href="GdataDocumentsV3Model.Revision.Entry.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GdataDocumentsV3Model.Revision.Feed.html">Feed</a>: <code class="type"><a href="GdataAtom.Feed.html">GdataAtom.Feed</a></code><code class="type"> 
+
+<pre><span class="keyword">module</span> <a href="GdataDocumentsV3Model.Revision.Entry.html">Entry</a>: <code class="code">sig</code> <a href="GdataDocumentsV3Model.Revision.Entry.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GdataDocumentsV3Model.Revision.Feed.html">Feed</a>: <code class="type"><a href="GdataAtom.Feed.html">GdataAtom.Feed</a></code><code class="type"> 
     with type entry_t = Entry.t
       and type link_t = <a href="GdataAtom.Link.html">GdataAtom.Link</a>.t
-      and type extensions_t = <a href="GdataAtom.GenericExtensions.html">GdataAtom.GenericExtensions</a>.t</code></pre><pre><span id="VALparse_entry"><span class="keyword">val</span> parse_entry</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">Entry.t</a></code></pre><pre><span id="VALparse_feed"><span class="keyword">val</span> parse_feed</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> Feed.t</code></pre><pre><span id="VALentry_to_data_model"><span class="keyword">val</span> entry_to_data_model</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">Entry.t</a> -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a></code></pre><pre><span id="VALfeed_to_data_model"><span class="keyword">val</span> feed_to_data_model</span> : <code class="type">Feed.t -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a></code></pre></body></html>
+      and type extensions_t = <a href="GdataAtom.GenericExtensions.html">GdataAtom.GenericExtensions</a>.t</code></pre>
+<pre><span id="VALparse_entry"><span class="keyword">val</span> parse_entry</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> <a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">Entry.t</a></code></pre>
+<pre><span id="VALparse_feed"><span class="keyword">val</span> parse_feed</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> Feed.t</code></pre>
+<pre><span id="VALentry_to_data_model"><span class="keyword">val</span> entry_to_data_model</span> : <code class="type"><a href="GdataDocumentsV3Model.Revision.Entry.html#TYPEt">Entry.t</a> -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a></code></pre>
+<pre><span id="VALfeed_to_data_model"><span class="keyword">val</span> feed_to_data_model</span> : <code class="type">Feed.t -> <a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a></code></pre></body></html>

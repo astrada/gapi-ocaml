@@ -77,7 +77,9 @@
 &nbsp;<a class="post" href="GdataDocumentsV3Model.ImportFormat.html" title="GdataDocumentsV3Model.ImportFormat">Next</a>
 </div>
 <h1>Functor <a href="type_GdataDocumentsV3Model.MakeDocumentFormat.html">GdataDocumentsV3Model.MakeDocumentFormat</a></h1>
-<pre><span class="keyword">module</span> MakeDocumentFormat: <div class="sig_block"><code class="code">functor (</code><code class="code">M</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block"><pre><span id="VALelement_name"><span class="keyword">val</span> element_name</span> : <code class="type">string</code></pre></div><code class="code">end</code><code class="code">) -&gt; </code><code class="type"><a href="GdataDocumentsV3Model.DocumentFormat.html">DocumentFormat</a></code><code class="type"> </code></div></pre><table border="0" cellpadding="3" width="100%">
+
+<pre><span class="keyword">module</span> MakeDocumentFormat: <div class="sig_block"><code class="code">functor (</code><code class="code">M</code><code class="code"> : </code><code class="code">sig</code><div class="sig_block">
+<pre><span id="VALelement_name"><span class="keyword">val</span> element_name</span> : <code class="type">string</code></pre></div><code class="code">end</code><code class="code">) -&gt; </code><code class="type"><a href="GdataDocumentsV3Model.DocumentFormat.html">DocumentFormat</a></code><code class="type"> </code></div></pre><table border="0" cellpadding="3" width="100%">
 <tr>
 <td align="left" valign="top" width="1%%"><b>Parameters: </b></td>
 <td>
@@ -92,23 +94,27 @@
 </tr>
 </table>
 <hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.source">source</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.source">source</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.target">target</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.target">target</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALsource"><span class="keyword">val</span> source</span> : <code class="type">(<a href="GdataDocumentsV3Model.DocumentFormat.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtarget"><span class="keyword">val</span> target</span> : <code class="type">(<a href="GdataDocumentsV3Model.DocumentFormat.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+
+<pre><span id="VALsource"><span class="keyword">val</span> source</span> : <code class="type">(<a href="GdataDocumentsV3Model.DocumentFormat.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtarget"><span class="keyword">val</span> target</span> : <code class="type">(<a href="GdataDocumentsV3Model.DocumentFormat.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
 </body></html>

@@ -75,8 +75,10 @@
 &nbsp;<a class="up" href="GapiBigqueryV2Service.html" title="GapiBigqueryV2Service">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiBigqueryV2Service.TablesResource.html">GapiBigqueryV2Service.TablesResource</a></h1>
+
 <pre><span class="keyword">module</span> TablesResource: <code class="code">sig</code> <a href="GapiBigqueryV2Service.TablesResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
@@ -84,7 +86,8 @@ Deletes the table specified by tableId from the dataset. If the table contains d
 <div class="param_info"><code class="code">projectId</code> : Project ID of the table to delete</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the table to delete</div>
 <div class="param_info"><code class="code">tableId</code> : Table ID of the table to delete</div>
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
@@ -93,14 +96,16 @@ Gets the specified table resource by table ID. This method does not return the d
 <div class="param_info"><code class="code">projectId</code> : Project ID of the requested table</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the requested table</div>
 <div class="param_info"><code class="code">tableId</code> : Table ID of the requested table</div>
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Creates a new, empty table in the dataset.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the new table</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the new table</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.TableList.html#TYPEt">GapiBigqueryV2Model.TableList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       projectId:string -><br>       datasetId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.TableList.html#TYPEt">GapiBigqueryV2Model.TableList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists all tables in the specified dataset.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
@@ -109,7 +114,8 @@ Lists all tables in the specified dataset.<br>
 <div class="param_info"><code class="code">pageToken</code> : Page token, returned by a previous call, to request the next page of results</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the tables to list</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the tables to list</div>
-<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates information in an existing table, specified by tableId. This method supports patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
@@ -117,7 +123,8 @@ Updates information in an existing table, specified by tableId. This method supp
 <div class="param_info"><code class="code">projectId</code> : Project ID of the table to update</div>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the table to update</div>
 <div class="param_info"><code class="code">tableId</code> : Table ID of the table to update</div>
-<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates information in an existing table, specified by tableId.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>

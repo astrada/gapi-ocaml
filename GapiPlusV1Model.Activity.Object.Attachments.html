@@ -77,56 +77,62 @@
 &nbsp;<a class="post" href="GapiPlusV1Model.Activity.Object.Actor.html" title="GapiPlusV1Model.Activity.Object.Actor">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Model.Activity.Object.Attachments.html">GapiPlusV1Model.Activity.Object.Attachments</a></h1>
+
 <pre><span class="keyword">module</span> Attachments: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html">Thumbnails</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html">Image</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html">FullImage</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html">Embed</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html">Thumbnails</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html">Image</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html">FullImage</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html">Embed</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.content">content</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.content">content</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is an article, this property contains a snippet of text from the article. It can also include descriptions for other types.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of the attachment (such as a photo caption or an article title).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.displayName">displayName</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of the attachment, such as a photo caption or an article title.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.embed">embed</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html#TYPEt">Embed.t</a></code>;</code></td>
+<code><span id="TYPEELTt.embed">embed</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html#TYPEt">Embed.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is a video, the embeddable link.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.fullImage">fullImage</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html#TYPEt">FullImage.t</a></code>;</code></td>
+<code><span id="TYPEELTt.fullImage">fullImage</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html#TYPEt">FullImage.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The full image URL for photo attachments.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the attachment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.image">image</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html#TYPEt">Image.t</a></code>;</code></td>
+<code><span id="TYPEELTt.image">image</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html#TYPEt">Image.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The preview image for photos or videos.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of media object. Possible values include (but are not limited to):  <ul>
+<code><span id="TYPEELTt.objectType">objectType</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of media object. Possible values include, but are not limited to, the following values:  <ul>
 <li>"photo" - A photo. </li>
 <li>"album" - A photo album. </li>
 <li>"video" - A video. </li>
@@ -138,17 +144,29 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.thumbnails">thumbnails</span>&nbsp;:<code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html#TYPEt">Thumbnails.t</a> list</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is an album, potential additional thumbnails from the album.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.thumbnails">thumbnails</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html#TYPEt">Thumbnails.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is an album, this property is a list of potential additional thumbnails from the album.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.url">url</span>&nbsp;:<code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The link to the attachment, should be of type text/html.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<code><span id="TYPEELTt.url">url</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The link to the attachment; should be of type text/html.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALembed"><span class="keyword">val</span> embed</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html#TYPEt">Embed.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALfullImage"><span class="keyword">val</span> fullImage</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html#TYPEt">FullImage.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALimage"><span class="keyword">val</span> image</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html#TYPEt">Image.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALthumbnails"><span class="keyword">val</span> thumbnails</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html#TYPEt">Thumbnails.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcontent"><span class="keyword">val</span> content</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALembed"><span class="keyword">val</span> embed</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html#TYPEt">Embed.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALfullImage"><span class="keyword">val</span> fullImage</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html#TYPEt">FullImage.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALimage"><span class="keyword">val</span> image</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html#TYPEt">Image.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALthumbnails"><span class="keyword">val</span> thumbnails</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>,<br>        <a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html#TYPEt">Thumbnails.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiPlusV1Model.Activity.Object.Attachments.html#TYPEt">t</a></code></pre></body></html>

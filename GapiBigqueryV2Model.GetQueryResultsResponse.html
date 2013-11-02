@@ -77,72 +77,88 @@
 &nbsp;<a class="post" href="GapiBigqueryV2Model.JobConfigurationLink.html" title="GapiBigqueryV2Model.JobConfigurationLink">Next</a>
 </div>
 <h1>Module <a href="type_GapiBigqueryV2Model.GetQueryResultsResponse.html">GapiBigqueryV2Model.GetQueryResultsResponse</a></h1>
+
 <pre><span class="keyword">module</span> GetQueryResultsResponse: <code class="code">sig</code> <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.cacheHit">cacheHit</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.cacheHit">cacheHit</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the query result was fetched from the query cache.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A hash of this response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.jobComplete">jobComplete</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.jobComplete">jobComplete</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.jobReference">jobReference</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.JobReference.html#TYPEt">GapiBigqueryV2Model.JobReference.t</a></code>;</code></td>
+<code><span id="TYPEELTt.jobReference">jobReference</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobReference.html#TYPEt">GapiBigqueryV2Model.JobReference.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Reference to the BigQuery Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The resource type of the response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.pageToken">pageToken</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.pageToken">pageToken</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A token used for paging results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.rows">rows</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.rows">rows</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. Present only when the query completes successfully.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.schema">schema</span>&nbsp;:<code class="type"><a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a></code>;</code></td>
+<code><span id="TYPEELTt.schema">schema</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The schema of the results. Present only when the query completes successfully.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.totalRows">totalRows</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.totalRows">totalRows</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. Present only when the query completes successfully.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALcacheHit"><span class="keyword">val</span> cacheHit</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALjobComplete"><span class="keyword">val</span> jobComplete</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALjobReference"><span class="keyword">val</span> jobReference</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.JobReference.html#TYPEt">GapiBigqueryV2Model.JobReference.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpageToken"><span class="keyword">val</span> pageToken</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALschema"><span class="keyword">val</span> schema</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtotalRows"><span class="keyword">val</span> totalRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcacheHit"><span class="keyword">val</span> cacheHit</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALjobComplete"><span class="keyword">val</span> jobComplete</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALjobReference"><span class="keyword">val</span> jobReference</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.JobReference.html#TYPEt">GapiBigqueryV2Model.JobReference.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpageToken"><span class="keyword">val</span> pageToken</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableRow.html#TYPEt">GapiBigqueryV2Model.TableRow.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALschema"><span class="keyword">val</span> schema</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.TableSchema.html#TYPEt">GapiBigqueryV2Model.TableSchema.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtotalRows"><span class="keyword">val</span> totalRows</span> : <code class="type">(<a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.GetQueryResultsResponse.html#TYPEt">t</a></code></pre></body></html>

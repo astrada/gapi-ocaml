@@ -75,151 +75,177 @@
 &nbsp;<a class="up" href="GdataComments.Comments.html" title="GdataComments.Comments">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GdataComments.Comments.Feed.html">GdataComments.Comments.Feed</a></h1>
+
 <pre><span class="keyword">module</span> Feed: <code class="type"><a href="GdataAtom.Feed.html">GdataAtom.Feed</a></code><code class="type"> 
       with type entry_t = Entry.t
         and type link_t = link_t</code></pre><hr width="100%">
+
 <pre><span id="TYPEentry_t"><span class="keyword">type</span> <code class="type"></code>entry_t</span> </pre>
+
 
 <pre><span id="TYPElink_t"><span class="keyword">type</span> <code class="type"></code>link_t</span> </pre>
 
+
 <pre><span id="TYPEextensions_t"><span class="keyword">type</span> <code class="type"></code>extensions_t</span> </pre>
+
 
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.authors">authors</span>&nbsp;:<code class="type">Author.t list</code>;</code></td>
+<code><span id="TYPEELTt.authors">authors</span>&nbsp;: <code class="type">Author.t list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.categories">categories</span>&nbsp;:<code class="type"><a href="GdataAtom.Category.html#TYPEt">GdataAtom.Category.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.categories">categories</span>&nbsp;: <code class="type"><a href="GdataAtom.Category.html#TYPEt">GdataAtom.Category.t</a> list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.contributors">contributors</span>&nbsp;:<code class="type">Contributor.t list</code>;</code></td>
+<code><span id="TYPEELTt.contributors">contributors</span>&nbsp;: <code class="type">Contributor.t list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.generator">generator</span>&nbsp;:<code class="type"><a href="GdataAtom.Generator.html#TYPEt">GdataAtom.Generator.t</a></code>;</code></td>
+<code><span id="TYPEELTt.generator">generator</span>&nbsp;: <code class="type"><a href="GdataAtom.Generator.html#TYPEt">GdataAtom.Generator.t</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.icon">icon</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEatom_icon">GdataAtom.atom_icon</a></code>;</code></td>
+<code><span id="TYPEELTt.icon">icon</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_icon">GdataAtom.atom_icon</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEatom_id">GdataAtom.atom_id</a></code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_id">GdataAtom.atom_id</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEatom_updated">GdataAtom.atom_updated</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_updated">GdataAtom.atom_updated</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.entries">entries</span>&nbsp;:<code class="type"><a href="GdataAtom.Feed.html#TYPEentry_t">entry_t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.entries">entries</span>&nbsp;: <code class="type"><a href="GdataAtom.Feed.html#TYPEentry_t">entry_t</a> list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.links">links</span>&nbsp;:<code class="type"><a href="GdataAtom.Feed.html#TYPElink_t">link_t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.links">links</span>&nbsp;: <code class="type"><a href="GdataAtom.Feed.html#TYPElink_t">link_t</a> list</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.logo">logo</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEatom_logo">GdataAtom.atom_logo</a></code>;</code></td>
+<code><span id="TYPEELTt.logo">logo</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEatom_logo">GdataAtom.atom_logo</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.rights">rights</span>&nbsp;:<code class="type">Rights.t</code>;</code></td>
+<code><span id="TYPEELTt.rights">rights</span>&nbsp;: <code class="type">Rights.t</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.subtitle">subtitle</span>&nbsp;:<code class="type">Subtitle.t</code>;</code></td>
+<code><span id="TYPEELTt.subtitle">subtitle</span>&nbsp;: <code class="type">Subtitle.t</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.title">title</span>&nbsp;:<code class="type">Title.t</code>;</code></td>
+<code><span id="TYPEELTt.title">title</span>&nbsp;: <code class="type">Title.t</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.totalResults">totalResults</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEopensearch_totalResults">GdataAtom.opensearch_totalResults</a></code>;</code></td>
+<code><span id="TYPEELTt.totalResults">totalResults</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEopensearch_totalResults">GdataAtom.opensearch_totalResults</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.itemsPerPage">itemsPerPage</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEopensearch_itemsPerPage">GdataAtom.opensearch_itemsPerPage</a></code>;</code></td>
+<code><span id="TYPEELTt.itemsPerPage">itemsPerPage</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEopensearch_itemsPerPage">GdataAtom.opensearch_itemsPerPage</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.startIndex">startIndex</span>&nbsp;:<code class="type"><a href="GdataAtom.html#TYPEopensearch_startIndex">GdataAtom.opensearch_startIndex</a></code>;</code></td>
+<code><span id="TYPEELTt.startIndex">startIndex</span>&nbsp;: <code class="type"><a href="GdataAtom.html#TYPEopensearch_startIndex">GdataAtom.opensearch_startIndex</a></code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;:<code class="type"><a href="GdataAtom.Feed.html#TYPEextensions_t">extensions_t</a></code>;</code></td>
+<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;: <code class="type"><a href="GdataAtom.Feed.html#TYPEextensions_t">extensions_t</a></code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALauthors"><span class="keyword">val</span> authors</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Author.t list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcategories"><span class="keyword">val</span> categories</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Category.html#TYPEt">GdataAtom.Category.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcontributors"><span class="keyword">val</span> contributors</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Contributor.t list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALgenerator"><span class="keyword">val</span> generator</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Generator.html#TYPEt">GdataAtom.Generator.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALicon"><span class="keyword">val</span> icon</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_icon">GdataAtom.atom_icon</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_id">GdataAtom.atom_id</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_updated">GdataAtom.atom_updated</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALentries"><span class="keyword">val</span> entries</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Feed.html#TYPEentry_t">entry_t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Feed.html#TYPElink_t">link_t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlogo"><span class="keyword">val</span> logo</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_logo">GdataAtom.atom_logo</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrights"><span class="keyword">val</span> rights</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Rights.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsubtitle"><span class="keyword">val</span> subtitle</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Subtitle.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Title.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtotalResults"><span class="keyword">val</span> totalResults</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEopensearch_totalResults">GdataAtom.opensearch_totalResults</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALitemsPerPage"><span class="keyword">val</span> itemsPerPage</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEopensearch_itemsPerPage">GdataAtom.opensearch_itemsPerPage</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALstartIndex"><span class="keyword">val</span> startIndex</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEopensearch_startIndex">GdataAtom.opensearch_startIndex</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Feed.html#TYPEextensions_t">extensions_t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALauthors"><span class="keyword">val</span> authors</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Author.t list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcategories"><span class="keyword">val</span> categories</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Category.html#TYPEt">GdataAtom.Category.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcontributors"><span class="keyword">val</span> contributors</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Contributor.t list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALgenerator"><span class="keyword">val</span> generator</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Generator.html#TYPEt">GdataAtom.Generator.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALicon"><span class="keyword">val</span> icon</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_icon">GdataAtom.atom_icon</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_id">GdataAtom.atom_id</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_updated">GdataAtom.atom_updated</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALentries"><span class="keyword">val</span> entries</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Feed.html#TYPEentry_t">entry_t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlinks"><span class="keyword">val</span> links</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Feed.html#TYPElink_t">link_t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlogo"><span class="keyword">val</span> logo</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEatom_logo">GdataAtom.atom_logo</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrights"><span class="keyword">val</span> rights</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Rights.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsubtitle"><span class="keyword">val</span> subtitle</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Subtitle.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, Title.t) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtotalResults"><span class="keyword">val</span> totalResults</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEopensearch_totalResults">GdataAtom.opensearch_totalResults</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALitemsPerPage"><span class="keyword">val</span> itemsPerPage</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEopensearch_itemsPerPage">GdataAtom.opensearch_itemsPerPage</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALstartIndex"><span class="keyword">val</span> startIndex</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.html#TYPEopensearch_startIndex">GdataAtom.opensearch_startIndex</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataAtom.Feed.html#TYPEt">t</a>, <a href="GdataAtom.Feed.html#TYPEextensions_t">extensions_t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+
 <pre><span id="VALparse_feed"><span class="keyword">val</span> parse_feed</span> : <code class="type"><a href="GdataCore.html#TYPExml_data_model">GdataCore.xml_data_model</a> -> <a href="GdataAtom.Feed.html#TYPEt">t</a></code></pre></body></html>

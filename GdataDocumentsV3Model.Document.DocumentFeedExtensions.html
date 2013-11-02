@@ -77,45 +77,53 @@
 &nbsp;<a class="post" href="GdataDocumentsV3Model.Document.Feed.html" title="GdataDocumentsV3Model.Document.Feed">Next</a>
 </div>
 <h1>Module <a href="type_GdataDocumentsV3Model.Document.DocumentFeedExtensions.html">GdataDocumentsV3Model.Document.DocumentFeedExtensions</a></h1>
+
 <pre><span class="keyword">module</span> DocumentFeedExtensions: <code class="code">sig</code> <a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesTotal">quotaBytesTotal</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesTotal">quotaBytesTotal</span>&nbsp;: <code class="type">int64</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;: <code class="type">int64</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesUsedInTrash">quotaBytesUsedInTrash</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesUsedInTrash">quotaBytesUsedInTrash</span>&nbsp;: <code class="type">int64</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.largestChangestamp">largestChangestamp</span>&nbsp;:<code class="type">int</code>;</code></td>
+<code><span id="TYPEELTt.largestChangestamp">largestChangestamp</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;:<code class="type">GdataAtom.GenericExtensions.t</code>;</code></td>
+<code><span id="TYPEELTt.extensions">extensions</span>&nbsp;: <code class="type">GdataAtom.GenericExtensions.t</code>;</code></td>
 
 </tr></table>
 }
 
 
-<pre><span id="VALquotaBytesTotal"><span class="keyword">val</span> quotaBytesTotal</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesUsedInTrash"><span class="keyword">val</span> quotaBytesUsedInTrash</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlargestChangestamp"><span class="keyword">val</span> largestChangestamp</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>,<br>        GdataAtom.GenericExtensions.t)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
+
+<pre><span id="VALquotaBytesTotal"><span class="keyword">val</span> quotaBytesTotal</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsedInTrash"><span class="keyword">val</span> quotaBytesUsedInTrash</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlargestChangestamp"><span class="keyword">val</span> largestChangestamp</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALextensions"><span class="keyword">val</span> extensions</span> : <code class="type">(<a href="GdataDocumentsV3Model.Document.DocumentFeedExtensions.html#TYPEt">t</a>,<br>        GdataAtom.GenericExtensions.t)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span class="keyword">include</span> <a href="GdataAtom.AtomData.html">GdataAtom.AtomData</a></pre>
 </body></html>

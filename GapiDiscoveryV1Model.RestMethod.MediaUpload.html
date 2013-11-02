@@ -75,30 +75,39 @@
 &nbsp;<a class="up" href="GapiDiscoveryV1Model.RestMethod.html" title="GapiDiscoveryV1Model.RestMethod">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiDiscoveryV1Model.RestMethod.MediaUpload.html">GapiDiscoveryV1Model.RestMethod.MediaUpload</a></h1>
+
 <pre><span class="keyword">module</span> MediaUpload: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html">Protocols</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html">Protocols</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.accept">accept</span>&nbsp;:<code class="type">string list</code>;</code></td>
+<code><span id="TYPEELTt.accept">accept</span>&nbsp;: <code class="type">string list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >MIME Media Ranges for acceptable media uploads to this method.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.maxSize">maxSize</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.maxSize">maxSize</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Maximum size of a media upload, such as "1MB", "2GB" or "3TB".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.protocols">protocols</span>&nbsp;:<code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html#TYPEt">Protocols.t</a></code>;</code></td>
+<code><span id="TYPEELTt.protocols">protocols</span>&nbsp;: <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html#TYPEt">Protocols.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Supported upload protocols.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALaccept"><span class="keyword">val</span> accept</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmaxSize"><span class="keyword">val</span> maxSize</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprotocols"><span class="keyword">val</span> protocols</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html#TYPEt">Protocols.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALaccept"><span class="keyword">val</span> accept</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmaxSize"><span class="keyword">val</span> maxSize</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALprotocols"><span class="keyword">val</span> protocols</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.Protocols.html#TYPEt">Protocols.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestMethod.MediaUpload.html#TYPEt">t</a></code></pre></body></html>

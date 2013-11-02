@@ -77,15 +77,19 @@
 &nbsp;<a class="post" href="GapiPlusV1Service.MomentsResource.html" title="GapiPlusV1Service.MomentsResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiPlusV1Service.CommentsResource.html">GapiPlusV1Service.CommentsResource</a></h1>
+
 <pre><span class="keyword">module</span> CommentsResource: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.CommentsResource.SortOrder.html">SortOrder</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.SortOrder.html">..</a> <code class="code">end</code></pre><pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Service.CommentsResource.SortOrder.html">SortOrder</a>: <code class="code">sig</code> <a href="GapiPlusV1Service.CommentsResource.SortOrder.html">..</a> <code class="code">end</code></pre>
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       commentId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.Comment.html#TYPEt">GapiPlusV1Model.Comment.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Get a comment.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">commentId</code> : The ID of the comment to get.</div>
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?sortOrder:<a href="GapiPlusV1Service.CommentsResource.SortOrder.html#TYPEt">SortOrder.t</a> -><br>       ?pageToken:string -><br>       activityId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">GapiPlusV1Model.CommentFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?sortOrder:<a href="GapiPlusV1Service.CommentsResource.SortOrder.html#TYPEt">SortOrder.t</a> -><br>       ?pageToken:string -><br>       activityId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiPlusV1Model.CommentFeed.html#TYPEt">GapiPlusV1Model.CommentFeed.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 List all of the comments for an activity.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/plus/v1/"</code>).</div>

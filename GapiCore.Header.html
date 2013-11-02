@@ -77,7 +77,9 @@
 &nbsp;<a class="post" href="GapiCore.SignatureMethod.html" title="GapiCore.SignatureMethod">Next</a>
 </div>
 <h1>Module <a href="type_GapiCore.Header.html">GapiCore.Header</a></h1>
+
 <pre><span class="keyword">module</span> Header: <code class="code">sig</code> <a href="GapiCore.Header.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
@@ -174,6 +176,13 @@
 <td align="left" valign="top" >
 <code><span class="keyword">|</span></code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.ContentLength"><span class="constructor">ContentLength</span></span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.KeyValueHeader"><span class="constructor">KeyValueHeader</span></span> <span class="keyword">of</span> <code class="type">string * string</code></code></td>
 
 </tr>
@@ -186,4 +195,6 @@
 </tr></table>
 
 
-<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="GapiCore.Header.html#TYPEt">t</a> -> string</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type">string -> <a href="GapiCore.Header.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALto_string"><span class="keyword">val</span> to_string</span> : <code class="type"><a href="GapiCore.Header.html#TYPEt">t</a> -> string</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type">string -> <a href="GapiCore.Header.html#TYPEt">t</a></code></pre></body></html>

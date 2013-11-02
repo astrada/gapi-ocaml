@@ -77,8 +77,19 @@
 &nbsp;<a class="post" href="GapiBigqueryV2Service.TablesResource.html" title="GapiBigqueryV2Service.TablesResource">Next</a>
 </div>
 <h1>Module <a href="type_GapiBigqueryV2Service.TabledataResource.html">GapiBigqueryV2Service.TabledataResource</a></h1>
+
 <pre><span class="keyword">module</span> TabledataResource: <code class="code">sig</code> <a href="GapiBigqueryV2Service.TabledataResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startIndex:string -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">GapiBigqueryV2Model.TableDataList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info">
+
+<pre><span id="VALinsertAll"><span class="keyword">val</span> insertAll</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.TableDataInsertAllRequest.html#TYPEt">GapiBigqueryV2Model.TableDataInsertAllRequest.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.TableDataInsertAllResponse.html#TYPEt">GapiBigqueryV2Model.TableDataInsertAllResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Inserts the supplied rows into the table.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">projectId</code> : Project ID of the destination table.</div>
+<div class="param_info"><code class="code">datasetId</code> : Dataset ID of the destination table.</div>
+<div class="param_info"><code class="code">tableId</code> : Table ID of the destination table.</div>
+
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startIndex:string -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.TableDataList.html#TYPEt">GapiBigqueryV2Model.TableDataList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Retrieves table data from a specified set of rows.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>

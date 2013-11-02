@@ -77,149 +77,181 @@
 &nbsp;<a class="post" href="GapiDriveV2Model.CommentReply.html" title="GapiDriveV2Model.CommentReply">Next</a>
 </div>
 <h1>Module <a href="type_GapiDriveV2Model.About.html">GapiDriveV2Model.About</a></h1>
+
 <pre><span class="keyword">module</span> About: <code class="code">sig</code> <a href="GapiDriveV2Model.About.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.MaxUploadSizes.html">MaxUploadSizes</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.MaxUploadSizes.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.ImportFormats.html">ImportFormats</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.ImportFormats.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.Features.html">Features</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.Features.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.ExportFormats.html">ExportFormats</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.ExportFormats.html">..</a> <code class="code">end</code></pre><pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.AdditionalRoleInfo.html">AdditionalRoleInfo</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.AdditionalRoleInfo.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.MaxUploadSizes.html">MaxUploadSizes</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.MaxUploadSizes.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.ImportFormats.html">ImportFormats</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.ImportFormats.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.Features.html">Features</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.Features.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.ExportFormats.html">ExportFormats</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.ExportFormats.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.AdditionalRoleInfo.html">AdditionalRoleInfo</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.AdditionalRoleInfo.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.additionalRoleInfo">additionalRoleInfo</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.About.AdditionalRoleInfo.html#TYPEt">AdditionalRoleInfo.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.additionalRoleInfo">additionalRoleInfo</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.About.AdditionalRoleInfo.html#TYPEt">AdditionalRoleInfo.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Information about supported additional roles per file type. The most specific type takes precedence.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.domainSharingPolicy">domainSharingPolicy</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.domainSharingPolicy">domainSharingPolicy</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The domain sharing policy for the current user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ETag of the item.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.exportFormats">exportFormats</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.About.ExportFormats.html#TYPEt">ExportFormats.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.exportFormats">exportFormats</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.About.ExportFormats.html#TYPEt">ExportFormats.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The allowable export formats.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.features">features</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.About.Features.html#TYPEt">Features.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.features">features</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.About.Features.html#TYPEt">Features.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of additional features enabled on this account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.importFormats">importFormats</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.About.ImportFormats.html#TYPEt">ImportFormats.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.importFormats">importFormats</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.About.ImportFormats.html#TYPEt">ImportFormats.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The allowable import formats.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.isCurrentAppInstalled">isCurrentAppInstalled</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.isCurrentAppInstalled">isCurrentAppInstalled</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A boolean indicating whether the authenticated app is installed by the authenticated user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >This is always drive#about.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.largestChangeId">largestChangeId</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.largestChangeId">largestChangeId</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The largest change id.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.maxUploadSizes">maxUploadSizes</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.About.MaxUploadSizes.html#TYPEt">MaxUploadSizes.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.maxUploadSizes">maxUploadSizes</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.About.MaxUploadSizes.html#TYPEt">MaxUploadSizes.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >List of max upload sizes for each file type. The most specific type takes precedence.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.name">name</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of the current user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.permissionId">permissionId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.permissionId">permissionId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The current user's ID as visible in the permissions collection.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesTotal">quotaBytesTotal</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesTotal">quotaBytesTotal</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of quota bytes.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The number of quota bytes used by Google Drive.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesUsedAggregate">quotaBytesUsedAggregate</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesUsedAggregate">quotaBytesUsedAggregate</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The number of quota bytes used by all Google apps (Drive, Picasa, etc.).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.quotaBytesUsedInTrash">quotaBytesUsedInTrash</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.quotaBytesUsedInTrash">quotaBytesUsedInTrash</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The number of quota bytes used by trashed items.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.remainingChangeIds">remainingChangeIds</span>&nbsp;:<code class="type">int64</code>;</code></td>
+<code><span id="TYPEELTt.remainingChangeIds">remainingChangeIds</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The number of remaining change ids.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.rootFolderId">rootFolderId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.rootFolderId">rootFolderId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The id of the root folder.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A link back to this item.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.user">user</span>&nbsp;:<code class="type"><a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a></code>;</code></td>
+<code><span id="TYPEELTt.user">user</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The authenticated user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALadditionalRoleInfo"><span class="keyword">val</span> additionalRoleInfo</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.AdditionalRoleInfo.html#TYPEt">AdditionalRoleInfo.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdomainSharingPolicy"><span class="keyword">val</span> domainSharingPolicy</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALexportFormats"><span class="keyword">val</span> exportFormats</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.ExportFormats.html#TYPEt">ExportFormats.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALfeatures"><span class="keyword">val</span> features</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.Features.html#TYPEt">Features.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALimportFormats"><span class="keyword">val</span> importFormats</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.ImportFormats.html#TYPEt">ImportFormats.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALisCurrentAppInstalled"><span class="keyword">val</span> isCurrentAppInstalled</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlargestChangeId"><span class="keyword">val</span> largestChangeId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALmaxUploadSizes"><span class="keyword">val</span> maxUploadSizes</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.MaxUploadSizes.html#TYPEt">MaxUploadSizes.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALpermissionId"><span class="keyword">val</span> permissionId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesTotal"><span class="keyword">val</span> quotaBytesTotal</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesUsedAggregate"><span class="keyword">val</span> quotaBytesUsedAggregate</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALquotaBytesUsedInTrash"><span class="keyword">val</span> quotaBytesUsedInTrash</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALremainingChangeIds"><span class="keyword">val</span> remainingChangeIds</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrootFolderId"><span class="keyword">val</span> rootFolderId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALuser"><span class="keyword">val</span> user</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.About.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.About.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALadditionalRoleInfo"><span class="keyword">val</span> additionalRoleInfo</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.AdditionalRoleInfo.html#TYPEt">AdditionalRoleInfo.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdomainSharingPolicy"><span class="keyword">val</span> domainSharingPolicy</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALexportFormats"><span class="keyword">val</span> exportFormats</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.ExportFormats.html#TYPEt">ExportFormats.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALfeatures"><span class="keyword">val</span> features</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.Features.html#TYPEt">Features.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALimportFormats"><span class="keyword">val</span> importFormats</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.ImportFormats.html#TYPEt">ImportFormats.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALisCurrentAppInstalled"><span class="keyword">val</span> isCurrentAppInstalled</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlargestChangeId"><span class="keyword">val</span> largestChangeId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmaxUploadSizes"><span class="keyword">val</span> maxUploadSizes</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.MaxUploadSizes.html#TYPEt">MaxUploadSizes.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpermissionId"><span class="keyword">val</span> permissionId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesTotal"><span class="keyword">val</span> quotaBytesTotal</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsedAggregate"><span class="keyword">val</span> quotaBytesUsedAggregate</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsedInTrash"><span class="keyword">val</span> quotaBytesUsedInTrash</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALremainingChangeIds"><span class="keyword">val</span> remainingChangeIds</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrootFolderId"><span class="keyword">val</span> rootFolderId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuser"><span class="keyword">val</span> user</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.About.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDriveV2Model.About.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV2Model.About.html#TYPEt">t</a></code></pre></body></html>

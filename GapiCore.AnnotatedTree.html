@@ -75,7 +75,9 @@
 &nbsp;<a class="post" href="GapiCore.HttpMethod.html" title="GapiCore.HttpMethod">Next</a>
 </div>
 <h1>Module <a href="type_GapiCore.AnnotatedTree.html">GapiCore.AnnotatedTree</a></h1>
+
 <pre><span class="keyword">module</span> AnnotatedTree: <code class="code">sig</code> <a href="GapiCore.AnnotatedTree.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type">('a, 'b)</code> t</span> = </code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
@@ -93,4 +95,8 @@
 </tr></table>
 
 
-<pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type">('a -> 'b) -> 'a list -> 'b list</code></pre><pre><span id="VALkfold"><span class="keyword">val</span> kfold</span> : <code class="type">('a -><br>        (('b -> 'b) -> 'c) list -><br>        ('a, 'd) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> ('b -> 'b) -> 'c) -><br>       ('a -> 'd -> ('a, 'd) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> ('b -> 'b) -> 'c) -><br>       ('a, 'd) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'c</code></pre><pre><span id="VALxfold"><span class="keyword">val</span> xfold</span> : <code class="type">('a -> 'b list -> ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b) -><br>       ('a -> 'c -> ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b) -><br>       ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b</code></pre><pre><span id="VALfold"><span class="keyword">val</span> fold</span> : <code class="type">('a -> 'b list -> 'b) -><br>       ('a -> 'c -> 'b) -> ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b</code></pre></body></html>
+
+<pre><span id="VALmap"><span class="keyword">val</span> map</span> : <code class="type">('a -> 'b) -> 'a list -> 'b list</code></pre>
+<pre><span id="VALkfold"><span class="keyword">val</span> kfold</span> : <code class="type">('a -><br>        (('b -> 'b) -> 'c) list -><br>        ('a, 'd) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> ('b -> 'b) -> 'c) -><br>       ('a -> 'd -> ('a, 'd) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> ('b -> 'b) -> 'c) -><br>       ('a, 'd) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'c</code></pre>
+<pre><span id="VALxfold"><span class="keyword">val</span> xfold</span> : <code class="type">('a -> 'b list -> ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b) -><br>       ('a -> 'c -> ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b) -><br>       ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b</code></pre>
+<pre><span id="VALfold"><span class="keyword">val</span> fold</span> : <code class="type">('a -> 'b list -> 'b) -><br>       ('a -> 'c -> 'b) -> ('a, 'c) <a href="GapiCore.AnnotatedTree.html#TYPEt">t</a> -> 'b</code></pre></body></html>

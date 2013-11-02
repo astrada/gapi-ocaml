@@ -73,44 +73,54 @@
 <div class="navbar">&nbsp;<a class="up" href="GapiBigqueryV2Model.Dataset.html" title="GapiBigqueryV2Model.Dataset">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiBigqueryV2Model.Dataset.Access.html">GapiBigqueryV2Model.Dataset.Access</a></h1>
+
 <pre><span class="keyword">module</span> Access: <code class="code">sig</code> <a href="GapiBigqueryV2Model.Dataset.Access.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.domain">domain</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.domain">domain</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Pick one</code> A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com".</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.groupByEmail">groupByEmail</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.groupByEmail">groupByEmail</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Pick one</code> A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.role">role</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.role">role</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.specialGroup">specialGroup</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.specialGroup">specialGroup</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Pick one</code> A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.userByEmail">userByEmail</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.userByEmail">userByEmail</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Pick one</code> A fully qualified email address of a user to grant access to. For example: fred@example.com.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALgroupByEmail"><span class="keyword">val</span> groupByEmail</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALrole"><span class="keyword">val</span> role</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALspecialGroup"><span class="keyword">val</span> specialGroup</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALuserByEmail"><span class="keyword">val</span> userByEmail</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALgroupByEmail"><span class="keyword">val</span> groupByEmail</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALrole"><span class="keyword">val</span> role</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALspecialGroup"><span class="keyword">val</span> specialGroup</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuserByEmail"><span class="keyword">val</span> userByEmail</span> : <code class="type">(<a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.Dataset.Access.html#TYPEt">t</a></code></pre></body></html>

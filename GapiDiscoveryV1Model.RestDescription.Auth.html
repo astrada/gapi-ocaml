@@ -75,16 +75,23 @@
 &nbsp;<a class="up" href="GapiDiscoveryV1Model.RestDescription.html" title="GapiDiscoveryV1Model.RestDescription">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiDiscoveryV1Model.RestDescription.Auth.html">GapiDiscoveryV1Model.RestDescription.Auth</a></h1>
+
 <pre><span class="keyword">module</span> Auth: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestDescription.Auth.html">..</a> <code class="code">end</code></pre><hr width="100%">
-<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html">Oauth2</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html">..</a> <code class="code">end</code></pre><pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+
+<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html">Oauth2</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.oauth2">oauth2</span>&nbsp;:<code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html#TYPEt">Oauth2.t</a></code>;</code></td>
+<code><span id="TYPEELTt.oauth2">oauth2</span>&nbsp;: <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html#TYPEt">Oauth2.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >OAuth 2.0 authentication information.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALoauth2"><span class="keyword">val</span> oauth2</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html#TYPEt">Oauth2.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALoauth2"><span class="keyword">val</span> oauth2</span> : <code class="type">(<a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.RestDescription.Auth.Oauth2.html#TYPEt">Oauth2.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.RestDescription.Auth.html#TYPEt">t</a></code></pre></body></html>

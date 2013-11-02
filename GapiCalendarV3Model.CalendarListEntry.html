@@ -77,13 +77,15 @@
 &nbsp;<a class="post" href="GapiCalendarV3Model.CalendarList.html" title="GapiCalendarV3Model.CalendarList">Next</a>
 </div>
 <h1>Module <a href="type_GapiCalendarV3Model.CalendarListEntry.html">GapiCalendarV3Model.CalendarListEntry</a></h1>
+
 <pre><span class="keyword">module</span> CalendarListEntry: <code class="code">sig</code> <a href="GapiCalendarV3Model.CalendarListEntry.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.accessRole">accessRole</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.accessRole">accessRole</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  <ul>
 <li>"freeBusyReader" - Provides read access to free/busy information. </li>
 <li>"reader" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. </li>
@@ -96,108 +98,129 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.backgroundColor">backgroundColor</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.backgroundColor">backgroundColor</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.colorId">colorId</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.colorId">colorId</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The color of the calendar. This is an ID referring to an entry in the "calendar" section of the colors definition (see the "colors" endpoint). Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.defaultReminders">defaultReminders</span>&nbsp;:<code class="type"><a href="GapiCalendarV3Model.EventReminder.html#TYPEt">GapiCalendarV3Model.EventReminder.t</a> list</code>;</code></td>
+<code><span id="TYPEELTt.defaultReminders">defaultReminders</span>&nbsp;: <code class="type"><a href="GapiCalendarV3Model.EventReminder.html#TYPEt">GapiCalendarV3Model.EventReminder.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The default reminders that the authenticated user has for this calendar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.description">description</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.description">description</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Description of the calendar. Optional. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.etag">etag</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >ETag of the resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.foregroundColor">foregroundColor</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.foregroundColor">foregroundColor</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.hidden">hidden</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.hidden">hidden</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the calendar has been hidden from the list. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.id">id</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Identifier of the calendar.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the resource ("calendar#calendarListEntry").</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.location">location</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.location">location</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Geographic location of the calendar as free-form text. Optional. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.primary">primary</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.primary">primary</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.selected">selected</span>&nbsp;:<code class="type">bool</code>;</code></td>
+<code><span id="TYPEELTt.selected">selected</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the calendar content shows up in the calendar UI. Optional. The default is False.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.summary">summary</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.summary">summary</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Title of the calendar. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.summaryOverride">summaryOverride</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.summaryOverride">summaryOverride</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The summary that the authenticated user has set for this calendar. Optional.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.timeZone">timeZone</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.timeZone">timeZone</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The time zone of the calendar. Optional. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALaccessRole"><span class="keyword">val</span> accessRole</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALbackgroundColor"><span class="keyword">val</span> backgroundColor</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALcolorId"><span class="keyword">val</span> colorId</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdefaultReminders"><span class="keyword">val</span> defaultReminders</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>,<br>        <a href="GapiCalendarV3Model.EventReminder.html#TYPEt">GapiCalendarV3Model.EventReminder.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALforegroundColor"><span class="keyword">val</span> foregroundColor</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALhidden"><span class="keyword">val</span> hidden</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALprimary"><span class="keyword">val</span> primary</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALselected"><span class="keyword">val</span> selected</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsummary"><span class="keyword">val</span> summary</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALsummaryOverride"><span class="keyword">val</span> summaryOverride</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALtimeZone"><span class="keyword">val</span> timeZone</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALaccessRole"><span class="keyword">val</span> accessRole</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALbackgroundColor"><span class="keyword">val</span> backgroundColor</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcolorId"><span class="keyword">val</span> colorId</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdefaultReminders"><span class="keyword">val</span> defaultReminders</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>,<br>        <a href="GapiCalendarV3Model.EventReminder.html#TYPEt">GapiCalendarV3Model.EventReminder.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALforegroundColor"><span class="keyword">val</span> foregroundColor</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALhidden"><span class="keyword">val</span> hidden</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlocation"><span class="keyword">val</span> location</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALprimary"><span class="keyword">val</span> primary</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALselected"><span class="keyword">val</span> selected</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsummary"><span class="keyword">val</span> summary</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsummaryOverride"><span class="keyword">val</span> summaryOverride</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtimeZone"><span class="keyword">val</span> timeZone</span> : <code class="type">(<a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">t</a></code></pre></body></html>

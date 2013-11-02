@@ -75,37 +75,48 @@
 &nbsp;<a class="up" href="GapiCalendarV3Model.html" title="GapiCalendarV3Model">Up</a>
 &nbsp;</div>
 <h1>Module <a href="type_GapiCalendarV3Model.Colors.html">GapiCalendarV3Model.Colors</a></h1>
+
 <pre><span class="keyword">module</span> Colors: <code class="code">sig</code> <a href="GapiCalendarV3Model.Colors.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.calendar">calendar</span>&nbsp;:<code class="type">(string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list</code>;</code></td>
+<code><span id="TYPEELTt.calendar">calendar</span>&nbsp;: <code class="type">(string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.event">event</span>&nbsp;:<code class="type">(string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list</code>;</code></td>
+<code><span id="TYPEELTt.event">event</span>&nbsp;: <code class="type">(string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.kind">kind</span>&nbsp;:<code class="type">string</code>;</code></td>
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Type of the resource ("calendar#colors").</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code><span id="TYPEELTt.updated">updated</span>&nbsp;:<code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Last modification time of the color palette (as a RFC 3339 timestamp). Read-only.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
-<pre><span id="VALcalendar"><span class="keyword">val</span> calendar</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>,<br>        (string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALevent"><span class="keyword">val</span> event</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>,<br>        (string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre><pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a></code></pre><pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre><pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a></code></pre><pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre><pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a></code></pre></body></html>
+
+<pre><span id="VALcalendar"><span class="keyword">val</span> calendar</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>,<br>        (string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALevent"><span class="keyword">val</span> event</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>,<br>        (string * <a href="GapiCalendarV3Model.ColorDefinition.html#TYPEt">GapiCalendarV3Model.ColorDefinition.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.Colors.html#TYPEt">t</a></code></pre></body></html>
