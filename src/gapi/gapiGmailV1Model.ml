@@ -78,10 +78,10 @@ module Label =
 struct
   type t = {
     id : string;
-    labelListVisibility : LabelListVisibility.t;
-    messageListVisibility : MessageListVisibility.t;
+    labelListVisibility : string;
+    messageListVisibility : string;
     name : string;
-    _type : Type.t;
+    _type : string;
     
   }
   
@@ -108,10 +108,10 @@ struct
   
   let empty = {
     id = "";
-    labelListVisibility = LabelListVisibility.Default;
-    messageListVisibility = MessageListVisibility.Default;
+    labelListVisibility = "";
+    messageListVisibility = "";
     name = "";
-    _type = Type.Default;
+    _type = "";
     
   }
   

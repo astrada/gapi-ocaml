@@ -36,22 +36,22 @@ sig
   type t = {
     id : string;
     (** The immutable ID of the label. *)
-    labelListVisibility : LabelListVisibility.t;
+    labelListVisibility : string;
     (** The visibility of the label in the label list in the Gmail web interface. *)
-    messageListVisibility : MessageListVisibility.t;
+    messageListVisibility : string;
     (** The visibility of the label in the message list in the Gmail web interface. *)
     name : string;
     (** The display name of the label. *)
-    _type : Type.t;
+    _type : string;
     (** The owner type for the label. User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. System labels are internally created and cannot be added, modified, or deleted. System labels may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the INBOX and UNREAD labels from messages and threads, but cannot apply or remove the DRAFTS or SENT labels from messages or threads. *)
     
   }
   
   val id : (t, string) GapiLens.t
-  val labelListVisibility : (t, LabelListVisibility.t) GapiLens.t
-  val messageListVisibility : (t, MessageListVisibility.t) GapiLens.t
+  val labelListVisibility : (t, string) GapiLens.t
+  val messageListVisibility : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
-  val _type : (t, Type.t) GapiLens.t
+  val _type : (t, string) GapiLens.t
   
   val empty : t
   
