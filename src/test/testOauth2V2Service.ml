@@ -12,7 +12,7 @@ let test_get_userinfo () =
        in
          TestHelper.assert_not_empty
            "User ID should not be empty"
-           userinfo.Userinfo.id)
+           userinfo.Userinfoplus.id)
 
 let test_get_me () =
   TestHelper.test_request
@@ -23,7 +23,7 @@ let test_get_me () =
        in
          TestHelper.assert_not_empty
            "User ID should not be empty"
-           userinfo.Userinfo.id)
+           userinfo.Userinfoplus.id)
 
 let test_tokeninfo () =
   TestHelper.test_request_noauth

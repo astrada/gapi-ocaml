@@ -5,8 +5,8 @@ let test_parse_userinfo () =
   let userinfo_json =
     Yojson.Safe.from_file "test_data/test_userinfo.json" in
   let tree = GapiJson.json_to_data_model userinfo_json in
-  let userinfo = Userinfo.of_data_model tree in
-  let tree' = Userinfo.to_data_model userinfo in
+  let userinfo = Userinfoplus.of_data_model tree in
+  let tree' = Userinfoplus.to_data_model userinfo in
   let json = GapiJson.data_model_to_json tree' in
     assert_equal
       ~printer:TestHelper.string_of_json_data_model

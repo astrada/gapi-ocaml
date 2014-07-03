@@ -3,21 +3,17 @@
       "locale":"en_US",
       "ruleResults":{
          "AvoidBadRequests":{
-            "localizedRuleName":"Avoid bad requests",
-            "ruleScore":100
+            "localizedRuleName":"Avoid bad requests"
          },
          "AvoidCharsetInMetaTag":{
-            "localizedRuleName":"Avoid a character set in the meta tag",
-            "ruleScore":100
+            "localizedRuleName":"Avoid a character set in the meta tag"
          },
          "AvoidCssImport":{
-            "localizedRuleName":"Avoid CSS @import",
-            "ruleScore":100
+            "localizedRuleName":"Avoid CSS @import"
          },
          "AvoidExcessSerialization":{
             "localizedRuleName":"Reduce request serialization",
             "ruleImpact":3.01,
-            "ruleScore":55,
             "urlBlocks":[
                {
                   "header":{
@@ -140,7 +136,6 @@
          },
          "AvoidLongRunningScripts":{
             "localizedRuleName":"Avoid long-running scripts",
-            "ruleScore":100,
             "urlBlocks":[
                {
                   "header":{
@@ -171,13 +166,11 @@
             ]
          },
          "DeferParsingJavaScript":{
-            "localizedRuleName":"Defer parsing of JavaScript",
-            "ruleScore":100
+            "localizedRuleName":"Defer parsing of JavaScript"
          },
          "EliminateUnnecessaryReflows":{
             "localizedRuleName":"Eliminate unnecessary reflows",
             "ruleImpact":0.008,
-            "ruleScore":60,
             "urlBlocks":[
                {
                   "header":{
@@ -327,25 +320,20 @@
             ]
          },
          "EnableGzipCompression":{
-            "localizedRuleName":"Enable compression",
-            "ruleScore":100
+            "localizedRuleName":"Enable compression"
          },
          "InlineSmallCss":{
-            "localizedRuleName":"Inline Small CSS",
-            "ruleScore":100
+            "localizedRuleName":"Inline Small CSS"
          },
          "InlineSmallJavaScript":{
-            "localizedRuleName":"Inline Small JavaScript",
-            "ruleScore":100
+            "localizedRuleName":"Inline Small JavaScript"
          },
          "LeverageBrowserCaching":{
-            "localizedRuleName":"Leverage browser caching",
-            "ruleScore":100
+            "localizedRuleName":"Leverage browser caching"
          },
          "MakeLandingPageRedirectsCacheable":{
             "localizedRuleName":"Make landing page redirects cacheable",
             "ruleImpact":1.01,
-            "ruleScore":54,
             "urlBlocks":[
                {
                   "header":{
@@ -372,17 +360,14 @@
             ]
          },
          "MinifyCss":{
-            "localizedRuleName":"Minify CSS",
-            "ruleScore":100
+            "localizedRuleName":"Minify CSS"
          },
          "MinifyHTML":{
-            "localizedRuleName":"Minify HTML",
-            "ruleScore":100
+            "localizedRuleName":"Minify HTML"
          },
          "MinifyJavaScript":{
             "localizedRuleName":"Minify JavaScript",
             "ruleImpact":0.09780000000000001,
-            "ruleScore":99,
             "urlBlocks":[
                {
                   "header":{
@@ -423,60 +408,46 @@
             ]
          },
          "MinimizeRedirects":{
-            "localizedRuleName":"Minimize redirects",
-            "ruleScore":100
+            "localizedRuleName":"Minimize redirects"
          },
          "MinimizeRequestSize":{
-            "localizedRuleName":"Minimize request size",
-            "ruleScore":100
+            "localizedRuleName":"Minimize request size"
          },
          "OptimizeImages":{
-            "localizedRuleName":"Optimize images",
-            "ruleScore":100
+            "localizedRuleName":"Optimize images"
          },
          "OptimizeTheOrderOfStylesAndScripts":{
-            "localizedRuleName":"Optimize the order of styles and scripts",
-            "ruleScore":100
+            "localizedRuleName":"Optimize the order of styles and scripts"
          },
          "PreferAsyncResources":{
-            "localizedRuleName":"Prefer asynchronous resources",
-            "ruleScore":100
+            "localizedRuleName":"Prefer asynchronous resources"
          },
          "PutCssInTheDocumentHead":{
-            "localizedRuleName":"Put CSS in the document head",
-            "ruleScore":100
+            "localizedRuleName":"Put CSS in the document head"
          },
          "RemoveQueryStringsFromStaticResources":{
-            "localizedRuleName":"Remove query strings from static resources",
-            "ruleScore":100
+            "localizedRuleName":"Remove query strings from static resources"
          },
          "ServeResourcesFromAConsistentUrl":{
-            "localizedRuleName":"Serve resources from a consistent URL",
-            "ruleScore":100
+            "localizedRuleName":"Serve resources from a consistent URL"
          },
          "ServeScaledImages":{
-            "localizedRuleName":"Serve scaled images",
-            "ruleScore":100
+            "localizedRuleName":"Serve scaled images"
          },
          "SpecifyACacheValidator":{
-            "localizedRuleName":"Specify a cache validator",
-            "ruleScore":100
+            "localizedRuleName":"Specify a cache validator"
          },
          "SpecifyAVaryAcceptEncodingHeader":{
-            "localizedRuleName":"Specify a Vary: Accept-Encoding header",
-            "ruleScore":100
+            "localizedRuleName":"Specify a Vary: Accept-Encoding header"
          },
          "SpecifyCharsetEarly":{
-            "localizedRuleName":"Specify a character set",
-            "ruleScore":100
+            "localizedRuleName":"Specify a character set"
          },
          "SpecifyImageDimensions":{
-            "localizedRuleName":"Specify image dimensions",
-            "ruleScore":100
+            "localizedRuleName":"Specify image dimensions"
          },
          "SpriteImages":{
-            "localizedRuleName":"Combine images into CSS sprites",
-            "ruleScore":100
+            "localizedRuleName":"Combine images into CSS sprites"
          }
       }
    },
