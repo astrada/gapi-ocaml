@@ -1,5 +1,6 @@
 <tools/*.ml>: syntax_camlp4o
 "src/test/testMonadic.ml": syntax_camlp4o
+"tools/serviceGenerator.byte": debug
 # Disable warning 23 (Useless record "with" clause.) for generated modules
 <src/gapi/gapi*Model.ml>: warn_x
 
