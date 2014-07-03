@@ -950,6 +950,11 @@ struct
 
   let create original_name enums enum_descriptions =
     let ocaml_name = OCamlName.get_ocaml_name ModuleName original_name in
+    let descriptions =
+      let n = List.length enum_descriptions - List.length enums in
+      if n = 0 then enum_descriptions
+      else enum_descriptions @ (ExtList.List.make (-n) "")
+    in
     let values =
       List.map2
         (fun value description ->
@@ -959,7 +964,7 @@ struct
                        description; })
         )
         enums
-        enum_descriptions
+        descriptions
     in
       { original_name;
         ocaml_name;

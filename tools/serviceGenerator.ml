@@ -1087,13 +1087,20 @@ let build_schema_module =
     build_module SchemaModule generate_body
 
 let build_service_module =
+  let rec get_suffix value =
+    let last_slash_position = String.rindex value '/' in
+    if last_slash_position > 0 then
+      let suffix =
+        (Str.string_after value (last_slash_position + 1))
+      in
+      if String.length suffix > 0 then suffix
+      else get_suffix (String.sub value 0 last_slash_position)
+    else value
+  in
+
   let generate_scope formatter (value, scope) =
     perform
-      let last_slash_position = String.rindex value '/' in
-      let suffix =
-        if last_slash_position > 0 then
-          (Str.string_after value (last_slash_position + 1))
-        else value in
+      let suffix = get_suffix value in
       let scope_id = OCamlName.get_ocaml_name ValueName suffix in
       lift_io $
         Format.fprintf formatter "let %s = \"%s\"@\n@\n" scope_id value;
