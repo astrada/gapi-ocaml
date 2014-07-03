@@ -83,6 +83,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;authorized&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;createInFolderTemplate&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;createUrl&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hasDriveWideScope&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;icons&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.<span class="constructor">Icons</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;installed&nbsp;:&nbsp;bool;<br>
@@ -101,9 +104,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;supportsCreate&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;supportsImport&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;supportsMultiOpen&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;supportsOfflineCreate&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;useByDefault&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;authorized&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createInFolderTemplate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createUrl&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;hasDriveWideScope&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;icons&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.<span class="constructor">Icons</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -125,6 +132,7 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supportsCreate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supportsImport&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supportsMultiOpen&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;supportsOfflineCreate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;useByDefault&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">App</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>

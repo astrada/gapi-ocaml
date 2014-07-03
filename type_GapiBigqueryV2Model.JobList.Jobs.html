@@ -77,6 +77,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;statistics&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatistics</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user_email&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;configuration&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">Jobs</span>.t,<br>
@@ -97,6 +98,7 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;status&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">Jobs</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobStatus</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;user_email&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">Jobs</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">Jobs</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobList</span>.<span class="constructor">Jobs</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>

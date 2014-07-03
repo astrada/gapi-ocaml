@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiDriveV2Model.ParentReference.html">
+<link rel="previous" href="GapiDriveV2Model.Permission.html">
 <link rel="next" href="GapiDriveV2Model.Change.html">
 <link rel="Up" href="GapiDriveV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -72,7 +72,7 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiDriveV2Model.File</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="GapiDriveV2Model.ParentReference.html" title="GapiDriveV2Model.ParentReference">Previous</a>
+<div class="navbar"><a class="pre" href="GapiDriveV2Model.Permission.html" title="GapiDriveV2Model.Permission">Previous</a>
 &nbsp;<a class="up" href="GapiDriveV2Model.html" title="GapiDriveV2Model">Up</a>
 &nbsp;<a class="post" href="GapiDriveV2Model.Change.html" title="GapiDriveV2Model.Change">Next</a>
 </div>
@@ -257,6 +257,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.markedViewedByMeDate">markedViewedByMeDate</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this file was explicitly marked viewed by the user (formatted RFC 3339 timestamp).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.md5Checksum">md5Checksum</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >An MD5 checksum for the content of this file. This is populated only for files with content stored in Drive.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -321,6 +328,13 @@ Setting this field will put the file in all of the provided folders. On insert, 
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.permissions">permissions</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The list of permissions for users with access to this file.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.properties">properties</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.Property.html#TYPEt">GapiDriveV2Model.Property.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The list of properties.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -356,6 +370,13 @@ Setting this field will put the file in all of the provided folders. On insert, 
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.sharingUser">sharingUser</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >User that shared the item with the current user, if available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.thumbnail">thumbnail</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.File.Thumbnail.html#TYPEt">Thumbnail.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -379,6 +400,13 @@ Setting this field will put the file in all of the provided folders. On insert, 
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.userPermission">userPermission</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The permissions for the authenticated user on this file.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.version">version</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the requesting user.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -429,6 +457,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
 <pre><span id="VALlastModifyingUser"><span class="keyword">val</span> lastModifyingUser</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALlastModifyingUserName"><span class="keyword">val</span> lastModifyingUserName</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALlastViewedByMeDate"><span class="keyword">val</span> lastViewedByMeDate</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmarkedViewedByMeDate"><span class="keyword">val</span> markedViewedByMeDate</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALmd5Checksum"><span class="keyword">val</span> md5Checksum</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALmimeType"><span class="keyword">val</span> mimeType</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALmodifiedByMeDate"><span class="keyword">val</span> modifiedByMeDate</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
@@ -438,15 +467,18 @@ Setting this field will put the file in all of the provided folders. On insert, 
 <pre><span id="VALownerNames"><span class="keyword">val</span> ownerNames</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALowners"><span class="keyword">val</span> owners</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALparents"><span class="keyword">val</span> parents</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.ParentReference.html#TYPEt">GapiDriveV2Model.ParentReference.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpermissions"><span class="keyword">val</span> permissions</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALproperties"><span class="keyword">val</span> properties</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.Property.html#TYPEt">GapiDriveV2Model.Property.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALshared"><span class="keyword">val</span> shared</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALsharedWithMeDate"><span class="keyword">val</span> sharedWithMeDate</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsharingUser"><span class="keyword">val</span> sharingUser</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.User.html#TYPEt">GapiDriveV2Model.User.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALthumbnail"><span class="keyword">val</span> thumbnail</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.File.Thumbnail.html#TYPEt">Thumbnail.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALthumbnailLink"><span class="keyword">val</span> thumbnailLink</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALtitle"><span class="keyword">val</span> title</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALuserPermission"><span class="keyword">val</span> userPermission</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALversion"><span class="keyword">val</span> version</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALwebContentLink"><span class="keyword">val</span> webContentLink</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALwebViewLink"><span class="keyword">val</span> webViewLink</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALwritersCanShare"><span class="keyword">val</span> writersCanShare</span> : <code class="type">(<a href="GapiDriveV2Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>

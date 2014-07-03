@@ -78,7 +78,6 @@
 
 <pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Version.html">Version</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Version.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">Screenshot</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html">..</a> <code class="code">end</code></pre>
-<pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.Request.html">Request</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.Request.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.PageStats.html">PageStats</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.PageStats.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html">FormattedResults</a>: <code class="code">sig</code> <a href="GapiPagespeedonlineV1Model.Result.FormattedResults.html">..</a> <code class="code">end</code></pre>
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
@@ -116,13 +115,6 @@
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.pageStats">pageStats</span>&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.PageStats.html#TYPEt">PageStats.t</a></code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Summary statistics for the page, such as number of JavaScript bytes, number of HTML bytes, etc.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
-</tr>
-<tr>
-<td align="left" valign="top" >
-<code>&nbsp;&nbsp;</code></td>
-<td align="left" valign="top" >
-<code><span id="TYPEELTt.request">request</span>&nbsp;: <code class="type"><a href="GapiPagespeedonlineV1Model.Result.Request.html#TYPEt">Request.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Echo of certain request parameters.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -168,7 +160,6 @@
 <pre><span id="VALinvalidRules"><span class="keyword">val</span> invalidRules</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALpageStats"><span class="keyword">val</span> pageStats</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>,<br>        <a href="GapiPagespeedonlineV1Model.Result.PageStats.html#TYPEt">PageStats.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
-<pre><span id="VALrequest"><span class="keyword">val</span> request</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>,<br>        <a href="GapiPagespeedonlineV1Model.Result.Request.html#TYPEt">Request.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALresponseCode"><span class="keyword">val</span> responseCode</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALscore"><span class="keyword">val</span> score</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALscreenshot"><span class="keyword">val</span> screenshot</span> : <code class="type">(<a href="GapiPagespeedonlineV1Model.Result.html#TYPEt">t</a>,<br>        <a href="GapiPagespeedonlineV1Model.Result.Screenshot.html#TYPEt">Screenshot.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>

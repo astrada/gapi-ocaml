@@ -116,7 +116,7 @@ Lists all tables in the specified dataset.<br>
 <div class="param_info"><code class="code">datasetId</code> : Dataset ID of the tables to list</div>
 
 <pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Updates information in an existing table, specified by tableId. This method supports patch semantics.<br>
+Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
@@ -125,7 +125,7 @@ Updates information in an existing table, specified by tableId. This method supp
 <div class="param_info"><code class="code">tableId</code> : Table ID of the table to update</div>
 
 <pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       datasetId:string -><br>       tableId:string -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Table.html#TYPEt">GapiBigqueryV2Model.Table.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Updates information in an existing table, specified by tableId.<br>
+Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>

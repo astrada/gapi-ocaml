@@ -68,9 +68,11 @@
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
-&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;anchor&nbsp;:&nbsp;string;&nbsp;label&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;anchor&nbsp;:&nbsp;string;&nbsp;label&nbsp;:&nbsp;string;&nbsp;label_with_op&nbsp;:&nbsp;string;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;anchor&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Context</span>.<span class="constructor">Facets</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;label&nbsp;:&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Context</span>.<span class="constructor">Facets</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;label_with_op&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Context</span>.<span class="constructor">Facets</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Context</span>.<span class="constructor">Facets</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiCustomsearchV1Model</span>.<span class="constructor">Context</span>.<span class="constructor">Facets</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>

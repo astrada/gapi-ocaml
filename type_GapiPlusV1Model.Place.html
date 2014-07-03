@@ -94,12 +94,14 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.<span class="constructor">Address</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;displayName&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;position&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.<span class="constructor">Position</span>.t;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;address&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.t,&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.<span class="constructor">Address</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;displayName&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;position&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.t,&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Place</span>.<span class="constructor">Position</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>

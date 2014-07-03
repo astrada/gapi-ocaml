@@ -107,7 +107,14 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.nextPageToken">nextPageToken</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Token used to access the next page of this result. Omitted if no further results are available.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.nextSyncToken">nextSyncToken</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -117,6 +124,7 @@
 <pre><span id="VALitems"><span class="keyword">val</span> items</span> : <code class="type">(<a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a>, <a href="GapiCalendarV3Model.AclRule.html#TYPEt">GapiCalendarV3Model.AclRule.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALnextPageToken"><span class="keyword">val</span> nextPageToken</span> : <code class="type">(<a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALnextSyncToken"><span class="keyword">val</span> nextSyncToken</span> : <code class="type">(<a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a></code></pre>
 <pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
 <pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiCalendarV3Model.Acl.html#TYPEt">t</a></code></pre>

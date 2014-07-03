@@ -93,6 +93,27 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.createInFolderTemplate">createInFolderTemplate</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The template url to create a new file with this app in a given folder. The template will contain {folderId} to be replaced by the folder to create the new file in.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.createUrl">createUrl</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The url to create a new file with this app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.hasDriveWideScope">hasDriveWideScope</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the app has drive-wide scope. An app with drive-wide scope can access all files in the user's drive.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.icons">icons</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.App.Icons.html#TYPEt">Icons.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The various icons for the app.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -219,6 +240,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.supportsOfflineCreate">supportsOfflineCreate</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether this app supports creating new files when offline.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.useByDefault">useByDefault</span>&nbsp;: <code class="type">bool</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Whether the app is selected as the default handler for the types it supports.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
@@ -227,6 +255,9 @@
 
 
 <pre><span id="VALauthorized"><span class="keyword">val</span> authorized</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcreateInFolderTemplate"><span class="keyword">val</span> createInFolderTemplate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcreateUrl"><span class="keyword">val</span> createUrl</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALhasDriveWideScope"><span class="keyword">val</span> hasDriveWideScope</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALicons"><span class="keyword">val</span> icons</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, <a href="GapiDriveV2Model.App.Icons.html#TYPEt">Icons.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALinstalled"><span class="keyword">val</span> installed</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
@@ -245,6 +276,7 @@
 <pre><span id="VALsupportsCreate"><span class="keyword">val</span> supportsCreate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALsupportsImport"><span class="keyword">val</span> supportsImport</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALsupportsMultiOpen"><span class="keyword">val</span> supportsMultiOpen</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsupportsOfflineCreate"><span class="keyword">val</span> supportsOfflineCreate</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALuseByDefault"><span class="keyword">val</span> useByDefault</span> : <code class="type">(<a href="GapiDriveV2Model.App.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a></code></pre>
 <pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV2Model.App.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>

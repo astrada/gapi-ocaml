@@ -104,11 +104,18 @@ Creates an access control rule.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Acl.html#TYPEt">GapiCalendarV3Model.Acl.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?showDeleted:bool -><br>       ?syncToken:string -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Acl.html#TYPEt">GapiCalendarV3Model.Acl.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Returns the rules in the access control list for the calendar.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">maxResults</code> : Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</div>
+<div class="param_info"><code class="code">pageToken</code> : Token specifying which result page to return. Optional.</div>
+<div class="param_info"><code class="code">showDeleted</code> : Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to "none". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.</div>
+<div class="param_info"><code class="code">syncToken</code> : Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 
 <pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       ruleId:string -><br>       <a href="GapiCalendarV3Model.AclRule.html#TYPEt">GapiCalendarV3Model.AclRule.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.AclRule.html#TYPEt">GapiCalendarV3Model.AclRule.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
@@ -126,4 +133,18 @@ Updates an access control rule.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 <div class="param_info"><code class="code">ruleId</code> : ACL rule identifier.</div>
+
+<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?showDeleted:bool -><br>       ?syncToken:string -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.Channel.html#TYPEt">GapiCalendarV3Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Channel.html#TYPEt">GapiCalendarV3Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Watch for changes to ACL resources.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">maxResults</code> : Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</div>
+<div class="param_info"><code class="code">pageToken</code> : Token specifying which result page to return. Optional.</div>
+<div class="param_info"><code class="code">showDeleted</code> : Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to "none". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.</div>
+<div class="param_info"><code class="code">syncToken</code> : Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
 </body></html>

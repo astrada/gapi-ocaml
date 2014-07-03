@@ -78,6 +78,7 @@
 
 <pre><span class="keyword">module</span> JsonSchema: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.JsonSchema.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
+<pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.JsonSchema.Variant.html">Variant</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.JsonSchema.Variant.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html">Annotations</a>: <code class="code">sig</code> <a href="GapiDiscoveryV1Model.JsonSchema.Annotations.html">..</a> <code class="code">end</code></pre>
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
@@ -212,6 +213,13 @@
 <td align="left" valign="top" >
 <code><span id="TYPEELTt._type">_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The value type for this schema. A list of values can be found here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.variant">variant</span>&nbsp;: <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.Variant.html#TYPEt">Variant.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >In a variant data type, the value of one property is used to determine how to interpret the entire entity. Its value must exist in a map of descriminant values to schema names.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -236,6 +244,7 @@
 <pre><span id="VALrepeated"><span class="keyword">val</span> repeated</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALrequired"><span class="keyword">val</span> required</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VAL_type"><span class="keyword">val</span> _type</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvariant"><span class="keyword">val</span> variant</span> : <code class="type">(<a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a>,<br>        <a href="GapiDiscoveryV1Model.JsonSchema.Variant.html#TYPEt">Variant.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre>
 <pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
 <pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDiscoveryV1Model.JsonSchema.html#TYPEt">t</a></code></pre>

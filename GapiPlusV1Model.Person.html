@@ -85,6 +85,7 @@
 <pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Organizations.html">Organizations</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Organizations.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Name.html">Name</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Name.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Image.html">Image</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Image.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Emails.html">Emails</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Emails.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.Cover.html">Cover</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.Cover.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiPlusV1Model.Person.AgeRange.html">AgeRange</a>: <code class="code">sig</code> <a href="GapiPlusV1Model.Person.AgeRange.html">..</a> <code class="code">end</code></pre>
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
@@ -100,7 +101,7 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.ageRange">ageRange</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Person.AgeRange.html#TYPEt">AgeRange.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The age range of the person.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The age range of the person. Valid ranges are 17 or younger, 18 to 20, and 21 or older. Age is determined from the user's birthday using Western age reckoning.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -121,7 +122,7 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.circledByCount">circledByCount</span>&nbsp;: <code class="type">int</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If a Google+ Page and for followers who are visible, the number of people who have added this page to a circle.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >For followers who are visible, the number of people who have added this person or page to a circle.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -143,6 +144,20 @@
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.displayName">displayName</span>&nbsp;: <code class="type">string</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The name of this person, which is suitable for display.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.domain">domain</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The hosted domain name for the user's Google Apps account. For instance, example.com. The plus.profile.emails.read or email scope is needed to get this domain name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.emails">emails</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Person.Emails.html#TYPEt">Emails.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A list of email addresses that this person has, including their Google account email address, and the public verified email addresses on their Google+ profile. The plus.profile.emails.read scope is needed to retrieve these email addresses, or the email scope can be used to retrieve just the Google account email address.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -227,6 +242,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.occupation">occupation</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The occupation of this person.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.organizations">organizations</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Person.Organizations.html#TYPEt">Organizations.t</a> list</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A list of current or past organizations with which this person is associated.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -261,6 +283,13 @@
 <li>"in_civil_union" - Person is in a civil union.</li>
 </ul>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.skills">skills</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The person's skills.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -302,6 +331,8 @@
 <pre><span id="VALcover"><span class="keyword">val</span> cover</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Cover.html#TYPEt">Cover.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALcurrentLocation"><span class="keyword">val</span> currentLocation</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALdisplayName"><span class="keyword">val</span> displayName</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdomain"><span class="keyword">val</span> domain</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALemails"><span class="keyword">val</span> emails</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Emails.html#TYPEt">Emails.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALetag"><span class="keyword">val</span> etag</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALgender"><span class="keyword">val</span> gender</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
@@ -312,10 +343,12 @@
 <pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Name.html#TYPEt">Name.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALnickname"><span class="keyword">val</span> nickname</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALobjectType"><span class="keyword">val</span> objectType</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALoccupation"><span class="keyword">val</span> occupation</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALorganizations"><span class="keyword">val</span> organizations</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Organizations.html#TYPEt">Organizations.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALplacesLived"><span class="keyword">val</span> placesLived</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.PlacesLived.html#TYPEt">PlacesLived.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALplusOneCount"><span class="keyword">val</span> plusOneCount</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALrelationshipStatus"><span class="keyword">val</span> relationshipStatus</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALskills"><span class="keyword">val</span> skills</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALtagline"><span class="keyword">val</span> tagline</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALurl"><span class="keyword">val</span> url</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALurls"><span class="keyword">val</span> urls</span> : <code class="type">(<a href="GapiPlusV1Model.Person.html#TYPEt">t</a>, <a href="GapiPlusV1Model.Person.Urls.html#TYPEt">Urls.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>

@@ -80,6 +80,7 @@
 
 <pre><span class="keyword">module</span> About: <code class="code">sig</code> <a href="GapiDriveV2Model.About.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
+<pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.QuotaBytesByService.html">QuotaBytesByService</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.QuotaBytesByService.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.MaxUploadSizes.html">MaxUploadSizes</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.MaxUploadSizes.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.ImportFormats.html">ImportFormats</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.ImportFormats.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiDriveV2Model.About.Features.html">Features</a>: <code class="code">sig</code> <a href="GapiDriveV2Model.About.Features.html">..</a> <code class="code">end</code></pre>
@@ -146,6 +147,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.languageCode">languageCode</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The user's language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.largestChangeId">largestChangeId</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The largest change id.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -174,6 +182,13 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.quotaBytesByService">quotaBytesByService</span>&nbsp;: <code class="type"><a href="GapiDriveV2Model.About.QuotaBytesByService.html#TYPEt">QuotaBytesByService.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The amount of storage quota used by different Google services.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.quotaBytesTotal">quotaBytesTotal</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of quota bytes.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
@@ -197,6 +212,17 @@
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.quotaBytesUsedInTrash">quotaBytesUsedInTrash</span>&nbsp;: <code class="type">int64</code>;</code></td>
 <td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The number of quota bytes used by trashed items.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.quotaType">quotaType</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of the user's storage quota. Possible values are:  <ul>
+<li>LIMITED </li>
+<li>UNLIMITED</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
@@ -238,14 +264,17 @@
 <pre><span id="VALimportFormats"><span class="keyword">val</span> importFormats</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.ImportFormats.html#TYPEt">ImportFormats.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALisCurrentAppInstalled"><span class="keyword">val</span> isCurrentAppInstalled</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlanguageCode"><span class="keyword">val</span> languageCode</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALlargestChangeId"><span class="keyword">val</span> largestChangeId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALmaxUploadSizes"><span class="keyword">val</span> maxUploadSizes</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.MaxUploadSizes.html#TYPEt">MaxUploadSizes.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALpermissionId"><span class="keyword">val</span> permissionId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesByService"><span class="keyword">val</span> quotaBytesByService</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, <a href="GapiDriveV2Model.About.QuotaBytesByService.html#TYPEt">QuotaBytesByService.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquotaBytesTotal"><span class="keyword">val</span> quotaBytesTotal</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquotaBytesUsedAggregate"><span class="keyword">val</span> quotaBytesUsedAggregate</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquotaBytesUsedInTrash"><span class="keyword">val</span> quotaBytesUsedInTrash</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaType"><span class="keyword">val</span> quotaType</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALremainingChangeIds"><span class="keyword">val</span> remainingChangeIds</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALrootFolderId"><span class="keyword">val</span> rootFolderId</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiDriveV2Model.About.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
