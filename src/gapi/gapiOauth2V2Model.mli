@@ -6,11 +6,9 @@
   {{:https://developers.google.com/accounts/docs/OAuth2}API Documentation}.
   *)
 
-module Userinfo :
+module Userinfoplus :
 sig
   type t = {
-    birthday : string;
-    (** The user's birthday. The year is not present. *)
     email : string;
     (** The user's email address. *)
     family_name : string;
@@ -26,19 +24,16 @@ sig
     link : string;
     (** URL of the profile page. *)
     locale : string;
-    (** The user's default locale. *)
+    (** The user's preferred locale. *)
     name : string;
     (** The user's full name. *)
     picture : string;
     (** URL of the user's picture image. *)
-    timezone : string;
-    (** The user's default timezone. *)
     verified_email : bool;
-    (** Boolean flag which is true if the email address is verified. *)
+    (** Boolean flag which is true if the email address is verified. Always verified because we only return the user's primary email address. *)
     
   }
   
-  val birthday : (t, string) GapiLens.t
   val email : (t, string) GapiLens.t
   val family_name : (t, string) GapiLens.t
   val gender : (t, string) GapiLens.t
@@ -49,7 +44,6 @@ sig
   val locale : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val picture : (t, string) GapiLens.t
-  val timezone : (t, string) GapiLens.t
   val verified_email : (t, bool) GapiLens.t
   
   val empty : t

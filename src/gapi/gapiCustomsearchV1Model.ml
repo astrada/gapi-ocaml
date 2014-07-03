@@ -446,6 +446,7 @@ struct
     type t = {
       anchor : string;
       label : string;
+      label_with_op : string;
       
     }
     
@@ -457,10 +458,15 @@ struct
       GapiLens.get = (fun x -> x.label);
       GapiLens.set = (fun v x -> { x with label = v });
     }
+    let label_with_op = {
+      GapiLens.get = (fun x -> x.label_with_op);
+      GapiLens.set = (fun v x -> { x with label_with_op = v });
+    }
     
     let empty = {
       anchor = "";
       label = "";
+      label_with_op = "";
       
     }
     
@@ -468,6 +474,7 @@ struct
        [
         GapiJson.render_string_value "anchor" x.anchor;
         GapiJson.render_string_value "label" x.label;
+        GapiJson.render_string_value "label_with_op" x.label_with_op;
         
       ]
     and render x = 
@@ -482,6 +489,10 @@ struct
           ({ GapiJson.name = "label"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with label = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "label_with_op"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with label_with_op = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -573,6 +584,7 @@ struct
   struct
     type t = {
       displayName : string;
+      label_with_op : string;
       name : string;
       
     }
@@ -581,6 +593,10 @@ struct
       GapiLens.get = (fun x -> x.displayName);
       GapiLens.set = (fun v x -> { x with displayName = v });
     }
+    let label_with_op = {
+      GapiLens.get = (fun x -> x.label_with_op);
+      GapiLens.set = (fun v x -> { x with label_with_op = v });
+    }
     let name = {
       GapiLens.get = (fun x -> x.name);
       GapiLens.set = (fun v x -> { x with name = v });
@@ -588,6 +604,7 @@ struct
     
     let empty = {
       displayName = "";
+      label_with_op = "";
       name = "";
       
     }
@@ -595,6 +612,7 @@ struct
     let rec render_content x = 
        [
         GapiJson.render_string_value "displayName" x.displayName;
+        GapiJson.render_string_value "label_with_op" x.label_with_op;
         GapiJson.render_string_value "name" x.name;
         
       ]
@@ -606,6 +624,10 @@ struct
           ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with displayName = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "label_with_op"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with label_with_op = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
           `String v) ->

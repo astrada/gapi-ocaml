@@ -1,9 +1,8 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-module Userinfo =
+module Userinfoplus =
 struct
   type t = {
-    birthday : string;
     email : string;
     family_name : string;
     gender : string;
@@ -14,15 +13,10 @@ struct
     locale : string;
     name : string;
     picture : string;
-    timezone : string;
     verified_email : bool;
     
   }
   
-  let birthday = {
-    GapiLens.get = (fun x -> x.birthday);
-    GapiLens.set = (fun v x -> { x with birthday = v });
-  }
   let email = {
     GapiLens.get = (fun x -> x.email);
     GapiLens.set = (fun v x -> { x with email = v });
@@ -63,17 +57,12 @@ struct
     GapiLens.get = (fun x -> x.picture);
     GapiLens.set = (fun v x -> { x with picture = v });
   }
-  let timezone = {
-    GapiLens.get = (fun x -> x.timezone);
-    GapiLens.set = (fun v x -> { x with timezone = v });
-  }
   let verified_email = {
     GapiLens.get = (fun x -> x.verified_email);
     GapiLens.set = (fun v x -> { x with verified_email = v });
   }
   
   let empty = {
-    birthday = "";
     email = "";
     family_name = "";
     gender = "";
@@ -84,14 +73,12 @@ struct
     locale = "";
     name = "";
     picture = "";
-    timezone = "";
     verified_email = false;
     
   }
   
   let rec render_content x = 
      [
-      GapiJson.render_string_value "birthday" x.birthday;
       GapiJson.render_string_value "email" x.email;
       GapiJson.render_string_value "family_name" x.family_name;
       GapiJson.render_string_value "gender" x.gender;
@@ -102,7 +89,6 @@ struct
       GapiJson.render_string_value "locale" x.locale;
       GapiJson.render_string_value "name" x.name;
       GapiJson.render_string_value "picture" x.picture;
-      GapiJson.render_string_value "timezone" x.timezone;
       GapiJson.render_bool_value "verified_email" x.verified_email;
       
     ]
@@ -110,10 +96,6 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "birthday"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with birthday = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "email"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -155,10 +137,6 @@ struct
         `String v) ->
       { x with picture = v }
     | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "timezone"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with timezone = v }
-    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "verified_email"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with verified_email = v }
@@ -167,7 +145,7 @@ struct
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiOauth2V2Model.Userinfo.parse" e x
+      GapiJson.unexpected "GapiOauth2V2Model.Userinfoplus.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

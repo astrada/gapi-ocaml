@@ -7,6 +7,8 @@ module Scope =
 struct
   let bigquery = "https://www.googleapis.com/auth/bigquery"
   
+  let bigquery_insertdata = "https://www.googleapis.com/auth/bigquery.insertdata"
+  
   let cloud_platform = "https://www.googleapis.com/auth/cloud-platform"
   
   let devstorage_full_control = "https://www.googleapis.com/auth/devstorage.full_control"
@@ -30,6 +32,7 @@ struct
       userIp : string;
       key : string;
       (* datasets-specific query parameters *)
+      all : bool;
       deleteContents : bool;
       maxResults : int;
       pageToken : string;
@@ -42,6 +45,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      all = false;
       deleteContents = false;
       maxResults = 0;
       pageToken = "";
@@ -56,6 +60,7 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.all) string_of_bool "all";
       param (fun p -> p.deleteContents) string_of_bool "deleteContents";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
@@ -64,6 +69,7 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(all = default.all)
         ?(deleteContents = default.deleteContents)
         ?(maxResults = default.maxResults)
         ?(pageToken = default.pageToken)
@@ -74,6 +80,7 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        all;
         deleteContents;
         maxResults;
         pageToken;
@@ -138,6 +145,7 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?std_params
+        ?all
         ?maxResults
         ?pageToken
         ~projectId
@@ -145,7 +153,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["projects";
       ((fun x -> x) projectId); "datasets"] base_url in
     let params = DatasetsParameters.merge_parameters
-      ?standard_parameters:std_params ?maxResults ?pageToken () in
+      ?standard_parameters:std_params ?all ?maxResults ?pageToken () in
     let query_parameters = Option.map DatasetsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url

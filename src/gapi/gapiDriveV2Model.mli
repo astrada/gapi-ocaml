@@ -97,6 +97,8 @@ sig
   type t = {
     displayName : string;
     (** A plain text displayable name for this user. *)
+    emailAddress : string;
+    (** The email address of the user. *)
     isAuthenticatedUser : bool;
     (** Whether this user is the same as the authenticated user for whom the request was made. *)
     kind : string;
@@ -109,6 +111,7 @@ sig
   }
   
   val displayName : (t, string) GapiLens.t
+  val emailAddress : (t, string) GapiLens.t
   val isAuthenticatedUser : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val permissionId : (t, string) GapiLens.t
@@ -128,6 +131,27 @@ end
 
 module About :
 sig
+  module QuotaBytesByService :
+  sig
+    type t = {
+      bytesUsed : int64;
+      (** The storage quota bytes used by the service. *)
+      serviceName : string;
+      (** The service's name, e.g. DRIVE, GMAIL, or PHOTOS. *)
+      
+    }
+    
+    val bytesUsed : (t, int64) GapiLens.t
+    val serviceName : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module MaxUploadSizes :
   sig
     type t = {
@@ -271,6 +295,8 @@ sig
     (** A boolean indicating whether the authenticated app is installed by the authenticated user. *)
     kind : string;
     (** This is always drive#about. *)
+    languageCode : string;
+    (** The user's language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/). *)
     largestChangeId : int64;
     (** The largest change id. *)
     maxUploadSizes : MaxUploadSizes.t list;
@@ -279,6 +305,8 @@ sig
     (** The name of the current user. *)
     permissionId : string;
     (** The current user's ID as visible in the permissions collection. *)
+    quotaBytesByService : QuotaBytesByService.t list;
+    (** The amount of storage quota used by different Google services. *)
     quotaBytesTotal : int64;
     (** The total number of quota bytes. *)
     quotaBytesUsed : int64;
@@ -287,6 +315,10 @@ sig
     (** The number of quota bytes used by all Google apps (Drive, Picasa, etc.). *)
     quotaBytesUsedInTrash : int64;
     (** The number of quota bytes used by trashed items. *)
+    quotaType : string;
+    (** The type of the user's storage quota. Possible values are:  
+- LIMITED 
+- UNLIMITED *)
     remainingChangeIds : int64;
     (** The number of remaining change ids. *)
     rootFolderId : string;
@@ -306,14 +338,17 @@ sig
   val importFormats : (t, ImportFormats.t list) GapiLens.t
   val isCurrentAppInstalled : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val languageCode : (t, string) GapiLens.t
   val largestChangeId : (t, int64) GapiLens.t
   val maxUploadSizes : (t, MaxUploadSizes.t list) GapiLens.t
   val name : (t, string) GapiLens.t
   val permissionId : (t, string) GapiLens.t
+  val quotaBytesByService : (t, QuotaBytesByService.t list) GapiLens.t
   val quotaBytesTotal : (t, int64) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
   val quotaBytesUsedAggregate : (t, int64) GapiLens.t
   val quotaBytesUsedInTrash : (t, int64) GapiLens.t
+  val quotaType : (t, string) GapiLens.t
   val remainingChangeIds : (t, int64) GapiLens.t
   val rootFolderId : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
@@ -411,6 +446,12 @@ sig
   type t = {
     authorized : bool;
     (** Whether the app is authorized to access data on the user's Drive. *)
+    createInFolderTemplate : string;
+    (** The template url to create a new file with this app in a given folder. The template will contain \{folderId\} to be replaced by the folder to create the new file in. *)
+    createUrl : string;
+    (** The url to create a new file with this app. *)
+    hasDriveWideScope : bool;
+    (** Whether the app has drive-wide scope. An app with drive-wide scope can access all files in the user's drive. *)
     icons : Icons.t list;
     (** The various icons for the app. *)
     id : string;
@@ -447,12 +488,17 @@ sig
     (** Whether this app supports importing Google Docs. *)
     supportsMultiOpen : bool;
     (** Whether this app supports opening more than one file. *)
+    supportsOfflineCreate : bool;
+    (** Whether this app supports creating new files when offline. *)
     useByDefault : bool;
     (** Whether the app is selected as the default handler for the types it supports. *)
     
   }
   
   val authorized : (t, bool) GapiLens.t
+  val createInFolderTemplate : (t, string) GapiLens.t
+  val createUrl : (t, string) GapiLens.t
+  val hasDriveWideScope : (t, bool) GapiLens.t
   val icons : (t, Icons.t list) GapiLens.t
   val id : (t, string) GapiLens.t
   val installed : (t, bool) GapiLens.t
@@ -471,6 +517,7 @@ sig
   val supportsCreate : (t, bool) GapiLens.t
   val supportsImport : (t, bool) GapiLens.t
   val supportsMultiOpen : (t, bool) GapiLens.t
+  val supportsOfflineCreate : (t, bool) GapiLens.t
   val useByDefault : (t, bool) GapiLens.t
   
   val empty : t
@@ -488,6 +535,8 @@ end
 module AppList :
 sig
   type t = {
+    defaultAppIds : string list;
+    (** List of app IDs that the user has specified to use by default. The list is in reverse-priority order (lowest to highest). *)
     etag : string;
     (** The ETag of the list. *)
     items : App.t list;
@@ -499,6 +548,7 @@ sig
     
   }
   
+  val defaultAppIds : (t, string list) GapiLens.t
   val etag : (t, string) GapiLens.t
   val items : (t, App.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -735,74 +785,6 @@ sig
   
 end
 
-module Permission :
-sig
-  type t = {
-    additionalRoles : string list;
-    (** Additional roles for this user. Only commenter is currently allowed. *)
-    authKey : string;
-    (** The authkey parameter required for this permission. *)
-    domain : string;
-    (** The domain name of the entity this permission refers to. This is an output-only field which is populated when the permission type is "user", "group" or "domain". *)
-    emailAddress : string;
-    (** The email address of the user this permission refers to. This is an output-only field which is populated when the permission type is "user" and the given user's Google+ profile privacy settings allow exposing their email address. *)
-    etag : string;
-    (** The ETag of the permission. *)
-    id : string;
-    (** The ID of the permission. *)
-    kind : string;
-    (** This is always drive#permission. *)
-    name : string;
-    (** The name for this permission. *)
-    photoLink : string;
-    (** A link to the profile photo, if available. *)
-    role : string;
-    (** The primary role for this user. Allowed values are:  
-- owner 
-- reader 
-- writer *)
-    selfLink : string;
-    (** A link back to this permission. *)
-    _type : string;
-    (** The account type. Allowed values are:  
-- user 
-- group 
-- domain 
-- anyone *)
-    value : string;
-    (** The email address or domain name for the entity. This is used during inserts and is not populated in responses. *)
-    withLink : bool;
-    (** Whether the link is required for this permission. *)
-    
-  }
-  
-  val additionalRoles : (t, string list) GapiLens.t
-  val authKey : (t, string) GapiLens.t
-  val domain : (t, string) GapiLens.t
-  val emailAddress : (t, string) GapiLens.t
-  val etag : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val name : (t, string) GapiLens.t
-  val photoLink : (t, string) GapiLens.t
-  val role : (t, string) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
-  val _type : (t, string) GapiLens.t
-  val value : (t, string) GapiLens.t
-  val withLink : (t, bool) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Property :
 sig
   type t = {
@@ -861,6 +843,74 @@ sig
   val kind : (t, string) GapiLens.t
   val parentLink : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Permission :
+sig
+  type t = {
+    additionalRoles : string list;
+    (** Additional roles for this user. Only commenter is currently allowed. *)
+    authKey : string;
+    (** The authkey parameter required for this permission. *)
+    domain : string;
+    (** The domain name of the entity this permission refers to. This is an output-only field which is present when the permission type is user, group or domain. *)
+    emailAddress : string;
+    (** The email address of the user this permission refers to. This is an output-only field which is present when the permission type is user and the given user's Google+ profile privacy settings allow exposing their email address. *)
+    etag : string;
+    (** The ETag of the permission. *)
+    id : string;
+    (** The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified. *)
+    kind : string;
+    (** This is always drive#permission. *)
+    name : string;
+    (** The name for this permission. *)
+    photoLink : string;
+    (** A link to the profile photo, if available. *)
+    role : string;
+    (** The primary role for this user. Allowed values are:  
+- owner 
+- reader 
+- writer *)
+    selfLink : string;
+    (** A link back to this permission. *)
+    _type : string;
+    (** The account type. Allowed values are:  
+- user 
+- group 
+- domain 
+- anyone *)
+    value : string;
+    (** The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified. *)
+    withLink : bool;
+    (** Whether the link is required for this permission. *)
+    
+  }
+  
+  val additionalRoles : (t, string list) GapiLens.t
+  val authKey : (t, string) GapiLens.t
+  val domain : (t, string) GapiLens.t
+  val emailAddress : (t, string) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val photoLink : (t, string) GapiLens.t
+  val role : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
+  val withLink : (t, bool) GapiLens.t
   
   val empty : t
   
@@ -1096,6 +1146,8 @@ sig
     (** Name of the last user to modify this file. *)
     lastViewedByMeDate : GapiDate.t;
     (** Last time this file was viewed by the user (formatted RFC 3339 timestamp). *)
+    markedViewedByMeDate : GapiDate.t;
+    (** Time this file was explicitly marked viewed by the user (formatted RFC 3339 timestamp). *)
     md5Checksum : string;
     (** An MD5 checksum for the content of this file. This is populated only for files with content stored in Drive. *)
     mimeType : string;
@@ -1115,6 +1167,8 @@ sig
     parents : ParentReference.t list;
     (** Collection of parent folders which contain this file.
 Setting this field will put the file in all of the provided folders. On insert, if no folders are provided, the file will be placed in the default root folder. *)
+    permissions : Permission.t list;
+    (** The list of permissions for users with access to this file. *)
     properties : Property.t list;
     (** The list of properties. *)
     quotaBytesUsed : int64;
@@ -1125,6 +1179,8 @@ Setting this field will put the file in all of the provided folders. On insert, 
     (** Whether the file has been shared. *)
     sharedWithMeDate : GapiDate.t;
     (** Time at which this file was shared with the user (formatted RFC 3339 timestamp). *)
+    sharingUser : User.t;
+    (** User that shared the item with the current user, if available. *)
     thumbnail : Thumbnail.t;
     (** Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google. *)
     thumbnailLink : string;
@@ -1133,6 +1189,8 @@ Setting this field will put the file in all of the provided folders. On insert, 
     (** The title of this file. *)
     userPermission : Permission.t;
     (** The permissions for the authenticated user on this file. *)
+    version : int64;
+    (** A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the requesting user. *)
     webContentLink : string;
     (** A link for downloading the content of the file in a browser using cookie based authentication. In cases where the content is shared publicly, the content can be downloaded without any credentials. *)
     webViewLink : string;
@@ -1166,6 +1224,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val lastModifyingUser : (t, User.t) GapiLens.t
   val lastModifyingUserName : (t, string) GapiLens.t
   val lastViewedByMeDate : (t, GapiDate.t) GapiLens.t
+  val markedViewedByMeDate : (t, GapiDate.t) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
   val mimeType : (t, string) GapiLens.t
   val modifiedByMeDate : (t, GapiDate.t) GapiLens.t
@@ -1175,15 +1234,18 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val ownerNames : (t, string list) GapiLens.t
   val owners : (t, User.t list) GapiLens.t
   val parents : (t, ParentReference.t list) GapiLens.t
+  val permissions : (t, Permission.t list) GapiLens.t
   val properties : (t, Property.t list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val shared : (t, bool) GapiLens.t
   val sharedWithMeDate : (t, GapiDate.t) GapiLens.t
+  val sharingUser : (t, User.t) GapiLens.t
   val thumbnail : (t, Thumbnail.t) GapiLens.t
   val thumbnailLink : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val userPermission : (t, Permission.t) GapiLens.t
+  val version : (t, int64) GapiLens.t
   val webContentLink : (t, string) GapiLens.t
   val webViewLink : (t, string) GapiLens.t
   val writersCanShare : (t, bool) GapiLens.t

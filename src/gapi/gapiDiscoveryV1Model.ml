@@ -2,6 +2,116 @@
 
 module JsonSchema =
 struct
+  module Variant =
+  struct
+    module Map =
+    struct
+      type t = {
+        _ref : string;
+        type_value : string;
+        
+      }
+      
+      let _ref = {
+        GapiLens.get = (fun x -> x._ref);
+        GapiLens.set = (fun v x -> { x with _ref = v });
+      }
+      let type_value = {
+        GapiLens.get = (fun x -> x.type_value);
+        GapiLens.set = (fun v x -> { x with type_value = v });
+      }
+      
+      let empty = {
+        _ref = "";
+        type_value = "";
+        
+      }
+      
+      let rec render_content x = 
+         [
+          GapiJson.render_string_value "$ref" x._ref;
+          GapiJson.render_string_value "type_value" x.type_value;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "$ref"; data_type = GapiJson.Scalar },
+            `String v) ->
+          { x with _ref = v }
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "type_value"; data_type = GapiJson.Scalar },
+            `String v) ->
+          { x with type_value = v }
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiDiscoveryV1Model.Map.parse" e x
+      
+    end
+    
+    type t = {
+      discriminant : string;
+      map : Map.t list;
+      
+    }
+    
+    let discriminant = {
+      GapiLens.get = (fun x -> x.discriminant);
+      GapiLens.set = (fun v x -> { x with discriminant = v });
+    }
+    let map = {
+      GapiLens.get = (fun x -> x.map);
+      GapiLens.set = (fun v x -> { x with map = v });
+    }
+    
+    let empty = {
+      discriminant = "";
+      map = [];
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "discriminant" x.discriminant;
+        GapiJson.render_array "map" Map.render x.map;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "discriminant"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with discriminant = v }
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "map"; data_type = GapiJson.Array },
+          cs) ->
+        GapiJson.parse_collection
+          (fun x' -> function
+            | GapiCore.AnnotatedTree.Node
+                ({ GapiJson.name = ""; data_type = GapiJson.Object },
+                cs) ->
+              GapiJson.parse_children Map.parse Map.empty (fun v -> v) cs
+            | e ->
+              GapiJson.unexpected "GapiDiscoveryV1Model.Variant.parse.parse_collection" e x')
+          Map.empty
+          (fun v -> { x with map = v })
+          cs
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDiscoveryV1Model.Variant.parse" e x
+    
+  end
+  
   module Annotations =
   struct
     type t = {
@@ -71,6 +181,7 @@ struct
     repeated : bool;
     required : bool;
     _type : string;
+    variant : Variant.t;
     
   }
   
@@ -150,6 +261,10 @@ struct
     GapiLens.get = (fun x -> x._type);
     GapiLens.set = (fun v x -> { x with _type = v });
   }
+  let variant = {
+    GapiLens.get = (fun x -> x.variant);
+    GapiLens.set = (fun v x -> { x with variant = v });
+  }
   
   let empty = {
     _ref = "";
@@ -171,6 +286,7 @@ struct
     repeated = false;
     required = false;
     _type = "";
+    variant = Variant.empty;
     
   }
   
@@ -195,6 +311,7 @@ struct
       GapiJson.render_bool_value "repeated" x.repeated;
       GapiJson.render_bool_value "required" x.required;
       GapiJson.render_string_value "type" x._type;
+      (fun v -> GapiJson.render_object "variant" (Variant.render_content v)) x.variant;
       
     ]
   and render x = 
@@ -319,6 +436,14 @@ struct
         ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with _type = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "variant"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Variant.parse
+        Variant.empty
+        (fun v -> { x with variant = v })
+        cs
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->

@@ -73,11 +73,22 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param showDeleted Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to "none". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
     @param calendarId Calendar identifier.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?showDeleted:bool ->
+    ?syncToken:string ->
     calendarId:string ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Acl.t * GapiConversation.Session.t
@@ -113,6 +124,31 @@ sig
     GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.AclRule.t * GapiConversation.Session.t
+  
+  (** Watch for changes to ACL resources.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param std_params Optional standard parameters.
+    @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param showDeleted Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to "none". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
+    @param calendarId Calendar identifier.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?showDeleted:bool ->
+    ?syncToken:string ->
+    calendarId:string ->
+    GapiCalendarV3Model.Channel.t ->
+    GapiConversation.Session.t ->
+    GapiCalendarV3Model.Channel.t * GapiConversation.Session.t
   
   
 end
@@ -167,7 +203,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param colorRgbFormat Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.
+    @param colorRgbFormat Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.
     *)
   val insert :
     ?base_url:string ->
@@ -181,10 +217,16 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param maxResults Maximum number of entries returned on one result page. Optional.
+    @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
     @param minAccessRole The minimum access role for the user in the returned entires. Optional. The default is no restriction.
     @param pageToken Token specifying which result page to return. Optional.
+    @param showDeleted Whether to include deleted calendar list entries in the result. Optional. The default is False.
     @param showHidden Whether to show hidden entries. Optional. The default is False.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. If only read-only fields such as calendar properties or ACLs have changed, the entry won't be returned. All entries deleted and hidden since the previous list request will always be in the result set and it is not allowed to set showDeleted neither showHidden to False.
+To ensure client state consistency minAccessRole query parameter cannot be specified together with nextSyncToken.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
     *)
   val list :
     ?base_url:string ->
@@ -192,7 +234,9 @@ sig
     ?maxResults:int ->
     ?minAccessRole:MinAccessRole.t ->
     ?pageToken:string ->
+    ?showDeleted:bool ->
     ?showHidden:bool ->
+    ?syncToken:string ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarList.t * GapiConversation.Session.t
   
@@ -200,7 +244,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param colorRgbFormat Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.
+    @param colorRgbFormat Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val patch :
@@ -216,7 +260,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param colorRgbFormat Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.
+    @param colorRgbFormat Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.
     @param calendarId Calendar identifier.
     *)
   val update :
@@ -227,6 +271,34 @@ sig
     GapiCalendarV3Model.CalendarListEntry.t ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t
+  
+  (** Watch for changes to CalendarList resources.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param std_params Optional standard parameters.
+    @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
+    @param minAccessRole The minimum access role for the user in the returned entires. Optional. The default is no restriction.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param showDeleted Whether to include deleted calendar list entries in the result. Optional. The default is False.
+    @param showHidden Whether to show hidden entries. Optional. The default is False.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. If only read-only fields such as calendar properties or ACLs have changed, the entry won't be returned. All entries deleted and hidden since the previous list request will always be in the result set and it is not allowed to set showDeleted neither showHidden to False.
+To ensure client state consistency minAccessRole query parameter cannot be specified together with nextSyncToken.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?minAccessRole:MinAccessRole.t ->
+    ?pageToken:string ->
+    ?showDeleted:bool ->
+    ?showHidden:bool ->
+    ?syncToken:string ->
+    GapiCalendarV3Model.Channel.t ->
+    GapiConversation.Session.t ->
+    GapiCalendarV3Model.Channel.t * GapiConversation.Session.t
   
   
 end
@@ -362,7 +434,7 @@ sig
   sig
     type t =
       | Default
-      | StartTime (** Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter "singleEvents" is True) *)
+      | StartTime (** Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True) *)
       | Updated (** Order by last modification time (ascending). *)
       
     val to_string : t -> string
@@ -393,7 +465,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
     @param calendarId Calendar identifier.
@@ -447,12 +519,12 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
-    @param maxResults Maximum number of events returned on one result page. Optional.
+    @param maxResults Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param originalStart The original start time of the instance in the result. Optional.
     @param pageToken Token specifying which result page to return. Optional.
-    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.
+    @param showDeleted Whether to include deleted events (with status equals "cancelled") in the result. Cancelled instances of recurring events will still be included if singleEvents is False. Optional. The default is False.
     @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
     @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
@@ -480,20 +552,36 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
-    @param iCalUID Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.
+    @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param iCalUID Specifies event ID in the iCalendar format to be included in the response. Optional.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
-    @param maxResults Maximum number of events returned on one result page. Optional.
+    @param maxResults Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
+    @param privateExtendedProperty Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.
     @param q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
-    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
+    @param sharedExtendedProperty Extended properties constraint specified as propertyName=value. Matches only shared properties. This parameter might be repeated multiple times to return events that match all given constraints.
+    @param showDeleted Whether to include deleted events (with status equals "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
     @param showHiddenInvitations Whether to include hidden invitations in the result. Optional. The default is False.
     @param singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.
+There are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.
+
+These are: 
+- iCalUID 
+- orderBy 
+- privateExtendedProperty 
+- q 
+- sharedExtendedProperty 
+- timeMin 
+- timeMax 
+- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
     @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
     @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
-    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.
+    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
     @param calendarId Calendar identifier.
     *)
   val list :
@@ -505,10 +593,13 @@ sig
     ?maxResults:int ->
     ?orderBy:OrderBy.t ->
     ?pageToken:string ->
+    ?privateExtendedProperty:string list ->
     ?q:string ->
+    ?sharedExtendedProperty:string list ->
     ?showDeleted:bool ->
     ?showHiddenInvitations:bool ->
     ?singleEvents:bool ->
+    ?syncToken:string ->
     ?timeMax:GapiDate.t ->
     ?timeMin:GapiDate.t ->
     ?timeZone:string ->
@@ -540,7 +631,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
     @param calendarId Calendar identifier.
@@ -579,7 +670,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
     @param calendarId Calendar identifier.
@@ -601,20 +692,36 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
-    @param iCalUID Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.
+    @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param iCalUID Specifies event ID in the iCalendar format to be included in the response. Optional.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
-    @param maxResults Maximum number of events returned on one result page. Optional.
+    @param maxResults Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
+    @param privateExtendedProperty Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.
     @param q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
-    @param showDeleted Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
+    @param sharedExtendedProperty Extended properties constraint specified as propertyName=value. Matches only shared properties. This parameter might be repeated multiple times to return events that match all given constraints.
+    @param showDeleted Whether to include deleted events (with status equals "cancelled") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.
     @param showHiddenInvitations Whether to include hidden invitations in the result. Optional. The default is False.
     @param singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.
+There are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.
+
+These are: 
+- iCalUID 
+- orderBy 
+- privateExtendedProperty 
+- q 
+- sharedExtendedProperty 
+- timeMin 
+- timeMax 
+- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
     @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
     @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
-    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.
+    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
     @param calendarId Calendar identifier.
     *)
   val watch :
@@ -626,10 +733,13 @@ sig
     ?maxResults:int ->
     ?orderBy:OrderBy.t ->
     ?pageToken:string ->
+    ?privateExtendedProperty:string list ->
     ?q:string ->
+    ?sharedExtendedProperty:string list ->
     ?showDeleted:bool ->
     ?showHiddenInvitations:bool ->
     ?singleEvents:bool ->
+    ?syncToken:string ->
     ?timeMax:GapiDate.t ->
     ?timeMin:GapiDate.t ->
     ?timeZone:string ->
@@ -682,12 +792,42 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?syncToken:string ->
     GapiConversation.Session.t ->
     GapiCalendarV3Model.Settings.t * GapiConversation.Session.t
+  
+  (** Watch for changes to Settings resources.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
+    @param std_params Optional standard parameters.
+    @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
+    @param pageToken Token specifying which result page to return. Optional.
+    @param syncToken Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.
+If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
+Learn more about incremental synchronization.
+Optional. The default is to return all entries.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    ?syncToken:string ->
+    GapiCalendarV3Model.Channel.t ->
+    GapiConversation.Session.t ->
+    GapiCalendarV3Model.Channel.t * GapiConversation.Session.t
   
   
 end

@@ -75,7 +75,7 @@ sig
     kind : string;
     (** Type of the resource ("calendar#setting"). *)
     value : string;
-    (** Value of the user setting. The format of the value depends on the ID of the setting. It must always be any UTF-8 string of length up to 1024 characters. *)
+    (** Value of the user setting. The format of the value depends on the ID of the setting. It must always be a UTF-8 string of length up to 1024 characters. *)
     
   }
   
@@ -105,12 +105,18 @@ sig
     (** List of user settings. *)
     kind : string;
     (** Type of the collection ("calendar#settings"). *)
+    nextPageToken : string;
+    (** Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided. *)
+    nextSyncToken : string;
+    (** Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided. *)
     
   }
   
   val etag : (t, string) GapiLens.t
   val items : (t, Setting.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  val nextSyncToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -256,6 +262,38 @@ sig
   
 end
 
+module CalendarNotification :
+sig
+  type t = {
+    _method : string;
+    (** The method used to deliver the notification. Possible values are:  
+- "email" - Reminders are sent via email. 
+- "sms" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. *)
+    _type : string;
+    (** The type of notification. Possible values are:  
+- "eventCreation" - Notification sent when a new event is put on the calendar. 
+- "eventChange" - Notification sent when an event is changed. 
+- "eventCancellation" - Notification sent when an event is cancelled. 
+- "eventResponse" - Notification sent when an event is changed. 
+- "agenda" - An agenda with the events of the day (sent out in the morning). *)
+    
+  }
+  
+  val _method : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module EventReminder :
 sig
   type t = {
@@ -286,6 +324,24 @@ end
 
 module CalendarListEntry :
 sig
+  module NotificationSettings :
+  sig
+    type t = {
+      notifications : CalendarNotification.t list;
+      (** The list of notifications set for this calendar. *)
+      
+    }
+    
+    val notifications : (t, CalendarNotification.t list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     accessRole : string;
     (** The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  
@@ -294,17 +350,19 @@ sig
 - "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
 - "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
     backgroundColor : string;
-    (** The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional. *)
+    (** The main color of the calendar in the hexadecimal format "#0088aa". This property supersedes the index-based colorId property. Optional. *)
     colorId : string;
-    (** The color of the calendar. This is an ID referring to an entry in the "calendar" section of the colors definition (see the "colors" endpoint). Optional. *)
+    (** The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). Optional. *)
     defaultReminders : EventReminder.t list;
     (** The default reminders that the authenticated user has for this calendar. *)
+    deleted : bool;
+    (** Whether this calendar list entry has been deleted from the calendar list. Read-only. Optional. The default is False. *)
     description : string;
     (** Description of the calendar. Optional. Read-only. *)
     etag : string;
     (** ETag of the resource. *)
     foregroundColor : string;
-    (** The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional. *)
+    (** The foreground color of the calendar in the hexadecimal format "#ffffff". This property supersedes the index-based colorId property. Optional. *)
     hidden : bool;
     (** Whether the calendar has been hidden from the list. Optional. The default is False. *)
     id : string;
@@ -313,6 +371,8 @@ sig
     (** Type of the resource ("calendar#calendarListEntry"). *)
     location : string;
     (** Geographic location of the calendar as free-form text. Optional. Read-only. *)
+    notificationSettings : NotificationSettings.t;
+    (** The notifications that the authenticated user is receiving for this calendar. *)
     primary : bool;
     (** Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False. *)
     selected : bool;
@@ -330,6 +390,7 @@ sig
   val backgroundColor : (t, string) GapiLens.t
   val colorId : (t, string) GapiLens.t
   val defaultReminders : (t, EventReminder.t list) GapiLens.t
+  val deleted : (t, bool) GapiLens.t
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val foregroundColor : (t, string) GapiLens.t
@@ -337,6 +398,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val location : (t, string) GapiLens.t
+  val notificationSettings : (t, NotificationSettings.t) GapiLens.t
   val primary : (t, bool) GapiLens.t
   val selected : (t, bool) GapiLens.t
   val summary : (t, string) GapiLens.t
@@ -365,7 +427,9 @@ sig
     kind : string;
     (** Type of the collection ("calendar#calendarList"). *)
     nextPageToken : string;
-    (** Token used to access the next page of this result. *)
+    (** Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided. *)
+    nextSyncToken : string;
+    (** Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided. *)
     
   }
   
@@ -373,6 +437,7 @@ sig
   val items : (t, CalendarListEntry.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
+  val nextSyncToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -580,7 +645,7 @@ sig
     date : GapiDate.t;
     (** The date, in the format "yyyy-mm-dd", if this is an all-day event. *)
     dateTime : GapiDate.t;
-    (** The time, as a combined date-time value (formatted according to RFC 3339). A time zone offset is required unless a time zone is explicitly specified in 'timeZone'. *)
+    (** The time, as a combined date-time value (formatted according to RFC 3339). A time zone offset is required unless a time zone is explicitly specified in timeZone. *)
     timeZone : string;
     (** The name of the time zone in which the time is specified (e.g. "Europe/Zurich"). Optional. The default is the time zone of the calendar. *)
     
@@ -768,9 +833,9 @@ sig
     attendees : EventAttendee.t list;
     (** The attendees of the event. *)
     attendeesOmitted : bool;
-    (** Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False. *)
+    (** Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False. *)
     colorId : string;
-    (** The color of the event. This is an ID referring to an entry in the "event" section of the colors definition (see the "colors" endpoint). Optional. *)
+    (** The color of the event. This is an ID referring to an entry in the event section of the colors definition (see the  colors endpoint). Optional. *)
     created : GapiDate.t;
     (** Creation time of the event (as a RFC 3339 timestamp). Read-only. *)
     creator : Creator.t;
@@ -800,7 +865,10 @@ sig
     iCalUID : string;
     (** Event ID in the iCalendar format. *)
     id : string;
-    (** Identifier of the event. *)
+    (** Identifier of the event. When creating new single or recurring events, you can specify their IDs. Provided IDs must follow these rules:  
+- characters allowed in the ID are those used in base32hex encoding, i.e. lowercase letters a-v and digits 0-9, see section 3.1.2 in RFC2938 
+- the length of the ID must be between 5 and 1024 characters 
+- the ID must be unique per calendar  Due to the globally distributed nature of the system, we cannot guarantee that ID collisions will be detected at event creation time. To minimize the risk of collisions we recommend using an established UUID algorithm such as one described in RFC4122. *)
     kind : string;
     (** Type of the resource ("calendar#event"). *)
     location : string;
@@ -808,7 +876,7 @@ sig
     locked : bool;
     (** Whether this is a locked event copy where no changes can be made to the main event fields "summary", "description", "location", "start", "end" or "recurrence". The default is False. Read-Only. *)
     organizer : Organizer.t;
-    (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the "move" operation. Read-only, except when importing an event. *)
+    (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in attendees with the organizer field set to True. To change the organizer, use the move operation. Read-only, except when importing an event. *)
     originalStartTime : EventDateTime.t;
     (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable. *)
     privateCopy : bool;
@@ -906,7 +974,9 @@ sig
     kind : string;
     (** Type of the collection ("calendar#acl"). *)
     nextPageToken : string;
-    (** Token used to access the next page of this result. Omitted if no further results are available. *)
+    (** Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided. *)
+    nextSyncToken : string;
+    (** Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided. *)
     
   }
   
@@ -914,6 +984,7 @@ sig
   val items : (t, AclRule.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
+  val nextSyncToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -938,7 +1009,7 @@ sig
 - "writer" - The user has read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
 - "owner" - The user has ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
     defaultReminders : EventReminder.t list;
-    (** The default reminders on the calendar for the authenticated user. These reminders apply to all events on this calendar that do not explicitly override them (i.e. do not have 'reminders.useDefault' set to 'true'). *)
+    (** The default reminders on the calendar for the authenticated user. These reminders apply to all events on this calendar that do not explicitly override them (i.e. do not have reminders.useDefault set to True). *)
     description : string;
     (** Description of the calendar. Read-only. *)
     etag : string;
@@ -948,7 +1019,9 @@ sig
     kind : string;
     (** Type of the collection ("calendar#events"). *)
     nextPageToken : string;
-    (** Token used to access the next page of this result. Omitted if no further results are available. *)
+    (** Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided. *)
+    nextSyncToken : string;
+    (** Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided. *)
     summary : string;
     (** Title of the calendar. Read-only. *)
     timeZone : string;
@@ -965,6 +1038,7 @@ sig
   val items : (t, Event.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
+  val nextSyncToken : (t, string) GapiLens.t
   val summary : (t, string) GapiLens.t
   val timeZone : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -1034,9 +1108,9 @@ module Colors :
 sig
   type t = {
     calendar : (string * ColorDefinition.t) list;
-    (** Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only. *)
+    (** Palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry resource refers to one of these color IDs in its color field. Read-only. *)
     event : (string * ColorDefinition.t) list;
-    (** Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only. *)
+    (** Palette of event colors, mapping from the color ID to its definition. An event resource may refer to one of these color IDs in its color field. Read-only. *)
     kind : string;
     (** Type of the resource ("calendar#colors"). *)
     updated : GapiDate.t;

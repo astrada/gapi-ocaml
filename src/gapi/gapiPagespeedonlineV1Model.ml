@@ -124,67 +124,6 @@ struct
     
   end
   
-  module Request =
-  struct
-    type t = {
-      filter_third_party_resources : string;
-      strategy : string;
-      url : string;
-      
-    }
-    
-    let filter_third_party_resources = {
-      GapiLens.get = (fun x -> x.filter_third_party_resources);
-      GapiLens.set = (fun v x -> { x with filter_third_party_resources = v });
-    }
-    let strategy = {
-      GapiLens.get = (fun x -> x.strategy);
-      GapiLens.set = (fun v x -> { x with strategy = v });
-    }
-    let url = {
-      GapiLens.get = (fun x -> x.url);
-      GapiLens.set = (fun v x -> { x with url = v });
-    }
-    
-    let empty = {
-      filter_third_party_resources = "";
-      strategy = "";
-      url = "";
-      
-    }
-    
-    let rec render_content x = 
-       [
-        GapiJson.render_string_value "filter_third_party_resources" x.filter_third_party_resources;
-        GapiJson.render_string_value "strategy" x.strategy;
-        GapiJson.render_string_value "url" x.url;
-        
-      ]
-    and render x = 
-      GapiJson.render_object "" (render_content x)
-    
-    let rec parse x = function
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "filter_third_party_resources"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with filter_third_party_resources = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "strategy"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with strategy = v }
-      | GapiCore.AnnotatedTree.Leaf
-          ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
-          `String v) ->
-        { x with url = v }
-      | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = ""; data_type = GapiJson.Object },
-        cs) ->
-        GapiJson.parse_children parse empty (fun x -> x) cs
-      | e ->
-        GapiJson.unexpected "GapiPagespeedonlineV1Model.Request.parse" e x
-    
-  end
-  
   module PageStats =
   struct
     type t = {
@@ -841,7 +780,6 @@ struct
       type t = {
         localizedRuleName : string;
         ruleImpact : float;
-        ruleScore : int;
         urlBlocks : UrlBlocks.t list;
         
       }
@@ -854,10 +792,6 @@ struct
         GapiLens.get = (fun x -> x.ruleImpact);
         GapiLens.set = (fun v x -> { x with ruleImpact = v });
       }
-      let ruleScore = {
-        GapiLens.get = (fun x -> x.ruleScore);
-        GapiLens.set = (fun v x -> { x with ruleScore = v });
-      }
       let urlBlocks = {
         GapiLens.get = (fun x -> x.urlBlocks);
         GapiLens.set = (fun v x -> { x with urlBlocks = v });
@@ -866,7 +800,6 @@ struct
       let empty = {
         localizedRuleName = "";
         ruleImpact = 0.0;
-        ruleScore = 0;
         urlBlocks = [];
         
       }
@@ -875,7 +808,6 @@ struct
          [
           GapiJson.render_string_value "localizedRuleName" x.localizedRuleName;
           GapiJson.render_float_value "ruleImpact" x.ruleImpact;
-          GapiJson.render_int_value "ruleScore" x.ruleScore;
           GapiJson.render_array "urlBlocks" UrlBlocks.render x.urlBlocks;
           
         ]
@@ -895,10 +827,6 @@ struct
             ({ GapiJson.name = "ruleImpact"; data_type = GapiJson.Scalar },
             `Int v) ->
           { x with ruleImpact = float_of_int v }
-        | GapiCore.AnnotatedTree.Leaf
-            ({ GapiJson.name = "ruleScore"; data_type = GapiJson.Scalar },
-            `Int v) ->
-          { x with ruleScore = v }
         | GapiCore.AnnotatedTree.Node
             ({ GapiJson.name = "urlBlocks"; data_type = GapiJson.Array },
             cs) ->
@@ -994,7 +922,6 @@ struct
     invalidRules : string list;
     kind : string;
     pageStats : PageStats.t;
-    request : Request.t;
     responseCode : int;
     score : int;
     screenshot : Screenshot.t;
@@ -1023,10 +950,6 @@ struct
     GapiLens.get = (fun x -> x.pageStats);
     GapiLens.set = (fun v x -> { x with pageStats = v });
   }
-  let request = {
-    GapiLens.get = (fun x -> x.request);
-    GapiLens.set = (fun v x -> { x with request = v });
-  }
   let responseCode = {
     GapiLens.get = (fun x -> x.responseCode);
     GapiLens.set = (fun v x -> { x with responseCode = v });
@@ -1054,7 +977,6 @@ struct
     invalidRules = [];
     kind = "";
     pageStats = PageStats.empty;
-    request = Request.empty;
     responseCode = 0;
     score = 0;
     screenshot = Screenshot.empty;
@@ -1070,7 +992,6 @@ struct
       GapiJson.render_array "invalidRules" (GapiJson.render_string_value "") x.invalidRules;
       GapiJson.render_string_value "kind" x.kind;
       (fun v -> GapiJson.render_object "pageStats" (PageStats.render_content v)) x.pageStats;
-      (fun v -> GapiJson.render_object "request" (Request.render_content v)) x.request;
       GapiJson.render_int_value "responseCode" x.responseCode;
       GapiJson.render_int_value "score" x.score;
       (fun v -> GapiJson.render_object "screenshot" (Screenshot.render_content v)) x.screenshot;
@@ -1119,14 +1040,6 @@ struct
         PageStats.parse
         PageStats.empty
         (fun v -> { x with pageStats = v })
-        cs
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "request"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        Request.parse
-        Request.empty
-        (fun v -> { x with request = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "responseCode"; data_type = GapiJson.Scalar },

@@ -56,30 +56,6 @@ sig
     
   end
   
-  module Request :
-  sig
-    type t = {
-      filter_third_party_resources : string;
-      (**  *)
-      strategy : string;
-      (**  *)
-      url : string;
-      (**  *)
-      
-    }
-    
-    val filter_third_party_resources : (t, string) GapiLens.t
-    val strategy : (t, string) GapiLens.t
-    val url : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
-  
   module PageStats :
   sig
     type t = {
@@ -311,8 +287,6 @@ sig
         (** Localized name of the rule, intended for presentation to a user. *)
         ruleImpact : float;
         (** The impact (unbounded floating point value) that implementing the suggestions for this rule would have on making the page faster. Impact is comparable between rules to determine which rule's suggestions would have a higher or lower impact on making a page faster. For instance, if enabling compression would save 1MB, while optimizing images would save 500kB, the enable compression rule would have 2x the impact of the image optimization rule, all other things being equal. *)
-        ruleScore : int;
-        (** The score (0-100) for this rule. The rule score indicates how well a page implements the recommendations for the given rule. For instance, if none of the compressible resources on a page are compressed, the rule score would be 0, while if all of the compressible resources on a page are compressed, the rule score would be 100. *)
         urlBlocks : UrlBlocks.t list;
         (** List of blocks of URLs. Each block may contain a heading and a list of URLs. Each URL may optionally include additional details. *)
         
@@ -320,7 +294,6 @@ sig
       
       val localizedRuleName : (t, string) GapiLens.t
       val ruleImpact : (t, float) GapiLens.t
-      val ruleScore : (t, int) GapiLens.t
       val urlBlocks : (t, UrlBlocks.t list) GapiLens.t
       
       val empty : t
@@ -361,8 +334,6 @@ sig
     (** Kind of result. *)
     pageStats : PageStats.t;
     (** Summary statistics for the page, such as number of JavaScript bytes, number of HTML bytes, etc. *)
-    request : Request.t;
-    (** Echo of certain request parameters. *)
     responseCode : int;
     (** Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error. *)
     score : int;
@@ -381,7 +352,6 @@ sig
   val invalidRules : (t, string list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val pageStats : (t, PageStats.t) GapiLens.t
-  val request : (t, Request.t) GapiLens.t
   val responseCode : (t, int) GapiLens.t
   val score : (t, int) GapiLens.t
   val screenshot : (t, Screenshot.t) GapiLens.t

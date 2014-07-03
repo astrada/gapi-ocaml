@@ -145,11 +145,14 @@ sig
       (**  *)
       label : string;
       (**  *)
+      label_with_op : string;
+      (**  *)
       
     }
     
     val anchor : (t, string) GapiLens.t
     val label : (t, string) GapiLens.t
+    val label_with_op : (t, string) GapiLens.t
     
     val empty : t
     
@@ -189,12 +192,15 @@ sig
     type t = {
       displayName : string;
       (**  *)
+      label_with_op : string;
+      (**  *)
       name : string;
       (**  *)
       
     }
     
     val displayName : (t, string) GapiLens.t
+    val label_with_op : (t, string) GapiLens.t
     val name : (t, string) GapiLens.t
     
     val empty : t

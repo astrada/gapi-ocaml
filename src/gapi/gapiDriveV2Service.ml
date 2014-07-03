@@ -109,6 +109,69 @@ end
 
 module AppsResource =
 struct
+  module AppsParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* apps-specific query parameters *)
+      appFilterExtensions : string;
+      appFilterMimeTypes : string;
+      languageCode : string;
+      
+    }
+    
+    let default = {
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      appFilterExtensions = "";
+      appFilterMimeTypes = "";
+      languageCode = "";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.appFilterExtensions) (fun x -> x) "appFilterExtensions";
+      param (fun p -> p.appFilterMimeTypes) (fun x -> x) "appFilterMimeTypes";
+      param (fun p -> p.languageCode) (fun x -> x) "languageCode";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(appFilterExtensions = default.appFilterExtensions)
+        ?(appFilterMimeTypes = default.appFilterMimeTypes)
+        ?(languageCode = default.languageCode)
+        () =
+      let parameters = {
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        appFilterExtensions;
+        appFilterMimeTypes;
+        languageCode;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?etag
@@ -117,22 +180,26 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["apps"; ((fun x -> x) appId)]
       base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = AppsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map AppsParameters.to_key_value_list params
+      in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response App.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?appFilterExtensions
+        ?appFilterMimeTypes
+        ?languageCode
         session =
     let full_url = GapiUtils.add_path_to_url ["apps"] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let params = AppsParameters.merge_parameters
+      ?standard_parameters:std_params ?appFilterExtensions
+      ?appFilterMimeTypes ?languageCode () in
+    let query_parameters = Option.map AppsParameters.to_key_value_list params
+      in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response AppList.of_data_model) session 
     
@@ -654,6 +721,7 @@ struct
       userIp : string;
       key : string;
       (* files-specific query parameters *)
+      addParents : string;
       convert : bool;
       maxResults : int;
       newRevision : bool;
@@ -663,6 +731,7 @@ struct
       pinned : bool;
       projection : Projection.t;
       q : string;
+      removeParents : string;
       setModifiedDate : bool;
       timedTextLanguage : string;
       timedTextTrackName : string;
@@ -678,6 +747,7 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      addParents = "";
       convert = false;
       maxResults = 100;
       newRevision = true;
@@ -687,6 +757,7 @@ struct
       pinned = false;
       projection = Projection.Default;
       q = "";
+      removeParents = "";
       setModifiedDate = false;
       timedTextLanguage = "";
       timedTextTrackName = "";
@@ -704,6 +775,7 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.addParents) (fun x -> x) "addParents";
       param (fun p -> p.convert) string_of_bool "convert";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.newRevision) string_of_bool "newRevision";
@@ -713,6 +785,7 @@ struct
       param (fun p -> p.pinned) string_of_bool "pinned";
       param (fun p -> p.projection) Projection.to_string "projection";
       param (fun p -> p.q) (fun x -> x) "q";
+      param (fun p -> p.removeParents) (fun x -> x) "removeParents";
       param (fun p -> p.setModifiedDate) string_of_bool "setModifiedDate";
       param (fun p -> p.timedTextLanguage) (fun x -> x) "timedTextLanguage";
       param (fun p -> p.timedTextTrackName) (fun x -> x) "timedTextTrackName";
@@ -724,6 +797,7 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(addParents = default.addParents)
         ?(convert = default.convert)
         ?(maxResults = default.maxResults)
         ?(newRevision = default.newRevision)
@@ -733,6 +807,7 @@ struct
         ?(pinned = default.pinned)
         ?(projection = default.projection)
         ?(q = default.q)
+        ?(removeParents = default.removeParents)
         ?(setModifiedDate = default.setModifiedDate)
         ?(timedTextLanguage = default.timedTextLanguage)
         ?(timedTextTrackName = default.timedTextTrackName)
@@ -746,6 +821,7 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        addParents;
         convert;
         maxResults;
         newRevision;
@@ -755,6 +831,7 @@ struct
         pinned;
         projection;
         q;
+        removeParents;
         setModifiedDate;
         timedTextLanguage;
         timedTextTrackName;
@@ -799,6 +876,18 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId)]
       base_url in
+    let params = FilesParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map FilesParameters.to_key_value_list
+      params in
+    GapiService.delete ?query_parameters full_url
+      GapiRequest.parse_empty_response session 
+    
+  let emptyTrash
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; "trash"] base_url in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
@@ -880,7 +969,9 @@ struct
         ?(setModifiedDate = false)
         ?(updateViewedDate = true)
         ?(useContentAsIndexableText = false)
+        ?addParents
         ?ocrLanguage
+        ?removeParents
         ?timedTextLanguage
         ?timedTextTrackName
         ~fileId
@@ -890,9 +981,9 @@ struct
       base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~convert ~newRevision ~ocr ?ocrLanguage
-      ~pinned ~setModifiedDate ?timedTextLanguage ?timedTextTrackName
-      ~updateViewedDate ~useContentAsIndexableText () in
+      ?standard_parameters:std_params ?addParents ~convert ~newRevision ~ocr
+      ?ocrLanguage ~pinned ?removeParents ~setModifiedDate ?timedTextLanguage
+      ?timedTextTrackName ~updateViewedDate ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -952,7 +1043,9 @@ struct
         ?(setModifiedDate = false)
         ?(updateViewedDate = true)
         ?(useContentAsIndexableText = false)
+        ?addParents
         ?ocrLanguage
+        ?removeParents
         ?timedTextLanguage
         ?timedTextTrackName
         ~fileId
@@ -966,9 +1059,9 @@ struct
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~convert ~newRevision ~ocr ?ocrLanguage
-      ~pinned ~setModifiedDate ?timedTextLanguage ?timedTextTrackName
-      ~updateViewedDate ~useContentAsIndexableText () in
+      ?standard_parameters:std_params ?addParents ~convert ~newRevision ~ocr
+      ?ocrLanguage ~pinned ?removeParents ~setModifiedDate ?timedTextLanguage
+      ?timedTextTrackName ~updateViewedDate ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag ?media_source
@@ -1428,6 +1521,7 @@ struct
       key : string;
       (* realtime-specific query parameters *)
       baseRevision : string;
+      revision : int;
       
     }
     
@@ -1438,6 +1532,7 @@ struct
       userIp = "";
       key = "";
       baseRevision = "";
+      revision = 0;
       
     }
     
@@ -1450,12 +1545,14 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.baseRevision) (fun x -> x) "baseRevision";
+      param (fun p -> p.revision) string_of_int "revision";
       
     ] |> List.concat
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(baseRevision = default.baseRevision)
+        ?(revision = default.revision)
         () =
       let parameters = {
         fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -1464,6 +1561,7 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         baseRevision;
+        revision;
         
       } in
       if parameters = default then None else Some parameters
@@ -1474,12 +1572,13 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?etag
         ?std_params
+        ?revision
         ~fileId
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "realtime"] base_url in
     let params = RealtimeParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?revision () in
     let query_parameters = Option.map RealtimeParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url

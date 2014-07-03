@@ -357,6 +357,31 @@ sig
     
   end
   
+  module Emails :
+  sig
+    type t = {
+      _type : string;
+      (** The type of address. Possible values include, but are not limited to, the following values:  
+- "account" - Google account email address. 
+- "home" - Home email address. 
+- "work" - Work email address. 
+- "other" - Other. *)
+      value : string;
+      (** The email address. *)
+      
+    }
+    
+    val _type : (t, string) GapiLens.t
+    val value : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Cover :
   sig
     module CoverPhoto :
@@ -431,9 +456,13 @@ sig
   sig
     type t = {
       max : int;
-      (** The age range's upper bound, if any. *)
+      (** The age range's upper bound, if any. Possible values include, but are not limited to, the following:  
+- "17" - for age 17 
+- "20" - for age 20 *)
       min : int;
-      (** The age range's lower bound, if any. *)
+      (** The age range's lower bound, if any. Possible values include, but are not limited to, the following:  
+- "21" - for age 21 
+- "18" - for age 18 *)
       
     }
     
@@ -452,19 +481,23 @@ sig
     aboutMe : string;
     (** A short biography for this person. *)
     ageRange : AgeRange.t;
-    (** The age range of the person. *)
+    (** The age range of the person. Valid ranges are 17 or younger, 18 to 20, and 21 or older. Age is determined from the user's birthday using Western age reckoning. *)
     birthday : string;
     (** The person's date of birth, represented as YYYY-MM-DD. *)
     braggingRights : string;
     (** The "bragging rights" line of this person. *)
     circledByCount : int;
-    (** If a Google+ Page and for followers who are visible, the number of people who have added this page to a circle. *)
+    (** For followers who are visible, the number of people who have added this person or page to a circle. *)
     cover : Cover.t;
     (** The cover photo content. *)
     currentLocation : string;
     (** The current location for this person. *)
     displayName : string;
     (** The name of this person, which is suitable for display. *)
+    domain : string;
+    (** The hosted domain name for the user's Google Apps account. For instance, example.com. The plus.profile.emails.read or email scope is needed to get this domain name. *)
+    emails : Emails.t list;
+    (** A list of email addresses that this person has, including their Google account email address, and the public verified email addresses on their Google+ profile. The plus.profile.emails.read scope is needed to retrieve these email addresses, or the email scope can be used to retrieve just the Google account email address. *)
     etag : string;
     (** ETag of this response for caching purposes. *)
     gender : string;
@@ -490,6 +523,8 @@ sig
     (** Type of person within Google+. Possible values include, but are not limited to, the following values:  
 - "person" - represents an actual person. 
 - "page" - represents a page. *)
+    occupation : string;
+    (** The occupation of this person. *)
     organizations : Organizations.t list;
     (** A list of current or past organizations with which this person is associated. *)
     placesLived : PlacesLived.t list;
@@ -507,6 +542,8 @@ sig
 - "widowed" - Person is widowed. 
 - "in_domestic_partnership" - Person is in a domestic partnership. 
 - "in_civil_union" - Person is in a civil union. *)
+    skills : string;
+    (** The person's skills. *)
     tagline : string;
     (** The brief description (tagline) of this person. *)
     url : string;
@@ -526,6 +563,8 @@ sig
   val cover : (t, Cover.t) GapiLens.t
   val currentLocation : (t, string) GapiLens.t
   val displayName : (t, string) GapiLens.t
+  val domain : (t, string) GapiLens.t
+  val emails : (t, Emails.t list) GapiLens.t
   val etag : (t, string) GapiLens.t
   val gender : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -536,10 +575,12 @@ sig
   val name : (t, Name.t) GapiLens.t
   val nickname : (t, string) GapiLens.t
   val objectType : (t, string) GapiLens.t
+  val occupation : (t, string) GapiLens.t
   val organizations : (t, Organizations.t list) GapiLens.t
   val placesLived : (t, PlacesLived.t list) GapiLens.t
   val plusOneCount : (t, int) GapiLens.t
   val relationshipStatus : (t, string) GapiLens.t
+  val skills : (t, string) GapiLens.t
   val tagline : (t, string) GapiLens.t
   val url : (t, string) GapiLens.t
   val urls : (t, Urls.t list) GapiLens.t
@@ -665,6 +706,8 @@ sig
     (** The physical address of the place. *)
     displayName : string;
     (** The display name of the place. *)
+    id : string;
+    (** The id of the place. *)
     kind : string;
     (** Identifies this resource as a place. Value: "plus#place". *)
     position : Position.t;
@@ -674,6 +717,7 @@ sig
   
   val address : (t, Address.t) GapiLens.t
   val displayName : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val position : (t, Position.t) GapiLens.t
   
@@ -924,7 +968,7 @@ sig
         thumbnails : Thumbnails.t list;
         (** If the attachment is an album, this property is a list of potential additional thumbnails from the album. *)
         url : string;
-        (** The link to the attachment; should be of type text/html. *)
+        (** The link to the attachment, which should be of type text/html. *)
         
       }
       
@@ -1248,7 +1292,7 @@ sig
     height : string;
     (** The height of the media object. *)
     id : string;
-    (** An identifier for the target. Your app can choose how to identify targets. The target.id is required if you are writing an activity that does not have a corresponding web page or target.url property. *)
+    (** An identifier for the object. Your app can choose how to identify objects. The object.id is required if you are writing an action that does not have a corresponding web page or object.url property. *)
     image : string;
     (** A URL to the image that represents this result. For example, if a user writes a review of a restaurant and attaches a photo of their meal, you might use that photo as the result.image. *)
     inAlbum : t option;
@@ -1288,9 +1332,9 @@ sig
     thumbnailUrl : string;
     (** A URL to a thumbnail image that represents this result. *)
     tickerSymbol : string;
-    (** The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we reccommend using the controlled vocaulary of Market Identifier Codes (MIC) specified in ISO15022. *)
+    (** The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we recommend using the controlled vocabulary of Market Identifier Codes (MIC) specified in ISO15022. *)
     _type : string;
-    (** The schema.org URL that best describes the referenced target and matches the type of moment. *)
+    (** The schema.org URL that best describes the referenced object and matches the type of moment. *)
     url : string;
     (** The URL that points to the result object. For example, a permalink directly to a restaurant reviewer's comment. *)
     width : string;
@@ -1375,19 +1419,22 @@ sig
     (** The moment ID. *)
     kind : string;
     (** Identifies this resource as a moment. *)
+    _object : ItemScope.t;
+    (** The object on which the action was performed. Specifying this is equivalent with specifying "target". Note that responses from the server will use the "target" field instead for backward-compatibility with older clients. *)
     result : ItemScope.t;
-    (** The object generated by performing the action on the target. For example, a user writes a review of a restaurant, the target is the restaurant and the result is the review. *)
+    (** The object generated by performing the action on the object. For example, a user writes a review of a restaurant, the object is the restaurant and the result is the review. *)
     startDate : GapiDate.t;
     (** Time stamp of when the action occurred in RFC3339 format. *)
     target : ItemScope.t;
     (** The object on which the action was performed. *)
     _type : string;
-    (** The Google schema for the type of moment to write. For example, http://schemas.google.com/AddActivity. *)
+    (** The schema.org type for the type of moment to write. For example, http://schema.org/AddAction. Note that responses from the server will use the Google schema type instead for backward-compatibility with older clients. For example, http://schemas.google.com/AddActivity. *)
     
   }
   
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val _object : (t, ItemScope.t) GapiLens.t
   val result : (t, ItemScope.t) GapiLens.t
   val startDate : (t, GapiDate.t) GapiLens.t
   val target : (t, ItemScope.t) GapiLens.t
@@ -1504,7 +1551,7 @@ sig
     nextPageToken : string;
     (** The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. *)
     selfLink : string;
-    (** Link to this activities resource. *)
+    (** Link to this activity resource. *)
     title : string;
     (** The title of this collection of activities, which is a truncated portion of the content. *)
     updated : GapiDate.t;

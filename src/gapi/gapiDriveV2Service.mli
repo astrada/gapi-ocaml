@@ -43,7 +43,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param includeSubscribed When calculating the number of remaining change IDs, whether to include shared files and public files the user has opened. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explictly added to a folder in Drive.
+    @param includeSubscribed When calculating the number of remaining change IDs, whether to include public files the user has opened and shared files. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explicitly added to a folder they own.
     @param maxChangeIdCount Maximum number of remaining change IDs to count
     @param startChangeId Change ID to start counting from when calculating number of remaining change IDs
     *)
@@ -82,10 +82,16 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
+    @param appFilterExtensions A comma-separated list of file extensions for open with filtering. All apps within the given app query scope which can open any of the given file extensions will be included in the response. If appFilterMimeTypes are provided as well, the result is a union of the two resulting app lists.
+    @param appFilterMimeTypes A comma-separated list of MIME types for open with filtering. All apps within the given app query scope which can open any of the given MIME types will be included in the response. If appFilterExtensions are provided as well, the result is a union of the two resulting app lists.
+    @param languageCode A language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/).
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?appFilterExtensions:string ->
+    ?appFilterMimeTypes:string ->
+    ?languageCode:string ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.AppList.t * GapiConversation.Session.t
   
@@ -115,7 +121,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param includeDeleted Whether to include deleted items.
-    @param includeSubscribed Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.
+    @param includeSubscribed Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.
     @param maxResults Maximum number of changes to return.
     @param pageToken Page token for changes.
     @param startChangeId Change ID to start listing changes from.
@@ -136,7 +142,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param includeDeleted Whether to include deleted items.
-    @param includeSubscribed Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.
+    @param includeSubscribed Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.
     @param maxResults Maximum number of changes to return.
     @param pageToken Page token for changes.
     @param startChangeId Change ID to start listing changes from.
@@ -422,6 +428,17 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
+  (** Permanently deletes all of the user's trashed files.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    *)
+  val emptyTrash :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
   (** Gets a file's metadata by ID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
@@ -494,13 +511,15 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
+    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
+    @param addParents Comma-separated list of parent IDs to add.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+    @param removeParents Comma-separated list of parent IDs to remove.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     @param fileId The ID of the file to update.
@@ -515,7 +534,9 @@ sig
     ?setModifiedDate:bool ->
     ?updateViewedDate:bool ->
     ?useContentAsIndexableText:bool ->
+    ?addParents:string ->
     ?ocrLanguage:string ->
+    ?removeParents:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
     fileId:string ->
@@ -567,13 +588,15 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
+    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
+    @param addParents Comma-separated list of parent IDs to add.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+    @param removeParents Comma-separated list of parent IDs to remove.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     @param fileId The ID of the file to update.
@@ -589,7 +612,9 @@ sig
     ?setModifiedDate:bool ->
     ?updateViewedDate:bool ->
     ?useContentAsIndexableText:bool ->
+    ?addParents:string ->
     ?ocrLanguage:string ->
+    ?removeParents:string ->
     ?timedTextLanguage:string ->
     ?timedTextTrackName:string ->
     fileId:string ->
@@ -735,7 +760,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param sendNotificationEmails Whether to send notification emails when sharing to users or groups.
+    @param sendNotificationEmails Whether to send notification emails when sharing to users or groups. This parameter is ignored and an email is sent if the role is owner.
     @param emailMessage A custom message to include in notification emails.
     @param fileId The ID for the file.
     *)
@@ -914,12 +939,14 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
+    @param revision The revision of the Realtime API data model to export. Revisions start at 1 (the initial empty data model) and are incremented with each change. If this parameter is excluded, the most recent data model will be returned.
     @param fileId The ID of the file that the Realtime API data model is associated with.
     *)
   val get :
     ?base_url:string ->
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?revision:int ->
     fileId:string ->
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t

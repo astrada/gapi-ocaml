@@ -237,6 +237,8 @@ struct
     etag : string;
     items : Setting.t list;
     kind : string;
+    nextPageToken : string;
+    nextSyncToken : string;
     
   }
   
@@ -252,11 +254,21 @@ struct
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
   }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  let nextSyncToken = {
+    GapiLens.get = (fun x -> x.nextSyncToken);
+    GapiLens.set = (fun v x -> { x with nextSyncToken = v });
+  }
   
   let empty = {
     etag = "";
     items = [];
     kind = "";
+    nextPageToken = "";
+    nextSyncToken = "";
     
   }
   
@@ -265,6 +277,8 @@ struct
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Setting.render x.items;
       GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      GapiJson.render_string_value "nextSyncToken" x.nextSyncToken;
       
     ]
   and render x = 
@@ -297,6 +311,14 @@ struct
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextSyncToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextSyncToken = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -634,6 +656,60 @@ struct
   
 end
 
+module CalendarNotification =
+struct
+  type t = {
+    _method : string;
+    _type : string;
+    
+  }
+  
+  let _method = {
+    GapiLens.get = (fun x -> x._method);
+    GapiLens.set = (fun v x -> { x with _method = v });
+  }
+  let _type = {
+    GapiLens.get = (fun x -> x._type);
+    GapiLens.set = (fun v x -> { x with _type = v });
+  }
+  
+  let empty = {
+    _method = "";
+    _type = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "method" x._method;
+      GapiJson.render_string_value "type" x._type;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "method"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with _method = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with _type = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.CalendarNotification.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module EventReminder =
 struct
   type t = {
@@ -690,11 +766,65 @@ end
 
 module CalendarListEntry =
 struct
+  module NotificationSettings =
+  struct
+    type t = {
+      notifications : CalendarNotification.t list;
+      
+    }
+    
+    let notifications = {
+      GapiLens.get = (fun x -> x.notifications);
+      GapiLens.set = (fun v x -> { x with notifications = v });
+    }
+    
+    let empty = {
+      notifications = [];
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_array "notifications" CalendarNotification.render x.notifications;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "notifications"; data_type = GapiJson.Array },
+          cs) ->
+        GapiJson.parse_collection
+          (fun x' -> function
+            | GapiCore.AnnotatedTree.Node
+                ({ GapiJson.name = ""; data_type = GapiJson.Object },
+                cs) ->
+              GapiJson.parse_children
+                CalendarNotification.parse
+                CalendarNotification.empty
+                (fun v -> v)
+                cs
+            | e ->
+              GapiJson.unexpected "GapiCalendarV3Model.NotificationSettings.parse.parse_collection" e x')
+          CalendarNotification.empty
+          (fun v -> { x with notifications = v })
+          cs
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiCalendarV3Model.NotificationSettings.parse" e x
+    
+  end
+  
   type t = {
     accessRole : string;
     backgroundColor : string;
     colorId : string;
     defaultReminders : EventReminder.t list;
+    deleted : bool;
     description : string;
     etag : string;
     foregroundColor : string;
@@ -702,6 +832,7 @@ struct
     id : string;
     kind : string;
     location : string;
+    notificationSettings : NotificationSettings.t;
     primary : bool;
     selected : bool;
     summary : string;
@@ -725,6 +856,10 @@ struct
   let defaultReminders = {
     GapiLens.get = (fun x -> x.defaultReminders);
     GapiLens.set = (fun v x -> { x with defaultReminders = v });
+  }
+  let deleted = {
+    GapiLens.get = (fun x -> x.deleted);
+    GapiLens.set = (fun v x -> { x with deleted = v });
   }
   let description = {
     GapiLens.get = (fun x -> x.description);
@@ -754,6 +889,10 @@ struct
     GapiLens.get = (fun x -> x.location);
     GapiLens.set = (fun v x -> { x with location = v });
   }
+  let notificationSettings = {
+    GapiLens.get = (fun x -> x.notificationSettings);
+    GapiLens.set = (fun v x -> { x with notificationSettings = v });
+  }
   let primary = {
     GapiLens.get = (fun x -> x.primary);
     GapiLens.set = (fun v x -> { x with primary = v });
@@ -780,6 +919,7 @@ struct
     backgroundColor = "";
     colorId = "";
     defaultReminders = [];
+    deleted = false;
     description = "";
     etag = "";
     foregroundColor = "";
@@ -787,6 +927,7 @@ struct
     id = "";
     kind = "";
     location = "";
+    notificationSettings = NotificationSettings.empty;
     primary = false;
     selected = false;
     summary = "";
@@ -801,6 +942,7 @@ struct
       GapiJson.render_string_value "backgroundColor" x.backgroundColor;
       GapiJson.render_string_value "colorId" x.colorId;
       GapiJson.render_array "defaultReminders" EventReminder.render x.defaultReminders;
+      GapiJson.render_bool_value "deleted" x.deleted;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "foregroundColor" x.foregroundColor;
@@ -808,6 +950,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "location" x.location;
+      (fun v -> GapiJson.render_object "notificationSettings" (NotificationSettings.render_content v)) x.notificationSettings;
       GapiJson.render_bool_value "primary" x.primary;
       GapiJson.render_bool_value "selected" x.selected;
       GapiJson.render_string_value "summary" x.summary;
@@ -850,6 +993,10 @@ struct
         (fun v -> { x with defaultReminders = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "deleted"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with deleted = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with description = v }
@@ -877,6 +1024,14 @@ struct
         ({ GapiJson.name = "location"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with location = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "notificationSettings"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        NotificationSettings.parse
+        NotificationSettings.empty
+        (fun v -> { x with notificationSettings = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "primary"; data_type = GapiJson.Scalar },
         `Bool v) ->
@@ -917,6 +1072,7 @@ struct
     items : CalendarListEntry.t list;
     kind : string;
     nextPageToken : string;
+    nextSyncToken : string;
     
   }
   
@@ -936,12 +1092,17 @@ struct
     GapiLens.get = (fun x -> x.nextPageToken);
     GapiLens.set = (fun v x -> { x with nextPageToken = v });
   }
+  let nextSyncToken = {
+    GapiLens.get = (fun x -> x.nextSyncToken);
+    GapiLens.set = (fun v x -> { x with nextSyncToken = v });
+  }
   
   let empty = {
     etag = "";
     items = [];
     kind = "";
     nextPageToken = "";
+    nextSyncToken = "";
     
   }
   
@@ -951,6 +1112,7 @@ struct
       GapiJson.render_array "items" CalendarListEntry.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      GapiJson.render_string_value "nextSyncToken" x.nextSyncToken;
       
     ]
   and render x = 
@@ -987,6 +1149,10 @@ struct
         ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextSyncToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextSyncToken = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -2511,6 +2677,7 @@ struct
     items : AclRule.t list;
     kind : string;
     nextPageToken : string;
+    nextSyncToken : string;
     
   }
   
@@ -2530,12 +2697,17 @@ struct
     GapiLens.get = (fun x -> x.nextPageToken);
     GapiLens.set = (fun v x -> { x with nextPageToken = v });
   }
+  let nextSyncToken = {
+    GapiLens.get = (fun x -> x.nextSyncToken);
+    GapiLens.set = (fun v x -> { x with nextSyncToken = v });
+  }
   
   let empty = {
     etag = "";
     items = [];
     kind = "";
     nextPageToken = "";
+    nextSyncToken = "";
     
   }
   
@@ -2545,6 +2717,7 @@ struct
       GapiJson.render_array "items" AclRule.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      GapiJson.render_string_value "nextSyncToken" x.nextSyncToken;
       
     ]
   and render x = 
@@ -2581,6 +2754,10 @@ struct
         ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextSyncToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextSyncToken = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -2604,6 +2781,7 @@ struct
     items : Event.t list;
     kind : string;
     nextPageToken : string;
+    nextSyncToken : string;
     summary : string;
     timeZone : string;
     updated : GapiDate.t;
@@ -2638,6 +2816,10 @@ struct
     GapiLens.get = (fun x -> x.nextPageToken);
     GapiLens.set = (fun v x -> { x with nextPageToken = v });
   }
+  let nextSyncToken = {
+    GapiLens.get = (fun x -> x.nextSyncToken);
+    GapiLens.set = (fun v x -> { x with nextSyncToken = v });
+  }
   let summary = {
     GapiLens.get = (fun x -> x.summary);
     GapiLens.set = (fun v x -> { x with summary = v });
@@ -2659,6 +2841,7 @@ struct
     items = [];
     kind = "";
     nextPageToken = "";
+    nextSyncToken = "";
     summary = "";
     timeZone = "";
     updated = GapiDate.epoch;
@@ -2674,6 +2857,7 @@ struct
       GapiJson.render_array "items" Event.render x.items;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      GapiJson.render_string_value "nextSyncToken" x.nextSyncToken;
       GapiJson.render_string_value "summary" x.summary;
       GapiJson.render_string_value "timeZone" x.timeZone;
       GapiJson.render_date_value "updated" x.updated;
@@ -2735,6 +2919,10 @@ struct
         ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextSyncToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextSyncToken = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "summary"; data_type = GapiJson.Scalar },
         `String v) ->

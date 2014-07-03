@@ -34,7 +34,7 @@ struct
         let query_parameters = Option.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters ?etag full_url
-          (GapiJson.parse_json_response Userinfo.of_data_model) session 
+          (GapiJson.parse_json_response Userinfoplus.of_data_model) session 
         
       
     end
@@ -54,7 +54,7 @@ struct
     let query_parameters = Option.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
-      (GapiJson.parse_json_response Userinfo.of_data_model) session 
+      (GapiJson.parse_json_response Userinfoplus.of_data_model) session 
     
   
 end

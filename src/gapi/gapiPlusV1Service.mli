@@ -11,10 +11,16 @@
 module Scope :
 sig
   val plus_login : string
-  (** Know your name, basic info, and list of people you're connected to on Google+ *)
+  (** Know your basic profile info and list of people in your circles. *)
   
   val plus_me : string
   (** Know who you are on Google *)
+  
+  val userinfo_email : string
+  (** View your email address *)
+  
+  val userinfo_profile : string
+  (** View basic information about your account *)
   
   
 end
@@ -174,12 +180,12 @@ sig
     
   end
   
-  (** Record a moment representing a user's activity such as making a purchase or commenting on a blog.
+  (** Record a moment representing a user's action such as making a purchase or commenting on a blog.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
     @param std_params Optional standard parameters.
     @param debug Return the moment as written. Should be used only for debugging.
-    @param userId The ID of the user to record activities for. The only valid values are "me" and the ID of the authenticated user.
+    @param userId The ID of the user to record actions for. The only valid values are "me" and the ID of the authenticated user.
     @param collection The collection to which to write moments.
     *)
   val insert :
@@ -251,6 +257,7 @@ sig
   sig
     type t =
       | Default
+      | Connected (** The list of visible people in the authenticated user's circles who also use the requesting app. This list is limited to users who made their app activities visible to the authenticated user. *)
       | Visible (** The list of people who this user has added to one or more circles, limited to the circles visible to the requesting application. *)
       | Plusoners (** List all people who have +1'd this activity. *)
       | Resharers (** List all people who have reshared this activity. *)

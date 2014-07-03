@@ -9,6 +9,10 @@ struct
   
   let plus_me = "https://www.googleapis.com/auth/plus.me"
   
+  let userinfo_email = "https://www.googleapis.com/auth/userinfo.email"
+  
+  let userinfo_profile = "https://www.googleapis.com/auth/userinfo.profile"
+  
   
 end
 
@@ -453,18 +457,21 @@ struct
   struct
     type t =
       | Default
+      | Connected
       | Visible
       | Plusoners
       | Resharers
       
     let to_string = function
       | Default -> ""
+      | Connected -> "connected"
       | Visible -> "visible"
       | Plusoners -> "plusoners"
       | Resharers -> "resharers"
       
     let of_string = function
       | "" -> Default
+      | "connected" -> Connected
       | "visible" -> Visible
       | "plusoners" -> Plusoners
       | "resharers" -> Resharers

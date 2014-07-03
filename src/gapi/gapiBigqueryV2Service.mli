@@ -13,6 +13,9 @@ sig
   val bigquery : string
   (** View and manage your data in Google BigQuery *)
   
+  val bigquery_insertdata : string
+  (** Insert data into Google BigQuery *)
+  
   val cloud_platform : string
   (** View and manage your data across Google Cloud Platform services *)
   
@@ -32,7 +35,7 @@ end
 module DatasetsResource :
 sig
   
-  (** Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.
+  (** Deletes the dataset specified by the datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -84,6 +87,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
+    @param all Whether to list all datasets, including hidden ones
     @param maxResults The maximum number of results to return
     @param pageToken Page token, returned by a previous call, to request the next page of results
     @param projectId Project ID of the datasets to be listed
@@ -91,13 +95,14 @@ sig
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?all:bool ->
     ?maxResults:int ->
     ?pageToken:string ->
     projectId:string ->
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.DatasetList.t * GapiConversation.Session.t
   
-  (** Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset. This method supports patch semantics.
+  (** Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports patch semantics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -113,7 +118,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.Dataset.t * GapiConversation.Session.t
   
-  (** Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset.
+  (** Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -281,7 +286,7 @@ end
 module TabledataResource :
 sig
   
-  (** Inserts the supplied rows into the table.
+  (** Streams data into BigQuery one record at a time without needing to run a load job.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -399,7 +404,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.TableList.t * GapiConversation.Session.t
   
-  (** Updates information in an existing table, specified by tableId. This method supports patch semantics.
+  (** Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -417,7 +422,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.Table.t * GapiConversation.Session.t
   
-  (** Updates information in an existing table, specified by tableId.
+  (** Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.

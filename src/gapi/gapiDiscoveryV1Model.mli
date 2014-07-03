@@ -8,6 +8,48 @@
 
 module JsonSchema :
 sig
+  module Variant :
+  sig
+    module Map :
+    sig
+      type t = {
+        _ref : string;
+        (**  *)
+        type_value : string;
+        (**  *)
+        
+      }
+      
+      val _ref : (t, string) GapiLens.t
+      val type_value : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      discriminant : string;
+      (** The name of the type discriminant property. *)
+      map : Map.t list;
+      (** The map of discriminant value to schema to use for parsing.. *)
+      
+    }
+    
+    val discriminant : (t, string) GapiLens.t
+    val map : (t, Map.t list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Annotations :
   sig
     type t = {
@@ -65,6 +107,8 @@ sig
     (** Whether the parameter is required. *)
     _type : string;
     (** The value type for this schema. A list of values can be found here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1 *)
+    variant : Variant.t;
+    (** In a variant data type, the value of one property is used to determine how to interpret the entire entity. Its value must exist in a map of descriminant values to schema names. *)
     
   }
   
@@ -87,6 +131,7 @@ sig
   val repeated : (t, bool) GapiLens.t
   val required : (t, bool) GapiLens.t
   val _type : (t, string) GapiLens.t
+  val variant : (t, Variant.t) GapiLens.t
   
   val empty : t
   

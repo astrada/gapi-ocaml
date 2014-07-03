@@ -6,6 +6,31 @@
   {{:https://developers.google.com/bigquery/docs/overview}API Documentation}.
   *)
 
+module DatasetReference :
+sig
+  type t = {
+    datasetId : string;
+    (** [Required] A unique ID for this dataset, without the project name. *)
+    projectId : string;
+    (** [Optional] The ID of the container project. *)
+    
+  }
+  
+  val datasetId : (t, string) GapiLens.t
+  val projectId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module TableReference :
 sig
   type t = {
@@ -34,52 +59,29 @@ sig
   
 end
 
-module DatasetReference :
-sig
-  type t = {
-    datasetId : string;
-    (** [Required] A unique ID for this dataset, without the project name. *)
-    projectId : string;
-    (** [Optional] The ID of the container project. *)
-    
-  }
-  
-  val datasetId : (t, string) GapiLens.t
-  val projectId : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module JobConfigurationQuery :
 sig
   type t = {
     allowLargeResults : bool;
-    (** [Experimental] If true, allows >128M results to be materialized in the destination table. Requires destination_table to be set. *)
+    (** If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set. *)
     createDisposition : string;
-    (** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. *)
+    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     defaultDataset : DatasetReference.t;
-    (** [Optional] Specifies the default dataset to assume for unqualified table names in the query. *)
+    (** [Optional] Specifies the default dataset to use for unqualified table names in the query. *)
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
+    flattenResults : bool;
+    (** [Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false. *)
     preserveNulls : bool;
-    (** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. *)
+    (** [Deprecated] This property is deprecated. *)
     priority : string;
-    (** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH. *)
+    (** [Optional] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE. *)
     query : string;
     (** [Required] BigQuery SQL query to execute. *)
     useQueryCache : bool;
     (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. *)
     writeDisposition : string;
-    (** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY. *)
+    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -87,6 +89,7 @@ sig
   val createDisposition : (t, string) GapiLens.t
   val defaultDataset : (t, DatasetReference.t) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
+  val flattenResults : (t, bool) GapiLens.t
   val preserveNulls : (t, bool) GapiLens.t
   val priority : (t, string) GapiLens.t
   val query : (t, string) GapiLens.t
@@ -282,21 +285,27 @@ end
 module JobConfigurationExtract :
 sig
   type t = {
+    compression : string;
+    (** [Optional] The compression type to use for exported files. Possible values include GZIP and NONE. The default value is NONE. *)
     destinationFormat : string;
-    (** [Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify "CSV". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". *)
+    (** [Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default value is CSV. Tables with nested or repeated fields cannot be exported as CSV. *)
     destinationUri : string;
-    (** [Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written. *)
+    (** [Pick one] DEPRECATED: Use destinationUris instead, passing only one URI as necessary. The fully-qualified Google Cloud Storage URI where the extracted table should be written. *)
+    destinationUris : string list;
+    (** [Pick one] A list of fully-qualified Google Cloud Storage URIs where the extracted table should be written. *)
     fieldDelimiter : string;
     (** [Optional] Delimiter to use between fields in the exported data. Default is ',' *)
     printHeader : bool;
-    (** [Optional] Whether to print out a heder row in the results. Default is true. *)
+    (** [Optional] Whether to print out a header row in the results. Default is true. *)
     sourceTable : TableReference.t;
     (** [Required] A reference to the table being exported. *)
     
   }
   
+  val compression : (t, string) GapiLens.t
   val destinationFormat : (t, string) GapiLens.t
   val destinationUri : (t, string) GapiLens.t
+  val destinationUris : (t, string list) GapiLens.t
   val fieldDelimiter : (t, string) GapiLens.t
   val printHeader : (t, bool) GapiLens.t
   val sourceTable : (t, TableReference.t) GapiLens.t
@@ -365,7 +374,7 @@ sig
     kind : string;
     (** The resource type of the response. *)
     pageToken : string;
-    (** A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing. *)
+    (** A token used for paging results. Providing this token instead of the startIndex parameter can help you retrieve stable results when an underlying table is changing. *)
     rows : TableRow.t list;
     (** Rows of results. *)
     totalRows : int64;
@@ -419,6 +428,8 @@ end
 module TableFieldSchema :
 sig
   type t = {
+    description : string;
+    (** [Optional] The field description. *)
     fields : t list;
     (** [Optional] Describes the nested schema fields if the type property is set to RECORD. *)
     mode : string;
@@ -430,6 +441,7 @@ sig
     
   }
   
+  val description : (t, string) GapiLens.t
   val fields : (t, t list) GapiLens.t
   val mode : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
@@ -528,6 +540,8 @@ sig
       (** The resource type. *)
       tableReference : TableReference.t;
       (** A reference uniquely identifying the table. *)
+      _type : string;
+      (** The type of table. Possible values are: TABLE, VIEW. *)
       
     }
     
@@ -535,6 +549,7 @@ sig
     val id : (t, string) GapiLens.t
     val kind : (t, string) GapiLens.t
     val tableReference : (t, TableReference.t) GapiLens.t
+    val _type : (t, string) GapiLens.t
     
     val empty : t
     
@@ -626,13 +641,13 @@ module JobConfigurationLink :
 sig
   type t = {
     createDisposition : string;
-    (** [Optional] Whether or not to create a new table, if none exists. *)
+    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     destinationTable : TableReference.t;
     (** [Required] The destination table of the link job. *)
     sourceUri : string list;
     (** [Required] URI of source table to link. *)
     writeDisposition : string;
-    (** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND. *)
+    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -672,6 +687,8 @@ sig
     (** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
     fieldDelimiter : string;
     (** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
+    ignoreUnknownValues : bool;
+    (** [Optional] Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false which treats unknown values as errors. For CSV this ignores extra values at the end of a line. For JSON this ignores named values that do not match any column name. *)
     maxBadRecords : int;
     (** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid. *)
     quote : string;
@@ -689,7 +706,7 @@ sig
     sourceUris : string list;
     (** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -699,6 +716,7 @@ sig
   val destinationTable : (t, TableReference.t) GapiLens.t
   val encoding : (t, string) GapiLens.t
   val fieldDelimiter : (t, string) GapiLens.t
+  val ignoreUnknownValues : (t, bool) GapiLens.t
   val maxBadRecords : (t, int) GapiLens.t
   val quote : (t, string) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
@@ -725,19 +743,22 @@ module JobConfigurationTableCopy :
 sig
   type t = {
     createDisposition : string;
-    (** [Optional] Whether or not to create a new table, if none exists. *)
+    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     destinationTable : TableReference.t;
     (** [Required] The destination table *)
     sourceTable : TableReference.t;
-    (** [Required] Source table to copy. *)
+    (** [Pick one] Source table to copy. *)
+    sourceTables : TableReference.t list;
+    (** [Pick one] Source tables to copy. *)
     writeDisposition : string;
-    (** [Optional] Whether or not to append or require the table to be empty. *)
+    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
   val createDisposition : (t, string) GapiLens.t
   val destinationTable : (t, TableReference.t) GapiLens.t
   val sourceTable : (t, TableReference.t) GapiLens.t
+  val sourceTables : (t, TableReference.t list) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
   val empty : t
@@ -810,6 +831,8 @@ sig
       (** [Output-only] Information about the job, including starting time and ending time of the job. *)
       status : JobStatus.t;
       (** [Full-projection-only] Describes the state of the job. *)
+      user_email : string;
+      (** [Full-projection-only] User who ran the job. *)
       
     }
     
@@ -821,6 +844,7 @@ sig
     val state : (t, string) GapiLens.t
     val statistics : (t, JobStatistics.t) GapiLens.t
     val status : (t, JobStatus.t) GapiLens.t
+    val user_email : (t, string) GapiLens.t
     
     val empty : t
     
@@ -934,13 +958,13 @@ sig
       domain : string;
       (** [Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com". *)
       groupByEmail : string;
-      (** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in \@googlegroups.com) or a group managed by an enterprise version of Google Groups. *)
+      (** [Pick one] An email address of a Google Group to grant access to. *)
       role : string;
-      (** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. *)
+      (** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER, WRITER, OWNER. *)
       specialGroup : string;
-      (** [Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. *)
+      (** [Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. *)
       userByEmail : string;
-      (** [Pick one] A fully qualified email address of a user to grant access to. For example: fred\@example.com. *)
+      (** [Pick one] An email address of a user to grant access to. For example: fred\@example.com. *)
       
     }
     
@@ -960,29 +984,25 @@ sig
   
   type t = {
     access : Access.t list;
-    (** [Optional] Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
-Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers
-See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
-To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
-Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers. *)
+    (** [Optional] An array of objects that define dataset access for one or more entities. You can set this property when inserting or updating a dataset in order to control who is allowed to access the data. If unspecified at dataset creation time, BigQuery adds default dataset access for the following entities: access.specialGroup: projectReaders; access.role: READER; access.specialGroup: projectWriters; access.role: WRITER; access.specialGroup: projectOwners; access.role: OWNER; access.userByEmail: [dataset creator email]; access.role: OWNER; *)
     creationTime : int64;
     (** [Output-only] The time when this dataset was created, in milliseconds since the epoch. *)
     datasetReference : DatasetReference.t;
-    (** [Required] Reference identifying dataset. *)
+    (** [Required] A reference that identifies the dataset. *)
     description : string;
-    (** [Optional] A user-friendly string description for the dataset. This might be shown in BigQuery UI for browsing the dataset. *)
+    (** [Optional] A user-friendly description of the dataset. *)
     etag : string;
-    (** [Output-only] A hash of this resource. *)
+    (** [Output-only] A hash of the resource. *)
     friendlyName : string;
-    (** [Optional] A descriptive name for this dataset, which might be shown in any BigQuery user interfaces for browsing the dataset. Use datasetId for making API calls. *)
+    (** [Optional] A descriptive name for the dataset. *)
     id : string;
-    (** [Output-only] The fully-qualified unique name of this dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. *)
+    (** [Output-only] The fully-qualified unique name of the dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. *)
     kind : string;
     (** [Output-only] The resource type. *)
     lastModifiedTime : int64;
     (** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. *)
     selfLink : string;
-    (** [Output-only] An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource. *)
+    (** [Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource. *)
     
   }
   
@@ -996,6 +1016,28 @@ Each access object can have only one of the following members: userByEmail, grou
   val kind : (t, string) GapiLens.t
   val lastModifiedTime : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ViewDefinition :
+sig
+  type t = {
+    query : string;
+    (** [Required] A query that BigQuery executes when the view is referenced. *)
+    
+  }
+  
+  val query : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1038,6 +1080,10 @@ sig
     (** [Output-only] A URL that can be used to access this resource again. *)
     tableReference : TableReference.t;
     (** [Required] Reference describing the ID of this table. *)
+    _type : string;
+    (** [Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. The default value is TABLE. *)
+    view : ViewDefinition.t;
+    (** [Optional] The view definition. *)
     
   }
   
@@ -1054,6 +1100,8 @@ sig
   val schema : (t, TableSchema.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val tableReference : (t, TableReference.t) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val view : (t, ViewDefinition.t) GapiLens.t
   
   val empty : t
   
@@ -1073,9 +1121,9 @@ sig
   sig
     type t = {
       errors : ErrorProto.t list;
-      (**  *)
+      (** Error information for the row indicated by the index property. *)
       index : int;
-      (**  *)
+      (** The index of the row that error applies to. *)
       
     }
     
@@ -1092,7 +1140,7 @@ sig
   
   type t = {
     insertErrors : InsertErrors.t list;
-    (** Rows of results. *)
+    (** An array of errors for rows that were not inserted. *)
     kind : string;
     (** The resource type of the response. *)
     
@@ -1263,9 +1311,9 @@ sig
   sig
     type t = {
       insertId : string;
-      (**  *)
+      (** [Optional] A unique ID for each row. BigQuery uses this property to detect duplicate insertion requests on a best-effort basis. *)
       json : JsonObject.t;
-      (**  *)
+      (** [Required] A JSON object that contains a row of data. The object's properties and values must match the destination table's schema. *)
       
     }
     
@@ -1284,7 +1332,7 @@ sig
     kind : string;
     (** The resource type of the response. *)
     rows : Rows.t list;
-    (** Rows to insert. *)
+    (** The rows to insert. *)
     
   }
   

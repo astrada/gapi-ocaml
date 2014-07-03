@@ -11,7 +11,7 @@
 module Scope :
 sig
   val plus_login : string
-  (** Know your name, basic info, and list of people you're connected to on Google+ *)
+  (** Know your basic profile info and list of people in your circles. *)
   
   val plus_me : string
   (** Know who you are on Google *)
@@ -44,7 +44,7 @@ sig
         ?etag:string ->
         ?std_params:GapiService.StandardParameters.t ->
         GapiConversation.Session.t ->
-        GapiOauth2V2Model.Userinfo.t * GapiConversation.Session.t
+        GapiOauth2V2Model.Userinfoplus.t * GapiConversation.Session.t
       
       
     end
@@ -65,7 +65,7 @@ sig
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
     GapiConversation.Session.t ->
-    GapiOauth2V2Model.Userinfo.t * GapiConversation.Session.t
+    GapiOauth2V2Model.Userinfoplus.t * GapiConversation.Session.t
   
   
 end

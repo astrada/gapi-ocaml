@@ -14,6 +14,74 @@ end
 
 module AclResource =
 struct
+  module AclParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* acl-specific query parameters *)
+      maxResults : int;
+      pageToken : string;
+      showDeleted : bool;
+      syncToken : string;
+      
+    }
+    
+    let default = {
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      maxResults = 0;
+      pageToken = "";
+      showDeleted = false;
+      syncToken = "";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.showDeleted) string_of_bool "showDeleted";
+      param (fun p -> p.syncToken) (fun x -> x) "syncToken";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(maxResults = default.maxResults)
+        ?(pageToken = default.pageToken)
+        ?(showDeleted = default.showDeleted)
+        ?(syncToken = default.syncToken)
+        () =
+      let parameters = {
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        maxResults;
+        pageToken;
+        showDeleted;
+        syncToken;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
   let delete
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
@@ -22,10 +90,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -38,10 +106,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response AclRule.of_data_model) session 
     
@@ -54,10 +122,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
       ~data:aclRule full_url
@@ -66,14 +134,19 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?maxResults
+        ?pageToken
+        ?showDeleted
+        ?syncToken
         ~calendarId
         session =
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let params = AclParameters.merge_parameters
+      ?standard_parameters:std_params ?maxResults ?pageToken ?showDeleted
+      ?syncToken () in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Acl.of_data_model) session 
     
@@ -87,10 +160,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
       ~data:aclRule full_url
@@ -106,14 +179,36 @@ struct
     let full_url = GapiUtils.add_path_to_url ["calendars";
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
       ~data:aclRule full_url
       (GapiJson.parse_json_response AclRule.of_data_model) session 
+    
+  let watch
+        ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?std_params
+        ?maxResults
+        ?pageToken
+        ?showDeleted
+        ?syncToken
+        ~calendarId
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["calendars";
+      ((fun x -> x) calendarId); "acl"; "watch"] base_url in
+    let params = AclParameters.merge_parameters
+      ?standard_parameters:std_params ?maxResults ?pageToken ?showDeleted
+      ?syncToken () in
+    let query_parameters = Option.map AclParameters.to_key_value_list params
+      in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url
+      (GapiJson.parse_json_response Channel.of_data_model) session 
     
   
 end
@@ -160,7 +255,9 @@ struct
       maxResults : int;
       minAccessRole : MinAccessRole.t;
       pageToken : string;
+      showDeleted : bool;
       showHidden : bool;
+      syncToken : string;
       
     }
     
@@ -174,7 +271,9 @@ struct
       maxResults = 0;
       minAccessRole = MinAccessRole.Default;
       pageToken = "";
+      showDeleted = false;
       showHidden = false;
+      syncToken = "";
       
     }
     
@@ -190,7 +289,9 @@ struct
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.minAccessRole) MinAccessRole.to_string "minAccessRole";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.showDeleted) string_of_bool "showDeleted";
       param (fun p -> p.showHidden) string_of_bool "showHidden";
+      param (fun p -> p.syncToken) (fun x -> x) "syncToken";
       
     ] |> List.concat
     
@@ -200,7 +301,9 @@ struct
         ?(maxResults = default.maxResults)
         ?(minAccessRole = default.minAccessRole)
         ?(pageToken = default.pageToken)
+        ?(showDeleted = default.showDeleted)
         ?(showHidden = default.showHidden)
+        ?(syncToken = default.syncToken)
         () =
       let parameters = {
         fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -212,7 +315,9 @@ struct
         maxResults;
         minAccessRole;
         pageToken;
+        showDeleted;
         showHidden;
+        syncToken;
         
       } in
       if parameters = default then None else Some parameters
@@ -273,13 +378,15 @@ struct
         ?maxResults
         ?minAccessRole
         ?pageToken
+        ?showDeleted
         ?showHidden
+        ?syncToken
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList"]
       base_url in
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?minAccessRole ?pageToken
-      ?showHidden () in
+      ?showDeleted ?showHidden ?syncToken () in
     let query_parameters = Option.map
       CalendarListParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
@@ -324,6 +431,29 @@ struct
       ~data_to_post:(GapiJson.render_json CalendarListEntry.to_data_model)
       ~data:calendarListEntry full_url
       (GapiJson.parse_json_response CalendarListEntry.of_data_model) session 
+    
+  let watch
+        ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?std_params
+        ?maxResults
+        ?minAccessRole
+        ?pageToken
+        ?showDeleted
+        ?showHidden
+        ?syncToken
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "calendarList";
+      "watch"] base_url in
+    let params = CalendarListParameters.merge_parameters
+      ?standard_parameters:std_params ?maxResults ?minAccessRole ?pageToken
+      ?showDeleted ?showHidden ?syncToken () in
+    let query_parameters = Option.map
+      CalendarListParameters.to_key_value_list params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url
+      (GapiJson.parse_json_response Channel.of_data_model) session 
     
   
 end
@@ -505,11 +635,14 @@ struct
       orderBy : OrderBy.t;
       originalStart : string;
       pageToken : string;
+      privateExtendedProperty : string list;
       q : string;
       sendNotifications : bool;
+      sharedExtendedProperty : string list;
       showDeleted : bool;
       showHiddenInvitations : bool;
       singleEvents : bool;
+      syncToken : string;
       text : string;
       timeMax : GapiDate.t;
       timeMin : GapiDate.t;
@@ -532,11 +665,14 @@ struct
       orderBy = OrderBy.Default;
       originalStart = "";
       pageToken = "";
+      privateExtendedProperty = [];
       q = "";
       sendNotifications = false;
+      sharedExtendedProperty = [];
       showDeleted = false;
       showHiddenInvitations = false;
       singleEvents = false;
+      syncToken = "";
       text = "";
       timeMax = GapiDate.epoch;
       timeMin = GapiDate.epoch;
@@ -561,11 +697,14 @@ struct
       param (fun p -> p.orderBy) OrderBy.to_string "orderBy";
       param (fun p -> p.originalStart) (fun x -> x) "originalStart";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      GapiService.build_params qp (fun p -> p.privateExtendedProperty) (fun x -> x) "privateExtendedProperty";
       param (fun p -> p.q) (fun x -> x) "q";
       param (fun p -> p.sendNotifications) string_of_bool "sendNotifications";
+      GapiService.build_params qp (fun p -> p.sharedExtendedProperty) (fun x -> x) "sharedExtendedProperty";
       param (fun p -> p.showDeleted) string_of_bool "showDeleted";
       param (fun p -> p.showHiddenInvitations) string_of_bool "showHiddenInvitations";
       param (fun p -> p.singleEvents) string_of_bool "singleEvents";
+      param (fun p -> p.syncToken) (fun x -> x) "syncToken";
       param (fun p -> p.text) (fun x -> x) "text";
       param (fun p -> p.timeMax) GapiDate.to_string "timeMax";
       param (fun p -> p.timeMin) GapiDate.to_string "timeMin";
@@ -584,11 +723,14 @@ struct
         ?(orderBy = default.orderBy)
         ?(originalStart = default.originalStart)
         ?(pageToken = default.pageToken)
+        ?(privateExtendedProperty = default.privateExtendedProperty)
         ?(q = default.q)
         ?(sendNotifications = default.sendNotifications)
+        ?(sharedExtendedProperty = default.sharedExtendedProperty)
         ?(showDeleted = default.showDeleted)
         ?(showHiddenInvitations = default.showHiddenInvitations)
         ?(singleEvents = default.singleEvents)
+        ?(syncToken = default.syncToken)
         ?(text = default.text)
         ?(timeMax = default.timeMax)
         ?(timeMin = default.timeMin)
@@ -609,11 +751,14 @@ struct
         orderBy;
         originalStart;
         pageToken;
+        privateExtendedProperty;
         q;
         sendNotifications;
+        sharedExtendedProperty;
         showDeleted;
         showHiddenInvitations;
         singleEvents;
+        syncToken;
         text;
         timeMax;
         timeMin;
@@ -735,10 +880,13 @@ struct
         ?maxResults
         ?orderBy
         ?pageToken
+        ?privateExtendedProperty
         ?q
+        ?sharedExtendedProperty
         ?showDeleted
         ?showHiddenInvitations
         ?singleEvents
+        ?syncToken
         ?timeMax
         ?timeMin
         ?timeZone
@@ -749,9 +897,9 @@ struct
       ((fun x -> x) calendarId); "events"] base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?iCalUID
-      ?maxAttendees ?maxResults ?orderBy ?pageToken ?q ?showDeleted
-      ?showHiddenInvitations ?singleEvents ?timeMax ?timeMin ?timeZone
-      ?updatedMin () in
+      ?maxAttendees ?maxResults ?orderBy ?pageToken ?privateExtendedProperty
+      ?q ?sharedExtendedProperty ?showDeleted ?showHiddenInvitations
+      ?singleEvents ?syncToken ?timeMax ?timeMin ?timeZone ?updatedMin () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -846,10 +994,13 @@ struct
         ?maxResults
         ?orderBy
         ?pageToken
+        ?privateExtendedProperty
         ?q
+        ?sharedExtendedProperty
         ?showDeleted
         ?showHiddenInvitations
         ?singleEvents
+        ?syncToken
         ?timeMax
         ?timeMin
         ?timeZone
@@ -861,9 +1012,9 @@ struct
       ((fun x -> x) calendarId); "events"; "watch"] base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?iCalUID
-      ?maxAttendees ?maxResults ?orderBy ?pageToken ?q ?showDeleted
-      ?showHiddenInvitations ?singleEvents ?timeMax ?timeMin ?timeZone
-      ?updatedMin () in
+      ?maxAttendees ?maxResults ?orderBy ?pageToken ?privateExtendedProperty
+      ?q ?sharedExtendedProperty ?showDeleted ?showHiddenInvitations
+      ?singleEvents ?syncToken ?timeMax ?timeMin ?timeZone ?updatedMin () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
@@ -896,6 +1047,69 @@ end
 
 module SettingsResource =
 struct
+  module SettingsParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* settings-specific query parameters *)
+      maxResults : int;
+      pageToken : string;
+      syncToken : string;
+      
+    }
+    
+    let default = {
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      maxResults = 0;
+      pageToken = "";
+      syncToken = "";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.syncToken) (fun x -> x) "syncToken";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(maxResults = default.maxResults)
+        ?(pageToken = default.pageToken)
+        ?(syncToken = default.syncToken)
+        () =
+      let parameters = {
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        maxResults;
+        pageToken;
+        syncToken;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
   let get
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?etag
@@ -904,25 +1118,47 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings";
       ((fun x -> x) setting)] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = SettingsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map SettingsParameters.to_key_value_list
+      params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Setting.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?maxResults
+        ?pageToken
+        ?syncToken
         session =
     let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings"]
       base_url in
-    let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let params = SettingsParameters.merge_parameters
+      ?standard_parameters:std_params ?maxResults ?pageToken ?syncToken () in
+    let query_parameters = Option.map SettingsParameters.to_key_value_list
+      params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Settings.of_data_model) session 
+    
+  let watch
+        ?(base_url = "https://www.googleapis.com/calendar/v3/")
+        ?std_params
+        ?maxResults
+        ?pageToken
+        ?syncToken
+        channel
+        session =
+    let full_url = GapiUtils.add_path_to_url ["users"; "me"; "settings";
+      "watch"] base_url in
+    let params = SettingsParameters.merge_parameters
+      ?standard_parameters:std_params ?maxResults ?pageToken ?syncToken () in
+    let query_parameters = Option.map SettingsParameters.to_key_value_list
+      params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json Channel.to_data_model)
+      ~data:channel full_url
+      (GapiJson.parse_json_response Channel.of_data_model) session 
     
   
 end
