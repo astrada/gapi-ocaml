@@ -118,10 +118,16 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@[<v 2>type t = {@,";
     List.iter
       (fun { Field.ocaml_name; ocaml_type; field_type; _ } ->
-         Format.fprintf formatter
-           "%s : %s;@,"
-           ocaml_name
-           ocaml_type)
+         if ComplexType.is_enum field_type then begin
+           Format.fprintf formatter
+             "%s : string;@,"
+             ocaml_name
+         end else begin
+           Format.fprintf formatter
+             "%s : %s;@,"
+             ocaml_name
+             ocaml_type
+         end)
       fields;
     Format.fprintf formatter "@]@,}@,"
   in
@@ -143,10 +149,16 @@ let build_schema_inner_module file_lens complex_type =
     Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
     List.iter
       (fun { Field.ocaml_name; field_type; empty_value; _ } ->
-         Format.fprintf formatter
-           "%s = %s;@,"
-           ocaml_name
-           empty_value)
+         if ComplexType.is_enum field_type then begin
+           Format.fprintf formatter
+             "%s = \"\";@,"
+             ocaml_name
+         end else begin
+           Format.fprintf formatter
+             "%s = %s;@,"
+             ocaml_name
+             empty_value
+         end)
       fields;
     Format.fprintf formatter "@]@,}@,"
   in
@@ -1187,11 +1199,18 @@ let rec generate_schema_module_signature
                 Format.fprintf formatter "@[<v 2>type t = {@,";
                 List.iter
                   (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-                     Format.fprintf formatter
-                       "%s : %s;@,(** %s *)@,"
-                       ocaml_name
-                       ocaml_type
-                       (clean_doc (ComplexType.get_description field_type)))
+                     if ComplexType.is_enum field_type then begin
+                       Format.fprintf formatter
+                         "%s : string;@,(** %s *)@,"
+                         ocaml_name
+                         (clean_doc (ComplexType.get_description field_type))
+                     end else begin
+                       Format.fprintf formatter
+                         "%s : %s;@,(** %s *)@,"
+                         ocaml_name
+                         ocaml_type
+                         (clean_doc (ComplexType.get_description field_type))
+                     end)
                   fields;
                 Format.fprintf formatter
                   "@]@,}@\n@\n";
@@ -1199,10 +1218,16 @@ let rec generate_schema_module_signature
                 (* Lenses *)
                 List.iter
                   (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-                     Format.fprintf formatter
-                       "val %s : (t, %s) GapiLens.t@,"
-                       ocaml_name
-                       ocaml_type)
+                     if ComplexType.is_enum field_type then begin
+                       Format.fprintf formatter
+                         "val %s : (t, string) GapiLens.t@,"
+                         ocaml_name
+                     end else begin
+                       Format.fprintf formatter
+                         "val %s : (t, %s) GapiLens.t@,"
+                         ocaml_name
+                         ocaml_type
+                     end)
                   fields;
 
                 (* empty, render, parse *)
