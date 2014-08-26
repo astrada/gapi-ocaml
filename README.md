@@ -19,6 +19,7 @@ Supported RESTful APIs:
 * AdSense Management API v1.1
 * BigQuery API v2
 * Drive API v2
+* Gmail API v1
 
 Google Data Protocol APIs (GData):
 
