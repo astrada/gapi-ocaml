@@ -145,10 +145,18 @@ let request
       Sys.os_type in
   let request_headers =
     let hl = Option.default [] header_list in
-      match post_data with
-          Some (GapiCore.PostData.Body (_, content_type)) ->
-            GapiCore.Header.ContentType content_type :: hl
-        | _ -> hl
+    let set_content_type_if_not_present ct =
+      let new_content_type = GapiCore.Header.ContentType ct in
+      if List.exists
+          (function GapiCore.Header.ContentType _ -> true | _ -> false)
+          hl then hl
+      else new_content_type :: hl
+    in match post_data with
+        Some (GapiCore.PostData.Body (_, content_type)) ->
+          set_content_type_if_not_present content_type
+      | Some (GapiCore.PostData.Fields _) ->
+          set_content_type_if_not_present "application/x-www-form-urlencoded"
+      | _ -> hl
   in
     GapiCurl.set_headerfunction parse_header session.Session.curl;
     GapiCurl.set_writefunction writer session.Session.curl;
