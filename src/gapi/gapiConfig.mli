@@ -47,12 +47,16 @@ type oauth2_config = {
   (** Client ID. *)
   client_secret : string;
   (** Client secret. *)
+  refresh_access_token : (unit -> string) option
+  (** Optional external function used to get new access tokens. *)
 }
 
 val client_id : (oauth2_config, string) GapiLens.t
 (** OAuth2 client ID lens. *)
 val client_secret : (oauth2_config, string) GapiLens.t
 (** OAuth2 client secret lens. *)
+val refresh_access_token : (oauth2_config, (unit -> string) option) GapiLens.t
+(** OAuth2 optional external token refresh function lens. *)
 
 (** Authorization method. *)
 type auth_config =

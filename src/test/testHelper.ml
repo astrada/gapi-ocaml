@@ -21,7 +21,8 @@ let build_oauth2_auth test_config =
   let get = Config.get test_config in
     (GapiConfig.OAuth2
        { GapiConfig.client_id = get "oa2_id";
-         client_secret = get "oa2_secret" },
+         client_secret = get "oa2_secret";
+         refresh_access_token = None },
      GapiConversation.Session.OAuth2
        { GapiConversation.Session.oauth2_token = get "oa2_token";
          refresh_token = get "oa2_refresh" })

@@ -14,7 +14,8 @@ type oauth2_data =
     { client_id : string;
       client_secret : string;
       oauth2_token : string;
-      refresh_token : string }
+      refresh_token : string;
+      refresh_access_token : (unit -> string) option }
 
 type authentication =
     NoAuth

@@ -13,7 +13,10 @@ exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
+exception InternalServerError of GapiConversation.Session.t
+exception BadGateway of GapiConversation.Session.t
 exception ServiceUnavailable of GapiConversation.Session.t
+exception GatewayTimeout of GapiConversation.Session.t
 exception RefreshTokenFailed of GapiConversation.Session.t
 
 type request_type =
@@ -102,8 +105,14 @@ let parse_response
           raise (Gone session)
       | 412 (* Precondition Failed *) ->
           raise (PreconditionFailed session)
+      | 500 (* Internal Server Error *) ->
+          raise (InternalServerError session)
+      | 502 (* Bad Gateway *) ->
+          raise (BadGateway session)
       | 503 (* Service Unavailable *) ->
           raise (ServiceUnavailable session)
+      | 504 (* Gateway Timeout *) ->
+          raise (GatewayTimeout session)
       | _ ->
           parse_error pipe response_code
 
@@ -133,7 +142,8 @@ let build_auth_data session =
                             token;
                             secret }
     | GapiConfig.OAuth2 { GapiConfig.client_id;
-                          client_secret } ->
+                          client_secret;
+                          refresh_access_token } ->
         let { GapiConversation.Session.oauth2_token;
                 refresh_token } = session
           |. GapiConversation.Session.auth
@@ -143,7 +153,8 @@ let build_auth_data session =
           GapiAuth.OAuth2 { GapiAuth.client_id;
                             client_secret;
                             oauth2_token;
-                            refresh_token }
+                            refresh_token;
+                            refresh_access_token }
 
 let single_request
       ?post_data
@@ -236,20 +247,32 @@ let refresh_oauth2_token session =
     match auth_data with
         GapiAuth.OAuth2 { GapiAuth.client_id;
                            client_secret;
-                           refresh_token; _ } ->
-          if client_id = "" || client_secret = "" || refresh_token = "" then
+                           refresh_token;
+                           refresh_access_token; _ } ->
+          if (client_id = "" ||
+                client_secret = "" ||
+                refresh_token = "") &&
+              refresh_access_token = None then
             raise (RefreshTokenFailed session);
-          let (response, new_session) =
-            GapiOAuth2.refresh_access_token
-              ~client_id
-              ~client_secret
-              ~refresh_token
-              session in
-          let access_token =
-            match response with
-                GapiAuthResponse.OAuth2AccessToken token ->
-                  token.GapiAuthResponse.OAuth2.access_token
-              | _ -> failwith "Not supported OAuth2 response" in
+          let (access_token, new_session) =
+            match refresh_access_token with
+                None ->
+                  let (response, new_session) =
+                    GapiOAuth2.refresh_access_token
+                      ~client_id
+                      ~client_secret
+                      ~refresh_token
+                      session in
+                  begin match response with
+                      GapiAuthResponse.OAuth2AccessToken token ->
+                        (token.GapiAuthResponse.OAuth2.access_token,
+                         new_session)
+                    | _ -> failwith "Not supported OAuth2 response"
+                  end
+              | Some refresh ->
+                  let access_token = refresh () in
+                  (access_token, session)
+          in
             new_session
               |> GapiConversation.Session.auth
               ^%= GapiConversation.Session.oauth2
@@ -276,6 +299,19 @@ let gapi_request
         request_number
         url
         session =
+    let set_upload_error upload_state data =
+      let new_upload_state =
+        Option.map
+          (fun u -> u
+             |> GapiMediaResource.state ^= GapiMediaResource.Error)
+          upload_state in
+      let new_post_data =
+        if Option.is_some new_upload_state then None
+        else data
+      in
+      (new_upload_state, new_post_data)
+    in
+
     try
       let verified_session =
         match session.GapiConversation.Session.auth with
@@ -313,13 +349,15 @@ let gapi_request
             raise e
           else
             let refreshed_session = refresh_oauth2_token new_session in
-              request_loop
-                ?post_data
-                ?current_upload_state
-                request_type
-                (succ request_number)
-                url
-                refreshed_session
+            let (new_upload_state, new_post_data) =
+              set_upload_error current_upload_state post_data in
+            request_loop
+              ?post_data:new_post_data
+              ?current_upload_state:new_upload_state
+              request_type
+              (succ request_number)
+              url
+              refreshed_session
       | ResumeIncomplete (range, location, new_session) ->
           let target = if location = "" then url else location in
           let upload_state = Option.get current_upload_state in
@@ -327,51 +365,45 @@ let gapi_request
                                    range
                                    upload_state in
           let new_post_data =
-            GapiMediaResource.get_post_data new_upload_state
-          in
-            request_loop
-              ~post_data:new_post_data
-              ~current_upload_state:new_upload_state
-              Update
-              0
-              target
-              new_session
+            GapiMediaResource.get_post_data new_upload_state in
+          request_loop
+            ~post_data:new_post_data
+            ~current_upload_state:new_upload_state
+            Update
+            0
+            target
+            new_session
       | StartUpload (location, new_session) ->
           let target = if location = "" then url else location in
           let upload_state = Option.get current_upload_state in
           let new_upload_state = upload_state
             |> GapiMediaResource.state ^= GapiMediaResource.Uploading in
           let new_post_data =
-            GapiMediaResource.get_post_data upload_state
-          in
-            request_loop
-              ~post_data:new_post_data
-              ~current_upload_state:new_upload_state
-              Update
-              0
-              target
-              new_session
-      | (ServiceUnavailable new_session) as e->
+            GapiMediaResource.get_post_data upload_state in
+          request_loop
+            ~post_data:new_post_data
+            ~current_upload_state:new_upload_state
+            Update
+            0
+            target
+            new_session
+      | (InternalServerError new_session)
+      | (BadGateway new_session)
+      | (ServiceUnavailable new_session)
+      | (GatewayTimeout new_session) as e ->
           if request_number > 4 then
             raise e
           else
-            let new_upload_state =
-              Option.map
-                (fun upload_state -> upload_state
-                   |> GapiMediaResource.state ^= GapiMediaResource.Error)
-                current_upload_state in
-            let new_post_data =
-              if Option.is_some new_upload_state then None
-              else post_data
-            in
-              GapiUtils.wait_exponential_backoff request_number;
-              request_loop
-                ?post_data:new_post_data
-                ?current_upload_state:new_upload_state
-                request_type
-                (succ request_number)
-                url
-                new_session
+            let (new_upload_state, new_post_data) =
+              set_upload_error current_upload_state post_data in
+            GapiUtils.wait_exponential_backoff request_number;
+            request_loop
+              ?post_data:new_post_data
+              ?current_upload_state:new_upload_state
+              request_type
+              (succ request_number)
+              url
+              new_session
   in
 
   let current_upload_state =

@@ -34,6 +34,7 @@ let consumer_secret = {
 type oauth2_config = {
   client_id : string;
   client_secret : string;
+  refresh_access_token : (unit -> string) option
 }
 let client_id = {
   GapiLens.get = (fun x -> x.client_id);
@@ -42,6 +43,10 @@ let client_id = {
 let client_secret = {
   GapiLens.get = (fun x -> x.client_secret);
   GapiLens.set = (fun v x -> { x with client_secret = v })
+}
+let refresh_access_token = {
+  GapiLens.get = (fun x -> x.refresh_access_token);
+  GapiLens.set = (fun v x -> { x with refresh_access_token = v })
 }
 type auth_config =
     NoAuth
