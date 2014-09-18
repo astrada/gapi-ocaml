@@ -299,17 +299,34 @@ let gapi_request
         request_number
         url
         session =
-    let set_upload_error upload_state data =
-      let new_upload_state =
-        Option.map
-          (fun u -> u
-             |> GapiMediaResource.state ^= GapiMediaResource.Error)
-          upload_state in
-      let new_post_data =
-        if Option.is_some new_upload_state then None
-        else data
-      in
-      (new_upload_state, new_post_data)
+    let retry_on_error
+          max_request_number
+          exponential_backoff
+          current_exception
+          update_session
+          new_session =
+      if request_number > max_request_number then
+        raise current_exception
+      else
+        let updated_session = update_session new_session in
+        let new_upload_state =
+          Option.map
+            (fun u -> u
+               |> GapiMediaResource.state ^= GapiMediaResource.Error)
+            current_upload_state in
+        let new_post_data =
+          if Option.is_some new_upload_state then None
+          else post_data
+        in
+        if exponential_backoff then
+          GapiUtils.wait_exponential_backoff request_number;
+        request_loop
+          ?post_data:new_post_data
+          ?current_upload_state:new_upload_state
+          request_type
+          (succ request_number)
+          url
+          updated_session
     in
 
     try
@@ -345,19 +362,7 @@ let gapi_request
           else
             failwith ("Redirection loop detected: url=" ^ url)
       | (Unauthorized new_session) as e->
-          if request_number > 1 then
-            raise e
-          else
-            let refreshed_session = refresh_oauth2_token new_session in
-            let (new_upload_state, new_post_data) =
-              set_upload_error current_upload_state post_data in
-            request_loop
-              ?post_data:new_post_data
-              ?current_upload_state:new_upload_state
-              request_type
-              (succ request_number)
-              url
-              refreshed_session
+          retry_on_error 1 false e (fun s -> refresh_oauth2_token s) new_session
       | ResumeIncomplete (range, location, new_session) ->
           let target = if location = "" then url else location in
           let upload_state = Option.get current_upload_state in
@@ -387,23 +392,12 @@ let gapi_request
             0
             target
             new_session
+      | (NotFound new_session)
       | (InternalServerError new_session)
       | (BadGateway new_session)
       | (ServiceUnavailable new_session)
       | (GatewayTimeout new_session) as e ->
-          if request_number > 4 then
-            raise e
-          else
-            let (new_upload_state, new_post_data) =
-              set_upload_error current_upload_state post_data in
-            GapiUtils.wait_exponential_backoff request_number;
-            request_loop
-              ?post_data:new_post_data
-              ?current_upload_state:new_upload_state
-              request_type
-              (succ request_number)
-              url
-              new_session
+          retry_on_error 4 true e (fun s -> s) new_session
   in
 
   let current_upload_state =
