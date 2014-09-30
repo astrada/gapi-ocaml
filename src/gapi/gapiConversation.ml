@@ -158,75 +158,76 @@ let request
           set_content_type_if_not_present "application/x-www-form-urlencoded"
       | _ -> hl
   in
-    GapiCurl.set_headerfunction parse_header session.Session.curl;
-    GapiCurl.set_writefunction writer session.Session.curl;
-    begin match http_method with
-        GapiCore.HttpMethod.GET ->
-          GapiCurl.set_httpget true session.Session.curl
-      | GapiCore.HttpMethod.POST ->
-          GapiCurl.set_post true session.Session.curl
-      | GapiCore.HttpMethod.PUT
-      | GapiCore.HttpMethod.PATCH ->
-          GapiCurl.set_upload true session.Session.curl
-      | GapiCore.HttpMethod.DELETE ->
-          GapiCurl.set_upload false session.Session.curl;
-          GapiCurl.set_nobody true session.Session.curl
-      | GapiCore.HttpMethod.HEAD ->
-          GapiCurl.set_upload false session.Session.curl;
-          GapiCurl.set_nobody true session.Session.curl
-    end;
-    begin match http_method with
-        GapiCore.HttpMethod.PATCH
-      | GapiCore.HttpMethod.DELETE ->
-          GapiCurl.set_customrequest
-            (GapiCore.HttpMethod.to_string http_method) session.Session.curl
-      | _ ->
-          (* FIXME: reset curl custom request *)
-          GapiCurl.set_customrequest
-            (GapiCore.HttpMethod.to_string http_method) session.Session.curl
-    end;
-    begin match post_data with
-        Some (GapiCore.PostData.Fields key_value_list) ->
-          GapiCurl.set_postfields key_value_list session.Session.curl
-      | Some (GapiCore.PostData.Body (body, _)) ->
-          GapiCurl.set_httpbody body session.Session.curl
-      | None ->
-          match http_method with
-              GapiCore.HttpMethod.POST ->
-                GapiCurl.set_postfields [] session.Session.curl
-            | GapiCore.HttpMethod.PUT ->
-                GapiCurl.set_upload false session.Session.curl;
-                GapiCurl.set_post true session.Session.curl;
-                GapiCurl.set_postfields [] session.Session.curl
-            | _ -> ()
-    end;
-    GapiCurl.set_useragent user_agent_header session.Session.curl;
-    GapiCurl.set_httpheader request_headers session.Session.curl;
-    GapiCurl.set_cookies session.Session.cookies session.Session.curl;
-    try
-      GapiCurl.perform url session.Session.curl;
-      GapiPipe.OcamlnetPipe.end_writing pipe;
-      let response_code = GapiCurl.get_responsecode session.Session.curl in
-      let response_headers = List.rev
-                               (Queue.fold
-                                  (fun l h -> GapiCore.Header.parse h :: l)
-                                  []
-                                  header_queue) in
-      let new_session = update_session response_headers session in
-      let result = parse_response
-                     pipe response_code response_headers new_session in
+  GapiCurl.set_headerfunction parse_header session.Session.curl;
+  GapiCurl.set_writefunction writer session.Session.curl;
+  begin match http_method with
+      GapiCore.HttpMethod.GET ->
+        GapiCurl.set_httpget true session.Session.curl
+    | GapiCore.HttpMethod.POST ->
+        GapiCurl.set_post true session.Session.curl
+    | GapiCore.HttpMethod.PUT
+    | GapiCore.HttpMethod.PATCH ->
+        GapiCurl.set_upload true session.Session.curl
+    | GapiCore.HttpMethod.DELETE ->
+        GapiCurl.set_upload false session.Session.curl;
+        GapiCurl.set_nobody true session.Session.curl
+    | GapiCore.HttpMethod.HEAD ->
+        GapiCurl.set_upload false session.Session.curl;
+        GapiCurl.set_nobody true session.Session.curl
+  end;
+  begin match http_method with
+      GapiCore.HttpMethod.PATCH
+    | GapiCore.HttpMethod.DELETE ->
+        GapiCurl.set_customrequest
+          (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+    | _ ->
+        (* FIXME: reset curl custom request *)
+        GapiCurl.set_customrequest
+          (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+  end;
+  begin match post_data with
+      Some (GapiCore.PostData.Fields key_value_list) ->
+        GapiCurl.set_postfields key_value_list session.Session.curl
+    | Some (GapiCore.PostData.Body (body, _)) ->
+        GapiCurl.set_httpbody body session.Session.curl
+    | None ->
+        match http_method with
+            GapiCore.HttpMethod.POST ->
+              GapiCurl.set_postfields [] session.Session.curl
+          | GapiCore.HttpMethod.PUT ->
+              GapiCurl.set_upload false session.Session.curl;
+              GapiCurl.set_post true session.Session.curl;
+              GapiCurl.set_postfields [] session.Session.curl
+          | _ -> ()
+  end;
+  GapiCurl.set_useragent user_agent_header session.Session.curl;
+  GapiCurl.set_httpheader request_headers session.Session.curl;
+  GapiCurl.set_cookies session.Session.cookies session.Session.curl;
+  try
+    GapiCurl.perform url session.Session.curl;
+    GapiPipe.OcamlnetPipe.end_writing pipe;
+    Option.may (fun oc -> oc#close_out ()) out_channel;
+    let response_code = GapiCurl.get_responsecode session.Session.curl in
+    let response_headers = List.rev
+                             (Queue.fold
+                                (fun l h -> GapiCore.Header.parse h :: l)
+                                []
+                                header_queue) in
+    let new_session = update_session response_headers session in
+    let result = parse_response
+                   pipe response_code response_headers new_session in
+    GapiPipe.OcamlnetPipe.end_reading pipe;
+    (result, new_session)
+  with
+      Curl.CurlException (_, code, desc) ->
         GapiPipe.OcamlnetPipe.end_reading pipe;
-        (result, new_session)
-    with
-        Curl.CurlException (_, code, desc) ->
-          GapiPipe.OcamlnetPipe.end_reading pipe;
-          failwith (Printf.sprintf
-                      "Code: %d, Description: %s, ErrorBuffer: %s\n"
-                      code desc
-                      (GapiCurl.get_error_buffer session.Session.curl))
-      | e ->
-          GapiPipe.OcamlnetPipe.end_reading pipe;
-          raise e
+        failwith (Printf.sprintf
+                    "Code: %d, Description: %s, ErrorBuffer: %s\n"
+                    code desc
+                    (GapiCurl.get_error_buffer session.Session.curl))
+    | e ->
+        GapiPipe.OcamlnetPipe.end_reading pipe;
+        raise e
 
 let with_session
       ?(auth_context = Session.NoAuth)

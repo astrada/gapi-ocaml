@@ -137,6 +137,23 @@ let test_generate_download_headers () =
       [GapiCore.Header.Range "bytes=5-12"]
       headers
 
+let test_create_out_channel_bigarray _ =
+  let buffer =
+    Bigarray.Array1.create Bigarray.char Bigarray.c_layout 3 in
+  let media_destination = GapiMediaResource.ArrayBuffer buffer in
+  let download = {
+    GapiMediaResource.destination = media_destination;
+    range_spec = ""
+  } in
+  let out_channel = GapiMediaResource.create_out_channel download in
+  let pipe = GapiPipe.OcamlnetPipe.create ~out_channel () in
+  GapiPipe.OcamlnetPipe.write_string pipe "abc";
+  GapiPipe.OcamlnetPipe.end_writing pipe;
+  out_channel#close_out ();
+  assert_equal 'a' (Bigarray.Array1.get buffer 0);
+  assert_equal 'b' (Bigarray.Array1.get buffer 1);
+  assert_equal 'c' (Bigarray.Array1.get buffer 2)
+
 let suite = "Media resource test" >:::
   ["test_setup_upload" >:: test_setup_upload;
    "test_generate_upload_request_post_headers"
@@ -147,5 +164,6 @@ let suite = "Media resource test" >:::
    "test_generate_resume_put_headers" >:: test_generate_resume_put_headers;
    "test_update_upload_state" >:: test_update_upload_state;
    "test_generate_range_spec" >:: test_generate_range_spec;
-   "test_generate_download_headers" >:: test_generate_download_headers]
+   "test_generate_download_headers" >:: test_generate_download_headers;
+   "test_create_out_channel_bigarray" >:: test_create_out_channel_bigarray]
 

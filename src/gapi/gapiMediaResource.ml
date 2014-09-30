@@ -31,9 +31,11 @@ let create_out_channel download =
       let n = Bigarray.Array1.dim arr in
       let netbuffer = Netbuffer.create n in
       let onclose () =
-        Netbuffer.blit_to_memory netbuffer 0 arr 0 n
+        let buffer_length = Netbuffer.length netbuffer in
+        let len = if buffer_length < n then buffer_length else n in
+        Netbuffer.blit_to_memory netbuffer 0 arr 0 len
       in
-        new Netchannels.output_netbuffer ~onclose netbuffer
+      new Netchannels.output_netbuffer ~onclose netbuffer
 
 let generate_download_headers download =
   match download.range_spec with
