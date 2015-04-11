@@ -222,7 +222,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.Job.t * GapiConversation.Session.t
   
-  (** Lists all the Jobs in the specified project that were started by the user.
+  (** Lists all the Jobs in the specified project that were started by the user. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.

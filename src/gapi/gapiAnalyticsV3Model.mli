@@ -6,6 +6,271 @@
   {{:https://developers.google.com/analytics/}API Documentation}.
   *)
 
+module UnsampledReport :
+sig
+  module DriveDownloadDetails :
+  sig
+    type t = {
+      documentId : string;
+      (** Id of the document/file containing the report data. *)
+      
+    }
+    
+    val documentId : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module CloudStorageDownloadDetails :
+  sig
+    type t = {
+      bucketId : string;
+      (** Id of the bucket the file object is stored in. *)
+      objectId : string;
+      (** Id of the file object containing the report data. *)
+      
+    }
+    
+    val bucketId : (t, string) GapiLens.t
+    val objectId : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountId : string;
+    (** Account ID to which this unsampled report belongs. *)
+    cloudStorageDownloadDetails : CloudStorageDownloadDetails.t;
+    (** Download details for a file stored in Google Cloud Storage. *)
+    created : GapiDate.t;
+    (** Time this unsampled report was created. *)
+    dimensions : string;
+    (** The dimensions for the unsampled report. *)
+    downloadType : string;
+    (** The type of download you need to use for the report data file. *)
+    driveDownloadDetails : DriveDownloadDetails.t;
+    (** Download details for a file stored in Google Drive. *)
+    end_date : string;
+    (** The end date for the unsampled report. *)
+    filters : string;
+    (** The filters for the unsampled report. *)
+    id : string;
+    (** Unsampled report ID. *)
+    kind : string;
+    (** Resource type for an Analytics unsampled report. *)
+    metrics : string;
+    (** The metrics for the unsampled report. *)
+    profileId : string;
+    (** View (Profile) ID to which this unsampled report belongs. *)
+    segment : string;
+    (** The segment for the unsampled report. *)
+    selfLink : string;
+    (** Link for this unsampled report. *)
+    start_date : string;
+    (** The start date for the unsampled report. *)
+    status : string;
+    (** Status of this unsampled report. Possible values are PENDING, COMPLETED, or FAILED. *)
+    title : string;
+    (** Title of the unsampled report. *)
+    updated : GapiDate.t;
+    (** Time this unsampled report was last modified. *)
+    webPropertyId : string;
+    (** Web property ID to which this unsampled report belongs. The web property ID is of the form UA-XXXXX-YY. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val cloudStorageDownloadDetails : (t, CloudStorageDownloadDetails.t) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val dimensions : (t, string) GapiLens.t
+  val downloadType : (t, string) GapiLens.t
+  val driveDownloadDetails : (t, DriveDownloadDetails.t) GapiLens.t
+  val end_date : (t, string) GapiLens.t
+  val filters : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val metrics : (t, string) GapiLens.t
+  val profileId : (t, string) GapiLens.t
+  val segment : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val start_date : (t, string) GapiLens.t
+  val status : (t, string) GapiLens.t
+  val title : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CustomDimension :
+sig
+  module ParentLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the property to which the custom dimension belongs. *)
+      _type : string;
+      (** Type of the parent link. Set to "analytics#webproperty". *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountId : string;
+    (** Account ID. *)
+    active : bool;
+    (** Boolean indicating whether the custom dimension is active. *)
+    created : GapiDate.t;
+    (** Time the custom dimension was created. *)
+    id : string;
+    (** Custom dimension ID. *)
+    index : int;
+    (** Index of the custom dimension. *)
+    kind : string;
+    (** Kind value for a custom dimension. Set to "analytics#customDimension". It is a read-only field. *)
+    name : string;
+    (** Name of the custom dimension. *)
+    parentLink : ParentLink.t;
+    (** Parent link for the custom dimension. Points to the property to which the custom dimension belongs. *)
+    scope : string;
+    (** Scope of the custom dimension: HIT, SESSION, USER or PRODUCT. *)
+    selfLink : string;
+    (** Link for the custom dimension *)
+    updated : GapiDate.t;
+    (** Time the custom dimension was last modified. *)
+    webPropertyId : string;
+    (** Property ID. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val active : (t, bool) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val index : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
+  val scope : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CustomDimensions :
+sig
+  type t = {
+    items : CustomDimension.t list;
+    (** Collection of custom dimensions. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this custom dimension collection. *)
+    previousLink : string;
+    (** Link to previous page for this custom dimension collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, CustomDimension.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ProfileSummary :
+sig
+  type t = {
+    id : string;
+    (** View (profile) ID. *)
+    kind : string;
+    (** Resource type for Analytics ProfileSummary. *)
+    name : string;
+    (** View (profile) name. *)
+    _type : string;
+    (** View (Profile) type. Supported types: WEB or APP. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Column :
 sig
   type t = {
@@ -68,25 +333,190 @@ sig
   
 end
 
+module WebPropertyRef :
+sig
+  type t = {
+    accountId : string;
+    (** Account ID to which this web property belongs. *)
+    href : string;
+    (** Link for this web property. *)
+    id : string;
+    (** Web property ID of the form UA-XXXXX-YY. *)
+    internalWebPropertyId : string;
+    (** Internal ID for this web property. *)
+    kind : string;
+    (** Analytics web property reference. *)
+    name : string;
+    (** Name of this web property. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val href : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val internalWebPropertyId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AdWordsAccount :
+sig
+  type t = {
+    autoTaggingEnabled : bool;
+    (** True if auto-tagging is enabled on the AdWords account. Read-only after the insert operation. *)
+    customerId : string;
+    (** Customer ID. This field is required when creating an AdWords link. *)
+    kind : string;
+    (** Resource type for AdWords account. *)
+    
+  }
+  
+  val autoTaggingEnabled : (t, bool) GapiLens.t
+  val customerId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module EntityAdWordsLink :
+sig
+  module Entity :
+  sig
+    type t = {
+      webPropertyRef : WebPropertyRef.t;
+      (**  *)
+      
+    }
+    
+    val webPropertyRef : (t, WebPropertyRef.t) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    adWordsAccounts : AdWordsAccount.t list;
+    (** A list of AdWords client accounts. These cannot be MCC accounts. This field is required when creating an AdWords link. It cannot be empty. *)
+    entity : Entity.t;
+    (** Web property being linked. *)
+    id : string;
+    (** Entity AdWords link ID *)
+    kind : string;
+    (** Resource type for entity AdWords link. *)
+    name : string;
+    (** Name of the link. This field is required when creating an AdWords link. *)
+    profileIds : string list;
+    (** IDs of linked Views (Profiles) represented as strings. *)
+    selfLink : string;
+    (** URL link for this Google Analytics - Google AdWords link. *)
+    
+  }
+  
+  val adWordsAccounts : (t, AdWordsAccount.t list) GapiLens.t
+  val entity : (t, Entity.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val profileIds : (t, string list) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module EntityAdWordsLinks :
+sig
+  type t = {
+    items : EntityAdWordsLink.t list;
+    (** A list of entity AdWords links. *)
+    itemsPerPage : int;
+    (** The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Next link for this AdWords link collection. *)
+    previousLink : string;
+    (** Previous link for this AdWords link collection. *)
+    startIndex : int;
+    (** The starting index of the entries, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    
+  }
+  
+  val items : (t, EntityAdWordsLink.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Segment :
 sig
   type t = {
     created : GapiDate.t;
-    (** Time the advanced segment was created. *)
+    (** Time the segment was created. *)
     definition : string;
-    (** Advanced segment definition. *)
+    (** Segment definition. *)
     id : string;
-    (** Advanced segment ID. *)
+    (** Segment ID. *)
     kind : string;
-    (** Resource type for Analytics advanced segment. *)
+    (** Resource type for Analytics segment. *)
     name : string;
-    (** Advanced segment name. *)
+    (** Segment name. *)
     segmentId : string;
-    (** Segment ID. Can be used with the 'segment' parameter in Data Feed. *)
+    (** Segment ID. Can be used with the 'segment' parameter in Core Reporting API. *)
     selfLink : string;
-    (** Link for this advanced segment. *)
+    (** Link for this segment. *)
+    _type : string;
+    (** Type for a segment. Possible values are "BUILT_IN" or "CUSTOM". *)
     updated : GapiDate.t;
-    (** Time the advanced segment was last modified. *)
+    (** Time the segment was last modified. *)
     
   }
   
@@ -97,6 +527,7 @@ sig
   val name : (t, string) GapiLens.t
   val segmentId : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   
   val empty : t
@@ -171,10 +602,12 @@ sig
     (** Time the experiment was created. This field is read-only. *)
     description : string;
     (** Notes about this experiment. *)
-    editableInGaUi : string;
+    editableInGaUi : bool;
     (** If true, the end user will be able to edit the experiment via the Google Analytics user interface. *)
     endTime : GapiDate.t;
     (** The ending time of the experiment (the time the status changed from RUNNING to ENDED). This field is present only if the experiment has ended. This field is read-only. *)
+    equalWeighting : bool;
+    (** Boolean specifying whether to distribute traffic evenly across all variations. If the value is False, content experiments follows the default behavior of adjusting traffic dynamically based on variation performance. Optional -- defaults to False. This field may not be changed for an experiment whose status is ENDED. *)
     id : string;
     (** Experiment ID. Required for patch and update. Disallowed for create. *)
     internalWebPropertyId : string;
@@ -182,11 +615,11 @@ sig
     kind : string;
     (** Resource type for an Analytics experiment. This field is read-only. *)
     minimumExperimentLengthInDays : int;
-    (** Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
+    (** An integer number in [3, 90]. Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
     name : string;
     (** Experiment name. This field may not be changed for an experiment whose status is ENDED. This field is required when creating an experiment. *)
     objectiveMetric : string;
-    (** The metric that the experiment is optimizing. Valid values: "ga:goal(n)Completions", "ga:bounces", "ga:pageviews", "ga:timeOnSite", "ga:transactions", "ga:transactionRevenue". This field is required if status is "RUNNING" and servingFramework is one of "REDIRECT" or "API". *)
+    (** The metric that the experiment is optimizing. Valid values: "ga:goal(n)Completions", "ga:adsenseAdsClicks", "ga:adsenseAdsViewed", "ga:adsenseRevenue", "ga:bounces", "ga:pageviews", "ga:sessionDuration", "ga:transactions", "ga:transactionRevenue". This field is required if status is "RUNNING" and servingFramework is one of "REDIRECT" or "API". *)
     optimizationType : string;
     (** Whether the objectiveMetric should be minimized or maximized. Possible values: "MAXIMUM", "MINIMUM". Optional--defaults to "MAXIMUM". Cannot be specified without objectiveMetric. Cannot be modified when status is "RUNNING" or "ENDED". *)
     parentLink : ParentLink.t;
@@ -228,8 +661,9 @@ sig
   val accountId : (t, string) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val description : (t, string) GapiLens.t
-  val editableInGaUi : (t, string) GapiLens.t
+  val editableInGaUi : (t, bool) GapiLens.t
   val endTime : (t, GapiDate.t) GapiLens.t
+  val equalWeighting : (t, bool) GapiLens.t
   val id : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -252,6 +686,46 @@ sig
   val webPropertyId : (t, string) GapiLens.t
   val winnerConfidenceLevel : (t, float) GapiLens.t
   val winnerFound : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module WebPropertySummary :
+sig
+  type t = {
+    id : string;
+    (** Web property ID of the form UA-XXXXX-YY. *)
+    internalWebPropertyId : string;
+    (** Internal ID for this web property. *)
+    kind : string;
+    (** Resource type for Analytics WebPropertySummary. *)
+    level : string;
+    (** Level for this web property. Possible values are STANDARD or PREMIUM. *)
+    name : string;
+    (** Web property name. *)
+    profiles : ProfileSummary.t list;
+    (** List of profiles under this web property. *)
+    websiteUrl : string;
+    (** Website url for this web property. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val internalWebPropertyId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val level : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val profiles : (t, ProfileSummary.t list) GapiLens.t
+  val websiteUrl : (t, string) GapiLens.t
   
   val empty : t
   
@@ -310,6 +784,24 @@ end
 
 module Profile :
 sig
+  module Permissions :
+  sig
+    type t = {
+      effective : string list;
+      (** All the permissions that the user has for this view (profile). These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent web property. *)
+      
+    }
+    
+    val effective : (t, string list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module ParentLink :
   sig
     type t = {
@@ -360,11 +852,14 @@ sig
     created : GapiDate.t;
     (** Time this view (profile) was created. *)
     currency : string;
-    (** The currency type associated with this view (profile). *)
+    (** The currency type associated with this view (profile). The supported values are:
+ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD, USD, VND, ZAR *)
     defaultPage : string;
     (** Default page for this view (profile). *)
     eCommerceTracking : bool;
     (** Indicates whether ecommerce tracking is enabled for this view (profile). *)
+    enhancedECommerceTracking : bool;
+    (** Indicates whether enhanced ecommerce tracking is enabled for this view (profile). This property can only be enabled if ecommerce tracking is enabled. *)
     excludeQueryParameters : string;
     (** The query parameters that are excluded from this view (profile). *)
     id : string;
@@ -372,19 +867,25 @@ sig
     internalWebPropertyId : string;
     (** Internal ID for the web property to which this view (profile) belongs. *)
     kind : string;
-    (** Resource type for Analytics profile. *)
+    (** Resource type for Analytics view (profile). *)
     name : string;
     (** Name of this view (profile). *)
     parentLink : ParentLink.t;
     (** Parent link for this view (profile). Points to the web property to which this view (profile) belongs. *)
+    permissions : Permissions.t;
+    (** Permissions the user has for this view (profile). *)
     selfLink : string;
     (** Link for this view (profile). *)
     siteSearchCategoryParameters : string;
     (** Site search category parameters for this view (profile). *)
     siteSearchQueryParameters : string;
     (** The site search query parameters for this view (profile). *)
+    stripSiteSearchCategoryParameters : bool;
+    (** Whether or not Analytics will strip search category parameters from the URLs in your reports. *)
+    stripSiteSearchQueryParameters : bool;
+    (** Whether or not Analytics will strip search query parameters from the URLs in your reports. *)
     timezone : string;
-    (** Time zone for which this profile has been configured. *)
+    (** Time zone for which this view (profile) has been configured. Time zones are identified by strings from the TZ database. *)
     _type : string;
     (** View (Profile) type. Supported types: WEB or APP. *)
     updated : GapiDate.t;
@@ -402,15 +903,19 @@ sig
   val currency : (t, string) GapiLens.t
   val defaultPage : (t, string) GapiLens.t
   val eCommerceTracking : (t, bool) GapiLens.t
+  val enhancedECommerceTracking : (t, bool) GapiLens.t
   val excludeQueryParameters : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val parentLink : (t, ParentLink.t) GapiLens.t
+  val permissions : (t, Permissions.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val siteSearchCategoryParameters : (t, string) GapiLens.t
   val siteSearchQueryParameters : (t, string) GapiLens.t
+  val stripSiteSearchCategoryParameters : (t, bool) GapiLens.t
+  val stripSiteSearchQueryParameters : (t, bool) GapiLens.t
   val timezone : (t, string) GapiLens.t
   val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -431,6 +936,24 @@ end
 
 module Webproperty :
 sig
+  module Permissions :
+  sig
+    type t = {
+      effective : string list;
+      (** All the permissions that the user has for this web property. These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent account. *)
+      
+    }
+    
+    val effective : (t, string list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module ParentLink :
   sig
     type t = {
@@ -480,6 +1003,8 @@ sig
     (** Child link for this web property. Points to the list of views (profiles) for this web property. *)
     created : GapiDate.t;
     (** Time this web property was created. *)
+    defaultProfileId : int64;
+    (** Default view (profile) ID. *)
     id : string;
     (** Web property ID of the form UA-XXXXX-YY. *)
     industryVertical : string;
@@ -494,6 +1019,8 @@ sig
     (** Name of this web property. *)
     parentLink : ParentLink.t;
     (** Parent link for this web property. Points to the account to which this web property belongs. *)
+    permissions : Permissions.t;
+    (** Permissions the user has for this web property. *)
     profileCount : int;
     (** View (Profile) count for this web property. *)
     selfLink : string;
@@ -508,6 +1035,7 @@ sig
   val accountId : (t, string) GapiLens.t
   val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
+  val defaultProfileId : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val industryVertical : (t, string) GapiLens.t
   val internalWebPropertyId : (t, string) GapiLens.t
@@ -515,6 +1043,7 @@ sig
   val level : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val parentLink : (t, ParentLink.t) GapiLens.t
+  val permissions : (t, Permissions.t) GapiLens.t
   val profileCount : (t, int) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -575,86 +1104,63 @@ sig
   
 end
 
-module DailyUpload :
+module AccountRef :
 sig
-  module RecentChanges :
-  sig
-    type t = {
-      change : string;
-      (** The type of change: APPEND, RESET, or DELETE. *)
-      time : GapiDate.t;
-      (** The time when the change occurred. *)
-      
-    }
+  type t = {
+    href : string;
+    (** Link for this account. *)
+    id : string;
+    (** Account ID. *)
+    kind : string;
+    (** Analytics account reference. *)
+    name : string;
+    (** Account name. *)
     
-    val change : (t, string) GapiLens.t
-    val time : (t, GapiDate.t) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
+  }
   
-  module ParentLink :
-  sig
-    type t = {
-      href : string;
-      (** Link to the custom data source to which this daily upload belongs. *)
-      _type : string;
-      (** Value is "analytics#customDataSource". *)
-      
-    }
-    
-    val href : (t, string) GapiLens.t
-    val _type : (t, string) GapiLens.t
-    
-    val empty : t
-    
-    val render : t -> GapiJson.json_data_model list
-    
-    val parse : t -> GapiJson.json_data_model -> t
-    
-  end
+  val href : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
   
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ProfileRef :
+sig
   type t = {
     accountId : string;
-    (** Account ID to which this daily upload belongs. *)
-    appendCount : int;
-    (** Number of appends for this date. *)
-    createdTime : GapiDate.t;
-    (** Time this daily upload was created. *)
-    customDataSourceId : string;
-    (** Custom data source ID to which this daily upload belongs. *)
-    date : string;
-    (** Date associated with daily upload. *)
+    (** Account ID to which this view (profile) belongs. *)
+    href : string;
+    (** Link for this view (profile). *)
+    id : string;
+    (** View (Profile) ID. *)
+    internalWebPropertyId : string;
+    (** Internal ID for the web property to which this view (profile) belongs. *)
     kind : string;
-    (** Resource type for Analytics daily upload. *)
-    modifiedTime : GapiDate.t;
-    (** Time this daily upload was last modified. *)
-    parentLink : ParentLink.t;
-    (** Parent link for a daily upload. Points to the custom data source to which this daily upload belongs. *)
-    recentChanges : RecentChanges.t list;
-    (** Change log for last 10 changes in chronological order. *)
-    selfLink : string;
-    (** Link for this daily upload. *)
+    (** Analytics view (profile) reference. *)
+    name : string;
+    (** Name of this view (profile). *)
     webPropertyId : string;
-    (** Web property ID of the form UA-XXXXX-YY to which this daily upload belongs. *)
+    (** Web property ID of the form UA-XXXXX-YY to which this view (profile) belongs. *)
     
   }
   
   val accountId : (t, string) GapiLens.t
-  val appendCount : (t, int) GapiLens.t
-  val createdTime : (t, GapiDate.t) GapiLens.t
-  val customDataSourceId : (t, string) GapiLens.t
-  val date : (t, string) GapiLens.t
+  val href : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val internalWebPropertyId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val modifiedTime : (t, GapiDate.t) GapiLens.t
-  val parentLink : (t, ParentLink.t) GapiLens.t
-  val recentChanges : (t, RecentChanges.t list) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
   val webPropertyId : (t, string) GapiLens.t
   
   val empty : t
@@ -669,36 +1175,103 @@ sig
   
 end
 
-module DailyUploads :
+module UserRef :
 sig
   type t = {
-    items : DailyUpload.t list;
-    (** A collection of daily uploads. *)
-    itemsPerPage : int;
-    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    email : string;
+    (** Email ID of this user. *)
+    id : string;
+    (** User ID. *)
     kind : string;
-    (** Collection type. Value is analytics#dailyUploads. *)
-    nextLink : string;
-    (** Link to next page for this daily upload collection. *)
-    previousLink : string;
-    (** Link to previous page for this daily upload collection. *)
-    startIndex : int;
-    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
-    totalResults : int;
-    (** The total number of results for the query, regardless of the number of results in the response. *)
-    username : string;
-    (** Email ID of the authenticated user *)
+    (**  *)
     
   }
   
-  val items : (t, DailyUpload.t list) GapiLens.t
-  val itemsPerPage : (t, int) GapiLens.t
+  val email : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val nextLink : (t, string) GapiLens.t
-  val previousLink : (t, string) GapiLens.t
-  val startIndex : (t, int) GapiLens.t
-  val totalResults : (t, int) GapiLens.t
-  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module EntityUserLink :
+sig
+  module Permissions :
+  sig
+    type t = {
+      effective : string list;
+      (** Effective permissions represent all the permissions that a user has for this entity. These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent entity. Effective permissions are read-only. *)
+      local : string list;
+      (** Permissions that a user has been assigned at this very level. Does not include any implied or inherited permissions. Local permissions are modifiable. *)
+      
+    }
+    
+    val effective : (t, string list) GapiLens.t
+    val local : (t, string list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module Entity :
+  sig
+    type t = {
+      accountRef : AccountRef.t;
+      (** Account for this link. *)
+      profileRef : ProfileRef.t;
+      (** View (Profile) for this link. *)
+      webPropertyRef : WebPropertyRef.t;
+      (** Web property for this link. *)
+      
+    }
+    
+    val accountRef : (t, AccountRef.t) GapiLens.t
+    val profileRef : (t, ProfileRef.t) GapiLens.t
+    val webPropertyRef : (t, WebPropertyRef.t) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    entity : Entity.t;
+    (** Entity for this link. It can be an account, a web property, or a view (profile). *)
+    id : string;
+    (** Entity user link ID *)
+    kind : string;
+    (** Resource type for entity user link. *)
+    permissions : Permissions.t;
+    (** Permissions the user has for this entity. *)
+    selfLink : string;
+    (** Self link for this resource. *)
+    userRef : UserRef.t;
+    (** User reference. *)
+    
+  }
+  
+  val entity : (t, Entity.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val permissions : (t, Permissions.t) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val userRef : (t, UserRef.t) GapiLens.t
   
   val empty : t
   
@@ -716,15 +1289,15 @@ module Segments :
 sig
   type t = {
     items : Segment.t list;
-    (** A list of advanced segments. *)
+    (** A list of segments. *)
     itemsPerPage : int;
     (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
     kind : string;
-    (** Collection type for advanced segments. *)
+    (** Collection type for segments. *)
     nextLink : string;
-    (** Link to next page for this advanced segment collection. *)
+    (** Link to next page for this segment collection. *)
     previousLink : string;
-    (** Link to previous page for this advanced segment collection. *)
+    (** Link to previous page for this segment collection. *)
     startIndex : int;
     (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
     totalResults : int;
@@ -742,6 +1315,162 @@ sig
   val startIndex : (t, int) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Upload :
+sig
+  type t = {
+    accountId : int64;
+    (** Account Id to which this upload belongs. *)
+    customDataSourceId : string;
+    (** Custom data source Id to which this data import belongs. *)
+    errors : string list;
+    (** Data import errors collection. *)
+    id : string;
+    (** A unique ID for this upload. *)
+    kind : string;
+    (** Resource type for Analytics upload. *)
+    status : string;
+    (** Upload status. Possible values: PENDING, COMPLETED, FAILED, DELETING, DELETED. *)
+    
+  }
+  
+  val accountId : (t, int64) GapiLens.t
+  val customDataSourceId : (t, string) GapiLens.t
+  val errors : (t, string list) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val status : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Account :
+sig
+  module Permissions :
+  sig
+    type t = {
+      effective : string list;
+      (** All the permissions that the user has for this account. These include any implied permissions (e.g., EDIT implies VIEW). *)
+      
+    }
+    
+    val effective : (t, string list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ChildLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the list of web properties for this account. *)
+      _type : string;
+      (** Type of the child link. Its value is "analytics#webproperties". *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    childLink : ChildLink.t;
+    (** Child link for an account entry. Points to the list of web properties for this account. *)
+    created : GapiDate.t;
+    (** Time the account was created. *)
+    id : string;
+    (** Account ID. *)
+    kind : string;
+    (** Resource type for Analytics account. *)
+    name : string;
+    (** Account name. *)
+    permissions : Permissions.t;
+    (** Permissions the user has for this account. *)
+    selfLink : string;
+    (** Link for this account. *)
+    updated : GapiDate.t;
+    (** Time the account was last modified. *)
+    
+  }
+  
+  val childLink : (t, ChildLink.t) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val permissions : (t, Permissions.t) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AccountTicket :
+sig
+  type t = {
+    account : Account.t;
+    (** Account for this ticket. *)
+    id : string;
+    (** Account ticket ID used to access the account ticket. *)
+    kind : string;
+    (** Resource type for account ticket. *)
+    profile : Profile.t;
+    (** View (Profile) for the account. *)
+    redirectUri : string;
+    (** Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in APIs console as a callback URL. *)
+    webproperty : Webproperty.t;
+    (** Web property for the account. *)
+    
+  }
+  
+  val account : (t, Account.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val profile : (t, Profile.t) GapiLens.t
+  val redirectUri : (t, string) GapiLens.t
+  val webproperty : (t, Webproperty.t) GapiLens.t
   
   val empty : t
   
@@ -810,6 +1539,8 @@ sig
     (** Description of custom data source. *)
     id : string;
     (** Custom data source ID. *)
+    importBehavior : string;
+    (**  *)
     kind : string;
     (** Resource type for Analytics custom data source. *)
     name : string;
@@ -824,6 +1555,8 @@ sig
     (** Type of the custom data source. *)
     updated : GapiDate.t;
     (** Time this custom data source was last modified. *)
+    uploadType : string;
+    (**  *)
     webPropertyId : string;
     (** Web property ID of the form UA-XXXXX-YY to which this custom data source belongs. *)
     
@@ -834,6 +1567,7 @@ sig
   val created : (t, GapiDate.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
+  val importBehavior : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val parentLink : (t, ParentLink.t) GapiLens.t
@@ -841,6 +1575,7 @@ sig
   val selfLink : (t, string) GapiLens.t
   val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
+  val uploadType : (t, string) GapiLens.t
   val webPropertyId : (t, string) GapiLens.t
   
   val empty : t
@@ -885,6 +1620,28 @@ sig
   val startIndex : (t, int) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AnalyticsDataimportDeleteUploadDataRequest :
+sig
+  type t = {
+    customDataImportUids : string list;
+    (** A list of upload UIDs. *)
+    
+  }
+  
+  val customDataImportUids : (t, string list) GapiLens.t
   
   val empty : t
   
@@ -1139,6 +1896,37 @@ sig
   
 end
 
+module AccountSummary :
+sig
+  type t = {
+    id : string;
+    (** Account ID. *)
+    kind : string;
+    (** Resource type for Analytics AccountSummary. *)
+    name : string;
+    (** Account name. *)
+    webProperties : WebPropertySummary.t list;
+    (** List of web properties under this account. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val webProperties : (t, WebPropertySummary.t list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Goals :
 sig
   type t = {
@@ -1182,15 +1970,92 @@ sig
   
 end
 
-module Account :
+module FilterRef :
 sig
-  module ChildLink :
+  type t = {
+    accountId : string;
+    (** Account ID to which this filter belongs. *)
+    href : string;
+    (** Link for this filter. *)
+    id : string;
+    (** Filter ID. *)
+    kind : string;
+    (** Kind value for filter reference. *)
+    name : string;
+    (** Name of this filter. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val href : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module UnsampledReports :
+sig
+  type t = {
+    items : UnsampledReport.t list;
+    (** A list of unsampled reports. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this unsampled report collection. *)
+    previousLink : string;
+    (** Link to previous page for this unsampled report collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of resources in the result. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, UnsampledReport.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CustomMetric :
+sig
+  module ParentLink :
   sig
     type t = {
       href : string;
-      (** Link to the list of web properties for this account. *)
+      (** Link to the property to which the custom metric belongs. *)
       _type : string;
-      (** Type of the child link. Its value is "analytics#webproperties". *)
+      (** Type of the parent link. Set to "analytics#webproperty". *)
       
     }
     
@@ -1206,30 +2071,219 @@ sig
   end
   
   type t = {
-    childLink : ChildLink.t;
-    (** Child link for an account entry. Points to the list of web properties for this account. *)
-    created : GapiDate.t;
-    (** Time the account was created. *)
-    id : string;
+    accountId : string;
     (** Account ID. *)
+    active : bool;
+    (** Boolean indicating whether the custom metric is active. *)
+    created : GapiDate.t;
+    (** Time the custom metric was created. *)
+    id : string;
+    (** Custom metric ID. *)
+    index : int;
+    (** Index of the custom metric. *)
     kind : string;
-    (** Resource type for Analytics account. *)
+    (** Kind value for a custom metric. Set to "analytics#customMetric". It is a read-only field. *)
+    max_value : string;
+    (** Max value of custom metric. *)
+    min_value : string;
+    (** Min value of custom metric. *)
     name : string;
-    (** Account name. *)
+    (** Name of the custom metric. *)
+    parentLink : ParentLink.t;
+    (** Parent link for the custom metric. Points to the property to which the custom metric belongs. *)
+    scope : string;
+    (** Scope of the custom metric: HIT or PRODUCT. *)
     selfLink : string;
-    (** Link for this account. *)
+    (** Link for the custom metric *)
+    _type : string;
+    (** Data type of custom metric. *)
     updated : GapiDate.t;
-    (** Time the account was last modified. *)
+    (** Time the custom metric was last modified. *)
+    webPropertyId : string;
+    (** Property ID. *)
     
   }
   
-  val childLink : (t, ChildLink.t) GapiLens.t
+  val accountId : (t, string) GapiLens.t
+  val active : (t, bool) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val id : (t, string) GapiLens.t
+  val index : (t, int) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val max_value : (t, string) GapiLens.t
+  val min_value : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
+  val scope : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CustomMetrics :
+sig
+  type t = {
+    items : CustomMetric.t list;
+    (** Collection of custom metrics. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this custom metric collection. *)
+    previousLink : string;
+    (** Link to previous page for this custom metric collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, CustomMetric.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Uploads :
+sig
+  type t = {
+    items : Upload.t list;
+    (** A list of uploads. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this upload collection. *)
+    previousLink : string;
+    (** Link to previous page for this upload collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of resources in the result. *)
+    
+  }
+  
+  val items : (t, Upload.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AccountSummaries :
+sig
+  type t = {
+    items : AccountSummary.t list;
+    (** A list of AccountSummaries. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this AccountSummary collection. *)
+    previousLink : string;
+    (** Link to previous page for this AccountSummary collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, AccountSummary.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ProfileFilterLink :
+sig
+  type t = {
+    filterRef : FilterRef.t;
+    (** Filter for this link. *)
+    id : string;
+    (** Profile filter link ID. *)
+    kind : string;
+    (** Resource type for Analytics filter. *)
+    profileRef : ProfileRef.t;
+    (** View (Profile) for this link. *)
+    rank : int;
+    (** The rank of this profile filter link relative to the other filters linked to the same profile.
+For readonly (i.e., list and get) operations, the rank always starts at 1.
+For write (i.e., create, update, or delete) operations, you may specify a value between 0 and 255 inclusively, [0, 255]. In order to insert a link at the end of the list, either don't specify a rank or set a rank to a number greater than the largest rank in the list. In order to insert a link to the beginning of the list specify a rank that is less than or equal to 1. The new link will move all existing filters with the same or lower rank down the list. After the link is inserted/updated/deleted all profile filter links will be renumbered starting at 1. *)
+    selfLink : string;
+    (** Link for this profile filter link. *)
+    
+  }
+  
+  val filterRef : (t, FilterRef.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val profileRef : (t, ProfileRef.t) GapiLens.t
+  val rank : (t, int) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1302,6 +2356,8 @@ sig
       (** Maximum results per page. *)
       metrics : string list;
       (** List of analytics metrics. *)
+      samplingLevel : string;
+      (** Desired sampling level *)
       segment : string;
       (** Analytics advanced segment. *)
       sort : string list;
@@ -1319,6 +2375,7 @@ sig
     val ids : (t, string) GapiLens.t
     val max_results : (t, int) GapiLens.t
     val metrics : (t, string list) GapiLens.t
+    val samplingLevel : (t, string) GapiLens.t
     val segment : (t, string) GapiLens.t
     val sort : (t, string list) GapiLens.t
     val start_date : (t, string) GapiLens.t
@@ -1410,6 +2467,10 @@ sig
     (** Analytics data request query parameters. *)
     rows : Rows.t list list;
     (** Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request. *)
+    sampleSize : int64;
+    (** The number of samples used to calculate the result. *)
+    sampleSpace : int64;
+    (** Total size of the sample space from which the samples were selected. *)
     selfLink : string;
     (** Link to this page. *)
     totalResults : int;
@@ -1429,6 +2490,8 @@ sig
   val profileInfo : (t, ProfileInfo.t) GapiLens.t
   val query : (t, Query.t) GapiLens.t
   val rows : (t, Rows.t list list) GapiLens.t
+  val sampleSize : (t, int64) GapiLens.t
+  val sampleSpace : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val totalsForAllResults : (t, (string * string) list) GapiLens.t
@@ -1581,6 +2644,124 @@ sig
   
 end
 
+module FilterExpression :
+sig
+  type t = {
+    caseSensitive : bool;
+    (** Determines if the filter is case sensitive. *)
+    expressionValue : string;
+    (** Filter expression value *)
+    field : string;
+    (** Field to filter. Possible values:  
+- Content and Traffic  
+- PAGE_REQUEST_URI, 
+- PAGE_HOSTNAME, 
+- PAGE_TITLE, 
+- REFERRAL, 
+- COST_DATA_URI (Campaign target URL), 
+- HIT_TYPE, 
+- INTERNAL_SEARCH_TERM, 
+- INTERNAL_SEARCH_TYPE, 
+- SOURCE_PROPERTY_TRACKING_ID,   
+- Campaign or AdGroup  
+- CAMPAIGN_SOURCE, 
+- CAMPAIGN_MEDIUM, 
+- CAMPAIGN_NAME, 
+- CAMPAIGN_AD_GROUP, 
+- CAMPAIGN_TERM, 
+- CAMPAIGN_CONTENT, 
+- CAMPAIGN_CODE, 
+- CAMPAIGN_REFERRAL_PATH,   
+- E-Commerce  
+- TRANSACTION_COUNTRY, 
+- TRANSACTION_REGION, 
+- TRANSACTION_CITY, 
+- TRANSACTION_AFFILIATION (Store or order location), 
+- ITEM_NAME, 
+- ITEM_CODE, 
+- ITEM_VARIATION, 
+- TRANSACTION_ID, 
+- TRANSACTION_CURRENCY_CODE, 
+- PRODUCT_ACTION_TYPE,   
+- Audience/Users  
+- BROWSER, 
+- BROWSER_VERSION, 
+- BROWSER_SIZE, 
+- PLATFORM, 
+- PLATFORM_VERSION, 
+- LANGUAGE, 
+- SCREEN_RESOLUTION, 
+- SCREEN_COLORS, 
+- JAVA_ENABLED (Boolean Field), 
+- FLASH_VERSION, 
+- GEO_SPEED (Connection speed), 
+- VISITOR_TYPE, 
+- GEO_ORGANIZATION (ISP organization), 
+- GEO_DOMAIN, 
+- GEO_IP_ADDRESS, 
+- GEO_IP_VERSION,   
+- Location  
+- GEO_COUNTRY, 
+- GEO_REGION, 
+- GEO_CITY,   
+- Event  
+- EVENT_CATEGORY, 
+- EVENT_ACTION, 
+- EVENT_LABEL,   
+- Other  
+- CUSTOM_FIELD_1, 
+- CUSTOM_FIELD_2, 
+- USER_DEFINED_VALUE,   
+- Application  
+- APP_ID, 
+- APP_INSTALLER_ID, 
+- APP_NAME, 
+- APP_VERSION, 
+- SCREEN, 
+- IS_APP (Boolean Field), 
+- IS_FATAL_EXCEPTION (Boolean Field), 
+- EXCEPTION_DESCRIPTION,   
+- Mobile device  
+- IS_MOBILE (Boolean Field, Deprecated. Use DEVICE_CATEGORY=mobile), 
+- IS_TABLET (Boolean Field, Deprecated. Use DEVICE_CATEGORY=tablet), 
+- DEVICE_CATEGORY, 
+- MOBILE_HAS_QWERTY_KEYBOARD (Boolean Field), 
+- MOBILE_HAS_NFC_SUPPORT (Boolean Field), 
+- MOBILE_HAS_CELLULAR_RADIO (Boolean Field), 
+- MOBILE_HAS_WIFI_SUPPORT (Boolean Field), 
+- MOBILE_BRAND_NAME, 
+- MOBILE_MODEL_NAME, 
+- MOBILE_MARKETING_NAME, 
+- MOBILE_POINTING_METHOD,   
+- Social  
+- SOCIAL_NETWORK, 
+- SOCIAL_ACTION, 
+- SOCIAL_ACTION_TARGET, *)
+    kind : string;
+    (** Kind value for filter expression *)
+    matchType : string;
+    (** Match type for this filter. Possible values are BEGINS_WITH, EQUAL, ENDS_WITH, CONTAINS, MATCHES. Include and Exclude filters can use any match type. Match type is not applicable to Upper case and Lower case filters. Search and Replace expressions in the Search and Replace filter and all filter expressions in the Advanced filter default to MATCHES. User should not set match type for those filters. *)
+    
+  }
+  
+  val caseSensitive : (t, bool) GapiLens.t
+  val expressionValue : (t, string) GapiLens.t
+  val field : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val matchType : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module GaData :
 sig
   module Query :
@@ -1598,6 +2779,8 @@ sig
       (** Maximum results per page. *)
       metrics : string list;
       (** List of analytics metrics. *)
+      samplingLevel : string;
+      (** Desired sampling level *)
       segment : string;
       (** Analytics advanced segment. *)
       sort : string list;
@@ -1615,6 +2798,7 @@ sig
     val ids : (t, string) GapiLens.t
     val max_results : (t, int) GapiLens.t
     val metrics : (t, string list) GapiLens.t
+    val samplingLevel : (t, string) GapiLens.t
     val segment : (t, string) GapiLens.t
     val sort : (t, string list) GapiLens.t
     val start_date : (t, string) GapiLens.t
@@ -1661,6 +2845,87 @@ sig
     
   end
   
+  module DataTable :
+  sig
+    module Rows :
+    sig
+      module C :
+      sig
+        type t = {
+          v : string;
+          (**  *)
+          
+        }
+        
+        val v : (t, string) GapiLens.t
+        
+        val empty : t
+        
+        val render : t -> GapiJson.json_data_model list
+        
+        val parse : t -> GapiJson.json_data_model -> t
+        
+      end
+      
+      type t = {
+        c : C.t list;
+        (**  *)
+        
+      }
+      
+      val c : (t, C.t list) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    module Cols :
+    sig
+      type t = {
+        id : string;
+        (**  *)
+        label : string;
+        (**  *)
+        _type : string;
+        (**  *)
+        
+      }
+      
+      val id : (t, string) GapiLens.t
+      val label : (t, string) GapiLens.t
+      val _type : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      cols : Cols.t list;
+      (**  *)
+      rows : Rows.t list;
+      (**  *)
+      
+    }
+    
+    val cols : (t, Cols.t list) GapiLens.t
+    val rows : (t, Rows.t list) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module ColumnHeaders :
   sig
     type t = {
@@ -1690,6 +2955,8 @@ sig
     (** Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request. *)
     containsSampledData : bool;
     (** Determines if Analytics data contains samples. *)
+    dataTable : DataTable.t;
+    (**  *)
     id : string;
     (** Unique ID for this data response. *)
     itemsPerPage : int;
@@ -1706,6 +2973,10 @@ sig
     (** Analytics data request query parameters. *)
     rows : string list list;
     (** Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request. *)
+    sampleSize : int64;
+    (** The number of samples used to calculate the result. *)
+    sampleSpace : int64;
+    (** Total size of the sample space from which the samples were selected. *)
     selfLink : string;
     (** Link to this page. *)
     totalResults : int;
@@ -1717,6 +2988,7 @@ sig
   
   val columnHeaders : (t, ColumnHeaders.t list) GapiLens.t
   val containsSampledData : (t, bool) GapiLens.t
+  val dataTable : (t, DataTable.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val itemsPerPage : (t, int) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -1725,9 +2997,54 @@ sig
   val profileInfo : (t, ProfileInfo.t) GapiLens.t
   val query : (t, Query.t) GapiLens.t
   val rows : (t, string list list) GapiLens.t
+  val sampleSize : (t, int64) GapiLens.t
+  val sampleSpace : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val totalsForAllResults : (t, (string * string) list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ProfileFilterLinks :
+sig
+  type t = {
+    items : ProfileFilterLink.t list;
+    (** A list of profile filter links. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this profile filter link collection. *)
+    previousLink : string;
+    (** Link to previous page for this profile filter link collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, ProfileFilterLink.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1784,6 +3101,46 @@ sig
   
 end
 
+module EntityUserLinks :
+sig
+  type t = {
+    items : EntityUserLink.t list;
+    (** A list of entity user links. *)
+    itemsPerPage : int;
+    (** The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Next link for this account collection. *)
+    previousLink : string;
+    (** Previous link for this account collection. *)
+    startIndex : int;
+    (** The starting index of the entries, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    
+  }
+  
+  val items : (t, EntityUserLink.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Profiles :
 sig
   type t = {
@@ -1827,33 +3184,229 @@ sig
   
 end
 
-module DailyUploadAppend :
+module Filter :
 sig
+  module UppercaseDetails :
+  sig
+    type t = {
+      field : string;
+      (** Field to use in the filter. *)
+      
+    }
+    
+    val field : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module SearchAndReplaceDetails :
+  sig
+    type t = {
+      caseSensitive : bool;
+      (** Determines if the filter is case sensitive. *)
+      field : string;
+      (** Field to use in the filter. *)
+      replaceString : string;
+      (** Term to replace the search term with. *)
+      searchString : string;
+      (** Term to search. *)
+      
+    }
+    
+    val caseSensitive : (t, bool) GapiLens.t
+    val field : (t, string) GapiLens.t
+    val replaceString : (t, string) GapiLens.t
+    val searchString : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ParentLink :
+  sig
+    type t = {
+      href : string;
+      (** Link to the account to which this filter belongs. *)
+      _type : string;
+      (** Value is "analytics#account". *)
+      
+    }
+    
+    val href : (t, string) GapiLens.t
+    val _type : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module LowercaseDetails :
+  sig
+    type t = {
+      field : string;
+      (** Field to use in the filter. *)
+      
+    }
+    
+    val field : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module AdvancedDetails :
+  sig
+    type t = {
+      caseSensitive : bool;
+      (** Indicates if the filter expressions are case sensitive. *)
+      extractA : string;
+      (** Expression to extract from field A. *)
+      extractB : string;
+      (** Expression to extract from field B. *)
+      fieldA : string;
+      (** Field A. *)
+      fieldARequired : bool;
+      (** Indicates if field A is required to match. *)
+      fieldB : string;
+      (** Field B. *)
+      fieldBRequired : bool;
+      (** Indicates if field B is required to match. *)
+      outputConstructor : string;
+      (** Expression used to construct the output value. *)
+      outputToField : string;
+      (** Output field. *)
+      overrideOutputField : bool;
+      (** Indicates if the existing value of the output field, if any, should be overridden by the output expression. *)
+      
+    }
+    
+    val caseSensitive : (t, bool) GapiLens.t
+    val extractA : (t, string) GapiLens.t
+    val extractB : (t, string) GapiLens.t
+    val fieldA : (t, string) GapiLens.t
+    val fieldARequired : (t, bool) GapiLens.t
+    val fieldB : (t, string) GapiLens.t
+    val fieldBRequired : (t, bool) GapiLens.t
+    val outputConstructor : (t, string) GapiLens.t
+    val outputToField : (t, string) GapiLens.t
+    val overrideOutputField : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     accountId : string;
-    (** Account Id to which this daily upload append belongs. *)
-    appendNumber : int;
-    (** Append number. *)
-    customDataSourceId : string;
-    (** Custom data source Id to which this daily upload append belongs. *)
-    date : string;
-    (** Date associated with daily upload append. *)
+    (** Account ID to which this filter belongs. *)
+    advancedDetails : AdvancedDetails.t;
+    (** Details for the filter of the type ADVANCED. *)
+    created : GapiDate.t;
+    (** Time this filter was created. *)
+    excludeDetails : FilterExpression.t;
+    (** Details for the filter of the type EXCLUDE. *)
+    id : string;
+    (** Filter ID. *)
+    includeDetails : FilterExpression.t;
+    (** Details for the filter of the type INCLUDE. *)
     kind : string;
-    (** Resource type for Analytics daily upload append. *)
-    nextAppendLink : string;
-    (**  *)
-    webPropertyId : string;
-    (** Web property Id of the form UA-XXXXX-YY to which this daily upload append belongs. *)
+    (** Resource type for Analytics filter. *)
+    lowercaseDetails : LowercaseDetails.t;
+    (** Details for the filter of the type LOWER. *)
+    name : string;
+    (** Name of this filter. *)
+    parentLink : ParentLink.t;
+    (** Parent link for this filter. Points to the account to which this filter belongs. *)
+    searchAndReplaceDetails : SearchAndReplaceDetails.t;
+    (** Details for the filter of the type SEARCH_AND_REPLACE. *)
+    selfLink : string;
+    (** Link for this filter. *)
+    _type : string;
+    (** Type of this filter. Possible values are INCLUDE, EXCLUDE, LOWERCASE, UPPERCASE, SEARCH_AND_REPLACE and ADVANCED. *)
+    updated : GapiDate.t;
+    (** Time this filter was last modified. *)
+    uppercaseDetails : UppercaseDetails.t;
+    (** Details for the filter of the type UPPER. *)
     
   }
   
   val accountId : (t, string) GapiLens.t
-  val appendNumber : (t, int) GapiLens.t
-  val customDataSourceId : (t, string) GapiLens.t
-  val date : (t, string) GapiLens.t
+  val advancedDetails : (t, AdvancedDetails.t) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val excludeDetails : (t, FilterExpression.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val includeDetails : (t, FilterExpression.t) GapiLens.t
   val kind : (t, string) GapiLens.t
-  val nextAppendLink : (t, string) GapiLens.t
-  val webPropertyId : (t, string) GapiLens.t
+  val lowercaseDetails : (t, LowercaseDetails.t) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val parentLink : (t, ParentLink.t) GapiLens.t
+  val searchAndReplaceDetails : (t, SearchAndReplaceDetails.t) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val uppercaseDetails : (t, UppercaseDetails.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Filters :
+sig
+  type t = {
+    items : Filter.t list;
+    (** A list of filters. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this filter collection. *)
+    previousLink : string;
+    (** Link to previous page for this filter collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, Filter.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
   
   val empty : t
   

@@ -147,7 +147,7 @@ val delete :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   string ->
-  (GapiPipe.OcamlnetPipe.t -> unit) ->
+  (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GapiConversation.Session.t ->
-  unit * GapiConversation.Session.t
+  'a * GapiConversation.Session.t
 
