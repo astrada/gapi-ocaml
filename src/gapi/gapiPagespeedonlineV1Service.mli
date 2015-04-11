@@ -24,14 +24,14 @@ sig
     
   end
   
-  (** Runs Page Speed analysis on the page at the specified URL, and returns a Page Speed score, a list of suggestions to make that page faster, and other information.
+  (** Runs PageSpeed analysis on the page at the specified URL, and returns a PageSpeed score, a list of suggestions to make that page faster, and other information.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/pagespeedonline/v1/"]).
     @param std_params Optional standard parameters.
     @param filter_third_party_resources Indicates if third party resources should be filtered out before PageSpeed analysis.
     @param screenshot Indicates if binary data containing a screenshot should be included
     @param locale The locale used to localize formatted results
-    @param rule A Page Speed rule to run; if none are given, all rules are run
+    @param rule A PageSpeed rule to run; if none are given, all rules are run
     @param strategy The analysis strategy to use
     @param url The URL to fetch and analyze
     *)

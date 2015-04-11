@@ -162,6 +162,7 @@ struct
     expires_in : int;
     issued_to : string;
     scope : string;
+    token_handle : string;
     user_id : string;
     verified_email : bool;
     
@@ -191,6 +192,10 @@ struct
     GapiLens.get = (fun x -> x.scope);
     GapiLens.set = (fun v x -> { x with scope = v });
   }
+  let token_handle = {
+    GapiLens.get = (fun x -> x.token_handle);
+    GapiLens.set = (fun v x -> { x with token_handle = v });
+  }
   let user_id = {
     GapiLens.get = (fun x -> x.user_id);
     GapiLens.set = (fun v x -> { x with user_id = v });
@@ -207,6 +212,7 @@ struct
     expires_in = 0;
     issued_to = "";
     scope = "";
+    token_handle = "";
     user_id = "";
     verified_email = false;
     
@@ -220,6 +226,7 @@ struct
       GapiJson.render_int_value "expires_in" x.expires_in;
       GapiJson.render_string_value "issued_to" x.issued_to;
       GapiJson.render_string_value "scope" x.scope;
+      GapiJson.render_string_value "token_handle" x.token_handle;
       GapiJson.render_string_value "user_id" x.user_id;
       GapiJson.render_bool_value "verified_email" x.verified_email;
       
@@ -253,6 +260,10 @@ struct
         `String v) ->
       { x with scope = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "token_handle"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with token_handle = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "user_id"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with user_id = v }
@@ -266,6 +277,153 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiOauth2V2Model.Tokeninfo.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module Jwk =
+struct
+  module Keys =
+  struct
+    type t = {
+      alg : string;
+      e : string;
+      kid : string;
+      kty : string;
+      n : string;
+      use : string;
+      
+    }
+    
+    let alg = {
+      GapiLens.get = (fun x -> x.alg);
+      GapiLens.set = (fun v x -> { x with alg = v });
+    }
+    let e = {
+      GapiLens.get = (fun x -> x.e);
+      GapiLens.set = (fun v x -> { x with e = v });
+    }
+    let kid = {
+      GapiLens.get = (fun x -> x.kid);
+      GapiLens.set = (fun v x -> { x with kid = v });
+    }
+    let kty = {
+      GapiLens.get = (fun x -> x.kty);
+      GapiLens.set = (fun v x -> { x with kty = v });
+    }
+    let n = {
+      GapiLens.get = (fun x -> x.n);
+      GapiLens.set = (fun v x -> { x with n = v });
+    }
+    let use = {
+      GapiLens.get = (fun x -> x.use);
+      GapiLens.set = (fun v x -> { x with use = v });
+    }
+    
+    let empty = {
+      alg = "";
+      e = "";
+      kid = "";
+      kty = "";
+      n = "";
+      use = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "alg" x.alg;
+        GapiJson.render_string_value "e" x.e;
+        GapiJson.render_string_value "kid" x.kid;
+        GapiJson.render_string_value "kty" x.kty;
+        GapiJson.render_string_value "n" x.n;
+        GapiJson.render_string_value "use" x.use;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "alg"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with alg = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "e"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with e = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "kid"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with kid = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "kty"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with kty = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "n"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with n = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "use"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with use = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiOauth2V2Model.Keys.parse" e x
+    
+  end
+  
+  type t = {
+    keys : Keys.t list;
+    
+  }
+  
+  let keys = {
+    GapiLens.get = (fun x -> x.keys);
+    GapiLens.set = (fun v x -> { x with keys = v });
+  }
+  
+  let empty = {
+    keys = [];
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_array "keys" Keys.render x.keys;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "keys"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children Keys.parse Keys.empty (fun v -> v) cs
+          | e ->
+            GapiJson.unexpected "GapiOauth2V2Model.Jwk.parse.parse_collection" e x')
+        Keys.empty
+        (fun v -> { x with keys = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiOauth2V2Model.Jwk.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

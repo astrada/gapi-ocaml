@@ -306,7 +306,7 @@ end
 module CalendarsResource :
 sig
   
-  (** Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.
+  (** Clears a primary calendar. This operation deletes all events associated with the primary calendar of an account.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -319,7 +319,7 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
-  (** Deletes a secondary calendar.
+  (** Deletes a secondary calendar. Use calendars.clear for clearing all events on primary calendars.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.

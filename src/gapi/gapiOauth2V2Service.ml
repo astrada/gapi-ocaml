@@ -71,6 +71,7 @@ struct
     (* oauth2-specific query parameters *)
     access_token : string;
     id_token : string;
+    token_handle : string;
     
   }
   
@@ -82,6 +83,7 @@ struct
     key = "";
     access_token = "";
     id_token = "";
+    token_handle = "";
     
   }
   
@@ -95,6 +97,7 @@ struct
     param (fun p -> p.key) (fun x -> x) "key";
     param (fun p -> p.access_token) (fun x -> x) "access_token";
     param (fun p -> p.id_token) (fun x -> x) "id_token";
+    param (fun p -> p.token_handle) (fun x -> x) "token_handle";
     
   ] |> List.concat
   
@@ -102,6 +105,7 @@ struct
       ?(standard_parameters = GapiService.StandardParameters.default)
       ?(access_token = default.access_token)
       ?(id_token = default.id_token)
+      ?(token_handle = default.token_handle)
       () =
     let parameters = {
       fields = standard_parameters.GapiService.StandardParameters.fields;
@@ -111,22 +115,38 @@ struct
       key = standard_parameters.GapiService.StandardParameters.key;
       access_token;
       id_token;
+      token_handle;
       
     } in
     if parameters = default then None else Some parameters
   
 end
 
+let getCertForOpenIdConnect
+      ?(base_url = "https://www.googleapis.com/")
+      ?std_params
+      session =
+  let full_url = GapiUtils.add_path_to_url ["oauth2"; "v2"; "certs"] base_url
+    in
+  let params = Oauth2Parameters.merge_parameters
+    ?standard_parameters:std_params () in
+  let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
+    in
+  GapiService.get ?query_parameters full_url
+    (GapiJson.parse_json_response Jwk.of_data_model) session 
+  
 let tokeninfo
       ?(base_url = "https://www.googleapis.com/")
       ?std_params
       ?access_token
       ?id_token
+      ?token_handle
       session =
   let full_url = GapiUtils.add_path_to_url ["oauth2"; "v2"; "tokeninfo"]
     base_url in
   let params = Oauth2Parameters.merge_parameters
-    ?standard_parameters:std_params ?access_token ?id_token () in
+    ?standard_parameters:std_params ?access_token ?id_token ?token_handle ()
+    in
   let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
     in
   GapiService.post ?query_parameters ~data:Tokeninfo.empty full_url

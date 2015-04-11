@@ -300,19 +300,22 @@ let build_schema_inner_module file_lens complex_type =
         | ComplexType.Array inner_type ->
             Format.fprintf formatter
               "@[<hv 2>(fun x' -> function@,%a@[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_collection\" e x')@]@]"
-              render_parse_element (name, prefix, inner_type, "v")
+              render_parse_element (name, prefix, inner_type,
+                ComplexType.get_convert_function inner_type ^ "v")
               container_name
               module_name
         | ComplexType.Dictionary inner_type ->
             Format.fprintf formatter
               "@[<hv 2>(fun x' -> function@,%a@[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_dictionary\" e x')@]@]"
-              render_parse_element ("n", prefix, inner_type, "(n, v)")
+              render_parse_element ("n", prefix, inner_type,
+                "(n, " ^ ComplexType.get_convert_function inner_type ^ "v)")
               container_name
               module_name
         | ComplexType.Scalar scalar ->
             Format.fprintf formatter
               "@[<hv 2>(fun x' -> function@,%a@[<hv 2>| e ->@ GapiJson.unexpected \"%s.%s.parse.parse_scalar\" e x')@]@]"
-              render_parse_element (name, prefix, field_type, "v")
+              render_parse_element (name, prefix, field_type,
+                ScalarType.get_convert_function scalar.ScalarType.data_type ^ "v")
               container_name
               module_name
         | _ ->

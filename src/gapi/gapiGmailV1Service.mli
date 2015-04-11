@@ -16,6 +16,12 @@ sig
   val gmail_compose : string
   (** Manage drafts and send emails *)
   
+  val gmail_insert : string
+  (** Insert mail into your mailbox *)
+  
+  val gmail_labels : string
+  (** Manage mailbox labels *)
+  
   val gmail_modify : string
   (** View and modify but not delete your email *)
   
@@ -30,6 +36,20 @@ module UsersResource :
 sig
   module Threads :
   sig
+    
+    module Format :
+    sig
+      type t =
+        | Default
+        | Full (**  *)
+        | Metadata (**  *)
+        | Minimal (**  *)
+        
+      val to_string : t -> string
+      
+      val of_string : string -> t
+      
+    end
     
     (** Immediately and permanently deletes the specified thread. This operation cannot be undone. Prefer threads.trash instead.
       
@@ -51,6 +71,8 @@ sig
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param etag Optional ETag.
       @param std_params Optional standard parameters.
+      @param format The format to return the messages in.
+      @param metadataHeaders When given and format is METADATA, only include headers specified.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       @param id The ID of the thread to retrieve.
       *)
@@ -58,6 +80,8 @@ sig
       ?base_url:string ->
       ?etag:string ->
       ?std_params:GapiService.StandardParameters.t ->
+      ?format:Format.t ->
+      ?metadataHeaders:string list ->
       userId:string ->
       id:string ->
       GapiConversation.Session.t ->
@@ -163,11 +187,25 @@ sig
     end
     
     
+    module InternalDateSource :
+    sig
+      type t =
+        | Default
+        | DateHeader (**  *)
+        | ReceivedTime (**  *)
+        
+      val to_string : t -> string
+      
+      val of_string : string -> t
+      
+    end
+    
     module Format :
     sig
       type t =
         | Default
         | Full (**  *)
+        | Metadata (**  *)
         | Minimal (**  *)
         | Raw (**  *)
         
@@ -198,6 +236,7 @@ sig
       @param etag Optional ETag.
       @param std_params Optional standard parameters.
       @param format The format to return the message in.
+      @param metadataHeaders When given and format is METADATA, only include headers specified.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       @param id The ID of the message to retrieve.
       *)
@@ -206,36 +245,49 @@ sig
       ?etag:string ->
       ?std_params:GapiService.StandardParameters.t ->
       ?format:Format.t ->
+      ?metadataHeaders:string list ->
       userId:string ->
       id:string ->
       GapiConversation.Session.t ->
       GapiGmailV1Model.Message.t * GapiConversation.Session.t
     
-    (** Directly imports a message into only this user's mailbox, similar to receiving via SMTP. Does not send a message.
+    (** Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. Does not send a message.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param std_params Optional standard parameters.
+      @param deleted Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.
+      @param internalDateSource Source for Gmail's internal date of the message.
+      @param neverMarkSpam Ignore the Gmail spam classifier decision and never mark this email as SPAM in the mailbox.
+      @param processForCalendar Process calendar invites in the email and add any extracted meetings to the Google Calendar for this user.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
     val import :
       ?base_url:string ->
       ?std_params:GapiService.StandardParameters.t ->
       ?media_source:GapiMediaResource.t ->
+      ?deleted:bool ->
+      ?internalDateSource:InternalDateSource.t ->
+      ?neverMarkSpam:bool ->
+      ?processForCalendar:bool ->
       userId:string ->
       GapiGmailV1Model.Message.t ->
       GapiConversation.Session.t ->
       GapiGmailV1Model.Message.t * GapiConversation.Session.t
     
-    (** Directly inserts a message into only this user's mailbox. Does not send a message.
+    (** Directly inserts a message into only this user's mailbox similar to IMAP APPEND, bypassing most scanning and classification. Does not send a message.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param std_params Optional standard parameters.
+      @param deleted Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.
+      @param internalDateSource Source for Gmail's internal date of the message.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
     val insert :
       ?base_url:string ->
       ?std_params:GapiService.StandardParameters.t ->
       ?media_source:GapiMediaResource.t ->
+      ?deleted:bool ->
+      ?internalDateSource:InternalDateSource.t ->
       userId:string ->
       GapiGmailV1Model.Message.t ->
       GapiConversation.Session.t ->
@@ -460,6 +512,7 @@ sig
       type t =
         | Default
         | Full (**  *)
+        | Metadata (**  *)
         | Minimal (**  *)
         | Raw (**  *)
         
@@ -570,6 +623,19 @@ sig
     
   end
   
+  
+  (** Gets the current user's Gmail profile.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+    @param std_params Optional standard parameters.
+    @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+    *)
+  val getProfile :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    userId:string ->
+    GapiConversation.Session.t ->
+    GapiGmailV1Model.Profile.t * GapiConversation.Session.t
   
   
 end

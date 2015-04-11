@@ -5,7 +5,7 @@
   Lets you create, inspect, and manage goo.gl short URLs.
   
   For more information about this service, see the
-  {{:http://code.google.com/apis/urlshortener/v1/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/url-shortener/v1/getting_started}API Documentation}.
   *)
 
 module Scope :

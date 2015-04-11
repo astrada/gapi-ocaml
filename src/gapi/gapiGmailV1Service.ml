@@ -9,6 +9,10 @@ struct
   
   let gmail_compose = "https://www.googleapis.com/auth/gmail.compose"
   
+  let gmail_insert = "https://www.googleapis.com/auth/gmail.insert"
+  
+  let gmail_labels = "https://www.googleapis.com/auth/gmail.labels"
+  
   let gmail_modify = "https://www.googleapis.com/auth/gmail.modify"
   
   let gmail_readonly = "https://www.googleapis.com/auth/gmail.readonly"
@@ -25,18 +29,21 @@ struct
       type t =
         | Default
         | Full
+        | Metadata
         | Minimal
         | Raw
         
       let to_string = function
         | Default -> ""
         | Full -> "full"
+        | Metadata -> "metadata"
         | Minimal -> "minimal"
         | Raw -> "raw"
         
       let of_string = function
         | "" -> Default
         | "full" -> Full
+        | "metadata" -> Metadata
         | "minimal" -> Minimal
         | "raw" -> Raw
         | s -> failwith ("Unexpected value for Format:" ^ s)
@@ -447,21 +454,44 @@ struct
       type t =
         | Default
         | Full
+        | Metadata
         | Minimal
         | Raw
         
       let to_string = function
         | Default -> ""
         | Full -> "full"
+        | Metadata -> "metadata"
         | Minimal -> "minimal"
         | Raw -> "raw"
         
       let of_string = function
         | "" -> Default
         | "full" -> Full
+        | "metadata" -> Metadata
         | "minimal" -> Minimal
         | "raw" -> Raw
         | s -> failwith ("Unexpected value for Format:" ^ s)
+    
+    end
+    
+    module InternalDateSource =
+    struct
+      type t =
+        | Default
+        | DateHeader
+        | ReceivedTime
+        
+      let to_string = function
+        | Default -> ""
+        | DateHeader -> "dateHeader"
+        | ReceivedTime -> "receivedTime"
+        
+      let of_string = function
+        | "" -> Default
+        | "dateHeader" -> DateHeader
+        | "receivedTime" -> ReceivedTime
+        | s -> failwith ("Unexpected value for InternalDateSource:" ^ s)
     
     end
     
@@ -475,11 +505,16 @@ struct
         userIp : string;
         key : string;
         (* messages-specific query parameters *)
+        deleted : bool;
         format : Format.t;
         includeSpamTrash : bool;
+        internalDateSource : InternalDateSource.t;
         labelIds : string list;
         maxResults : int;
+        metadataHeaders : string list;
+        neverMarkSpam : bool;
         pageToken : string;
+        processForCalendar : bool;
         q : string;
         
       }
@@ -490,11 +525,16 @@ struct
         quotaUser = "";
         userIp = "";
         key = "";
+        deleted = false;
         format = Format.Default;
         includeSpamTrash = false;
+        internalDateSource = InternalDateSource.Default;
         labelIds = [];
         maxResults = 100;
+        metadataHeaders = [];
+        neverMarkSpam = false;
         pageToken = "";
+        processForCalendar = false;
         q = "";
         
       }
@@ -507,22 +547,32 @@ struct
         param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
         param (fun p -> p.userIp) (fun x -> x) "userIp";
         param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.deleted) string_of_bool "deleted";
         param (fun p -> p.format) Format.to_string "format";
         param (fun p -> p.includeSpamTrash) string_of_bool "includeSpamTrash";
+        param (fun p -> p.internalDateSource) InternalDateSource.to_string "internalDateSource";
         GapiService.build_params qp (fun p -> p.labelIds) (fun x -> x) "labelIds";
         param (fun p -> p.maxResults) string_of_int "maxResults";
+        GapiService.build_params qp (fun p -> p.metadataHeaders) (fun x -> x) "metadataHeaders";
+        param (fun p -> p.neverMarkSpam) string_of_bool "neverMarkSpam";
         param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+        param (fun p -> p.processForCalendar) string_of_bool "processForCalendar";
         param (fun p -> p.q) (fun x -> x) "q";
         
       ] |> List.concat
       
       let merge_parameters
           ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(deleted = default.deleted)
           ?(format = default.format)
           ?(includeSpamTrash = default.includeSpamTrash)
+          ?(internalDateSource = default.internalDateSource)
           ?(labelIds = default.labelIds)
           ?(maxResults = default.maxResults)
+          ?(metadataHeaders = default.metadataHeaders)
+          ?(neverMarkSpam = default.neverMarkSpam)
           ?(pageToken = default.pageToken)
+          ?(processForCalendar = default.processForCalendar)
           ?(q = default.q)
           () =
         let parameters = {
@@ -531,11 +581,16 @@ struct
           quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
           userIp = standard_parameters.GapiService.StandardParameters.userIp;
           key = standard_parameters.GapiService.StandardParameters.key;
+          deleted;
           format;
           includeSpamTrash;
+          internalDateSource;
           labelIds;
           maxResults;
+          metadataHeaders;
+          neverMarkSpam;
           pageToken;
+          processForCalendar;
           q;
           
         } in
@@ -563,13 +618,14 @@ struct
           ?etag
           ?std_params
           ?(format = Format.Default)
+          ?metadataHeaders
           ~userId
           ~id
           session =
       let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
         "messages"; ((fun x -> x) id)] base_url in
       let params = MessagesParameters.merge_parameters
-        ?standard_parameters:std_params ~format () in
+        ?standard_parameters:std_params ~format ?metadataHeaders () in
       let query_parameters = Option.map MessagesParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters ?etag full_url
@@ -579,6 +635,10 @@ struct
           ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
           ?std_params
           ?media_source
+          ?(deleted = false)
+          ?(internalDateSource = InternalDateSource.Default)
+          ?(neverMarkSpam = false)
+          ?(processForCalendar = false)
           ~userId
           message
           session =
@@ -589,7 +649,8 @@ struct
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = MessagesParameters.merge_parameters
-        ?standard_parameters:std_params () in
+        ?standard_parameters:std_params ~deleted ~internalDateSource
+        ~neverMarkSpam ~processForCalendar () in
       let query_parameters = Option.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
@@ -601,6 +662,8 @@ struct
           ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
           ?std_params
           ?media_source
+          ?(deleted = false)
+          ?(internalDateSource = InternalDateSource.Default)
           ~userId
           message
           session =
@@ -611,7 +674,7 @@ struct
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = MessagesParameters.merge_parameters
-        ?standard_parameters:std_params () in
+        ?standard_parameters:std_params ~deleted ~internalDateSource () in
       let query_parameters = Option.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
@@ -715,6 +778,29 @@ struct
   
   module Threads =
   struct
+    module Format =
+    struct
+      type t =
+        | Default
+        | Full
+        | Metadata
+        | Minimal
+        
+      let to_string = function
+        | Default -> ""
+        | Full -> "full"
+        | Metadata -> "metadata"
+        | Minimal -> "minimal"
+        
+      let of_string = function
+        | "" -> Default
+        | "full" -> Full
+        | "metadata" -> Metadata
+        | "minimal" -> Minimal
+        | s -> failwith ("Unexpected value for Format:" ^ s)
+    
+    end
+    
     module ThreadsParameters =
     struct
       type t = {
@@ -725,9 +811,11 @@ struct
         userIp : string;
         key : string;
         (* threads-specific query parameters *)
+        format : Format.t;
         includeSpamTrash : bool;
         labelIds : string list;
         maxResults : int;
+        metadataHeaders : string list;
         pageToken : string;
         q : string;
         
@@ -739,9 +827,11 @@ struct
         quotaUser = "";
         userIp = "";
         key = "";
+        format = Format.Default;
         includeSpamTrash = false;
         labelIds = [];
         maxResults = 100;
+        metadataHeaders = [];
         pageToken = "";
         q = "";
         
@@ -755,9 +845,11 @@ struct
         param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
         param (fun p -> p.userIp) (fun x -> x) "userIp";
         param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.format) Format.to_string "format";
         param (fun p -> p.includeSpamTrash) string_of_bool "includeSpamTrash";
         GapiService.build_params qp (fun p -> p.labelIds) (fun x -> x) "labelIds";
         param (fun p -> p.maxResults) string_of_int "maxResults";
+        GapiService.build_params qp (fun p -> p.metadataHeaders) (fun x -> x) "metadataHeaders";
         param (fun p -> p.pageToken) (fun x -> x) "pageToken";
         param (fun p -> p.q) (fun x -> x) "q";
         
@@ -765,9 +857,11 @@ struct
       
       let merge_parameters
           ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(format = default.format)
           ?(includeSpamTrash = default.includeSpamTrash)
           ?(labelIds = default.labelIds)
           ?(maxResults = default.maxResults)
+          ?(metadataHeaders = default.metadataHeaders)
           ?(pageToken = default.pageToken)
           ?(q = default.q)
           () =
@@ -777,9 +871,11 @@ struct
           quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
           userIp = standard_parameters.GapiService.StandardParameters.userIp;
           key = standard_parameters.GapiService.StandardParameters.key;
+          format;
           includeSpamTrash;
           labelIds;
           maxResults;
+          metadataHeaders;
           pageToken;
           q;
           
@@ -807,13 +903,15 @@ struct
           ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
           ?etag
           ?std_params
+          ?(format = Format.Default)
+          ?metadataHeaders
           ~userId
           ~id
           session =
       let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
         "threads"; ((fun x -> x) id)] base_url in
       let params = ThreadsParameters.merge_parameters
-        ?standard_parameters:std_params () in
+        ?standard_parameters:std_params ~format ?metadataHeaders () in
       let query_parameters = Option.map ThreadsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters ?etag full_url
@@ -891,6 +989,20 @@ struct
     
   end
   
+  let getProfile
+        ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+        ?std_params
+        ~userId
+        session =
+    let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+      "profile"] base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.get ?query_parameters full_url
+      (GapiJson.parse_json_response Profile.of_data_model) session 
+    
   
 end
 

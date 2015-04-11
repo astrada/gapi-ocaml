@@ -289,6 +289,8 @@ sig
     (** The allowable export formats. *)
     features : Features.t list;
     (** List of additional features enabled on this account. *)
+    folderColorPalette : string list;
+    (** The palette of allowable folder colors as RGB hex strings. *)
     importFormats : ImportFormats.t list;
     (** The allowable import formats. *)
     isCurrentAppInstalled : bool;
@@ -335,6 +337,7 @@ sig
   val etag : (t, string) GapiLens.t
   val exportFormats : (t, ExportFormats.t list) GapiLens.t
   val features : (t, Features.t list) GapiLens.t
+  val folderColorPalette : (t, string list) GapiLens.t
   val importFormats : (t, ImportFormats.t list) GapiLens.t
   val isCurrentAppInstalled : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -467,7 +470,7 @@ sig
     objectType : string;
     (** The type of object this app creates (e.g. Chart). If empty, the app name should be used instead. *)
     openUrlTemplate : string;
-    (** The template url for opening files with this app. The template will contain \{ids\} and/or \{exportIds\} to be replaced by the actual file ids. *)
+    (** The template url for opening files with this app. The template will contain \{ids\} and/or \{exportIds\} to be replaced by the actual file ids. See  Open Files  for the full documentation. *)
     primaryFileExtensions : string list;
     (** The list of primary file extensions. *)
     primaryMimeTypes : string list;
@@ -785,77 +788,6 @@ sig
   
 end
 
-module Property :
-sig
-  type t = {
-    etag : string;
-    (** ETag of the property. *)
-    key : string;
-    (** The key of this property. *)
-    kind : string;
-    (** This is always drive#property. *)
-    selfLink : string;
-    (** The link back to this property. *)
-    value : string;
-    (** The value of this property. *)
-    visibility : string;
-    (** The visibility of this property. *)
-    
-  }
-  
-  val etag : (t, string) GapiLens.t
-  val key : (t, string) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
-  val value : (t, string) GapiLens.t
-  val visibility : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module ParentReference :
-sig
-  type t = {
-    id : string;
-    (** The ID of the parent. *)
-    isRoot : bool;
-    (** Whether or not the parent is the root folder. *)
-    kind : string;
-    (** This is always drive#parentReference. *)
-    parentLink : string;
-    (** A link to the parent. *)
-    selfLink : string;
-    (** A link back to this reference. *)
-    
-  }
-  
-  val id : (t, string) GapiLens.t
-  val isRoot : (t, bool) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val parentLink : (t, string) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
 module Permission :
 sig
   type t = {
@@ -866,7 +798,7 @@ sig
     domain : string;
     (** The domain name of the entity this permission refers to. This is an output-only field which is present when the permission type is user, group or domain. *)
     emailAddress : string;
-    (** The email address of the user this permission refers to. This is an output-only field which is present when the permission type is user and the given user's Google+ profile privacy settings allow exposing their email address. *)
+    (** The email address of the user or group this permission refers to. This is an output-only field which is present when the permission type is user or group. *)
     etag : string;
     (** The ETag of the permission. *)
     id : string;
@@ -924,13 +856,108 @@ sig
   
 end
 
+module ParentReference :
+sig
+  type t = {
+    id : string;
+    (** The ID of the parent. *)
+    isRoot : bool;
+    (** Whether or not the parent is the root folder. *)
+    kind : string;
+    (** This is always drive#parentReference. *)
+    parentLink : string;
+    (** A link to the parent. *)
+    selfLink : string;
+    (** A link back to this reference. *)
+    
+  }
+  
+  val id : (t, string) GapiLens.t
+  val isRoot : (t, bool) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val parentLink : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Property :
+sig
+  type t = {
+    etag : string;
+    (** ETag of the property. *)
+    key : string;
+    (** The key of this property. *)
+    kind : string;
+    (** This is always drive#property. *)
+    selfLink : string;
+    (** The link back to this property. *)
+    value : string;
+    (** The value of this property. *)
+    visibility : string;
+    (** The visibility of this property. *)
+    
+  }
+  
+  val etag : (t, string) GapiLens.t
+  val key : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val value : (t, string) GapiLens.t
+  val visibility : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module File :
 sig
+  module VideoMediaMetadata :
+  sig
+    type t = {
+      durationMillis : int64;
+      (** The duration of the video in milliseconds. *)
+      height : int;
+      (** The height of the video in pixels. *)
+      width : int;
+      (** The width of the video in pixels. *)
+      
+    }
+    
+    val durationMillis : (t, int64) GapiLens.t
+    val height : (t, int) GapiLens.t
+    val width : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Thumbnail :
   sig
     type t = {
       image : string;
-      (** The URL-safe Base64 encoded bytes of the thumbnail image. *)
+      (** The URL-safe Base64 encoded bytes of the thumbnail image. It should conform to RFC 4648 section 5. *)
       mimeType : string;
       (** The MIME type of the thumbnail. *)
       
@@ -957,7 +984,7 @@ sig
       starred : bool;
       (** Whether this file is starred by the user. *)
       trashed : bool;
-      (** Whether this file has been trashed. *)
+      (** Whether this file has been trashed. This label applies to all users accessing the file; however, only owners are allowed to see and untrash files. *)
       viewed : bool;
       (** Whether this file has been viewed by this user. *)
       
@@ -1099,13 +1126,13 @@ sig
   
   type t = {
     alternateLink : string;
-    (** A link for opening the file in using a relevant Google editor or viewer. *)
+    (** A link for opening the file in a relevant Google editor or viewer. *)
     appDataContents : bool;
-    (** Whether this file is in the appdata folder. *)
+    (** Whether this file is in the Application Data folder. *)
     copyable : bool;
     (** Whether the file can be copied by the current user. *)
     createdDate : GapiDate.t;
-    (** Create time for this file (formatted ISO8601 timestamp). *)
+    (** Create time for this file (formatted RFC 3339 timestamp). *)
     defaultOpenWithLink : string;
     (** A link to open this file with the user's default app for this file. Only populated when the drive.apps.readonly scope is used. *)
     description : string;
@@ -1126,6 +1153,8 @@ sig
     (** The file extension used when downloading this file. This field is read only. To set the extension, include it in the title when creating the file. This is only populated for files with content stored in Drive. *)
     fileSize : int64;
     (** The size of the file in bytes. This is only populated for files with content stored in Drive. *)
+    folderColorRgb : string;
+    (** Folder color as an RGB hex string if the file is a folder. The list of supported colors is available in the folderColorPalette field of the About resource. If an unsupported color is specified, it will be changed to the closest color in the palette. *)
     headRevisionId : string;
     (** The ID of the file's head revision. This will only be populated for files with content stored in Drive. *)
     iconLink : string;
@@ -1184,13 +1213,15 @@ Setting this field will put the file in all of the provided folders. On insert, 
     thumbnail : Thumbnail.t;
     (** Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google. *)
     thumbnailLink : string;
-    (** A link to the file's thumbnail. *)
+    (** A short-lived link to the file's thumbnail. Typically lasts on the order of hours. *)
     title : string;
     (** The title of this file. *)
     userPermission : Permission.t;
     (** The permissions for the authenticated user on this file. *)
     version : int64;
     (** A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the requesting user. *)
+    videoMediaMetadata : VideoMediaMetadata.t;
+    (** Metadata about video media. This will only be present for video types. *)
     webContentLink : string;
     (** A link for downloading the content of the file in a browser using cookie based authentication. In cases where the content is shared publicly, the content can be downloaded without any credentials. *)
     webViewLink : string;
@@ -1214,6 +1245,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val exportLinks : (t, (string * string) list) GapiLens.t
   val fileExtension : (t, string) GapiLens.t
   val fileSize : (t, int64) GapiLens.t
+  val folderColorRgb : (t, string) GapiLens.t
   val headRevisionId : (t, string) GapiLens.t
   val iconLink : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -1246,6 +1278,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val title : (t, string) GapiLens.t
   val userPermission : (t, Permission.t) GapiLens.t
   val version : (t, int64) GapiLens.t
+  val videoMediaMetadata : (t, VideoMediaMetadata.t) GapiLens.t
   val webContentLink : (t, string) GapiLens.t
   val webViewLink : (t, string) GapiLens.t
   val writersCanShare : (t, bool) GapiLens.t

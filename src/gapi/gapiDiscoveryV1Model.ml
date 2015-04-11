@@ -1095,6 +1095,7 @@ struct
     supportsMediaDownload : bool;
     supportsMediaUpload : bool;
     supportsSubscription : bool;
+    useMediaDownloadService : bool;
     
   }
   
@@ -1154,6 +1155,10 @@ struct
     GapiLens.get = (fun x -> x.supportsSubscription);
     GapiLens.set = (fun v x -> { x with supportsSubscription = v });
   }
+  let useMediaDownloadService = {
+    GapiLens.get = (fun x -> x.useMediaDownloadService);
+    GapiLens.set = (fun v x -> { x with useMediaDownloadService = v });
+  }
   
   let empty = {
     description = "";
@@ -1170,6 +1175,7 @@ struct
     supportsMediaDownload = false;
     supportsMediaUpload = false;
     supportsSubscription = false;
+    useMediaDownloadService = false;
     
   }
   
@@ -1189,6 +1195,7 @@ struct
       GapiJson.render_bool_value "supportsMediaDownload" x.supportsMediaDownload;
       GapiJson.render_bool_value "supportsMediaUpload" x.supportsMediaUpload;
       GapiJson.render_bool_value "supportsSubscription" x.supportsSubscription;
+      GapiJson.render_bool_value "useMediaDownloadService" x.useMediaDownloadService;
       
     ]
   and render x = 
@@ -1297,6 +1304,10 @@ struct
         ({ GapiJson.name = "supportsSubscription"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with supportsSubscription = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "useMediaDownloadService"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with useMediaDownloadService = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->

@@ -20,7 +20,7 @@ sig
     hd : string;
     (** The hosted domain e.g. example.com if the user is Google apps user. *)
     id : string;
-    (** The focus obfuscated gaia id of the user. *)
+    (** The obfuscated ID of the user. *)
     link : string;
     (** URL of the profile page. *)
     locale : string;
@@ -73,8 +73,10 @@ sig
     (** To whom was the token issued to. In general the same as audience. *)
     scope : string;
     (** The space separated list of scopes granted to this token. *)
+    token_handle : string;
+    (** The token handle associated with this token. *)
     user_id : string;
-    (** The Gaia obfuscated user id. *)
+    (** The obfuscated user id. *)
     verified_email : bool;
     (** Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request. *)
     
@@ -86,8 +88,64 @@ sig
   val expires_in : (t, int) GapiLens.t
   val issued_to : (t, string) GapiLens.t
   val scope : (t, string) GapiLens.t
+  val token_handle : (t, string) GapiLens.t
   val user_id : (t, string) GapiLens.t
   val verified_email : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Jwk :
+sig
+  module Keys :
+  sig
+    type t = {
+      alg : string;
+      (**  *)
+      e : string;
+      (**  *)
+      kid : string;
+      (**  *)
+      kty : string;
+      (**  *)
+      n : string;
+      (**  *)
+      use : string;
+      (**  *)
+      
+    }
+    
+    val alg : (t, string) GapiLens.t
+    val e : (t, string) GapiLens.t
+    val kid : (t, string) GapiLens.t
+    val kty : (t, string) GapiLens.t
+    val n : (t, string) GapiLens.t
+    val use : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    keys : Keys.t list;
+    (**  *)
+    
+  }
+  
+  val keys : (t, Keys.t list) GapiLens.t
   
   val empty : t
   

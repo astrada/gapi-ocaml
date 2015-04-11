@@ -342,11 +342,14 @@ sig
   module Image :
   sig
     type t = {
+      isDefault : bool;
+      (** Whether the person's profile photo is the default one *)
       url : string;
       (** The URL of the person's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side. *)
       
     }
     
+    val isDefault : (t, bool) GapiLens.t
     val url : (t, string) GapiLens.t
     
     val empty : t
@@ -491,7 +494,7 @@ sig
     cover : Cover.t;
     (** The cover photo content. *)
     currentLocation : string;
-    (** The current location for this person. *)
+    (** (this field is not currently used) *)
     displayName : string;
     (** The name of this person, which is suitable for display. *)
     domain : string;

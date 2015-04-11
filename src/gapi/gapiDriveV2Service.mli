@@ -11,7 +11,7 @@
 module Scope :
 sig
   val drive : string
-  (** View and manage the files and documents in your Google Drive *)
+  (** View and manage the files in your Google Drive *)
   
   val drive_appdata : string
   (** View and manage its own configuration data in your Google Drive *)
@@ -23,10 +23,10 @@ sig
   (** View and manage Google Drive files that you have opened or created with this app *)
   
   val drive_metadata_readonly : string
-  (** View metadata for files and documents in your Google Drive *)
+  (** View metadata for files in your Google Drive *)
   
   val drive_readonly : string
-  (** View the files and documents in your Google Drive *)
+  (** View the files in your Google Drive *)
   
   val drive_scripts : string
   (** Modify your Google Apps Script scripts' behavior *)
@@ -387,13 +387,26 @@ sig
     
   end
   
+  module Corpus :
+  sig
+    type t =
+      | Default
+      | DEFAULT (** The items that the user has accessed. *)
+      | DOMAIN (** Items shared to the user's domain. *)
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
+  
   (** Creates a copy of the specified file.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
-    @param pinned Whether to pin the head revision of the new copy.
+    @param pinned Whether to pin the head revision of the new copy. A file can have a maximum of 200 pinned revisions.
     @param visibility The visibility of the new file. This parameter is only relevant when the source is not a native Google Doc and convert=false.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
     @param timedTextLanguage The language of the timed text.
@@ -415,7 +428,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.File.t * GapiConversation.Session.t
   
-  (** Permanently deletes a file by ID. Skips the trash.
+  (** Permanently deletes a file by ID. Skips the trash. The currently authenticated user must own the file.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
@@ -444,16 +457,22 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
+    @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.
     @param updateViewedDate Whether to update the view date after successfully retrieving the file.
+    @param alt Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.
     @param projection This parameter is deprecated and has no function.
+    @param revisionId Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.
     @param fileId The ID for the file in question.
     *)
   val get :
     ?base_url:string ->
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?acknowledgeAbuse:bool ->
     ?updateViewedDate:bool ->
+    ?alt:string ->
     ?projection:Projection.t ->
+    ?revisionId:string ->
     fileId:string ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.File.t * GapiConversation.Session.t
@@ -464,7 +483,7 @@ sig
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
-    @param pinned Whether to pin the head revision of the uploaded file.
+    @param pinned Whether to pin the head revision of the uploaded file. A file can have a maximum of 200 pinned revisions.
     @param useContentAsIndexableText Whether to use the content as indexable text.
     @param visibility The visibility of the new file. This parameter is only relevant when convert=false.
     @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
@@ -492,6 +511,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of files to return.
+    @param corpus The body of items (files/documents) to which the query applies.
     @param pageToken Page token for files.
     @param projection This parameter is deprecated and has no function.
     @param q Query string for searching files.
@@ -500,6 +520,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxResults:int ->
+    ?corpus:Corpus.t ->
     ?pageToken:string ->
     ?projection:Projection.t ->
     ?q:string ->
@@ -511,9 +532,9 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
+    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
-    @param pinned Whether to pin the new revision.
+    @param pinned Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
@@ -588,9 +609,9 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
+    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
-    @param pinned Whether to pin the new revision.
+    @param pinned Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
@@ -626,15 +647,21 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
+    @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.
     @param updateViewedDate Whether to update the view date after successfully retrieving the file.
+    @param alt Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.
     @param projection This parameter is deprecated and has no function.
+    @param revisionId Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.
     @param fileId The ID for the file in question.
     *)
   val watch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?acknowledgeAbuse:bool ->
     ?updateViewedDate:bool ->
+    ?alt:string ->
     ?projection:Projection.t ->
+    ?revisionId:string ->
     fileId:string ->
     GapiDriveV2Model.Channel.t ->
     GapiConversation.Session.t ->
@@ -791,7 +818,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param transferOwnership Whether changing a role to 'owner' should also downgrade the current owners to writers.
+    @param transferOwnership Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
     *)
@@ -809,7 +836,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param transferOwnership Whether changing a role to 'owner' should also downgrade the current owners to writers.
+    @param transferOwnership Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
     *)

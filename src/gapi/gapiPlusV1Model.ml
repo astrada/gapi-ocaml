@@ -915,22 +915,29 @@ struct
   module Image =
   struct
     type t = {
+      isDefault : bool;
       url : string;
       
     }
     
+    let isDefault = {
+      GapiLens.get = (fun x -> x.isDefault);
+      GapiLens.set = (fun v x -> { x with isDefault = v });
+    }
     let url = {
       GapiLens.get = (fun x -> x.url);
       GapiLens.set = (fun v x -> { x with url = v });
     }
     
     let empty = {
+      isDefault = false;
       url = "";
       
     }
     
     let rec render_content x = 
        [
+        GapiJson.render_bool_value "isDefault" x.isDefault;
         GapiJson.render_string_value "url" x.url;
         
       ]
@@ -938,6 +945,10 @@ struct
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "isDefault"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with isDefault = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
           `String v) ->

@@ -20,7 +20,7 @@ sig
   (** View your email address *)
   
   val userinfo_profile : string
-  (** View basic information about your account *)
+  (** View your basic profile info *)
   
   
 end

@@ -20,7 +20,7 @@ sig
   (** View your email address *)
   
   val userinfo_profile : string
-  (** View basic information about your account *)
+  (** View your basic profile info *)
   
   
 end
@@ -76,11 +76,23 @@ end
   @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
   @param std_params Optional standard parameters.
   *)
+val getCertForOpenIdConnect :
+  ?base_url:string ->
+  ?std_params:GapiService.StandardParameters.t ->
+  GapiConversation.Session.t ->
+  GapiOauth2V2Model.Jwk.t * GapiConversation.Session.t
+
+(** 
+  
+  @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/"]).
+  @param std_params Optional standard parameters.
+  *)
 val tokeninfo :
   ?base_url:string ->
   ?std_params:GapiService.StandardParameters.t ->
   ?access_token:string ->
   ?id_token:string ->
+  ?token_handle:string ->
   GapiConversation.Session.t ->
   GapiOauth2V2Model.Tokeninfo.t * GapiConversation.Session.t
 

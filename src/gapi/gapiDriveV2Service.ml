@@ -671,6 +671,26 @@ end
 
 module FilesResource =
 struct
+  module Corpus =
+  struct
+    type t =
+      | Default
+      | DEFAULT
+      | DOMAIN
+      
+    let to_string = function
+      | Default -> ""
+      | DEFAULT -> "DEFAULT"
+      | DOMAIN -> "DOMAIN"
+      
+    let of_string = function
+      | "" -> Default
+      | "DEFAULT" -> DEFAULT
+      | "DOMAIN" -> DOMAIN
+      | s -> failwith ("Unexpected value for Corpus:" ^ s)
+  
+  end
+  
   module Projection =
   struct
     type t =
@@ -721,8 +741,11 @@ struct
       userIp : string;
       key : string;
       (* files-specific query parameters *)
+      acknowledgeAbuse : bool;
       addParents : string;
+      alt : string;
       convert : bool;
+      corpus : Corpus.t;
       maxResults : int;
       newRevision : bool;
       ocr : bool;
@@ -732,6 +755,7 @@ struct
       projection : Projection.t;
       q : string;
       removeParents : string;
+      revisionId : string;
       setModifiedDate : bool;
       timedTextLanguage : string;
       timedTextTrackName : string;
@@ -747,8 +771,11 @@ struct
       quotaUser = "";
       userIp = "";
       key = "";
+      acknowledgeAbuse = false;
       addParents = "";
+      alt = "";
       convert = false;
+      corpus = Corpus.Default;
       maxResults = 100;
       newRevision = true;
       ocr = false;
@@ -758,6 +785,7 @@ struct
       projection = Projection.Default;
       q = "";
       removeParents = "";
+      revisionId = "";
       setModifiedDate = false;
       timedTextLanguage = "";
       timedTextTrackName = "";
@@ -775,8 +803,11 @@ struct
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.acknowledgeAbuse) string_of_bool "acknowledgeAbuse";
       param (fun p -> p.addParents) (fun x -> x) "addParents";
+      param (fun p -> p.alt) (fun x -> x) "alt";
       param (fun p -> p.convert) string_of_bool "convert";
+      param (fun p -> p.corpus) Corpus.to_string "corpus";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.newRevision) string_of_bool "newRevision";
       param (fun p -> p.ocr) string_of_bool "ocr";
@@ -786,6 +817,7 @@ struct
       param (fun p -> p.projection) Projection.to_string "projection";
       param (fun p -> p.q) (fun x -> x) "q";
       param (fun p -> p.removeParents) (fun x -> x) "removeParents";
+      param (fun p -> p.revisionId) (fun x -> x) "revisionId";
       param (fun p -> p.setModifiedDate) string_of_bool "setModifiedDate";
       param (fun p -> p.timedTextLanguage) (fun x -> x) "timedTextLanguage";
       param (fun p -> p.timedTextTrackName) (fun x -> x) "timedTextTrackName";
@@ -797,8 +829,11 @@ struct
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(acknowledgeAbuse = default.acknowledgeAbuse)
         ?(addParents = default.addParents)
+        ?(alt = default.alt)
         ?(convert = default.convert)
+        ?(corpus = default.corpus)
         ?(maxResults = default.maxResults)
         ?(newRevision = default.newRevision)
         ?(ocr = default.ocr)
@@ -808,6 +843,7 @@ struct
         ?(projection = default.projection)
         ?(q = default.q)
         ?(removeParents = default.removeParents)
+        ?(revisionId = default.revisionId)
         ?(setModifiedDate = default.setModifiedDate)
         ?(timedTextLanguage = default.timedTextLanguage)
         ?(timedTextTrackName = default.timedTextTrackName)
@@ -821,8 +857,11 @@ struct
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
+        acknowledgeAbuse;
         addParents;
+        alt;
         convert;
+        corpus;
         maxResults;
         newRevision;
         ocr;
@@ -832,6 +871,7 @@ struct
         projection;
         q;
         removeParents;
+        revisionId;
         setModifiedDate;
         timedTextLanguage;
         timedTextTrackName;
@@ -899,14 +939,18 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?etag
         ?std_params
+        ?(acknowledgeAbuse = false)
         ?(updateViewedDate = false)
+        ?alt
         ?projection
+        ?revisionId
         ~fileId
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId)]
       base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ?projection ~updateViewedDate () in
+      ?standard_parameters:std_params ~acknowledgeAbuse ?alt ?projection
+      ?revisionId ~updateViewedDate () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
@@ -946,14 +990,15 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
         ?(maxResults = 100)
+        ?corpus
         ?pageToken
         ?projection
         ?q
         session =
     let full_url = GapiUtils.add_path_to_url ["files"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~maxResults ?pageToken ?projection ?q
-      () in
+      ?standard_parameters:std_params ?corpus ~maxResults ?pageToken
+      ?projection ?q () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -1071,15 +1116,19 @@ struct
   let watch
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?(acknowledgeAbuse = false)
         ?(updateViewedDate = false)
+        ?alt
         ?projection
+        ?revisionId
         ~fileId
         channel
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "watch"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ?projection ~updateViewedDate () in
+      ?standard_parameters:std_params ~acknowledgeAbuse ?alt ?projection
+      ?revisionId ~updateViewedDate () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters

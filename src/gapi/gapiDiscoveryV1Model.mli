@@ -402,6 +402,8 @@ sig
     (** Whether this method supports media uploads. *)
     supportsSubscription : bool;
     (** Whether this method supports subscriptions. *)
+    useMediaDownloadService : bool;
+    (** Indicates that downloads from this method should use the download service URL (i.e. "/download"). Only applies if the method supports media download. *)
     
   }
   
@@ -419,6 +421,7 @@ sig
   val supportsMediaDownload : (t, bool) GapiLens.t
   val supportsMediaUpload : (t, bool) GapiLens.t
   val supportsSubscription : (t, bool) GapiLens.t
+  val useMediaDownloadService : (t, bool) GapiLens.t
   
   val empty : t
   

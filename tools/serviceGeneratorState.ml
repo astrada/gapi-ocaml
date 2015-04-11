@@ -244,6 +244,16 @@ struct
             failwith ("Unexpected original type: " ^ original_type)
     in
 
+    let get_descriptions es ds =
+      let rec loop es ds accu =
+        match (es, ds) with
+          [], _ -> accu
+        | _ :: es, [] -> loop es ds ("" :: accu)
+        | _ :: es, d :: ds -> loop es ds (d :: accu)
+      in
+      List.rev (loop es ds [])
+    in
+
     let format = format_of_string json_schema.JsonSchema.format in
     let data_type = get_data_type json_schema.JsonSchema._type format in
     let empty_value = get_empty_value data_type in
@@ -259,7 +269,9 @@ struct
           minimum = json_schema.JsonSchema.minimum;
           maximum = json_schema.JsonSchema.maximum;
           enum = json_schema.JsonSchema.enum;
-          enumDescriptions = json_schema.JsonSchema.enumDescriptions;
+          enumDescriptions = get_descriptions
+            json_schema.JsonSchema.enum
+            json_schema.JsonSchema.enumDescriptions;
           repeated = json_schema.JsonSchema.repeated;
           location = location_of_string json_schema.JsonSchema.location;
           data_type;
@@ -591,6 +603,12 @@ struct
         Scalar scalar -> scalar.ScalarType.location
       | _ ->
         failwith "Unsupported type in ComplexType.get_location"
+
+  let get_convert_function complex_type =
+    match complex_type.data_type with
+        Scalar scalar ->
+          ScalarType.get_convert_function scalar.ScalarType.data_type
+      | _ -> ""
 
 end
 

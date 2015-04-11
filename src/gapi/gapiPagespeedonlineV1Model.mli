@@ -12,9 +12,9 @@ sig
   sig
     type t = {
       major : int;
-      (** The major version number of the Page Speed SDK used to generate these results. *)
+      (** The major version number of PageSpeed used to generate these results. *)
       minor : int;
-      (** The minor version number of the Page Speed SDK used to generate these results. *)
+      (** The minor version number of PageSpeed used to generate these results. *)
       
     }
     
@@ -308,7 +308,7 @@ sig
       locale : string;
       (** The locale of the formattedResults, e.g. "en_US". *)
       ruleResults : (string * RuleResults.t) list;
-      (** Dictionary of formatted rule results, with one entry for each Page Speed rule instantiated and run by the server. *)
+      (** Dictionary of formatted rule results, with one entry for each PageSpeed rule instantiated and run by the server. *)
       
     }
     
@@ -325,7 +325,7 @@ sig
   
   type t = {
     formattedResults : FormattedResults.t;
-    (** Localized Page Speed results. Contains a ruleResults entry for each Page Speed rule instantiated and run by the server. *)
+    (** Localized PageSpeed results. Contains a ruleResults entry for each PageSpeed rule instantiated and run by the server. *)
     id : string;
     (** Canonicalized and final URL for the document, after following page redirects (if any). *)
     invalidRules : string list;
@@ -337,13 +337,13 @@ sig
     responseCode : int;
     (** Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error. *)
     score : int;
-    (** The Page Speed Score (0-100), which indicates how much faster a page could be. A high score indicates little room for improvement, while a lower score indicates more room for improvement. *)
+    (** The PageSpeed Score (0-100), which indicates how much faster a page could be. A high score indicates little room for improvement, while a lower score indicates more room for improvement. *)
     screenshot : Screenshot.t;
-    (** Base64 encoded screenshot of the page that was analyzed. *)
+    (** Base64-encoded screenshot of the page that was analyzed. *)
     title : string;
     (** Title of the page, as displayed in the browser's title bar. *)
     version : Version.t;
-    (** The version of the Page Speed SDK used to generate these results. *)
+    (** The version of PageSpeed used to generate these results. *)
     
   }
   

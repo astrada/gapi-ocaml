@@ -3,7 +3,7 @@
 (** Data definition for URL Shortener API (v1).
   
   For more information about this data model, see the
-  {{:http://code.google.com/apis/urlshortener/v1/getting_started.html}API Documentation}.
+  {{:https://developers.google.com/url-shortener/v1/getting_started}API Documentation}.
   *)
 
 module StringCount :
