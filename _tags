@@ -5,10 +5,11 @@
 <src/gapi/gapi*Model.ml>: warn_x
 
 # OASIS_START
-# DO NOT EDIT (digest: 4d67abccdc03518922fc68621885aaf3)
+# DO NOT EDIT (digest: 41046b81b4116502ba6064dbe7b830f3)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
+true: annot, bin_annot
 <**/.svn>: -traverse
 <**/.svn>: not_hygienic
 ".bzr": -traverse
@@ -21,22 +22,22 @@
 "_darcs": not_hygienic
 # Library gapi-ocaml
 "src/gapi/gapi-ocaml.cmxs": use_gapi-ocaml
-<src/gapi/*.ml{,i}>: pkg_cryptokit
-<src/gapi/*.ml{,i}>: pkg_curl
-<src/gapi/*.ml{,i}>: pkg_extlib
-<src/gapi/*.ml{,i}>: pkg_netstring
-<src/gapi/*.ml{,i}>: pkg_str
-<src/gapi/*.ml{,i}>: pkg_yojson
+<src/gapi/*.ml{,i,y}>: pkg_cryptokit
+<src/gapi/*.ml{,i,y}>: pkg_curl
+<src/gapi/*.ml{,i,y}>: pkg_extlib
+<src/gapi/*.ml{,i,y}>: pkg_netstring
+<src/gapi/*.ml{,i,y}>: pkg_str
+<src/gapi/*.ml{,i,y}>: pkg_yojson
 # Library gdata
 "src/gdata/gdata.cmxs": use_gdata
-<src/gdata/*.ml{,i}>: pkg_cryptokit
-<src/gdata/*.ml{,i}>: pkg_curl
-<src/gdata/*.ml{,i}>: pkg_extlib
-<src/gdata/*.ml{,i}>: pkg_netstring
-<src/gdata/*.ml{,i}>: pkg_str
-<src/gdata/*.ml{,i}>: pkg_xmlm
-<src/gdata/*.ml{,i}>: pkg_yojson
-<src/gdata/*.ml{,i}>: use_gapi-ocaml
+<src/gdata/*.ml{,i,y}>: pkg_cryptokit
+<src/gdata/*.ml{,i,y}>: pkg_curl
+<src/gdata/*.ml{,i,y}>: pkg_extlib
+<src/gdata/*.ml{,i,y}>: pkg_netstring
+<src/gdata/*.ml{,i,y}>: pkg_str
+<src/gdata/*.ml{,i,y}>: pkg_xmlm
+<src/gdata/*.ml{,i,y}>: pkg_yojson
+<src/gdata/*.ml{,i,y}>: use_gapi-ocaml
 # Executable serviceGenerator
 "tools/serviceGenerator.byte": pkg_cryptokit
 "tools/serviceGenerator.byte": pkg_curl
@@ -46,14 +47,14 @@
 "tools/serviceGenerator.byte": pkg_str
 "tools/serviceGenerator.byte": pkg_yojson
 "tools/serviceGenerator.byte": use_gapi-ocaml
-<tools/*.ml{,i}>: pkg_cryptokit
-<tools/*.ml{,i}>: pkg_curl
-<tools/*.ml{,i}>: pkg_extlib
-<tools/*.ml{,i}>: pkg_monad-custom
-<tools/*.ml{,i}>: pkg_netstring
-<tools/*.ml{,i}>: pkg_str
-<tools/*.ml{,i}>: pkg_yojson
-<tools/*.ml{,i}>: use_gapi-ocaml
+<tools/*.ml{,i,y}>: pkg_cryptokit
+<tools/*.ml{,i,y}>: pkg_curl
+<tools/*.ml{,i,y}>: pkg_extlib
+<tools/*.ml{,i,y}>: pkg_monad-custom
+<tools/*.ml{,i,y}>: pkg_netstring
+<tools/*.ml{,i,y}>: pkg_str
+<tools/*.ml{,i,y}>: pkg_yojson
+<tools/*.ml{,i,y}>: use_gapi-ocaml
 # Executable oauth2Flow
 "examples/auth/oauth2Flow.byte": pkg_cryptokit
 "examples/auth/oauth2Flow.byte": pkg_curl
@@ -65,8 +66,8 @@
 "examples/auth/oauth2Flow.byte": pkg_yojson
 "examples/auth/oauth2Flow.byte": use_gapi-ocaml
 "examples/auth/oauth2Flow.byte": use_gdata
-<examples/auth/*.ml{,i}>: pkg_xmlm
-<examples/auth/*.ml{,i}>: use_gdata
+<examples/auth/*.ml{,i,y}>: pkg_xmlm
+<examples/auth/*.ml{,i,y}>: use_gdata
 # Executable oauth1Flow
 "examples/auth/oauth1Flow.byte": pkg_cryptokit
 "examples/auth/oauth1Flow.byte": pkg_curl
@@ -85,14 +86,14 @@
 "examples/auth/clientLoginFlow.byte": pkg_str
 "examples/auth/clientLoginFlow.byte": pkg_yojson
 "examples/auth/clientLoginFlow.byte": use_gapi-ocaml
-<examples/auth/*.ml{,i}>: pkg_cryptokit
-<examples/auth/*.ml{,i}>: pkg_curl
-<examples/auth/*.ml{,i}>: pkg_extlib
-<examples/auth/*.ml{,i}>: pkg_nethttpd
-<examples/auth/*.ml{,i}>: pkg_netstring
-<examples/auth/*.ml{,i}>: pkg_str
-<examples/auth/*.ml{,i}>: pkg_yojson
-<examples/auth/*.ml{,i}>: use_gapi-ocaml
+<examples/auth/*.ml{,i,y}>: pkg_cryptokit
+<examples/auth/*.ml{,i,y}>: pkg_curl
+<examples/auth/*.ml{,i,y}>: pkg_extlib
+<examples/auth/*.ml{,i,y}>: pkg_nethttpd
+<examples/auth/*.ml{,i,y}>: pkg_netstring
+<examples/auth/*.ml{,i,y}>: pkg_str
+<examples/auth/*.ml{,i,y}>: pkg_yojson
+<examples/auth/*.ml{,i,y}>: use_gapi-ocaml
 # Executable refreshOAuth2Token
 "src/test/refreshOAuth2Token.byte": pkg_cryptokit
 "src/test/refreshOAuth2Token.byte": pkg_curl
@@ -114,15 +115,15 @@
 "src/test/testSuite.byte": pkg_yojson
 "src/test/testSuite.byte": use_gapi-ocaml
 "src/test/testSuite.byte": use_gdata
-<src/test/*.ml{,i}>: pkg_cryptokit
-<src/test/*.ml{,i}>: pkg_curl
-<src/test/*.ml{,i}>: pkg_extlib
-<src/test/*.ml{,i}>: pkg_monad-custom
-<src/test/*.ml{,i}>: pkg_netstring
-<src/test/*.ml{,i}>: pkg_oUnit
-<src/test/*.ml{,i}>: pkg_str
-<src/test/*.ml{,i}>: pkg_xmlm
-<src/test/*.ml{,i}>: pkg_yojson
-<src/test/*.ml{,i}>: use_gapi-ocaml
-<src/test/*.ml{,i}>: use_gdata
+<src/test/*.ml{,i,y}>: pkg_cryptokit
+<src/test/*.ml{,i,y}>: pkg_curl
+<src/test/*.ml{,i,y}>: pkg_extlib
+<src/test/*.ml{,i,y}>: pkg_monad-custom
+<src/test/*.ml{,i,y}>: pkg_netstring
+<src/test/*.ml{,i,y}>: pkg_oUnit
+<src/test/*.ml{,i,y}>: pkg_str
+<src/test/*.ml{,i,y}>: pkg_xmlm
+<src/test/*.ml{,i,y}>: pkg_yojson
+<src/test/*.ml{,i,y}>: use_gapi-ocaml
+<src/test/*.ml{,i,y}>: use_gdata
 # OASIS_STOP

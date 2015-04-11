@@ -20,7 +20,7 @@ Description: gapi-ocaml is a simple, unofficial, OCaml client for
   Google+ API v1, Tasks API v1, APIs Discovery Service v1, URL Shortener
   API v1, OAuth2 API v2, Custom Search API v1, Google Analytics API v3,
   Page Speed Online API v1, Blogger API v2, Site Verification API v1,
-  AdSense Management API v1.1, BigQuery API v2, Drive API v2, Gmail API v1.
+  AdSense Management API v1.4, BigQuery API v2, Drive API v2, Gmail API v1.
   Google Data Protocol APIs (GData): Google Documents List API v3.
 
 # Flags
@@ -85,6 +85,8 @@ Library "gapi-ocaml"
     GapiSiteVerificationV1Service,
     GapiAdsenseV1_1Model,
     GapiAdsenseV1_1Service,
+    GapiAdsenseV1_4Model,
+    GapiAdsenseV1_4Service,
     GapiBigqueryV2Model,
     GapiBigqueryV2Service,
     GapiDriveV2Model,
