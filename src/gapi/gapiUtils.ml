@@ -20,7 +20,7 @@ let etag_option etag =
       "" -> None
     | v -> Some v
 
-let merge_query_string ?(encoded = true) parameters url =
+let merge_query_string parameters url =
   let neturl = Neturl.parse_url url in
   let fields =
     try
