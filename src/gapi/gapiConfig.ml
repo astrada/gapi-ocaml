@@ -63,6 +63,10 @@ type t = {
   compress : bool;
   auth : auth_config;
   upload_chunk_size : int;
+  max_send_speed : int64;
+  max_recv_speed : int64;
+  low_speed_limit : int;
+  low_speed_time : int;
 }
 
 let application_name = {
@@ -93,6 +97,22 @@ let upload_chunk_size = {
   GapiLens.get = (fun x -> x.upload_chunk_size);
   GapiLens.set = (fun v x -> { x with upload_chunk_size = v })
 }
+let max_send_speed = {
+  GapiLens.get = (fun x -> x.max_send_speed);
+  GapiLens.set = (fun v x -> { x with max_send_speed = v })
+}
+let max_recv_speed = {
+  GapiLens.get = (fun x -> x.max_recv_speed);
+  GapiLens.set = (fun v x -> { x with max_recv_speed = v })
+}
+let low_speed_limit = {
+  GapiLens.get = (fun x -> x.low_speed_limit);
+  GapiLens.set = (fun v x -> { x with low_speed_limit = v })
+}
+let low_speed_time = {
+  GapiLens.get = (fun x -> x.low_speed_time);
+  GapiLens.set = (fun v x -> { x with low_speed_time = v })
+}
 
 let default = {
   application_name = "gapi-ocaml";
@@ -102,6 +122,10 @@ let default = {
   compress = true;
   auth = NoAuth;
   upload_chunk_size = 10485760;
+  max_send_speed = 0L;
+  max_recv_speed = 0L;
+  low_speed_limit = 0;
+  low_speed_time = 0;
 }
 
 let default_debug = {
@@ -112,5 +136,9 @@ let default_debug = {
   compress = false;
   auth = NoAuth;
   upload_chunk_size = 10485760;
+  max_send_speed = 0L;
+  max_recv_speed = 0L;
+  low_speed_limit = 0;
+  low_speed_time = 0;
 }
 

@@ -43,6 +43,10 @@ let init
       ?connect_timeout
       ?(follow_location = false)
       ?(compress = false)
+      ?(max_send_speed = 0L)
+      ?(max_recv_speed = 0L)
+      ?(low_speed_limit = 0)
+      ?(low_speed_time = 0)
       ?options
       (state : [`Initialized] t) : [`Created] t =
   let error_buffer = ref "" in
@@ -70,6 +74,14 @@ let init
       | true ->
           Curl.set_encoding curl Curl.CURL_ENCODING_DEFLATE
     end;
+    if max_send_speed > 0L then
+      Curl.set_maxsendspeedlarge curl max_send_speed;
+    if max_recv_speed > 0L then
+      Curl.set_maxrecvspeedlarge curl max_recv_speed;
+    if low_speed_limit > 0 then
+      Curl.set_lowspeedlimit curl low_speed_limit;
+    if low_speed_time > 0 then
+      Curl.set_lowspeedtime curl low_speed_time;
     begin match options with
         None -> ()
       | Some option_list -> set_curl_options option_list curl

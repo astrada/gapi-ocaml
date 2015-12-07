@@ -244,11 +244,19 @@ let with_session
   let timeout = config.GapiConfig.timeout in
   let connect_timeout = config.GapiConfig.connect_timeout in
   let compress = config.GapiConfig.compress in
+  let max_recv_speed = config.GapiConfig.max_recv_speed in
+  let max_send_speed = config.GapiConfig.max_send_speed in
+  let low_speed_limit = config.GapiConfig.low_speed_limit in
+  let low_speed_time = config.GapiConfig.low_speed_time in
   let curl_session = GapiCurl.init
                        ?debug_function
                        ?timeout
                        ?connect_timeout
                        ~compress
+                       ~max_recv_speed
+                       ~max_send_speed
+                       ~low_speed_limit
+                       ~low_speed_time
                        curl_state in
   let cleanup () = ignore (GapiCurl.cleanup curl_session) in
   let session =

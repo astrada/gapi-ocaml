@@ -85,6 +85,14 @@ type t = {
   (** Authorization configuration. *)
   upload_chunk_size : int;
   (** Chunk default size (in bytes) used by resumable upload. Should be a multiple of 512KB. *)
+  max_send_speed : int64;
+  (** If an upload exceeds this speed (counted in bytes per second) on cumulative average during the transfer, the transfer will pause to keep the average rate less than or equal to the parameter value. Defaults to unlimited speed. *)
+  max_recv_speed : int64;
+  (** If a download exceeds this speed (counted in bytes per second) on cumulative average during the transfer, the transfer will pause to keep the average rate less than or equal to the parameter value. Defaults to unlimited speed. *)
+  low_speed_limit : int;
+  (** It contains the average transfer speed in bytes per second that the transfer should be below during [low_speed_time] seconds for libcurl to consider it to be too slow and abort. Defaults to 0 (disabled). *)
+  low_speed_time : int;
+  (** It contains the time in number seconds that the transfer speed should be below the [low_speed_limit] for the library to consider it too slow and abort. Defaults to 0 (disabled). *)
 }
 
 val application_name : (t, string) GapiLens.t
@@ -101,6 +109,14 @@ val auth : (t, auth_config) GapiLens.t
 (** Authorization configuration lens. *)
 val upload_chunk_size : (t, int) GapiLens.t
 (** Upload chunk size lens. *)
+val max_send_speed : (t, int64) GapiLens.t
+(** Max send speed lens. *)
+val max_recv_speed : (t, int64) GapiLens.t
+(** Max receive speed lens. *)
+val low_speed_limit : (t, int) GapiLens.t
+(** Low speed limit lens. *)
+val low_speed_time : (t, int) GapiLens.t
+(** Low speed time lens. *)
 
 val default : t
 (** Default configuration.
@@ -113,6 +129,10 @@ val default : t
   compress = true;
   auth = NoAuth;
   upload_chunk_size = 10485760; (* 10MB *)
+  max_send_speed = 0L;
+  max_recv_speed = 0L;
+  low_speed_limit = 0;
+  low_speed_time = 0;
  }]}
 
 *)
@@ -128,6 +148,10 @@ val default_debug : t
   compress = false;
   auth = NoAuth;
   upload_chunk_size = 10485760; (* 10MB *)
+  max_send_speed = 0L;
+  max_recv_speed = 0L;
+  low_speed_limit = 0;
+  low_speed_time = 0;
  }]}
 
 *)

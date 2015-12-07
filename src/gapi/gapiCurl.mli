@@ -17,6 +17,10 @@ val init :
   ?connect_timeout:int ->
   ?follow_location:bool ->
   ?compress:bool ->
+  ?max_send_speed:int64 ->
+  ?max_recv_speed:int64 ->
+  ?low_speed_limit:int ->
+  ?low_speed_time:int ->
   ?options:Curl.curlOption list ->
   [ `Initialized ] t ->
   [ `Created ] t
