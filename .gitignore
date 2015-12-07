@@ -8,4 +8,6 @@ generated/
 
 setup.data
 setup.log
+*.byte
+*.native
 
