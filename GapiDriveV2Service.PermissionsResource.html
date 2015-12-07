@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -123,11 +125,11 @@ Lists a file's permissions.<br>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
 
 <pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?transferOwnership:bool -><br>       fileId:string -><br>       permissionId:string -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Permission.html#TYPEt">GapiDriveV2Model.Permission.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Updates a permission. This method supports patch semantics.<br>
+Updates a permission using patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">transferOwnership</code> : Whether changing a role to 'owner' should also downgrade the current owners to writers.</div>
+<div class="param_info"><code class="code">transferOwnership</code> : Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
 <div class="param_info"><code class="code">permissionId</code> : The ID for the permission.</div>
 
@@ -136,7 +138,7 @@ Updates a permission.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">transferOwnership</code> : Whether changing a role to 'owner' should also downgrade the current owners to writers.</div>
+<div class="param_info"><code class="code">transferOwnership</code> : Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.</div>
 <div class="param_info"><code class="code">fileId</code> : The ID for the file.</div>
 <div class="param_info"><code class="code">permissionId</code> : The ID for the permission.</div>
 </body></html>

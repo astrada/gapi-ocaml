@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -88,70 +90,120 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.allowLargeResults">allowLargeResults</span>&nbsp;: <code class="type">bool</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.createDisposition">createDisposition</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.defaultDataset">defaultDataset</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.DatasetReference.html#TYPEt">GapiBigqueryV2Model.DatasetReference.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Specifies the default dataset to use for unqualified table names in the query.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Specifies the default dataset to use for unqualified table names in the query.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.destinationTable">destinationTable</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.TableReference.html#TYPEt">GapiBigqueryV2Model.TableReference.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Describes the table where the query results should be stored. If not present, a new table will be created to store the results.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.flattenResults">flattenResults</span>&nbsp;: <code class="type">bool</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Experimental</code> Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.preserveNulls">preserveNulls</span>&nbsp;: <code class="type">bool</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Deprecated</code> This property is deprecated.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Deprecated] This property is deprecated.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.priority">priority</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.query">query</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> BigQuery SQL query to execute.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Required] BigQuery SQL query to execute.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.tableDefinitions">tableDefinitions</span>&nbsp;: <code class="type">(string * <a href="GapiBigqueryV2Model.ExternalDataConfiguration.html#TYPEt">GapiBigqueryV2Model.ExternalDataConfiguration.t</a>) list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Experimental] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.useQueryCache">useQueryCache</span>&nbsp;: <code class="type">bool</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.userDefinedFunctionResources">userDefinedFunctionResources</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.UserDefinedFunctionResource.html#TYPEt">GapiBigqueryV2Model.UserDefinedFunctionResource.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Experimental] Describes user-defined function resources used in the query.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.writeDisposition">writeDisposition</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -165,7 +217,9 @@
 <pre><span id="VALpreserveNulls"><span class="keyword">val</span> preserveNulls</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALpriority"><span class="keyword">val</span> priority</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquery"><span class="keyword">val</span> query</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtableDefinitions"><span class="keyword">val</span> tableDefinitions</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>,<br>        (string * <a href="GapiBigqueryV2Model.ExternalDataConfiguration.html#TYPEt">GapiBigqueryV2Model.ExternalDataConfiguration.t</a>) list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALuseQueryCache"><span class="keyword">val</span> useQueryCache</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuserDefinedFunctionResources"><span class="keyword">val</span> userDefinedFunctionResources</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.UserDefinedFunctionResource.html#TYPEt">GapiBigqueryV2Model.UserDefinedFunctionResource.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALwriteDisposition"><span class="keyword">val</span> writeDisposition</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a></code></pre>
 <pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.JobConfigurationQuery.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>

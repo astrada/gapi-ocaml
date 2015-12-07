@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -92,54 +94,75 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.content">content</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is an article, this property contains a snippet of text from the article. It can also include descriptions for other types.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+If the attachment is an article, this property contains a snippet of text from the article. It can also include descriptions for other types.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.displayName">displayName</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The title of the attachment, such as a photo caption or an article title.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The title of the attachment, such as a photo caption or an article title.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.embed">embed</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Embed.html#TYPEt">Embed.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is a video, the embeddable link.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+If the attachment is a video, the embeddable link.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.fullImage">fullImage</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.FullImage.html#TYPEt">FullImage.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The full image URL for photo attachments.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The full image URL for photo attachments.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The ID of the attachment.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The ID of the attachment.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.image">image</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Image.html#TYPEt">Image.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The preview image for photos or videos.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The preview image for photos or videos.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.objectType">objectType</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The type of media object. Possible values include, but are not limited to, the following values:  <ul>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The type of media object. Possible values include, but are not limited to, the following values:  <ul>
 <li>"photo" - A photo. </li>
 <li>"album" - A photo album. </li>
 <li>"video" - A video. </li>
 <li>"article" - An article, specified by a link.</li>
 </ul>
+<br>
+</div>
 </td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
@@ -147,14 +170,20 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.thumbnails">thumbnails</span>&nbsp;: <code class="type"><a href="GapiPlusV1Model.Activity.Object.Attachments.Thumbnails.html#TYPEt">Thumbnails.t</a> list</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >If the attachment is an album, this property is a list of potential additional thumbnails from the album.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+If the attachment is an album, this property is a list of potential additional thumbnails from the album.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.url">url</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The link to the attachment, which should be of type text/html.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The link to the attachment, which should be of type text/html.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 

@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -108,7 +110,7 @@ Creates a new empty dataset.<br>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the new dataset</div>
 
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?all:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       projectId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.DatasetList.html#TYPEt">GapiBigqueryV2Model.DatasetList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Lists all the datasets in the specified project to which the caller has read access; however, a project owner can list (but not necessarily get) all datasets in his project.<br>
+Lists all datasets in the specified project to which you have been granted the READER dataset role.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>

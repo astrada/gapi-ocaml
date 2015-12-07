@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -82,6 +84,7 @@
 
 <pre><span class="keyword">module</span> Webproperty: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Webproperty.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Webproperty.Permissions.html">Permissions</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Webproperty.Permissions.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html">ParentLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Webproperty.ChildLink.html">ChildLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Webproperty.ChildLink.html">..</a> <code class="code">end</code></pre>
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
@@ -90,98 +93,160 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.accountId">accountId</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Account ID to which this web property belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Account ID to which this web property belongs.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.childLink">childLink</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.ChildLink.html#TYPEt">ChildLink.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Child link for this web property. Points to the list of views (profiles) for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Child link for this web property. Points to the list of views (profiles) for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.created">created</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this web property was created.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Time this web property was created.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.defaultProfileId">defaultProfileId</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Default view (profile) ID.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Web property ID of the form UA-XXXXX-YY.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Web property ID of the form UA-XXXXX-YY.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.industryVertical">industryVertical</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The industry vertical/category selected for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The industry vertical/category selected for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.internalWebPropertyId">internalWebPropertyId</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Internal ID for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Internal ID for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Resource type for Analytics WebProperty.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Resource type for Analytics WebProperty.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.level">level</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Level for this web property. Possible values are STANDARD or PREMIUM.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Level for this web property. Possible values are STANDARD or PREMIUM.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Name of this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Name of this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.parentLink">parentLink</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html#TYPEt">ParentLink.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Parent link for this web property. Points to the account to which this web property belongs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Parent link for this web property. Points to the account to which this web property belongs.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.permissions">permissions</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Webproperty.Permissions.html#TYPEt">Permissions.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Permissions the user has for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.profileCount">profileCount</span>&nbsp;: <code class="type">int</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >View (Profile) count for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+View (Profile) count for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Link for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time this web property was last modified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Time this web property was last modified.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.websiteUrl">websiteUrl</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Website url for this web property.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Website url for this web property.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -190,6 +255,7 @@
 <pre><span id="VALaccountId"><span class="keyword">val</span> accountId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALchildLink"><span class="keyword">val</span> childLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.ChildLink.html#TYPEt">ChildLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALcreated"><span class="keyword">val</span> created</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdefaultProfileId"><span class="keyword">val</span> defaultProfileId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALindustryVertical"><span class="keyword">val</span> industryVertical</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALinternalWebPropertyId"><span class="keyword">val</span> internalWebPropertyId</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
@@ -197,6 +263,7 @@
 <pre><span id="VALlevel"><span class="keyword">val</span> level</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALparentLink"><span class="keyword">val</span> parentLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.ParentLink.html#TYPEt">ParentLink.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpermissions"><span class="keyword">val</span> permissions</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.Webproperty.Permissions.html#TYPEt">Permissions.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALprofileCount"><span class="keyword">val</span> profileCount</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>

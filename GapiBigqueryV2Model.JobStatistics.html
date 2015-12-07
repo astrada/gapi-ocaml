@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -88,42 +90,70 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.creationTime">creationTime</span>&nbsp;: <code class="type">int64</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.endTime">endTime</span>&nbsp;: <code class="type">int64</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.extract">extract</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobStatistics4.html#TYPEt">GapiBigqueryV2Model.JobStatistics4.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Statistics for an extract job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.load">load</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobStatistics3.html#TYPEt">GapiBigqueryV2Model.JobStatistics3.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Statistics for a load job.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Statistics for a load job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.query">query</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">GapiBigqueryV2Model.JobStatistics2.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Statistics for a query job.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Statistics for a query job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.startTime">startTime</span>&nbsp;: <code class="type">int64</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.totalBytesProcessed">totalBytesProcessed</span>&nbsp;: <code class="type">int64</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> <code class="code">Deprecated</code> Use the bytes processed in the query statistics instead.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] [Deprecated] Use the bytes processed in the query statistics instead.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -131,6 +161,7 @@
 
 <pre><span id="VALcreationTime"><span class="keyword">val</span> creationTime</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALendTime"><span class="keyword">val</span> endTime</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALextract"><span class="keyword">val</span> extract</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.JobStatistics4.html#TYPEt">GapiBigqueryV2Model.JobStatistics4.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALload"><span class="keyword">val</span> load</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.JobStatistics3.html#TYPEt">GapiBigqueryV2Model.JobStatistics3.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquery"><span class="keyword">val</span> query</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">GapiBigqueryV2Model.JobStatistics2.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALstartTime"><span class="keyword">val</span> startTime</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>

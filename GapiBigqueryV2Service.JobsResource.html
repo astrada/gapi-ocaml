@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -84,8 +86,16 @@
 
 <pre><span class="keyword">module</span> <a href="GapiBigqueryV2Service.JobsResource.StateFilter.html">StateFilter</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.StateFilter.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiBigqueryV2Service.JobsResource.Projection.html">Projection</a>: <code class="code">sig</code> <a href="GapiBigqueryV2Service.JobsResource.Projection.html">..</a> <code class="code">end</code></pre>
+<pre><span id="VALcancel"><span class="keyword">val</span> cancel</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       jobId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.JobCancelResponse.html#TYPEt">GapiBigqueryV2Model.JobCancelResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">projectId</code> : Project ID of the job to cancel</div>
+<div class="param_info"><code class="code">jobId</code> : Job ID of the job to cancel</div>
+
 <pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       projectId:string -><br>       jobId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Retrieves the specified job by ID.<br>
+Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
@@ -101,19 +111,19 @@ Retrieves the results of a query job.<br>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of results to read</div>
 <div class="param_info"><code class="code">pageToken</code> : Page token, returned by a previous call, to request the next page of results</div>
 <div class="param_info"><code class="code">startIndex</code> : Zero-based index of the starting row</div>
-<div class="param_info"><code class="code">timeoutMs</code> : How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error</div>
+<div class="param_info"><code class="code">timeoutMs</code> : How long to wait for the query to complete, in milliseconds, before returning. Default is 10 seconds. If the timeout passes before the job completes, the 'jobComplete' field in the response will be false</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the query job</div>
 <div class="param_info"><code class="code">jobId</code> : Job ID of the query job</div>
 
 <pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       projectId:string -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.Job.html#TYPEt">GapiBigqueryV2Model.Job.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Starts a new asynchronous job.<br>
+Starts a new asynchronous job. Requires the Can View project role.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">projectId</code> : Project ID of the project that will be billed for the job</div>
 
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?allUsers:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?projection:<a href="GapiBigqueryV2Service.JobsResource.Projection.html#TYPEt">Projection.t</a> -><br>       ?stateFilter:<a href="GapiBigqueryV2Service.JobsResource.StateFilter.html#TYPEt">StateFilter.t</a> list -><br>       projectId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiBigqueryV2Model.JobList.html#TYPEt">GapiBigqueryV2Model.JobList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Lists all the Jobs in the specified project that were started by the user.<br>
+Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/bigquery/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>

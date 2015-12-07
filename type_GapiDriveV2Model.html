@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -292,6 +294,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exportFormats&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.<span class="constructor">ExportFormats</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;features&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.<span class="constructor">Features</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;folderColorPalette&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importFormats&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.<span class="constructor">ImportFormats</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isCurrentAppInstalled&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
@@ -325,6 +328,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;features&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.<span class="constructor">Features</span>.t&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;folderColorPalette&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;importFormats&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">About</span>.<span class="constructor">ImportFormats</span>.t&nbsp;list)<br>
@@ -668,58 +673,22 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">CommentList</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Property</span>&nbsp;:<br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">GeneratedIds</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visibility&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;key&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;value&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;visibility&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;ids&nbsp;:&nbsp;string&nbsp;list;&nbsp;kind&nbsp;:&nbsp;string;&nbsp;space&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ids&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;space&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
-&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ParentReference</span>&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRoot&nbsp;:&nbsp;bool;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parentLink&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;isRoot&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parentLink&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">GeneratedIds</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Permission</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
@@ -765,8 +734,79 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Permission</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ParentReference</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRoot&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parentLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;isRoot&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parentLink&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Property</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visibility&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;key&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;value&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;visibility&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_data_model&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">File</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">VideoMediaMetadata</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;durationMillis&nbsp;:&nbsp;int64;&nbsp;height&nbsp;:&nbsp;int;&nbsp;width&nbsp;:&nbsp;int;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;durationMillis&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;height&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;width&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Thumbnail</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;image&nbsp;:&nbsp;string;&nbsp;mimeType&nbsp;:&nbsp;string;&nbsp;}<br>
@@ -921,6 +961,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alternateLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appDataContents&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canComment&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copyable&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createdDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defaultOpenWithLink&nbsp;:&nbsp;string;<br>
@@ -933,6 +974,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exportLinks&nbsp;:&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileExtension&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileSize&nbsp;:&nbsp;int64;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;folderColorRgb&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fullFileExtension&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headRevisionId&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iconLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
@@ -950,6 +993,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifiedDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;openWithLinks&nbsp;:&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;originalFilename&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ownedByMe&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ownerNames&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;owners&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">User</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parents&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">ParentReference</span>.t&nbsp;list;<br>
@@ -957,20 +1001,24 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Property</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quotaBytesUsed&nbsp;:&nbsp;int64;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shareable&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shared&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sharedWithMeDate&nbsp;:&nbsp;<span class="constructor">GapiDate</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sharingUser&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">User</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spaces&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbnail&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">Thumbnail</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbnailLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;userPermission&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Permission</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;:&nbsp;int64;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;videoMediaMetadata&nbsp;:&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;webContentLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;webViewLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writersCanShare&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;alternateLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;appDataContents&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;canComment&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;copyable&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;createdDate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;defaultOpenWithLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -984,6 +1032,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fileExtension&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fileSize&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;folderColorRgb&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;fullFileExtension&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;headRevisionId&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;iconLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -1011,6 +1061,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;openWithLinks&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;originalFilename&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ownedByMe&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ownerNames&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;owners&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">User</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -1025,10 +1076,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;quotaBytesUsed&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;shareable&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;shared&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sharedWithMeDate&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDate</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sharingUser&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">User</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;spaces&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;thumbnail&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">Thumbnail</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -1037,6 +1090,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;userPermission&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">Permission</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;version&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;videoMediaMetadata&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.<span class="constructor">VideoMediaMetadata</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;webContentLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;webViewLink&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;writersCanShare&nbsp;:&nbsp;(<span class="constructor">GapiDriveV2Model</span>.<span class="constructor">File</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>

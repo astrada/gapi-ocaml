@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiAnalyticsV3Model.Goals.html">
-<link rel="next" href="GapiAnalyticsV3Model.McfData.html">
+<link rel="previous" href="GapiAnalyticsV3Model.Upload.html">
+<link rel="next" href="GapiAnalyticsV3Model.AccountTicket.html">
 <link rel="Up" href="GapiAnalyticsV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -74,14 +76,15 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Model.Account</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="GapiAnalyticsV3Model.Goals.html" title="GapiAnalyticsV3Model.Goals">Previous</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Model.Upload.html" title="GapiAnalyticsV3Model.Upload">Previous</a>
 &nbsp;<a class="up" href="GapiAnalyticsV3Model.html" title="GapiAnalyticsV3Model">Up</a>
-&nbsp;<a class="post" href="GapiAnalyticsV3Model.McfData.html" title="GapiAnalyticsV3Model.McfData">Next</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Model.AccountTicket.html" title="GapiAnalyticsV3Model.AccountTicket">Next</a>
 </div>
 <h1>Module <a href="type_GapiAnalyticsV3Model.Account.html">GapiAnalyticsV3Model.Account</a></h1>
 
 <pre><span class="keyword">module</span> Account: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Account.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Account.Permissions.html">Permissions</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Account.Permissions.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.Account.ChildLink.html">ChildLink</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.Account.ChildLink.html">..</a> <code class="code">end</code></pre>
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
@@ -89,49 +92,80 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.childLink">childLink</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Account.ChildLink.html#TYPEt">ChildLink.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Child link for an account entry. Points to the list of web properties for this account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Child link for an account entry. Points to the list of web properties for this account.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.created">created</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time the account was created.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Time the account was created.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Account ID.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Account ID.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Resource type for Analytics account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Resource type for Analytics account.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Account name.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Account name.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.permissions">permissions</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.Account.Permissions.html#TYPEt">Permissions.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Permissions the user has for this account.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link for this account.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Link for this account.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.updated">updated</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Time the account was last modified.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Time the account was last modified.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -142,6 +176,7 @@
 <pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpermissions"><span class="keyword">val</span> permissions</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.Account.Permissions.html#TYPEt">Permissions.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALupdated"><span class="keyword">val</span> updated</span> : <code class="type">(<a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiAnalyticsV3Model.Account.html#TYPEt">t</a></code></pre>

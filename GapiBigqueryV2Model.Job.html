@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBigqueryV2Model.QueryRequest.html">
-<link rel="next" href="GapiBigqueryV2Model.TableDataInsertAllRequest.html">
+<link rel="previous" href="GapiBigqueryV2Model.TableDataInsertAllResponse.html">
+<link rel="next" href="GapiBigqueryV2Model.JobCancelResponse.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -74,9 +76,9 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.Job</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.QueryRequest.html" title="GapiBigqueryV2Model.QueryRequest">Previous</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.TableDataInsertAllResponse.html" title="GapiBigqueryV2Model.TableDataInsertAllResponse">Previous</a>
 &nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
-&nbsp;<a class="post" href="GapiBigqueryV2Model.TableDataInsertAllRequest.html" title="GapiBigqueryV2Model.TableDataInsertAllRequest">Next</a>
+&nbsp;<a class="post" href="GapiBigqueryV2Model.JobCancelResponse.html" title="GapiBigqueryV2Model.JobCancelResponse">Next</a>
 </div>
 <h1>Module <a href="type_GapiBigqueryV2Model.Job.html">GapiBigqueryV2Model.Job</a></h1>
 
@@ -88,56 +90,90 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.configuration">configuration</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobConfiguration.html#TYPEt">GapiBigqueryV2Model.JobConfiguration.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Required</code> Describes the job configuration.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Required] Describes the job configuration.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.etag">etag</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> A hash of this resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] A hash of this resource.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Opaque ID field of the job</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Opaque ID field of the job<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.jobReference">jobReference</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobReference.html#TYPEt">GapiBigqueryV2Model.JobReference.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Optional</code> Reference describing the unique-per-user name of the job.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Optional] Reference describing the unique-per-user name of the job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> The type of the resource.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] The type of the resource.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> A URL that can be used to access this resource again.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] A URL that can be used to access this resource again.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.statistics">statistics</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">GapiBigqueryV2Model.JobStatistics.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Information about the job, including starting time and ending time of the job.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Information about the job, including starting time and ending time of the job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.status">status</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.JobStatus.html#TYPEt">GapiBigqueryV2Model.JobStatus.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> The status of this job. Examine this value when polling an asynchronous job to see if the job is complete.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] The status of this job. Examine this value when polling an asynchronous job to see if the job is complete.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.user_email">user_email</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Email address of the user who ran the job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -151,6 +187,7 @@
 <pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALstatistics"><span class="keyword">val</span> statistics</span> : <code class="type">(<a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.JobStatistics.html#TYPEt">GapiBigqueryV2Model.JobStatistics.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALstatus"><span class="keyword">val</span> status</span> : <code class="type">(<a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a>, <a href="GapiBigqueryV2Model.JobStatus.html#TYPEt">GapiBigqueryV2Model.JobStatus.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALuser_email"><span class="keyword">val</span> user_email</span> : <code class="type">(<a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a></code></pre>
 <pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
 <pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiBigqueryV2Model.Job.html#TYPEt">t</a></code></pre>

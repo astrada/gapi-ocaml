@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -70,6 +72,20 @@
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Verification</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;adHocVerified&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;adHocVerified&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Name</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;familyName&nbsp;:&nbsp;string;&nbsp;givenName&nbsp;:&nbsp;string;&nbsp;}<br>
@@ -97,13 +113,56 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Image</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Image</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ClientSpecificActorInfo</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">YoutubeActorInfo</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;channelId&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;channelId&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;youtubeActorInfo&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;youtubeActorInfo&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.<span class="constructor">YoutubeActorInfo</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;clientSpecificActorInfo&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;displayName&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Image</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Name</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verification&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;clientSpecificActorInfo&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">ClientSpecificActorInfo</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;displayName&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image&nbsp;:<br>
@@ -114,6 +173,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t,&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Name</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;url&nbsp;:&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;verification&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.<span class="constructor">Verification</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiPlusV1Model</span>.<span class="constructor">Activity</span>.<span class="constructor">Actor</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>

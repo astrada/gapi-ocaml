@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -82,9 +84,19 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">MessagePartBody</span>.t&nbsp;*&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">InternalDateSource</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Default</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">DateHeader</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">ReceivedTime</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Service</span>.<span class="constructor">UsersResource</span>.<span class="constructor">Messages</span>.<span class="constructor">InternalDateSource</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Service</span>.<span class="constructor">UsersResource</span>.<span class="constructor">Messages</span>.<span class="constructor">InternalDateSource</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Format</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Default</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Full</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Minimal</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;<span class="constructor">Default</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Full</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Metadata</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Minimal</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Raw</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_string&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Service</span>.<span class="constructor">UsersResource</span>.<span class="constructor">Messages</span>.<span class="constructor">Format</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_string&nbsp;:<br>
@@ -101,6 +113,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?etag:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?std_params:<span class="constructor">GapiService</span>.<span class="constructor">StandardParameters</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?format:<span class="constructor">GapiGmailV1Service</span>.<span class="constructor">UsersResource</span>.<span class="constructor">Messages</span>.<span class="constructor">Format</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?metadataHeaders:string&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;userId:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;id:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -109,6 +122,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?base_url:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?std_params:<span class="constructor">GapiService</span>.<span class="constructor">StandardParameters</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?media_source:<span class="constructor">GapiMediaResource</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?deleted:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?internalDateSource:<span class="constructor">GapiGmailV1Service</span>.<span class="constructor">UsersResource</span>.<span class="constructor">Messages</span>.<span class="constructor">InternalDateSource</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?neverMarkSpam:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?processForCalendar:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;userId:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Message</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
@@ -117,6 +134,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?base_url:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?std_params:<span class="constructor">GapiService</span>.<span class="constructor">StandardParameters</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?media_source:<span class="constructor">GapiMediaResource</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?deleted:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?internalDateSource:<span class="constructor">GapiGmailV1Service</span>.<span class="constructor">UsersResource</span>.<span class="constructor">Messages</span>.<span class="constructor">InternalDateSource</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;userId:string&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Message</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiConversation</span>.<span class="constructor">Session</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>

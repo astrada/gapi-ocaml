@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -106,12 +108,13 @@ Inserts a file into a folder.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">folderId</code> : The ID of the folder.</div>
 
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?q:string -><br>       folderId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.ChildList.html#TYPEt">GapiDriveV2Model.ChildList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?orderBy:string -><br>       ?pageToken:string -><br>       ?q:string -><br>       folderId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.ChildList.html#TYPEt">GapiDriveV2Model.ChildList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists a folder's children.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of children to return.</div>
+<div class="param_info"><code class="code">orderBy</code> : A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.</div>
 <div class="param_info"><code class="code">pageToken</code> : Page token for children.</div>
 <div class="param_info"><code class="code">q</code> : Query string for searching children.</div>
 <div class="param_info"><code class="code">folderId</code> : The ID of the folder.</div>

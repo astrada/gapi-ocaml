@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -72,6 +74,7 @@
 <code class="code"><span class="keyword">sig</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cacheHit&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;errors&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;jobComplete&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;jobReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">JobReference</span>.t;<br>
@@ -79,10 +82,15 @@
 &nbsp;&nbsp;&nbsp;&nbsp;pageToken&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableRow</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;totalBytesProcessed&nbsp;:&nbsp;int64;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;totalRows&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cacheHit&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;errors&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ErrorProto</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;jobComplete&nbsp;:<br>
@@ -103,6 +111,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalBytesProcessed&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalRows&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">GetQueryResultsResponse</span>.t<br>

@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="next" href="GapiAnalyticsV3Service.ManagementResource.Segments.html">
+<link rel="previous" href="GapiAnalyticsV3Service.ManagementResource.WebpropertyUserLinks.html">
+<link rel="next" href="GapiAnalyticsV3Service.ManagementResource.WebPropertyAdWordsLinks.html">
 <link rel="Up" href="GapiAnalyticsV3Service.ManagementResource.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -54,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -73,12 +76,29 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Service.ManagementResource.Webproperties</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a class="up" href="GapiAnalyticsV3Service.ManagementResource.html" title="GapiAnalyticsV3Service.ManagementResource">Up</a>
-&nbsp;<a class="post" href="GapiAnalyticsV3Service.ManagementResource.Segments.html" title="GapiAnalyticsV3Service.ManagementResource.Segments">Next</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Service.ManagementResource.WebpropertyUserLinks.html" title="GapiAnalyticsV3Service.ManagementResource.WebpropertyUserLinks">Previous</a>
+&nbsp;<a class="up" href="GapiAnalyticsV3Service.ManagementResource.html" title="GapiAnalyticsV3Service.ManagementResource">Up</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Service.ManagementResource.WebPropertyAdWordsLinks.html" title="GapiAnalyticsV3Service.ManagementResource.WebPropertyAdWordsLinks">Next</a>
 </div>
 <h1>Module <a href="type_GapiAnalyticsV3Service.ManagementResource.Webproperties.html">GapiAnalyticsV3Service.ManagementResource.Webproperties</a></h1>
 
 <pre><span class="keyword">module</span> Webproperties: <code class="code">sig</code> <a href="GapiAnalyticsV3Service.ManagementResource.Webproperties.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Gets a web property to which the user has access.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/analytics/v3/"</code>).</div>
+<div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">accountId</code> : Account ID to retrieve the web property for.</div>
+<div class="param_info"><code class="code">webPropertyId</code> : ID to retrieve the web property for.</div>
+
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Create a new property if the account has fewer than 20 properties. Web properties are visible in the Google Analytics interface only if they have at least one profile.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/analytics/v3/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">accountId</code> : Account ID to create the web property for.</div>
 
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?max_results:int -><br>       ?start_index:int -><br>       accountId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Webproperties.html#TYPEt">GapiAnalyticsV3Model.Webproperties.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists web properties to which the user has access.<br>
@@ -88,4 +108,20 @@ Lists web properties to which the user has access.<br>
 <div class="param_info"><code class="code">max_results</code> : The maximum number of web properties to include in this response.</div>
 <div class="param_info"><code class="code">start_index</code> : An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.</div>
 <div class="param_info"><code class="code">accountId</code> : Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.</div>
+
+<pre><span id="VALpatch"><span class="keyword">val</span> patch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Updates an existing web property. This method supports patch semantics.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/analytics/v3/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">accountId</code> : Account ID to which the web property belongs</div>
+<div class="param_info"><code class="code">webPropertyId</code> : Web property ID</div>
+
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       accountId:string -><br>       webPropertyId:string -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAnalyticsV3Model.Webproperty.html#TYPEt">GapiAnalyticsV3Model.Webproperty.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Updates an existing web property.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/analytics/v3/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">accountId</code> : Account ID to which the web property belongs</div>
+<div class="param_info"><code class="code">webPropertyId</code> : Web property ID</div>
 </body></html>

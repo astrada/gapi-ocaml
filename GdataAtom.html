@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -169,7 +171,7 @@ Defines basic ATOM data structures (e.g., feed, author, title).<br>
       and type link_t = Link.t
       and type extensions_t = Extensions.t</code></div></div></div></pre>
 <pre><span class="keyword">module</span> <a href="GdataAtom.BasicEntry.html">BasicEntry</a>: <code class="code">sig</code> <a href="GdataAtom.BasicEntry.html">..</a> <code class="code">end</code></pre>
-<pre><span class="keyword">module</span> <a href="GdataAtom.GenericExtensions.html">GenericExtensions</a>: <code class="type"><a href="GdataAtom.AtomData.html">AtomData</a></code><code class="type">  with type t = GdataCore.xml_data_model list</code></pre>
+<pre><span class="keyword">module</span> <a href="GdataAtom.GenericExtensions.html">GenericExtensions</a>: <code class="type"><a href="GdataAtom.AtomData.html">AtomData</a></code><code class="type">  with type t = <a href="GdataCore.html">GdataCore</a>.xml_data_model list</code></pre>
 <pre><span class="keyword">module type</span> <a href="GdataAtom.LinkRelation.html">LinkRelation</a> = <code class="code">sig</code> <a href="GdataAtom.LinkRelation.html">..</a> <code class="code">end</code></pre>
 <pre><span id="VALfind_url_generic"><span class="keyword">val</span> find_url_generic</span> : <code class="type">(module GdataAtom.LinkRelation with type t = 'a) -><br>       'a -> <a href="GdataAtom.Link.html#TYPEt">Link.t</a> list -> string</code></pre>
 <pre><span class="keyword">module</span> <a href="GdataAtom.Rel.html">Rel</a>: <code class="code">sig</code> <a href="GdataAtom.Rel.html">..</a> <code class="code">end</code></pre>

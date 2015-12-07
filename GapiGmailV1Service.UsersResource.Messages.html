@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -83,6 +85,7 @@
 <pre><span class="keyword">module</span> Messages: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Messages.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
 <pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Messages.Attachments.html">Attachments</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Messages.Attachments.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Messages.InternalDateSource.html">InternalDateSource</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Messages.InternalDateSource.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Messages.Format.html">Format</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Messages.Format.html">..</a> <code class="code">end</code></pre>
 <pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       id:string -> <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Immediately and permanently deletes the specified message. This operation cannot be undone. Prefer messages.trash instead.<br>
@@ -92,28 +95,35 @@ Immediately and permanently deletes the specified message. This operation cannot
 <div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
 <div class="param_info"><code class="code">id</code> : The ID of the message to delete.</div>
 
-<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?format:<a href="GapiGmailV1Service.UsersResource.Messages.Format.html#TYPEt">Format.t</a> -><br>       userId:string -><br>       id:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?format:<a href="GapiGmailV1Service.UsersResource.Messages.Format.html#TYPEt">Format.t</a> -><br>       ?metadataHeaders:string list -><br>       userId:string -><br>       id:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Gets the specified message.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/gmail/v1/users/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">format</code> : The format to return the message in.</div>
+<div class="param_info"><code class="code">metadataHeaders</code> : When given and format is METADATA, only include headers specified.</div>
 <div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
 <div class="param_info"><code class="code">id</code> : The ID of the message to retrieve.</div>
 
-<pre><span id="VALimport"><span class="keyword">val</span> import</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       userId:string -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Directly imports a message into only this user's mailbox, similar to receiving via SMTP. Does not send a message.<br>
+<pre><span id="VALimport"><span class="keyword">val</span> import</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       ?deleted:bool -><br>       ?internalDateSource:<a href="GapiGmailV1Service.UsersResource.Messages.InternalDateSource.html#TYPEt">InternalDateSource.t</a> -><br>       ?neverMarkSpam:bool -><br>       ?processForCalendar:bool -><br>       userId:string -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. Does not send a message.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/gmail/v1/users/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">deleted</code> : Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.</div>
+<div class="param_info"><code class="code">internalDateSource</code> : Source for Gmail's internal date of the message.</div>
+<div class="param_info"><code class="code">neverMarkSpam</code> : Ignore the Gmail spam classifier decision and never mark this email as SPAM in the mailbox.</div>
+<div class="param_info"><code class="code">processForCalendar</code> : Process calendar invites in the email and add any extracted meetings to the Google Calendar for this user.</div>
 <div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
 
-<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       userId:string -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Directly inserts a message into only this user's mailbox. Does not send a message.<br>
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_source:<a href="GapiMediaResource.html#TYPEt">GapiMediaResource.t</a> -><br>       ?deleted:bool -><br>       ?internalDateSource:<a href="GapiGmailV1Service.UsersResource.Messages.InternalDateSource.html#TYPEt">InternalDateSource.t</a> -><br>       userId:string -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Message.html#TYPEt">GapiGmailV1Model.Message.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Directly inserts a message into only this user's mailbox similar to IMAP APPEND, bypassing most scanning and classification. Does not send a message.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/gmail/v1/users/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">deleted</code> : Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.</div>
+<div class="param_info"><code class="code">internalDateSource</code> : Source for Gmail's internal date of the message.</div>
 <div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
 
 <pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeSpamTrash:bool -><br>       ?maxResults:int -><br>       ?labelIds:string list -><br>       ?pageToken:string -><br>       ?q:string -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.ListMessagesResponse.html#TYPEt">GapiGmailV1Model.ListMessagesResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">

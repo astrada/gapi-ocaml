@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -83,18 +85,18 @@
 <pre><span class="keyword">module</span> CalendarsResource: <code class="code">sig</code> <a href="GapiCalendarV3Service.CalendarsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
 <pre><span id="VALclear"><span class="keyword">val</span> clear</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.<br>
+Clears a primary calendar. This operation deletes all events associated with the primary calendar of an account.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
-Deletes a secondary calendar.<br>
+Deletes a secondary calendar. Use calendars.clear for clearing all events on primary calendars.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Returns metadata for a calendar.<br>
@@ -102,7 +104,7 @@ Returns metadata for a calendar.<br>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Creates a secondary calendar.<br>
@@ -115,12 +117,12 @@ Updates metadata for a calendar. This method supports patch semantics.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Calendar.html#TYPEt">GapiCalendarV3Model.Calendar.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates metadata for a calendar.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 </body></html>

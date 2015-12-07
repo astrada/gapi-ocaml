@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiBigqueryV2Model.JobStatistics3.html">
+<link rel="previous" href="GapiBigqueryV2Model.ExplainQueryStage.html">
 <link rel="next" href="GapiBigqueryV2Model.JobStatistics.html">
 <link rel="Up" href="GapiBigqueryV2Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -74,7 +76,7 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiBigqueryV2Model.JobStatistics2</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.JobStatistics3.html" title="GapiBigqueryV2Model.JobStatistics3">Previous</a>
+<div class="navbar"><a class="pre" href="GapiBigqueryV2Model.ExplainQueryStage.html" title="GapiBigqueryV2Model.ExplainQueryStage">Previous</a>
 &nbsp;<a class="up" href="GapiBigqueryV2Model.html" title="GapiBigqueryV2Model">Up</a>
 &nbsp;<a class="post" href="GapiBigqueryV2Model.JobStatistics.html" title="GapiBigqueryV2Model.JobStatistics">Next</a>
 </div>
@@ -87,21 +89,60 @@
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
+<code><span id="TYPEELTt.billingTier">billingTier</span>&nbsp;: <code class="type">int</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Billing tier for the job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
 <code><span id="TYPEELTt.cacheHit">cacheHit</span>&nbsp;: <code class="type">bool</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Whether the query result was fetched from the query cache.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Whether the query result was fetched from the query cache.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.queryPlan">queryPlan</span>&nbsp;: <code class="type"><a href="GapiBigqueryV2Model.ExplainQueryStage.html#TYPEt">GapiBigqueryV2Model.ExplainQueryStage.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only, Experimental] Describes execution plan for the query as a list of stages.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.totalBytesBilled">totalBytesBilled</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Total bytes billed for the job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.totalBytesProcessed">totalBytesProcessed</span>&nbsp;: <code class="type">int64</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><code class="code">Output-only</code> Total bytes processed for this job.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+[Output-only] Total bytes processed for the job.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
 
 
+<pre><span id="VALbillingTier"><span class="keyword">val</span> billingTier</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALcacheHit"><span class="keyword">val</span> cacheHit</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALqueryPlan"><span class="keyword">val</span> queryPlan</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a>,<br>        <a href="GapiBigqueryV2Model.ExplainQueryStage.html#TYPEt">GapiBigqueryV2Model.ExplainQueryStage.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtotalBytesBilled"><span class="keyword">val</span> totalBytesBilled</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALtotalBytesProcessed"><span class="keyword">val</span> totalBytesProcessed</span> : <code class="type">(<a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a></code></pre>
 <pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiBigqueryV2Model.JobStatistics2.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>

@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -79,6 +81,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ids&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max_results&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metrics&nbsp;:&nbsp;string&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;samplingLevel&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;segment&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sort&nbsp;:&nbsp;string&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start_date&nbsp;:&nbsp;string;<br>
@@ -92,6 +95,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;max_results&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;metrics&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;samplingLevel&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;segment&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sort&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t,&nbsp;string&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -135,6 +140,79 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">ProfileInfo</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">ProfileInfo</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">DataTable</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Rows</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">C</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;v&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;v&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t,&nbsp;string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;c&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.<span class="constructor">C</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">Cols</span>&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;id&nbsp;:&nbsp;string;&nbsp;label&nbsp;:&nbsp;string;&nbsp;_type&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;label&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;_type&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cols&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Cols</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.<span class="constructor">Rows</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">module</span>&nbsp;<span class="constructor">ColumnHeaders</span>&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">sig</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;columnType&nbsp;:&nbsp;string;&nbsp;dataType&nbsp;:&nbsp;string;&nbsp;name&nbsp;:&nbsp;string;&nbsp;}<br>
@@ -156,6 +234,7 @@
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;columnHeaders&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">ColumnHeaders</span>.t&nbsp;list;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;containsSampledData&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataTable&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;itemsPerPage&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
@@ -164,6 +243,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;profileInfo&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">ProfileInfo</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;:&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;string&nbsp;list&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sampleSize&nbsp;:&nbsp;int64;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sampleSpace&nbsp;:&nbsp;int64;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;totalResults&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;totalsForAllResults&nbsp;:&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list;<br>
@@ -173,6 +254,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">ColumnHeaders</span>.t&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;containsSampledData&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;dataTable&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">DataTable</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;itemsPerPage&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
@@ -186,6 +270,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.<span class="constructor">Query</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rows&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;string&nbsp;list&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sampleSize&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;sampleSpace&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalResults&nbsp;:&nbsp;(<span class="constructor">GapiAnalyticsV3Model</span>.<span class="constructor">GaData</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;totalsForAllResults&nbsp;:<br>

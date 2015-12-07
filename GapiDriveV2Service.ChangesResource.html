@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -90,7 +92,7 @@ Gets a specific change.<br>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">changeId</code> : The ID of the change.</div>
 
-<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.ChangeList.html#TYPEt">GapiDriveV2Model.ChangeList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+<pre><span id="VALlist"><span class="keyword">val</span> list</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?spaces:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.ChangeList.html#TYPEt">GapiDriveV2Model.ChangeList.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Lists the changes for a user.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -99,9 +101,10 @@ Lists the changes for a user.<br>
 <div class="param_info"><code class="code">includeSubscribed</code> : Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.</div>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of changes to return.</div>
 <div class="param_info"><code class="code">pageToken</code> : Page token for changes.</div>
+<div class="param_info"><code class="code">spaces</code> : A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.</div>
 <div class="param_info"><code class="code">startChangeId</code> : Change ID to start listing changes from.</div>
 
-<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?includeDeleted:bool -><br>       ?includeSubscribed:bool -><br>       ?maxResults:int -><br>       ?pageToken:string -><br>       ?spaces:string -><br>       ?startChangeId:int64 -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiDriveV2Model.Channel.html#TYPEt">GapiDriveV2Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Subscribe to changes for a user.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/drive/v2/"</code>).</div>
@@ -110,5 +113,6 @@ Subscribe to changes for a user.<br>
 <div class="param_info"><code class="code">includeSubscribed</code> : Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.</div>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of changes to return.</div>
 <div class="param_info"><code class="code">pageToken</code> : Page token for changes.</div>
+<div class="param_info"><code class="code">spaces</code> : A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.</div>
 <div class="param_info"><code class="code">startChangeId</code> : Change ID to start listing changes from.</div>
 </body></html>

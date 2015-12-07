@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -88,7 +90,7 @@ Deletes an entry on the user's calendar list.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type">?base_url:string -><br>       ?etag:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       calendarId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Returns an entry on the user's calendar list.<br>
@@ -96,7 +98,7 @@ Returns an entry on the user's calendar list.<br>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">etag</code> : Optional ETag.</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?colorRgbFormat:bool -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Adds an entry to the user's calendar list.<br>
@@ -111,7 +113,7 @@ Returns entries on the user's calendar list.<br>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</div>
-<div class="param_info"><code class="code">minAccessRole</code> : The minimum access role for the user in the returned entires. Optional. The default is no restriction.</div>
+<div class="param_info"><code class="code">minAccessRole</code> : The minimum access role for the user in the returned entries. Optional. The default is no restriction.</div>
 <div class="param_info"><code class="code">pageToken</code> : Token specifying which result page to return. Optional.</div>
 <div class="param_info"><code class="code">showDeleted</code> : Whether to include deleted calendar list entries in the result. Optional. The default is False.</div>
 <div class="param_info"><code class="code">showHidden</code> : Whether to show hidden entries. Optional. The default is False.</div>
@@ -127,7 +129,7 @@ Updates an entry on the user's calendar list. This method supports patch semanti
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?colorRgbFormat:bool -><br>       calendarId:string -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.CalendarListEntry.html#TYPEt">GapiCalendarV3Model.CalendarListEntry.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Updates an entry on the user's calendar list.<br>
@@ -135,7 +137,7 @@ Updates an entry on the user's calendar list.<br>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">colorRgbFormat</code> : Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.</div>
-<div class="param_info"><code class="code">calendarId</code> : Calendar identifier.</div>
+<div class="param_info"><code class="code">calendarId</code> : Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.</div>
 
 <pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?maxResults:int -><br>       ?minAccessRole:<a href="GapiCalendarV3Service.CalendarListResource.MinAccessRole.html#TYPEt">MinAccessRole.t</a> -><br>       ?pageToken:string -><br>       ?showDeleted:bool -><br>       ?showHidden:bool -><br>       ?syncToken:string -><br>       <a href="GapiCalendarV3Model.Channel.html#TYPEt">GapiCalendarV3Model.Channel.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiCalendarV3Model.Channel.html#TYPEt">GapiCalendarV3Model.Channel.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Watch for changes to CalendarList resources.<br>
@@ -143,7 +145,7 @@ Watch for changes to CalendarList resources.<br>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/calendar/v3/"</code>).</div>
 <div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
 <div class="param_info"><code class="code">maxResults</code> : Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.</div>
-<div class="param_info"><code class="code">minAccessRole</code> : The minimum access role for the user in the returned entires. Optional. The default is no restriction.</div>
+<div class="param_info"><code class="code">minAccessRole</code> : The minimum access role for the user in the returned entries. Optional. The default is no restriction.</div>
 <div class="param_info"><code class="code">pageToken</code> : Token specifying which result page to return. Optional.</div>
 <div class="param_info"><code class="code">showDeleted</code> : Whether to include deleted calendar list entries in the result. Optional. The default is False.</div>
 <div class="param_info"><code class="code">showHidden</code> : Whether to show hidden entries. Optional. The default is False.</div>

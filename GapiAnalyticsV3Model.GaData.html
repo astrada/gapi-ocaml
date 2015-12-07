@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link rel="Start" href="index.html">
-<link rel="previous" href="GapiAnalyticsV3Model.RealtimeData.html">
-<link rel="next" href="GapiAnalyticsV3Model.Accounts.html">
+<link rel="previous" href="GapiAnalyticsV3Model.FilterExpression.html">
+<link rel="next" href="GapiAnalyticsV3Model.ProfileFilterLinks.html">
 <link rel="Up" href="GapiAnalyticsV3Model.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -55,6 +55,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -74,9 +76,9 @@
 <link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiAnalyticsV3Model.GaData</title>
 </head>
 <body>
-<div class="navbar"><a class="pre" href="GapiAnalyticsV3Model.RealtimeData.html" title="GapiAnalyticsV3Model.RealtimeData">Previous</a>
+<div class="navbar"><a class="pre" href="GapiAnalyticsV3Model.FilterExpression.html" title="GapiAnalyticsV3Model.FilterExpression">Previous</a>
 &nbsp;<a class="up" href="GapiAnalyticsV3Model.html" title="GapiAnalyticsV3Model">Up</a>
-&nbsp;<a class="post" href="GapiAnalyticsV3Model.Accounts.html" title="GapiAnalyticsV3Model.Accounts">Next</a>
+&nbsp;<a class="post" href="GapiAnalyticsV3Model.ProfileFilterLinks.html" title="GapiAnalyticsV3Model.ProfileFilterLinks">Next</a>
 </div>
 <h1>Module <a href="type_GapiAnalyticsV3Model.GaData.html">GapiAnalyticsV3Model.GaData</a></h1>
 
@@ -84,6 +86,7 @@
 
 <pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.GaData.Query.html">Query</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.GaData.Query.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.GaData.ProfileInfo.html">ProfileInfo</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.GaData.ProfileInfo.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.GaData.DataTable.html">DataTable</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.GaData.DataTable.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiAnalyticsV3Model.GaData.ColumnHeaders.html">ColumnHeaders</a>: <code class="code">sig</code> <a href="GapiAnalyticsV3Model.GaData.ColumnHeaders.html">..</a> <code class="code">end</code></pre>
 <pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
 <tr>
@@ -91,91 +94,159 @@
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.columnHeaders">columnHeaders</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.GaData.ColumnHeaders.html#TYPEt">ColumnHeaders.t</a> list</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.containsSampledData">containsSampledData</span>&nbsp;: <code class="type">bool</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Determines if Analytics data contains samples.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Determines if Analytics data contains samples.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.dataTable">dataTable</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.GaData.DataTable.html#TYPEt">DataTable.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Unique ID for this data response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Unique ID for this data response.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.itemsPerPage">itemsPerPage</span>&nbsp;: <code class="type">int</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The maximum number of rows the response can contain, regardless of the actual number of rows returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The maximum number of rows the response can contain, regardless of the actual number of rows returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Resource type.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Resource type.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.nextLink">nextLink</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to next page for this Analytics data query.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Link to next page for this Analytics data query.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.previousLink">previousLink</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to previous page for this Analytics data query.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Link to previous page for this Analytics data query.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.profileInfo">profileInfo</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.GaData.ProfileInfo.html#TYPEt">ProfileInfo.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Information for the view (profile), for which the Analytics data was requested.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Information for the view (profile), for which the Analytics data was requested.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.query">query</span>&nbsp;: <code class="type"><a href="GapiAnalyticsV3Model.GaData.Query.html#TYPEt">Query.t</a></code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Analytics data request query parameters.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Analytics data request query parameters.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.rows">rows</span>&nbsp;: <code class="type">string list list</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.sampleSize">sampleSize</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The number of samples used to calculate the result.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.sampleSpace">sampleSpace</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Total size of the sample space from which the samples were selected.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.selfLink">selfLink</span>&nbsp;: <code class="type">string</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Link to this page.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Link to this page.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.totalResults">totalResults</span>&nbsp;: <code class="type">int</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The total number of rows for the query, regardless of the number of rows in the response.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The total number of rows for the query, regardless of the number of rows in the response.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
 <code><span id="TYPEELTt.totalsForAllResults">totalsForAllResults</span>&nbsp;: <code class="type">(string * string) list</code>;</code></td>
-<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
 </tr></table>
 }
 
@@ -183,6 +254,7 @@
 
 <pre><span id="VALcolumnHeaders"><span class="keyword">val</span> columnHeaders</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>,<br>        <a href="GapiAnalyticsV3Model.GaData.ColumnHeaders.html#TYPEt">ColumnHeaders.t</a> list)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALcontainsSampledData"><span class="keyword">val</span> containsSampledData</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdataTable"><span class="keyword">val</span> dataTable</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.GaData.DataTable.html#TYPEt">DataTable.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALitemsPerPage"><span class="keyword">val</span> itemsPerPage</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
@@ -191,6 +263,8 @@
 <pre><span id="VALprofileInfo"><span class="keyword">val</span> profileInfo</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.GaData.ProfileInfo.html#TYPEt">ProfileInfo.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALquery"><span class="keyword">val</span> query</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, <a href="GapiAnalyticsV3Model.GaData.Query.html#TYPEt">Query.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALrows"><span class="keyword">val</span> rows</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, string list list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsampleSize"><span class="keyword">val</span> sampleSize</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsampleSpace"><span class="keyword">val</span> sampleSpace</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALselfLink"><span class="keyword">val</span> selfLink</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALtotalResults"><span class="keyword">val</span> totalResults</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, int) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
 <pre><span id="VALtotalsForAllResults"><span class="keyword">val</span> totalsForAllResults</span> : <code class="type">(<a href="GapiAnalyticsV3Model.GaData.html#TYPEt">t</a>, (string * string) list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>

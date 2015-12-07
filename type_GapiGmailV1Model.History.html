@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -70,10 +72,30 @@
 </head>
 <body>
 <code class="code"><span class="keyword">sig</span><br>
-&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{&nbsp;id&nbsp;:&nbsp;string;&nbsp;messages&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Message</span>.t&nbsp;list;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;labelsAdded&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryLabelAdded</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;labelsRemoved&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryLabelRemoved</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messages&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Message</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messagesAdded&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryMessageAdded</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messagesDeleted&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryMessageDeleted</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;labelsAdded&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t,&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryLabelAdded</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;labelsRemoved&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t,&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryLabelRemoved</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;messages&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t,&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Message</span>.t&nbsp;list)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;messagesAdded&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t,&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryMessageAdded</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;messagesDeleted&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">HistoryMessageDeleted</span>.t&nbsp;list)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">History</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;parse&nbsp;:<br>

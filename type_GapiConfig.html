@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -85,9 +87,15 @@
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConfig</span>.oauth1_config,&nbsp;<span class="constructor">GapiCore</span>.<span class="constructor">SignatureMethod</span>.t)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;consumer_key&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth1_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;consumer_secret&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth1_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;oauth2_config&nbsp;=&nbsp;{&nbsp;client_id&nbsp;:&nbsp;string;&nbsp;client_secret&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;oauth2_config&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client_id&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client_secret&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;refresh_access_token&nbsp;:&nbsp;(unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string)&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;client_id&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth2_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;client_secret&nbsp;:&nbsp;(<span class="constructor">GapiConfig</span>.oauth2_config,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;refresh_access_token&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiConfig</span>.oauth2_config,&nbsp;(unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string)&nbsp;option)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;auth_config&nbsp;=<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">NoAuth</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">ClientLogin</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">GapiConfig</span>.client_login_config<br>

@@ -54,6 +54,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -84,4 +86,25 @@
 <pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Messages.html">Messages</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Messages.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Labels.html">Labels</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Labels.html">..</a> <code class="code">end</code></pre>
 <pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.History.html">History</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.History.html">..</a> <code class="code">end</code></pre>
-<pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Drafts.html">Drafts</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Drafts.html">..</a> <code class="code">end</code></pre></body></html>
+<pre><span class="keyword">module</span> <a href="GapiGmailV1Service.UsersResource.Drafts.html">Drafts</a>: <code class="code">sig</code> <a href="GapiGmailV1Service.UsersResource.Drafts.html">..</a> <code class="code">end</code></pre>
+<pre><span id="VALgetProfile"><span class="keyword">val</span> getProfile</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.Profile.html#TYPEt">GapiGmailV1Model.Profile.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Gets the current user's Gmail profile.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/gmail/v1/users/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
+
+<pre><span id="VALstop"><span class="keyword">val</span> stop</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -> unit * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Stop receiving push notifications for the given user mailbox.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/gmail/v1/users/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
+
+<pre><span id="VALwatch"><span class="keyword">val</span> watch</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       userId:string -><br>       <a href="GapiGmailV1Model.WatchRequest.html#TYPEt">GapiGmailV1Model.WatchRequest.t</a> -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiGmailV1Model.WatchResponse.html#TYPEt">GapiGmailV1Model.WatchResponse.t</a> * <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+Set up or update a push notification watch on the given user mailbox.<br>
+</div>
+<div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/gmail/v1/users/"</code>).</div>
+<div class="param_info"><code class="code">std_params</code> : Optional standard parameters.</div>
+<div class="param_info"><code class="code">userId</code> : The user's email address. The special value me can be used to indicate the authenticated user.</div>
+</body></html>

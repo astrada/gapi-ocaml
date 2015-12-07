@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -74,13 +76,21 @@
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;labelListVisibility&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;messageListVisibility&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messagesTotal&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messagesUnread&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;threadsTotal&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;threadsUnread&nbsp;:&nbsp;int;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;_type&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;labelListVisibility&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;messageListVisibility&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;messagesTotal&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;messagesUnread&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;name&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;threadsTotal&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;threadsUnread&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;int)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;_type&nbsp;:&nbsp;(<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:&nbsp;<span class="constructor">GapiGmailV1Model</span>.<span class="constructor">Label</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">GapiJson</span>.json_data_model&nbsp;list<br>

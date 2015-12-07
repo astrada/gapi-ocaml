@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -93,15 +95,24 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.<span class="constructor">Rows</span>.t<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">end</span><br>
 &nbsp;&nbsp;<span class="keyword">type</span>&nbsp;t&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ignoreUnknownValues&nbsp;:&nbsp;bool;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.<span class="constructor">Rows</span>.t&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;skipInvalidRows&nbsp;:&nbsp;bool;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;templateSuffix&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;ignoreUnknownValues&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;rows&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.<span class="constructor">Rows</span>.t&nbsp;list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;skipInvalidRows&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t,&nbsp;bool)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;templateSuffix&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;empty&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;render&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableDataInsertAllRequest</span>.t&nbsp;<span class="keywordsign">-&gt;</span><br>

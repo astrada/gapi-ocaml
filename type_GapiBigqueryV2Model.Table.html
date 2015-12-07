@@ -50,6 +50,8 @@
 <link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
 <link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
 <link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
 <link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
@@ -75,14 +77,18 @@
 &nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;etag&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;expirationTime&nbsp;:&nbsp;int64;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;externalDataConfiguration&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ExternalDataConfiguration</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;friendlyName&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kind&nbsp;:&nbsp;string;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;lastModifiedTime&nbsp;:&nbsp;int64;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lastModifiedTime&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numBytes&nbsp;:&nbsp;int64;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numRows&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;selfLink&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;streamingBuffer&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Streamingbuffer</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tableReference&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;_type&nbsp;:&nbsp;string;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;view&nbsp;:&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ViewDefinition</span>.t;<br>
@@ -91,16 +97,24 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;description&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;etag&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;expirationTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;externalDataConfiguration&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">ExternalDataConfiguration</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;friendlyName&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;id&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;kind&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lastModifiedTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lastModifiedTime&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;location&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;numBytes&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;int64)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;numRows&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;schema&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableSchema</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;selfLink&nbsp;:&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;string)&nbsp;<span class="constructor">GapiLens</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;streamingBuffer&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Streamingbuffer</span>.t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tableReference&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">Table</span>.t,&nbsp;<span class="constructor">GapiBigqueryV2Model</span>.<span class="constructor">TableReference</span>.t)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiLens</span>.t<br>
