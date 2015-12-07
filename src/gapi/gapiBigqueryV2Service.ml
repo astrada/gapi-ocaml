@@ -11,6 +11,8 @@ struct
   
   let cloud_platform = "https://www.googleapis.com/auth/cloud-platform"
   
+  let cloud_platform_read_only = "https://www.googleapis.com/auth/cloud-platform.read-only"
+  
   let devstorage_full_control = "https://www.googleapis.com/auth/devstorage.full_control"
   
   let devstorage_read_only = "https://www.googleapis.com/auth/devstorage.read_only"
@@ -330,6 +332,22 @@ struct
     
   end
   
+  let cancel
+        ?(base_url = "https://www.googleapis.com/bigquery/v2/")
+        ?std_params
+        ~projectId
+        ~jobId
+        session =
+    let full_url = GapiUtils.add_path_to_url ["project";
+      ((fun x -> x) projectId); "jobs"; ((fun x -> x) jobId); "cancel"]
+      base_url in
+    let params = JobsParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map JobsParameters.to_key_value_list params
+      in
+    GapiService.post ?query_parameters ~data:JobCancelResponse.empty full_url
+      (GapiJson.parse_json_response JobCancelResponse.of_data_model) session 
+    
   let get
         ?(base_url = "https://www.googleapis.com/bigquery/v2/")
         ?etag

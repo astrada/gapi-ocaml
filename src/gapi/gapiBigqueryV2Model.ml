@@ -1,39 +1,32 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
-module TableReference =
+module UserDefinedFunctionResource =
 struct
   type t = {
-    datasetId : string;
-    projectId : string;
-    tableId : string;
+    inlineCode : string;
+    resourceUri : string;
     
   }
   
-  let datasetId = {
-    GapiLens.get = (fun x -> x.datasetId);
-    GapiLens.set = (fun v x -> { x with datasetId = v });
+  let inlineCode = {
+    GapiLens.get = (fun x -> x.inlineCode);
+    GapiLens.set = (fun v x -> { x with inlineCode = v });
   }
-  let projectId = {
-    GapiLens.get = (fun x -> x.projectId);
-    GapiLens.set = (fun v x -> { x with projectId = v });
-  }
-  let tableId = {
-    GapiLens.get = (fun x -> x.tableId);
-    GapiLens.set = (fun v x -> { x with tableId = v });
+  let resourceUri = {
+    GapiLens.get = (fun x -> x.resourceUri);
+    GapiLens.set = (fun v x -> { x with resourceUri = v });
   }
   
   let empty = {
-    datasetId = "";
-    projectId = "";
-    tableId = "";
+    inlineCode = "";
+    resourceUri = "";
     
   }
   
   let rec render_content x = 
      [
-      GapiJson.render_string_value "datasetId" x.datasetId;
-      GapiJson.render_string_value "projectId" x.projectId;
-      GapiJson.render_string_value "tableId" x.tableId;
+      GapiJson.render_string_value "inlineCode" x.inlineCode;
+      GapiJson.render_string_value "resourceUri" x.resourceUri;
       
     ]
   and render x = 
@@ -41,77 +34,19 @@ struct
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "datasetId"; data_type = GapiJson.Scalar },
+        ({ GapiJson.name = "inlineCode"; data_type = GapiJson.Scalar },
         `String v) ->
-      { x with datasetId = v }
+      { x with inlineCode = v }
     | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "projectId"; data_type = GapiJson.Scalar },
+        ({ GapiJson.name = "resourceUri"; data_type = GapiJson.Scalar },
         `String v) ->
-      { x with projectId = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "tableId"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with tableId = v }
+      { x with resourceUri = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
-      GapiJson.unexpected "GapiBigqueryV2Model.TableReference.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
-module DatasetReference =
-struct
-  type t = {
-    datasetId : string;
-    projectId : string;
-    
-  }
-  
-  let datasetId = {
-    GapiLens.get = (fun x -> x.datasetId);
-    GapiLens.set = (fun v x -> { x with datasetId = v });
-  }
-  let projectId = {
-    GapiLens.get = (fun x -> x.projectId);
-    GapiLens.set = (fun v x -> { x with projectId = v });
-  }
-  
-  let empty = {
-    datasetId = "";
-    projectId = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      GapiJson.render_string_value "datasetId" x.datasetId;
-      GapiJson.render_string_value "projectId" x.projectId;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "datasetId"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with datasetId = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "projectId"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with projectId = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiBigqueryV2Model.DatasetReference.parse" e x
+      GapiJson.unexpected "GapiBigqueryV2Model.UserDefinedFunctionResource.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -498,6 +433,125 @@ struct
   
 end
 
+module DatasetReference =
+struct
+  type t = {
+    datasetId : string;
+    projectId : string;
+    
+  }
+  
+  let datasetId = {
+    GapiLens.get = (fun x -> x.datasetId);
+    GapiLens.set = (fun v x -> { x with datasetId = v });
+  }
+  let projectId = {
+    GapiLens.get = (fun x -> x.projectId);
+    GapiLens.set = (fun v x -> { x with projectId = v });
+  }
+  
+  let empty = {
+    datasetId = "";
+    projectId = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "datasetId" x.datasetId;
+      GapiJson.render_string_value "projectId" x.projectId;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "datasetId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with datasetId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "projectId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with projectId = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.DatasetReference.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module TableReference =
+struct
+  type t = {
+    datasetId : string;
+    projectId : string;
+    tableId : string;
+    
+  }
+  
+  let datasetId = {
+    GapiLens.get = (fun x -> x.datasetId);
+    GapiLens.set = (fun v x -> { x with datasetId = v });
+  }
+  let projectId = {
+    GapiLens.get = (fun x -> x.projectId);
+    GapiLens.set = (fun v x -> { x with projectId = v });
+  }
+  let tableId = {
+    GapiLens.get = (fun x -> x.tableId);
+    GapiLens.set = (fun v x -> { x with tableId = v });
+  }
+  
+  let empty = {
+    datasetId = "";
+    projectId = "";
+    tableId = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "datasetId" x.datasetId;
+      GapiJson.render_string_value "projectId" x.projectId;
+      GapiJson.render_string_value "tableId" x.tableId;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "datasetId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with datasetId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "projectId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with projectId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "tableId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with tableId = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.TableReference.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module JobConfigurationQuery =
 struct
   type t = {
@@ -511,6 +565,7 @@ struct
     query : string;
     tableDefinitions : (string * ExternalDataConfiguration.t) list;
     useQueryCache : bool;
+    userDefinedFunctionResources : UserDefinedFunctionResource.t list;
     writeDisposition : string;
     
   }
@@ -555,6 +610,10 @@ struct
     GapiLens.get = (fun x -> x.useQueryCache);
     GapiLens.set = (fun v x -> { x with useQueryCache = v });
   }
+  let userDefinedFunctionResources = {
+    GapiLens.get = (fun x -> x.userDefinedFunctionResources);
+    GapiLens.set = (fun v x -> { x with userDefinedFunctionResources = v });
+  }
   let writeDisposition = {
     GapiLens.get = (fun x -> x.writeDisposition);
     GapiLens.set = (fun v x -> { x with writeDisposition = v });
@@ -571,6 +630,7 @@ struct
     query = "";
     tableDefinitions = [];
     useQueryCache = false;
+    userDefinedFunctionResources = [];
     writeDisposition = "";
     
   }
@@ -587,6 +647,7 @@ struct
       GapiJson.render_string_value "query" x.query;
       GapiJson.render_collection "tableDefinitions" GapiJson.Object (fun (id, v) -> (fun v -> GapiJson.render_object id (ExternalDataConfiguration.render_content v)) v) x.tableDefinitions;
       GapiJson.render_bool_value "useQueryCache" x.useQueryCache;
+      GapiJson.render_array "userDefinedFunctionResources" UserDefinedFunctionResource.render x.userDefinedFunctionResources;
       GapiJson.render_string_value "writeDisposition" x.writeDisposition;
       
     ]
@@ -656,6 +717,24 @@ struct
         ({ GapiJson.name = "useQueryCache"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with useQueryCache = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "userDefinedFunctionResources"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              UserDefinedFunctionResource.parse
+              UserDefinedFunctionResource.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.JobConfigurationQuery.parse.parse_collection" e x')
+        UserDefinedFunctionResource.empty
+        (fun v -> { x with userDefinedFunctionResources = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "writeDisposition"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -961,17 +1040,317 @@ struct
   
 end
 
+module ExplainQueryStep =
+struct
+  type t = {
+    kind : string;
+    substeps : string list;
+    
+  }
+  
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let substeps = {
+    GapiLens.get = (fun x -> x.substeps);
+    GapiLens.set = (fun v x -> { x with substeps = v });
+  }
+  
+  let empty = {
+    kind = "";
+    substeps = [];
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_array "substeps" (GapiJson.render_string_value "") x.substeps;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "substeps"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              `String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.ExplainQueryStep.parse.parse_collection" e x')
+        ""
+        (fun v -> { x with substeps = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.ExplainQueryStep.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ExplainQueryStage =
+struct
+  type t = {
+    computeRatioAvg : float;
+    computeRatioMax : float;
+    id : int64;
+    name : string;
+    readRatioAvg : float;
+    readRatioMax : float;
+    recordsRead : int64;
+    recordsWritten : int64;
+    steps : ExplainQueryStep.t list;
+    waitRatioAvg : float;
+    waitRatioMax : float;
+    writeRatioAvg : float;
+    writeRatioMax : float;
+    
+  }
+  
+  let computeRatioAvg = {
+    GapiLens.get = (fun x -> x.computeRatioAvg);
+    GapiLens.set = (fun v x -> { x with computeRatioAvg = v });
+  }
+  let computeRatioMax = {
+    GapiLens.get = (fun x -> x.computeRatioMax);
+    GapiLens.set = (fun v x -> { x with computeRatioMax = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let name = {
+    GapiLens.get = (fun x -> x.name);
+    GapiLens.set = (fun v x -> { x with name = v });
+  }
+  let readRatioAvg = {
+    GapiLens.get = (fun x -> x.readRatioAvg);
+    GapiLens.set = (fun v x -> { x with readRatioAvg = v });
+  }
+  let readRatioMax = {
+    GapiLens.get = (fun x -> x.readRatioMax);
+    GapiLens.set = (fun v x -> { x with readRatioMax = v });
+  }
+  let recordsRead = {
+    GapiLens.get = (fun x -> x.recordsRead);
+    GapiLens.set = (fun v x -> { x with recordsRead = v });
+  }
+  let recordsWritten = {
+    GapiLens.get = (fun x -> x.recordsWritten);
+    GapiLens.set = (fun v x -> { x with recordsWritten = v });
+  }
+  let steps = {
+    GapiLens.get = (fun x -> x.steps);
+    GapiLens.set = (fun v x -> { x with steps = v });
+  }
+  let waitRatioAvg = {
+    GapiLens.get = (fun x -> x.waitRatioAvg);
+    GapiLens.set = (fun v x -> { x with waitRatioAvg = v });
+  }
+  let waitRatioMax = {
+    GapiLens.get = (fun x -> x.waitRatioMax);
+    GapiLens.set = (fun v x -> { x with waitRatioMax = v });
+  }
+  let writeRatioAvg = {
+    GapiLens.get = (fun x -> x.writeRatioAvg);
+    GapiLens.set = (fun v x -> { x with writeRatioAvg = v });
+  }
+  let writeRatioMax = {
+    GapiLens.get = (fun x -> x.writeRatioMax);
+    GapiLens.set = (fun v x -> { x with writeRatioMax = v });
+  }
+  
+  let empty = {
+    computeRatioAvg = 0.0;
+    computeRatioMax = 0.0;
+    id = 0L;
+    name = "";
+    readRatioAvg = 0.0;
+    readRatioMax = 0.0;
+    recordsRead = 0L;
+    recordsWritten = 0L;
+    steps = [];
+    waitRatioAvg = 0.0;
+    waitRatioMax = 0.0;
+    writeRatioAvg = 0.0;
+    writeRatioMax = 0.0;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_float_value "computeRatioAvg" x.computeRatioAvg;
+      GapiJson.render_float_value "computeRatioMax" x.computeRatioMax;
+      GapiJson.render_int64_value "id" x.id;
+      GapiJson.render_string_value "name" x.name;
+      GapiJson.render_float_value "readRatioAvg" x.readRatioAvg;
+      GapiJson.render_float_value "readRatioMax" x.readRatioMax;
+      GapiJson.render_int64_value "recordsRead" x.recordsRead;
+      GapiJson.render_int64_value "recordsWritten" x.recordsWritten;
+      GapiJson.render_array "steps" ExplainQueryStep.render x.steps;
+      GapiJson.render_float_value "waitRatioAvg" x.waitRatioAvg;
+      GapiJson.render_float_value "waitRatioMax" x.waitRatioMax;
+      GapiJson.render_float_value "writeRatioAvg" x.writeRatioAvg;
+      GapiJson.render_float_value "writeRatioMax" x.writeRatioMax;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "computeRatioAvg"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with computeRatioAvg = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "computeRatioAvg"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with computeRatioAvg = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "computeRatioMax"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with computeRatioMax = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "computeRatioMax"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with computeRatioMax = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with id = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with name = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "readRatioAvg"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with readRatioAvg = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "readRatioAvg"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with readRatioAvg = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "readRatioMax"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with readRatioMax = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "readRatioMax"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with readRatioMax = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "recordsRead"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with recordsRead = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "recordsWritten"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with recordsWritten = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "steps"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              ExplainQueryStep.parse
+              ExplainQueryStep.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.ExplainQueryStage.parse.parse_collection" e x')
+        ExplainQueryStep.empty
+        (fun v -> { x with steps = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "waitRatioAvg"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with waitRatioAvg = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "waitRatioAvg"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with waitRatioAvg = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "waitRatioMax"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with waitRatioMax = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "waitRatioMax"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with waitRatioMax = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "writeRatioAvg"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with writeRatioAvg = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "writeRatioAvg"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with writeRatioAvg = float_of_int v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "writeRatioMax"; data_type = GapiJson.Scalar },
+        `Float v) ->
+      { x with writeRatioMax = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "writeRatioMax"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with writeRatioMax = float_of_int v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.ExplainQueryStage.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module JobStatistics2 =
 struct
   type t = {
+    billingTier : int;
     cacheHit : bool;
+    queryPlan : ExplainQueryStage.t list;
+    totalBytesBilled : int64;
     totalBytesProcessed : int64;
     
   }
   
+  let billingTier = {
+    GapiLens.get = (fun x -> x.billingTier);
+    GapiLens.set = (fun v x -> { x with billingTier = v });
+  }
   let cacheHit = {
     GapiLens.get = (fun x -> x.cacheHit);
     GapiLens.set = (fun v x -> { x with cacheHit = v });
+  }
+  let queryPlan = {
+    GapiLens.get = (fun x -> x.queryPlan);
+    GapiLens.set = (fun v x -> { x with queryPlan = v });
+  }
+  let totalBytesBilled = {
+    GapiLens.get = (fun x -> x.totalBytesBilled);
+    GapiLens.set = (fun v x -> { x with totalBytesBilled = v });
   }
   let totalBytesProcessed = {
     GapiLens.get = (fun x -> x.totalBytesProcessed);
@@ -979,14 +1358,20 @@ struct
   }
   
   let empty = {
+    billingTier = 0;
     cacheHit = false;
+    queryPlan = [];
+    totalBytesBilled = 0L;
     totalBytesProcessed = 0L;
     
   }
   
   let rec render_content x = 
      [
+      GapiJson.render_int_value "billingTier" x.billingTier;
       GapiJson.render_bool_value "cacheHit" x.cacheHit;
+      GapiJson.render_array "queryPlan" ExplainQueryStage.render x.queryPlan;
+      GapiJson.render_int64_value "totalBytesBilled" x.totalBytesBilled;
       GapiJson.render_int64_value "totalBytesProcessed" x.totalBytesProcessed;
       
     ]
@@ -995,9 +1380,35 @@ struct
   
   let rec parse x = function
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "billingTier"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with billingTier = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "cacheHit"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with cacheHit = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "queryPlan"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              ExplainQueryStage.parse
+              ExplainQueryStage.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.JobStatistics2.parse.parse_collection" e x')
+        ExplainQueryStage.empty
+        (fun v -> { x with queryPlan = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "totalBytesBilled"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with totalBytesBilled = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "totalBytesProcessed"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1561,6 +1972,7 @@ module QueryResponse =
 struct
   type t = {
     cacheHit : bool;
+    errors : ErrorProto.t list;
     jobComplete : bool;
     jobReference : JobReference.t;
     kind : string;
@@ -1575,6 +1987,10 @@ struct
   let cacheHit = {
     GapiLens.get = (fun x -> x.cacheHit);
     GapiLens.set = (fun v x -> { x with cacheHit = v });
+  }
+  let errors = {
+    GapiLens.get = (fun x -> x.errors);
+    GapiLens.set = (fun v x -> { x with errors = v });
   }
   let jobComplete = {
     GapiLens.get = (fun x -> x.jobComplete);
@@ -1611,6 +2027,7 @@ struct
   
   let empty = {
     cacheHit = false;
+    errors = [];
     jobComplete = false;
     jobReference = JobReference.empty;
     kind = "";
@@ -1625,6 +2042,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_bool_value "cacheHit" x.cacheHit;
+      GapiJson.render_array "errors" ErrorProto.render x.errors;
       GapiJson.render_bool_value "jobComplete" x.jobComplete;
       (fun v -> GapiJson.render_object "jobReference" (JobReference.render_content v)) x.jobReference;
       GapiJson.render_string_value "kind" x.kind;
@@ -1643,6 +2061,24 @@ struct
         ({ GapiJson.name = "cacheHit"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with cacheHit = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "errors"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              ErrorProto.parse
+              ErrorProto.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.QueryResponse.parse.parse_collection" e x')
+        ErrorProto.empty
+        (fun v -> { x with errors = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "jobComplete"; data_type = GapiJson.Scalar },
         `Bool v) ->
@@ -1898,6 +2334,7 @@ module GetQueryResultsResponse =
 struct
   type t = {
     cacheHit : bool;
+    errors : ErrorProto.t list;
     etag : string;
     jobComplete : bool;
     jobReference : JobReference.t;
@@ -1913,6 +2350,10 @@ struct
   let cacheHit = {
     GapiLens.get = (fun x -> x.cacheHit);
     GapiLens.set = (fun v x -> { x with cacheHit = v });
+  }
+  let errors = {
+    GapiLens.get = (fun x -> x.errors);
+    GapiLens.set = (fun v x -> { x with errors = v });
   }
   let etag = {
     GapiLens.get = (fun x -> x.etag);
@@ -1953,6 +2394,7 @@ struct
   
   let empty = {
     cacheHit = false;
+    errors = [];
     etag = "";
     jobComplete = false;
     jobReference = JobReference.empty;
@@ -1968,6 +2410,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_bool_value "cacheHit" x.cacheHit;
+      GapiJson.render_array "errors" ErrorProto.render x.errors;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_bool_value "jobComplete" x.jobComplete;
       (fun v -> GapiJson.render_object "jobReference" (JobReference.render_content v)) x.jobReference;
@@ -1987,6 +2430,24 @@ struct
         ({ GapiJson.name = "cacheHit"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with cacheHit = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "errors"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              ErrorProto.parse
+              ErrorProto.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.GetQueryResultsResponse.parse.parse_collection" e x')
+        ErrorProto.empty
+        (fun v -> { x with errors = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -2780,7 +3241,6 @@ struct
     jobs : Jobs.t list;
     kind : string;
     nextPageToken : string;
-    totalItems : int;
     
   }
   
@@ -2800,17 +3260,12 @@ struct
     GapiLens.get = (fun x -> x.nextPageToken);
     GapiLens.set = (fun v x -> { x with nextPageToken = v });
   }
-  let totalItems = {
-    GapiLens.get = (fun x -> x.totalItems);
-    GapiLens.set = (fun v x -> { x with totalItems = v });
-  }
   
   let empty = {
     etag = "";
     jobs = [];
     kind = "";
     nextPageToken = "";
-    totalItems = 0;
     
   }
   
@@ -2820,7 +3275,6 @@ struct
       GapiJson.render_array "jobs" Jobs.render x.jobs;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
-      GapiJson.render_int_value "totalItems" x.totalItems;
       
     ]
   and render x = 
@@ -2853,10 +3307,6 @@ struct
         ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with nextPageToken = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "totalItems"; data_type = GapiJson.Scalar },
-        `Int v) ->
-      { x with totalItems = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -3169,6 +3619,7 @@ struct
     id : string;
     kind : string;
     lastModifiedTime : int64;
+    location : string;
     selfLink : string;
     
   }
@@ -3213,6 +3664,10 @@ struct
     GapiLens.get = (fun x -> x.lastModifiedTime);
     GapiLens.set = (fun v x -> { x with lastModifiedTime = v });
   }
+  let location = {
+    GapiLens.get = (fun x -> x.location);
+    GapiLens.set = (fun v x -> { x with location = v });
+  }
   let selfLink = {
     GapiLens.get = (fun x -> x.selfLink);
     GapiLens.set = (fun v x -> { x with selfLink = v });
@@ -3229,6 +3684,7 @@ struct
     id = "";
     kind = "";
     lastModifiedTime = 0L;
+    location = "";
     selfLink = "";
     
   }
@@ -3245,6 +3701,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_int64_value "lastModifiedTime" x.lastModifiedTime;
+      GapiJson.render_string_value "location" x.location;
       GapiJson.render_string_value "selfLink" x.selfLink;
       
     ]
@@ -3307,6 +3764,10 @@ struct
         `String v) ->
       { x with lastModifiedTime = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "location"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with location = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with selfLink = v }
@@ -3323,10 +3784,76 @@ struct
   
 end
 
+module Streamingbuffer =
+struct
+  type t = {
+    estimatedBytes : string;
+    estimatedRows : string;
+    oldestEntryTime : string;
+    
+  }
+  
+  let estimatedBytes = {
+    GapiLens.get = (fun x -> x.estimatedBytes);
+    GapiLens.set = (fun v x -> { x with estimatedBytes = v });
+  }
+  let estimatedRows = {
+    GapiLens.get = (fun x -> x.estimatedRows);
+    GapiLens.set = (fun v x -> { x with estimatedRows = v });
+  }
+  let oldestEntryTime = {
+    GapiLens.get = (fun x -> x.oldestEntryTime);
+    GapiLens.set = (fun v x -> { x with oldestEntryTime = v });
+  }
+  
+  let empty = {
+    estimatedBytes = "";
+    estimatedRows = "";
+    oldestEntryTime = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "estimatedBytes" x.estimatedBytes;
+      GapiJson.render_string_value "estimatedRows" x.estimatedRows;
+      GapiJson.render_string_value "oldestEntryTime" x.oldestEntryTime;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "estimatedBytes"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with estimatedBytes = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "estimatedRows"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with estimatedRows = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "oldestEntryTime"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with oldestEntryTime = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.Streamingbuffer.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module ViewDefinition =
 struct
   type t = {
     query : string;
+    userDefinedFunctionResources : UserDefinedFunctionResource.t list;
     
   }
   
@@ -3334,15 +3861,21 @@ struct
     GapiLens.get = (fun x -> x.query);
     GapiLens.set = (fun v x -> { x with query = v });
   }
+  let userDefinedFunctionResources = {
+    GapiLens.get = (fun x -> x.userDefinedFunctionResources);
+    GapiLens.set = (fun v x -> { x with userDefinedFunctionResources = v });
+  }
   
   let empty = {
     query = "";
+    userDefinedFunctionResources = [];
     
   }
   
   let rec render_content x = 
      [
       GapiJson.render_string_value "query" x.query;
+      GapiJson.render_array "userDefinedFunctionResources" UserDefinedFunctionResource.render x.userDefinedFunctionResources;
       
     ]
   and render x = 
@@ -3353,6 +3886,24 @@ struct
         ({ GapiJson.name = "query"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with query = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "userDefinedFunctionResources"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              UserDefinedFunctionResource.parse
+              UserDefinedFunctionResource.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiBigqueryV2Model.ViewDefinition.parse.parse_collection" e x')
+        UserDefinedFunctionResource.empty
+        (fun v -> { x with userDefinedFunctionResources = v })
+        cs
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -3373,14 +3924,17 @@ struct
     description : string;
     etag : string;
     expirationTime : int64;
+    externalDataConfiguration : ExternalDataConfiguration.t;
     friendlyName : string;
     id : string;
     kind : string;
     lastModifiedTime : string;
+    location : string;
     numBytes : int64;
     numRows : string;
     schema : TableSchema.t;
     selfLink : string;
+    streamingBuffer : Streamingbuffer.t;
     tableReference : TableReference.t;
     _type : string;
     view : ViewDefinition.t;
@@ -3403,6 +3957,10 @@ struct
     GapiLens.get = (fun x -> x.expirationTime);
     GapiLens.set = (fun v x -> { x with expirationTime = v });
   }
+  let externalDataConfiguration = {
+    GapiLens.get = (fun x -> x.externalDataConfiguration);
+    GapiLens.set = (fun v x -> { x with externalDataConfiguration = v });
+  }
   let friendlyName = {
     GapiLens.get = (fun x -> x.friendlyName);
     GapiLens.set = (fun v x -> { x with friendlyName = v });
@@ -3419,6 +3977,10 @@ struct
     GapiLens.get = (fun x -> x.lastModifiedTime);
     GapiLens.set = (fun v x -> { x with lastModifiedTime = v });
   }
+  let location = {
+    GapiLens.get = (fun x -> x.location);
+    GapiLens.set = (fun v x -> { x with location = v });
+  }
   let numBytes = {
     GapiLens.get = (fun x -> x.numBytes);
     GapiLens.set = (fun v x -> { x with numBytes = v });
@@ -3434,6 +3996,10 @@ struct
   let selfLink = {
     GapiLens.get = (fun x -> x.selfLink);
     GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  let streamingBuffer = {
+    GapiLens.get = (fun x -> x.streamingBuffer);
+    GapiLens.set = (fun v x -> { x with streamingBuffer = v });
   }
   let tableReference = {
     GapiLens.get = (fun x -> x.tableReference);
@@ -3453,14 +4019,17 @@ struct
     description = "";
     etag = "";
     expirationTime = 0L;
+    externalDataConfiguration = ExternalDataConfiguration.empty;
     friendlyName = "";
     id = "";
     kind = "";
     lastModifiedTime = "";
+    location = "";
     numBytes = 0L;
     numRows = "";
     schema = TableSchema.empty;
     selfLink = "";
+    streamingBuffer = Streamingbuffer.empty;
     tableReference = TableReference.empty;
     _type = "";
     view = ViewDefinition.empty;
@@ -3473,14 +4042,17 @@ struct
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_int64_value "expirationTime" x.expirationTime;
+      (fun v -> GapiJson.render_object "externalDataConfiguration" (ExternalDataConfiguration.render_content v)) x.externalDataConfiguration;
       GapiJson.render_string_value "friendlyName" x.friendlyName;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "lastModifiedTime" x.lastModifiedTime;
+      GapiJson.render_string_value "location" x.location;
       GapiJson.render_int64_value "numBytes" x.numBytes;
       GapiJson.render_string_value "numRows" x.numRows;
       (fun v -> GapiJson.render_object "schema" (TableSchema.render_content v)) x.schema;
       GapiJson.render_string_value "selfLink" x.selfLink;
+      (fun v -> GapiJson.render_object "streamingBuffer" (Streamingbuffer.render_content v)) x.streamingBuffer;
       (fun v -> GapiJson.render_object "tableReference" (TableReference.render_content v)) x.tableReference;
       GapiJson.render_string_value "type" x._type;
       (fun v -> GapiJson.render_object "view" (ViewDefinition.render_content v)) x.view;
@@ -3506,6 +4078,14 @@ struct
         ({ GapiJson.name = "expirationTime"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with expirationTime = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "externalDataConfiguration"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ExternalDataConfiguration.parse
+        ExternalDataConfiguration.empty
+        (fun v -> { x with externalDataConfiguration = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "friendlyName"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -3522,6 +4102,10 @@ struct
         ({ GapiJson.name = "lastModifiedTime"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with lastModifiedTime = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "location"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with location = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "numBytes"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -3542,6 +4126,14 @@ struct
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "streamingBuffer"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Streamingbuffer.parse
+        Streamingbuffer.empty
+        (fun v -> { x with streamingBuffer = v })
+        cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "tableReference"; data_type = GapiJson.Object },
         cs) ->
@@ -3700,6 +4292,211 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiBigqueryV2Model.TableDataInsertAllResponse.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module Job =
+struct
+  type t = {
+    configuration : JobConfiguration.t;
+    etag : string;
+    id : string;
+    jobReference : JobReference.t;
+    kind : string;
+    selfLink : string;
+    statistics : JobStatistics.t;
+    status : JobStatus.t;
+    user_email : string;
+    
+  }
+  
+  let configuration = {
+    GapiLens.get = (fun x -> x.configuration);
+    GapiLens.set = (fun v x -> { x with configuration = v });
+  }
+  let etag = {
+    GapiLens.get = (fun x -> x.etag);
+    GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let jobReference = {
+    GapiLens.get = (fun x -> x.jobReference);
+    GapiLens.set = (fun v x -> { x with jobReference = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let selfLink = {
+    GapiLens.get = (fun x -> x.selfLink);
+    GapiLens.set = (fun v x -> { x with selfLink = v });
+  }
+  let statistics = {
+    GapiLens.get = (fun x -> x.statistics);
+    GapiLens.set = (fun v x -> { x with statistics = v });
+  }
+  let status = {
+    GapiLens.get = (fun x -> x.status);
+    GapiLens.set = (fun v x -> { x with status = v });
+  }
+  let user_email = {
+    GapiLens.get = (fun x -> x.user_email);
+    GapiLens.set = (fun v x -> { x with user_email = v });
+  }
+  
+  let empty = {
+    configuration = JobConfiguration.empty;
+    etag = "";
+    id = "";
+    jobReference = JobReference.empty;
+    kind = "";
+    selfLink = "";
+    statistics = JobStatistics.empty;
+    status = JobStatus.empty;
+    user_email = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      (fun v -> GapiJson.render_object "configuration" (JobConfiguration.render_content v)) x.configuration;
+      GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_string_value "id" x.id;
+      (fun v -> GapiJson.render_object "jobReference" (JobReference.render_content v)) x.jobReference;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "selfLink" x.selfLink;
+      (fun v -> GapiJson.render_object "statistics" (JobStatistics.render_content v)) x.statistics;
+      (fun v -> GapiJson.render_object "status" (JobStatus.render_content v)) x.status;
+      GapiJson.render_string_value "user_email" x.user_email;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "configuration"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        JobConfiguration.parse
+        JobConfiguration.empty
+        (fun v -> { x with configuration = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with etag = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "jobReference"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        JobReference.parse
+        JobReference.empty
+        (fun v -> { x with jobReference = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with selfLink = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "statistics"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        JobStatistics.parse
+        JobStatistics.empty
+        (fun v -> { x with statistics = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "status"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        JobStatus.parse
+        JobStatus.empty
+        (fun v -> { x with status = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "user_email"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with user_email = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.Job.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module JobCancelResponse =
+struct
+  type t = {
+    job : Job.t;
+    kind : string;
+    
+  }
+  
+  let job = {
+    GapiLens.get = (fun x -> x.job);
+    GapiLens.set = (fun v x -> { x with job = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  
+  let empty = {
+    job = Job.empty;
+    kind = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      (fun v -> GapiJson.render_object "job" (Job.render_content v)) x.job;
+      GapiJson.render_string_value "kind" x.kind;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "job"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Job.parse
+        Job.empty
+        (fun v -> { x with job = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiBigqueryV2Model.JobCancelResponse.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -3997,153 +4794,6 @@ struct
   
 end
 
-module Job =
-struct
-  type t = {
-    configuration : JobConfiguration.t;
-    etag : string;
-    id : string;
-    jobReference : JobReference.t;
-    kind : string;
-    selfLink : string;
-    statistics : JobStatistics.t;
-    status : JobStatus.t;
-    user_email : string;
-    
-  }
-  
-  let configuration = {
-    GapiLens.get = (fun x -> x.configuration);
-    GapiLens.set = (fun v x -> { x with configuration = v });
-  }
-  let etag = {
-    GapiLens.get = (fun x -> x.etag);
-    GapiLens.set = (fun v x -> { x with etag = v });
-  }
-  let id = {
-    GapiLens.get = (fun x -> x.id);
-    GapiLens.set = (fun v x -> { x with id = v });
-  }
-  let jobReference = {
-    GapiLens.get = (fun x -> x.jobReference);
-    GapiLens.set = (fun v x -> { x with jobReference = v });
-  }
-  let kind = {
-    GapiLens.get = (fun x -> x.kind);
-    GapiLens.set = (fun v x -> { x with kind = v });
-  }
-  let selfLink = {
-    GapiLens.get = (fun x -> x.selfLink);
-    GapiLens.set = (fun v x -> { x with selfLink = v });
-  }
-  let statistics = {
-    GapiLens.get = (fun x -> x.statistics);
-    GapiLens.set = (fun v x -> { x with statistics = v });
-  }
-  let status = {
-    GapiLens.get = (fun x -> x.status);
-    GapiLens.set = (fun v x -> { x with status = v });
-  }
-  let user_email = {
-    GapiLens.get = (fun x -> x.user_email);
-    GapiLens.set = (fun v x -> { x with user_email = v });
-  }
-  
-  let empty = {
-    configuration = JobConfiguration.empty;
-    etag = "";
-    id = "";
-    jobReference = JobReference.empty;
-    kind = "";
-    selfLink = "";
-    statistics = JobStatistics.empty;
-    status = JobStatus.empty;
-    user_email = "";
-    
-  }
-  
-  let rec render_content x = 
-     [
-      (fun v -> GapiJson.render_object "configuration" (JobConfiguration.render_content v)) x.configuration;
-      GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_string_value "id" x.id;
-      (fun v -> GapiJson.render_object "jobReference" (JobReference.render_content v)) x.jobReference;
-      GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_string_value "selfLink" x.selfLink;
-      (fun v -> GapiJson.render_object "statistics" (JobStatistics.render_content v)) x.statistics;
-      (fun v -> GapiJson.render_object "status" (JobStatus.render_content v)) x.status;
-      GapiJson.render_string_value "user_email" x.user_email;
-      
-    ]
-  and render x = 
-    GapiJson.render_object "" (render_content x)
-  
-  let rec parse x = function
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "configuration"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        JobConfiguration.parse
-        JobConfiguration.empty
-        (fun v -> { x with configuration = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with etag = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with id = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "jobReference"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        JobReference.parse
-        JobReference.empty
-        (fun v -> { x with jobReference = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with kind = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with selfLink = v }
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "statistics"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        JobStatistics.parse
-        JobStatistics.empty
-        (fun v -> { x with statistics = v })
-        cs
-    | GapiCore.AnnotatedTree.Node
-        ({ GapiJson.name = "status"; data_type = GapiJson.Object },
-        cs) ->
-      GapiJson.parse_children
-        JobStatus.parse
-        JobStatus.empty
-        (fun v -> { x with status = v })
-        cs
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "user_email"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with user_email = v }
-    | GapiCore.AnnotatedTree.Node
-      ({ GapiJson.name = ""; data_type = GapiJson.Object },
-      cs) ->
-      GapiJson.parse_children parse empty (fun x -> x) cs
-    | e ->
-      GapiJson.unexpected "GapiBigqueryV2Model.Job.parse" e x
-  
-  let to_data_model = GapiJson.render_root render
-  
-  let of_data_model = GapiJson.parse_root parse empty
-  
-end
-
 module TableDataInsertAllRequest =
 struct
   module Rows =
@@ -4205,6 +4855,7 @@ struct
     kind : string;
     rows : Rows.t list;
     skipInvalidRows : bool;
+    templateSuffix : string;
     
   }
   
@@ -4224,12 +4875,17 @@ struct
     GapiLens.get = (fun x -> x.skipInvalidRows);
     GapiLens.set = (fun v x -> { x with skipInvalidRows = v });
   }
+  let templateSuffix = {
+    GapiLens.get = (fun x -> x.templateSuffix);
+    GapiLens.set = (fun v x -> { x with templateSuffix = v });
+  }
   
   let empty = {
     ignoreUnknownValues = false;
     kind = "";
     rows = [];
     skipInvalidRows = false;
+    templateSuffix = "";
     
   }
   
@@ -4239,6 +4895,7 @@ struct
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_array "rows" Rows.render x.rows;
       GapiJson.render_bool_value "skipInvalidRows" x.skipInvalidRows;
+      GapiJson.render_string_value "templateSuffix" x.templateSuffix;
       
     ]
   and render x = 
@@ -4271,6 +4928,10 @@ struct
         ({ GapiJson.name = "skipInvalidRows"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with skipInvalidRows = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "templateSuffix"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with templateSuffix = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->

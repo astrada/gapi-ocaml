@@ -1728,6 +1728,93 @@ struct
   
 end
 
+module EventAttachment =
+struct
+  type t = {
+    fileId : string;
+    fileUrl : string;
+    iconLink : string;
+    mimeType : string;
+    title : string;
+    
+  }
+  
+  let fileId = {
+    GapiLens.get = (fun x -> x.fileId);
+    GapiLens.set = (fun v x -> { x with fileId = v });
+  }
+  let fileUrl = {
+    GapiLens.get = (fun x -> x.fileUrl);
+    GapiLens.set = (fun v x -> { x with fileUrl = v });
+  }
+  let iconLink = {
+    GapiLens.get = (fun x -> x.iconLink);
+    GapiLens.set = (fun v x -> { x with iconLink = v });
+  }
+  let mimeType = {
+    GapiLens.get = (fun x -> x.mimeType);
+    GapiLens.set = (fun v x -> { x with mimeType = v });
+  }
+  let title = {
+    GapiLens.get = (fun x -> x.title);
+    GapiLens.set = (fun v x -> { x with title = v });
+  }
+  
+  let empty = {
+    fileId = "";
+    fileUrl = "";
+    iconLink = "";
+    mimeType = "";
+    title = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "fileId" x.fileId;
+      GapiJson.render_string_value "fileUrl" x.fileUrl;
+      GapiJson.render_string_value "iconLink" x.iconLink;
+      GapiJson.render_string_value "mimeType" x.mimeType;
+      GapiJson.render_string_value "title" x.title;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "fileId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with fileId = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "fileUrl"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with fileUrl = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "iconLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with iconLink = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "mimeType"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with mimeType = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "title"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with title = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.EventAttachment.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module Event =
 struct
   module Source =
@@ -2186,6 +2273,7 @@ struct
   
   type t = {
     anyoneCanAddSelf : bool;
+    attachments : EventAttachment.t list;
     attendees : EventAttendee.t list;
     attendeesOmitted : bool;
     colorId : string;
@@ -2227,6 +2315,10 @@ struct
   let anyoneCanAddSelf = {
     GapiLens.get = (fun x -> x.anyoneCanAddSelf);
     GapiLens.set = (fun v x -> { x with anyoneCanAddSelf = v });
+  }
+  let attachments = {
+    GapiLens.get = (fun x -> x.attachments);
+    GapiLens.set = (fun v x -> { x with attachments = v });
   }
   let attendees = {
     GapiLens.get = (fun x -> x.attendees);
@@ -2371,6 +2463,7 @@ struct
   
   let empty = {
     anyoneCanAddSelf = false;
+    attachments = [];
     attendees = [];
     attendeesOmitted = false;
     colorId = "";
@@ -2412,6 +2505,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_bool_value "anyoneCanAddSelf" x.anyoneCanAddSelf;
+      GapiJson.render_array "attachments" EventAttachment.render x.attachments;
       GapiJson.render_array "attendees" EventAttendee.render x.attendees;
       GapiJson.render_bool_value "attendeesOmitted" x.attendeesOmitted;
       GapiJson.render_string_value "colorId" x.colorId;
@@ -2457,6 +2551,24 @@ struct
         ({ GapiJson.name = "anyoneCanAddSelf"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with anyoneCanAddSelf = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "attachments"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              EventAttachment.parse
+              EventAttachment.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiCalendarV3Model.Event.parse.parse_collection" e x')
+        EventAttachment.empty
+        (fun v -> { x with attachments = v })
+        cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "attendees"; data_type = GapiJson.Array },
         cs) ->

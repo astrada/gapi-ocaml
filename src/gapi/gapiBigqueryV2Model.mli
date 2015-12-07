@@ -3,49 +3,21 @@
 (** Data definition for BigQuery API (v2).
   
   For more information about this data model, see the
-  {{:https://developers.google.com/bigquery/docs/overview}API Documentation}.
+  {{:https://cloud.google.com/bigquery/}API Documentation}.
   *)
 
-module TableReference :
+module UserDefinedFunctionResource :
 sig
   type t = {
-    datasetId : string;
-    (** [Required] The ID of the dataset containing this table. *)
-    projectId : string;
-    (** [Required] The ID of the project containing this table. *)
-    tableId : string;
-    (** [Required] The ID of the table. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
+    inlineCode : string;
+    (** [Pick one] An inline resource that contains code for a user-defined function (UDF). Providing a inline code resource is equivalent to providing a URI for a file containing the same code. *)
+    resourceUri : string;
+    (** [Pick one] A code resource to load from a Google Cloud Storage URI (gs://bucket/path). *)
     
   }
   
-  val datasetId : (t, string) GapiLens.t
-  val projectId : (t, string) GapiLens.t
-  val tableId : (t, string) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module DatasetReference :
-sig
-  type t = {
-    datasetId : string;
-    (** [Required] A unique ID for this dataset, without the project name. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
-    projectId : string;
-    (** [Optional] The ID of the project containing this dataset. *)
-    
-  }
-  
-  val datasetId : (t, string) GapiLens.t
-  val projectId : (t, string) GapiLens.t
+  val inlineCode : (t, string) GapiLens.t
+  val resourceUri : (t, string) GapiLens.t
   
   val empty : t
   
@@ -156,19 +128,19 @@ module ExternalDataConfiguration :
 sig
   type t = {
     compression : string;
-    (** [Optional] The compression type of the data source. Possible values include GZIP and NONE. The default value is NONE. *)
+    (** [Optional] The compression type of the data source. Possible values include GZIP and NONE. The default value is NONE. This setting is ignored for Google Cloud Datastore backups. *)
     csvOptions : CsvOptions.t;
     (** Additional properties to set if sourceFormat is set to CSV. *)
     ignoreUnknownValues : bool;
-    (** [Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns *)
+    (** [Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Datastore backups: This setting is ignored. *)
     maxBadRecords : int;
-    (** [Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. *)
+    (** [Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Datastore backups. *)
     schema : TableSchema.t;
-    (** [Required] The schema for the data. *)
+    (** [Optional] The schema for the data. Schema is required for CSV and JSON formats. Schema is disallowed for Google Cloud Datastore backups. *)
     sourceFormat : string;
-    (** [Optional] The data format. External data sources must be in CSV format. The default value is CSV. *)
+    (** [Required] The data format. For CSV files, specify "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Google Cloud Datastore backups, specify "DATASTORE_BACKUP". *)
     sourceUris : string list;
-    (** [Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. CSV limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs. *)
+    (** [Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs. For Google Cloud Datastore backups, exactly one URI can be specified, and it must end with '.backup_info'. Also, the '*' wildcard character is not allowed. *)
     
   }
   
@@ -179,6 +151,59 @@ sig
   val schema : (t, TableSchema.t) GapiLens.t
   val sourceFormat : (t, string) GapiLens.t
   val sourceUris : (t, string list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module DatasetReference :
+sig
+  type t = {
+    datasetId : string;
+    (** [Required] A unique ID for this dataset, without the project name. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
+    projectId : string;
+    (** [Optional] The ID of the project containing this dataset. *)
+    
+  }
+  
+  val datasetId : (t, string) GapiLens.t
+  val projectId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module TableReference :
+sig
+  type t = {
+    datasetId : string;
+    (** [Required] The ID of the dataset containing this table. *)
+    projectId : string;
+    (** [Required] The ID of the project containing this table. *)
+    tableId : string;
+    (** [Required] The ID of the table. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
+    
+  }
+  
+  val datasetId : (t, string) GapiLens.t
+  val projectId : (t, string) GapiLens.t
+  val tableId : (t, string) GapiLens.t
   
   val empty : t
   
@@ -204,7 +229,7 @@ sig
     destinationTable : TableReference.t;
     (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
     flattenResults : bool;
-    (** [Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false. *)
+    (** [Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false. *)
     preserveNulls : bool;
     (** [Deprecated] This property is deprecated. *)
     priority : string;
@@ -214,7 +239,9 @@ sig
     tableDefinitions : (string * ExternalDataConfiguration.t) list;
     (** [Experimental] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table. *)
     useQueryCache : bool;
-    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. *)
+    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true. *)
+    userDefinedFunctionResources : UserDefinedFunctionResource.t list;
+    (** [Experimental] Describes user-defined function resources used in the query. *)
     writeDisposition : string;
     (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
@@ -230,6 +257,7 @@ sig
   val query : (t, string) GapiLens.t
   val tableDefinitions : (t, (string * ExternalDataConfiguration.t) list) GapiLens.t
   val useQueryCache : (t, bool) GapiLens.t
+  val userDefinedFunctionResources : (t, UserDefinedFunctionResource.t list) GapiLens.t
   val writeDisposition : (t, string) GapiLens.t
   
   val empty : t
@@ -307,11 +335,11 @@ module JobStatistics3 :
 sig
   type t = {
     inputFileBytes : int64;
-    (** [Output-only] Number of bytes of source data in a joad job. *)
+    (** [Output-only] Number of bytes of source data in a load job. *)
     inputFiles : int64;
     (** [Output-only] Number of source files in a load job. *)
     outputBytes : int64;
-    (** [Output-only] Size of the loaded data in bytes. Note that while an import job is in the running state, this value may change. *)
+    (** [Output-only] Size of the loaded data in bytes. Note that while a load job is in the running state, this value may change. *)
     outputRows : int64;
     (** [Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change. *)
     
@@ -338,7 +366,7 @@ module JobStatistics4 :
 sig
   type t = {
     destinationUriFileCounts : int64 list;
-    (** [Experimental] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field. *)
+    (** [Output-only] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field. *)
     
   }
   
@@ -356,17 +384,109 @@ sig
   
 end
 
-module JobStatistics2 :
+module ExplainQueryStep :
 sig
   type t = {
-    cacheHit : bool;
-    (** [Output-only] Whether the query result was fetched from the query cache. *)
-    totalBytesProcessed : int64;
-    (** [Output-only] Total bytes processed for this job. *)
+    kind : string;
+    (** Machine-readable operation type. *)
+    substeps : string list;
+    (** Human-readable stage descriptions. *)
     
   }
   
+  val kind : (t, string) GapiLens.t
+  val substeps : (t, string list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ExplainQueryStage :
+sig
+  type t = {
+    computeRatioAvg : float;
+    (** Relative amount of time the average shard spent on CPU-bound tasks. *)
+    computeRatioMax : float;
+    (** Relative amount of time the slowest shard spent on CPU-bound tasks. *)
+    id : int64;
+    (** Unique ID for stage within plan. *)
+    name : string;
+    (** Human-readable name for stage. *)
+    readRatioAvg : float;
+    (** Relative amount of time the average shard spent reading input. *)
+    readRatioMax : float;
+    (** Relative amount of time the slowest shard spent reading input. *)
+    recordsRead : int64;
+    (** Number of records read into the stage. *)
+    recordsWritten : int64;
+    (** Number of records written by the stage. *)
+    steps : ExplainQueryStep.t list;
+    (** List of operations within the stage in dependency order (approximately chronological). *)
+    waitRatioAvg : float;
+    (** Relative amount of time the average shard spent waiting to be scheduled. *)
+    waitRatioMax : float;
+    (** Relative amount of time the slowest shard spent waiting to be scheduled. *)
+    writeRatioAvg : float;
+    (** Relative amount of time the average shard spent on writing output. *)
+    writeRatioMax : float;
+    (** Relative amount of time the slowest shard spent on writing output. *)
+    
+  }
+  
+  val computeRatioAvg : (t, float) GapiLens.t
+  val computeRatioMax : (t, float) GapiLens.t
+  val id : (t, int64) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val readRatioAvg : (t, float) GapiLens.t
+  val readRatioMax : (t, float) GapiLens.t
+  val recordsRead : (t, int64) GapiLens.t
+  val recordsWritten : (t, int64) GapiLens.t
+  val steps : (t, ExplainQueryStep.t list) GapiLens.t
+  val waitRatioAvg : (t, float) GapiLens.t
+  val waitRatioMax : (t, float) GapiLens.t
+  val writeRatioAvg : (t, float) GapiLens.t
+  val writeRatioMax : (t, float) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module JobStatistics2 :
+sig
+  type t = {
+    billingTier : int;
+    (** [Output-only] Billing tier for the job. *)
+    cacheHit : bool;
+    (** [Output-only] Whether the query result was fetched from the query cache. *)
+    queryPlan : ExplainQueryStage.t list;
+    (** [Output-only, Experimental] Describes execution plan for the query as a list of stages. *)
+    totalBytesBilled : int64;
+    (** [Output-only] Total bytes billed for the job. *)
+    totalBytesProcessed : int64;
+    (** [Output-only] Total bytes processed for the job. *)
+    
+  }
+  
+  val billingTier : (t, int) GapiLens.t
   val cacheHit : (t, bool) GapiLens.t
+  val queryPlan : (t, ExplainQueryStage.t list) GapiLens.t
+  val totalBytesBilled : (t, int64) GapiLens.t
   val totalBytesProcessed : (t, int64) GapiLens.t
   
   val empty : t
@@ -509,7 +629,7 @@ module TableRow :
 sig
   type t = {
     f : TableCell.t list;
-    (**  *)
+    (** Represents a single row in the result set, consisting of one or more fields. *)
     
   }
   
@@ -591,6 +711,8 @@ sig
   type t = {
     cacheHit : bool;
     (** Whether the query result was fetched from the query cache. *)
+    errors : ErrorProto.t list;
+    (** [Output-only] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
     jobComplete : bool;
     (** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. *)
     jobReference : JobReference.t;
@@ -611,6 +733,7 @@ sig
   }
   
   val cacheHit : (t, bool) GapiLens.t
+  val errors : (t, ErrorProto.t list) GapiLens.t
   val jobComplete : (t, bool) GapiLens.t
   val jobReference : (t, JobReference.t) GapiLens.t
   val kind : (t, string) GapiLens.t
@@ -701,6 +824,8 @@ sig
   type t = {
     cacheHit : bool;
     (** Whether the query result was fetched from the query cache. *)
+    errors : ErrorProto.t list;
+    (** [Output-only] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
     etag : string;
     (** A hash of this response. *)
     jobComplete : bool;
@@ -723,6 +848,7 @@ sig
   }
   
   val cacheHit : (t, bool) GapiLens.t
+  val errors : (t, ErrorProto.t list) GapiLens.t
   val etag : (t, string) GapiLens.t
   val jobComplete : (t, bool) GapiLens.t
   val jobReference : (t, JobReference.t) GapiLens.t
@@ -800,7 +926,7 @@ sig
     maxBadRecords : int;
     (** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. *)
     projectionFields : string list;
-    (** [Experimental] Names(case-sensitive) of properties to keep when importing data. If this is populated, only the specified properties will be imported for each entity. Currently, this is only supported for DATASTORE_BACKUP imports and only top level properties are supported. If any specified property is not found in the Datastore 'Kind' being imported, that is an error. Note: This feature is experimental and can change in the future. *)
+    (** [Experimental] If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result. *)
     quote : string;
     (** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
     schema : TableSchema.t;
@@ -816,7 +942,7 @@ sig
     sourceUris : string list;
     (** [Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_APPEND. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -974,8 +1100,6 @@ sig
     (** The resource type of the response. *)
     nextPageToken : string;
     (** A token to request the next page of results. *)
-    totalItems : int;
-    (** Total number of jobs in this collection. *)
     
   }
   
@@ -983,7 +1107,6 @@ sig
   val jobs : (t, Jobs.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
-  val totalItems : (t, int) GapiLens.t
   
   val empty : t
   
@@ -1117,6 +1240,8 @@ sig
     (** [Output-only] The resource type. *)
     lastModifiedTime : int64;
     (** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. *)
+    location : string;
+    (** [Experimental] The geographic location where the dataset should reside. Possible values include EU and US. The default value is US. *)
     selfLink : string;
     (** [Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource. *)
     
@@ -1132,7 +1257,36 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val lastModifiedTime : (t, int64) GapiLens.t
+  val location : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Streamingbuffer :
+sig
+  type t = {
+    estimatedBytes : string;
+    (** [Output-only] A lower-bound estimate of the number of bytes currently in the streaming buffer. *)
+    estimatedRows : string;
+    (** [Output-only] A lower-bound estimate of the number of rows currently in the streaming buffer. *)
+    oldestEntryTime : string;
+    (** [Output-only] Contains the timestamp of the oldest entry in the streaming buffer, in milliseconds since the epoch, if the streaming buffer is available. *)
+    
+  }
+  
+  val estimatedBytes : (t, string) GapiLens.t
+  val estimatedRows : (t, string) GapiLens.t
+  val oldestEntryTime : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1151,10 +1305,13 @@ sig
   type t = {
     query : string;
     (** [Required] A query that BigQuery executes when the view is referenced. *)
+    userDefinedFunctionResources : UserDefinedFunctionResource.t list;
+    (** [Experimental] Describes user-defined function resources used in the query. *)
     
   }
   
   val query : (t, string) GapiLens.t
+  val userDefinedFunctionResources : (t, UserDefinedFunctionResource.t list) GapiLens.t
   
   val empty : t
   
@@ -1179,6 +1336,8 @@ sig
     (** [Output-only] A hash of this resource. *)
     expirationTime : int64;
     (** [Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. *)
+    externalDataConfiguration : ExternalDataConfiguration.t;
+    (** [Experimental] Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table. *)
     friendlyName : string;
     (** [Optional] A descriptive name for this table. *)
     id : string;
@@ -1187,14 +1346,18 @@ sig
     (** [Output-only] The type of the resource. *)
     lastModifiedTime : string;
     (** [Output-only] The time when this table was last modified, in milliseconds since the epoch. *)
+    location : string;
+    (** [Output-only] The geographic location where the table resides. This value is inherited from the dataset. *)
     numBytes : int64;
-    (** [Output-only] The size of the table in bytes. This property is unavailable for tables that are actively receiving streaming inserts. *)
+    (** [Output-only] The size of this table in bytes, excluding any data in the streaming buffer. *)
     numRows : string;
-    (** [Output-only] The number of rows of data in this table. This property is unavailable for tables that are actively receiving streaming inserts. *)
+    (** [Output-only] The number of rows of data in this table, excluding any data in the streaming buffer. *)
     schema : TableSchema.t;
     (** [Optional] Describes the schema of this table. *)
     selfLink : string;
     (** [Output-only] A URL that can be used to access this resource again. *)
+    streamingBuffer : Streamingbuffer.t;
+    (** [Output-only] Contains information regarding this table's streaming buffer, if one is present. This field will be absent if the table is not being streamed to or if there is no data in the streaming buffer. *)
     tableReference : TableReference.t;
     (** [Required] Reference describing the ID of this table. *)
     _type : string;
@@ -1208,14 +1371,17 @@ sig
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val expirationTime : (t, int64) GapiLens.t
+  val externalDataConfiguration : (t, ExternalDataConfiguration.t) GapiLens.t
   val friendlyName : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val lastModifiedTime : (t, string) GapiLens.t
+  val location : (t, string) GapiLens.t
   val numBytes : (t, int64) GapiLens.t
   val numRows : (t, string) GapiLens.t
   val schema : (t, TableSchema.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val streamingBuffer : (t, Streamingbuffer.t) GapiLens.t
   val tableReference : (t, TableReference.t) GapiLens.t
   val _type : (t, string) GapiLens.t
   val view : (t, ViewDefinition.t) GapiLens.t
@@ -1264,6 +1430,77 @@ sig
   }
   
   val insertErrors : (t, InsertErrors.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Job :
+sig
+  type t = {
+    configuration : JobConfiguration.t;
+    (** [Required] Describes the job configuration. *)
+    etag : string;
+    (** [Output-only] A hash of this resource. *)
+    id : string;
+    (** [Output-only] Opaque ID field of the job *)
+    jobReference : JobReference.t;
+    (** [Optional] Reference describing the unique-per-user name of the job. *)
+    kind : string;
+    (** [Output-only] The type of the resource. *)
+    selfLink : string;
+    (** [Output-only] A URL that can be used to access this resource again. *)
+    statistics : JobStatistics.t;
+    (** [Output-only] Information about the job, including starting time and ending time of the job. *)
+    status : JobStatus.t;
+    (** [Output-only] The status of this job. Examine this value when polling an asynchronous job to see if the job is complete. *)
+    user_email : string;
+    (** [Output-only] Email address of the user who ran the job. *)
+    
+  }
+  
+  val configuration : (t, JobConfiguration.t) GapiLens.t
+  val etag : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val jobReference : (t, JobReference.t) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val selfLink : (t, string) GapiLens.t
+  val statistics : (t, JobStatistics.t) GapiLens.t
+  val status : (t, JobStatus.t) GapiLens.t
+  val user_email : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module JobCancelResponse :
+sig
+  type t = {
+    job : Job.t;
+    (** The final state of the job. *)
+    kind : string;
+    (** The resource type of the response. *)
+    
+  }
+  
+  val job : (t, Job.t) GapiLens.t
   val kind : (t, string) GapiLens.t
   
   val empty : t
@@ -1342,7 +1579,7 @@ sig
     defaultDataset : DatasetReference.t;
     (** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'. *)
     dryRun : bool;
-    (** [Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run. *)
+    (** [Optional] If set to true, BigQuery doesn't run the job. Instead, if the query is valid, BigQuery returns statistics about the job such as how many bytes would be processed. If the query is invalid, an error returns. The default value is false. *)
     kind : string;
     (** The resource type of the request. *)
     maxResults : int;
@@ -1366,52 +1603,6 @@ sig
   val query : (t, string) GapiLens.t
   val timeoutMs : (t, int) GapiLens.t
   val useQueryCache : (t, bool) GapiLens.t
-  
-  val empty : t
-  
-  val render : t -> GapiJson.json_data_model list
-  
-  val parse : t -> GapiJson.json_data_model -> t
-  
-  val to_data_model : t -> GapiJson.json_data_model
-  
-  val of_data_model : GapiJson.json_data_model -> t
-  
-end
-
-module Job :
-sig
-  type t = {
-    configuration : JobConfiguration.t;
-    (** [Required] Describes the job configuration. *)
-    etag : string;
-    (** [Output-only] A hash of this resource. *)
-    id : string;
-    (** [Output-only] Opaque ID field of the job *)
-    jobReference : JobReference.t;
-    (** [Optional] Reference describing the unique-per-user name of the job. *)
-    kind : string;
-    (** [Output-only] The type of the resource. *)
-    selfLink : string;
-    (** [Output-only] A URL that can be used to access this resource again. *)
-    statistics : JobStatistics.t;
-    (** [Output-only] Information about the job, including starting time and ending time of the job. *)
-    status : JobStatus.t;
-    (** [Output-only] The status of this job. Examine this value when polling an asynchronous job to see if the job is complete. *)
-    user_email : string;
-    (** [Output-only] Email address of the user who ran the job. *)
-    
-  }
-  
-  val configuration : (t, JobConfiguration.t) GapiLens.t
-  val etag : (t, string) GapiLens.t
-  val id : (t, string) GapiLens.t
-  val jobReference : (t, JobReference.t) GapiLens.t
-  val kind : (t, string) GapiLens.t
-  val selfLink : (t, string) GapiLens.t
-  val statistics : (t, JobStatistics.t) GapiLens.t
-  val status : (t, JobStatus.t) GapiLens.t
-  val user_email : (t, string) GapiLens.t
   
   val empty : t
   
@@ -1457,6 +1648,8 @@ sig
     (** The rows to insert. *)
     skipInvalidRows : bool;
     (** [Optional] Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. *)
+    templateSuffix : string;
+    (** [Experimental] If specified, treats the destination table as a base template, and inserts the rows into an instance table named "". BigQuery will manage creation of the instance table, using the schema of the base template table. *)
     
   }
   
@@ -1464,6 +1657,7 @@ sig
   val kind : (t, string) GapiLens.t
   val rows : (t, Rows.t list) GapiLens.t
   val skipInvalidRows : (t, bool) GapiLens.t
+  val templateSuffix : (t, string) GapiLens.t
   
   val empty : t
   

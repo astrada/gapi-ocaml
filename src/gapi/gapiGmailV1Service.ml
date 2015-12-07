@@ -17,6 +17,8 @@ struct
   
   let gmail_readonly = "https://www.googleapis.com/auth/gmail.readonly"
   
+  let gmail_send = "https://www.googleapis.com/auth/gmail.send"
+  
   
 end
 
@@ -1002,6 +1004,37 @@ struct
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Profile.of_data_model) session 
+    
+  let stop
+        ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+        ?std_params
+        ~userId
+        session =
+    let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId); "stop"]
+      base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.post ?query_parameters ~data:() full_url
+      GapiRequest.parse_empty_response session 
+    
+  let watch
+        ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+        ?std_params
+        ~userId
+        watchRequest
+        session =
+    let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId); "watch"]
+      base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json WatchRequest.to_data_model)
+      ~data:watchRequest full_url
+      (GapiJson.parse_json_response WatchResponse.of_data_model) session 
     
   
 end

@@ -434,20 +434,6 @@ struct
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response MomentsFeed.of_data_model) session 
     
-  let remove
-        ?(base_url = "https://www.googleapis.com/plus/v1/")
-        ?std_params
-        ~id
-        session =
-    let full_url = GapiUtils.add_path_to_url ["moments"; ((fun x -> x) id)]
-      base_url in
-    let params = MomentsParameters.merge_parameters
-      ?standard_parameters:std_params () in
-    let query_parameters = Option.map MomentsParameters.to_key_value_list
-      params in
-    GapiService.delete ?query_parameters full_url
-      GapiRequest.parse_empty_response session 
-    
   
 end
 

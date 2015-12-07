@@ -221,19 +221,6 @@ sig
     GapiConversation.Session.t ->
     GapiPlusV1Model.MomentsFeed.t * GapiConversation.Session.t
   
-  (** Delete a moment.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
-    @param std_params Optional standard parameters.
-    @param id The ID of the moment to delete.
-    *)
-  val remove :
-    ?base_url:string ->
-    ?std_params:GapiService.StandardParameters.t ->
-    id:string ->
-    GapiConversation.Session.t ->
-    unit * GapiConversation.Session.t
-  
   
 end
 

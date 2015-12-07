@@ -1596,6 +1596,7 @@ struct
     discoveryVersion : string;
     documentationLink : string;
     etag : string;
+    exponentialBackoffDefault : bool;
     features : string list;
     icons : Icons.t;
     id : string;
@@ -1615,6 +1616,7 @@ struct
     servicePath : string;
     title : string;
     version : string;
+    version_module : bool;
     
   }
   
@@ -1653,6 +1655,10 @@ struct
   let etag = {
     GapiLens.get = (fun x -> x.etag);
     GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let exponentialBackoffDefault = {
+    GapiLens.get = (fun x -> x.exponentialBackoffDefault);
+    GapiLens.set = (fun v x -> { x with exponentialBackoffDefault = v });
   }
   let features = {
     GapiLens.get = (fun x -> x.features);
@@ -1730,6 +1736,10 @@ struct
     GapiLens.get = (fun x -> x.version);
     GapiLens.set = (fun v x -> { x with version = v });
   }
+  let version_module = {
+    GapiLens.get = (fun x -> x.version_module);
+    GapiLens.set = (fun v x -> { x with version_module = v });
+  }
   
   let empty = {
     auth = Auth.empty;
@@ -1741,6 +1751,7 @@ struct
     discoveryVersion = "";
     documentationLink = "";
     etag = "";
+    exponentialBackoffDefault = false;
     features = [];
     icons = Icons.empty;
     id = "";
@@ -1760,6 +1771,7 @@ struct
     servicePath = "";
     title = "";
     version = "";
+    version_module = false;
     
   }
   
@@ -1774,6 +1786,7 @@ struct
       GapiJson.render_string_value "discoveryVersion" x.discoveryVersion;
       GapiJson.render_string_value "documentationLink" x.documentationLink;
       GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_bool_value "exponentialBackoffDefault" x.exponentialBackoffDefault;
       GapiJson.render_array "features" (GapiJson.render_string_value "") x.features;
       (fun v -> GapiJson.render_object "icons" (Icons.render_content v)) x.icons;
       GapiJson.render_string_value "id" x.id;
@@ -1793,6 +1806,7 @@ struct
       GapiJson.render_string_value "servicePath" x.servicePath;
       GapiJson.render_string_value "title" x.title;
       GapiJson.render_string_value "version" x.version;
+      GapiJson.render_bool_value "version_module" x.version_module;
       
     ]
   and render x = 
@@ -1839,6 +1853,10 @@ struct
         ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with etag = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "exponentialBackoffDefault"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with exponentialBackoffDefault = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "features"; data_type = GapiJson.Array },
         cs) ->
@@ -1995,6 +2013,10 @@ struct
         ({ GapiJson.name = "version"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with version = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "version_module"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with version_module = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->

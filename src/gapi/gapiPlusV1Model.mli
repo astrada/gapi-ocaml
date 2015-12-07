@@ -74,6 +74,24 @@ sig
   
   module Actor :
   sig
+    module Verification :
+    sig
+      type t = {
+        adHocVerified : string;
+        (** Verification for one-time or manual processes. *)
+        
+      }
+      
+      val adHocVerified : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
     module Image :
     sig
       type t = {
@@ -92,7 +110,45 @@ sig
       
     end
     
+    module ClientSpecificActorInfo :
+    sig
+      module YoutubeActorInfo :
+      sig
+        type t = {
+          channelId : string;
+          (** ID of the YouTube channel owned by the Actor. *)
+          
+        }
+        
+        val channelId : (t, string) GapiLens.t
+        
+        val empty : t
+        
+        val render : t -> GapiJson.json_data_model list
+        
+        val parse : t -> GapiJson.json_data_model -> t
+        
+      end
+      
+      type t = {
+        youtubeActorInfo : YoutubeActorInfo.t;
+        (** Actor info specific to YouTube clients. *)
+        
+      }
+      
+      val youtubeActorInfo : (t, YoutubeActorInfo.t) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
     type t = {
+      clientSpecificActorInfo : ClientSpecificActorInfo.t;
+      (** Actor info specific to particular clients. *)
       displayName : string;
       (** The name of this actor, suitable for display. *)
       id : string;
@@ -101,13 +157,17 @@ sig
       (** The image representation of this actor. *)
       url : string;
       (** A link to the Person resource for this actor. *)
+      verification : Verification.t;
+      (** Verification status of actor. *)
       
     }
     
+    val clientSpecificActorInfo : (t, ClientSpecificActorInfo.t) GapiLens.t
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
     val image : (t, Image.t) GapiLens.t
     val url : (t, string) GapiLens.t
+    val verification : (t, Verification.t) GapiLens.t
     
     val empty : t
     
@@ -995,6 +1055,24 @@ sig
     
     module Actor :
     sig
+      module Verification :
+      sig
+        type t = {
+          adHocVerified : string;
+          (** Verification for one-time or manual processes. *)
+          
+        }
+        
+        val adHocVerified : (t, string) GapiLens.t
+        
+        val empty : t
+        
+        val render : t -> GapiJson.json_data_model list
+        
+        val parse : t -> GapiJson.json_data_model -> t
+        
+      end
+      
       module Image :
       sig
         type t = {
@@ -1013,7 +1091,45 @@ sig
         
       end
       
+      module ClientSpecificActorInfo :
+      sig
+        module YoutubeActorInfo :
+        sig
+          type t = {
+            channelId : string;
+            (** ID of the YouTube channel owned by the Actor. *)
+            
+          }
+          
+          val channelId : (t, string) GapiLens.t
+          
+          val empty : t
+          
+          val render : t -> GapiJson.json_data_model list
+          
+          val parse : t -> GapiJson.json_data_model -> t
+          
+        end
+        
+        type t = {
+          youtubeActorInfo : YoutubeActorInfo.t;
+          (** Actor info specific to YouTube clients. *)
+          
+        }
+        
+        val youtubeActorInfo : (t, YoutubeActorInfo.t) GapiLens.t
+        
+        val empty : t
+        
+        val render : t -> GapiJson.json_data_model list
+        
+        val parse : t -> GapiJson.json_data_model -> t
+        
+      end
+      
       type t = {
+        clientSpecificActorInfo : ClientSpecificActorInfo.t;
+        (** Actor info specific to particular clients. *)
         displayName : string;
         (** The original actor's name, which is suitable for display. *)
         id : string;
@@ -1022,13 +1138,17 @@ sig
         (** The image representation of the original actor. *)
         url : string;
         (** A link to the original actor's Google profile. *)
+        verification : Verification.t;
+        (** Verification status of actor. *)
         
       }
       
+      val clientSpecificActorInfo : (t, ClientSpecificActorInfo.t) GapiLens.t
       val displayName : (t, string) GapiLens.t
       val id : (t, string) GapiLens.t
       val image : (t, Image.t) GapiLens.t
       val url : (t, string) GapiLens.t
+      val verification : (t, Verification.t) GapiLens.t
       
       val empty : t
       
@@ -1085,6 +1205,24 @@ sig
   
   module Actor :
   sig
+    module Verification :
+    sig
+      type t = {
+        adHocVerified : string;
+        (** Verification for one-time or manual processes. *)
+        
+      }
+      
+      val adHocVerified : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
     module Name :
     sig
       type t = {
@@ -1124,7 +1262,45 @@ sig
       
     end
     
+    module ClientSpecificActorInfo :
+    sig
+      module YoutubeActorInfo :
+      sig
+        type t = {
+          channelId : string;
+          (** ID of the YouTube channel owned by the Actor. *)
+          
+        }
+        
+        val channelId : (t, string) GapiLens.t
+        
+        val empty : t
+        
+        val render : t -> GapiJson.json_data_model list
+        
+        val parse : t -> GapiJson.json_data_model -> t
+        
+      end
+      
+      type t = {
+        youtubeActorInfo : YoutubeActorInfo.t;
+        (** Actor info specific to YouTube clients. *)
+        
+      }
+      
+      val youtubeActorInfo : (t, YoutubeActorInfo.t) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
     type t = {
+      clientSpecificActorInfo : ClientSpecificActorInfo.t;
+      (** Actor info specific to particular clients. *)
       displayName : string;
       (** The name of the actor, suitable for display. *)
       id : string;
@@ -1135,14 +1311,18 @@ sig
       (** An object representation of the individual components of name. *)
       url : string;
       (** The link to the actor's Google profile. *)
+      verification : Verification.t;
+      (** Verification status of actor. *)
       
     }
     
+    val clientSpecificActorInfo : (t, ClientSpecificActorInfo.t) GapiLens.t
     val displayName : (t, string) GapiLens.t
     val id : (t, string) GapiLens.t
     val image : (t, Image.t) GapiLens.t
     val name : (t, Name.t) GapiLens.t
     val url : (t, string) GapiLens.t
+    val verification : (t, Verification.t) GapiLens.t
     
     val empty : t
     

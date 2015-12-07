@@ -2438,6 +2438,81 @@ struct
   
 end
 
+module GeneratedIds =
+struct
+  type t = {
+    ids : string list;
+    kind : string;
+    space : string;
+    
+  }
+  
+  let ids = {
+    GapiLens.get = (fun x -> x.ids);
+    GapiLens.set = (fun v x -> { x with ids = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let space = {
+    GapiLens.get = (fun x -> x.space);
+    GapiLens.set = (fun v x -> { x with space = v });
+  }
+  
+  let empty = {
+    ids = [];
+    kind = "";
+    space = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_array "ids" (GapiJson.render_string_value "") x.ids;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "space" x.space;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "ids"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              `String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiDriveV2Model.GeneratedIds.parse.parse_collection" e x')
+        ""
+        (fun v -> { x with ids = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "space"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with space = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDriveV2Model.GeneratedIds.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module Permission =
 struct
   type t = {
@@ -3413,6 +3488,7 @@ struct
   type t = {
     alternateLink : string;
     appDataContents : bool;
+    canComment : bool;
     copyable : bool;
     createdDate : GapiDate.t;
     defaultOpenWithLink : string;
@@ -3426,6 +3502,7 @@ struct
     fileExtension : string;
     fileSize : int64;
     folderColorRgb : string;
+    fullFileExtension : string;
     headRevisionId : string;
     iconLink : string;
     id : string;
@@ -3443,6 +3520,7 @@ struct
     modifiedDate : GapiDate.t;
     openWithLinks : (string * string) list;
     originalFilename : string;
+    ownedByMe : bool;
     ownerNames : string list;
     owners : User.t list;
     parents : ParentReference.t list;
@@ -3450,9 +3528,11 @@ struct
     properties : Property.t list;
     quotaBytesUsed : int64;
     selfLink : string;
+    shareable : bool;
     shared : bool;
     sharedWithMeDate : GapiDate.t;
     sharingUser : User.t;
+    spaces : string list;
     thumbnail : Thumbnail.t;
     thumbnailLink : string;
     title : string;
@@ -3472,6 +3552,10 @@ struct
   let appDataContents = {
     GapiLens.get = (fun x -> x.appDataContents);
     GapiLens.set = (fun v x -> { x with appDataContents = v });
+  }
+  let canComment = {
+    GapiLens.get = (fun x -> x.canComment);
+    GapiLens.set = (fun v x -> { x with canComment = v });
   }
   let copyable = {
     GapiLens.get = (fun x -> x.copyable);
@@ -3524,6 +3608,10 @@ struct
   let folderColorRgb = {
     GapiLens.get = (fun x -> x.folderColorRgb);
     GapiLens.set = (fun v x -> { x with folderColorRgb = v });
+  }
+  let fullFileExtension = {
+    GapiLens.get = (fun x -> x.fullFileExtension);
+    GapiLens.set = (fun v x -> { x with fullFileExtension = v });
   }
   let headRevisionId = {
     GapiLens.get = (fun x -> x.headRevisionId);
@@ -3593,6 +3681,10 @@ struct
     GapiLens.get = (fun x -> x.originalFilename);
     GapiLens.set = (fun v x -> { x with originalFilename = v });
   }
+  let ownedByMe = {
+    GapiLens.get = (fun x -> x.ownedByMe);
+    GapiLens.set = (fun v x -> { x with ownedByMe = v });
+  }
   let ownerNames = {
     GapiLens.get = (fun x -> x.ownerNames);
     GapiLens.set = (fun v x -> { x with ownerNames = v });
@@ -3621,6 +3713,10 @@ struct
     GapiLens.get = (fun x -> x.selfLink);
     GapiLens.set = (fun v x -> { x with selfLink = v });
   }
+  let shareable = {
+    GapiLens.get = (fun x -> x.shareable);
+    GapiLens.set = (fun v x -> { x with shareable = v });
+  }
   let shared = {
     GapiLens.get = (fun x -> x.shared);
     GapiLens.set = (fun v x -> { x with shared = v });
@@ -3632,6 +3728,10 @@ struct
   let sharingUser = {
     GapiLens.get = (fun x -> x.sharingUser);
     GapiLens.set = (fun v x -> { x with sharingUser = v });
+  }
+  let spaces = {
+    GapiLens.get = (fun x -> x.spaces);
+    GapiLens.set = (fun v x -> { x with spaces = v });
   }
   let thumbnail = {
     GapiLens.get = (fun x -> x.thumbnail);
@@ -3673,6 +3773,7 @@ struct
   let empty = {
     alternateLink = "";
     appDataContents = false;
+    canComment = false;
     copyable = false;
     createdDate = GapiDate.epoch;
     defaultOpenWithLink = "";
@@ -3686,6 +3787,7 @@ struct
     fileExtension = "";
     fileSize = 0L;
     folderColorRgb = "";
+    fullFileExtension = "";
     headRevisionId = "";
     iconLink = "";
     id = "";
@@ -3703,6 +3805,7 @@ struct
     modifiedDate = GapiDate.epoch;
     openWithLinks = [];
     originalFilename = "";
+    ownedByMe = false;
     ownerNames = [];
     owners = [];
     parents = [];
@@ -3710,9 +3813,11 @@ struct
     properties = [];
     quotaBytesUsed = 0L;
     selfLink = "";
+    shareable = false;
     shared = false;
     sharedWithMeDate = GapiDate.epoch;
     sharingUser = User.empty;
+    spaces = [];
     thumbnail = Thumbnail.empty;
     thumbnailLink = "";
     title = "";
@@ -3729,6 +3834,7 @@ struct
      [
       GapiJson.render_string_value "alternateLink" x.alternateLink;
       GapiJson.render_bool_value "appDataContents" x.appDataContents;
+      GapiJson.render_bool_value "canComment" x.canComment;
       GapiJson.render_bool_value "copyable" x.copyable;
       GapiJson.render_date_value "createdDate" x.createdDate;
       GapiJson.render_string_value "defaultOpenWithLink" x.defaultOpenWithLink;
@@ -3742,6 +3848,7 @@ struct
       GapiJson.render_string_value "fileExtension" x.fileExtension;
       GapiJson.render_int64_value "fileSize" x.fileSize;
       GapiJson.render_string_value "folderColorRgb" x.folderColorRgb;
+      GapiJson.render_string_value "fullFileExtension" x.fullFileExtension;
       GapiJson.render_string_value "headRevisionId" x.headRevisionId;
       GapiJson.render_string_value "iconLink" x.iconLink;
       GapiJson.render_string_value "id" x.id;
@@ -3759,6 +3866,7 @@ struct
       GapiJson.render_date_value "modifiedDate" x.modifiedDate;
       GapiJson.render_collection "openWithLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.openWithLinks;
       GapiJson.render_string_value "originalFilename" x.originalFilename;
+      GapiJson.render_bool_value "ownedByMe" x.ownedByMe;
       GapiJson.render_array "ownerNames" (GapiJson.render_string_value "") x.ownerNames;
       GapiJson.render_array "owners" User.render x.owners;
       GapiJson.render_array "parents" ParentReference.render x.parents;
@@ -3766,9 +3874,11 @@ struct
       GapiJson.render_array "properties" Property.render x.properties;
       GapiJson.render_int64_value "quotaBytesUsed" x.quotaBytesUsed;
       GapiJson.render_string_value "selfLink" x.selfLink;
+      GapiJson.render_bool_value "shareable" x.shareable;
       GapiJson.render_bool_value "shared" x.shared;
       GapiJson.render_date_value "sharedWithMeDate" x.sharedWithMeDate;
       (fun v -> GapiJson.render_object "sharingUser" (User.render_content v)) x.sharingUser;
+      GapiJson.render_array "spaces" (GapiJson.render_string_value "") x.spaces;
       (fun v -> GapiJson.render_object "thumbnail" (Thumbnail.render_content v)) x.thumbnail;
       GapiJson.render_string_value "thumbnailLink" x.thumbnailLink;
       GapiJson.render_string_value "title" x.title;
@@ -3792,6 +3902,10 @@ struct
         ({ GapiJson.name = "appDataContents"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with appDataContents = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "canComment"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with canComment = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "copyable"; data_type = GapiJson.Scalar },
         `Bool v) ->
@@ -3854,6 +3968,10 @@ struct
         ({ GapiJson.name = "folderColorRgb"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with folderColorRgb = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "fullFileExtension"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with fullFileExtension = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "headRevisionId"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -3948,6 +4066,10 @@ struct
         ({ GapiJson.name = "originalFilename"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with originalFilename = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "ownedByMe"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with ownedByMe = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "ownerNames"; data_type = GapiJson.Array },
         cs) ->
@@ -4039,6 +4161,10 @@ struct
         `String v) ->
       { x with selfLink = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "shareable"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with shareable = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "shared"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with shared = v }
@@ -4053,6 +4179,20 @@ struct
         User.parse
         User.empty
         (fun v -> { x with sharingUser = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "spaces"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              `String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiDriveV2Model.File.parse.parse_collection" e x')
+        ""
+        (fun v -> { x with spaces = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "thumbnail"; data_type = GapiJson.Object },

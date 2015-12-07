@@ -13,7 +13,11 @@ struct
   
   let drive_file = "https://www.googleapis.com/auth/drive.file"
   
+  let drive_metadata = "https://www.googleapis.com/auth/drive.metadata"
+  
   let drive_metadata_readonly = "https://www.googleapis.com/auth/drive.metadata.readonly"
+  
+  let drive_photos_readonly = "https://www.googleapis.com/auth/drive.photos.readonly"
   
   let drive_readonly = "https://www.googleapis.com/auth/drive.readonly"
   
@@ -222,6 +226,7 @@ struct
       includeSubscribed : bool;
       maxResults : int;
       pageToken : string;
+      spaces : string;
       startChangeId : int64;
       
     }
@@ -236,6 +241,7 @@ struct
       includeSubscribed = true;
       maxResults = 100;
       pageToken = "";
+      spaces = "";
       startChangeId = 0L;
       
     }
@@ -252,6 +258,7 @@ struct
       param (fun p -> p.includeSubscribed) string_of_bool "includeSubscribed";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.spaces) (fun x -> x) "spaces";
       param (fun p -> p.startChangeId) Int64.to_string "startChangeId";
       
     ] |> List.concat
@@ -262,6 +269,7 @@ struct
         ?(includeSubscribed = default.includeSubscribed)
         ?(maxResults = default.maxResults)
         ?(pageToken = default.pageToken)
+        ?(spaces = default.spaces)
         ?(startChangeId = default.startChangeId)
         () =
       let parameters = {
@@ -274,6 +282,7 @@ struct
         includeSubscribed;
         maxResults;
         pageToken;
+        spaces;
         startChangeId;
         
       } in
@@ -303,12 +312,13 @@ struct
         ?(includeSubscribed = true)
         ?(maxResults = 100)
         ?pageToken
+        ?spaces
         ?startChangeId
         session =
     let full_url = GapiUtils.add_path_to_url ["changes"] base_url in
     let params = ChangesParameters.merge_parameters
       ?standard_parameters:std_params ~includeDeleted ~includeSubscribed
-      ~maxResults ?pageToken ?startChangeId () in
+      ~maxResults ?pageToken ?spaces ?startChangeId () in
     let query_parameters = Option.map ChangesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -321,13 +331,14 @@ struct
         ?(includeSubscribed = true)
         ?(maxResults = 100)
         ?pageToken
+        ?spaces
         ?startChangeId
         channel
         session =
     let full_url = GapiUtils.add_path_to_url ["changes"; "watch"] base_url in
     let params = ChangesParameters.merge_parameters
       ?standard_parameters:std_params ~includeDeleted ~includeSubscribed
-      ~maxResults ?pageToken ?startChangeId () in
+      ~maxResults ?pageToken ?spaces ?startChangeId () in
     let query_parameters = Option.map ChangesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
@@ -370,6 +381,7 @@ struct
       key : string;
       (* children-specific query parameters *)
       maxResults : int;
+      orderBy : string;
       pageToken : string;
       q : string;
       
@@ -382,6 +394,7 @@ struct
       userIp = "";
       key = "";
       maxResults = 100;
+      orderBy = "";
       pageToken = "";
       q = "";
       
@@ -396,6 +409,7 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.orderBy) (fun x -> x) "orderBy";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.q) (fun x -> x) "q";
       
@@ -404,6 +418,7 @@ struct
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(maxResults = default.maxResults)
+        ?(orderBy = default.orderBy)
         ?(pageToken = default.pageToken)
         ?(q = default.q)
         () =
@@ -414,6 +429,7 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         maxResults;
+        orderBy;
         pageToken;
         q;
         
@@ -476,6 +492,7 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
         ?(maxResults = 100)
+        ?orderBy
         ?pageToken
         ?q
         ~folderId
@@ -483,7 +500,8 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files";
       ((fun x -> x) folderId); "children"] base_url in
     let params = ChildrenParameters.merge_parameters
-      ?standard_parameters:std_params ~maxResults ?pageToken ?q () in
+      ?standard_parameters:std_params ~maxResults ?orderBy ?pageToken ?q ()
+      in
     let query_parameters = Option.map ChildrenParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -691,6 +709,38 @@ struct
   
   end
   
+  module ModifiedDateBehavior =
+  struct
+    type t =
+      | Default
+      | FromBody
+      | FromBodyIfNeeded
+      | FromBodyOrNow
+      | NoChange
+      | Now
+      | NowIfNeeded
+      
+    let to_string = function
+      | Default -> ""
+      | FromBody -> "fromBody"
+      | FromBodyIfNeeded -> "fromBodyIfNeeded"
+      | FromBodyOrNow -> "fromBodyOrNow"
+      | NoChange -> "noChange"
+      | Now -> "now"
+      | NowIfNeeded -> "nowIfNeeded"
+      
+    let of_string = function
+      | "" -> Default
+      | "fromBody" -> FromBody
+      | "fromBodyIfNeeded" -> FromBodyIfNeeded
+      | "fromBodyOrNow" -> FromBodyOrNow
+      | "noChange" -> NoChange
+      | "now" -> Now
+      | "nowIfNeeded" -> NowIfNeeded
+      | s -> failwith ("Unexpected value for ModifiedDateBehavior:" ^ s)
+  
+  end
+  
   module Projection =
   struct
     type t =
@@ -743,13 +793,14 @@ struct
       (* files-specific query parameters *)
       acknowledgeAbuse : bool;
       addParents : string;
-      alt : string;
       convert : bool;
       corpus : Corpus.t;
       maxResults : int;
+      modifiedDateBehavior : ModifiedDateBehavior.t;
       newRevision : bool;
       ocr : bool;
       ocrLanguage : string;
+      orderBy : string;
       pageToken : string;
       pinned : bool;
       projection : Projection.t;
@@ -757,6 +808,8 @@ struct
       removeParents : string;
       revisionId : string;
       setModifiedDate : bool;
+      space : string;
+      spaces : string;
       timedTextLanguage : string;
       timedTextTrackName : string;
       updateViewedDate : bool;
@@ -773,13 +826,14 @@ struct
       key = "";
       acknowledgeAbuse = false;
       addParents = "";
-      alt = "";
       convert = false;
       corpus = Corpus.Default;
-      maxResults = 100;
+      maxResults = 10;
+      modifiedDateBehavior = ModifiedDateBehavior.Default;
       newRevision = true;
       ocr = false;
       ocrLanguage = "";
+      orderBy = "";
       pageToken = "";
       pinned = false;
       projection = Projection.Default;
@@ -787,6 +841,8 @@ struct
       removeParents = "";
       revisionId = "";
       setModifiedDate = false;
+      space = "drive";
+      spaces = "";
       timedTextLanguage = "";
       timedTextTrackName = "";
       updateViewedDate = false;
@@ -805,13 +861,14 @@ struct
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.acknowledgeAbuse) string_of_bool "acknowledgeAbuse";
       param (fun p -> p.addParents) (fun x -> x) "addParents";
-      param (fun p -> p.alt) (fun x -> x) "alt";
       param (fun p -> p.convert) string_of_bool "convert";
       param (fun p -> p.corpus) Corpus.to_string "corpus";
       param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.modifiedDateBehavior) ModifiedDateBehavior.to_string "modifiedDateBehavior";
       param (fun p -> p.newRevision) string_of_bool "newRevision";
       param (fun p -> p.ocr) string_of_bool "ocr";
       param (fun p -> p.ocrLanguage) (fun x -> x) "ocrLanguage";
+      param (fun p -> p.orderBy) (fun x -> x) "orderBy";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.pinned) string_of_bool "pinned";
       param (fun p -> p.projection) Projection.to_string "projection";
@@ -819,6 +876,8 @@ struct
       param (fun p -> p.removeParents) (fun x -> x) "removeParents";
       param (fun p -> p.revisionId) (fun x -> x) "revisionId";
       param (fun p -> p.setModifiedDate) string_of_bool "setModifiedDate";
+      param (fun p -> p.space) (fun x -> x) "space";
+      param (fun p -> p.spaces) (fun x -> x) "spaces";
       param (fun p -> p.timedTextLanguage) (fun x -> x) "timedTextLanguage";
       param (fun p -> p.timedTextTrackName) (fun x -> x) "timedTextTrackName";
       param (fun p -> p.updateViewedDate) string_of_bool "updateViewedDate";
@@ -831,13 +890,14 @@ struct
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(acknowledgeAbuse = default.acknowledgeAbuse)
         ?(addParents = default.addParents)
-        ?(alt = default.alt)
         ?(convert = default.convert)
         ?(corpus = default.corpus)
         ?(maxResults = default.maxResults)
+        ?(modifiedDateBehavior = default.modifiedDateBehavior)
         ?(newRevision = default.newRevision)
         ?(ocr = default.ocr)
         ?(ocrLanguage = default.ocrLanguage)
+        ?(orderBy = default.orderBy)
         ?(pageToken = default.pageToken)
         ?(pinned = default.pinned)
         ?(projection = default.projection)
@@ -845,6 +905,8 @@ struct
         ?(removeParents = default.removeParents)
         ?(revisionId = default.revisionId)
         ?(setModifiedDate = default.setModifiedDate)
+        ?(space = default.space)
+        ?(spaces = default.spaces)
         ?(timedTextLanguage = default.timedTextLanguage)
         ?(timedTextTrackName = default.timedTextTrackName)
         ?(updateViewedDate = default.updateViewedDate)
@@ -859,13 +921,14 @@ struct
         key = standard_parameters.GapiService.StandardParameters.key;
         acknowledgeAbuse;
         addParents;
-        alt;
         convert;
         corpus;
         maxResults;
+        modifiedDateBehavior;
         newRevision;
         ocr;
         ocrLanguage;
+        orderBy;
         pageToken;
         pinned;
         projection;
@@ -873,6 +936,8 @@ struct
         removeParents;
         revisionId;
         setModifiedDate;
+        space;
+        spaces;
         timedTextLanguage;
         timedTextTrackName;
         updateViewedDate;
@@ -935,13 +1000,27 @@ struct
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
+  let generateIds
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ?(maxResults = 10)
+        ?(space = "drive")
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; "generateIds"]
+      base_url in
+    let params = FilesParameters.merge_parameters
+      ?standard_parameters:std_params ~maxResults ~space () in
+    let query_parameters = Option.map FilesParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters full_url
+      (GapiJson.parse_json_response GeneratedIds.of_data_model) session 
+    
   let get
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?etag
         ?std_params
         ?(acknowledgeAbuse = false)
         ?(updateViewedDate = false)
-        ?alt
         ?projection
         ?revisionId
         ~fileId
@@ -949,7 +1028,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId)]
       base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~acknowledgeAbuse ?alt ?projection
+      ?standard_parameters:std_params ~acknowledgeAbuse ?projection
       ?revisionId ~updateViewedDate () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
@@ -991,14 +1070,16 @@ struct
         ?std_params
         ?(maxResults = 100)
         ?corpus
+        ?orderBy
         ?pageToken
         ?projection
         ?q
+        ?spaces
         session =
     let full_url = GapiUtils.add_path_to_url ["files"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ?corpus ~maxResults ?pageToken
-      ?projection ?q () in
+      ?standard_parameters:std_params ?corpus ~maxResults ?orderBy ?pageToken
+      ?projection ?q ?spaces () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
@@ -1015,6 +1096,7 @@ struct
         ?(updateViewedDate = true)
         ?(useContentAsIndexableText = false)
         ?addParents
+        ?modifiedDateBehavior
         ?ocrLanguage
         ?removeParents
         ?timedTextLanguage
@@ -1026,9 +1108,10 @@ struct
       base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ?addParents ~convert ~newRevision ~ocr
-      ?ocrLanguage ~pinned ?removeParents ~setModifiedDate ?timedTextLanguage
-      ?timedTextTrackName ~updateViewedDate ~useContentAsIndexableText () in
+      ?standard_parameters:std_params ?addParents ~convert
+      ?modifiedDateBehavior ~newRevision ~ocr ?ocrLanguage ~pinned
+      ?removeParents ~setModifiedDate ?timedTextLanguage ?timedTextTrackName
+      ~updateViewedDate ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -1089,6 +1172,7 @@ struct
         ?(updateViewedDate = true)
         ?(useContentAsIndexableText = false)
         ?addParents
+        ?modifiedDateBehavior
         ?ocrLanguage
         ?removeParents
         ?timedTextLanguage
@@ -1104,9 +1188,10 @@ struct
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let etag = GapiUtils.etag_option file.File.etag in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ?addParents ~convert ~newRevision ~ocr
-      ?ocrLanguage ~pinned ?removeParents ~setModifiedDate ?timedTextLanguage
-      ?timedTextTrackName ~updateViewedDate ~useContentAsIndexableText () in
+      ?standard_parameters:std_params ?addParents ~convert
+      ?modifiedDateBehavior ~newRevision ~ocr ?ocrLanguage ~pinned
+      ?removeParents ~setModifiedDate ?timedTextLanguage ?timedTextTrackName
+      ~updateViewedDate ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag ?media_source
@@ -1118,7 +1203,6 @@ struct
         ?std_params
         ?(acknowledgeAbuse = false)
         ?(updateViewedDate = false)
-        ?alt
         ?projection
         ?revisionId
         ~fileId
@@ -1127,7 +1211,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "watch"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~acknowledgeAbuse ?alt ?projection
+      ?standard_parameters:std_params ~acknowledgeAbuse ?projection
       ?revisionId ~updateViewedDate () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in

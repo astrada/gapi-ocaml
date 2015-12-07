@@ -1846,6 +1846,7 @@ end
 module Account =
 struct
   type t = {
+    creation_time : int64;
     id : string;
     kind : string;
     name : string;
@@ -1855,6 +1856,10 @@ struct
     
   }
   
+  let creation_time = {
+    GapiLens.get = (fun x -> x.creation_time);
+    GapiLens.set = (fun v x -> { x with creation_time = v });
+  }
   let id = {
     GapiLens.get = (fun x -> x.id);
     GapiLens.set = (fun v x -> { x with id = v });
@@ -1881,6 +1886,7 @@ struct
   }
   
   let empty = {
+    creation_time = 0L;
     id = "";
     kind = "";
     name = "";
@@ -1892,6 +1898,7 @@ struct
   
   let rec render_content x = 
      [
+      GapiJson.render_int64_value "creation_time" x.creation_time;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "name" x.name;
@@ -1904,6 +1911,10 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "creation_time"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with creation_time = Int64.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         `String v) ->

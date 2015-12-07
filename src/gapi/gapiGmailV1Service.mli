@@ -28,6 +28,9 @@ sig
   val gmail_readonly : string
   (** View your emails messages and settings *)
   
+  val gmail_send : string
+  (** Send email on your behalf *)
+  
   
 end
 (** Service Auth Scopes *)
@@ -487,7 +490,7 @@ sig
       @param maxResults The maximum number of history records to return.
       @param labelId Only return messages with a label matching the ID.
       @param pageToken Page token to retrieve a specific page of results in the list.
-      @param startHistoryId Required. Returns history records after the specified startHistoryId. The supplied startHistoryId should be obtained from the historyId of a message, thread, or previous list response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date startHistoryId typically returns an HTTP 404 error code. A historyId is typically valid for at least a week, but in some circumstances may be valid for only a few hours. If you receive an HTTP 404 error response, your application should perform a full sync. If you receive no nextPageToken in the response, there are no updates to retrieve and you can store the returned historyId for a future request.
+      @param startHistoryId Required. Returns history records after the specified startHistoryId. The supplied startHistoryId should be obtained from the historyId of a message, thread, or previous list response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date startHistoryId typically returns an HTTP 404 error code. A historyId is typically valid for at least a week, but in some rare circumstances may be valid for only a few hours. If you receive an HTTP 404 error response, your application should perform a full sync. If you receive no nextPageToken in the response, there are no updates to retrieve and you can store the returned historyId for a future request.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
     val list :
@@ -636,6 +639,33 @@ sig
     userId:string ->
     GapiConversation.Session.t ->
     GapiGmailV1Model.Profile.t * GapiConversation.Session.t
+  
+  (** Stop receiving push notifications for the given user mailbox.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+    @param std_params Optional standard parameters.
+    @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+    *)
+  val stop :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    userId:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  (** Set up or update a push notification watch on the given user mailbox.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+    @param std_params Optional standard parameters.
+    @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+    *)
+  val watch :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    userId:string ->
+    GapiGmailV1Model.WatchRequest.t ->
+    GapiConversation.Session.t ->
+    GapiGmailV1Model.WatchResponse.t * GapiConversation.Session.t
   
   
 end

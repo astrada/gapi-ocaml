@@ -155,6 +155,7 @@ sig
       @param std_params Optional standard parameters.
       @param dimensions A comma-separated list of Analytics dimensions. E.g., 'ga:browser,ga:city'.
       @param filters A comma-separated list of dimension or metric filters to be applied to Analytics data.
+      @param include_empty_rows The response will include empty rows if this parameter is set to true, the default is true
       @param max_results The maximum number of entries to include in this feed.
       @param output The selected format for the response. Default format is JSON.
       @param samplingLevel The desired sampling level.
@@ -172,6 +173,7 @@ sig
       ?std_params:GapiService.StandardParameters.t ->
       ?dimensions:string ->
       ?filters:string ->
+      ?include_empty_rows:bool ->
       ?max_results:int ->
       ?output:Output.t ->
       ?samplingLevel:SamplingLevel.t ->

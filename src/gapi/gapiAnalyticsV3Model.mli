@@ -644,7 +644,7 @@ sig
     status : string;
     (** Experiment status. Possible values: "DRAFT", "READY_TO_RUN", "RUNNING", "ENDED". Experiments can be created in the "DRAFT", "READY_TO_RUN" or "RUNNING" state. This field is required when creating an experiment. *)
     trafficCoverage : float;
-    (** A floating-point number between 0 and 1. Specifies the fraction of the traffic that participates in the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
+    (** A floating-point number in (0, 1]. Specifies the fraction of the traffic that participates in the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
     updated : GapiDate.t;
     (** Time the experiment was last modified. This field is read-only. *)
     variations : Variations.t list;
@@ -652,7 +652,7 @@ sig
     webPropertyId : string;
     (** Web property ID to which this experiment belongs. The web property ID is of the form UA-XXXXX-YY. This field is read-only. *)
     winnerConfidenceLevel : float;
-    (** A floating-point number between 0 and 1. Specifies the necessary confidence level to choose a winner. This field may not be changed for an experiments whose status is ENDED. *)
+    (** A floating-point number in (0, 1). Specifies the necessary confidence level to choose a winner. This field may not be changed for an experiments whose status is ENDED. *)
     winnerFound : bool;
     (** Boolean specifying whether a winner has been found for this experiment. This field is read-only. *)
     
@@ -852,7 +852,7 @@ sig
     created : GapiDate.t;
     (** Time this view (profile) was created. *)
     currency : string;
-    (** The currency type associated with this view (profile). The supported values are:
+    (** The currency type associated with this view (profile), defaults to USD. The supported values are:
 ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD, USD, VND, ZAR *)
     defaultPage : string;
     (** Default page for this view (profile). *)
@@ -2736,17 +2736,22 @@ sig
 - Social  
 - SOCIAL_NETWORK, 
 - SOCIAL_ACTION, 
-- SOCIAL_ACTION_TARGET, *)
+- SOCIAL_ACTION_TARGET,   
+- Custom dimension  
+- CUSTOM_DIMENSION (See accompanying field index), *)
+    fieldIndex : int;
+    (** The Index of the custom dimension. Set only if the field is a is CUSTOM_DIMENSION. *)
     kind : string;
     (** Kind value for filter expression *)
     matchType : string;
-    (** Match type for this filter. Possible values are BEGINS_WITH, EQUAL, ENDS_WITH, CONTAINS, MATCHES. Include and Exclude filters can use any match type. Match type is not applicable to Upper case and Lower case filters. Search and Replace expressions in the Search and Replace filter and all filter expressions in the Advanced filter default to MATCHES. User should not set match type for those filters. *)
+    (** Match type for this filter. Possible values are BEGINS_WITH, EQUAL, ENDS_WITH, CONTAINS, or MATCHES. GEO_DOMAIN, GEO_IP_ADDRESS, PAGE_REQUEST_URI, or PAGE_HOSTNAME filters can use any match type; all other filters must use MATCHES. *)
     
   }
   
   val caseSensitive : (t, bool) GapiLens.t
   val expressionValue : (t, string) GapiLens.t
   val field : (t, string) GapiLens.t
+  val fieldIndex : (t, int) GapiLens.t
   val kind : (t, string) GapiLens.t
   val matchType : (t, string) GapiLens.t
   
@@ -3191,10 +3196,13 @@ sig
     type t = {
       field : string;
       (** Field to use in the filter. *)
+      fieldIndex : int;
+      (** The Index of the custom dimension. Required if field is a CUSTOM_DIMENSION. *)
       
     }
     
     val field : (t, string) GapiLens.t
+    val fieldIndex : (t, int) GapiLens.t
     
     val empty : t
     
@@ -3211,6 +3219,8 @@ sig
       (** Determines if the filter is case sensitive. *)
       field : string;
       (** Field to use in the filter. *)
+      fieldIndex : int;
+      (** The Index of the custom dimension. Required if field is a CUSTOM_DIMENSION. *)
       replaceString : string;
       (** Term to replace the search term with. *)
       searchString : string;
@@ -3220,6 +3230,7 @@ sig
     
     val caseSensitive : (t, bool) GapiLens.t
     val field : (t, string) GapiLens.t
+    val fieldIndex : (t, int) GapiLens.t
     val replaceString : (t, string) GapiLens.t
     val searchString : (t, string) GapiLens.t
     
@@ -3257,10 +3268,13 @@ sig
     type t = {
       field : string;
       (** Field to use in the filter. *)
+      fieldIndex : int;
+      (** The Index of the custom dimension. Required if field is a CUSTOM_DIMENSION. *)
       
     }
     
     val field : (t, string) GapiLens.t
+    val fieldIndex : (t, int) GapiLens.t
     
     val empty : t
     
@@ -3281,16 +3295,22 @@ sig
       (** Expression to extract from field B. *)
       fieldA : string;
       (** Field A. *)
+      fieldAIndex : int;
+      (** The Index of the custom dimension. Required if field is a CUSTOM_DIMENSION. *)
       fieldARequired : bool;
       (** Indicates if field A is required to match. *)
       fieldB : string;
       (** Field B. *)
+      fieldBIndex : int;
+      (** The Index of the custom dimension. Required if field is a CUSTOM_DIMENSION. *)
       fieldBRequired : bool;
       (** Indicates if field B is required to match. *)
       outputConstructor : string;
       (** Expression used to construct the output value. *)
       outputToField : string;
       (** Output field. *)
+      outputToFieldIndex : int;
+      (** The Index of the custom dimension. Required if field is a CUSTOM_DIMENSION. *)
       overrideOutputField : bool;
       (** Indicates if the existing value of the output field, if any, should be overridden by the output expression. *)
       
@@ -3300,11 +3320,14 @@ sig
     val extractA : (t, string) GapiLens.t
     val extractB : (t, string) GapiLens.t
     val fieldA : (t, string) GapiLens.t
+    val fieldAIndex : (t, int) GapiLens.t
     val fieldARequired : (t, bool) GapiLens.t
     val fieldB : (t, string) GapiLens.t
+    val fieldBIndex : (t, int) GapiLens.t
     val fieldBRequired : (t, bool) GapiLens.t
     val outputConstructor : (t, string) GapiLens.t
     val outputToField : (t, string) GapiLens.t
+    val outputToFieldIndex : (t, int) GapiLens.t
     val overrideOutputField : (t, bool) GapiLens.t
     
     val empty : t

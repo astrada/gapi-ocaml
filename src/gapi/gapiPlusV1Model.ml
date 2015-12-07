@@ -154,6 +154,45 @@ struct
   
   module Actor =
   struct
+    module Verification =
+    struct
+      type t = {
+        adHocVerified : string;
+        
+      }
+      
+      let adHocVerified = {
+        GapiLens.get = (fun x -> x.adHocVerified);
+        GapiLens.set = (fun v x -> { x with adHocVerified = v });
+      }
+      
+      let empty = {
+        adHocVerified = "";
+        
+      }
+      
+      let rec render_content x = 
+         [
+          GapiJson.render_string_value "adHocVerified" x.adHocVerified;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "adHocVerified"; data_type = GapiJson.Scalar },
+            `String v) ->
+          { x with adHocVerified = v }
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiPlusV1Model.Verification.parse" e x
+      
+    end
+    
     module Image =
     struct
       type t = {
@@ -193,14 +232,102 @@ struct
       
     end
     
+    module ClientSpecificActorInfo =
+    struct
+      module YoutubeActorInfo =
+      struct
+        type t = {
+          channelId : string;
+          
+        }
+        
+        let channelId = {
+          GapiLens.get = (fun x -> x.channelId);
+          GapiLens.set = (fun v x -> { x with channelId = v });
+        }
+        
+        let empty = {
+          channelId = "";
+          
+        }
+        
+        let rec render_content x = 
+           [
+            GapiJson.render_string_value "channelId" x.channelId;
+            
+          ]
+        and render x = 
+          GapiJson.render_object "" (render_content x)
+        
+        let rec parse x = function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = "channelId"; data_type = GapiJson.Scalar },
+              `String v) ->
+            { x with channelId = v }
+          | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = ""; data_type = GapiJson.Object },
+            cs) ->
+            GapiJson.parse_children parse empty (fun x -> x) cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.YoutubeActorInfo.parse" e x
+        
+      end
+      
+      type t = {
+        youtubeActorInfo : YoutubeActorInfo.t;
+        
+      }
+      
+      let youtubeActorInfo = {
+        GapiLens.get = (fun x -> x.youtubeActorInfo);
+        GapiLens.set = (fun v x -> { x with youtubeActorInfo = v });
+      }
+      
+      let empty = {
+        youtubeActorInfo = YoutubeActorInfo.empty;
+        
+      }
+      
+      let rec render_content x = 
+         [
+          (fun v -> GapiJson.render_object "youtubeActorInfo" (YoutubeActorInfo.render_content v)) x.youtubeActorInfo;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = "youtubeActorInfo"; data_type = GapiJson.Object },
+            cs) ->
+          GapiJson.parse_children
+            YoutubeActorInfo.parse
+            YoutubeActorInfo.empty
+            (fun v -> { x with youtubeActorInfo = v })
+            cs
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiPlusV1Model.ClientSpecificActorInfo.parse" e x
+      
+    end
+    
     type t = {
+      clientSpecificActorInfo : ClientSpecificActorInfo.t;
       displayName : string;
       id : string;
       image : Image.t;
       url : string;
+      verification : Verification.t;
       
     }
     
+    let clientSpecificActorInfo = {
+      GapiLens.get = (fun x -> x.clientSpecificActorInfo);
+      GapiLens.set = (fun v x -> { x with clientSpecificActorInfo = v });
+    }
     let displayName = {
       GapiLens.get = (fun x -> x.displayName);
       GapiLens.set = (fun v x -> { x with displayName = v });
@@ -217,27 +344,43 @@ struct
       GapiLens.get = (fun x -> x.url);
       GapiLens.set = (fun v x -> { x with url = v });
     }
+    let verification = {
+      GapiLens.get = (fun x -> x.verification);
+      GapiLens.set = (fun v x -> { x with verification = v });
+    }
     
     let empty = {
+      clientSpecificActorInfo = ClientSpecificActorInfo.empty;
       displayName = "";
       id = "";
       image = Image.empty;
       url = "";
+      verification = Verification.empty;
       
     }
     
     let rec render_content x = 
        [
+        (fun v -> GapiJson.render_object "clientSpecificActorInfo" (ClientSpecificActorInfo.render_content v)) x.clientSpecificActorInfo;
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
         (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
         GapiJson.render_string_value "url" x.url;
+        (fun v -> GapiJson.render_object "verification" (Verification.render_content v)) x.verification;
         
       ]
     and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "clientSpecificActorInfo"; data_type = GapiJson.Object },
+          cs) ->
+        GapiJson.parse_children
+          ClientSpecificActorInfo.parse
+          ClientSpecificActorInfo.empty
+          (fun v -> { x with clientSpecificActorInfo = v })
+          cs
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
           `String v) ->
@@ -258,6 +401,14 @@ struct
           ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with url = v }
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "verification"; data_type = GapiJson.Object },
+          cs) ->
+        GapiJson.parse_children
+          Verification.parse
+          Verification.empty
+          (fun v -> { x with verification = v })
+          cs
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -2681,6 +2832,45 @@ struct
     
     module Actor =
     struct
+      module Verification =
+      struct
+        type t = {
+          adHocVerified : string;
+          
+        }
+        
+        let adHocVerified = {
+          GapiLens.get = (fun x -> x.adHocVerified);
+          GapiLens.set = (fun v x -> { x with adHocVerified = v });
+        }
+        
+        let empty = {
+          adHocVerified = "";
+          
+        }
+        
+        let rec render_content x = 
+           [
+            GapiJson.render_string_value "adHocVerified" x.adHocVerified;
+            
+          ]
+        and render x = 
+          GapiJson.render_object "" (render_content x)
+        
+        let rec parse x = function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = "adHocVerified"; data_type = GapiJson.Scalar },
+              `String v) ->
+            { x with adHocVerified = v }
+          | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = ""; data_type = GapiJson.Object },
+            cs) ->
+            GapiJson.parse_children parse empty (fun x -> x) cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.Verification.parse" e x
+        
+      end
+      
       module Image =
       struct
         type t = {
@@ -2720,14 +2910,102 @@ struct
         
       end
       
+      module ClientSpecificActorInfo =
+      struct
+        module YoutubeActorInfo =
+        struct
+          type t = {
+            channelId : string;
+            
+          }
+          
+          let channelId = {
+            GapiLens.get = (fun x -> x.channelId);
+            GapiLens.set = (fun v x -> { x with channelId = v });
+          }
+          
+          let empty = {
+            channelId = "";
+            
+          }
+          
+          let rec render_content x = 
+             [
+              GapiJson.render_string_value "channelId" x.channelId;
+              
+            ]
+          and render x = 
+            GapiJson.render_object "" (render_content x)
+          
+          let rec parse x = function
+            | GapiCore.AnnotatedTree.Leaf
+                ({ GapiJson.name = "channelId"; data_type = GapiJson.Scalar },
+                `String v) ->
+              { x with channelId = v }
+            | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+              GapiJson.parse_children parse empty (fun x -> x) cs
+            | e ->
+              GapiJson.unexpected "GapiPlusV1Model.YoutubeActorInfo.parse" e x
+          
+        end
+        
+        type t = {
+          youtubeActorInfo : YoutubeActorInfo.t;
+          
+        }
+        
+        let youtubeActorInfo = {
+          GapiLens.get = (fun x -> x.youtubeActorInfo);
+          GapiLens.set = (fun v x -> { x with youtubeActorInfo = v });
+        }
+        
+        let empty = {
+          youtubeActorInfo = YoutubeActorInfo.empty;
+          
+        }
+        
+        let rec render_content x = 
+           [
+            (fun v -> GapiJson.render_object "youtubeActorInfo" (YoutubeActorInfo.render_content v)) x.youtubeActorInfo;
+            
+          ]
+        and render x = 
+          GapiJson.render_object "" (render_content x)
+        
+        let rec parse x = function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = "youtubeActorInfo"; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              YoutubeActorInfo.parse
+              YoutubeActorInfo.empty
+              (fun v -> { x with youtubeActorInfo = v })
+              cs
+          | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = ""; data_type = GapiJson.Object },
+            cs) ->
+            GapiJson.parse_children parse empty (fun x -> x) cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.ClientSpecificActorInfo.parse" e x
+        
+      end
+      
       type t = {
+        clientSpecificActorInfo : ClientSpecificActorInfo.t;
         displayName : string;
         id : string;
         image : Image.t;
         url : string;
+        verification : Verification.t;
         
       }
       
+      let clientSpecificActorInfo = {
+        GapiLens.get = (fun x -> x.clientSpecificActorInfo);
+        GapiLens.set = (fun v x -> { x with clientSpecificActorInfo = v });
+      }
       let displayName = {
         GapiLens.get = (fun x -> x.displayName);
         GapiLens.set = (fun v x -> { x with displayName = v });
@@ -2744,27 +3022,43 @@ struct
         GapiLens.get = (fun x -> x.url);
         GapiLens.set = (fun v x -> { x with url = v });
       }
+      let verification = {
+        GapiLens.get = (fun x -> x.verification);
+        GapiLens.set = (fun v x -> { x with verification = v });
+      }
       
       let empty = {
+        clientSpecificActorInfo = ClientSpecificActorInfo.empty;
         displayName = "";
         id = "";
         image = Image.empty;
         url = "";
+        verification = Verification.empty;
         
       }
       
       let rec render_content x = 
          [
+          (fun v -> GapiJson.render_object "clientSpecificActorInfo" (ClientSpecificActorInfo.render_content v)) x.clientSpecificActorInfo;
           GapiJson.render_string_value "displayName" x.displayName;
           GapiJson.render_string_value "id" x.id;
           (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
           GapiJson.render_string_value "url" x.url;
+          (fun v -> GapiJson.render_object "verification" (Verification.render_content v)) x.verification;
           
         ]
       and render x = 
         GapiJson.render_object "" (render_content x)
       
       let rec parse x = function
+        | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = "clientSpecificActorInfo"; data_type = GapiJson.Object },
+            cs) ->
+          GapiJson.parse_children
+            ClientSpecificActorInfo.parse
+            ClientSpecificActorInfo.empty
+            (fun v -> { x with clientSpecificActorInfo = v })
+            cs
         | GapiCore.AnnotatedTree.Leaf
             ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
             `String v) ->
@@ -2785,6 +3079,14 @@ struct
             ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
             `String v) ->
           { x with url = v }
+        | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = "verification"; data_type = GapiJson.Object },
+            cs) ->
+          GapiJson.parse_children
+            Verification.parse
+            Verification.empty
+            (fun v -> { x with verification = v })
+            cs
         | GapiCore.AnnotatedTree.Node
           ({ GapiJson.name = ""; data_type = GapiJson.Object },
           cs) ->
@@ -2962,6 +3264,45 @@ struct
   
   module Actor =
   struct
+    module Verification =
+    struct
+      type t = {
+        adHocVerified : string;
+        
+      }
+      
+      let adHocVerified = {
+        GapiLens.get = (fun x -> x.adHocVerified);
+        GapiLens.set = (fun v x -> { x with adHocVerified = v });
+      }
+      
+      let empty = {
+        adHocVerified = "";
+        
+      }
+      
+      let rec render_content x = 
+         [
+          GapiJson.render_string_value "adHocVerified" x.adHocVerified;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Leaf
+            ({ GapiJson.name = "adHocVerified"; data_type = GapiJson.Scalar },
+            `String v) ->
+          { x with adHocVerified = v }
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiPlusV1Model.Verification.parse" e x
+      
+    end
+    
     module Name =
     struct
       type t = {
@@ -3051,15 +3392,103 @@ struct
       
     end
     
+    module ClientSpecificActorInfo =
+    struct
+      module YoutubeActorInfo =
+      struct
+        type t = {
+          channelId : string;
+          
+        }
+        
+        let channelId = {
+          GapiLens.get = (fun x -> x.channelId);
+          GapiLens.set = (fun v x -> { x with channelId = v });
+        }
+        
+        let empty = {
+          channelId = "";
+          
+        }
+        
+        let rec render_content x = 
+           [
+            GapiJson.render_string_value "channelId" x.channelId;
+            
+          ]
+        and render x = 
+          GapiJson.render_object "" (render_content x)
+        
+        let rec parse x = function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = "channelId"; data_type = GapiJson.Scalar },
+              `String v) ->
+            { x with channelId = v }
+          | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = ""; data_type = GapiJson.Object },
+            cs) ->
+            GapiJson.parse_children parse empty (fun x -> x) cs
+          | e ->
+            GapiJson.unexpected "GapiPlusV1Model.YoutubeActorInfo.parse" e x
+        
+      end
+      
+      type t = {
+        youtubeActorInfo : YoutubeActorInfo.t;
+        
+      }
+      
+      let youtubeActorInfo = {
+        GapiLens.get = (fun x -> x.youtubeActorInfo);
+        GapiLens.set = (fun v x -> { x with youtubeActorInfo = v });
+      }
+      
+      let empty = {
+        youtubeActorInfo = YoutubeActorInfo.empty;
+        
+      }
+      
+      let rec render_content x = 
+         [
+          (fun v -> GapiJson.render_object "youtubeActorInfo" (YoutubeActorInfo.render_content v)) x.youtubeActorInfo;
+          
+        ]
+      and render x = 
+        GapiJson.render_object "" (render_content x)
+      
+      let rec parse x = function
+        | GapiCore.AnnotatedTree.Node
+            ({ GapiJson.name = "youtubeActorInfo"; data_type = GapiJson.Object },
+            cs) ->
+          GapiJson.parse_children
+            YoutubeActorInfo.parse
+            YoutubeActorInfo.empty
+            (fun v -> { x with youtubeActorInfo = v })
+            cs
+        | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = ""; data_type = GapiJson.Object },
+          cs) ->
+          GapiJson.parse_children parse empty (fun x -> x) cs
+        | e ->
+          GapiJson.unexpected "GapiPlusV1Model.ClientSpecificActorInfo.parse" e x
+      
+    end
+    
     type t = {
+      clientSpecificActorInfo : ClientSpecificActorInfo.t;
       displayName : string;
       id : string;
       image : Image.t;
       name : Name.t;
       url : string;
+      verification : Verification.t;
       
     }
     
+    let clientSpecificActorInfo = {
+      GapiLens.get = (fun x -> x.clientSpecificActorInfo);
+      GapiLens.set = (fun v x -> { x with clientSpecificActorInfo = v });
+    }
     let displayName = {
       GapiLens.get = (fun x -> x.displayName);
       GapiLens.set = (fun v x -> { x with displayName = v });
@@ -3080,29 +3509,45 @@ struct
       GapiLens.get = (fun x -> x.url);
       GapiLens.set = (fun v x -> { x with url = v });
     }
+    let verification = {
+      GapiLens.get = (fun x -> x.verification);
+      GapiLens.set = (fun v x -> { x with verification = v });
+    }
     
     let empty = {
+      clientSpecificActorInfo = ClientSpecificActorInfo.empty;
       displayName = "";
       id = "";
       image = Image.empty;
       name = Name.empty;
       url = "";
+      verification = Verification.empty;
       
     }
     
     let rec render_content x = 
        [
+        (fun v -> GapiJson.render_object "clientSpecificActorInfo" (ClientSpecificActorInfo.render_content v)) x.clientSpecificActorInfo;
         GapiJson.render_string_value "displayName" x.displayName;
         GapiJson.render_string_value "id" x.id;
         (fun v -> GapiJson.render_object "image" (Image.render_content v)) x.image;
         (fun v -> GapiJson.render_object "name" (Name.render_content v)) x.name;
         GapiJson.render_string_value "url" x.url;
+        (fun v -> GapiJson.render_object "verification" (Verification.render_content v)) x.verification;
         
       ]
     and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "clientSpecificActorInfo"; data_type = GapiJson.Object },
+          cs) ->
+        GapiJson.parse_children
+          ClientSpecificActorInfo.parse
+          ClientSpecificActorInfo.empty
+          (fun v -> { x with clientSpecificActorInfo = v })
+          cs
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
           `String v) ->
@@ -3131,6 +3576,14 @@ struct
           ({ GapiJson.name = "url"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with url = v }
+      | GapiCore.AnnotatedTree.Node
+          ({ GapiJson.name = "verification"; data_type = GapiJson.Object },
+          cs) ->
+        GapiJson.parse_children
+          Verification.parse
+          Verification.empty
+          (fun v -> { x with verification = v })
+          cs
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->

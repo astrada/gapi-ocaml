@@ -250,6 +250,7 @@ struct
   type t = {
     historyId : string;
     id : string;
+    internalDate : int64;
     labelIds : string list;
     payload : MessagePart.t;
     raw : string;
@@ -266,6 +267,10 @@ struct
   let id = {
     GapiLens.get = (fun x -> x.id);
     GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let internalDate = {
+    GapiLens.get = (fun x -> x.internalDate);
+    GapiLens.set = (fun v x -> { x with internalDate = v });
   }
   let labelIds = {
     GapiLens.get = (fun x -> x.labelIds);
@@ -295,6 +300,7 @@ struct
   let empty = {
     historyId = "";
     id = "";
+    internalDate = 0L;
     labelIds = [];
     payload = MessagePart.empty;
     raw = "";
@@ -308,6 +314,7 @@ struct
      [
       GapiJson.render_string_value "historyId" x.historyId;
       GapiJson.render_string_value "id" x.id;
+      GapiJson.render_int64_value "internalDate" x.internalDate;
       GapiJson.render_array "labelIds" (GapiJson.render_string_value "") x.labelIds;
       (fun v -> GapiJson.render_object "payload" (MessagePart.render_content v)) x.payload;
       GapiJson.render_string_value "raw" x.raw;
@@ -328,6 +335,10 @@ struct
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "internalDate"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with internalDate = Int64.of_string v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "labelIds"; data_type = GapiJson.Array },
         cs) ->
@@ -885,6 +896,60 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiGmailV1Model.Thread.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module WatchResponse =
+struct
+  type t = {
+    expiration : int64;
+    historyId : string;
+    
+  }
+  
+  let expiration = {
+    GapiLens.get = (fun x -> x.expiration);
+    GapiLens.set = (fun v x -> { x with expiration = v });
+  }
+  let historyId = {
+    GapiLens.get = (fun x -> x.historyId);
+    GapiLens.set = (fun v x -> { x with historyId = v });
+  }
+  
+  let empty = {
+    expiration = 0L;
+    historyId = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_int64_value "expiration" x.expiration;
+      GapiJson.render_string_value "historyId" x.historyId;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "expiration"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with expiration = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "historyId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with historyId = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiGmailV1Model.WatchResponse.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1502,6 +1567,81 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiGmailV1Model.ListHistoryResponse.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module WatchRequest =
+struct
+  type t = {
+    labelFilterAction : string;
+    labelIds : string list;
+    topicName : string;
+    
+  }
+  
+  let labelFilterAction = {
+    GapiLens.get = (fun x -> x.labelFilterAction);
+    GapiLens.set = (fun v x -> { x with labelFilterAction = v });
+  }
+  let labelIds = {
+    GapiLens.get = (fun x -> x.labelIds);
+    GapiLens.set = (fun v x -> { x with labelIds = v });
+  }
+  let topicName = {
+    GapiLens.get = (fun x -> x.topicName);
+    GapiLens.set = (fun v x -> { x with topicName = v });
+  }
+  
+  let empty = {
+    labelFilterAction = "";
+    labelIds = [];
+    topicName = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "labelFilterAction" x.labelFilterAction;
+      GapiJson.render_array "labelIds" (GapiJson.render_string_value "") x.labelIds;
+      GapiJson.render_string_value "topicName" x.topicName;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "labelFilterAction"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with labelFilterAction = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "labelIds"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              `String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiGmailV1Model.WatchRequest.parse.parse_collection" e x')
+        ""
+        (fun v -> { x with labelIds = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "topicName"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with topicName = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiGmailV1Model.WatchRequest.parse" e x
   
   let to_data_model = GapiJson.render_root render
   

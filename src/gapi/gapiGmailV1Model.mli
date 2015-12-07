@@ -103,6 +103,8 @@ sig
     (** The ID of the last history record that modified this message. *)
     id : string;
     (** The immutable ID of the message. *)
+    internalDate : int64;
+    (** The internal message creation timestamp (epoch ms), which determines ordering in the inbox. For normal SMTP-received email, this represents the time the message was originally accepted by Google, which is more reliable than the Date header. However, for API-migrated mail, it can be configured by client to be based on the Date header. *)
     labelIds : string list;
     (** List of IDs of labels applied to this message. *)
     payload : MessagePart.t;
@@ -123,6 +125,7 @@ sig
   
   val historyId : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
+  val internalDate : (t, int64) GapiLens.t
   val labelIds : (t, string list) GapiLens.t
   val payload : (t, MessagePart.t) GapiLens.t
   val raw : (t, string) GapiLens.t
@@ -312,6 +315,31 @@ sig
   val id : (t, string) GapiLens.t
   val messages : (t, Message.t list) GapiLens.t
   val snippet : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module WatchResponse :
+sig
+  type t = {
+    expiration : int64;
+    (** When Gmail will stop sending notifications for mailbox updates (epoch millis). Call watch again before this time to renew the watch. *)
+    historyId : string;
+    (** The ID of the mailbox's current history record. *)
+    
+  }
+  
+  val expiration : (t, int64) GapiLens.t
+  val historyId : (t, string) GapiLens.t
   
   val empty : t
   
@@ -527,6 +555,36 @@ sig
   val history : (t, History.t list) GapiLens.t
   val historyId : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module WatchRequest :
+sig
+  type t = {
+    labelFilterAction : string;
+    (** Filtering behavior of labelIds list specified. *)
+    labelIds : string list;
+    (** List of label_ids to restrict notifications about. By default, if unspecified, all changes are pushed out. If specified then dictates which labels are required for a push notification to be generated. *)
+    topicName : string;
+    (** A fully qualified Google Cloud Pub/Sub API topic name to publish the events to. This topic name **must** already exist in Cloud Pub/Sub and you **must** have already granted gmail "publish" permission on it. For example, "projects/my-project-identifier/topics/my-topic-name" (using the new Cloud Pub/Sub "v1beta2" topic naming format).
+
+Note that the "my-project-identifier" portion must exactly match your Google developer project id (the one executing this watch request). *)
+    
+  }
+  
+  val labelFilterAction : (t, string) GapiLens.t
+  val labelIds : (t, string list) GapiLens.t
+  val topicName : (t, string) GapiLens.t
   
   val empty : t
   

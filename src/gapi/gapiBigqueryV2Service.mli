@@ -5,7 +5,7 @@
   A data platform for customers to create, manage, share and query data..
   
   For more information about this service, see the
-  {{:https://developers.google.com/bigquery/docs/overview}API Documentation}.
+  {{:https://cloud.google.com/bigquery/}API Documentation}.
   *)
 
 module Scope :
@@ -18,6 +18,9 @@ sig
   
   val cloud_platform : string
   (** View and manage your data across Google Cloud Platform services *)
+  
+  val cloud_platform_read_only : string
+  (** View your data across Google Cloud Platform services *)
   
   val devstorage_full_control : string
   (** Manage your data and permissions in Google Cloud Storage *)
@@ -83,7 +86,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.Dataset.t * GapiConversation.Session.t
   
-  (** Lists all the datasets in the specified project to which the caller has read access; however, a project owner can list (but not necessarily get) all datasets in his project.
+  (** Lists all datasets in the specified project to which you have been granted the READER dataset role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -167,7 +170,22 @@ sig
     
   end
   
-  (** Retrieves the specified job by ID.
+  (** Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
+    @param std_params Optional standard parameters.
+    @param projectId Project ID of the job to cancel
+    @param jobId Job ID of the job to cancel
+    *)
+  val cancel :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    projectId:string ->
+    jobId:string ->
+    GapiConversation.Session.t ->
+    GapiBigqueryV2Model.JobCancelResponse.t * GapiConversation.Session.t
+  
+  (** Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param etag Optional ETag.
@@ -191,7 +209,7 @@ sig
     @param maxResults Maximum number of results to read
     @param pageToken Page token, returned by a previous call, to request the next page of results
     @param startIndex Zero-based index of the starting row
-    @param timeoutMs How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error
+    @param timeoutMs How long to wait for the query to complete, in milliseconds, before returning. Default is 10 seconds. If the timeout passes before the job completes, the 'jobComplete' field in the response will be false
     @param projectId Project ID of the query job
     @param jobId Job ID of the query job
     *)
@@ -207,7 +225,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.GetQueryResultsResponse.t * GapiConversation.Session.t
   
-  (** Starts a new asynchronous job.
+  (** Starts a new asynchronous job. Requires the Can View project role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -222,7 +240,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.Job.t * GapiConversation.Session.t
   
-  (** Lists all the Jobs in the specified project that were started by the user. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created.
+  (** Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -265,7 +283,7 @@ end
 module ProjectsResource :
 sig
   
-  (** Lists the projects to which you have at least read access.
+  (** Lists all projects to which you have been granted any project role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -286,7 +304,7 @@ end
 module TabledataResource :
 sig
   
-  (** Streams data into BigQuery one record at a time without needing to run a load job.
+  (** Streams data into BigQuery one record at a time without needing to run a load job. Requires the WRITER dataset role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -304,7 +322,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.TableDataInsertAllResponse.t * GapiConversation.Session.t
   
-  (** Retrieves table data from a specified set of rows.
+  (** Retrieves table data from a specified set of rows. Requires the READER dataset role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.
@@ -385,7 +403,7 @@ sig
     GapiConversation.Session.t ->
     GapiBigqueryV2Model.Table.t * GapiConversation.Session.t
   
-  (** Lists all tables in the specified dataset.
+  (** Lists all tables in the specified dataset. Requires the READER dataset role.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/bigquery/v2/"]).
     @param std_params Optional standard parameters.

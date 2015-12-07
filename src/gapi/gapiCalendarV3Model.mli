@@ -140,9 +140,9 @@ sig
     displayName : string;
     (** The attendee's name, if available. Optional. *)
     email : string;
-    (** The attendee's email address, if available. This field must be present when adding an attendee. *)
+    (** The attendee's email address, if available. This field must be present when adding an attendee. It must be a valid email address as per RFC5322. *)
     id : string;
-    (** The attendee's Profile ID, if available. *)
+    (** The attendee's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API *)
     optional : bool;
     (** Whether this is an optional attendee. Optional. The default is False. *)
     organizer : bool;
@@ -268,7 +268,7 @@ sig
     _method : string;
     (** The method used to deliver the notification. Possible values are:  
 - "email" - Reminders are sent via email. 
-- "sms" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. *)
+- "sms" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. SMS reminders are only available for Google Apps for Work, Education, and Government customers. *)
     _type : string;
     (** The type of notification. Possible values are:  
 - "eventCreation" - Notification sent when a new event is put on the calendar. 
@@ -300,10 +300,10 @@ sig
     _method : string;
     (** The method used by this reminder. Possible values are:  
 - "email" - Reminders are sent via email. 
-- "sms" - Reminders are sent via SMS. 
+- "sms" - Reminders are sent via SMS. These are only available for Google Apps for Work, Education, and Government customers. Requests to set SMS reminders for other account types are ignored. 
 - "popup" - Reminders are sent via a UI popup. *)
     minutes : int;
-    (** Number of minutes before the start of the event when the reminder should trigger. *)
+    (** Number of minutes before the start of the event when the reminder should trigger. Valid values are between 0 and 40320 (4 weeks in minutes). *)
     
   }
   
@@ -350,9 +350,9 @@ sig
 - "writer" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. 
 - "owner" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs. *)
     backgroundColor : string;
-    (** The main color of the calendar in the hexadecimal format "#0088aa". This property supersedes the index-based colorId property. Optional. *)
+    (** The main color of the calendar in the hexadecimal format "#0088aa". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional. *)
     colorId : string;
-    (** The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). Optional. *)
+    (** The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). This property is superseded by the backgroundColor and foregroundColor properties and can be ignored when using these properties. Optional. *)
     defaultReminders : EventReminder.t list;
     (** The default reminders that the authenticated user has for this calendar. *)
     deleted : bool;
@@ -362,7 +362,7 @@ sig
     etag : string;
     (** ETag of the resource. *)
     foregroundColor : string;
-    (** The foreground color of the calendar in the hexadecimal format "#ffffff". This property supersedes the index-based colorId property. Optional. *)
+    (** The foreground color of the calendar in the hexadecimal format "#ffffff". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional. *)
     hidden : bool;
     (** Whether the calendar has been hidden from the list. Optional. The default is False. *)
     id : string;
@@ -523,7 +523,7 @@ sig
     etag : string;
     (** ETag of the resource. *)
     id : string;
-    (** Identifier of the calendar. *)
+    (** Identifier of the calendar. To retrieve IDs call the calendarList.list() method. *)
     kind : string;
     (** Type of the resource ("calendar#calendar"). *)
     location : string;
@@ -645,7 +645,7 @@ sig
     date : GapiDate.t;
     (** The date, in the format "yyyy-mm-dd", if this is an all-day event. *)
     dateTime : GapiDate.t;
-    (** The time, as a combined date-time value (formatted according to RFC 3339). A time zone offset is required unless a time zone is explicitly specified in timeZone. *)
+    (** The time, as a combined date-time value (formatted according to RFC3339). A time zone offset is required unless a time zone is explicitly specified in timeZone. *)
     timeZone : string;
     (** The time zone in which the time is specified. (Formatted as an IANA Time Zone Database name, e.g. "Europe/Zurich".) For recurring events this field is required and specifies the time zone in which the recurrence is expanded. For single events this field is optional and indicates a custom time zone for the event start/end. *)
     
@@ -667,6 +667,42 @@ sig
   
 end
 
+module EventAttachment :
+sig
+  type t = {
+    fileId : string;
+    (** ID of the attached file. Read-only.
+For Google Drive files, this is the ID of the corresponding Files resource entry in the Drive API. *)
+    fileUrl : string;
+    (** URL link to the attachment.
+For adding Google Drive file attachments use the same format as in alternateLink property of the Files resource in the Drive API. *)
+    iconLink : string;
+    (** URL link to the attachment's icon. Read-only. *)
+    mimeType : string;
+    (** Internet media type (MIME type) of the attachment. *)
+    title : string;
+    (** Attachment title. *)
+    
+  }
+  
+  val fileId : (t, string) GapiLens.t
+  val fileUrl : (t, string) GapiLens.t
+  val iconLink : (t, string) GapiLens.t
+  val mimeType : (t, string) GapiLens.t
+  val title : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Event :
 sig
   module Source :
@@ -675,7 +711,7 @@ sig
       title : string;
       (** Title of the source; for example a title of a web page or an email subject. *)
       url : string;
-      (** URL of the source pointing to a resource. URL's protocol must be HTTP or HTTPS. *)
+      (** URL of the source pointing to a resource. The URL scheme must be HTTP or HTTPS. *)
       
     }
     
@@ -694,7 +730,7 @@ sig
   sig
     type t = {
       overrides : EventReminder.t list;
-      (** If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. *)
+      (** If the event doesn't use the default reminders, this lists the reminders specific to the event, or, if not set, indicates that no reminders are set for this event. The maximum number of override reminders is 5. *)
       useDefault : bool;
       (** Whether the default reminders of the calendar apply to the event. *)
       
@@ -717,9 +753,9 @@ sig
       displayName : string;
       (** The organizer's name, if available. *)
       email : string;
-      (** The organizer's email address, if available. *)
+      (** The organizer's email address, if available. It must be a valid email address as per RFC5322. *)
       id : string;
-      (** The organizer's Profile ID, if available. *)
+      (** The organizer's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API *)
       self : bool;
       (** Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False. *)
       
@@ -746,11 +782,11 @@ sig
 - "icon" - The gadget displays next to the event's title in the calendar view. 
 - "chip" - The gadget displays when the event is clicked. *)
       height : int;
-      (** The gadget's height in pixels. Optional. *)
+      (** The gadget's height in pixels. The height must be an integer greater than 0. Optional. *)
       iconLink : string;
-      (** The gadget's icon URL. *)
+      (** The gadget's icon URL. The URL scheme must be HTTPS. *)
       link : string;
-      (** The gadget's URL. *)
+      (** The gadget's URL. The URL scheme must be HTTPS. *)
       preferences : (string * string) list;
       (** Preferences. *)
       title : string;
@@ -758,7 +794,7 @@ sig
       _type : string;
       (** The gadget's type. *)
       width : int;
-      (** The gadget's width in pixels. Optional. *)
+      (** The gadget's width in pixels. The width must be an integer greater than 0. Optional. *)
       
     }
     
@@ -808,7 +844,7 @@ sig
       email : string;
       (** The creator's email address, if available. *)
       id : string;
-      (** The creator's Profile ID, if available. *)
+      (** The creator's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API *)
       self : bool;
       (** Whether the creator corresponds to the calendar on which this copy of the event appears. Read-only. The default is False. *)
       
@@ -829,15 +865,19 @@ sig
   
   type t = {
     anyoneCanAddSelf : bool;
-    (** Whether anyone can invite themselves to the event. Optional. The default is False. *)
+    (** Whether anyone can invite themselves to the event (currently works for Google+ events only). Optional. The default is False. *)
+    attachments : EventAttachment.t list;
+    (** File attachments for the event. Currently only Google Drive attachments are supported.
+In order to modify attachments the supportsAttachments request parameter should be set to true.
+There can be at most 25 attachments per event, *)
     attendees : EventAttendee.t list;
-    (** The attendees of the event. *)
+    (** The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users. *)
     attendeesOmitted : bool;
     (** Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False. *)
     colorId : string;
     (** The color of the event. This is an ID referring to an entry in the event section of the colors definition (see the  colors endpoint). Optional. *)
     created : GapiDate.t;
-    (** Creation time of the event (as a RFC 3339 timestamp). Read-only. *)
+    (** Creation time of the event (as a RFC3339 timestamp). Read-only. *)
     creator : Creator.t;
     (** The creator of the event. Read-only. *)
     description : string;
@@ -863,12 +903,15 @@ sig
     htmlLink : string;
     (** An absolute link to this event in the Google Calendar Web UI. Read-only. *)
     iCalUID : string;
-    (** Event ID in the iCalendar format. *)
+    (** Event unique identifier as defined in RFC5545. It is used to uniquely identify events accross calendaring systems and must be supplied when importing events via the import method.
+Note that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs. *)
     id : string;
-    (** Identifier of the event. When creating new single or recurring events, you can specify their IDs. Provided IDs must follow these rules:  
+    (** Opaque identifier of the event. When creating new single or recurring events, you can specify their IDs. Provided IDs must follow these rules:  
 - characters allowed in the ID are those used in base32hex encoding, i.e. lowercase letters a-v and digits 0-9, see section 3.1.2 in RFC2938 
 - the length of the ID must be between 5 and 1024 characters 
-- the ID must be unique per calendar  Due to the globally distributed nature of the system, we cannot guarantee that ID collisions will be detected at event creation time. To minimize the risk of collisions we recommend using an established UUID algorithm such as one described in RFC4122. *)
+- the ID must be unique per calendar  Due to the globally distributed nature of the system, we cannot guarantee that ID collisions will be detected at event creation time. To minimize the risk of collisions we recommend using an established UUID algorithm such as one described in RFC4122.
+If you do not specify an ID, it will be automatically generated by the server.
+Note that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs. *)
     kind : string;
     (** Type of the resource ("calendar#event"). *)
     location : string;
@@ -882,15 +925,15 @@ sig
     privateCopy : bool;
     (** Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False. *)
     recurrence : string list;
-    (** List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event. This field is omitted for single events or instances of recurring events. *)
+    (** List of RRULE, EXRULE, RDATE and EXDATE lines for a recurring event, as specified in RFC5545. Note that DTSTART and DTEND lines are not allowed in this field; event start and end times are specified in the start and end fields. This field is omitted for single events or instances of recurring events. *)
     recurringEventId : string;
-    (** For an instance of a recurring event, this is the event ID of the recurring event itself. Immutable. *)
+    (** For an instance of a recurring event, this is the id of the recurring event to which this instance belongs. Immutable. *)
     reminders : Reminders.t;
     (** Information about the event's reminders for the authenticated user. *)
     sequence : int;
     (** Sequence number as per iCalendar. *)
     source : Source.t;
-    (** Source of an event from which it was created; for example a web page, an email message or any document identifiable by an URL using HTTP/HTTPS protocol. Accessible only by the creator of the event. *)
+    (** Source from which the event was created. For example, a web page, an email message or any document identifiable by an URL with HTTP or HTTPS scheme. Can only be seen or modified by the creator of the event. *)
     start : EventDateTime.t;
     (** The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance. *)
     status : string;
@@ -905,7 +948,7 @@ sig
 - "opaque" - The event blocks time on the calendar. This is the default value. 
 - "transparent" - The event does not block time on the calendar. *)
     updated : GapiDate.t;
-    (** Last modification time of the event (as a RFC 3339 timestamp). Read-only. *)
+    (** Last modification time of the event (as a RFC3339 timestamp). Read-only. *)
     visibility : string;
     (** Visibility of the event. Optional. Possible values are:  
 - "default" - Uses the default visibility for events on the calendar. This is the default value. 
@@ -916,6 +959,7 @@ sig
   }
   
   val anyoneCanAddSelf : (t, bool) GapiLens.t
+  val attachments : (t, EventAttachment.t list) GapiLens.t
   val attendees : (t, EventAttendee.t list) GapiLens.t
   val attendeesOmitted : (t, bool) GapiLens.t
   val colorId : (t, string) GapiLens.t
@@ -1027,7 +1071,7 @@ sig
     timeZone : string;
     (** The time zone of the calendar. Read-only. *)
     updated : GapiDate.t;
-    (** Last modification time of the calendar (as a RFC 3339 timestamp). Read-only. *)
+    (** Last modification time of the calendar (as a RFC3339 timestamp). Read-only. *)
     
   }
   
@@ -1108,13 +1152,13 @@ module Colors :
 sig
   type t = {
     calendar : (string * ColorDefinition.t) list;
-    (** Palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry resource refers to one of these color IDs in its color field. Read-only. *)
+    (** A global palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry resource refers to one of these color IDs in its color field. Read-only. *)
     event : (string * ColorDefinition.t) list;
-    (** Palette of event colors, mapping from the color ID to its definition. An event resource may refer to one of these color IDs in its color field. Read-only. *)
+    (** A global palette of event colors, mapping from the color ID to its definition. An event resource may refer to one of these color IDs in its color field. Read-only. *)
     kind : string;
     (** Type of the resource ("calendar#colors"). *)
     updated : GapiDate.t;
-    (** Last modification time of the color palette (as a RFC 3339 timestamp). Read-only. *)
+    (** Last modification time of the color palette (as a RFC3339 timestamp). Read-only. *)
     
   }
   

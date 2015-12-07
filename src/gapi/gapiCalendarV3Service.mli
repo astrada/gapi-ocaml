@@ -27,7 +27,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param ruleId ACL rule identifier.
     *)
   val delete :
@@ -43,7 +43,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param ruleId ACL rule identifier.
     *)
   val get :
@@ -59,7 +59,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val insert :
     ?base_url:string ->
@@ -80,7 +80,7 @@ sig
 If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
 Learn more about incremental synchronization.
 Optional. The default is to return all entries.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val list :
     ?base_url:string ->
@@ -97,7 +97,7 @@ Optional. The default is to return all entries.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param ruleId ACL rule identifier.
     *)
   val patch :
@@ -113,7 +113,7 @@ Optional. The default is to return all entries.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param ruleId ACL rule identifier.
     *)
   val update :
@@ -136,7 +136,7 @@ Optional. The default is to return all entries.
 If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
 Learn more about incremental synchronization.
 Optional. The default is to return all entries.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val watch :
     ?base_url:string ->
@@ -175,7 +175,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val delete :
     ?base_url:string ->
@@ -189,7 +189,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val get :
     ?base_url:string ->
@@ -218,7 +218,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
-    @param minAccessRole The minimum access role for the user in the returned entires. Optional. The default is no restriction.
+    @param minAccessRole The minimum access role for the user in the returned entries. Optional. The default is no restriction.
     @param pageToken Token specifying which result page to return. Optional.
     @param showDeleted Whether to include deleted calendar list entries in the result. Optional. The default is False.
     @param showHidden Whether to show hidden entries. Optional. The default is False.
@@ -245,7 +245,7 @@ Optional. The default is to return all entries.
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param colorRgbFormat Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val patch :
     ?base_url:string ->
@@ -261,7 +261,7 @@ Optional. The default is to return all entries.
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param colorRgbFormat Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val update :
     ?base_url:string ->
@@ -277,7 +277,7 @@ Optional. The default is to return all entries.
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.
-    @param minAccessRole The minimum access role for the user in the returned entires. Optional. The default is no restriction.
+    @param minAccessRole The minimum access role for the user in the returned entries. Optional. The default is no restriction.
     @param pageToken Token specifying which result page to return. Optional.
     @param showDeleted Whether to include deleted calendar list entries in the result. Optional. The default is False.
     @param showHidden Whether to show hidden entries. Optional. The default is False.
@@ -310,7 +310,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val clear :
     ?base_url:string ->
@@ -323,7 +323,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val delete :
     ?base_url:string ->
@@ -337,7 +337,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val get :
     ?base_url:string ->
@@ -363,7 +363,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val patch :
     ?base_url:string ->
@@ -377,7 +377,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val update :
     ?base_url:string ->
@@ -448,7 +448,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param sendNotifications Whether to send notifications about the deletion of the event. Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param eventId Event identifier.
     *)
   val delete :
@@ -468,7 +468,7 @@ sig
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param eventId Event identifier.
     *)
   val get :
@@ -487,11 +487,13 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
-    @param calendarId Calendar identifier.
+    @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val import :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAttachments:bool ->
     calendarId:string ->
     GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
@@ -503,13 +505,15 @@ sig
     @param std_params Optional standard parameters.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the creation of the new event. Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxAttendees:int ->
     ?sendNotifications:bool ->
+    ?supportsAttachments:bool ->
     calendarId:string ->
     GapiCalendarV3Model.Event.t ->
     GapiConversation.Session.t ->
@@ -525,10 +529,10 @@ sig
     @param originalStart The original start time of the instance in the result. Optional.
     @param pageToken Token specifying which result page to return. Optional.
     @param showDeleted Whether to include deleted events (with status equals "cancelled") in the result. Cancelled instances of recurring events will still be included if singleEvents is False. Optional. The default is False.
-    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
-    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param eventId Recurring event identifier.
     *)
   val instances :
@@ -578,11 +582,11 @@ These are:
 - updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
 Learn more about incremental synchronization.
 Optional. The default is to return all entries.
-    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
-    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
-    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
-    @param calendarId Calendar identifier.
+    @param updatedMin Lower bound for an event's last modification time (as a RFC3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val list :
     ?base_url:string ->
@@ -634,7 +638,8 @@ Optional. The default is to return all entries.
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param eventId Event identifier.
     *)
   val patch :
@@ -643,6 +648,7 @@ Optional. The default is to return all entries.
     ?alwaysIncludeEmail:bool ->
     ?maxAttendees:int ->
     ?sendNotifications:bool ->
+    ?supportsAttachments:bool ->
     calendarId:string ->
     eventId:string ->
     GapiCalendarV3Model.Event.t ->
@@ -654,7 +660,7 @@ Optional. The default is to return all entries.
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param sendNotifications Whether to send notifications about the creation of the event. Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param text The text describing the event to be created.
     *)
   val quickAdd :
@@ -673,7 +679,8 @@ Optional. The default is to return all entries.
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
-    @param calendarId Calendar identifier.
+    @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param eventId Event identifier.
     *)
   val update :
@@ -682,6 +689,7 @@ Optional. The default is to return all entries.
     ?alwaysIncludeEmail:bool ->
     ?maxAttendees:int ->
     ?sendNotifications:bool ->
+    ?supportsAttachments:bool ->
     calendarId:string ->
     eventId:string ->
     GapiCalendarV3Model.Event.t ->
@@ -718,11 +726,11 @@ These are:
 - updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
 Learn more about incremental synchronization.
 Optional. The default is to return all entries.
-    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.
-    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
-    @param updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
-    @param calendarId Calendar identifier.
+    @param updatedMin Lower bound for an event's last modification time (as a RFC3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
+    @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val watch :
     ?base_url:string ->

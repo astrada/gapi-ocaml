@@ -81,6 +81,7 @@ struct
         end_date : string;
         filters : string;
         ids : string;
+        include_empty_rows : bool;
         max_results : int;
         metrics : string;
         output : Output.t;
@@ -102,6 +103,7 @@ struct
         end_date = "";
         filters = "";
         ids = "";
+        include_empty_rows = false;
         max_results = 0;
         metrics = "";
         output = Output.Default;
@@ -125,6 +127,7 @@ struct
         param (fun p -> p.end_date) (fun x -> x) "end-date";
         param (fun p -> p.filters) (fun x -> x) "filters";
         param (fun p -> p.ids) (fun x -> x) "ids";
+        param (fun p -> p.include_empty_rows) string_of_bool "include-empty-rows";
         param (fun p -> p.max_results) string_of_int "max-results";
         param (fun p -> p.metrics) (fun x -> x) "metrics";
         param (fun p -> p.output) Output.to_string "output";
@@ -142,6 +145,7 @@ struct
           ?(end_date = default.end_date)
           ?(filters = default.filters)
           ?(ids = default.ids)
+          ?(include_empty_rows = default.include_empty_rows)
           ?(max_results = default.max_results)
           ?(metrics = default.metrics)
           ?(output = default.output)
@@ -161,6 +165,7 @@ struct
           end_date;
           filters;
           ids;
+          include_empty_rows;
           max_results;
           metrics;
           output;
@@ -181,6 +186,7 @@ struct
           ?std_params
           ?dimensions
           ?filters
+          ?include_empty_rows
           ?max_results
           ?output
           ?samplingLevel
@@ -195,8 +201,8 @@ struct
       let full_url = GapiUtils.add_path_to_url ["data"; "ga"] base_url in
       let params = GaParameters.merge_parameters
         ?standard_parameters:std_params ?dimensions ~end_date ?filters ~ids
-        ?max_results ~metrics ?output ?samplingLevel ?segment ?sort
-        ~start_date ?start_index () in
+        ?include_empty_rows ?max_results ~metrics ?output ?samplingLevel
+        ?segment ?sort ~start_date ?start_index () in
       let query_parameters = Option.map GaParameters.to_key_value_list params
         in
       GapiService.get ?query_parameters ?etag full_url

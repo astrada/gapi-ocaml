@@ -556,6 +556,8 @@ sig
     (** A link to human readable documentation for the API. *)
     etag : string;
     (** The ETag for this response. *)
+    exponentialBackoffDefault : bool;
+    (** Enable exponential backoff for suitable methods in the generated clients. *)
     features : string list;
     (** A list of supported features for this API. *)
     icons : Icons.t;
@@ -594,6 +596,8 @@ sig
     (** The title of this API. *)
     version : string;
     (** The version of this API. *)
+    version_module : bool;
+    (**  *)
     
   }
   
@@ -606,6 +610,7 @@ sig
   val discoveryVersion : (t, string) GapiLens.t
   val documentationLink : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
+  val exponentialBackoffDefault : (t, bool) GapiLens.t
   val features : (t, string list) GapiLens.t
   val icons : (t, Icons.t) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -625,6 +630,7 @@ sig
   val servicePath : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
   val version : (t, string) GapiLens.t
+  val version_module : (t, bool) GapiLens.t
   
   val empty : t
   

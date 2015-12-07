@@ -99,6 +99,5 @@
     }
   ],
   "kind": "bigquery#jobList",
-  "nextPageToken": "string",
-  "totalItems": 12345
+  "nextPageToken": "string"
 }

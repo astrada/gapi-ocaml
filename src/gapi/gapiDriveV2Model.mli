@@ -282,7 +282,11 @@ sig
     additionalRoleInfo : AdditionalRoleInfo.t list;
     (** Information about supported additional roles per file type. The most specific type takes precedence. *)
     domainSharingPolicy : string;
-    (** The domain sharing policy for the current user. *)
+    (** The domain sharing policy for the current user. Possible values are:  
+- allowed 
+- allowedWithWarning 
+- incomingOnly 
+- disallowed *)
     etag : string;
     (** The ETag of the item. *)
     exportFormats : ExportFormats.t list;
@@ -788,6 +792,34 @@ sig
   
 end
 
+module GeneratedIds :
+sig
+  type t = {
+    ids : string list;
+    (** The IDs generated for the requesting user in the specified space. *)
+    kind : string;
+    (** This is always drive#generatedIds *)
+    space : string;
+    (** The type of file that can be created with these IDs. *)
+    
+  }
+  
+  val ids : (t, string list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val space : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Permission :
 sig
   type t = {
@@ -980,7 +1012,7 @@ sig
       hidden : bool;
       (** Deprecated. *)
       restricted : bool;
-      (** Whether viewers are prevented from downloading this file. *)
+      (** Whether viewers and commenters are prevented from downloading, printing, and copying this file. *)
       starred : bool;
       (** Whether this file is starred by the user. *)
       trashed : bool;
@@ -1129,6 +1161,8 @@ sig
     (** A link for opening the file in a relevant Google editor or viewer. *)
     appDataContents : bool;
     (** Whether this file is in the Application Data folder. *)
+    canComment : bool;
+    (** Whether the current user can comment on the file. *)
     copyable : bool;
     (** Whether the file can be copied by the current user. *)
     createdDate : GapiDate.t;
@@ -1138,7 +1172,7 @@ sig
     description : string;
     (** A short description of the file. *)
     downloadUrl : string;
-    (** Short lived download URL for the file. This is only populated for files with content stored in Drive. *)
+    (**  *)
     editable : bool;
     (** Whether the file can be edited by the current user. *)
     embedLink : string;
@@ -1146,17 +1180,19 @@ sig
     etag : string;
     (** ETag of the file. *)
     explicitlyTrashed : bool;
-    (** Whether this file has been explicitly trashed, as opposed to recursively trashed. This will only be populated if the file is trashed. *)
+    (** Whether this file has been explicitly trashed, as opposed to recursively trashed. *)
     exportLinks : (string * string) list;
     (** Links for exporting Google Docs to specific formats. *)
     fileExtension : string;
-    (** The file extension used when downloading this file. This field is read only. To set the extension, include it in the title when creating the file. This is only populated for files with content stored in Drive. *)
+    (** The final component of fullFileExtension with trailing text that does not appear to be part of the extension removed. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
     fileSize : int64;
-    (** The size of the file in bytes. This is only populated for files with content stored in Drive. *)
+    (** The size of the file in bytes. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
     folderColorRgb : string;
     (** Folder color as an RGB hex string if the file is a folder. The list of supported colors is available in the folderColorPalette field of the About resource. If an unsupported color is specified, it will be changed to the closest color in the palette. *)
+    fullFileExtension : string;
+    (** The full file extension; extracted from the title. May contain multiple concatenated extensions, such as "tar.gz". Removing an extension from the title does not clear this field; however, changing the extension on the title does update this field. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
     headRevisionId : string;
-    (** The ID of the file's head revision. This will only be populated for files with content stored in Drive. *)
+    (** The ID of the file's head revision. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
     iconLink : string;
     (** A link to the file's icon. *)
     id : string;
@@ -1176,9 +1212,9 @@ sig
     lastViewedByMeDate : GapiDate.t;
     (** Last time this file was viewed by the user (formatted RFC 3339 timestamp). *)
     markedViewedByMeDate : GapiDate.t;
-    (** Time this file was explicitly marked viewed by the user (formatted RFC 3339 timestamp). *)
+    (** Deprecated. *)
     md5Checksum : string;
-    (** An MD5 checksum for the content of this file. This is populated only for files with content stored in Drive. *)
+    (** An MD5 checksum for the content of this file. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
     mimeType : string;
     (** The MIME type of the file. This is only mutable on update when uploading new content. This field can be left blank, and the mimetype will be determined from the uploaded content's MIME type. *)
     modifiedByMeDate : GapiDate.t;
@@ -1188,7 +1224,9 @@ sig
     openWithLinks : (string * string) list;
     (** A map of the id of each of the user's apps to a link to open this file with that app. Only populated when the drive.apps.readonly scope is used. *)
     originalFilename : string;
-    (** The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This will only be populated on files with content stored in Drive. *)
+    (** The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
+    ownedByMe : bool;
+    (** Whether the file is owned by the current user. *)
     ownerNames : string list;
     (** Name(s) of the owner(s) of this file. *)
     owners : User.t list;
@@ -1204,12 +1242,16 @@ Setting this field will put the file in all of the provided folders. On insert, 
     (** The number of quota bytes used by this file. *)
     selfLink : string;
     (** A link back to this file. *)
+    shareable : bool;
+    (** Whether the file's sharing settings can be modified by the current user. *)
     shared : bool;
     (** Whether the file has been shared. *)
     sharedWithMeDate : GapiDate.t;
     (** Time at which this file was shared with the user (formatted RFC 3339 timestamp). *)
     sharingUser : User.t;
     (** User that shared the item with the current user, if available. *)
+    spaces : string list;
+    (** The list of spaces which contain the file. Supported values are 'drive', 'appDataFolder' and 'photos'. *)
     thumbnail : Thumbnail.t;
     (** Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google. *)
     thumbnailLink : string;
@@ -1233,6 +1275,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   
   val alternateLink : (t, string) GapiLens.t
   val appDataContents : (t, bool) GapiLens.t
+  val canComment : (t, bool) GapiLens.t
   val copyable : (t, bool) GapiLens.t
   val createdDate : (t, GapiDate.t) GapiLens.t
   val defaultOpenWithLink : (t, string) GapiLens.t
@@ -1246,6 +1289,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val fileExtension : (t, string) GapiLens.t
   val fileSize : (t, int64) GapiLens.t
   val folderColorRgb : (t, string) GapiLens.t
+  val fullFileExtension : (t, string) GapiLens.t
   val headRevisionId : (t, string) GapiLens.t
   val iconLink : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -1263,6 +1307,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val modifiedDate : (t, GapiDate.t) GapiLens.t
   val openWithLinks : (t, (string * string) list) GapiLens.t
   val originalFilename : (t, string) GapiLens.t
+  val ownedByMe : (t, bool) GapiLens.t
   val ownerNames : (t, string list) GapiLens.t
   val owners : (t, User.t list) GapiLens.t
   val parents : (t, ParentReference.t list) GapiLens.t
@@ -1270,9 +1315,11 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val properties : (t, Property.t list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val shareable : (t, bool) GapiLens.t
   val shared : (t, bool) GapiLens.t
   val sharedWithMeDate : (t, GapiDate.t) GapiLens.t
   val sharingUser : (t, User.t) GapiLens.t
+  val spaces : (t, string list) GapiLens.t
   val thumbnail : (t, Thumbnail.t) GapiLens.t
   val thumbnailLink : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t

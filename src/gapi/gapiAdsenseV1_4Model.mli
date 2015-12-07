@@ -702,6 +702,8 @@ end
 module Account :
 sig
   type t = {
+    creation_time : int64;
+    (**  *)
     id : string;
     (** Unique identifier of this account. *)
     kind : string;
@@ -717,6 +719,7 @@ sig
     
   }
   
+  val creation_time : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t

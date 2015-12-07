@@ -7888,6 +7888,7 @@ struct
     caseSensitive : bool;
     expressionValue : string;
     field : string;
+    fieldIndex : int;
     kind : string;
     matchType : string;
     
@@ -7905,6 +7906,10 @@ struct
     GapiLens.get = (fun x -> x.field);
     GapiLens.set = (fun v x -> { x with field = v });
   }
+  let fieldIndex = {
+    GapiLens.get = (fun x -> x.fieldIndex);
+    GapiLens.set = (fun v x -> { x with fieldIndex = v });
+  }
   let kind = {
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
@@ -7918,6 +7923,7 @@ struct
     caseSensitive = false;
     expressionValue = "";
     field = "";
+    fieldIndex = 0;
     kind = "";
     matchType = "";
     
@@ -7928,6 +7934,7 @@ struct
       GapiJson.render_bool_value "caseSensitive" x.caseSensitive;
       GapiJson.render_string_value "expressionValue" x.expressionValue;
       GapiJson.render_string_value "field" x.field;
+      GapiJson.render_int_value "fieldIndex" x.fieldIndex;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "matchType" x.matchType;
       
@@ -7948,6 +7955,10 @@ struct
         ({ GapiJson.name = "field"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with field = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "fieldIndex"; data_type = GapiJson.Scalar },
+        `Int v) ->
+      { x with fieldIndex = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -9307,6 +9318,7 @@ struct
   struct
     type t = {
       field : string;
+      fieldIndex : int;
       
     }
     
@@ -9314,15 +9326,21 @@ struct
       GapiLens.get = (fun x -> x.field);
       GapiLens.set = (fun v x -> { x with field = v });
     }
+    let fieldIndex = {
+      GapiLens.get = (fun x -> x.fieldIndex);
+      GapiLens.set = (fun v x -> { x with fieldIndex = v });
+    }
     
     let empty = {
       field = "";
+      fieldIndex = 0;
       
     }
     
     let rec render_content x = 
        [
         GapiJson.render_string_value "field" x.field;
+        GapiJson.render_int_value "fieldIndex" x.fieldIndex;
         
       ]
     and render x = 
@@ -9333,6 +9351,10 @@ struct
           ({ GapiJson.name = "field"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with field = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "fieldIndex"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with fieldIndex = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -9347,6 +9369,7 @@ struct
     type t = {
       caseSensitive : bool;
       field : string;
+      fieldIndex : int;
       replaceString : string;
       searchString : string;
       
@@ -9360,6 +9383,10 @@ struct
       GapiLens.get = (fun x -> x.field);
       GapiLens.set = (fun v x -> { x with field = v });
     }
+    let fieldIndex = {
+      GapiLens.get = (fun x -> x.fieldIndex);
+      GapiLens.set = (fun v x -> { x with fieldIndex = v });
+    }
     let replaceString = {
       GapiLens.get = (fun x -> x.replaceString);
       GapiLens.set = (fun v x -> { x with replaceString = v });
@@ -9372,6 +9399,7 @@ struct
     let empty = {
       caseSensitive = false;
       field = "";
+      fieldIndex = 0;
       replaceString = "";
       searchString = "";
       
@@ -9381,6 +9409,7 @@ struct
        [
         GapiJson.render_bool_value "caseSensitive" x.caseSensitive;
         GapiJson.render_string_value "field" x.field;
+        GapiJson.render_int_value "fieldIndex" x.fieldIndex;
         GapiJson.render_string_value "replaceString" x.replaceString;
         GapiJson.render_string_value "searchString" x.searchString;
         
@@ -9397,6 +9426,10 @@ struct
           ({ GapiJson.name = "field"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with field = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "fieldIndex"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with fieldIndex = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "replaceString"; data_type = GapiJson.Scalar },
           `String v) ->
@@ -9468,6 +9501,7 @@ struct
   struct
     type t = {
       field : string;
+      fieldIndex : int;
       
     }
     
@@ -9475,15 +9509,21 @@ struct
       GapiLens.get = (fun x -> x.field);
       GapiLens.set = (fun v x -> { x with field = v });
     }
+    let fieldIndex = {
+      GapiLens.get = (fun x -> x.fieldIndex);
+      GapiLens.set = (fun v x -> { x with fieldIndex = v });
+    }
     
     let empty = {
       field = "";
+      fieldIndex = 0;
       
     }
     
     let rec render_content x = 
        [
         GapiJson.render_string_value "field" x.field;
+        GapiJson.render_int_value "fieldIndex" x.fieldIndex;
         
       ]
     and render x = 
@@ -9494,6 +9534,10 @@ struct
           ({ GapiJson.name = "field"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with field = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "fieldIndex"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with fieldIndex = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -9510,11 +9554,14 @@ struct
       extractA : string;
       extractB : string;
       fieldA : string;
+      fieldAIndex : int;
       fieldARequired : bool;
       fieldB : string;
+      fieldBIndex : int;
       fieldBRequired : bool;
       outputConstructor : string;
       outputToField : string;
+      outputToFieldIndex : int;
       overrideOutputField : bool;
       
     }
@@ -9535,6 +9582,10 @@ struct
       GapiLens.get = (fun x -> x.fieldA);
       GapiLens.set = (fun v x -> { x with fieldA = v });
     }
+    let fieldAIndex = {
+      GapiLens.get = (fun x -> x.fieldAIndex);
+      GapiLens.set = (fun v x -> { x with fieldAIndex = v });
+    }
     let fieldARequired = {
       GapiLens.get = (fun x -> x.fieldARequired);
       GapiLens.set = (fun v x -> { x with fieldARequired = v });
@@ -9542,6 +9593,10 @@ struct
     let fieldB = {
       GapiLens.get = (fun x -> x.fieldB);
       GapiLens.set = (fun v x -> { x with fieldB = v });
+    }
+    let fieldBIndex = {
+      GapiLens.get = (fun x -> x.fieldBIndex);
+      GapiLens.set = (fun v x -> { x with fieldBIndex = v });
     }
     let fieldBRequired = {
       GapiLens.get = (fun x -> x.fieldBRequired);
@@ -9555,6 +9610,10 @@ struct
       GapiLens.get = (fun x -> x.outputToField);
       GapiLens.set = (fun v x -> { x with outputToField = v });
     }
+    let outputToFieldIndex = {
+      GapiLens.get = (fun x -> x.outputToFieldIndex);
+      GapiLens.set = (fun v x -> { x with outputToFieldIndex = v });
+    }
     let overrideOutputField = {
       GapiLens.get = (fun x -> x.overrideOutputField);
       GapiLens.set = (fun v x -> { x with overrideOutputField = v });
@@ -9565,11 +9624,14 @@ struct
       extractA = "";
       extractB = "";
       fieldA = "";
+      fieldAIndex = 0;
       fieldARequired = false;
       fieldB = "";
+      fieldBIndex = 0;
       fieldBRequired = false;
       outputConstructor = "";
       outputToField = "";
+      outputToFieldIndex = 0;
       overrideOutputField = false;
       
     }
@@ -9580,11 +9642,14 @@ struct
         GapiJson.render_string_value "extractA" x.extractA;
         GapiJson.render_string_value "extractB" x.extractB;
         GapiJson.render_string_value "fieldA" x.fieldA;
+        GapiJson.render_int_value "fieldAIndex" x.fieldAIndex;
         GapiJson.render_bool_value "fieldARequired" x.fieldARequired;
         GapiJson.render_string_value "fieldB" x.fieldB;
+        GapiJson.render_int_value "fieldBIndex" x.fieldBIndex;
         GapiJson.render_bool_value "fieldBRequired" x.fieldBRequired;
         GapiJson.render_string_value "outputConstructor" x.outputConstructor;
         GapiJson.render_string_value "outputToField" x.outputToField;
+        GapiJson.render_int_value "outputToFieldIndex" x.outputToFieldIndex;
         GapiJson.render_bool_value "overrideOutputField" x.overrideOutputField;
         
       ]
@@ -9609,6 +9674,10 @@ struct
           `String v) ->
         { x with fieldA = v }
       | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "fieldAIndex"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with fieldAIndex = v }
+      | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "fieldARequired"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with fieldARequired = v }
@@ -9616,6 +9685,10 @@ struct
           ({ GapiJson.name = "fieldB"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with fieldB = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "fieldBIndex"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with fieldBIndex = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "fieldBRequired"; data_type = GapiJson.Scalar },
           `Bool v) ->
@@ -9628,6 +9701,10 @@ struct
           ({ GapiJson.name = "outputToField"; data_type = GapiJson.Scalar },
           `String v) ->
         { x with outputToField = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "outputToFieldIndex"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with outputToFieldIndex = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "overrideOutputField"; data_type = GapiJson.Scalar },
           `Bool v) ->

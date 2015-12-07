@@ -642,6 +642,7 @@ struct
       showDeleted : bool;
       showHiddenInvitations : bool;
       singleEvents : bool;
+      supportsAttachments : bool;
       syncToken : string;
       text : string;
       timeMax : GapiDate.t;
@@ -672,6 +673,7 @@ struct
       showDeleted = false;
       showHiddenInvitations = false;
       singleEvents = false;
+      supportsAttachments = false;
       syncToken = "";
       text = "";
       timeMax = GapiDate.epoch;
@@ -704,6 +706,7 @@ struct
       param (fun p -> p.showDeleted) string_of_bool "showDeleted";
       param (fun p -> p.showHiddenInvitations) string_of_bool "showHiddenInvitations";
       param (fun p -> p.singleEvents) string_of_bool "singleEvents";
+      param (fun p -> p.supportsAttachments) string_of_bool "supportsAttachments";
       param (fun p -> p.syncToken) (fun x -> x) "syncToken";
       param (fun p -> p.text) (fun x -> x) "text";
       param (fun p -> p.timeMax) GapiDate.to_string "timeMax";
@@ -730,6 +733,7 @@ struct
         ?(showDeleted = default.showDeleted)
         ?(showHiddenInvitations = default.showHiddenInvitations)
         ?(singleEvents = default.singleEvents)
+        ?(supportsAttachments = default.supportsAttachments)
         ?(syncToken = default.syncToken)
         ?(text = default.text)
         ?(timeMax = default.timeMax)
@@ -758,6 +762,7 @@ struct
         showDeleted;
         showHiddenInvitations;
         singleEvents;
+        supportsAttachments;
         syncToken;
         text;
         timeMax;
@@ -811,6 +816,7 @@ struct
   let import
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?supportsAttachments
         ~calendarId
         event
         session =
@@ -818,7 +824,7 @@ struct
       ((fun x -> x) calendarId); "events"; "import"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -830,6 +836,7 @@ struct
         ?std_params
         ?maxAttendees
         ?sendNotifications
+        ?supportsAttachments
         ~calendarId
         event
         session =
@@ -837,7 +844,8 @@ struct
       ((fun x -> x) calendarId); "events"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?maxAttendees ?sendNotifications () in
+      ?standard_parameters:std_params ?maxAttendees ?sendNotifications
+      ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -929,6 +937,7 @@ struct
         ?alwaysIncludeEmail
         ?maxAttendees
         ?sendNotifications
+        ?supportsAttachments
         ~calendarId
         ~eventId
         event
@@ -939,7 +948,7 @@ struct
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
-      ?sendNotifications () in
+      ?sendNotifications ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -968,6 +977,7 @@ struct
         ?alwaysIncludeEmail
         ?maxAttendees
         ?sendNotifications
+        ?supportsAttachments
         ~calendarId
         ~eventId
         event
@@ -978,7 +988,7 @@ struct
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
-      ?sendNotifications () in
+      ?sendNotifications ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag

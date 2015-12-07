@@ -20,10 +20,16 @@ sig
   (** View your Google Drive apps *)
   
   val drive_file : string
-  (** View and manage Google Drive files that you have opened or created with this app *)
+  (** View and manage Google Drive files and folders that you have opened or created with this app *)
+  
+  val drive_metadata : string
+  (** View and manage metadata of files in your Google Drive *)
   
   val drive_metadata_readonly : string
   (** View metadata for files in your Google Drive *)
+  
+  val drive_photos_readonly : string
+  (** View the photos, videos and albums in your Google Photos *)
   
   val drive_readonly : string
   (** View the files in your Google Drive *)
@@ -124,6 +130,7 @@ sig
     @param includeSubscribed Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.
     @param maxResults Maximum number of changes to return.
     @param pageToken Page token for changes.
+    @param spaces A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.
     @param startChangeId Change ID to start listing changes from.
     *)
   val list :
@@ -133,6 +140,7 @@ sig
     ?includeSubscribed:bool ->
     ?maxResults:int ->
     ?pageToken:string ->
+    ?spaces:string ->
     ?startChangeId:int64 ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.ChangeList.t * GapiConversation.Session.t
@@ -145,6 +153,7 @@ sig
     @param includeSubscribed Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.
     @param maxResults Maximum number of changes to return.
     @param pageToken Page token for changes.
+    @param spaces A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.
     @param startChangeId Change ID to start listing changes from.
     *)
   val watch :
@@ -154,6 +163,7 @@ sig
     ?includeSubscribed:bool ->
     ?maxResults:int ->
     ?pageToken:string ->
+    ?spaces:string ->
     ?startChangeId:int64 ->
     GapiDriveV2Model.Channel.t ->
     GapiConversation.Session.t ->
@@ -234,6 +244,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of children to return.
+    @param orderBy A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.
     @param pageToken Page token for children.
     @param q Query string for searching children.
     @param folderId The ID of the folder.
@@ -242,6 +253,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxResults:int ->
+    ?orderBy:string ->
     ?pageToken:string ->
     ?q:string ->
     folderId:string ->
@@ -387,6 +399,23 @@ sig
     
   end
   
+  module ModifiedDateBehavior :
+  sig
+    type t =
+      | Default
+      | FromBody (** Set modifiedDate to the value provided in the body of the request. No change if no value was provided. *)
+      | FromBodyIfNeeded (** Set modifiedDate to the value provided in the body of the request depending on other contents of the update. *)
+      | FromBodyOrNow (** Set modifiedDate to the value provided in the body of the request, or to the current time if no value was provided. *)
+      | NoChange (** Maintain the previous value of modifiedDate. *)
+      | Now (** Set modifiedDate to the current time. *)
+      | NowIfNeeded (** Set modifiedDate to the current time depending on contents of the update. *)
+      
+    val to_string : t -> string
+    
+    val of_string : string -> t
+    
+  end
+  
   module Corpus :
   sig
     type t =
@@ -408,7 +437,7 @@ sig
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the head revision of the new copy. A file can have a maximum of 200 pinned revisions.
     @param visibility The visibility of the new file. This parameter is only relevant when the source is not a native Google Doc and convert=false.
-    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are BCP 47 codes.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     @param fileId The ID of the file to copy.
@@ -452,14 +481,28 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
+  (** Generates a set of file IDs which can be provided in insert requests.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param maxResults Maximum number of IDs to return.
+    @param space The space in which the IDs can be used to create new files. Supported values are 'drive' and 'appDataFolder'.
+    *)
+  val generateIds :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
+    ?space:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV2Model.GeneratedIds.t * GapiConversation.Session.t
+  
   (** Gets a file's metadata by ID.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.
-    @param updateViewedDate Whether to update the view date after successfully retrieving the file.
-    @param alt Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.
+    @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files.
+    @param updateViewedDate Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.
     @param projection This parameter is deprecated and has no function.
     @param revisionId Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.
     @param fileId The ID for the file in question.
@@ -470,7 +513,6 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?acknowledgeAbuse:bool ->
     ?updateViewedDate:bool ->
-    ?alt:string ->
     ?projection:Projection.t ->
     ?revisionId:string ->
     fileId:string ->
@@ -486,7 +528,7 @@ sig
     @param pinned Whether to pin the head revision of the uploaded file. A file can have a maximum of 200 pinned revisions.
     @param useContentAsIndexableText Whether to use the content as indexable text.
     @param visibility The visibility of the new file. This parameter is only relevant when convert=false.
-    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are BCP 47 codes.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
     *)
@@ -512,18 +554,22 @@ sig
     @param std_params Optional standard parameters.
     @param maxResults Maximum number of files to return.
     @param corpus The body of items (files/documents) to which the query applies.
+    @param orderBy A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.
     @param pageToken Page token for files.
     @param projection This parameter is deprecated and has no function.
     @param q Query string for searching files.
+    @param spaces A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?maxResults:int ->
     ?corpus:Corpus.t ->
+    ?orderBy:string ->
     ?pageToken:string ->
     ?projection:Projection.t ->
     ?q:string ->
+    ?spaces:string ->
     GapiConversation.Session.t ->
     GapiDriveV2Model.FileList.t * GapiConversation.Session.t
   
@@ -531,15 +577,16 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
+    @param convert This parameter is deprecated and has no function.
+    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the Drive Help Center.
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
     @param addParents Comma-separated list of parent IDs to add.
-    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+    @param modifiedDateBehavior Determines the behavior in which modifiedDate is updated. This overrides setModifiedDate.
+    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are BCP 47 codes.
     @param removeParents Comma-separated list of parent IDs to remove.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
@@ -556,6 +603,7 @@ sig
     ?updateViewedDate:bool ->
     ?useContentAsIndexableText:bool ->
     ?addParents:string ->
+    ?modifiedDateBehavior:ModifiedDateBehavior.t ->
     ?ocrLanguage:string ->
     ?removeParents:string ->
     ?timedTextLanguage:string ->
@@ -578,7 +626,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.File.t * GapiConversation.Session.t
   
-  (** Moves a file to the trash.
+  (** Moves a file to the trash. The currently authenticated user must own the file.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
@@ -608,15 +656,16 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param convert Whether to convert this file to the corresponding Google Docs format.
-    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).
+    @param convert This parameter is deprecated and has no function.
+    @param newRevision Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the Drive Help Center.
     @param ocr Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
     @param pinned Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.
     @param setModifiedDate Whether to set the modified date with the supplied modified date.
     @param updateViewedDate Whether to update the view date after successfully updating the file.
     @param useContentAsIndexableText Whether to use the content as indexable text.
     @param addParents Comma-separated list of parent IDs to add.
-    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.
+    @param modifiedDateBehavior Determines the behavior in which modifiedDate is updated. This overrides setModifiedDate.
+    @param ocrLanguage If ocr is true, hints at the language to use. Valid values are BCP 47 codes.
     @param removeParents Comma-separated list of parent IDs to remove.
     @param timedTextLanguage The language of the timed text.
     @param timedTextTrackName The timed text track name.
@@ -634,6 +683,7 @@ sig
     ?updateViewedDate:bool ->
     ?useContentAsIndexableText:bool ->
     ?addParents:string ->
+    ?modifiedDateBehavior:ModifiedDateBehavior.t ->
     ?ocrLanguage:string ->
     ?removeParents:string ->
     ?timedTextLanguage:string ->
@@ -647,9 +697,8 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
-    @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.
-    @param updateViewedDate Whether to update the view date after successfully retrieving the file.
-    @param alt Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.
+    @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files.
+    @param updateViewedDate Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.
     @param projection This parameter is deprecated and has no function.
     @param revisionId Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.
     @param fileId The ID for the file in question.
@@ -659,7 +708,6 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?acknowledgeAbuse:bool ->
     ?updateViewedDate:bool ->
-    ?alt:string ->
     ?projection:Projection.t ->
     ?revisionId:string ->
     fileId:string ->
@@ -814,7 +862,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.PermissionList.t * GapiConversation.Session.t
   
-  (** Updates a permission. This method supports patch semantics.
+  (** Updates a permission using patch semantics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
