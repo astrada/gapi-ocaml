@@ -541,9 +541,9 @@ sig
     auth : Auth.t;
     (** Authentication information. *)
     basePath : string;
-    (** [DEPRECATED] The base path for REST requests. *)
+    (** \[DEPRECATED\] The base path for REST requests. *)
     baseUrl : string;
-    (** [DEPRECATED] The base URL for REST requests. *)
+    (** \[DEPRECATED\] The base URL for REST requests. *)
     batchPath : string;
     (** The path for REST batch requests. *)
     canonicalName : string;

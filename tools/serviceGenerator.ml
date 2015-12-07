@@ -13,7 +13,7 @@ let no_overwrite = ref false
 
 (* Docs *)
 
-let to_escape_regexp = Str.regexp "[@{}]"
+let to_escape_regexp = Str.regexp "[][@{}]"
 
 let clean_doc s = Str.global_replace to_escape_regexp "\\\\\\0" s
 

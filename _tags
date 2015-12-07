@@ -3,6 +3,9 @@
 "tools/serviceGenerator.byte": debug
 # Disable warning 23 (Useless record "with" clause.) for generated modules
 <src/gapi/gapi*Model.ml>: warn_x
+# Disable warning 3 (Deprecated feature.) for compatibility with old compilers
+<src/gapi/*.ml>: warn_d
+<src/gdata/*.ml>: warn_d
 
 # OASIS_START
 # DO NOT EDIT (digest: 41046b81b4116502ba6064dbe7b830f3)

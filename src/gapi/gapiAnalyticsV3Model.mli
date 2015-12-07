@@ -615,7 +615,7 @@ sig
     kind : string;
     (** Resource type for an Analytics experiment. This field is read-only. *)
     minimumExperimentLengthInDays : int;
-    (** An integer number in [3, 90]. Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
+    (** An integer number in \[3, 90\]. Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
     name : string;
     (** Experiment name. This field may not be changed for an experiment whose status is ENDED. This field is required when creating an experiment. *)
     objectiveMetric : string;
@@ -644,7 +644,7 @@ sig
     status : string;
     (** Experiment status. Possible values: "DRAFT", "READY_TO_RUN", "RUNNING", "ENDED". Experiments can be created in the "DRAFT", "READY_TO_RUN" or "RUNNING" state. This field is required when creating an experiment. *)
     trafficCoverage : float;
-    (** A floating-point number in (0, 1]. Specifies the fraction of the traffic that participates in the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
+    (** A floating-point number in (0, 1\]. Specifies the fraction of the traffic that participates in the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED. *)
     updated : GapiDate.t;
     (** Time the experiment was last modified. This field is read-only. *)
     variations : Variations.t list;
@@ -2272,7 +2272,7 @@ sig
     rank : int;
     (** The rank of this profile filter link relative to the other filters linked to the same profile.
 For readonly (i.e., list and get) operations, the rank always starts at 1.
-For write (i.e., create, update, or delete) operations, you may specify a value between 0 and 255 inclusively, [0, 255]. In order to insert a link at the end of the list, either don't specify a rank or set a rank to a number greater than the largest rank in the list. In order to insert a link to the beginning of the list specify a rank that is less than or equal to 1. The new link will move all existing filters with the same or lower rank down the list. After the link is inserted/updated/deleted all profile filter links will be renumbered starting at 1. *)
+For write (i.e., create, update, or delete) operations, you may specify a value between 0 and 255 inclusively, \[0, 255\]. In order to insert a link at the end of the list, either don't specify a rank or set a rank to a number greater than the largest rank in the list. In order to insert a link to the beginning of the list specify a rank that is less than or equal to 1. The new link will move all existing filters with the same or lower rank down the list. After the link is inserted/updated/deleted all profile filter links will be renumbered starting at 1. *)
     selfLink : string;
     (** Link for this profile filter link. *)
     

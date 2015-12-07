@@ -10,9 +10,9 @@ module UserDefinedFunctionResource :
 sig
   type t = {
     inlineCode : string;
-    (** [Pick one] An inline resource that contains code for a user-defined function (UDF). Providing a inline code resource is equivalent to providing a URI for a file containing the same code. *)
+    (** \[Pick one\] An inline resource that contains code for a user-defined function (UDF). Providing a inline code resource is equivalent to providing a URI for a file containing the same code. *)
     resourceUri : string;
-    (** [Pick one] A code resource to load from a Google Cloud Storage URI (gs://bucket/path). *)
+    (** \[Pick one\] A code resource to load from a Google Cloud Storage URI (gs://bucket/path). *)
     
   }
   
@@ -35,17 +35,17 @@ module CsvOptions :
 sig
   type t = {
     allowJaggedRows : bool;
-    (** [Optional] Indicates if BigQuery should accept rows that are missing trailing optional columns. If true, BigQuery treats missing trailing columns as null values. If false, records with missing trailing columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. *)
+    (** \[Optional\] Indicates if BigQuery should accept rows that are missing trailing optional columns. If true, BigQuery treats missing trailing columns as null values. If false, records with missing trailing columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. *)
     allowQuotedNewlines : bool;
-    (** [Optional] Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. *)
+    (** \[Optional\] Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. *)
     encoding : string;
-    (** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
+    (** \[Optional\] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
     fieldDelimiter : string;
-    (** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
+    (** \[Optional\] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
     quote : string;
-    (** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
+    (** \[Optional\] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
     skipLeadingRows : int;
-    (** [Optional] The number of rows at the top of a CSV file that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
+    (** \[Optional\] The number of rows at the top of a CSV file that BigQuery will skip when reading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
     
   }
   
@@ -72,15 +72,15 @@ module TableFieldSchema :
 sig
   type t = {
     description : string;
-    (** [Optional] The field description. The maximum length is 16K characters. *)
+    (** \[Optional\] The field description. The maximum length is 16K characters. *)
     fields : t list;
-    (** [Optional] Describes the nested schema fields if the type property is set to RECORD. *)
+    (** \[Optional\] Describes the nested schema fields if the type property is set to RECORD. *)
     mode : string;
-    (** [Optional] The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The default value is NULLABLE. *)
+    (** \[Optional\] The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The default value is NULLABLE. *)
     name : string;
-    (** [Required] The field name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 128 characters. *)
+    (** \[Required\] The field name. The name must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a letter or underscore. The maximum length is 128 characters. *)
     _type : string;
-    (** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema). *)
+    (** \[Required\] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema). *)
     
   }
   
@@ -128,19 +128,19 @@ module ExternalDataConfiguration :
 sig
   type t = {
     compression : string;
-    (** [Optional] The compression type of the data source. Possible values include GZIP and NONE. The default value is NONE. This setting is ignored for Google Cloud Datastore backups. *)
+    (** \[Optional\] The compression type of the data source. Possible values include GZIP and NONE. The default value is NONE. This setting is ignored for Google Cloud Datastore backups. *)
     csvOptions : CsvOptions.t;
     (** Additional properties to set if sourceFormat is set to CSV. *)
     ignoreUnknownValues : bool;
-    (** [Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Datastore backups: This setting is ignored. *)
+    (** \[Optional\] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Datastore backups: This setting is ignored. *)
     maxBadRecords : int;
-    (** [Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Datastore backups. *)
+    (** \[Optional\] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Datastore backups. *)
     schema : TableSchema.t;
-    (** [Optional] The schema for the data. Schema is required for CSV and JSON formats. Schema is disallowed for Google Cloud Datastore backups. *)
+    (** \[Optional\] The schema for the data. Schema is required for CSV and JSON formats. Schema is disallowed for Google Cloud Datastore backups. *)
     sourceFormat : string;
-    (** [Required] The data format. For CSV files, specify "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Google Cloud Datastore backups, specify "DATASTORE_BACKUP". *)
+    (** \[Required\] The data format. For CSV files, specify "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Google Cloud Datastore backups, specify "DATASTORE_BACKUP". *)
     sourceUris : string list;
-    (** [Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs. For Google Cloud Datastore backups, exactly one URI can be specified, and it must end with '.backup_info'. Also, the '*' wildcard character is not allowed. *)
+    (** \[Required\] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs. For Google Cloud Datastore backups, exactly one URI can be specified, and it must end with '.backup_info'. Also, the '*' wildcard character is not allowed. *)
     
   }
   
@@ -168,9 +168,9 @@ module DatasetReference :
 sig
   type t = {
     datasetId : string;
-    (** [Required] A unique ID for this dataset, without the project name. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
+    (** \[Required\] A unique ID for this dataset, without the project name. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
     projectId : string;
-    (** [Optional] The ID of the project containing this dataset. *)
+    (** \[Optional\] The ID of the project containing this dataset. *)
     
   }
   
@@ -193,11 +193,11 @@ module TableReference :
 sig
   type t = {
     datasetId : string;
-    (** [Required] The ID of the dataset containing this table. *)
+    (** \[Required\] The ID of the dataset containing this table. *)
     projectId : string;
-    (** [Required] The ID of the project containing this table. *)
+    (** \[Required\] The ID of the project containing this table. *)
     tableId : string;
-    (** [Required] The ID of the table. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
+    (** \[Required\] The ID of the table. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters. *)
     
   }
   
@@ -223,27 +223,27 @@ sig
     allowLargeResults : bool;
     (** If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set. *)
     createDisposition : string;
-    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     defaultDataset : DatasetReference.t;
-    (** [Optional] Specifies the default dataset to use for unqualified table names in the query. *)
+    (** \[Optional\] Specifies the default dataset to use for unqualified table names in the query. *)
     destinationTable : TableReference.t;
-    (** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
+    (** \[Optional\] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. *)
     flattenResults : bool;
-    (** [Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false. *)
+    (** \[Optional\] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false. *)
     preserveNulls : bool;
-    (** [Deprecated] This property is deprecated. *)
+    (** \[Deprecated\] This property is deprecated. *)
     priority : string;
-    (** [Optional] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE. *)
+    (** \[Optional\] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE. *)
     query : string;
-    (** [Required] BigQuery SQL query to execute. *)
+    (** \[Required\] BigQuery SQL query to execute. *)
     tableDefinitions : (string * ExternalDataConfiguration.t) list;
-    (** [Experimental] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table. *)
+    (** \[Experimental\] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table. *)
     useQueryCache : bool;
-    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true. *)
+    (** \[Optional\] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true. *)
     userDefinedFunctionResources : UserDefinedFunctionResource.t list;
-    (** [Experimental] Describes user-defined function resources used in the query. *)
+    (** \[Experimental\] Describes user-defined function resources used in the query. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -307,11 +307,11 @@ module JobStatus :
 sig
   type t = {
     errorResult : ErrorProto.t;
-    (** [Output-only] Final error result of the job. If present, indicates that the job has completed and was unsuccessful. *)
+    (** \[Output-only\] Final error result of the job. If present, indicates that the job has completed and was unsuccessful. *)
     errors : ErrorProto.t list;
-    (** [Output-only] All errors encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
+    (** \[Output-only\] All errors encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
     state : string;
-    (** [Output-only] Running state of the job. *)
+    (** \[Output-only\] Running state of the job. *)
     
   }
   
@@ -335,13 +335,13 @@ module JobStatistics3 :
 sig
   type t = {
     inputFileBytes : int64;
-    (** [Output-only] Number of bytes of source data in a load job. *)
+    (** \[Output-only\] Number of bytes of source data in a load job. *)
     inputFiles : int64;
-    (** [Output-only] Number of source files in a load job. *)
+    (** \[Output-only\] Number of source files in a load job. *)
     outputBytes : int64;
-    (** [Output-only] Size of the loaded data in bytes. Note that while a load job is in the running state, this value may change. *)
+    (** \[Output-only\] Size of the loaded data in bytes. Note that while a load job is in the running state, this value may change. *)
     outputRows : int64;
-    (** [Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change. *)
+    (** \[Output-only\] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change. *)
     
   }
   
@@ -366,7 +366,7 @@ module JobStatistics4 :
 sig
   type t = {
     destinationUriFileCounts : int64 list;
-    (** [Output-only] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field. *)
+    (** \[Output-only\] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field. *)
     
   }
   
@@ -471,15 +471,15 @@ module JobStatistics2 :
 sig
   type t = {
     billingTier : int;
-    (** [Output-only] Billing tier for the job. *)
+    (** \[Output-only\] Billing tier for the job. *)
     cacheHit : bool;
-    (** [Output-only] Whether the query result was fetched from the query cache. *)
+    (** \[Output-only\] Whether the query result was fetched from the query cache. *)
     queryPlan : ExplainQueryStage.t list;
-    (** [Output-only, Experimental] Describes execution plan for the query as a list of stages. *)
+    (** \[Output-only, Experimental\] Describes execution plan for the query as a list of stages. *)
     totalBytesBilled : int64;
-    (** [Output-only] Total bytes billed for the job. *)
+    (** \[Output-only\] Total bytes billed for the job. *)
     totalBytesProcessed : int64;
-    (** [Output-only] Total bytes processed for the job. *)
+    (** \[Output-only\] Total bytes processed for the job. *)
     
   }
   
@@ -505,19 +505,19 @@ module JobStatistics :
 sig
   type t = {
     creationTime : int64;
-    (** [Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs. *)
+    (** \[Output-only\] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs. *)
     endTime : int64;
-    (** [Output-only] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state. *)
+    (** \[Output-only\] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state. *)
     extract : JobStatistics4.t;
-    (** [Output-only] Statistics for an extract job. *)
+    (** \[Output-only\] Statistics for an extract job. *)
     load : JobStatistics3.t;
-    (** [Output-only] Statistics for a load job. *)
+    (** \[Output-only\] Statistics for a load job. *)
     query : JobStatistics2.t;
-    (** [Output-only] Statistics for a query job. *)
+    (** \[Output-only\] Statistics for a query job. *)
     startTime : int64;
-    (** [Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE. *)
+    (** \[Output-only\] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE. *)
     totalBytesProcessed : int64;
-    (** [Output-only] [Deprecated] Use the bytes processed in the query statistics instead. *)
+    (** \[Output-only\] \[Deprecated\] Use the bytes processed in the query statistics instead. *)
     
   }
   
@@ -545,7 +545,7 @@ module ProjectReference :
 sig
   type t = {
     projectId : string;
-    (** [Required] ID of the project. Can be either the numeric ID or the assigned ID of the project. *)
+    (** \[Required\] ID of the project. Can be either the numeric ID or the assigned ID of the project. *)
     
   }
   
@@ -567,19 +567,19 @@ module JobConfigurationExtract :
 sig
   type t = {
     compression : string;
-    (** [Optional] The compression type to use for exported files. Possible values include GZIP and NONE. The default value is NONE. *)
+    (** \[Optional\] The compression type to use for exported files. Possible values include GZIP and NONE. The default value is NONE. *)
     destinationFormat : string;
-    (** [Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default value is CSV. Tables with nested or repeated fields cannot be exported as CSV. *)
+    (** \[Optional\] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default value is CSV. Tables with nested or repeated fields cannot be exported as CSV. *)
     destinationUri : string;
-    (** [Pick one] DEPRECATED: Use destinationUris instead, passing only one URI as necessary. The fully-qualified Google Cloud Storage URI where the extracted table should be written. *)
+    (** \[Pick one\] DEPRECATED: Use destinationUris instead, passing only one URI as necessary. The fully-qualified Google Cloud Storage URI where the extracted table should be written. *)
     destinationUris : string list;
-    (** [Pick one] A list of fully-qualified Google Cloud Storage URIs where the extracted table should be written. *)
+    (** \[Pick one\] A list of fully-qualified Google Cloud Storage URIs where the extracted table should be written. *)
     fieldDelimiter : string;
-    (** [Optional] Delimiter to use between fields in the exported data. Default is ',' *)
+    (** \[Optional\] Delimiter to use between fields in the exported data. Default is ',' *)
     printHeader : bool;
-    (** [Optional] Whether to print out a header row in the results. Default is true. *)
+    (** \[Optional\] Whether to print out a header row in the results. Default is true. *)
     sourceTable : TableReference.t;
-    (** [Required] A reference to the table being exported. *)
+    (** \[Required\] A reference to the table being exported. *)
     
   }
   
@@ -685,9 +685,9 @@ module JobReference :
 sig
   type t = {
     jobId : string;
-    (** [Required] The ID of the job. The ID must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-). The maximum length is 1,024 characters. *)
+    (** \[Required\] The ID of the job. The ID must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-). The maximum length is 1,024 characters. *)
     projectId : string;
-    (** [Required] The ID of the project containing this job. *)
+    (** \[Required\] The ID of the project containing this job. *)
     
   }
   
@@ -712,7 +712,7 @@ sig
     cacheHit : bool;
     (** Whether the query result was fetched from the query cache. *)
     errors : ErrorProto.t list;
-    (** [Output-only] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
+    (** \[Output-only\] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
     jobComplete : bool;
     (** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. *)
     jobReference : JobReference.t;
@@ -825,7 +825,7 @@ sig
     cacheHit : bool;
     (** Whether the query result was fetched from the query cache. *)
     errors : ErrorProto.t list;
-    (** [Output-only] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
+    (** \[Output-only\] All errors and warnings encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. *)
     etag : string;
     (** A hash of this response. *)
     jobComplete : bool;
@@ -875,13 +875,13 @@ module JobConfigurationLink :
 sig
   type t = {
     createDisposition : string;
-    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     destinationTable : TableReference.t;
-    (** [Required] The destination table of the link job. *)
+    (** \[Required\] The destination table of the link job. *)
     sourceUri : string list;
-    (** [Required] URI of source table to link. *)
+    (** \[Required\] URI of source table to link. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -910,39 +910,39 @@ module JobConfigurationLoad :
 sig
   type t = {
     allowJaggedRows : bool;
-    (** [Optional] Accept rows that are missing trailing optional columns. The missing values are treated as nulls. If false, records with missing trailing columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. Only applicable to CSV, ignored for other formats. *)
+    (** \[Optional\] Accept rows that are missing trailing optional columns. The missing values are treated as nulls. If false, records with missing trailing columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. Only applicable to CSV, ignored for other formats. *)
     allowQuotedNewlines : bool;
     (** Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. *)
     createDisposition : string;
-    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     destinationTable : TableReference.t;
-    (** [Required] The destination table to load the data into. *)
+    (** \[Required\] The destination table to load the data into. *)
     encoding : string;
-    (** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
+    (** \[Optional\] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. *)
     fieldDelimiter : string;
-    (** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
+    (** \[Optional\] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). *)
     ignoreUnknownValues : bool;
-    (** [Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names *)
+    (** \[Optional\] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names *)
     maxBadRecords : int;
-    (** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. *)
+    (** \[Optional\] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. *)
     projectionFields : string list;
-    (** [Experimental] If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result. *)
+    (** \[Experimental\] If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result. *)
     quote : string;
-    (** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
+    (** \[Optional\] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. *)
     schema : TableSchema.t;
-    (** [Optional] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data. *)
+    (** \[Optional\] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data. *)
     schemaInline : string;
-    (** [Deprecated] The inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT". *)
+    (** \[Deprecated\] The inline schema. For CSV schemas, specify as "Field1:Type1\[,Field2:Type2\]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT". *)
     schemaInlineFormat : string;
-    (** [Deprecated] The format of the schemaInline property. *)
+    (** \[Deprecated\] The format of the schemaInline property. *)
     skipLeadingRows : int;
-    (** [Optional] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
+    (** \[Optional\] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. *)
     sourceFormat : string;
-    (** [Optional] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV. *)
+    (** \[Optional\] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV. *)
     sourceUris : string list;
-    (** [Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. *)
+    (** \[Required\] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_APPEND. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_APPEND. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -980,15 +980,15 @@ module JobConfigurationTableCopy :
 sig
   type t = {
     createDisposition : string;
-    (** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     destinationTable : TableReference.t;
-    (** [Required] The destination table *)
+    (** \[Required\] The destination table *)
     sourceTable : TableReference.t;
-    (** [Pick one] Source table to copy. *)
+    (** \[Pick one\] Source table to copy. *)
     sourceTables : TableReference.t list;
-    (** [Pick one] Source tables to copy. *)
+    (** \[Pick one\] Source tables to copy. *)
     writeDisposition : string;
-    (** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
+    (** \[Optional\] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. *)
     
   }
   
@@ -1014,17 +1014,17 @@ module JobConfiguration :
 sig
   type t = {
     copy : JobConfigurationTableCopy.t;
-    (** [Pick one] Copies a table. *)
+    (** \[Pick one\] Copies a table. *)
     dryRun : bool;
-    (** [Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run. Behavior of non-query jobs is undefined. *)
+    (** \[Optional\] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run. Behavior of non-query jobs is undefined. *)
     extract : JobConfigurationExtract.t;
-    (** [Pick one] Configures an extract job. *)
+    (** \[Pick one\] Configures an extract job. *)
     link : JobConfigurationLink.t;
-    (** [Pick one] Configures a link job. *)
+    (** \[Pick one\] Configures a link job. *)
     load : JobConfigurationLoad.t;
-    (** [Pick one] Configures a load job. *)
+    (** \[Pick one\] Configures a load job. *)
     query : JobConfigurationQuery.t;
-    (** [Pick one] Configures a query job. *)
+    (** \[Pick one\] Configures a query job. *)
     
   }
   
@@ -1053,7 +1053,7 @@ sig
   sig
     type t = {
       configuration : JobConfiguration.t;
-      (** [Full-projection-only] Specifies the job configuration. *)
+      (** \[Full-projection-only\] Specifies the job configuration. *)
       errorResult : ErrorProto.t;
       (** A result object that will be present only if the job has failed. *)
       id : string;
@@ -1065,11 +1065,11 @@ sig
       state : string;
       (** Running state of the job. When the state is DONE, errorResult can be checked to determine whether the job succeeded or failed. *)
       statistics : JobStatistics.t;
-      (** [Output-only] Information about the job, including starting time and ending time of the job. *)
+      (** \[Output-only\] Information about the job, including starting time and ending time of the job. *)
       status : JobStatus.t;
-      (** [Full-projection-only] Describes the state of the job. *)
+      (** \[Full-projection-only\] Describes the state of the job. *)
       user_email : string;
-      (** [Full-projection-only] Email address of the user who ran the job. *)
+      (** \[Full-projection-only\] Email address of the user who ran the job. *)
       
     }
     
@@ -1190,17 +1190,17 @@ sig
   sig
     type t = {
       domain : string;
-      (** [Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com". *)
+      (** \[Pick one\] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com". *)
       groupByEmail : string;
-      (** [Pick one] An email address of a Google Group to grant access to. *)
+      (** \[Pick one\] An email address of a Google Group to grant access to. *)
       role : string;
-      (** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER, WRITER, OWNER. *)
+      (** \[Required\] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER, WRITER, OWNER. *)
       specialGroup : string;
-      (** [Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. *)
+      (** \[Pick one\] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. *)
       userByEmail : string;
-      (** [Pick one] An email address of a user to grant access to. For example: fred\@example.com. *)
+      (** \[Pick one\] An email address of a user to grant access to. For example: fred\@example.com. *)
       view : TableReference.t;
-      (** [Pick one] A view from a different dataset to grant access to. Queries executed against that view will have read access to tables in this dataset. The role field is not required when this field is set. If that view is updated by any user, access to the view needs to be granted again via an update operation. *)
+      (** \[Pick one\] A view from a different dataset to grant access to. Queries executed against that view will have read access to tables in this dataset. The role field is not required when this field is set. If that view is updated by any user, access to the view needs to be granted again via an update operation. *)
       
     }
     
@@ -1221,29 +1221,29 @@ sig
   
   type t = {
     access : Access.t list;
-    (** [Optional] An array of objects that define dataset access for one or more entities. You can set this property when inserting or updating a dataset in order to control who is allowed to access the data. If unspecified at dataset creation time, BigQuery adds default dataset access for the following entities: access.specialGroup: projectReaders; access.role: READER; access.specialGroup: projectWriters; access.role: WRITER; access.specialGroup: projectOwners; access.role: OWNER; access.userByEmail: [dataset creator email]; access.role: OWNER; *)
+    (** \[Optional\] An array of objects that define dataset access for one or more entities. You can set this property when inserting or updating a dataset in order to control who is allowed to access the data. If unspecified at dataset creation time, BigQuery adds default dataset access for the following entities: access.specialGroup: projectReaders; access.role: READER; access.specialGroup: projectWriters; access.role: WRITER; access.specialGroup: projectOwners; access.role: OWNER; access.userByEmail: \[dataset creator email\]; access.role: OWNER; *)
     creationTime : int64;
-    (** [Output-only] The time when this dataset was created, in milliseconds since the epoch. *)
+    (** \[Output-only\] The time when this dataset was created, in milliseconds since the epoch. *)
     datasetReference : DatasetReference.t;
-    (** [Required] A reference that identifies the dataset. *)
+    (** \[Required\] A reference that identifies the dataset. *)
     defaultTableExpirationMs : int64;
-    (** [Experimental] The default lifetime of all tables in the dataset, in milliseconds. The minimum value is 3600000 milliseconds (one hour). Once this property is set, all newly-created tables in the dataset will have an expirationTime property set to the creation time plus the value in this property, and changing the value will only affect new tables, not existing ones. When the expirationTime for a given table is reached, that table will be deleted automatically. If a table's expirationTime is modified or removed before the table expires, or if you provide an explicit expirationTime when creating a table, that value takes precedence over the default expiration time indicated by this property. *)
+    (** \[Experimental\] The default lifetime of all tables in the dataset, in milliseconds. The minimum value is 3600000 milliseconds (one hour). Once this property is set, all newly-created tables in the dataset will have an expirationTime property set to the creation time plus the value in this property, and changing the value will only affect new tables, not existing ones. When the expirationTime for a given table is reached, that table will be deleted automatically. If a table's expirationTime is modified or removed before the table expires, or if you provide an explicit expirationTime when creating a table, that value takes precedence over the default expiration time indicated by this property. *)
     description : string;
-    (** [Optional] A user-friendly description of the dataset. *)
+    (** \[Optional\] A user-friendly description of the dataset. *)
     etag : string;
-    (** [Output-only] A hash of the resource. *)
+    (** \[Output-only\] A hash of the resource. *)
     friendlyName : string;
-    (** [Optional] A descriptive name for the dataset. *)
+    (** \[Optional\] A descriptive name for the dataset. *)
     id : string;
-    (** [Output-only] The fully-qualified unique name of the dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. *)
+    (** \[Output-only\] The fully-qualified unique name of the dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. *)
     kind : string;
-    (** [Output-only] The resource type. *)
+    (** \[Output-only\] The resource type. *)
     lastModifiedTime : int64;
-    (** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. *)
+    (** \[Output-only\] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. *)
     location : string;
-    (** [Experimental] The geographic location where the dataset should reside. Possible values include EU and US. The default value is US. *)
+    (** \[Experimental\] The geographic location where the dataset should reside. Possible values include EU and US. The default value is US. *)
     selfLink : string;
-    (** [Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource. *)
+    (** \[Output-only\] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource. *)
     
   }
   
@@ -1276,11 +1276,11 @@ module Streamingbuffer :
 sig
   type t = {
     estimatedBytes : string;
-    (** [Output-only] A lower-bound estimate of the number of bytes currently in the streaming buffer. *)
+    (** \[Output-only\] A lower-bound estimate of the number of bytes currently in the streaming buffer. *)
     estimatedRows : string;
-    (** [Output-only] A lower-bound estimate of the number of rows currently in the streaming buffer. *)
+    (** \[Output-only\] A lower-bound estimate of the number of rows currently in the streaming buffer. *)
     oldestEntryTime : string;
-    (** [Output-only] Contains the timestamp of the oldest entry in the streaming buffer, in milliseconds since the epoch, if the streaming buffer is available. *)
+    (** \[Output-only\] Contains the timestamp of the oldest entry in the streaming buffer, in milliseconds since the epoch, if the streaming buffer is available. *)
     
   }
   
@@ -1304,9 +1304,9 @@ module ViewDefinition :
 sig
   type t = {
     query : string;
-    (** [Required] A query that BigQuery executes when the view is referenced. *)
+    (** \[Required\] A query that BigQuery executes when the view is referenced. *)
     userDefinedFunctionResources : UserDefinedFunctionResource.t list;
-    (** [Experimental] Describes user-defined function resources used in the query. *)
+    (** \[Experimental\] Describes user-defined function resources used in the query. *)
     
   }
   
@@ -1329,41 +1329,41 @@ module Table :
 sig
   type t = {
     creationTime : int64;
-    (** [Output-only] The time when this table was created, in milliseconds since the epoch. *)
+    (** \[Output-only\] The time when this table was created, in milliseconds since the epoch. *)
     description : string;
-    (** [Optional] A user-friendly description of this table. *)
+    (** \[Optional\] A user-friendly description of this table. *)
     etag : string;
-    (** [Output-only] A hash of this resource. *)
+    (** \[Output-only\] A hash of this resource. *)
     expirationTime : int64;
-    (** [Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. *)
+    (** \[Optional\] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. *)
     externalDataConfiguration : ExternalDataConfiguration.t;
-    (** [Experimental] Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table. *)
+    (** \[Experimental\] Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table. *)
     friendlyName : string;
-    (** [Optional] A descriptive name for this table. *)
+    (** \[Optional\] A descriptive name for this table. *)
     id : string;
-    (** [Output-only] An opaque ID uniquely identifying the table. *)
+    (** \[Output-only\] An opaque ID uniquely identifying the table. *)
     kind : string;
-    (** [Output-only] The type of the resource. *)
+    (** \[Output-only\] The type of the resource. *)
     lastModifiedTime : string;
-    (** [Output-only] The time when this table was last modified, in milliseconds since the epoch. *)
+    (** \[Output-only\] The time when this table was last modified, in milliseconds since the epoch. *)
     location : string;
-    (** [Output-only] The geographic location where the table resides. This value is inherited from the dataset. *)
+    (** \[Output-only\] The geographic location where the table resides. This value is inherited from the dataset. *)
     numBytes : int64;
-    (** [Output-only] The size of this table in bytes, excluding any data in the streaming buffer. *)
+    (** \[Output-only\] The size of this table in bytes, excluding any data in the streaming buffer. *)
     numRows : string;
-    (** [Output-only] The number of rows of data in this table, excluding any data in the streaming buffer. *)
+    (** \[Output-only\] The number of rows of data in this table, excluding any data in the streaming buffer. *)
     schema : TableSchema.t;
-    (** [Optional] Describes the schema of this table. *)
+    (** \[Optional\] Describes the schema of this table. *)
     selfLink : string;
-    (** [Output-only] A URL that can be used to access this resource again. *)
+    (** \[Output-only\] A URL that can be used to access this resource again. *)
     streamingBuffer : Streamingbuffer.t;
-    (** [Output-only] Contains information regarding this table's streaming buffer, if one is present. This field will be absent if the table is not being streamed to or if there is no data in the streaming buffer. *)
+    (** \[Output-only\] Contains information regarding this table's streaming buffer, if one is present. This field will be absent if the table is not being streamed to or if there is no data in the streaming buffer. *)
     tableReference : TableReference.t;
-    (** [Required] Reference describing the ID of this table. *)
+    (** \[Required\] Reference describing the ID of this table. *)
     _type : string;
-    (** [Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. The default value is TABLE. *)
+    (** \[Output-only\] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. The default value is TABLE. *)
     view : ViewDefinition.t;
-    (** [Optional] The view definition. *)
+    (** \[Optional\] The view definition. *)
     
   }
   
@@ -1448,23 +1448,23 @@ module Job :
 sig
   type t = {
     configuration : JobConfiguration.t;
-    (** [Required] Describes the job configuration. *)
+    (** \[Required\] Describes the job configuration. *)
     etag : string;
-    (** [Output-only] A hash of this resource. *)
+    (** \[Output-only\] A hash of this resource. *)
     id : string;
-    (** [Output-only] Opaque ID field of the job *)
+    (** \[Output-only\] Opaque ID field of the job *)
     jobReference : JobReference.t;
-    (** [Optional] Reference describing the unique-per-user name of the job. *)
+    (** \[Optional\] Reference describing the unique-per-user name of the job. *)
     kind : string;
-    (** [Output-only] The type of the resource. *)
+    (** \[Output-only\] The type of the resource. *)
     selfLink : string;
-    (** [Output-only] A URL that can be used to access this resource again. *)
+    (** \[Output-only\] A URL that can be used to access this resource again. *)
     statistics : JobStatistics.t;
-    (** [Output-only] Information about the job, including starting time and ending time of the job. *)
+    (** \[Output-only\] Information about the job, including starting time and ending time of the job. *)
     status : JobStatus.t;
-    (** [Output-only] The status of this job. Examine this value when polling an asynchronous job to see if the job is complete. *)
+    (** \[Output-only\] The status of this job. Examine this value when polling an asynchronous job to see if the job is complete. *)
     user_email : string;
-    (** [Output-only] Email address of the user who ran the job. *)
+    (** \[Output-only\] Email address of the user who ran the job. *)
     
   }
   
@@ -1577,21 +1577,21 @@ module QueryRequest :
 sig
   type t = {
     defaultDataset : DatasetReference.t;
-    (** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'. *)
+    (** \[Optional\] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'. *)
     dryRun : bool;
-    (** [Optional] If set to true, BigQuery doesn't run the job. Instead, if the query is valid, BigQuery returns statistics about the job such as how many bytes would be processed. If the query is invalid, an error returns. The default value is false. *)
+    (** \[Optional\] If set to true, BigQuery doesn't run the job. Instead, if the query is valid, BigQuery returns statistics about the job such as how many bytes would be processed. If the query is invalid, an error returns. The default value is false. *)
     kind : string;
     (** The resource type of the request. *)
     maxResults : int;
-    (** [Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies. *)
+    (** \[Optional\] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies. *)
     preserveNulls : bool;
-    (** [Deprecated] This property is deprecated. *)
+    (** \[Deprecated\] This property is deprecated. *)
     query : string;
-    (** [Required] A query string, following the BigQuery query syntax, of the query to execute. Example: "SELECT count(f1) FROM [myProjectId:myDatasetId.myTableId]". *)
+    (** \[Required\] A query string, following the BigQuery query syntax, of the query to execute. Example: "SELECT count(f1) FROM \[myProjectId:myDatasetId.myTableId\]". *)
     timeoutMs : int;
-    (** [Optional] How long to wait for the query to complete, in milliseconds, before the request times out and returns. Note that this is only a timeout for the request, not the query. If the query takes longer to run than the timeout value, the call returns without any results and with the 'jobComplete' flag set to false. You can call GetQueryResults() to wait for the query to complete and read the results. The default value is 10000 milliseconds (10 seconds). *)
+    (** \[Optional\] How long to wait for the query to complete, in milliseconds, before the request times out and returns. Note that this is only a timeout for the request, not the query. If the query takes longer to run than the timeout value, the call returns without any results and with the 'jobComplete' flag set to false. You can call GetQueryResults() to wait for the query to complete and read the results. The default value is 10000 milliseconds (10 seconds). *)
     useQueryCache : bool;
-    (** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true. *)
+    (** \[Optional\] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true. *)
     
   }
   
@@ -1622,9 +1622,9 @@ sig
   sig
     type t = {
       insertId : string;
-      (** [Optional] A unique ID for each row. BigQuery uses this property to detect duplicate insertion requests on a best-effort basis. *)
+      (** \[Optional\] A unique ID for each row. BigQuery uses this property to detect duplicate insertion requests on a best-effort basis. *)
       json : JsonObject.t;
-      (** [Required] A JSON object that contains a row of data. The object's properties and values must match the destination table's schema. *)
+      (** \[Required\] A JSON object that contains a row of data. The object's properties and values must match the destination table's schema. *)
       
     }
     
@@ -1641,15 +1641,15 @@ sig
   
   type t = {
     ignoreUnknownValues : bool;
-    (** [Optional] Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false, which treats unknown values as errors. *)
+    (** \[Optional\] Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false, which treats unknown values as errors. *)
     kind : string;
     (** The resource type of the response. *)
     rows : Rows.t list;
     (** The rows to insert. *)
     skipInvalidRows : bool;
-    (** [Optional] Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. *)
+    (** \[Optional\] Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist. *)
     templateSuffix : string;
-    (** [Experimental] If specified, treats the destination table as a base template, and inserts the rows into an instance table named "". BigQuery will manage creation of the instance table, using the schema of the base template table. *)
+    (** \[Experimental\] If specified, treats the destination table as a base template, and inserts the rows into an instance table named "". BigQuery will manage creation of the instance table, using the schema of the base template table. *)
     
   }
   
