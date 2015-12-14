@@ -21,6 +21,7 @@ val init :
   ?max_recv_speed:int64 ->
   ?low_speed_limit:int ->
   ?low_speed_time:int ->
+  ?no_signal:bool ->
   ?options:Curl.curlOption list ->
   [ `Initialized ] t ->
   [ `Created ] t

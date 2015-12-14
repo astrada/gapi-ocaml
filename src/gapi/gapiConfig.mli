@@ -93,6 +93,8 @@ type t = {
   (** It contains the average transfer speed in bytes per second that the transfer should be below during [low_speed_time] seconds for libcurl to consider it to be too slow and abort. Defaults to 0 (disabled). *)
   low_speed_time : int;
   (** It contains the time in number seconds that the transfer speed should be below the [low_speed_limit] for the library to consider it too slow and abort. Defaults to 0 (disabled). *)
+  curl_no_signal : bool;
+  (** If [true], libcurl will not use any functions that install signal handlers or any functions that cause signals to be sent to the process. This option is here to allow multi-threaded unix applications to still set/use all timeout options etc, without risking getting signals. Defaults to [true] *)
 }
 
 val application_name : (t, string) GapiLens.t

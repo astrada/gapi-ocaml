@@ -47,6 +47,7 @@ let init
       ?(max_recv_speed = 0L)
       ?(low_speed_limit = 0)
       ?(low_speed_time = 0)
+      ?(no_signal = true)
       ?options
       (state : [`Initialized] t) : [`Created] t =
   let error_buffer = ref "" in
@@ -86,6 +87,7 @@ let init
         None -> ()
       | Some option_list -> set_curl_options option_list curl
     end;
+    Curl.set_nosignal curl no_signal;
     Curl.set_errorbuffer curl error_buffer;
     Curl.set_followlocation curl follow_location;
     Created { curl;

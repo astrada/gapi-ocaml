@@ -248,6 +248,7 @@ let with_session
   let max_send_speed = config.GapiConfig.max_send_speed in
   let low_speed_limit = config.GapiConfig.low_speed_limit in
   let low_speed_time = config.GapiConfig.low_speed_time in
+  let no_signal = config.GapiConfig.curl_no_signal in
   let curl_session = GapiCurl.init
                        ?debug_function
                        ?timeout
@@ -257,6 +258,7 @@ let with_session
                        ~max_send_speed
                        ~low_speed_limit
                        ~low_speed_time
+                       ~no_signal
                        curl_state in
   let cleanup () = ignore (GapiCurl.cleanup curl_session) in
   let session =

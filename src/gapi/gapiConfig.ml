@@ -67,6 +67,7 @@ type t = {
   max_recv_speed : int64;
   low_speed_limit : int;
   low_speed_time : int;
+  curl_no_signal : bool;
 }
 
 let application_name = {
@@ -113,6 +114,10 @@ let low_speed_time = {
   GapiLens.get = (fun x -> x.low_speed_time);
   GapiLens.set = (fun v x -> { x with low_speed_time = v })
 }
+let curl_no_signal = {
+  GapiLens.get = (fun x -> x.curl_no_signal);
+  GapiLens.set = (fun v x -> { x with curl_no_signal = v })
+}
 
 let default = {
   application_name = "gapi-ocaml";
@@ -126,6 +131,7 @@ let default = {
   max_recv_speed = 0L;
   low_speed_limit = 0;
   low_speed_time = 0;
+  curl_no_signal = true;
 }
 
 let default_debug = {
@@ -140,5 +146,6 @@ let default_debug = {
   max_recv_speed = 0L;
   low_speed_limit = 0;
   low_speed_time = 0;
+  curl_no_signal = true;
 }
 
