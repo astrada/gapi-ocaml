@@ -9,10 +9,11 @@ let test_to_string () =
         hour = 10;
         minute = 30;
         second = 0;
+        nanos = 100000000;
         zone = 120;
   } in
   let s = GapiDate.to_string t in
-    assert_equal "2011-10-14T10:30:00.000+02:00" s
+    assert_equal "2011-10-14T10:30:00.100+02:00" s
 
 let test_of_string () =
   let t = GapiDate.of_string "2011-10-14T10:30:00.000+02:00" in
@@ -43,7 +44,7 @@ let test_of_string_negative_offset () =
       t
 
 let test_of_string_utc () =
-  let t = GapiDate.of_string "2011-10-14T10:30:00.000Z" in
+  let t = GapiDate.of_string "2011-10-14T10:30:00.100Z" in
     assert_equal
       ~printer:GapiDate.to_string
       { GapiDate.epoch with
@@ -53,6 +54,7 @@ let test_of_string_utc () =
             hour = 10;
             minute = 30;
             second = 0;
+            nanos = 100000000;
             week_day = -1;
       }
       t
@@ -68,6 +70,7 @@ let test_of_string_full_date () =
             hour = 0;
             minute = 0;
             second = 0;
+            nanos = 0;
             week_day = -1;
       }
       t
