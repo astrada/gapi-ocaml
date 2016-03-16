@@ -23,7 +23,7 @@ depends: [
   "cryptokit"
   ("extlib" | "extlib-compat")
   "ocamlfind" {build}
-  "ocamlnet"
+  "ocamlnet" {>= "3.5.1"}
   "ocurl"
   "xmlm"
   "yojson"
