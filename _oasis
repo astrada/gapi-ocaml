@@ -93,7 +93,7 @@ Library "gapi-ocaml"
     GapiDriveV2Service,
     GapiGmailV1Model,
     GapiGmailV1Service
-  BuildDepends: extlib, netstring, curl, str, cryptokit, yojson
+  BuildDepends: extlib, netstring (>= 3.5.1), curl, str, cryptokit, yojson
   XMETADescription: Google APIs client library
 
 Library gdata
