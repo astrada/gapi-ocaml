@@ -14,17 +14,8 @@ let to_string ?(time = true) date =
       let tz_minute = String.sub timezone 3 2 in
       tz_hour ^ ":" ^ tz_minute in
   if time then
-    let fraction = string_of_int date.Netdate.nanos in
-    let fraction_length = String.length fraction in
-    let fraction_string =
-      let padding =
-        if fraction_length < 3 then
-          String.make (3 - fraction_length) '0'
-        else "" in
-      let milli = String.sub fraction 0 (min fraction_length 3) in
-      "." ^ padding ^ milli in
-    let result = Netdate.format ~fmt:"%Y-%m-%dT%T" date in
-    result ^ fraction_string ^ tz
+    let result = Netdate.format ~fmt:"%Y-%m-%dT%H:%M:%.3S" date in
+    result ^ tz
   else
     Netdate.format ~fmt:"%Y-%m-%d" date
 
