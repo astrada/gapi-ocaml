@@ -326,7 +326,7 @@ sig
 - LIMITED 
 - UNLIMITED *)
     remainingChangeIds : int64;
-    (** The number of remaining change ids. *)
+    (** The number of remaining change ids, limited to no more than 2500. *)
     rootFolderId : string;
     (** The id of the root folder. *)
     selfLink : string;
@@ -833,8 +833,10 @@ sig
     (** The email address of the user or group this permission refers to. This is an output-only field which is present when the permission type is user or group. *)
     etag : string;
     (** The ETag of the permission. *)
+    expirationDate : GapiDate.t;
+    (** The time at which this permission will expire (RFC 3339 date-time). *)
     id : string;
-    (** The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified. *)
+    (** The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified unless the permission type anyone, in which case both id and value are ignored. *)
     kind : string;
     (** This is always drive#permission. *)
     name : string;
@@ -855,7 +857,7 @@ sig
 - domain 
 - anyone *)
     value : string;
-    (** The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified. *)
+    (** The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified unless the permission type anyone, in which case both id and value are ignored. *)
     withLink : bool;
     (** Whether the link is required for this permission. *)
     
@@ -866,6 +868,7 @@ sig
   val domain : (t, string) GapiLens.t
   val emailAddress : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
+  val expirationDate : (t, GapiDate.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
@@ -1163,6 +1166,8 @@ sig
     (** Whether this file is in the Application Data folder. *)
     canComment : bool;
     (** Whether the current user can comment on the file. *)
+    canReadRevisions : bool;
+    (** Whether the current user has read access to the Revisions resource of the file. *)
     copyable : bool;
     (** Whether the file can be copied by the current user. *)
     createdDate : GapiDate.t;
@@ -1201,6 +1206,8 @@ sig
     (** Metadata about image media. This will only be present for image types, and its contents will depend on what can be parsed from the image content. *)
     indexableText : IndexableText.t;
     (** Indexable text attributes for the file (can only be written) *)
+    isAppAuthorized : bool;
+    (** Whether the file was created or opened by the requesting app. *)
     kind : string;
     (** The type of file. This is always drive#file. *)
     labels : Labels.t;
@@ -1224,7 +1231,7 @@ sig
     openWithLinks : (string * string) list;
     (** A map of the id of each of the user's apps to a link to open this file with that app. Only populated when the drive.apps.readonly scope is used. *)
     originalFilename : string;
-    (** The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files. *)
+    (** The original filename of the uploaded content if available, or else the original value of the title field. This is only available for files with binary content in Drive. *)
     ownedByMe : bool;
     (** Whether the file is owned by the current user. *)
     ownerNames : string list;
@@ -1276,6 +1283,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val alternateLink : (t, string) GapiLens.t
   val appDataContents : (t, bool) GapiLens.t
   val canComment : (t, bool) GapiLens.t
+  val canReadRevisions : (t, bool) GapiLens.t
   val copyable : (t, bool) GapiLens.t
   val createdDate : (t, GapiDate.t) GapiLens.t
   val defaultOpenWithLink : (t, string) GapiLens.t
@@ -1295,6 +1303,7 @@ Setting this field will put the file in all of the provided folders. On insert, 
   val id : (t, string) GapiLens.t
   val imageMediaMetadata : (t, ImageMediaMetadata.t) GapiLens.t
   val indexableText : (t, IndexableText.t) GapiLens.t
+  val isAppAuthorized : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val labels : (t, Labels.t) GapiLens.t
   val lastModifyingUser : (t, User.t) GapiLens.t

@@ -2,7 +2,7 @@
 
 (** Service definition for Drive API (v2).
   
-  The API to interact with Drive..
+  Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions..
   
   For more information about this service, see the
   {{:https://developers.google.com/drive/}API Documentation}.
@@ -481,6 +481,21 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
+  (** Exports a Google Doc to the requested MIME type and returns the exported content.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
+    @param std_params Optional standard parameters.
+    @param fileId The ID of the file.
+    @param mimeType The MIME type of the format requested for this export.
+    *)
+  val export :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    fileId:string ->
+    mimeType:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
   (** Generates a set of file IDs which can be provided in insert requests.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
@@ -866,6 +881,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
+    @param removeExpiration Whether to remove the expiration date.
     @param transferOwnership Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
@@ -873,6 +889,7 @@ sig
   val patch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?removeExpiration:bool ->
     ?transferOwnership:bool ->
     fileId:string ->
     permissionId:string ->
@@ -884,6 +901,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
+    @param removeExpiration Whether to remove the expiration date.
     @param transferOwnership Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.
     @param fileId The ID for the file.
     @param permissionId The ID for the permission.
@@ -891,6 +909,7 @@ sig
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?removeExpiration:bool ->
     ?transferOwnership:bool ->
     fileId:string ->
     permissionId:string ->
@@ -940,7 +959,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.Property.t * GapiConversation.Session.t
   
-  (** Adds a property to a file.
+  (** Adds a property to a file, or updates it if it already exists.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
@@ -967,7 +986,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.PropertyList.t * GapiConversation.Session.t
   
-  (** Updates a property. This method supports patch semantics.
+  (** Updates a property, or adds it if it doesn't exist. This method supports patch semantics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
@@ -985,7 +1004,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV2Model.Property.t * GapiConversation.Session.t
   
-  (** Updates a property.
+  (** Updates a property, or adds it if it doesn't exist.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.

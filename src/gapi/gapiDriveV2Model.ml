@@ -2521,6 +2521,7 @@ struct
     domain : string;
     emailAddress : string;
     etag : string;
+    expirationDate : GapiDate.t;
     id : string;
     kind : string;
     name : string;
@@ -2552,6 +2553,10 @@ struct
   let etag = {
     GapiLens.get = (fun x -> x.etag);
     GapiLens.set = (fun v x -> { x with etag = v });
+  }
+  let expirationDate = {
+    GapiLens.get = (fun x -> x.expirationDate);
+    GapiLens.set = (fun v x -> { x with expirationDate = v });
   }
   let id = {
     GapiLens.get = (fun x -> x.id);
@@ -2596,6 +2601,7 @@ struct
     domain = "";
     emailAddress = "";
     etag = "";
+    expirationDate = GapiDate.epoch;
     id = "";
     kind = "";
     name = "";
@@ -2615,6 +2621,7 @@ struct
       GapiJson.render_string_value "domain" x.domain;
       GapiJson.render_string_value "emailAddress" x.emailAddress;
       GapiJson.render_string_value "etag" x.etag;
+      GapiJson.render_date_value "expirationDate" x.expirationDate;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "name" x.name;
@@ -2660,6 +2667,10 @@ struct
         ({ GapiJson.name = "etag"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with etag = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "expirationDate"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with expirationDate = GapiDate.of_string v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -3489,6 +3500,7 @@ struct
     alternateLink : string;
     appDataContents : bool;
     canComment : bool;
+    canReadRevisions : bool;
     copyable : bool;
     createdDate : GapiDate.t;
     defaultOpenWithLink : string;
@@ -3508,6 +3520,7 @@ struct
     id : string;
     imageMediaMetadata : ImageMediaMetadata.t;
     indexableText : IndexableText.t;
+    isAppAuthorized : bool;
     kind : string;
     labels : Labels.t;
     lastModifyingUser : User.t;
@@ -3556,6 +3569,10 @@ struct
   let canComment = {
     GapiLens.get = (fun x -> x.canComment);
     GapiLens.set = (fun v x -> { x with canComment = v });
+  }
+  let canReadRevisions = {
+    GapiLens.get = (fun x -> x.canReadRevisions);
+    GapiLens.set = (fun v x -> { x with canReadRevisions = v });
   }
   let copyable = {
     GapiLens.get = (fun x -> x.copyable);
@@ -3632,6 +3649,10 @@ struct
   let indexableText = {
     GapiLens.get = (fun x -> x.indexableText);
     GapiLens.set = (fun v x -> { x with indexableText = v });
+  }
+  let isAppAuthorized = {
+    GapiLens.get = (fun x -> x.isAppAuthorized);
+    GapiLens.set = (fun v x -> { x with isAppAuthorized = v });
   }
   let kind = {
     GapiLens.get = (fun x -> x.kind);
@@ -3774,6 +3795,7 @@ struct
     alternateLink = "";
     appDataContents = false;
     canComment = false;
+    canReadRevisions = false;
     copyable = false;
     createdDate = GapiDate.epoch;
     defaultOpenWithLink = "";
@@ -3793,6 +3815,7 @@ struct
     id = "";
     imageMediaMetadata = ImageMediaMetadata.empty;
     indexableText = IndexableText.empty;
+    isAppAuthorized = false;
     kind = "";
     labels = Labels.empty;
     lastModifyingUser = User.empty;
@@ -3835,6 +3858,7 @@ struct
       GapiJson.render_string_value "alternateLink" x.alternateLink;
       GapiJson.render_bool_value "appDataContents" x.appDataContents;
       GapiJson.render_bool_value "canComment" x.canComment;
+      GapiJson.render_bool_value "canReadRevisions" x.canReadRevisions;
       GapiJson.render_bool_value "copyable" x.copyable;
       GapiJson.render_date_value "createdDate" x.createdDate;
       GapiJson.render_string_value "defaultOpenWithLink" x.defaultOpenWithLink;
@@ -3854,6 +3878,7 @@ struct
       GapiJson.render_string_value "id" x.id;
       (fun v -> GapiJson.render_object "imageMediaMetadata" (ImageMediaMetadata.render_content v)) x.imageMediaMetadata;
       (fun v -> GapiJson.render_object "indexableText" (IndexableText.render_content v)) x.indexableText;
+      GapiJson.render_bool_value "isAppAuthorized" x.isAppAuthorized;
       GapiJson.render_string_value "kind" x.kind;
       (fun v -> GapiJson.render_object "labels" (Labels.render_content v)) x.labels;
       (fun v -> GapiJson.render_object "lastModifyingUser" (User.render_content v)) x.lastModifyingUser;
@@ -3906,6 +3931,10 @@ struct
         ({ GapiJson.name = "canComment"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with canComment = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "canReadRevisions"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with canReadRevisions = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "copyable"; data_type = GapiJson.Scalar },
         `Bool v) ->
@@ -4000,6 +4029,10 @@ struct
         IndexableText.empty
         (fun v -> { x with indexableText = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "isAppAuthorized"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with isAppAuthorized = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->

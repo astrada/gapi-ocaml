@@ -796,6 +796,7 @@ struct
       convert : bool;
       corpus : Corpus.t;
       maxResults : int;
+      mimeType : string;
       modifiedDateBehavior : ModifiedDateBehavior.t;
       newRevision : bool;
       ocr : bool;
@@ -829,6 +830,7 @@ struct
       convert = false;
       corpus = Corpus.Default;
       maxResults = 10;
+      mimeType = "";
       modifiedDateBehavior = ModifiedDateBehavior.Default;
       newRevision = true;
       ocr = false;
@@ -864,6 +866,7 @@ struct
       param (fun p -> p.convert) string_of_bool "convert";
       param (fun p -> p.corpus) Corpus.to_string "corpus";
       param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.mimeType) (fun x -> x) "mimeType";
       param (fun p -> p.modifiedDateBehavior) ModifiedDateBehavior.to_string "modifiedDateBehavior";
       param (fun p -> p.newRevision) string_of_bool "newRevision";
       param (fun p -> p.ocr) string_of_bool "ocr";
@@ -893,6 +896,7 @@ struct
         ?(convert = default.convert)
         ?(corpus = default.corpus)
         ?(maxResults = default.maxResults)
+        ?(mimeType = default.mimeType)
         ?(modifiedDateBehavior = default.modifiedDateBehavior)
         ?(newRevision = default.newRevision)
         ?(ocr = default.ocr)
@@ -924,6 +928,7 @@ struct
         convert;
         corpus;
         maxResults;
+        mimeType;
         modifiedDateBehavior;
         newRevision;
         ocr;
@@ -998,6 +1003,21 @@ struct
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
+      GapiRequest.parse_empty_response session 
+    
+  let export
+        ?(base_url = "https://www.googleapis.com/drive/v2/")
+        ?std_params
+        ~fileId
+        ~mimeType
+        session =
+    let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
+      "export"] base_url in
+    let params = FilesParameters.merge_parameters
+      ?standard_parameters:std_params ~mimeType () in
+    let query_parameters = Option.map FilesParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
   let generateIds
@@ -1303,6 +1323,7 @@ struct
       key : string;
       (* permissions-specific query parameters *)
       emailMessage : string;
+      removeExpiration : bool;
       sendNotificationEmails : bool;
       transferOwnership : bool;
       
@@ -1315,6 +1336,7 @@ struct
       userIp = "";
       key = "";
       emailMessage = "";
+      removeExpiration = false;
       sendNotificationEmails = true;
       transferOwnership = false;
       
@@ -1329,6 +1351,7 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.emailMessage) (fun x -> x) "emailMessage";
+      param (fun p -> p.removeExpiration) string_of_bool "removeExpiration";
       param (fun p -> p.sendNotificationEmails) string_of_bool "sendNotificationEmails";
       param (fun p -> p.transferOwnership) string_of_bool "transferOwnership";
       
@@ -1337,6 +1360,7 @@ struct
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(emailMessage = default.emailMessage)
+        ?(removeExpiration = default.removeExpiration)
         ?(sendNotificationEmails = default.sendNotificationEmails)
         ?(transferOwnership = default.transferOwnership)
         () =
@@ -1347,6 +1371,7 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         emailMessage;
+        removeExpiration;
         sendNotificationEmails;
         transferOwnership;
         
@@ -1438,6 +1463,7 @@ struct
   let patch
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?(removeExpiration = false)
         ?(transferOwnership = false)
         ~fileId
         ~permissionId
@@ -1447,7 +1473,8 @@ struct
       "permissions"; ((fun x -> x) permissionId)] base_url in
     let etag = GapiUtils.etag_option permission.Permission.etag in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params ~transferOwnership () in
+      ?standard_parameters:std_params ~removeExpiration ~transferOwnership ()
+      in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -1458,6 +1485,7 @@ struct
   let update
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?(removeExpiration = false)
         ?(transferOwnership = false)
         ~fileId
         ~permissionId
@@ -1467,7 +1495,8 @@ struct
       "permissions"; ((fun x -> x) permissionId)] base_url in
     let etag = GapiUtils.etag_option permission.Permission.etag in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params ~transferOwnership () in
+      ?standard_parameters:std_params ~removeExpiration ~transferOwnership ()
+      in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
