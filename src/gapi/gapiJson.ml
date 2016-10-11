@@ -173,7 +173,8 @@ let render_json render_data_model data =
   let tree = render_data_model data in
   let json = data_model_to_json tree in
   let json_string = Yojson.Safe.to_string json in
-    GapiCore.PostData.Body (json_string, default_content_type)
+    GapiCore.PostData.Body (GapiCore.PostData.String json_string,
+                            default_content_type)
 
 module StringDictionary =
 struct

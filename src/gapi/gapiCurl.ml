@@ -1,10 +1,10 @@
 open GapiUtils.Infix
 
-type curl_context =
-    { curl : Curl.t;
-      error_buffer : string ref;
-      disposed : bool;
-    }
+type curl_context = {
+  curl : Curl.t;
+  error_buffer : string ref;
+  disposed : bool;
+}
 
 type 'a t =
     Initialized
@@ -25,10 +25,10 @@ let reader netchannel bytes =
   let result = String.create bytes in
     try
       let len = netchannel#input result 0 bytes in
-        if len = bytes then
-          result
-        else
-          String.sub result 0 len
+      if len = bytes then
+        result
+      else
+        String.sub result 0 len
     with End_of_file ->
       netchannel#close_in ();
       ""
@@ -52,47 +52,47 @@ let init
       (state : [`Initialized] t) : [`Created] t =
   let error_buffer = ref "" in
   let curl = Curl.init () in
-    begin match debug_function with
-        None ->
-          Curl.set_verbose curl false
-      | Some f ->
-          Curl.set_verbose curl true;
-          Curl.set_debugfunction curl f
-    end;
-    begin match timeout with
-        None -> ()
-      | Some ms ->
-          Curl.set_timeoutms curl ms;
-    end;
-    begin match connect_timeout with
-        None -> ()
-      | Some ms ->
-          Curl.set_connecttimeoutms curl ms;
-    end;
-    begin match compress with
-        false ->
-          Curl.set_encoding curl Curl.CURL_ENCODING_NONE
-      | true ->
-          Curl.set_encoding curl Curl.CURL_ENCODING_DEFLATE
-    end;
-    if max_send_speed > 0L then
-      Curl.set_maxsendspeedlarge curl max_send_speed;
-    if max_recv_speed > 0L then
-      Curl.set_maxrecvspeedlarge curl max_recv_speed;
-    if low_speed_limit > 0 then
-      Curl.set_lowspeedlimit curl low_speed_limit;
-    if low_speed_time > 0 then
-      Curl.set_lowspeedtime curl low_speed_time;
-    begin match options with
-        None -> ()
-      | Some option_list -> set_curl_options option_list curl
-    end;
-    Curl.set_nosignal curl no_signal;
-    Curl.set_errorbuffer curl error_buffer;
-    Curl.set_followlocation curl follow_location;
-    Created { curl;
-              error_buffer;
-              disposed = false }
+  begin match debug_function with
+      None ->
+        Curl.set_verbose curl false
+    | Some f ->
+        Curl.set_verbose curl true;
+        Curl.set_debugfunction curl f
+  end;
+  begin match timeout with
+      None -> ()
+    | Some ms ->
+        Curl.set_timeoutms curl ms;
+  end;
+  begin match connect_timeout with
+      None -> ()
+    | Some ms ->
+        Curl.set_connecttimeoutms curl ms;
+  end;
+  begin match compress with
+      false ->
+        Curl.set_encoding curl Curl.CURL_ENCODING_NONE
+    | true ->
+        Curl.set_encoding curl Curl.CURL_ENCODING_DEFLATE
+  end;
+  if max_send_speed > 0L then
+    Curl.set_maxsendspeedlarge curl max_send_speed;
+  if max_recv_speed > 0L then
+    Curl.set_maxrecvspeedlarge curl max_recv_speed;
+  if low_speed_limit > 0 then
+    Curl.set_lowspeedlimit curl low_speed_limit;
+  if low_speed_time > 0 then
+    Curl.set_lowspeedtime curl low_speed_time;
+  begin match options with
+      None -> ()
+    | Some option_list -> set_curl_options option_list curl
+  end;
+  Curl.set_nosignal curl no_signal;
+  Curl.set_errorbuffer curl error_buffer;
+  Curl.set_followlocation curl follow_location;
+  Created { curl;
+            error_buffer;
+            disposed = false }
 
 let with_curl_context f (state : [`Created] t) =
   match state with
@@ -154,10 +154,25 @@ let set_upload flag (state : [`Created] t) =
 let set_httpbody body (state : [`Created] t) =
   with_curl
     (fun curl ->
-       let ch = new Netchannels.input_string body in
+       let (ch, length) =
+         match body with
+             GapiCore.PostData.String content ->
+               (new Netchannels.input_string content, String.length content)
+           | GapiCore.PostData.File (path, chunk_size, offset) ->
+               let in_ch = open_in_bin path in
+               let length = min chunk_size (in_channel_length in_ch) in
+               LargeFile.seek_in in_ch offset;
+               let net_in_ch = new Netchannels.input_channel in_ch in
+               (((new Netstream.input_stream ~len:length net_in_ch) :>
+                   Netchannels.in_obj_channel),
+                length)
+           | GapiCore.PostData.Buffer buffer ->
+               (new Netchannels.input_memory buffer, Bigarray.Array1.dim buffer)
+       in
        let readfunction = reader ch in
-         Curl.set_postfieldsize curl (String.length body);
-         Curl.set_readfunction curl readfunction)
+       Curl.set_postfieldsize curl length;
+       Curl.set_readfunction curl readfunction
+    )
     state
 
 let set_customrequest http_method (state : [`Created] t) =
@@ -177,11 +192,11 @@ let set_postfields key_value_list (state : [`Created] t) =
                                     key_value_list in
              let ch = new Netchannels.input_string encoded_string in
              let readfunction = reader ch in
-               Curl.set_postfieldsize curl (String.length encoded_string);
-               (* using readfunction instead of set_postfields because there is
-                * no way to reset postfields buffer using current version of
-                * ocurl (doesn't implement curl_easy_reset) *)
-               Curl.set_readfunction curl readfunction
+             Curl.set_postfieldsize curl (String.length encoded_string);
+             (* using readfunction instead of set_postfields because there is
+              * no way to reset postfields buffer using ocurl <= 0.5.1
+              * (doesn't implement curl_easy_reset) *)
+             Curl.set_readfunction curl readfunction
     )
     state
 

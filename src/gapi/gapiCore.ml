@@ -66,11 +66,18 @@ end
 
 module PostData =
 struct
+  type body =
+      String of string
+    | File of string * int * int64
+    | Buffer of (char,
+                 Bigarray.int8_unsigned_elt,
+                 Bigarray.c_layout) Bigarray.Array1.t
+
   type t =
       (* field list (key/value pair) *)
       Fields of (string * string) list
       (* body, and content type *)
-    | Body of string * string
+    | Body of body * string
 
   let empty = Fields []
 

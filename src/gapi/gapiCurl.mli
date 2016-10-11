@@ -42,7 +42,7 @@ val set_nobody : bool -> [ `Created ] t -> unit
 
 val set_upload : bool -> [ `Created ] t -> unit
 
-val set_httpbody : string -> [ `Created ] t -> unit
+val set_httpbody : GapiCore.PostData.body -> [ `Created ] t -> unit
 
 val set_customrequest : string -> [ `Created ] t -> unit
 

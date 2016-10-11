@@ -49,9 +49,16 @@ end
 
 module PostData :
 sig
+  type body =
+      String of string
+    | File of string * int * int64
+    | Buffer of (char,
+                 Bigarray.int8_unsigned_elt,
+                 Bigarray.c_layout) Bigarray.Array1.t
+
   type t =
       Fields of (string * string) list
-    | Body of string * string
+    | Body of body * string
 
   val empty : t
 

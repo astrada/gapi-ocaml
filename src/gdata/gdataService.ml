@@ -1,7 +1,8 @@
 let data_to_post data_to_tree data =
   let tree = data_to_tree data in
   let body = GdataUtils.data_to_xml_string tree in
-    GapiCore.PostData.Body (body, GdataCore.default_content_type)
+  GapiCore.PostData.Body (GapiCore.PostData.String body,
+                          GdataCore.default_content_type)
 
 let query
       ?version
