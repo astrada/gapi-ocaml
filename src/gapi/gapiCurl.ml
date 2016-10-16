@@ -167,7 +167,17 @@ let set_httpbody body (state : [`Created] t) =
                    Netchannels.in_obj_channel),
                 length)
            | GapiCore.PostData.Buffer buffer ->
-               (new Netchannels.input_memory buffer, Bigarray.Array1.dim buffer)
+               let length = Bigarray.Array1.dim buffer in
+               let netbuffer = Netbuffer.create length in
+               let (net_in_ch, close) =
+                 Netchannels.create_input_netbuffer netbuffer in
+               Netbuffer.add_sub_memory netbuffer buffer 0 length;
+               close ();
+               (net_in_ch, length)
+               (** Ocamlnet 4.1.2 version:
+                * (new Netchannels.input_memory buffer,
+                *  Bigarray.Array1.dim buffer)
+                *)
        in
        let readfunction = reader ch in
        Curl.set_postfieldsize curl length;
