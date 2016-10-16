@@ -1,110 +1,5 @@
 open GapiUtils.Infix
 
-(* Backport input_memory from Ocamlnet 4.1.2 *)
-open Netsys_types
-open Netstring_tstring
-
-class ['t] input_generic name ops ?(pos = 0) ?len (s:'t) : Netchannels.in_obj_channel =
-object (self)
-  val mutable str = s
-  val mutable str_len = 
-    match len with 
-	None   -> ops.length s 
-      | Some l -> pos + l
-
-  val mutable str_pos = pos
-  val mutable closed = false
-
-  initializer
-    if str_pos < 0 || str_pos > ops.length str || 
-       str_len < 0 || str_len > ops.length s 
-    then
-      invalid_arg ("new Netchannels." ^ name)
-	  
-
-  method private complain_closed() =
-    raise Netchannels.Closed_channel
-
-  method input buf pos len =
-    if closed then self # complain_closed();
-    if pos < 0 || len < 0 || pos+len > Bytes.length buf then
-      invalid_arg "input";
-
-    let n = min len (str_len - str_pos) in
-    ops.blit_to_bytes str str_pos buf pos n;
-    
-    str_pos <- str_pos + n;
-
-    if n=0 && len>0 then raise End_of_file else n
-
-
-  method really_input buf pos len =
-    if closed then self # complain_closed();
-    if pos < 0 || len < 0 || pos+len > Bytes.length buf then
-      invalid_arg "really_input";
-
-    let n = self # input buf pos len in
-    if n <> len then raise End_of_file;
-    ()
-
-
-  method really_input_string len =
-    if closed then self # complain_closed();
-    if len < 0 then
-      invalid_arg "really_input_string";
-
-    let buf = Bytes.create len in
-    let n = self # input buf 0 len in
-    if n <> len then raise End_of_file;
-    Bytes.to_string buf
-
-
-  method input_char() =
-    if closed then self # complain_closed();
-    if str_pos >= str_len then raise End_of_file;
-    let c = ops.get str str_pos in
-    str_pos <- str_pos + 1;
-    c
-
-
-  method input_line() =
-    if closed then self # complain_closed();
-    try
-      let k = ops.index_from str str_pos '\n' in
-      (* CHECK: Are the different end of line conventions important here? *)
-      let line = ops.substring str str_pos (k - str_pos) in
-      str_pos <- k+1;
-      line
-    with
-	Not_found ->
-	  if str_pos >= str_len then raise End_of_file;
-	  (* Implicitly add linefeed at the end of the file: *)
-	  let line = ops.substring str str_pos (str_len - str_pos) in
-	  str_pos <- str_len;
-	  line
-
-
-  method input_byte() =
-    Char.code (self # input_char())
-
-
-  method close_in() =
-    (* str <- ""; *)
-    closed <- true;
-
-
-  method pos_in = 
-    if closed then self # complain_closed();
-    str_pos
-
-end
-
-class input_memory =
-  [memory] input_generic "input_memory" Netstring_tstring.memory_ops
-
-let input_memory = new input_memory
-(* END: Backport input_memory from Ocamlnet 4.1.2 *)
-
 type curl_context = {
   curl : Curl.t;
   error_buffer : string ref;
@@ -272,7 +167,7 @@ let set_httpbody body (state : [`Created] t) =
                    Netchannels.in_obj_channel),
                 length)
            | GapiCore.PostData.Buffer buffer ->
-               (new input_memory buffer, Bigarray.Array1.dim buffer)
+               (new Netchannels.input_memory buffer, Bigarray.Array1.dim buffer)
        in
        let readfunction = reader ch in
        Curl.set_postfieldsize curl length;
