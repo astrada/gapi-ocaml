@@ -92,6 +92,7 @@ val post :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?media_download:GapiMediaResource.download ->
   ?data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->

@@ -172,6 +172,7 @@ let post
       ?etag
       ?query_parameters
       ?media_source
+      ?media_download
       ?(data_to_post = (fun _ -> GapiCore.PostData.empty))
       ~data
       url
@@ -183,6 +184,7 @@ let post
       ?etag
       ?query_parameters
       ?media_source
+      ?media_download
       ~request_type:GapiRequest.Create
       url
       (fun pipe _ -> parse_response pipe)
