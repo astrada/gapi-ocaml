@@ -573,6 +573,7 @@ struct
   let export
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?media_download
         ~fileId
         ~mimeType
         session =
@@ -582,7 +583,7 @@ struct
       ?standard_parameters:std_params ~mimeType () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?media_download full_url
       GapiRequest.parse_empty_response session 
     
   let generateIds
@@ -604,6 +605,7 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?media_download
         ?(acknowledgeAbuse = false)
         ~fileId
         session =
@@ -613,7 +615,7 @@ struct
       ?standard_parameters:std_params ~acknowledgeAbuse () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?media_download full_url
       (GapiJson.parse_json_response File.of_data_model) session 
     
   let list
@@ -665,6 +667,7 @@ struct
   let watch
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?media_download
         ?(acknowledgeAbuse = false)
         ~fileId
         channel
@@ -675,7 +678,7 @@ struct
       ?standard_parameters:std_params ~acknowledgeAbuse () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?media_download
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
       ~data:channel full_url
       (GapiJson.parse_json_response Channel.of_data_model) session 
@@ -1076,6 +1079,7 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?media_download
         ?(acknowledgeAbuse = false)
         ~fileId
         ~revisionId
@@ -1086,7 +1090,7 @@ struct
       ?standard_parameters:std_params ~acknowledgeAbuse () in
     let query_parameters = Option.map RevisionsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?media_download full_url
       (GapiJson.parse_json_response Revision.of_data_model) session 
     
   let list
