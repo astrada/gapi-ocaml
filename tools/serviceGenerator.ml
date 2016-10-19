@@ -871,6 +871,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
           if rest_method.RestMethod.supportsMediaUpload then begin
             Format.fprintf formatter "?media_source@ ";
           end;
+          if rest_method.RestMethod.supportsMediaDownload then begin
+            Format.fprintf formatter "?media_download@ ";
+          end;
           if Option.is_some request_parameter then begin
             Format.fprintf formatter
               "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
@@ -963,6 +966,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                     RestMethod.(rest_method.request.Request._ref)
                     RestMethod.(rest_method.response.Response._ref)
                     rest_method.RestMethod.supportsMediaUpload
+                    rest_method.RestMethod.supportsMediaDownload
                     type_table in
       method_lens ^=! methd;
 
@@ -979,6 +983,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         Format.fprintf formatter "?std_params@ ";
         if rest_method.RestMethod.supportsMediaUpload then begin
           Format.fprintf formatter "?media_source@ ";
+        end;
+        if rest_method.RestMethod.supportsMediaDownload then begin
+          Format.fprintf formatter "?media_download@ ";
         end);
 
       render_parameters formatter method_lens;
@@ -1393,6 +1400,10 @@ let rec generate_service_module_signature
             "?std_params:GapiService.StandardParameters.t ->@ ";
           if methd.Method.supports_media_upload then begin
             Format.fprintf formatter "?media_source:GapiMediaResource.t ->@ ";
+          end;
+          if methd.Method.supports_media_download then begin
+            Format.fprintf formatter
+              "?media_download:GapiMediaResource.download ->@ ";
           end;
           (* Parameters *)
           List.iter

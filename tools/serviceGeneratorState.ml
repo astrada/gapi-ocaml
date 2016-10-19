@@ -726,14 +726,14 @@ struct
     fields : (string * Field.t) list;
   }
 
-	let module_name = {
-		GapiLens.get = (fun x -> x.module_name);
-		GapiLens.set = (fun v x -> { x with module_name = v })
-	}
-	let fields = {
-		GapiLens.get = (fun x -> x.fields);
-		GapiLens.set = (fun v x -> { x with fields = v })
-	}
+  let module_name = {
+    GapiLens.get = (fun x -> x.module_name);
+    GapiLens.set = (fun v x -> { x with module_name = v })
+  }
+  let fields = {
+    GapiLens.get = (fun x -> x.fields);
+    GapiLens.set = (fun v x -> { x with fields = v })
+  }
   let field id = GapiLens.for_assoc id
   let field_list = fields |-- GapiLens.list_map GapiLens.second
 
@@ -766,32 +766,37 @@ struct
     request : Field.t option;
     response : Field.t option;
     supports_media_upload : bool;
+    supports_media_download : bool;
   }
 
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let description = {
-		GapiLens.get = (fun x -> x.description);
-		GapiLens.set = (fun v x -> { x with description = v })
-	}
-	let parameters = {
-		GapiLens.get = (fun x -> x.parameters);
-		GapiLens.set = (fun v x -> { x with parameters = v })
-	}
-	let parameter_order = {
-		GapiLens.get = (fun x -> x.parameter_order);
-		GapiLens.set = (fun v x -> { x with parameter_order = v })
-	}
-	let supports_media_upload = {
-		GapiLens.get = (fun x -> x.supports_media_upload);
-		GapiLens.set = (fun v x -> { x with supports_media_upload = v })
-	}
+  let original_name = {
+    GapiLens.get = (fun x -> x.original_name);
+    GapiLens.set = (fun v x -> { x with original_name = v })
+  }
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let description = {
+    GapiLens.get = (fun x -> x.description);
+    GapiLens.set = (fun v x -> { x with description = v })
+  }
+  let parameters = {
+    GapiLens.get = (fun x -> x.parameters);
+    GapiLens.set = (fun v x -> { x with parameters = v })
+  }
+  let parameter_order = {
+    GapiLens.get = (fun x -> x.parameter_order);
+    GapiLens.set = (fun v x -> { x with parameter_order = v })
+  }
+  let supports_media_upload = {
+    GapiLens.get = (fun x -> x.supports_media_upload);
+    GapiLens.set = (fun v x -> { x with supports_media_upload = v })
+  }
+  let supports_media_download = {
+    GapiLens.get = (fun x -> x.supports_media_download);
+    GapiLens.set = (fun v x -> { x with supports_media_download = v })
+  }
   let parameter id = GapiLens.for_assoc id
 
   let get_parameter_lens id =
@@ -804,6 +809,7 @@ struct
         request_ref
         response_ref
         supports_media_upload
+        supports_media_download
         type_table =
     let get_field_from_ref reference =
       if reference = "" then None
@@ -837,6 +843,7 @@ struct
         request;
         response;
         supports_media_upload;
+        supports_media_download;
       }
 
 end
@@ -858,22 +865,22 @@ struct
     inner_modules : (string * t) list;
   }
 
-	let original_name = {
-		GapiLens.get = (fun x -> x.original_name);
-		GapiLens.set = (fun v x -> { x with original_name = v })
-	}
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let type_t = {
-		GapiLens.get = (fun x -> x.type_t);
-		GapiLens.set = (fun v x -> { x with type_t = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
+  let original_name = {
+    GapiLens.get = (fun x -> x.original_name);
+    GapiLens.set = (fun v x -> { x with original_name = v })
+  }
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let type_t = {
+    GapiLens.get = (fun x -> x.type_t);
+    GapiLens.set = (fun v x -> { x with type_t = v })
+  }
+  let inner_modules = {
+    GapiLens.get = (fun x -> x.inner_modules);
+    GapiLens.set = (fun v x -> { x with inner_modules = v })
+  }
   let inner_module id = GapiLens.for_assoc id
 
   let get_inner_module_lens id =
@@ -1066,14 +1073,14 @@ struct
     inner_modules : (string * InnerSchemaModule.t) list;
   }
 
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let inner_modules = {
+    GapiLens.get = (fun x -> x.inner_modules);
+    GapiLens.set = (fun v x -> { x with inner_modules = v })
+  }
   let inner_module id = GapiLens.for_assoc id
 
   let get_inner_module_lens id =
@@ -1099,22 +1106,22 @@ struct
     api_level_module : InnerServiceModule.t option;
   }
 
-	let ocaml_name = {
-		GapiLens.get = (fun x -> x.ocaml_name);
-		GapiLens.set = (fun v x -> { x with ocaml_name = v })
-	}
-	let inner_modules = {
-		GapiLens.get = (fun x -> x.inner_modules);
-		GapiLens.set = (fun v x -> { x with inner_modules = v })
-	}
-	let scopes = {
-		GapiLens.get = (fun x -> x.scopes);
-		GapiLens.set = (fun v x -> { x with scopes = v })
-	}
-	let api_level_module = {
-		GapiLens.get = (fun x -> x.api_level_module);
-		GapiLens.set = (fun v x -> { x with api_level_module = v })
-	}
+  let ocaml_name = {
+    GapiLens.get = (fun x -> x.ocaml_name);
+    GapiLens.set = (fun v x -> { x with ocaml_name = v })
+  }
+  let inner_modules = {
+    GapiLens.get = (fun x -> x.inner_modules);
+    GapiLens.set = (fun v x -> { x with inner_modules = v })
+  }
+  let scopes = {
+    GapiLens.get = (fun x -> x.scopes);
+    GapiLens.set = (fun v x -> { x with scopes = v })
+  }
+  let api_level_module = {
+    GapiLens.get = (fun x -> x.api_level_module);
+    GapiLens.set = (fun v x -> { x with api_level_module = v })
+  }
   let inner_module id = GapiLens.for_assoc id
   let scope id = GapiLens.for_assoc id
 
@@ -1169,30 +1176,30 @@ struct
     formatter : Format.formatter;
   }
 
-	let file_type = {
-		GapiLens.get = (fun x -> x.file_type);
-		GapiLens.set = (fun v x -> { x with file_type = v })
-	}
-	let service_name = {
-		GapiLens.get = (fun x -> x.service_name);
-		GapiLens.set = (fun v x -> { x with service_name = v })
-	}
-	let service_version = {
-		GapiLens.get = (fun x -> x.service_version);
-		GapiLens.set = (fun v x -> { x with service_version = v })
-	}
-	let module_name = {
-		GapiLens.get = (fun x -> x.module_name);
-		GapiLens.set = (fun v x -> { x with module_name = v })
-	}
-	let file_name = {
-		GapiLens.get = (fun x -> x.file_name);
-		GapiLens.set = (fun v x -> { x with file_name = v })
-	}
-	let formatter = {
-		GapiLens.get = (fun x -> x.formatter);
-		GapiLens.set = (fun v x -> { x with formatter = v })
-	}
+  let file_type = {
+    GapiLens.get = (fun x -> x.file_type);
+    GapiLens.set = (fun v x -> { x with file_type = v })
+  }
+  let service_name = {
+    GapiLens.get = (fun x -> x.service_name);
+    GapiLens.set = (fun v x -> { x with service_name = v })
+  }
+  let service_version = {
+    GapiLens.get = (fun x -> x.service_version);
+    GapiLens.set = (fun v x -> { x with service_version = v })
+  }
+  let module_name = {
+    GapiLens.get = (fun x -> x.module_name);
+    GapiLens.set = (fun v x -> { x with module_name = v })
+  }
+  let file_name = {
+    GapiLens.get = (fun x -> x.file_name);
+    GapiLens.set = (fun v x -> { x with file_name = v })
+  }
+  let formatter = {
+    GapiLens.get = (fun x -> x.formatter);
+    GapiLens.set = (fun v x -> { x with formatter = v })
+  }
 
   let create service_name service_version output_path file_type =
     let base_name = service_name ^ (String.capitalize service_version) in
@@ -1312,29 +1319,29 @@ struct
   }
 
   let service = {
-		GapiLens.get = (fun x -> x.service);
-		GapiLens.set = (fun v x -> { x with service = v })
+    GapiLens.get = (fun x -> x.service);
+    GapiLens.set = (fun v x -> { x with service = v })
   }
-	let files = {
-		GapiLens.get = (fun x -> x.files);
-		GapiLens.set = (fun v x -> { x with files = v })
-	}
-	let schema_module = {
-		GapiLens.get = (fun x -> x.schema_module);
-		GapiLens.set = (fun v x -> { x with schema_module = v })
-	}
-	let service_module = {
-		GapiLens.get = (fun x -> x.service_module);
-		GapiLens.set = (fun v x -> { x with service_module = v })
-	}
-	let type_table = {
-		GapiLens.get = (fun x -> x.type_table);
-		GapiLens.set = (fun v x -> { x with type_table = v })
-	}
-	let sorted_types = {
-		GapiLens.get = (fun x -> x.sorted_types);
-		GapiLens.set = (fun v x -> { x with sorted_types = v })
-	}
+  let files = {
+    GapiLens.get = (fun x -> x.files);
+    GapiLens.set = (fun v x -> { x with files = v })
+  }
+  let schema_module = {
+    GapiLens.get = (fun x -> x.schema_module);
+    GapiLens.set = (fun v x -> { x with schema_module = v })
+  }
+  let service_module = {
+    GapiLens.get = (fun x -> x.service_module);
+    GapiLens.set = (fun v x -> { x with service_module = v })
+  }
+  let type_table = {
+    GapiLens.get = (fun x -> x.type_table);
+    GapiLens.set = (fun v x -> { x with type_table = v })
+  }
+  let sorted_types = {
+    GapiLens.get = (fun x -> x.sorted_types);
+    GapiLens.set = (fun v x -> { x with sorted_types = v })
+  }
   let file file_type = GapiLens.for_hash file_type
 
   let get_schema_module_lens =
