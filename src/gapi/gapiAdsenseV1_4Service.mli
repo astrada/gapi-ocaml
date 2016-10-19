@@ -154,6 +154,7 @@ sig
     val generate :
       ?base_url:string ->
       ?std_params:GapiService.StandardParameters.t ->
+      ?media_download:GapiMediaResource.download ->
       ?currency:string ->
       ?dimension:string list ->
       ?filter:string list ->
@@ -771,6 +772,7 @@ sig
   val generate :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_download:GapiMediaResource.download ->
     ?accountId:string list ->
     ?currency:string ->
     ?dimension:string list ->

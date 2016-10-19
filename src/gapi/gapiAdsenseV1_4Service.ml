@@ -813,6 +813,7 @@ struct
     let generate
           ?(base_url = "https://www.googleapis.com/adsense/v1.4/")
           ?std_params
+          ?media_download
           ?currency
           ?dimension
           ?filter
@@ -834,7 +835,7 @@ struct
         ?useTimezoneReporting () in
       let query_parameters = Option.map ReportsParameters.to_key_value_list
         params in
-      GapiService.get ?query_parameters full_url
+      GapiService.get ?query_parameters ?media_download full_url
         (GapiJson.parse_json_response AdsenseReportsGenerateResponse.of_data_model)
         session 
       
@@ -1937,6 +1938,7 @@ struct
   let generate
         ?(base_url = "https://www.googleapis.com/adsense/v1.4/")
         ?std_params
+        ?media_download
         ?accountId
         ?currency
         ?dimension
@@ -1957,7 +1959,7 @@ struct
       ?startIndex ?useTimezoneReporting () in
     let query_parameters = Option.map ReportsParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?media_download full_url
       (GapiJson.parse_json_response AdsenseReportsGenerateResponse.of_data_model)
       session 
     

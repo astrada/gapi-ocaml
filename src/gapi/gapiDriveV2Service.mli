@@ -491,6 +491,7 @@ sig
   val export :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_download:GapiMediaResource.download ->
     fileId:string ->
     mimeType:string ->
     GapiConversation.Session.t ->
@@ -526,6 +527,7 @@ sig
     ?base_url:string ->
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_download:GapiMediaResource.download ->
     ?acknowledgeAbuse:bool ->
     ?updateViewedDate:bool ->
     ?projection:Projection.t ->
@@ -721,6 +723,7 @@ sig
   val watch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_download:GapiMediaResource.download ->
     ?acknowledgeAbuse:bool ->
     ?updateViewedDate:bool ->
     ?projection:Projection.t ->
@@ -1040,6 +1043,7 @@ sig
     ?base_url:string ->
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?media_download:GapiMediaResource.download ->
     ?revision:int ->
     fileId:string ->
     GapiConversation.Session.t ->
