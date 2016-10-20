@@ -59,6 +59,7 @@ struct
   struct
     type t = {
       (* Standard query parameters *)
+      alt : string;
       fields : string;
       prettyPrint : bool;
       quotaUser : string;
@@ -74,6 +75,7 @@ struct
     }
     
     let default = {
+      alt = "";
       fields = "";
       prettyPrint = true;
       quotaUser = "";
@@ -90,6 +92,7 @@ struct
     let to_key_value_list qp =
       let param get_value to_string name =
         GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.alt) (fun x -> x) "alt";
       param (fun p -> p.fields) (fun x -> x) "fields";
       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
@@ -112,6 +115,7 @@ struct
         ?(query = default.query)
         () =
       let parameters = {
+        alt = standard_parameters.GapiService.StandardParameters.alt;
         fields = standard_parameters.GapiService.StandardParameters.fields;
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
@@ -208,6 +212,7 @@ struct
   struct
     type t = {
       (* Standard query parameters *)
+      alt : string;
       fields : string;
       prettyPrint : bool;
       quotaUser : string;
@@ -221,6 +226,7 @@ struct
     }
     
     let default = {
+      alt = "";
       fields = "";
       prettyPrint = true;
       quotaUser = "";
@@ -235,6 +241,7 @@ struct
     let to_key_value_list qp =
       let param get_value to_string name =
         GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.alt) (fun x -> x) "alt";
       param (fun p -> p.fields) (fun x -> x) "fields";
       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
@@ -253,6 +260,7 @@ struct
         ?(sortOrder = default.sortOrder)
         () =
       let parameters = {
+        alt = standard_parameters.GapiService.StandardParameters.alt;
         fields = standard_parameters.GapiService.StandardParameters.fields;
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
@@ -325,6 +333,7 @@ struct
   struct
     type t = {
       (* Standard query parameters *)
+      alt : string;
       fields : string;
       prettyPrint : bool;
       quotaUser : string;
@@ -340,6 +349,7 @@ struct
     }
     
     let default = {
+      alt = "";
       fields = "";
       prettyPrint = true;
       quotaUser = "";
@@ -356,6 +366,7 @@ struct
     let to_key_value_list qp =
       let param get_value to_string name =
         GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.alt) (fun x -> x) "alt";
       param (fun p -> p.fields) (fun x -> x) "fields";
       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
@@ -378,6 +389,7 @@ struct
         ?(_type = default._type)
         () =
       let parameters = {
+        alt = standard_parameters.GapiService.StandardParameters.alt;
         fields = standard_parameters.GapiService.StandardParameters.fields;
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
@@ -489,6 +501,7 @@ struct
   struct
     type t = {
       (* Standard query parameters *)
+      alt : string;
       fields : string;
       prettyPrint : bool;
       quotaUser : string;
@@ -504,6 +517,7 @@ struct
     }
     
     let default = {
+      alt = "";
       fields = "";
       prettyPrint = true;
       quotaUser = "";
@@ -520,6 +534,7 @@ struct
     let to_key_value_list qp =
       let param get_value to_string name =
         GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.alt) (fun x -> x) "alt";
       param (fun p -> p.fields) (fun x -> x) "fields";
       param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
       param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
@@ -542,6 +557,7 @@ struct
         ?(query = default.query)
         () =
       let parameters = {
+        alt = standard_parameters.GapiService.StandardParameters.alt;
         fields = standard_parameters.GapiService.StandardParameters.fields;
         prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
         quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
