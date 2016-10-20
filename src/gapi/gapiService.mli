@@ -50,6 +50,8 @@ val build_params :
 module StandardParameters :
 sig
   type t = {
+    alt : string;
+    (** Data format for the response. *)
     fields : string;
     (** Selector specifying which fields to include in a partial response. *)
     prettyPrint : bool;

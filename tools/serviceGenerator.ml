@@ -649,7 +649,7 @@ let generate_parameters_module filter_parameters formatter
       inner_module_lens resource_id resource =
   let render_type_t formatter parameters =
     Format.fprintf formatter
-      "@[<v 2>type t = {@,(* Standard query parameters *)@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
+      "@[<v 2>type t = {@,(* Standard query parameters *)@,alt : string;@,fields : string;@,prettyPrint : bool;@,quotaUser : string;@,userIp : string;@,key : string;@,(* %s-specific query parameters *)@,"
       resource_id;
     FieldSet.iter
       (fun (id, { Field.ocaml_name;
@@ -669,7 +669,7 @@ let generate_parameters_module filter_parameters formatter
   in
 
   let render_default formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let default = {@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,key = \"\";@,";
+    Format.fprintf formatter "@,@[<v 2>let default = {@,alt = \"\";@,fields = \"\";@,prettyPrint = true;@,quotaUser = \"\";@,userIp = \"\";@,key = \"\";@,";
     FieldSet.iter
       (fun (id, { Field.ocaml_name;
                   default;
@@ -689,7 +689,7 @@ let generate_parameters_module filter_parameters formatter
   in
 
   let render_to_key_value_list formatter parameters =
-    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.fields) (fun x -> x) \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) (fun x -> x) \"quotaUser\";@,param (fun p -> p.userIp) (fun x -> x) \"userIp\";@,param (fun p -> p.key) (fun x -> x) \"key\";@,";
+    Format.fprintf formatter "@,@[<v 2>let to_key_value_list qp =@,@[<hov 2>let param get_value to_string name =@,GapiService.build_param default qp get_value to_string name in@] [@,param (fun p -> p.alt) (fun x -> x) \"alt\";@,param (fun p -> p.fields) (fun x -> x) \"fields\";@,param (fun p -> p.prettyPrint) string_of_bool \"prettyPrint\";@,param (fun p -> p.quotaUser) (fun x -> x) \"quotaUser\";@,param (fun p -> p.userIp) (fun x -> x) \"userIp\";@,param (fun p -> p.key) (fun x -> x) \"key\";@,";
     FieldSet.iter
       (fun (id, { Field.original_name;
                   ocaml_name;
@@ -719,7 +719,7 @@ let generate_parameters_module filter_parameters formatter
            field.Field.ocaml_name
            field.Field.ocaml_name)
       parameters;
-    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.StandardParameters.key;@,";
+    Format.fprintf formatter "() =@]@,@[<v 2>let parameters = {@,alt = standard_parameters.GapiService.StandardParameters.alt;@,fields = standard_parameters.GapiService.StandardParameters.fields;@,prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;@,quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;@,userIp = standard_parameters.GapiService.StandardParameters.userIp;@,key = standard_parameters.GapiService.StandardParameters.key;@,";
     FieldSet.iter
       (fun (id, field) ->
          Format.fprintf formatter

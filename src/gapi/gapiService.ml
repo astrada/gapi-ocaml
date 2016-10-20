@@ -105,6 +105,7 @@ let build_params params get_value to_string name =
 module StandardParameters =
 struct
   type t = {
+    alt : string;
     fields : string;
     prettyPrint : bool;
     quotaUser : string;
@@ -113,6 +114,7 @@ struct
   }
 
   let default = {
+    alt = "";
     fields = "";
     prettyPrint = true;
     quotaUser = "";
@@ -124,7 +126,8 @@ struct
     let param get_value to_string name =
       build_param default qp get_value to_string name
     in
-      [param (fun p -> p.fields) Std.identity "fields";
+      [param (fun p -> p.alt) Std.identity "alt";
+       param (fun p -> p.fields) Std.identity "fields";
        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
        param (fun p -> p.quotaUser) Std.identity "quotaUser";
        param (fun p -> p.userIp) Std.identity "userIp";
