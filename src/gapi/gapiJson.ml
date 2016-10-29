@@ -48,7 +48,7 @@ let render_int_value ?(default = 0) name value =
 
 let render_int64_value ?(default = 0L) name value =
   let to_json v = `String (Int64.to_string v) in
-    render_value name (to_json default) (to_json value)
+  render_value name (to_json default) (to_json value)
 
 let render_bool_value ?(default = false) name value =
   render_value name (`Bool default) (`Bool value)
@@ -58,23 +58,23 @@ let render_float_value ?(default = 0.0) name value =
 
 let render_date_value ?time ?(default = GapiDate.epoch) name value =
   let to_json v = `String (GapiDate.to_string ?time v) in
-    render_value name (to_json default) (to_json value)
+  render_value name (to_json default) (to_json value)
 
 let render_struct name data_type xs =
   let xs' = List.concat xs in
-    if xs' <> [] then
-      [AnnotatedTree.Node (
-        { name; data_type },
-        xs')]
-    else
-      []
+  if xs' <> [] then
+    [AnnotatedTree.Node (
+      { name; data_type },
+      xs')]
+  else
+    []
 
 let render_object name xs =
   render_struct name Object xs
 
 let render_collection name data_type render xs =
   let xs' = List.map render xs in
-    render_struct name data_type xs'
+  render_struct name data_type xs'
 
 let render_array name render xs =
   render_collection name Array render xs
@@ -89,7 +89,7 @@ let parse_children parse_child empty_element update cs =
                   empty_element
                   cs
   in
-    update element
+  update element
 
 let parse_collection parse_child empty_element update cs =
   let xs = List.fold_right
@@ -97,7 +97,7 @@ let parse_collection parse_child empty_element update cs =
                   cs
                   []
   in
-    update xs
+  update xs
 
 let parse_root parse_object empty_object tree =
   match tree with
@@ -144,7 +144,7 @@ let json_to_data_model json_value =
             { name; data_type = Scalar },
             value)
   in
-    map ("", json_value)
+  map ("", json_value)
 
 let data_model_to_json tree =
   AnnotatedTree.fold
@@ -163,9 +163,12 @@ let data_model_to_json tree =
 
 let parse_json_response parse pipe =
   let json_string = GapiConversation.read_all pipe in
-  let json = Yojson.Safe.from_string json_string in
+  let json = if json_string = "" then
+      `Assoc []
+    else
+      Yojson.Safe.from_string json_string in
   let tree = json_to_data_model json in
-    parse tree
+  parse tree
 
 let default_content_type = "application/json"
 
@@ -173,8 +176,8 @@ let render_json render_data_model data =
   let tree = render_data_model data in
   let json = data_model_to_json tree in
   let json_string = Yojson.Safe.to_string json in
-    GapiCore.PostData.Body (GapiCore.PostData.String json_string,
-                            default_content_type)
+  GapiCore.PostData.Body (GapiCore.PostData.String json_string,
+                          default_content_type)
 
 module StringDictionary =
 struct
