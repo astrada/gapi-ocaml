@@ -191,15 +191,6 @@ let generate_x_upload_headers upload_state =
   in
   [upload_content_type; upload_content_length]
 
-let generate_upload_request_post_headers upload_state =
-  let slug =
-    GapiCore.Header.Slug upload_state.resource.name
-  in
-  slug :: (generate_x_upload_headers upload_state)
-
-let generate_upload_request_put_headers =
-  generate_x_upload_headers
-
 let generate_upload_chunk_headers upload_state =
   let next_chunk = Int64.add
                      upload_state.current_offset
@@ -226,10 +217,10 @@ let generate_upload_headers http_method upload_state =
   match upload_state.state with
       Request ->
         begin match http_method with
-            GapiCore.HttpMethod.POST ->
-              generate_upload_request_post_headers upload_state
-          | GapiCore.HttpMethod.PUT ->
-              generate_upload_request_put_headers upload_state
+            GapiCore.HttpMethod.POST
+          | GapiCore.HttpMethod.PUT
+          | GapiCore.HttpMethod.PATCH ->
+              generate_x_upload_headers upload_state
           | _ ->
               failwith "Cannot generate upload headers if the HTTP method is not POST or PUT"
         end
