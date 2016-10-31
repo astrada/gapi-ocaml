@@ -7,6 +7,9 @@
 # compatibility with old compilers
 <src/gapi/*.ml>: warn(-d-58)
 <src/gdata/*.ml>: warn(-d-58)
+<tools/*.ml>: warn(-d)
+# Disable warning 52 (Fragile costant pattern) for tests
+<src/test/testDocumentsV3Service.ml>: warn(-52)
 
 # OASIS_START
 # DO NOT EDIT (digest: 41046b81b4116502ba6064dbe7b830f3)
