@@ -1947,7 +1947,7 @@ struct
      [
       GapiJson.render_string_value "downloadUrl" x.downloadUrl;
       GapiJson.render_string_value "etag" x.etag;
-      GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.exportLinks;
+      GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.exportLinks;
       GapiJson.render_int64_value "fileSize" x.fileSize;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
@@ -3868,7 +3868,7 @@ struct
       GapiJson.render_string_value "embedLink" x.embedLink;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_bool_value "explicitlyTrashed" x.explicitlyTrashed;
-      GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.exportLinks;
+      GapiJson.render_collection "exportLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.exportLinks;
       GapiJson.render_string_value "fileExtension" x.fileExtension;
       GapiJson.render_int64_value "fileSize" x.fileSize;
       GapiJson.render_string_value "folderColorRgb" x.folderColorRgb;
@@ -3889,7 +3889,7 @@ struct
       GapiJson.render_string_value "mimeType" x.mimeType;
       GapiJson.render_date_value "modifiedByMeDate" x.modifiedByMeDate;
       GapiJson.render_date_value "modifiedDate" x.modifiedDate;
-      GapiJson.render_collection "openWithLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.openWithLinks;
+      GapiJson.render_collection "openWithLinks" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.openWithLinks;
       GapiJson.render_string_value "originalFilename" x.originalFilename;
       GapiJson.render_bool_value "ownedByMe" x.ownedByMe;
       GapiJson.render_array "ownerNames" (GapiJson.render_string_value "") x.ownerNames;
@@ -4968,7 +4968,7 @@ struct
       GapiJson.render_int64_value "expiration" x.expiration;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_collection "params" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.params;
+      GapiJson.render_collection "params" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.params;
       GapiJson.render_bool_value "payload" x.payload;
       GapiJson.render_string_value "resourceId" x.resourceId;
       GapiJson.render_string_value "resourceUri" x.resourceUri;

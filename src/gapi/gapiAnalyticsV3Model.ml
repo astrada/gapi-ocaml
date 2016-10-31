@@ -797,7 +797,7 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_collection "attributes" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.attributes;
+      GapiJson.render_collection "attributes" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.attributes;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       
@@ -7294,7 +7294,7 @@ struct
       GapiJson.render_int64_value "sampleSpace" x.sampleSpace;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_int_value "totalResults" x.totalResults;
-      GapiJson.render_collection "totalsForAllResults" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.totalsForAllResults;
+      GapiJson.render_collection "totalsForAllResults" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.totalsForAllResults;
       
     ]
   and render x = 
@@ -7774,7 +7774,7 @@ struct
       GapiJson.render_array "rows" (GapiJson.render_array "" (GapiJson.render_string_value "")) x.rows;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_int_value "totalResults" x.totalResults;
-      GapiJson.render_collection "totalsForAllResults" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.totalsForAllResults;
+      GapiJson.render_collection "totalsForAllResults" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.totalsForAllResults;
       
     ]
   and render x = 
@@ -8647,7 +8647,7 @@ struct
       GapiJson.render_int64_value "sampleSpace" x.sampleSpace;
       GapiJson.render_string_value "selfLink" x.selfLink;
       GapiJson.render_int_value "totalResults" x.totalResults;
-      GapiJson.render_collection "totalsForAllResults" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.totalsForAllResults;
+      GapiJson.render_collection "totalsForAllResults" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.totalsForAllResults;
       
     ]
   and render x = 

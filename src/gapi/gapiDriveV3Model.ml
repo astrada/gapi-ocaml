@@ -2081,7 +2081,7 @@ struct
   
   let rec render_content x = 
      [
-      GapiJson.render_collection "appProperties" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.appProperties;
+      GapiJson.render_collection "appProperties" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.appProperties;
       (fun v -> GapiJson.render_object "capabilities" (Capabilities.render_content v)) x.capabilities;
       (fun v -> GapiJson.render_object "contentHints" (ContentHints.render_content v)) x.contentHints;
       GapiJson.render_date_value "createdTime" x.createdTime;
@@ -2107,7 +2107,7 @@ struct
       GapiJson.render_array "owners" User.render x.owners;
       GapiJson.render_array "parents" (GapiJson.render_string_value "") x.parents;
       GapiJson.render_array "permissions" Permission.render x.permissions;
-      GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.properties;
+      GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.properties;
       GapiJson.render_int64_value "quotaBytesUsed" x.quotaBytesUsed;
       GapiJson.render_bool_value "shared" x.shared;
       GapiJson.render_date_value "sharedWithMeTime" x.sharedWithMeTime;
@@ -2927,7 +2927,7 @@ struct
       GapiJson.render_int64_value "expiration" x.expiration;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
-      GapiJson.render_collection "params" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v) x.params;
+      GapiJson.render_collection "params" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.params;
       GapiJson.render_bool_value "payload" x.payload;
       GapiJson.render_string_value "resourceId" x.resourceId;
       GapiJson.render_string_value "resourceUri" x.resourceUri;

@@ -859,7 +859,7 @@ struct
       GapiJson.render_array "labels" Labels.render x.labels;
       GapiJson.render_string_value "link" x.link;
       GapiJson.render_string_value "mime" x.mime;
-      GapiJson.render_collection "pagemap" GapiJson.Object (fun (id, v) -> GapiJson.render_array id (GapiJson.render_collection "" GapiJson.Object (fun (id, v) -> GapiJson.render_string_value id v)) v) x.pagemap;
+      GapiJson.render_collection "pagemap" GapiJson.Object (fun (id, v) -> GapiJson.render_array id (GapiJson.render_collection "" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v)) v) x.pagemap;
       GapiJson.render_string_value "snippet" x.snippet;
       GapiJson.render_string_value "title" x.title;
       
