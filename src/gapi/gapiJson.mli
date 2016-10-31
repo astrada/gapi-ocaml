@@ -32,6 +32,12 @@ val render_string_value :
   string ->
   json_data_model list
 
+val render_nullable_string_value :
+  ?default:string ->
+  string ->
+  string ->
+  json_data_model list
+
 val render_int_value :
   ?default:int ->
   string ->

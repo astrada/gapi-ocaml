@@ -43,6 +43,12 @@ let render_value name default value =
 let render_string_value ?(default = "") name value =
   render_value name (`String default) (`String value)
 
+let render_nullable_string_value ?(default = "") name value =
+  if value = default then
+    render_value name (`String default) (`Null)
+  else
+    render_string_value name ~default value
+
 let render_int_value ?(default = 0) name value =
   render_value name (`Int default) (`Int value)
 
