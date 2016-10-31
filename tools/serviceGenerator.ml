@@ -165,13 +165,17 @@ let build_schema_inner_module file_lens complex_type =
 
   let render_render_function formatter fields =
     let rec render_curried_function formatter
-          (name, prefix, field_type) =
+          (name, prefix, field_type, in_dictionary) =
       match field_type.ComplexType.data_type with
           ComplexType.Scalar scalar ->
             begin match scalar.ScalarType.data_type with
                 ScalarType.String ->
-                  Format.fprintf formatter
-                    "GapiJson.render_string_value"
+                  if in_dictionary then
+                    Format.fprintf formatter
+                      "GapiJson.render_nullable_string_value"
+                  else
+                    Format.fprintf formatter
+                      "GapiJson.render_string_value"
               | ScalarType.Boolean ->
                   Format.fprintf formatter
                     "GapiJson.render_bool_value"
@@ -201,7 +205,7 @@ let build_schema_inner_module file_lens complex_type =
             Format.fprintf formatter
               "GapiJson.render_array %s (%a)"
               name
-              render_curried_function ("\"\"", prefix, inner_type)
+              render_curried_function ("\"\"", prefix, inner_type, false)
         | ComplexType.Dictionary
             ({ ComplexType.data_type = ComplexType.Reference _; _ }
                as inner_type)
@@ -211,12 +215,12 @@ let build_schema_inner_module file_lens complex_type =
             Format.fprintf formatter
               "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
               name
-              render_curried_function ("id", prefix, inner_type)
+              render_curried_function ("id", prefix, inner_type, true)
         | ComplexType.Dictionary inner_type ->
             Format.fprintf formatter
               "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a v)"
               name
-              render_curried_function ("id", prefix, inner_type)
+              render_curried_function ("id", prefix, inner_type, true)
         | ComplexType.Reference _
         | ComplexType.AnonymousObject _ ->
             Format.fprintf formatter
@@ -249,7 +253,7 @@ let build_schema_inner_module file_lens complex_type =
                | _ ->
                    Format.fprintf formatter
                      "%a x.%s;@,"
-                     render_curried_function (name, prefix, field_type)
+                     render_curried_function (name, prefix, field_type, false)
                      ocaml_name)
         fields;
       Format.fprintf formatter "@]@,@]]@,";
