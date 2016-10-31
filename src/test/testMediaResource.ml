@@ -29,8 +29,7 @@ let test_generate_upload_request_post_headers () =
       upload_state
   in
     assert_equal
-      [GapiCore.Header.Slug "test.pdf";
-       GapiCore.Header.UploadContentType "application/pdf";
+      [GapiCore.Header.UploadContentType "application/pdf";
        GapiCore.Header.UploadContentLength "3908"]
       headers
 

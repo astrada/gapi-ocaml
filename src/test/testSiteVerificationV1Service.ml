@@ -62,16 +62,17 @@ let test_insert_webresource () =
            }) in
          assert_raises
            (GapiService.ServiceError
-              { GapiError.RequestError.code = 400;
-                errors = [
-                  { GapiError.SingleError.empty with
-                        GapiError.SingleError.domain = "global";
-                        reason = "badRequest";
-                        message = "The necessary verification token could not be found on your site.";
-                  }
-                ];
-                message = "The necessary verification token could not be found on your site.";
-              })
+              (session,
+               { GapiError.RequestError.code = 400;
+                 errors = [
+                   { GapiError.SingleError.empty with
+                         GapiError.SingleError.domain = "global";
+                         reason = "badRequest";
+                         message = "The necessary verification token could not be found on your site.";
+                   }
+                 ];
+                 message = "The necessary verification token could not be found on your site.";
+               }))
            (fun () ->
               WebResourceResource.insert
                 ~verificationMethod:"FILE"

@@ -86,7 +86,7 @@ let do_request
             try_request ()
           else
             handle_exception e
-      | GapiService.ServiceError e ->
+      | GapiService.ServiceError (_, e) ->
           let e' = Failure (
             e |> GapiError.RequestError.to_data_model
               |> string_of_json_data_model)
