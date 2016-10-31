@@ -8,11 +8,11 @@ let debug_print start_time curl info_type info =
        info.[String.length info - 1] = '\n' then ""
     else "\n"
   in
-    Printf.printf "[%f] curl: %s: %s%s%!"
-      timestamp
-      (GapiCurl.string_of_curl_info_type info_type)
-      info
-      nl
+  Printf.printf "[%f] curl: %s: %s%s%!"
+    timestamp
+    (GapiCurl.string_of_curl_info_type info_type)
+    info
+    nl
 
 module Session =
 struct
@@ -116,9 +116,9 @@ let update_session headers session =
                ""
                headers
   in
-    { session with
-          Session.cookies;
-          etag }
+  { session with
+        Session.cookies;
+        etag }
 
 let request
       ?header_list
@@ -216,18 +216,13 @@ let request
     let new_session = update_session response_headers session in
     let result = parse_response
                    pipe response_code response_headers new_session in
-    GapiPipe.OcamlnetPipe.end_reading pipe;
     (result, new_session)
-  with
-      Curl.CurlException (_, code, desc) ->
-        GapiPipe.OcamlnetPipe.end_reading pipe;
-        failwith (Printf.sprintf
-                    "Code: %d, Description: %s, ErrorBuffer: %s\n"
-                    code desc
-                    (GapiCurl.get_error_buffer session.Session.curl))
-    | e ->
-        GapiPipe.OcamlnetPipe.end_reading pipe;
-        raise e
+  with Curl.CurlException (_, code, desc) ->
+    GapiPipe.OcamlnetPipe.end_reading pipe;
+    failwith (Printf.sprintf
+                "Code: %d, Description: %s, ErrorBuffer: %s\n"
+                code desc
+                (GapiCurl.get_error_buffer session.Session.curl))
 
 let with_session
       ?(auth_context = Session.NoAuth)
@@ -268,13 +263,13 @@ let with_session
       auth = auth_context;
       etag = "" }
   in
-    try
-      let result = interact session in
-        cleanup ();
-        result
-    with e ->
+  try
+    let result = interact session in
       cleanup ();
-      raise e
+      result
+  with e ->
+    cleanup ();
+    raise e
 
 let with_curl
       ?auth_context
@@ -282,34 +277,35 @@ let with_curl
       interact =
   let curl_state = GapiCurl.global_init () in
   let cleanup () = ignore (GapiCurl.global_cleanup curl_state) in
-    try
-      let result =
-        with_session
-          ?auth_context
-          config
-          curl_state
-          interact in
-        cleanup ();
-        result
-    with e ->
+  try
+    let result =
+      with_session
+        ?auth_context
+        config
+        curl_state
+        interact in
       cleanup ();
-      raise e
+      result
+  with e ->
+    cleanup ();
+    raise e
 
-let read_all pipe =
+let read_all ?(auto_close=true) pipe =
   let buffer = Buffer.create 16 in
-    try
-      while true do
-        Buffer.add_string buffer (GapiPipe.OcamlnetPipe.read_line pipe)
-      done;
-      assert false
-    with End_of_file ->
-      Buffer.contents buffer
+  try
+    while true do
+      Buffer.add_string buffer (GapiPipe.OcamlnetPipe.read_line pipe)
+    done;
+    assert false
+  with End_of_file ->
+    if auto_close then GapiPipe.OcamlnetPipe.end_reading pipe;
+    Buffer.contents buffer
 
-let parse_error pipe response_code =
+let parse_error pipe response_code session =
   let error_message = read_all pipe in
-    failwith (Printf.sprintf "Error: %s (HTTP response code: %d)"
-                error_message
-                response_code)
+  failwith (Printf.sprintf "Error: %s (HTTP response code: %d)"
+              error_message
+              response_code)
 
 exception ConversationException of string
 
@@ -320,11 +316,11 @@ type ('i, 'o) iter =
 
 let rec loop continue input =
   let iter = continue input in
-    match iter with
-        Done output ->
-          output
-      | Error message ->
-          raise (ConversationException message)
-      | Continue k ->
-          loop k input
+  match iter with
+      Done output ->
+        output
+    | Error message ->
+        raise (ConversationException message)
+    | Continue k ->
+        loop k input
 

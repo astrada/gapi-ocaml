@@ -2,15 +2,19 @@
   *)
 
 exception NotModified of GapiConversation.Session.t
-exception Unauthorized of GapiConversation.Session.t
+exception BadRequest of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception Unauthorized of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
 exception PermissionDenied of GapiConversation.Session.t
-exception Forbidden of GapiConversation.Session.t
-exception NotFound of GapiConversation.Session.t
+exception Forbidden of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception NotFound of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
 exception RequestTimeout of GapiConversation.Session.t
 exception Conflict of GapiConversation.Session.t
 exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
-exception ServiceUnavailable of GapiConversation.Session.t
+exception InternalServerError of GapiConversation.Session.t *
+                                 GapiPipe.OcamlnetPipe.t
+exception ServiceUnavailable of GapiConversation.Session.t *
+                                GapiPipe.OcamlnetPipe.t
 exception RefreshTokenFailed of GapiConversation.Session.t
 
 type request_type =
@@ -29,7 +33,8 @@ val gapi_request :
   ?etag:string ->
   ?media_source:GapiMediaResource.t ->
   ?media_download:GapiMediaResource.download ->
-  ?parse_error:(GapiPipe.OcamlnetPipe.t -> int -> 'a) ->
+  ?parse_error:(GapiPipe.OcamlnetPipe.t -> int ->
+                GapiConversation.Session.t -> 'a) ->
   request_type ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->

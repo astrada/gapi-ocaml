@@ -3,20 +3,23 @@ open GapiLens.Infix
 
 exception Redirect of string * GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
-exception Unauthorized of GapiConversation.Session.t
+exception BadRequest of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception Unauthorized of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
 exception PermissionDenied of GapiConversation.Session.t
-exception Forbidden of GapiConversation.Session.t
-exception NotFound of GapiConversation.Session.t
+exception Forbidden of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception NotFound of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
 exception RequestTimeout of GapiConversation.Session.t
 exception Conflict of GapiConversation.Session.t
 exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
-exception InternalServerError of GapiConversation.Session.t
-exception BadGateway of GapiConversation.Session.t
-exception ServiceUnavailable of GapiConversation.Session.t
-exception GatewayTimeout of GapiConversation.Session.t
+exception InternalServerError of GapiConversation.Session.t *
+                                 GapiPipe.OcamlnetPipe.t
+exception BadGateway of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception ServiceUnavailable of GapiConversation.Session.t *
+                                GapiPipe.OcamlnetPipe.t
+exception GatewayTimeout of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
 exception RefreshTokenFailed of GapiConversation.Session.t
 
 type request_type =
@@ -82,6 +85,8 @@ let parse_response
               headers
           in
             raise (ResumeIncomplete (range, url, session))
+      | 400 (* Bad Request *) ->
+          raise (BadRequest (session, pipe))
       | 401 (* Unauthorized *) ->
           let reason_phrase = get_reason_phrase () in
             begin match reason_phrase with
@@ -91,12 +96,12 @@ let parse_response
                    * user. *)
                   raise (PermissionDenied session)
               | _ ->
-                  raise (Unauthorized session)
+                  raise (Unauthorized (session, pipe))
             end
       | 403 (* Forbidden *) ->
-          raise (Forbidden session)
+          raise (Forbidden (session, pipe))
       | 404 (* Not Found *) ->
-          raise (NotFound session)
+          raise (NotFound (session, pipe))
       | 408 (* Request Timeout *) ->
           raise (RequestTimeout session)
       | 409 (* Conflict *) ->
@@ -106,15 +111,15 @@ let parse_response
       | 412 (* Precondition Failed *) ->
           raise (PreconditionFailed session)
       | 500 (* Internal Server Error *) ->
-          raise (InternalServerError session)
+          raise (InternalServerError (session, pipe))
       | 502 (* Bad Gateway *) ->
-          raise (BadGateway session)
+          raise (BadGateway (session, pipe))
       | 503 (* Service Unavailable *) ->
-          raise (ServiceUnavailable session)
+          raise (ServiceUnavailable (session, pipe))
       | 504 (* Gateway Timeout *) ->
-          raise (GatewayTimeout session)
+          raise (GatewayTimeout (session, pipe))
       | _ ->
-          parse_error pipe response_code
+          parse_error pipe response_code session
 
 let build_auth_data session =
   match session.GapiConversation.Session.config.GapiConfig.auth with
@@ -361,7 +366,7 @@ let gapi_request
               new_session
           else
             failwith ("Redirection loop detected: url=" ^ url)
-      | (Unauthorized new_session) as e->
+      | (Unauthorized (new_session, _)) as e ->
           retry_on_error 1 false e (fun s -> refresh_oauth2_token s) new_session
       | ResumeIncomplete (range, location, new_session) ->
           let target = if location = "" then url else location in
@@ -392,12 +397,15 @@ let gapi_request
             0
             target
             new_session
-      | (NotFound new_session)
-      | (InternalServerError new_session)
-      | (BadGateway new_session)
-      | (ServiceUnavailable new_session)
-      | (GatewayTimeout new_session) as e ->
+      | NotFound (new_session, _) as e ->
           retry_on_error 4 true e (fun s -> s) new_session
+      | InternalServerError (new_session, pipe)
+      | BadGateway (new_session, pipe)
+      | ServiceUnavailable (new_session, pipe)
+      | GatewayTimeout (new_session, pipe) ->
+          retry_on_error 4 true
+            (InternalServerError (new_session, pipe))
+            (fun s -> s) new_session
   in
 
   let current_upload_state =

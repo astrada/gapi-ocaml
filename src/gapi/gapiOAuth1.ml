@@ -237,12 +237,12 @@ let parse_token_info pipe =
                             secure = false })
          pipe)
 
-let parse_response parse_ok pipe response_code _ _ =
+let parse_response parse_ok pipe response_code _ session =
   match response_code with
       200 ->
         parse_ok pipe
     | _ ->
-        GapiConversation.parse_error pipe response_code
+        GapiConversation.parse_error pipe response_code session
 
 (* TODO: oauth_callback "oob" value management *)
 (* TODO: scope composition *)

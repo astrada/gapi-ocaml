@@ -1,7 +1,7 @@
 (** Common operations for services. *)
 
 (** Wraps a server error *)
-exception ServiceError of GapiError.RequestError.t
+exception ServiceError of GapiConversation.Session.t * GapiError.RequestError.t
 
 val service_request :
   ?post_data:GapiCore.PostData.t ->

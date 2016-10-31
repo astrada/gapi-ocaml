@@ -111,9 +111,15 @@ val with_curl :
   ?auth_context:Session.auth_context ->
   GapiConfig.t -> (Session.t -> 'a) -> 'a
 
-val read_all : GapiPipe.OcamlnetPipe.t -> string
+(** Reads a pipe until EOF.
+ 
+ @param auto_close Closes the pipe after reading. Defaults to [true].
+  *)
+val read_all :
+  ?auto_close:bool ->
+  GapiPipe.OcamlnetPipe.t -> string
 
-val parse_error : GapiPipe.OcamlnetPipe.t -> int -> 'a
+val parse_error : GapiPipe.OcamlnetPipe.t -> int -> Session.t -> 'a
 
 exception ConversationException of string
 
