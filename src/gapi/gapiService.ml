@@ -4,9 +4,9 @@ exception ServiceError of GapiConversation.Session.t * GapiError.RequestError.t
 
 let parse_error pipe response_code session =
   try
-    let error = GapiJson.parse_json_response
-                  GapiError.RequestError.of_data_model
-                  pipe
+    let error =
+      GapiJson.parse_json_response
+        GapiError.RequestError.of_data_model pipe
     in
     raise (ServiceError (session, error))
   with Yojson.Json_error _ ->
@@ -42,17 +42,12 @@ let service_request
       parse_response
       session
   with
-      GapiRequest.BadRequest (session, pipe) ->
-        parse_error pipe 400 session
-    | GapiRequest.Unauthorized (session, pipe) ->
-        parse_error pipe 401 session
-    | GapiRequest.Forbidden (session, pipe) ->
-        parse_error pipe 403 session
-    | GapiRequest.NotFound (session, pipe) ->
-        parse_error pipe 404 session
-    | GapiRequest.InternalServerError (session, pipe) ->
-        parse_error pipe 500 session
-
+      GapiRequest.BadRequest (session, response_code, pipe)
+    | GapiRequest.Unauthorized (session, response_code, pipe)
+    | GapiRequest.Forbidden (session, response_code, pipe)
+    | GapiRequest.NotFound (session, response_code, pipe)
+    | GapiRequest.InternalServerError (session, response_code, pipe) ->
+        parse_error pipe response_code session
 
 let service_request_with_data
       request_type

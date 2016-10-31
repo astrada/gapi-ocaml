@@ -3,23 +3,29 @@ open GapiLens.Infix
 
 exception Redirect of string * GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
-exception BadRequest of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
-exception Unauthorized of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception BadRequest of GapiConversation.Session.t * int *
+                        GapiPipe.OcamlnetPipe.t
+exception Unauthorized of GapiConversation.Session.t * int *
+                          GapiPipe.OcamlnetPipe.t
 exception PermissionDenied of GapiConversation.Session.t
-exception Forbidden of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
-exception NotFound of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception Forbidden of GapiConversation.Session.t * int *
+                       GapiPipe.OcamlnetPipe.t
+exception NotFound of GapiConversation.Session.t * int *
+                      GapiPipe.OcamlnetPipe.t
 exception RequestTimeout of GapiConversation.Session.t
 exception Conflict of GapiConversation.Session.t
 exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
-exception InternalServerError of GapiConversation.Session.t *
+exception InternalServerError of GapiConversation.Session.t * int *
                                  GapiPipe.OcamlnetPipe.t
-exception BadGateway of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
-exception ServiceUnavailable of GapiConversation.Session.t *
+exception BadGateway of GapiConversation.Session.t * int *
+                        GapiPipe.OcamlnetPipe.t
+exception ServiceUnavailable of GapiConversation.Session.t * int *
                                 GapiPipe.OcamlnetPipe.t
-exception GatewayTimeout of GapiConversation.Session.t * GapiPipe.OcamlnetPipe.t
+exception GatewayTimeout of GapiConversation.Session.t * int *
+                            GapiPipe.OcamlnetPipe.t
 exception RefreshTokenFailed of GapiConversation.Session.t
 
 type request_type =
@@ -57,69 +63,69 @@ let parse_response
       ""
       headers
   in
-    match response_code with
-        200 (* OK *) ->
-          let location = get_location () in
-            if location = "" then
-              parse_output pipe headers
-            else
-              raise (StartUpload (location, session))
-      | 201 (* Created *)
-      | 204 (* No Content *)
-      | 206 (* Partial Content *) ->
+  match response_code with
+      200 (* OK *) ->
+        let location = get_location () in
+        if location = "" then
           parse_output pipe headers
-      | 302 (* Found *) ->
-          let url = get_location () in
-            raise (Redirect (url, session))
-      | 304 (* Not Modified *) ->
-          raise (NotModified session)
-      | 308 (* Resume Incomplete *) ->
-          let (range, url) =
-            List.fold_left
-              (fun ((r, u) as accu) h ->
-                 match h with
-                     GapiCore.Header.Location value -> (r, value)
-                   | GapiCore.Header.Range value -> (value, u)
-                   | _ -> accu)
-              ("", "")
-              headers
-          in
-            raise (ResumeIncomplete (range, url, session))
-      | 400 (* Bad Request *) ->
-          raise (BadRequest (session, pipe))
-      | 401 (* Unauthorized *) ->
-          let reason_phrase = get_reason_phrase () in
-            begin match reason_phrase with
-                "Permission denied" ->
-                  (* Documents List API may return a Permission denied reason
-                   * phrase, when a document cannot be accessed by the current
-                   * user. *)
-                  raise (PermissionDenied session)
-              | _ ->
-                  raise (Unauthorized (session, pipe))
-            end
-      | 403 (* Forbidden *) ->
-          raise (Forbidden (session, pipe))
-      | 404 (* Not Found *) ->
-          raise (NotFound (session, pipe))
-      | 408 (* Request Timeout *) ->
-          raise (RequestTimeout session)
-      | 409 (* Conflict *) ->
-          raise (Conflict session)
-      | 410 (* Gone *) ->
-          raise (Gone session)
-      | 412 (* Precondition Failed *) ->
-          raise (PreconditionFailed session)
-      | 500 (* Internal Server Error *) ->
-          raise (InternalServerError (session, pipe))
-      | 502 (* Bad Gateway *) ->
-          raise (BadGateway (session, pipe))
-      | 503 (* Service Unavailable *) ->
-          raise (ServiceUnavailable (session, pipe))
-      | 504 (* Gateway Timeout *) ->
-          raise (GatewayTimeout (session, pipe))
-      | _ ->
-          parse_error pipe response_code session
+        else
+          raise (StartUpload (location, session))
+    | 201 (* Created *)
+    | 204 (* No Content *)
+    | 206 (* Partial Content *) ->
+        parse_output pipe headers
+    | 302 (* Found *) ->
+        let url = get_location () in
+        raise (Redirect (url, session))
+    | 304 (* Not Modified *) ->
+        raise (NotModified session)
+    | 308 (* Resume Incomplete *) ->
+        let (range, url) =
+          List.fold_left
+            (fun ((r, u) as accu) h ->
+               match h with
+                   GapiCore.Header.Location value -> (r, value)
+                 | GapiCore.Header.Range value -> (value, u)
+                 | _ -> accu)
+            ("", "")
+            headers
+        in
+        raise (ResumeIncomplete (range, url, session))
+    | 400 (* Bad Request *) ->
+        raise (BadRequest (session, response_code, pipe))
+    | 401 (* Unauthorized *) ->
+        let reason_phrase = get_reason_phrase () in
+        begin match reason_phrase with
+            "Permission denied" ->
+              (* Documents List API may return a Permission denied reason
+               * phrase, when a document cannot be accessed by the current
+               * user. *)
+              raise (PermissionDenied session)
+          | _ ->
+              raise (Unauthorized (session, response_code, pipe))
+        end
+    | 403 (* Forbidden *) ->
+        raise (Forbidden (session, response_code, pipe))
+    | 404 (* Not Found *) ->
+        raise (NotFound (session, response_code, pipe))
+    | 408 (* Request Timeout *) ->
+        raise (RequestTimeout session)
+    | 409 (* Conflict *) ->
+        raise (Conflict session)
+    | 410 (* Gone *) ->
+        raise (Gone session)
+    | 412 (* Precondition Failed *) ->
+        raise (PreconditionFailed session)
+    | 500 (* Internal Server Error *) ->
+        raise (InternalServerError (session, response_code, pipe))
+    | 502 (* Bad Gateway *) ->
+        raise (BadGateway (session, response_code, pipe))
+    | 503 (* Service Unavailable *) ->
+        raise (ServiceUnavailable (session, response_code, pipe))
+    | 504 (* Gateway Timeout *) ->
+        raise (GatewayTimeout (session, response_code, pipe))
+    | _ ->
+        parse_error pipe response_code session
 
 let build_auth_data session =
   match session.GapiConversation.Session.config.GapiConfig.auth with
@@ -366,7 +372,7 @@ let gapi_request
               new_session
           else
             failwith ("Redirection loop detected: url=" ^ url)
-      | (Unauthorized (new_session, _)) as e ->
+      | Unauthorized (new_session, _, _) as e ->
           retry_on_error 1 false e (fun s -> refresh_oauth2_token s) new_session
       | ResumeIncomplete (range, location, new_session) ->
           let target = if location = "" then url else location in
@@ -397,14 +403,14 @@ let gapi_request
             0
             target
             new_session
-      | NotFound (new_session, _) as e ->
+      | NotFound (new_session, _, _) as e ->
           retry_on_error 4 true e (fun s -> s) new_session
-      | InternalServerError (new_session, pipe)
-      | BadGateway (new_session, pipe)
-      | ServiceUnavailable (new_session, pipe)
-      | GatewayTimeout (new_session, pipe) ->
+      | InternalServerError (new_session, response_code, pipe)
+      | BadGateway (new_session, response_code, pipe)
+      | ServiceUnavailable (new_session, response_code, pipe)
+      | GatewayTimeout (new_session, response_code, pipe) ->
           retry_on_error 4 true
-            (InternalServerError (new_session, pipe))
+            (InternalServerError (new_session, response_code, pipe))
             (fun s -> s) new_session
   in
 
