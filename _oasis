@@ -1,15 +1,15 @@
-OASISFormat: 0.3
+OASISFormat: 0.4
 OCamlVersion: >= 3.12.0
 Name: gapi-ocaml
-Version: 0.2.14
+Version: 0.3.0
 LicenseFile: LICENSE
 License: MIT
-BuildType: ocamlbuild (0.3)
+BuildType: ocamlbuild (0.4)
 Authors: Alessandro Strada
 Maintainers: Alessandro Strada <alessandro.strada@gmail.com>
-Copyrights: (C) 2011-2012 Alessandro Strada
+Copyrights: (C) 2011-2016 Alessandro Strada
 Homepage: http://gapi-ocaml.forge.ocamlcore.org
-Plugins: META (0.3)
+Plugins: META (0.4)
 BuildTools: ocamlbuild
 
 Synopsis: A simple OCaml client for Google Services.
