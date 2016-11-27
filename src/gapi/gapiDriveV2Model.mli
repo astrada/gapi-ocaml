@@ -1014,6 +1014,8 @@ sig
     type t = {
       hidden : bool;
       (** Deprecated. *)
+      modified : bool;
+      (** Whether the file has been modified by this user. *)
       restricted : bool;
       (** Whether viewers and commenters are prevented from downloading, printing, and copying this file. *)
       starred : bool;
@@ -1026,6 +1028,7 @@ sig
     }
     
     val hidden : (t, bool) GapiLens.t
+    val modified : (t, bool) GapiLens.t
     val restricted : (t, bool) GapiLens.t
     val starred : (t, bool) GapiLens.t
     val trashed : (t, bool) GapiLens.t
@@ -1536,6 +1539,8 @@ sig
     (** The actual list of revisions. *)
     kind : string;
     (** This is always drive#revisionList. *)
+    nextPageToken : string;
+    (** The page token for the next page of revisions. This field will be absent if the end of the revisions list has been reached. If the token is rejected for any reason, it should be discarded and pagination should be restarted from the first page of results. *)
     selfLink : string;
     (** A link back to this list. *)
     
@@ -1544,6 +1549,7 @@ sig
   val etag : (t, string) GapiLens.t
   val items : (t, Revision.t list) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   
   val empty : t

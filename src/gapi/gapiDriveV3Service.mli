@@ -656,11 +656,15 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param pageSize The maximum number of revisions to return per page.
+    @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.
     @param fileId The ID of the file.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?pageSize:int ->
+    ?pageToken:string ->
     fileId:string ->
     GapiConversation.Session.t ->
     GapiDriveV3Model.RevisionList.t * GapiConversation.Session.t

@@ -651,6 +651,8 @@ This is automatically updated when the name field changes, however it is not cle
     (** The MIME type of the file.
 Drive will attempt to automatically detect an appropriate value from uploaded content if no value is provided. The value cannot be changed unless a new revision is uploaded.
 If a file is created with a Google Doc MIME type, the uploaded content will be imported if possible. The supported import formats are published in the About resource. *)
+    modifiedByMe : bool;
+    (** Whether the file has been modified by this user. *)
     modifiedByMeTime : GapiDate.t;
     (** The last time the file was modified by the user (RFC 3339 date-time). *)
     modifiedTime : GapiDate.t;
@@ -727,6 +729,7 @@ Entries with null values are cleared in update and copy requests. *)
   val lastModifyingUser : (t, User.t) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
   val mimeType : (t, string) GapiLens.t
+  val modifiedByMe : (t, bool) GapiLens.t
   val modifiedByMeTime : (t, GapiDate.t) GapiLens.t
   val modifiedTime : (t, GapiDate.t) GapiLens.t
   val name : (t, string) GapiLens.t
@@ -914,12 +917,15 @@ sig
   type t = {
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#revisionList". *)
+    nextPageToken : string;
+    (** The page token for the next page of revisions. This will be absent if the end of the revisions list has been reached. *)
     revisions : Revision.t list;
     (** The full list of revisions. *)
     
   }
   
   val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   val revisions : (t, Revision.t list) GapiLens.t
   
   val empty : t

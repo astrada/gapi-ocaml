@@ -1997,6 +1997,68 @@ end
 
 module RevisionsResource =
 struct
+  module RevisionsParameters =
+  struct
+    type t = {
+      (* Standard query parameters *)
+      alt : string;
+      fields : string;
+      prettyPrint : bool;
+      quotaUser : string;
+      userIp : string;
+      key : string;
+      (* revisions-specific query parameters *)
+      maxResults : int;
+      pageToken : string;
+      
+    }
+    
+    let default = {
+      alt = "";
+      fields = "";
+      prettyPrint = true;
+      quotaUser = "";
+      userIp = "";
+      key = "";
+      maxResults = 200;
+      pageToken = "";
+      
+    }
+    
+    let to_key_value_list qp =
+      let param get_value to_string name =
+        GapiService.build_param default qp get_value to_string name in [
+      param (fun p -> p.alt) (fun x -> x) "alt";
+      param (fun p -> p.fields) (fun x -> x) "fields";
+      param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+      param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+      param (fun p -> p.userIp) (fun x -> x) "userIp";
+      param (fun p -> p.key) (fun x -> x) "key";
+      param (fun p -> p.maxResults) string_of_int "maxResults";
+      param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      
+    ] |> List.concat
+    
+    let merge_parameters
+        ?(standard_parameters = GapiService.StandardParameters.default)
+        ?(maxResults = default.maxResults)
+        ?(pageToken = default.pageToken)
+        () =
+      let parameters = {
+        alt = standard_parameters.GapiService.StandardParameters.alt;
+        fields = standard_parameters.GapiService.StandardParameters.fields;
+        prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+        quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+        userIp = standard_parameters.GapiService.StandardParameters.userIp;
+        key = standard_parameters.GapiService.StandardParameters.key;
+        maxResults;
+        pageToken;
+        
+      } in
+      if parameters = default then None else Some parameters
+    
+  end
+  
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
@@ -2005,10 +2067,10 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "revisions"; ((fun x -> x) revisionId)] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map RevisionsParameters.to_key_value_list
+      params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -2021,24 +2083,26 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "revisions"; ((fun x -> x) revisionId)] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map RevisionsParameters.to_key_value_list
+      params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Revision.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v2/")
         ?std_params
+        ?(maxResults = 200)
+        ?pageToken
         ~fileId
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "revisions"] base_url in
-    let params = GapiService.StandardParameters.merge_parameters
-      ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let params = RevisionsParameters.merge_parameters
+      ?standard_parameters:std_params ~maxResults ?pageToken () in
+    let query_parameters = Option.map RevisionsParameters.to_key_value_list
+      params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response RevisionList.of_data_model) session 
     
@@ -2052,10 +2116,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "revisions"; ((fun x -> x) revisionId)] base_url in
     let etag = GapiUtils.etag_option revision.Revision.etag in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map RevisionsParameters.to_key_value_list
+      params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Revision.to_data_model)
       ~data:revision full_url
@@ -2071,10 +2135,10 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "revisions"; ((fun x -> x) revisionId)] base_url in
     let etag = GapiUtils.etag_option revision.Revision.etag in
-    let params = GapiService.StandardParameters.merge_parameters
+    let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
-      GapiService.StandardParameters.to_key_value_list params in
+    let query_parameters = Option.map RevisionsParameters.to_key_value_list
+      params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Revision.to_data_model)
       ~data:revision full_url

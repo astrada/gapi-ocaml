@@ -1039,6 +1039,8 @@ struct
       key : string;
       (* revisions-specific query parameters *)
       acknowledgeAbuse : bool;
+      pageSize : int;
+      pageToken : string;
       
     }
     
@@ -1050,6 +1052,8 @@ struct
       userIp = "";
       key = "";
       acknowledgeAbuse = false;
+      pageSize = 200;
+      pageToken = "";
       
     }
     
@@ -1063,12 +1067,16 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.acknowledgeAbuse) string_of_bool "acknowledgeAbuse";
+      param (fun p -> p.pageSize) string_of_int "pageSize";
+      param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       
     ] |> List.concat
     
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(acknowledgeAbuse = default.acknowledgeAbuse)
+        ?(pageSize = default.pageSize)
+        ?(pageToken = default.pageToken)
         () =
       let parameters = {
         alt = standard_parameters.GapiService.StandardParameters.alt;
@@ -1078,6 +1086,8 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         acknowledgeAbuse;
+        pageSize;
+        pageToken;
         
       } in
       if parameters = default then None else Some parameters
@@ -1120,12 +1130,14 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?(pageSize = 200)
+        ?pageToken
         ~fileId
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "revisions"] base_url in
     let params = RevisionsParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ~pageSize ?pageToken () in
     let query_parameters = Option.map RevisionsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url

@@ -3022,6 +3022,7 @@ struct
   struct
     type t = {
       hidden : bool;
+      modified : bool;
       restricted : bool;
       starred : bool;
       trashed : bool;
@@ -3032,6 +3033,10 @@ struct
     let hidden = {
       GapiLens.get = (fun x -> x.hidden);
       GapiLens.set = (fun v x -> { x with hidden = v });
+    }
+    let modified = {
+      GapiLens.get = (fun x -> x.modified);
+      GapiLens.set = (fun v x -> { x with modified = v });
     }
     let restricted = {
       GapiLens.get = (fun x -> x.restricted);
@@ -3052,6 +3057,7 @@ struct
     
     let empty = {
       hidden = false;
+      modified = false;
       restricted = false;
       starred = false;
       trashed = false;
@@ -3062,6 +3068,7 @@ struct
     let rec render_content x = 
        [
         GapiJson.render_bool_value "hidden" x.hidden;
+        GapiJson.render_bool_value "modified" x.modified;
         GapiJson.render_bool_value "restricted" x.restricted;
         GapiJson.render_bool_value "starred" x.starred;
         GapiJson.render_bool_value "trashed" x.trashed;
@@ -3076,6 +3083,10 @@ struct
           ({ GapiJson.name = "hidden"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with hidden = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "modified"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with modified = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "restricted"; data_type = GapiJson.Scalar },
           `Bool v) ->
@@ -4807,6 +4818,7 @@ struct
     etag : string;
     items : Revision.t list;
     kind : string;
+    nextPageToken : string;
     selfLink : string;
     
   }
@@ -4823,6 +4835,10 @@ struct
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
   }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
   let selfLink = {
     GapiLens.get = (fun x -> x.selfLink);
     GapiLens.set = (fun v x -> { x with selfLink = v });
@@ -4832,6 +4848,7 @@ struct
     etag = "";
     items = [];
     kind = "";
+    nextPageToken = "";
     selfLink = "";
     
   }
@@ -4841,6 +4858,7 @@ struct
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_array "items" Revision.render x.items;
       GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       GapiJson.render_string_value "selfLink" x.selfLink;
       
     ]
@@ -4874,6 +4892,10 @@ struct
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "selfLink"; data_type = GapiJson.Scalar },
         `String v) ->

@@ -1825,6 +1825,7 @@ struct
     lastModifyingUser : User.t;
     md5Checksum : string;
     mimeType : string;
+    modifiedByMe : bool;
     modifiedByMeTime : GapiDate.t;
     modifiedTime : GapiDate.t;
     name : string;
@@ -1925,6 +1926,10 @@ struct
   let mimeType = {
     GapiLens.get = (fun x -> x.mimeType);
     GapiLens.set = (fun v x -> { x with mimeType = v });
+  }
+  let modifiedByMe = {
+    GapiLens.get = (fun x -> x.modifiedByMe);
+    GapiLens.set = (fun v x -> { x with modifiedByMe = v });
   }
   let modifiedByMeTime = {
     GapiLens.get = (fun x -> x.modifiedByMeTime);
@@ -2050,6 +2055,7 @@ struct
     lastModifyingUser = User.empty;
     md5Checksum = "";
     mimeType = "";
+    modifiedByMe = false;
     modifiedByMeTime = GapiDate.epoch;
     modifiedTime = GapiDate.epoch;
     name = "";
@@ -2099,6 +2105,7 @@ struct
       (fun v -> GapiJson.render_object "lastModifyingUser" (User.render_content v)) x.lastModifyingUser;
       GapiJson.render_string_value "md5Checksum" x.md5Checksum;
       GapiJson.render_string_value "mimeType" x.mimeType;
+      GapiJson.render_bool_value "modifiedByMe" x.modifiedByMe;
       GapiJson.render_date_value "modifiedByMeTime" x.modifiedByMeTime;
       GapiJson.render_date_value "modifiedTime" x.modifiedTime;
       GapiJson.render_string_value "name" x.name;
@@ -2229,6 +2236,10 @@ struct
         ({ GapiJson.name = "mimeType"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with mimeType = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "modifiedByMe"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with modifiedByMe = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "modifiedByMeTime"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -2786,6 +2797,7 @@ module RevisionList =
 struct
   type t = {
     kind : string;
+    nextPageToken : string;
     revisions : Revision.t list;
     
   }
@@ -2794,6 +2806,10 @@ struct
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
   }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
   let revisions = {
     GapiLens.get = (fun x -> x.revisions);
     GapiLens.set = (fun v x -> { x with revisions = v });
@@ -2801,6 +2817,7 @@ struct
   
   let empty = {
     kind = "";
+    nextPageToken = "";
     revisions = [];
     
   }
@@ -2808,6 +2825,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       GapiJson.render_array "revisions" Revision.render x.revisions;
       
     ]
@@ -2819,6 +2837,10 @@ struct
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "revisions"; data_type = GapiJson.Array },
         cs) ->
