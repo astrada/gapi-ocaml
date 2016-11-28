@@ -3,6 +3,7 @@
 <head>
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiCore.html">
 <link rel="next" href="GapiPipe.html">
@@ -61,6 +62,8 @@
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
 <link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
+<link title="GapiDriveV3Model" rel="Chapter" href="GapiDriveV3Model.html">
+<link title="GapiDriveV3Service" rel="Chapter" href="GapiDriveV3Service.html">
 <link title="GapiGmailV1Model" rel="Chapter" href="GapiGmailV1Model.html">
 <link title="GapiGmailV1Service" rel="Chapter" href="GapiGmailV1Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
@@ -123,7 +126,7 @@ Ocurl wrapper module.<br>
 
 
 <pre><span id="VALglobal_init"><span class="keyword">val</span> global_init</span> : <code class="type">unit -> [ `Initialized ] <a href="GapiCurl.html#TYPEt">t</a></code></pre>
-<pre><span id="VALinit"><span class="keyword">val</span> init</span> : <code class="type">?debug_function:(Curl.t -> Curl.curlDebugType -> string -> unit) -><br>       ?timeout:int -><br>       ?connect_timeout:int -><br>       ?follow_location:bool -><br>       ?compress:bool -><br>       ?options:Curl.curlOption list -><br>       [ `Initialized ] <a href="GapiCurl.html#TYPEt">t</a> -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a></code></pre>
+<pre><span id="VALinit"><span class="keyword">val</span> init</span> : <code class="type">?debug_function:(Curl.t -> Curl.curlDebugType -> string -> unit) -><br>       ?timeout:int -><br>       ?connect_timeout:int -><br>       ?follow_location:bool -><br>       ?compress:bool -><br>       ?max_send_speed:int64 -><br>       ?max_recv_speed:int64 -><br>       ?low_speed_limit:int -><br>       ?low_speed_time:int -><br>       ?no_signal:bool -><br>       ?options:Curl.curlOption list -><br>       [ `Initialized ] <a href="GapiCurl.html#TYPEt">t</a> -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a></code></pre>
 <pre><span id="VALset_options"><span class="keyword">val</span> set_options</span> : <code class="type">Curl.curlOption list -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_writefunction"><span class="keyword">val</span> set_writefunction</span> : <code class="type">(string -> int) -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_headerfunction"><span class="keyword">val</span> set_headerfunction</span> : <code class="type">(string -> int) -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
@@ -132,7 +135,7 @@ Ocurl wrapper module.<br>
 <pre><span id="VALset_post"><span class="keyword">val</span> set_post</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_nobody"><span class="keyword">val</span> set_nobody</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_upload"><span class="keyword">val</span> set_upload</span> : <code class="type">bool -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
-<pre><span id="VALset_httpbody"><span class="keyword">val</span> set_httpbody</span> : <code class="type">string -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
+<pre><span id="VALset_httpbody"><span class="keyword">val</span> set_httpbody</span> : <code class="type"><a href="GapiCore.PostData.html#TYPEbody">GapiCore.PostData.body</a> -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_customrequest"><span class="keyword">val</span> set_customrequest</span> : <code class="type">string -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_postfields"><span class="keyword">val</span> set_postfields</span> : <code class="type">(string * string) list -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>
 <pre><span id="VALset_useragent"><span class="keyword">val</span> set_useragent</span> : <code class="type">string -> [ `Created ] <a href="GapiCurl.html#TYPEt">t</a> -> unit</code></pre>

@@ -3,6 +3,7 @@
 <head>
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiAdsenseV1_4Service.PaymentsResource.html">
 <link rel="next" href="GapiAdsenseV1_4Service.SavedadstylesResource.html">
@@ -61,6 +62,8 @@
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
 <link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
+<link title="GapiDriveV3Model" rel="Chapter" href="GapiDriveV3Model.html">
+<link title="GapiDriveV3Service" rel="Chapter" href="GapiDriveV3Service.html">
 <link title="GapiGmailV1Model" rel="Chapter" href="GapiGmailV1Model.html">
 <link title="GapiGmailV1Service" rel="Chapter" href="GapiGmailV1Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
@@ -85,7 +88,7 @@
 <pre><span class="keyword">module</span> ReportsResource: <code class="code">sig</code> <a href="GapiAdsenseV1_4Service.ReportsResource.html">..</a> <code class="code">end</code></pre><hr width="100%">
 
 <pre><span class="keyword">module</span> <a href="GapiAdsenseV1_4Service.ReportsResource.Saved.html">Saved</a>: <code class="code">sig</code> <a href="GapiAdsenseV1_4Service.ReportsResource.Saved.html">..</a> <code class="code">end</code></pre>
-<pre><span id="VALgenerate"><span class="keyword">val</span> generate</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?accountId:string list -><br>       ?currency:string -><br>       ?dimension:string list -><br>       ?filter:string list -><br>       ?locale:string -><br>       ?maxResults:int -><br>       ?metric:string list -><br>       ?sort:string list -><br>       ?startIndex:int -><br>       ?useTimezoneReporting:bool -><br>       startDate:string -><br>       endDate:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAdsenseV1_4Model.AdsenseReportsGenerateResponse.html#TYPEt">GapiAdsenseV1_4Model.AdsenseReportsGenerateResponse.t</a> *<br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
+<pre><span id="VALgenerate"><span class="keyword">val</span> generate</span> : <code class="type">?base_url:string -><br>       ?std_params:<a href="GapiService.StandardParameters.html#TYPEt">GapiService.StandardParameters.t</a> -><br>       ?media_download:<a href="GapiMediaResource.html#TYPEdownload">GapiMediaResource.download</a> -><br>       ?accountId:string list -><br>       ?currency:string -><br>       ?dimension:string list -><br>       ?filter:string list -><br>       ?locale:string -><br>       ?maxResults:int -><br>       ?metric:string list -><br>       ?sort:string list -><br>       ?startIndex:int -><br>       ?useTimezoneReporting:bool -><br>       startDate:string -><br>       endDate:string -><br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a> -><br>       <a href="GapiAdsenseV1_4Model.AdsenseReportsGenerateResponse.html#TYPEt">GapiAdsenseV1_4Model.AdsenseReportsGenerateResponse.t</a> *<br>       <a href="GapiConversation.Session.html#TYPEt">GapiConversation.Session.t</a></code></pre><div class="info ">
 Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify "alt=csv" as a query parameter.<br>
 </div>
 <div class="param_info"><code class="code">base_url</code> : Service endpoint base URL (defaults to <code class="code">"https://www.googleapis.com/adsense/v1.4/"</code>).</div>

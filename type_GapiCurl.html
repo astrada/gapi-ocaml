@@ -1,6 +1,7 @@
 <html><head>
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="Start" href="index.html">
 <link title="Index of types" rel=Appendix href="index_types.html">
 <link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
@@ -56,6 +57,8 @@
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
 <link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
+<link title="GapiDriveV3Model" rel="Chapter" href="GapiDriveV3Model.html">
+<link title="GapiDriveV3Service" rel="Chapter" href="GapiDriveV3Service.html">
 <link title="GapiGmailV1Model" rel="Chapter" href="GapiGmailV1Model.html">
 <link title="GapiGmailV1Service" rel="Chapter" href="GapiGmailV1Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
@@ -85,6 +88,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;?connect_timeout:int&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?follow_location:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?compress:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?max_send_speed:int64&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?max_recv_speed:int64&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?low_speed_limit:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?low_speed_time:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?no_signal:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;?options:<span class="constructor">Curl</span>.curlOption&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Initialized</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_options&nbsp;:&nbsp;<span class="constructor">Curl</span>.curlOption&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
@@ -96,7 +104,8 @@
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_post&nbsp;:&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_nobody&nbsp;:&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_upload&nbsp;:&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
-&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_httpbody&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_httpbody&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">GapiCore</span>.<span class="constructor">PostData</span>.body&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_customrequest&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
 &nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_postfields&nbsp;:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;(string&nbsp;*&nbsp;string)&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&nbsp;<span class="keywordsign">`</span><span class="constructor">Created</span>&nbsp;]&nbsp;<span class="constructor">GapiCurl</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>

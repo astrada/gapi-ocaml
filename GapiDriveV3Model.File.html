@@ -1,0 +1,606 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="doc/style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="GapiDriveV3Model.Permission.html">
+<link rel="next" href="GapiDriveV3Model.Change.html">
+<link rel="Up" href="GapiDriveV3Model.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="GapiUtils" rel="Chapter" href="GapiUtils.html">
+<link title="GapiCore" rel="Chapter" href="GapiCore.html">
+<link title="GapiCurl" rel="Chapter" href="GapiCurl.html">
+<link title="GapiPipe" rel="Chapter" href="GapiPipe.html">
+<link title="GapiConfig" rel="Chapter" href="GapiConfig.html">
+<link title="GapiConversation" rel="Chapter" href="GapiConversation.html">
+<link title="GapiAuthResponse" rel="Chapter" href="GapiAuthResponse.html">
+<link title="GapiClientLogin" rel="Chapter" href="GapiClientLogin.html">
+<link title="GapiOAuth1" rel="Chapter" href="GapiOAuth1.html">
+<link title="GapiOAuth2" rel="Chapter" href="GapiOAuth2.html">
+<link title="GapiAuth" rel="Chapter" href="GapiAuth.html">
+<link title="GapiRequest" rel="Chapter" href="GapiRequest.html">
+<link title="GapiMonad" rel="Chapter" href="GapiMonad.html">
+<link title="GapiError" rel="Chapter" href="GapiError.html">
+<link title="GapiService" rel="Chapter" href="GapiService.html">
+<link title="GapiDate" rel="Chapter" href="GapiDate.html">
+<link title="GapiJson" rel="Chapter" href="GapiJson.html">
+<link title="GapiLens" rel="Chapter" href="GapiLens.html">
+<link title="GapiMediaResource" rel="Chapter" href="GapiMediaResource.html">
+<link title="GapiCalendarV3Model" rel="Chapter" href="GapiCalendarV3Model.html">
+<link title="GapiCalendarV3Service" rel="Chapter" href="GapiCalendarV3Service.html">
+<link title="GapiPlusV1Model" rel="Chapter" href="GapiPlusV1Model.html">
+<link title="GapiPlusV1Service" rel="Chapter" href="GapiPlusV1Service.html">
+<link title="GapiTasksV1Model" rel="Chapter" href="GapiTasksV1Model.html">
+<link title="GapiTasksV1Service" rel="Chapter" href="GapiTasksV1Service.html">
+<link title="GapiDiscoveryV1Model" rel="Chapter" href="GapiDiscoveryV1Model.html">
+<link title="GapiDiscoveryV1Service" rel="Chapter" href="GapiDiscoveryV1Service.html">
+<link title="GapiUrlshortenerV1Model" rel="Chapter" href="GapiUrlshortenerV1Model.html">
+<link title="GapiUrlshortenerV1Service" rel="Chapter" href="GapiUrlshortenerV1Service.html">
+<link title="GapiOauth2V2Model" rel="Chapter" href="GapiOauth2V2Model.html">
+<link title="GapiOauth2V2Service" rel="Chapter" href="GapiOauth2V2Service.html">
+<link title="GapiCustomsearchV1Model" rel="Chapter" href="GapiCustomsearchV1Model.html">
+<link title="GapiCustomsearchV1Service" rel="Chapter" href="GapiCustomsearchV1Service.html">
+<link title="GapiAnalyticsV3Model" rel="Chapter" href="GapiAnalyticsV3Model.html">
+<link title="GapiAnalyticsV3Service" rel="Chapter" href="GapiAnalyticsV3Service.html">
+<link title="GapiPagespeedonlineV1Model" rel="Chapter" href="GapiPagespeedonlineV1Model.html">
+<link title="GapiPagespeedonlineV1Service" rel="Chapter" href="GapiPagespeedonlineV1Service.html">
+<link title="GapiBloggerV2Model" rel="Chapter" href="GapiBloggerV2Model.html">
+<link title="GapiBloggerV2Service" rel="Chapter" href="GapiBloggerV2Service.html">
+<link title="GapiSiteVerificationV1Model" rel="Chapter" href="GapiSiteVerificationV1Model.html">
+<link title="GapiSiteVerificationV1Service" rel="Chapter" href="GapiSiteVerificationV1Service.html">
+<link title="GapiAdsenseV1_1Model" rel="Chapter" href="GapiAdsenseV1_1Model.html">
+<link title="GapiAdsenseV1_1Service" rel="Chapter" href="GapiAdsenseV1_1Service.html">
+<link title="GapiAdsenseV1_4Model" rel="Chapter" href="GapiAdsenseV1_4Model.html">
+<link title="GapiAdsenseV1_4Service" rel="Chapter" href="GapiAdsenseV1_4Service.html">
+<link title="GapiBigqueryV2Model" rel="Chapter" href="GapiBigqueryV2Model.html">
+<link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
+<link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
+<link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
+<link title="GapiDriveV3Model" rel="Chapter" href="GapiDriveV3Model.html">
+<link title="GapiDriveV3Service" rel="Chapter" href="GapiDriveV3Service.html">
+<link title="GapiGmailV1Model" rel="Chapter" href="GapiGmailV1Model.html">
+<link title="GapiGmailV1Service" rel="Chapter" href="GapiGmailV1Service.html">
+<link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
+<link title="GdataCore" rel="Chapter" href="GdataCore.html">
+<link title="GdataBatch" rel="Chapter" href="GdataBatch.html">
+<link title="GdataAtom" rel="Chapter" href="GdataAtom.html">
+<link title="GdataExtensions" rel="Chapter" href="GdataExtensions.html">
+<link title="GdataComments" rel="Chapter" href="GdataComments.html">
+<link title="GdataService" rel="Chapter" href="GdataService.html">
+<link title="GdataACL" rel="Chapter" href="GdataACL.html">
+<link title="GdataACLService" rel="Chapter" href="GdataACLService.html">
+<link title="GdataDocumentsV3Model" rel="Chapter" href="GdataDocumentsV3Model.html">
+<link title="GdataDocumentsV3Service" rel="Chapter" href="GdataDocumentsV3Service.html"><title>GapiDriveV3Model.File</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="GapiDriveV3Model.Permission.html" title="GapiDriveV3Model.Permission">Previous</a>
+&nbsp;<a class="up" href="GapiDriveV3Model.html" title="GapiDriveV3Model">Up</a>
+&nbsp;<a class="post" href="GapiDriveV3Model.Change.html" title="GapiDriveV3Model.Change">Next</a>
+</div>
+<h1>Module <a href="type_GapiDriveV3Model.File.html">GapiDriveV3Model.File</a></h1>
+
+<pre><span class="keyword">module</span> File: <code class="code">sig</code> <a href="GapiDriveV3Model.File.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><span class="keyword">module</span> <a href="GapiDriveV3Model.File.VideoMediaMetadata.html">VideoMediaMetadata</a>: <code class="code">sig</code> <a href="GapiDriveV3Model.File.VideoMediaMetadata.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV3Model.File.ImageMediaMetadata.html">ImageMediaMetadata</a>: <code class="code">sig</code> <a href="GapiDriveV3Model.File.ImageMediaMetadata.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV3Model.File.ContentHints.html">ContentHints</a>: <code class="code">sig</code> <a href="GapiDriveV3Model.File.ContentHints.html">..</a> <code class="code">end</code></pre>
+<pre><span class="keyword">module</span> <a href="GapiDriveV3Model.File.Capabilities.html">Capabilities</a>: <code class="code">sig</code> <a href="GapiDriveV3Model.File.Capabilities.html">..</a> <code class="code">end</code></pre>
+<pre><code><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.appProperties">appProperties</span>&nbsp;: <code class="type">(string * string) list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A collection of arbitrary key-value pairs which are private to the requesting app.
+Entries with null values are cleared in update and copy requests.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.capabilities">capabilities</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.File.Capabilities.html#TYPEt">Capabilities.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Capabilities the current user has on the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.contentHints">contentHints</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.File.ContentHints.html#TYPEt">ContentHints.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Additional information about the content of the file. These fields are never populated in responses.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.createdTime">createdTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The time at which the file was created (RFC 3339 date-time).<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.description">description</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A short description of the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.explicitlyTrashed">explicitlyTrashed</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the file has been explicitly trashed, as opposed to recursively trashed from a parent folder.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.fileExtension">fileExtension</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The final component of fullFileExtension. This is only available for files with binary content in Drive.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.folderColorRgb">folderColorRgb</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The color for a folder as an RGB hex string. The supported colors are published in the folderColorPalette field of the About resource.
+If an unsupported color is specified, the closest color in the palette will be used instead.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.fullFileExtension">fullFileExtension</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The full file extension extracted from the name field. May contain multiple concatenated extensions, such as "tar.gz". This is only available for files with binary content in Drive.
+This is automatically updated when the name field changes, however it is not cleared if the new name does not contain a valid extension.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.headRevisionId">headRevisionId</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The ID of the file's head revision. This is currently only available for files with binary content in Drive.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.iconLink">iconLink</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A static, unauthenticated link to the file's icon.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The ID of the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.imageMediaMetadata">imageMediaMetadata</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.File.ImageMediaMetadata.html#TYPEt">ImageMediaMetadata.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Additional metadata about image media, if available.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.isAppAuthorized">isAppAuthorized</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the file was created or opened by the requesting app.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.kind">kind</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Identifies what kind of resource this is. Value: the fixed string "drive#file".<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.lastModifyingUser">lastModifyingUser</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.User.html#TYPEt">GapiDriveV3Model.User.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The last user to modify the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.md5Checksum">md5Checksum</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The MD5 checksum for the content of the file. This is only applicable to files with binary content in Drive.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.mimeType">mimeType</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The MIME type of the file.
+Drive will attempt to automatically detect an appropriate value from uploaded content if no value is provided. The value cannot be changed unless a new revision is uploaded.
+If a file is created with a Google Doc MIME type, the uploaded content will be imported if possible. The supported import formats are published in the About resource.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.modifiedByMe">modifiedByMe</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the file has been modified by this user.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.modifiedByMeTime">modifiedByMeTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The last time the file was modified by the user (RFC 3339 date-time).<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.modifiedTime">modifiedTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The last time the file was modified by anyone (RFC 3339 date-time).
+Note that setting modifiedTime will also update modifiedByMeTime for the user.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.name">name</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The name of the file. This is not necessarily unique within a folder.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.originalFilename">originalFilename</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The original filename of the uploaded content if available, or else the original value of the name field. This is only available for files with binary content in Drive.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.ownedByMe">ownedByMe</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the user owns the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.owners">owners</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.User.html#TYPEt">GapiDriveV3Model.User.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The owners of the file. Currently, only certain legacy files may have more than one owner.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.parents">parents</span>&nbsp;: <code class="type">string list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The IDs of the parent folders which contain the file.
+If not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.permissions">permissions</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.Permission.html#TYPEt">GapiDriveV3Model.Permission.t</a> list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The full list of permissions for the file. This is only available if the requesting user can share the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.properties">properties</span>&nbsp;: <code class="type">(string * string) list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A collection of arbitrary key-value pairs which are visible to all apps.
+Entries with null values are cleared in update and copy requests.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.quotaBytesUsed">quotaBytesUsed</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The number of storage quota bytes used by the file. This includes the head revision as well as previous revisions with keepForever enabled.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.shared">shared</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the file has been shared.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.sharedWithMeTime">sharedWithMeTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The time at which the file was shared with the user, if applicable (RFC 3339 date-time).<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.sharingUser">sharingUser</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.User.html#TYPEt">GapiDriveV3Model.User.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The user who shared the file with the requesting user, if applicable.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.size">size</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The size of the file's content in bytes. This is only applicable to files with binary content in Drive.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.spaces">spaces</span>&nbsp;: <code class="type">string list</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The list of spaces which contain the file. The currently supported values are 'drive', 'appDataFolder' and 'photos'.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.starred">starred</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the user has starred the file.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.thumbnailLink">thumbnailLink</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.trashed">trashed</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the file has been trashed, either explicitly or from a trashed parent folder. Only the owner may trash a file, and other users cannot see files in the owner's trash.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.version">version</span>&nbsp;: <code class="type">int64</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the user.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.videoMediaMetadata">videoMediaMetadata</span>&nbsp;: <code class="type"><a href="GapiDriveV3Model.File.VideoMediaMetadata.html#TYPEt">VideoMediaMetadata.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Additional metadata about video media. This may not be available immediately upon upload.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.viewedByMe">viewedByMe</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether the file has been viewed by this user.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.viewedByMeTime">viewedByMeTime</span>&nbsp;: <code class="type"><a href="GapiDate.html#TYPEt">GapiDate.t</a></code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+The last time the file was viewed by the user (RFC 3339 date-time).<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.viewersCanCopyContent">viewersCanCopyContent</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether users with only reader or commenter permission can copy the file's content. This affects copy, download, and print operations.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.webContentLink">webContentLink</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A link for downloading the content of the file in a browser. This is only available for files with binary content in Drive.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.webViewLink">webViewLink</span>&nbsp;: <code class="type">string</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+A link for opening the file in a relevant Google editor or viewer in a browser.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTt.writersCanShare">writersCanShare</span>&nbsp;: <code class="type">bool</code>;</code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><div class="info ">
+Whether users with only writer permission can modify the file's permissions.<br>
+</div>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+}
+
+
+
+<pre><span id="VALappProperties"><span class="keyword">val</span> appProperties</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, (string * string) list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcapabilities"><span class="keyword">val</span> capabilities</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.File.Capabilities.html#TYPEt">Capabilities.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcontentHints"><span class="keyword">val</span> contentHints</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.File.ContentHints.html#TYPEt">ContentHints.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALcreatedTime"><span class="keyword">val</span> createdTime</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALdescription"><span class="keyword">val</span> description</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALexplicitlyTrashed"><span class="keyword">val</span> explicitlyTrashed</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALfileExtension"><span class="keyword">val</span> fileExtension</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALfolderColorRgb"><span class="keyword">val</span> folderColorRgb</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALfullFileExtension"><span class="keyword">val</span> fullFileExtension</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALheadRevisionId"><span class="keyword">val</span> headRevisionId</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALiconLink"><span class="keyword">val</span> iconLink</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALid"><span class="keyword">val</span> id</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALimageMediaMetadata"><span class="keyword">val</span> imageMediaMetadata</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.File.ImageMediaMetadata.html#TYPEt">ImageMediaMetadata.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALisAppAuthorized"><span class="keyword">val</span> isAppAuthorized</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALkind"><span class="keyword">val</span> kind</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALlastModifyingUser"><span class="keyword">val</span> lastModifyingUser</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.User.html#TYPEt">GapiDriveV3Model.User.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmd5Checksum"><span class="keyword">val</span> md5Checksum</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmimeType"><span class="keyword">val</span> mimeType</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmodifiedByMe"><span class="keyword">val</span> modifiedByMe</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmodifiedByMeTime"><span class="keyword">val</span> modifiedByMeTime</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALmodifiedTime"><span class="keyword">val</span> modifiedTime</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALname"><span class="keyword">val</span> name</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALoriginalFilename"><span class="keyword">val</span> originalFilename</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALownedByMe"><span class="keyword">val</span> ownedByMe</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALowners"><span class="keyword">val</span> owners</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.User.html#TYPEt">GapiDriveV3Model.User.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALparents"><span class="keyword">val</span> parents</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALpermissions"><span class="keyword">val</span> permissions</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.Permission.html#TYPEt">GapiDriveV3Model.Permission.t</a> list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALproperties"><span class="keyword">val</span> properties</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, (string * string) list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALquotaBytesUsed"><span class="keyword">val</span> quotaBytesUsed</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALshared"><span class="keyword">val</span> shared</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsharedWithMeTime"><span class="keyword">val</span> sharedWithMeTime</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsharingUser"><span class="keyword">val</span> sharingUser</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.User.html#TYPEt">GapiDriveV3Model.User.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALsize"><span class="keyword">val</span> size</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALspaces"><span class="keyword">val</span> spaces</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string list) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALstarred"><span class="keyword">val</span> starred</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALthumbnailLink"><span class="keyword">val</span> thumbnailLink</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALtrashed"><span class="keyword">val</span> trashed</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALversion"><span class="keyword">val</span> version</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, int64) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALvideoMediaMetadata"><span class="keyword">val</span> videoMediaMetadata</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDriveV3Model.File.VideoMediaMetadata.html#TYPEt">VideoMediaMetadata.t</a>)<br>       <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALviewedByMe"><span class="keyword">val</span> viewedByMe</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALviewedByMeTime"><span class="keyword">val</span> viewedByMeTime</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, <a href="GapiDate.html#TYPEt">GapiDate.t</a>) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALviewersCanCopyContent"><span class="keyword">val</span> viewersCanCopyContent</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwebContentLink"><span class="keyword">val</span> webContentLink</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwebViewLink"><span class="keyword">val</span> webViewLink</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, string) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALwritersCanShare"><span class="keyword">val</span> writersCanShare</span> : <code class="type">(<a href="GapiDriveV3Model.File.html#TYPEt">t</a>, bool) <a href="GapiLens.html#TYPEt">GapiLens.t</a></code></pre>
+<pre><span id="VALempty"><span class="keyword">val</span> empty</span> : <code class="type"><a href="GapiDriveV3Model.File.html#TYPEt">t</a></code></pre>
+<pre><span id="VALrender"><span class="keyword">val</span> render</span> : <code class="type"><a href="GapiDriveV3Model.File.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> list</code></pre>
+<pre><span id="VALparse"><span class="keyword">val</span> parse</span> : <code class="type"><a href="GapiDriveV3Model.File.html#TYPEt">t</a> -><br>       <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV3Model.File.html#TYPEt">t</a></code></pre>
+<pre><span id="VALto_data_model"><span class="keyword">val</span> to_data_model</span> : <code class="type"><a href="GapiDriveV3Model.File.html#TYPEt">t</a> -> <a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a></code></pre>
+<pre><span id="VALof_data_model"><span class="keyword">val</span> of_data_model</span> : <code class="type"><a href="GapiJson.html#TYPEjson_data_model">GapiJson.json_data_model</a> -> <a href="GapiDriveV3Model.File.html#TYPEt">t</a></code></pre></body></html>

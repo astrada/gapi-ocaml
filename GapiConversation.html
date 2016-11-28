@@ -3,6 +3,7 @@
 <head>
 <link rel="stylesheet" href="doc/style.css" type="text/css">
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="Start" href="index.html">
 <link rel="previous" href="GapiConfig.html">
 <link rel="next" href="GapiAuthResponse.html">
@@ -61,6 +62,8 @@
 <link title="GapiBigqueryV2Service" rel="Chapter" href="GapiBigqueryV2Service.html">
 <link title="GapiDriveV2Model" rel="Chapter" href="GapiDriveV2Model.html">
 <link title="GapiDriveV2Service" rel="Chapter" href="GapiDriveV2Service.html">
+<link title="GapiDriveV3Model" rel="Chapter" href="GapiDriveV3Model.html">
+<link title="GapiDriveV3Service" rel="Chapter" href="GapiDriveV3Service.html">
 <link title="GapiGmailV1Model" rel="Chapter" href="GapiGmailV1Model.html">
 <link title="GapiGmailV1Service" rel="Chapter" href="GapiGmailV1Service.html">
 <link title="GdataUtils" rel="Chapter" href="GdataUtils.html">
@@ -108,8 +111,12 @@ Initializes a new connection to the server and executes a batch of requests.
 </div>
 <div class="param_info"><code class="code">auth_context</code> : Optional current authorization context. Defaults to <code class="code">NoAuth</code>.</div>
 
-<pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> string</code></pre>
-<pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> int -> 'a</code></pre>
+<pre><span id="VALread_all"><span class="keyword">val</span> read_all</span> : <code class="type">?auto_close:bool -> <a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> string</code></pre><div class="info ">
+Reads a pipe until EOF.<br>
+</div>
+<div class="param_info"><code class="code">auto_close</code> : Closes the pipe after reading. Defaults to <code class="code">true</code>.</div>
+
+<pre><span id="VALparse_error"><span class="keyword">val</span> parse_error</span> : <code class="type"><a href="GapiPipe.OcamlnetPipe.html#TYPEt">GapiPipe.OcamlnetPipe.t</a> -> int -> <a href="GapiConversation.Session.html#TYPEt">Session.t</a> -> 'a</code></pre>
 <pre><span id="EXCEPTIONConversationException"><span class="keyword">exception</span> ConversationException</span> <span class="keyword">of</span> <code class="type">string</code></pre>
 
 <pre><code><span id="TYPEiter"><span class="keyword">type</span> <code class="type">('a, 'b)</code> iter</span> = </code></pre><table class="typetable">
