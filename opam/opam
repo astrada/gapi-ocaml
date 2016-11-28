@@ -22,6 +22,7 @@ build-doc: [ "ocaml" "setup.ml" "-doc" ]
 depends: [
   "cryptokit"
   ("extlib" | "extlib-compat")
+  "ocamlbuild" {build}
   "ocamlfind" {build}
   "ocamlnet" {>= "3.5.1"}
   "ocurl"

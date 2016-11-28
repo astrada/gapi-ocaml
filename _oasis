@@ -142,21 +142,21 @@ Executable "oauth2Flow"
   Path: examples/auth
   Install: false
   MainIs: oauth2Flow.ml
-  BuildDepends: gapi-ocaml.gdata, nethttpd
+  BuildDepends: gapi-ocaml.gdata, nethttpd (>= 3.5.1)
 
 Executable "oauth1Flow"
   Build$: flag(examples) || flag(all)
   Path: examples/auth
   Install: false
   MainIs: oauth1Flow.ml
-  BuildDepends: gapi-ocaml, nethttpd
+  BuildDepends: gapi-ocaml, nethttpd (>= 3.5.1)
 
 Executable "clientLoginFlow"
   Build$: flag(examples) || flag(all)
   Path: examples/auth
   Install: false
   MainIs: clientLoginFlow.ml
-  BuildDepends: gapi-ocaml, nethttpd
+  BuildDepends: gapi-ocaml, nethttpd (>= 3.5.1)
 
 # Tests
 Executable "refreshOAuth2Token"
