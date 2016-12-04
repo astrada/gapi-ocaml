@@ -20,6 +20,7 @@ let model_tests =
    TestMediaResource.suite;
    TestDriveV2Model.suite;
    TestDriveV3Model.suite;
+   TestError.suite;
   ]
 
 let service_tests = 
