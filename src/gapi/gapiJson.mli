@@ -141,6 +141,11 @@ val parse_json_response :
   GapiPipe.OcamlnetPipe.t ->
   'a
 
+val parse_json_string :
+  (json_data_model -> 'a) ->
+  string ->
+  'a
+
 val default_content_type : string
 
 val render_json :

@@ -167,14 +167,18 @@ let data_model_to_json tree =
     tree
     |> snd
 
-let parse_json_response parse pipe =
-  let json_string = GapiConversation.read_all pipe in
-  let json = if json_string = "" then
+let parse_json_string parse json_string =
+  let json =
+    if json_string = "" then
       `Assoc []
     else
       Yojson.Safe.from_string json_string in
   let tree = json_to_data_model json in
   parse tree
+
+let parse_json_response parse pipe =
+  let json_string = GapiConversation.read_all pipe in
+  parse_json_string parse json_string
 
 let default_content_type = "application/json"
 

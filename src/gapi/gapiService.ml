@@ -3,14 +3,17 @@ open GapiUtils.Infix
 exception ServiceError of GapiConversation.Session.t * GapiError.RequestError.t
 
 let parse_error pipe response_code session =
+  let json_string = GapiConversation.read_all pipe in
   try
     let error =
-      GapiJson.parse_json_response
-        GapiError.RequestError.of_data_model pipe
+      GapiJson.parse_json_string
+        GapiError.RequestError.of_data_model json_string
     in
     raise (ServiceError (session, error))
   with Yojson.Json_error _ ->
-    GapiConversation.parse_error pipe response_code session
+    failwith (Printf.sprintf "Error: %s (HTTP response code: %d)"
+                json_string
+                response_code)
 
 let service_request
       ?post_data
