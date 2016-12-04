@@ -6,7 +6,9 @@ sig
   type t
 
   val create :
-    ?out_channel:Netchannels.out_obj_channel -> unit -> t
+    ?out_channel:Netchannels.out_obj_channel ->
+    ?in_channel:Netchannels.in_obj_channel ->
+    unit -> t
 
   val read_byte :
     t -> int
@@ -15,6 +17,9 @@ sig
     t -> int -> string
 
   val read_line :
+    t -> string
+
+  val read_all :
     t -> string
 
   val write_byte :
