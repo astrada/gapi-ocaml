@@ -1,7 +1,7 @@
 open GapiUtils.Infix
 
 type destination =
-    TargetFile of string
+  | TargetFile of string
   | StringBuffer of Buffer.t
   | ArrayBuffer of (char,
                     Bigarray.int8_unsigned_elt,
@@ -23,39 +23,63 @@ let range_spec = {
 
 let create_out_channel download =
   match download.destination with
-      TargetFile filename ->
-        new Netchannels.output_channel (open_out filename)
-    | StringBuffer buf ->
-        new Netchannels.output_buffer buf
-    | ArrayBuffer arr ->
-        let n = Bigarray.Array1.dim arr in
-        let netbuffer = Netbuffer.create n in
-        let onclose () =
-          let buffer_length = Netbuffer.length netbuffer in
-          let len = if buffer_length < n then buffer_length else n in
-          Netbuffer.blit_to_memory netbuffer 0 arr 0 len
-        in
-        new Netchannels.output_netbuffer ~onclose netbuffer
+  | TargetFile filename ->
+    new Netchannels.output_channel (open_out filename)
+  | StringBuffer buf ->
+    new Netchannels.output_buffer buf
+  | ArrayBuffer arr ->
+    let n = Bigarray.Array1.dim arr in
+    let netbuffer = Netbuffer.create n in
+    let onclose () =
+      let buffer_length = Netbuffer.length netbuffer in
+      let len = if buffer_length < n then buffer_length else n in
+      Netbuffer.blit_to_memory netbuffer 0 arr 0 len
+    in
+    new Netchannels.output_netbuffer ~onclose netbuffer
+
+let create_in_channel ?(discard_on_close = true) download =
+  match download.destination with
+  | TargetFile filename ->
+    let onclose =
+      if discard_on_close then
+        Some
+          (fun () ->
+             if Sys.file_exists filename then
+               try
+                 Sys.remove filename
+               with _ -> ()
+          )
+      else None
+    in
+    new Netchannels.input_channel ?onclose (open_in filename)
+  | StringBuffer buf ->
+    new Netchannels.input_string (Buffer.contents buf)
+  | ArrayBuffer arr ->
+    let n = Bigarray.Array1.dim arr in
+    let netbuffer = Netbuffer.create n in
+    let (in_ch, end_input) = Netchannels.create_input_netbuffer netbuffer in
+    Netbuffer.add_sub_memory netbuffer arr 0 n;
+    end_input ();
+    in_ch
 
 let generate_download_headers download =
   match download.range_spec with
-      "" ->
-        []
-    | spec ->
-        [GapiCore.Header.Range spec]
+  | "" -> []
+  | spec -> [GapiCore.Header.Range spec]
 
 let generate_range_spec ranges =
   let n_to_s = Option.map_default Int64.to_string "" in
   let range_strings =
     List.map
       (fun (range_start, range_end) ->
-         (n_to_s range_start) ^ "-" ^ (n_to_s range_end))
+         (n_to_s range_start) ^ "-" ^ (n_to_s range_end)
+      )
       ranges in
   let range_string = String.concat "," range_strings in
   "bytes=" ^ range_string
 
 type source =
-    File of string
+  | File of string
   | String of string
   | Buffer of (char,
                Bigarray.int8_unsigned_elt,
@@ -86,7 +110,7 @@ let content_length = {
 }
 
 type state =
-    Request
+  | Request
   | Uploading
   | Done
   | Error
@@ -121,20 +145,20 @@ let get_basename filename =
   with Not_found -> filename 
 
 let get_resource_length = function
-    File filename ->
-      let ch = open_in_bin filename in
-      begin try
+  | File filename ->
+    let ch = open_in_bin filename in
+    begin try
         let result = LargeFile.in_channel_length ch in
         close_in ch;
         result
       with e ->
         close_in ch;
         raise e
-      end
+    end
   | String str ->
-      str |> String.length |> Int64.of_int
+    str |> String.length |> Int64.of_int
   | Buffer arr ->
-      arr |> Bigarray.Array1.dim |> Int64.of_int
+    arr |> Bigarray.Array1.dim |> Int64.of_int
 
 let get_content_type filename =
   let extension =
@@ -143,25 +167,27 @@ let get_content_type filename =
     with Not_found -> ""
   in
   match extension with
-      "csv" -> "text/csv"
-    | "tab" -> "text/tab-separated-values"
-    | "tsv" -> "text/tab-separated-values"
-    | "txt" -> "text/plain"
-    | "html" -> "text/html"
-    | "htm" -> "text/html"
-    | "doc" -> "application/msword"
-    | "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    | "ods" -> "application/x-vnd.oasis.opendocument.spreadsheet"
-    | "odt" -> "application/vnd.oasis.opendocument.text"
-    | "rtf" -> "application/rtf"
-    | "sxw" -> "application/vnd.sun.xml.writer"
-    | "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    | "xls" -> "application/vnd.ms-excel"
-    | "ppt" -> "application/vnd.ms-powerpoint"
-    | "pps" -> "application/vnd.ms-powerpoint"
-    | "pdf" -> "application/pdf"
-    | "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-    | _ -> "application/octect-stream"
+  | "csv" -> "text/csv"
+  | "tab" -> "text/tab-separated-values"
+  | "tsv" -> "text/tab-separated-values"
+  | "txt" -> "text/plain"
+  | "html" -> "text/html"
+  | "htm" -> "text/html"
+  | "doc" -> "application/msword"
+  | "docx" ->
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  | "ods" -> "application/x-vnd.oasis.opendocument.spreadsheet"
+  | "odt" -> "application/vnd.oasis.opendocument.text"
+  | "rtf" -> "application/rtf"
+  | "sxw" -> "application/vnd.sun.xml.writer"
+  | "xlsx" ->
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  | "xls" -> "application/vnd.ms-excel"
+  | "ppt" -> "application/vnd.ms-powerpoint"
+  | "pps" -> "application/vnd.ms-powerpoint"
+  | "pdf" -> "application/pdf"
+  | "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+  | _ -> "application/octect-stream"
 
 let create_file_resource filename =
   let source = File filename in
@@ -186,15 +212,16 @@ let generate_x_upload_headers upload_state =
   let upload_content_type =
     GapiCore.Header.UploadContentType upload_state.resource.content_type in
   let upload_content_length =
-    GapiCore.Header.UploadContentLength (Int64.to_string
-                                           upload_state.resource.content_length)
+    GapiCore.Header.UploadContentLength
+      (Int64.to_string upload_state.resource.content_length)
   in
   [upload_content_type; upload_content_length]
 
 let generate_upload_chunk_headers upload_state =
-  let next_chunk = Int64.add
-                     upload_state.current_offset
-                     (Int64.of_int upload_state.chunk_size) in
+  let next_chunk =
+    Int64.add
+      upload_state.current_offset
+      (Int64.of_int upload_state.chunk_size) in
   let next_offset = min upload_state.resource.content_length next_chunk in
   let current_block_end = Int64.sub next_offset 1L in
   let content_range =
@@ -215,21 +242,22 @@ let generate_resume_put_headers upload_state =
 
 let generate_upload_headers http_method upload_state =
   match upload_state.state with
-      Request ->
-        begin match http_method with
-            GapiCore.HttpMethod.POST
-          | GapiCore.HttpMethod.PUT
-          | GapiCore.HttpMethod.PATCH ->
-              generate_x_upload_headers upload_state
-          | _ ->
-              failwith "Cannot generate upload headers if the HTTP method is not POST or PUT"
-        end
-    | Uploading ->
-        generate_upload_chunk_headers upload_state
-    | Error ->
-        generate_resume_put_headers upload_state
-    | Done ->
-        []
+  | Request ->
+    begin match http_method with
+      | GapiCore.HttpMethod.POST
+      | GapiCore.HttpMethod.PUT
+      | GapiCore.HttpMethod.PATCH ->
+        generate_x_upload_headers upload_state
+      | _ ->
+        failwith
+          "Cannot generate upload headers if the HTTP method is not POST or PUT"
+    end
+  | Uploading ->
+    generate_upload_chunk_headers upload_state
+  | Error ->
+    generate_resume_put_headers upload_state
+  | Done ->
+    []
 
 let update_upload_state range_header upload_state =
   let current_offset =
@@ -241,8 +269,8 @@ let update_upload_state range_header upload_state =
       failwith ("Cannot parse Range header: " ^ range_header)
   in
   if current_offset >= upload_state.resource.content_length then
-    failwith (Printf.sprintf
-                "Cannot updata upload state: new offset %Ld is beyond EOF (content length %Ld)"
+    failwith (Printf.sprintf "Cannot updata upload state: \
+                              new offset %Ld is beyond EOF (content length %Ld)"
                 current_offset
                 upload_state.resource.content_length)
   else
@@ -266,14 +294,14 @@ let fill_buffer channel buffer size =
 let get_post_data upload_state =
   let body =
     match upload_state.resource.source with
-        File filename ->
-          GapiCore.PostData.File (filename,
-                                  upload_state.chunk_size,
-                                  upload_state.current_offset)
-      | String content ->
-          GapiCore.PostData.String content
-      | Buffer buffer ->
-          GapiCore.PostData.Buffer buffer
+    | File filename ->
+      GapiCore.PostData.File (filename,
+                              upload_state.chunk_size,
+                              upload_state.current_offset)
+    | String content ->
+      GapiCore.PostData.String content
+    | Buffer buffer ->
+      GapiCore.PostData.Buffer buffer
   in
   GapiCore.PostData.Body (body, upload_state.resource.content_type)
 

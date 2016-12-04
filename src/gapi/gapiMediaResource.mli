@@ -16,6 +16,9 @@ val range_spec : (download, string) GapiLens.t
 val create_out_channel :
   download -> Netchannels.out_obj_channel
 
+val create_in_channel :
+  ?discard_on_close:bool -> download -> Netchannels.in_obj_channel
+
 val generate_download_headers :
   download -> GapiCore.Header.t list
 
