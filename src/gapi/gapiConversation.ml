@@ -45,7 +45,7 @@ struct
   }
 
   type auth_context =
-      NoAuth
+    | NoAuth
     | ClientLogin of string
     | OAuth1 of oauth1_context
     | OAuth2 of oauth2_context
@@ -103,31 +103,39 @@ let update_session headers session =
     List.fold_left
       (fun cs header ->
          match header with
-             GapiCore.Header.KeyValueHeader (k, v) when k = "Set-Cookie" ->
-               GapiCore.Header.to_string header :: cs
-           | _ -> cs)
+         | GapiCore.Header.KeyValueHeader (k, v) when k = "Set-Cookie" ->
+           GapiCore.Header.to_string header :: cs
+         | _ -> cs
+      )
       []
       headers in
-  let etag = List.fold_left
-               (fun e h ->
-                  match h with
-                      GapiCore.Header.ETag v -> v
-                    | _ -> e)
-               ""
-               headers
+  let etag =
+    List.fold_left
+      (fun e h ->
+         match h with
+         | GapiCore.Header.ETag v -> v
+         | _ -> e
+      )
+      ""
+      headers
   in
   { session with
-        Session.cookies;
-        etag }
+    Session.cookies;
+    etag }
+
+let is_error response_code =
+  (* Return true for HTTP status code = 4xx or 5xx *)
+  response_code / 400 = 1 ||
+  response_code / 500 = 1
 
 let request
-      ?header_list
-      ?post_data
-      ?media_download
-      http_method
-      session
-      url
-      parse_response =
+    ?header_list
+    ?post_data
+    ?media_download
+    http_method
+    session
+    url
+    parse_response =
   let header_queue = Queue.create () in
   let parse_header data =
     Queue.add data header_queue;
@@ -150,55 +158,55 @@ let request
       if List.exists
           (function GapiCore.Header.ContentType _ -> true | _ -> false)
           hl then hl
-      else new_content_type :: hl
-    in match post_data with
-        Some (GapiCore.PostData.Body (_, content_type)) ->
-          set_content_type_if_not_present content_type
-      | Some (GapiCore.PostData.Fields _) ->
-          set_content_type_if_not_present "application/x-www-form-urlencoded"
-      | _ -> hl
+      else new_content_type :: hl in
+    match post_data with
+    | Some (GapiCore.PostData.Body (_, content_type)) ->
+      set_content_type_if_not_present content_type
+    | Some (GapiCore.PostData.Fields _) ->
+      set_content_type_if_not_present "application/x-www-form-urlencoded"
+    | _ -> hl
   in
   GapiCurl.set_headerfunction parse_header session.Session.curl;
   GapiCurl.set_writefunction writer session.Session.curl;
   begin match http_method with
-      GapiCore.HttpMethod.GET ->
-        GapiCurl.set_httpget true session.Session.curl
+    | GapiCore.HttpMethod.GET ->
+      GapiCurl.set_httpget true session.Session.curl
     | GapiCore.HttpMethod.POST ->
-        GapiCurl.set_post true session.Session.curl
+      GapiCurl.set_post true session.Session.curl
     | GapiCore.HttpMethod.PUT
     | GapiCore.HttpMethod.PATCH ->
-        GapiCurl.set_upload true session.Session.curl
+      GapiCurl.set_upload true session.Session.curl
     | GapiCore.HttpMethod.DELETE ->
-        GapiCurl.set_upload false session.Session.curl;
-        GapiCurl.set_nobody true session.Session.curl
+      GapiCurl.set_upload false session.Session.curl;
+      GapiCurl.set_nobody true session.Session.curl
     | GapiCore.HttpMethod.HEAD ->
-        GapiCurl.set_upload false session.Session.curl;
-        GapiCurl.set_nobody true session.Session.curl
+      GapiCurl.set_upload false session.Session.curl;
+      GapiCurl.set_nobody true session.Session.curl
   end;
   begin match http_method with
-      GapiCore.HttpMethod.PATCH
+    | GapiCore.HttpMethod.PATCH
     | GapiCore.HttpMethod.DELETE ->
-        GapiCurl.set_customrequest
-          (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+      GapiCurl.set_customrequest
+        (GapiCore.HttpMethod.to_string http_method) session.Session.curl
     | _ ->
-        (* FIXME: reset curl custom request *)
-        GapiCurl.set_customrequest
-          (GapiCore.HttpMethod.to_string http_method) session.Session.curl
+      (* FIXME: reset curl custom request *)
+      GapiCurl.set_customrequest
+        (GapiCore.HttpMethod.to_string http_method) session.Session.curl
   end;
   begin match post_data with
-      Some (GapiCore.PostData.Fields key_value_list) ->
-        GapiCurl.set_postfields key_value_list session.Session.curl
+    | Some (GapiCore.PostData.Fields key_value_list) ->
+      GapiCurl.set_postfields key_value_list session.Session.curl
     | Some (GapiCore.PostData.Body (body, _)) ->
-        GapiCurl.set_httpbody body session.Session.curl
+      GapiCurl.set_httpbody body session.Session.curl
     | None ->
-        match http_method with
-            GapiCore.HttpMethod.POST ->
-              GapiCurl.set_postfields [] session.Session.curl
-          | GapiCore.HttpMethod.PUT ->
-              GapiCurl.set_upload false session.Session.curl;
-              GapiCurl.set_post true session.Session.curl;
-              GapiCurl.set_postfields [] session.Session.curl
-          | _ -> ()
+      match http_method with
+      | GapiCore.HttpMethod.POST ->
+        GapiCurl.set_postfields [] session.Session.curl
+      | GapiCore.HttpMethod.PUT ->
+        GapiCurl.set_upload false session.Session.curl;
+        GapiCurl.set_post true session.Session.curl;
+        GapiCurl.set_postfields [] session.Session.curl
+      | _ -> ()
   end;
   GapiCurl.set_useragent user_agent_header session.Session.curl;
   GapiCurl.set_httpheader request_headers session.Session.curl;
@@ -206,16 +214,25 @@ let request
   try
     GapiCurl.perform url session.Session.curl;
     GapiPipe.OcamlnetPipe.end_writing pipe;
-    Option.may (fun oc -> oc#close_out ()) out_channel;
     let response_code = GapiCurl.get_responsecode session.Session.curl in
-    let response_headers = List.rev
-                             (Queue.fold
-                                (fun l h -> GapiCore.Header.parse h :: l)
-                                []
-                                header_queue) in
+    let response_headers =
+      List.rev
+        (Queue.fold
+           (fun l h -> GapiCore.Header.parse h :: l)
+           []
+           header_queue) in
     let new_session = update_session response_headers session in
-    let result = parse_response
-                   pipe response_code response_headers new_session in
+    let pipe =
+      if not (is_error response_code) ||
+         Option.is_none media_download then pipe
+      else
+        (* If media_download is specified and there is an HTTP error code,
+         * re-read response body from media *)
+        let in_channel =
+          Option.map GapiMediaResource.create_in_channel media_download in
+        GapiPipe.OcamlnetPipe.create ?in_channel () in
+    let result =
+      parse_response pipe response_code response_headers new_session in
     (result, new_session)
   with Curl.CurlException (_, code, desc) ->
     GapiPipe.OcamlnetPipe.end_reading pipe;
@@ -225,16 +242,16 @@ let request
                 (GapiCurl.get_error_buffer session.Session.curl))
 
 let with_session
-      ?(auth_context = Session.NoAuth)
-      config
-      curl_state
-      interact =
+    ?(auth_context = Session.NoAuth)
+    config
+    curl_state
+    interact =
   let debug_function =
     Option.map
       (fun df ->
          match df with
-             GapiConfig.Standard -> debug_print (Unix.gettimeofday ())
-           | GapiConfig.Custom f -> f)
+         | GapiConfig.Standard -> debug_print (Unix.gettimeofday ())
+         | GapiConfig.Custom f -> f)
       config.GapiConfig.debug in
   let timeout = config.GapiConfig.timeout in
   let connect_timeout = config.GapiConfig.connect_timeout in
@@ -244,37 +261,39 @@ let with_session
   let low_speed_limit = config.GapiConfig.low_speed_limit in
   let low_speed_time = config.GapiConfig.low_speed_time in
   let no_signal = config.GapiConfig.curl_no_signal in
-  let curl_session = GapiCurl.init
-                       ?debug_function
-                       ?timeout
-                       ?connect_timeout
-                       ~compress
-                       ~max_recv_speed
-                       ~max_send_speed
-                       ~low_speed_limit
-                       ~low_speed_time
-                       ~no_signal
-                       curl_state in
+  let curl_session =
+    GapiCurl.init
+      ?debug_function
+      ?timeout
+      ?connect_timeout
+      ~compress
+      ~max_recv_speed
+      ~max_send_speed
+      ~low_speed_limit
+      ~low_speed_time
+      ~no_signal
+      curl_state in
   let cleanup () = ignore (GapiCurl.cleanup curl_session) in
   let session =
     { Session.curl = curl_session;
       config = config;
       cookies = [];
       auth = auth_context;
-      etag = "" }
+      etag = ""
+    }
   in
   try
     let result = interact session in
-      cleanup ();
-      result
+    cleanup ();
+    result
   with e ->
     cleanup ();
     raise e
 
 let with_curl
-      ?auth_context
-      config
-      interact =
+    ?auth_context
+    config
+    interact =
   let curl_state = GapiCurl.global_init () in
   let cleanup () = ignore (GapiCurl.global_cleanup curl_state) in
   try
@@ -284,43 +303,35 @@ let with_curl
         config
         curl_state
         interact in
-      cleanup ();
-      result
+    cleanup ();
+    result
   with e ->
     cleanup ();
     raise e
 
-let read_all ?(auto_close=true) pipe =
-  let buffer = Buffer.create 16 in
-  try
-    while true do
-      Buffer.add_string buffer (GapiPipe.OcamlnetPipe.read_line pipe)
-    done;
-    assert false
-  with End_of_file ->
-    if auto_close then GapiPipe.OcamlnetPipe.end_reading pipe;
-    Buffer.contents buffer
+let read_all ?(auto_close = true) pipe =
+  let result = GapiPipe.OcamlnetPipe.read_all pipe in
+  if auto_close then GapiPipe.OcamlnetPipe.end_reading pipe;
+  result
 
 let parse_error pipe response_code session =
   let error_message = read_all pipe in
-  failwith (Printf.sprintf "Error: %s (HTTP response code: %d)"
-              error_message
-              response_code)
+  failwith
+    (Printf.sprintf "Error: %s (HTTP response code: %d)"
+       error_message
+       response_code)
 
 exception ConversationException of string
 
 type ('i, 'o) iter =
-    Done of 'o
+  | Done of 'o
   | Continue of ('i -> ('i, 'o) iter)
   | Error of string
 
 let rec loop continue input =
   let iter = continue input in
   match iter with
-      Done output ->
-        output
-    | Error message ->
-        raise (ConversationException message)
-    | Continue k ->
-        loop k input
+  | Done output -> output
+  | Error message -> raise (ConversationException message)
+  | Continue k -> loop k input
 
