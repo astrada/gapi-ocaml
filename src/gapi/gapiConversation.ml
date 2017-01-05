@@ -175,7 +175,13 @@ let request
       GapiCurl.set_post true session.Session.curl
     | GapiCore.HttpMethod.PUT
     | GapiCore.HttpMethod.PATCH ->
-      GapiCurl.set_upload true session.Session.curl
+      begin match post_data with
+        | Some _ ->
+          GapiCurl.set_upload true session.Session.curl
+        | None ->
+          GapiCurl.set_upload false session.Session.curl;
+          GapiCurl.set_nobody true session.Session.curl
+      end
     | GapiCore.HttpMethod.DELETE ->
       GapiCurl.set_upload false session.Session.curl;
       GapiCurl.set_nobody true session.Session.curl

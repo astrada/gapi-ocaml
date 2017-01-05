@@ -276,20 +276,8 @@ let update_upload_state range_header upload_state =
   else
     { upload_state with
           state = Uploading;
-          current_offset }
-
-let fill_buffer channel buffer size =
-  let rec loop pos =
-    if pos = size then
-      buffer
-    else
-      let bytes = input channel buffer pos (size - pos) in
-      if bytes = 0 then
-        String.sub buffer 0 pos
-      else
-        loop (pos + bytes)
-  in
-  loop 0
+          current_offset
+    }
 
 let get_post_data upload_state =
   let body =
