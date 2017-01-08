@@ -77,6 +77,53 @@ let wait_exponential_backoff n =
   let wait_time = float_of_int seconds +. milliseconds in
     Unix.select [] [] [] wait_time |> ignore
 
+class bigarray_rec_out_channel buffer =
+object(self)
+  val mutable pos = 0
+
+  method output s offset len =
+    Netsys_mem.blit_string_to_memory s offset buffer pos len;
+    pos <- pos + len;
+    len
+
+  method flush () = ()
+
+  method close_out () = ()
+
+end
+
+class bigarray_out_obj_channel buffer =
+  Netchannels.out_obj_channel_delegation
+    (Netchannels.lift_out ~buffered:false
+      (`Rec (new bigarray_rec_out_channel buffer)))
+
+class bigarray_rec_in_channel buffer =
+object(self)
+  val dim = Bigarray.Array1.dim buffer
+  val mutable pos = 0
+
+  method input s offset len =
+    let input_bytes l =
+      Netsys_mem.blit_memory_to_string buffer pos s offset l;
+      pos <- pos + l;
+      l
+    in
+    if pos >= dim then raise End_of_file
+    else if pos + len > dim then begin
+      input_bytes (dim - pos)
+    end else begin
+      input_bytes len
+    end
+
+  method close_in () = ()
+
+end
+
+class bigarray_in_obj_channel buffer =
+  Netchannels.in_obj_channel_delegation
+    (Netchannels.lift_in ~buffered:false
+      (`Rec (new bigarray_rec_in_channel buffer)))
+
 (* Initialize random number generator *)
 let () =
   Random.self_init ()

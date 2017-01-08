@@ -28,14 +28,7 @@ let create_out_channel download =
   | StringBuffer buf ->
     new Netchannels.output_buffer buf
   | ArrayBuffer arr ->
-    let n = Bigarray.Array1.dim arr in
-    let netbuffer = Netbuffer.create n in
-    let onclose () =
-      let buffer_length = Netbuffer.length netbuffer in
-      let len = if buffer_length < n then buffer_length else n in
-      Netbuffer.blit_to_memory netbuffer 0 arr 0 len
-    in
-    new Netchannels.output_netbuffer ~onclose netbuffer
+    new GapiUtils.bigarray_out_obj_channel arr
 
 let create_in_channel ?(discard_on_close = true) download =
   match download.destination with
@@ -55,12 +48,7 @@ let create_in_channel ?(discard_on_close = true) download =
   | StringBuffer buf ->
     new Netchannels.input_string (Buffer.contents buf)
   | ArrayBuffer arr ->
-    let n = Bigarray.Array1.dim arr in
-    let netbuffer = Netbuffer.create n in
-    let (in_ch, end_input) = Netchannels.create_input_netbuffer netbuffer in
-    Netbuffer.add_sub_memory netbuffer arr 0 n;
-    end_input ();
-    in_ch
+    new GapiUtils.bigarray_in_obj_channel arr
 
 let generate_download_headers download =
   match download.range_spec with

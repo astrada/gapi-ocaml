@@ -22,3 +22,13 @@ val string_after_char : char -> string -> string
 
 val wait_exponential_backoff : int -> unit
 
+class bigarray_out_obj_channel :
+  (char,
+   Bigarray.int8_unsigned_elt,
+   Bigarray.c_layout) Bigarray.Array1.t -> Netchannels.out_obj_channel
+
+class bigarray_in_obj_channel :
+  (char,
+   Bigarray.int8_unsigned_elt,
+   Bigarray.c_layout) Bigarray.Array1.t -> Netchannels.in_obj_channel
+
