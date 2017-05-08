@@ -20,6 +20,8 @@ val add_path_to_url :
 
 val string_after_char : char -> string -> string
 
+val string_before_char : char -> string -> string
+
 val wait_exponential_backoff : int -> unit
 
 class bigarray_out_obj_channel :

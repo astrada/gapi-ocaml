@@ -71,6 +71,12 @@ let string_after_char c s =
   let last_position = String.rindex s c in
     Str.string_after s (last_position + 1)
 
+let string_before_char c s =
+  try
+    let first_occurrence = String.index s c in
+    Str.string_before s first_occurrence
+  with Not_found -> s
+
 let wait_exponential_backoff n =
   let seconds = 1 lsl n in
   let milliseconds = Random.float 1.0 in

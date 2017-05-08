@@ -3,7 +3,8 @@ open GapiUtils.Infix
 exception ServiceError of GapiConversation.Session.t * GapiError.RequestError.t
 
 let parse_error pipe response_code session =
-  let json_string = GapiConversation.read_all pipe in
+  let json_string_asciiz = GapiConversation.read_all pipe in
+  let json_string = GapiUtils.string_before_char '\000' json_string_asciiz in
   try
     let error =
       GapiJson.parse_json_string
