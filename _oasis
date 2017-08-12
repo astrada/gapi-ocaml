@@ -8,7 +8,7 @@ BuildType: ocamlbuild (0.4)
 Authors: Alessandro Strada
 Maintainers: Alessandro Strada <alessandro.strada@gmail.com>
 Copyrights: (C) 2011-2016 Alessandro Strada
-Homepage: http://gapi-ocaml.forge.ocamlcore.org
+Homepage: https://github.com/astrada/gapi-ocaml
 Plugins: META (0.4)
 BuildTools: ocamlbuild
 

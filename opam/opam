@@ -2,7 +2,7 @@ opam-version: "1.2"
 maintainer: "Alessandro Strada <alessandro.strada@gmail.com>"
 authors: [ "Alessandro Strada" ]
 license: "MIT"
-homepage: "http://gapi-ocaml.forge.ocamlcore.org"
+homepage: "https://github.com/astrada/gapi-ocaml"
 dev-repo: "https://github.com/astrada/gapi-ocaml.git"
 bug-reports: "https://github.com/astrada/gapi-ocaml/issues"
 build: [
