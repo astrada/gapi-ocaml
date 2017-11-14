@@ -1,5 +1,5 @@
 OASISFormat: 0.4
-OCamlVersion: >= 3.12.0
+OCamlVersion: >= 4.02.3
 Name: gapi-ocaml
 Version: 0.3.5
 LicenseFile: LICENSE
@@ -96,7 +96,7 @@ Library "gapi-ocaml"
     GapiDriveV3Service,
     GapiGmailV1Model,
     GapiGmailV1Service
-  BuildDepends: extlib, netstring (>= 3.5.1), curl, str, cryptokit, yojson
+  BuildDepends: extlib, netstring (>= 4.1.4), curl, str, cryptokit, yojson
   XMETADescription: Google APIs client library
 
 Library gdata

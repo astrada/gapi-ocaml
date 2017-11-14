@@ -13,8 +13,8 @@ sig
   val read_byte :
     t -> int
 
-  val read_string :
-    t -> int -> string
+  val read_bytes :
+    t -> int -> bytes
 
   val read_line :
     t -> string

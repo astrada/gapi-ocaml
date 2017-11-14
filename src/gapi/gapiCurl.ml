@@ -22,16 +22,20 @@ let set_curl_options option_list curl =
 
 (* private *)
 let reader netchannel bytes =
-  let result = String.create bytes in
+  let result = Bytes.create bytes in
+  let result =
     try
       let len = netchannel#input result 0 bytes in
       if len = bytes then
         result
       else
-        String.sub result 0 len
+        Bytes.sub result 0 len
     with End_of_file ->
       netchannel#close_in ();
-      ""
+      Bytes.create 0
+  in
+  (* TODO: remove when Curl.set_readfunction is modified in: int -> bytes *)
+  Bytes.to_string result
 
 let global_init () : [`Initialized] t =
   Curl.global_init Curl.CURLINIT_GLOBALALL;

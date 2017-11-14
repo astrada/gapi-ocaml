@@ -87,8 +87,8 @@ class bigarray_rec_out_channel buffer =
 object(self)
   val mutable pos = 0
 
-  method output s offset len =
-    Netsys_mem.blit_string_to_memory s offset buffer pos len;
+  method output b offset len =
+    Netsys_mem.blit_bytes_to_memory b offset buffer pos len;
     pos <- pos + len;
     len
 
@@ -108,9 +108,9 @@ object(self)
   val dim = Bigarray.Array1.dim buffer
   val mutable pos = 0
 
-  method input s offset len =
+  method input b offset len =
     let input_bytes l =
-      Netsys_mem.blit_memory_to_string buffer pos s offset l;
+      Netsys_mem.blit_memory_to_bytes buffer pos b offset l;
       pos <- pos + l;
       l
     in

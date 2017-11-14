@@ -41,9 +41,9 @@ Building gapi-ocaml
 
 You will need the following libraries:
 
-* [OCaml][] >= 3.12.0
+* [OCaml][] >= 4.02.3
 * [Findlib][] >= 1.2.7
-* [Ocamlnet][] >= 3.5.1
+* [Ocamlnet][] >= 4.1.4
 * [Ocurl][] >= 0.5.3
 * [Cryptokit][] >= 1.3.14
 * [ExtLib][] >= 1.5.1

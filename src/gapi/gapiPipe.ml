@@ -35,8 +35,8 @@ struct
     let ch = in_ch p in
     ch#input_byte ()
 
-  let read_string p len =
-    let result = String.create len in
+  let read_bytes p len =
+    let result = Bytes.create len in
     let ch = in_ch p in
     ignore (ch#input result 0 len);
     result

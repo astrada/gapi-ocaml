@@ -24,7 +24,7 @@ depends: [
   ("extlib" | "extlib-compat")
   "ocamlbuild" {build}
   "ocamlfind" {build}
-  "ocamlnet" {>= "3.5.1"}
+  "ocamlnet" {>= "4.1.4"}
   "ocurl"
   "xmlm"
   "yojson"
@@ -33,4 +33,4 @@ depopts: [
   "ounit" {build & test}
   "pa_monad_custom" {build}
 ]
-available: [ ocaml-version >= "3.12.0" ]
+available: [ ocaml-version >= "4.02.3" ]

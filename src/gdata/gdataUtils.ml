@@ -91,11 +91,11 @@ let render_xml buffer tree =
 let data_to_xml_string ?(buffer_size = 512) tree =
   let buffer = Buffer.create buffer_size in
   let () = render_xml buffer tree in
-  let result = Buffer.contents buffer in
-    (* Replace new-line character after xml declaration, because it causes a
-     * server-side error *)
-    String.fill result 38 1 ' ';
-    result
+  let result = Buffer.to_bytes buffer in
+  (* Replace new-line character after xml declaration, because it causes a
+   * server-side error *)
+  Bytes.fill result 38 1 ' ';
+  Bytes.to_string result
 
 let parse_xml next_byte parse_tree =
   let input = Xmlm.make_input ~strip:true (`Fun next_byte) in 
