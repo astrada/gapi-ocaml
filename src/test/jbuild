@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(executable
+ ((name testSuite)
+  (libraries (oUnit gapi-ocaml.gdata))))
+
+(alias
+ ((name runtest)
+  (deps (testSuite.exe (glob_files test_data/*)))
+  (action (run ${<}))))

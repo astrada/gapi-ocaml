@@ -39,10 +39,9 @@ let test_monadic_session_perform () =
                      GapiConversation.Session.etag =
                        "W/\"D04ASX47eCp7JGA9WhdbEEo." } in
        let go =
-         perform
-           put s;
-           own <-- GdataCalendarService.own_calendars;
-           all <-- GdataCalendarService.all_calendars;
+           put s >>= fun () ->
+           GdataCalendarService.own_calendars >>= fun own ->
+           GdataCalendarService.all_calendars >>= fun all ->
            return (own, all) in
        let ((own, all), new_session) =
          go session
