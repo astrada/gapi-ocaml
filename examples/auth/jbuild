@@ -1,0 +1,9 @@
+(jbuild_version 1)
+
+(executables
+ ((names (oauth2Flow oauth1Flow clientLoginFlow))
+  (libraries (gapi-ocaml.gdata threads nethttpd))))
+
+(alias
+ ((name examples)
+  (deps (oauth2Flow.exe oauth1Flow.exe clientLoginFlow.exe))))
