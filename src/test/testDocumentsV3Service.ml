@@ -83,7 +83,7 @@ let test_query_changes_expand_acl () =
              assert_bool
                "There should be at least 1 ACL entry"
                (List.length acl_entries >= 1)
-         with Failure "hd" -> ())
+         with Failure _ -> ())
 
 let test_query_documents_list () =
   TestHelper.test_request
