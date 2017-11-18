@@ -35,7 +35,7 @@ Google Data Protocol APIs (GData):
   APIs based on the Google API Discovery format
 
 Building gapi-ocaml
-------------------
+-------------------
 
 ### Requirements
 
@@ -49,10 +49,11 @@ You will need the following libraries:
 * [ExtLib][] >= 1.5.1
 * [Yojson][] >= 1.0.2
 * [Xmlm][] >= 1.0.2
-* [ppx_monadic][] >= 2.2.2 (syntax extension for Monads, optional)
+* [ppx_monadic][] >= 2.2.2 (PPX syntax extension for monadic bind syntactic
+  sugar)
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
-This library was developed and tested on Ubuntu 12.04 LTS (64-bit).
+This library was developed and tested on Ubuntu LTS (64-bit).
 
 [OCaml]: http://www.ocaml.org/docs/install.html
 [Findlib]: http://projects.camlcity.org/projects/findlib.html/
@@ -103,7 +104,7 @@ Then you can browse the HTML documentation starting from
 
 To uninstall anything that was previously installed, execute
 
-    $ jbuilder -uninstall
+    $ jbuilder uninstall
 
 ### Usage
 
