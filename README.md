@@ -49,20 +49,20 @@ You will need the following libraries:
 * [ExtLib][] >= 1.5.1
 * [Yojson][] >= 1.0.2
 * [Xmlm][] >= 1.0.2
-* [pa_monad_custom][] >= 6.0.0 (syntax extension for Monads, optional)
+* [ppx_monadic][] >= 2.2.2 (syntax extension for Monads, optional)
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
 This library was developed and tested on Ubuntu 12.04 LTS (64-bit).
 
-[OCaml]: http://caml.inria.fr/ocaml/release.en.html
+[OCaml]: http://www.ocaml.org/docs/install.html
 [Findlib]: http://projects.camlcity.org/projects/findlib.html/
 [Ocamlnet]: http://projects.camlcity.org/projects/ocamlnet.html
-[Ocurl]: http://sourceforge.net/projects/ocurl/
-[Cryptokit]: http://forge.ocamlcore.org/projects/cryptokit/
-[ExtLib]: http://code.google.com/p/ocaml-extlib/
+[Ocurl]: http://ygrek.org.ua/p/ocurl/
+[Cryptokit]: https://github.com/xavierleroy/cryptokit
+[ExtLib]: https://github.com/ygrek/ocaml-extlib
 [Yojson]: http://mjambon.com/yojson.html
-[Xmlm]: http://erratique.ch/software/xmlm/doc/Xmlm
-[pa_monad_custom]: http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html
+[Xmlm]: http://erratique.ch/software/xmlm
+[ppx_monadic]: https://bitbucket.org/camlspotter/ppx_monadic
 [OUnit]: http://ounit.forge.ocamlcore.org/
 
 ### Configuration and installation
@@ -74,41 +74,36 @@ This project provides 2 libraries:
 
 To build the libraries, run
 
-    $ ocaml setup.ml -configure
-    $ ocaml setup.ml -build
+    $ jbuilder build @install
 
 To install the libraries, run (as root, if your user doesn't have enough
 privileges)
 
-    $ ocaml setup.ml -install
+    $ jbuilder install
 
 To build and run the tests (you will need
-[pa_monad_custom](http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html)),
-execute
+[ppx_monadic](https://bitbucket.org/camlspotter/ppx_monadic)), execute
 
-    $ ocaml setup.ml -configure --enable-tests
-    $ ocaml setup.ml -build
-    $ ocaml setup.ml -test
+    $ jbuilder runtest
 
 See `src/test/README.md` for further details regarding the tests.
 
 To build the examples:
 
-    $ ocaml setup.ml -configure --enable-examples
-    $ ocaml setup.ml -build
+    $ jbuilder build @examples
 
 See `examples/README.md` for further details regarding the examples.
 
 To generate the documentation, run
 
-    $ ocaml setup.ml -doc
+    $ jbuilder build @doc
 
 Then you can browse the HTML documentation starting from
 `gapi-ocaml.docdir/index.html`, but is not installed by default.
 
 To uninstall anything that was previously installed, execute
 
-    $ ocaml setup.ml -uninstall
+    $ jbuilder -uninstall
 
 ### Usage
 

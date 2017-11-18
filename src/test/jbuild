@@ -8,3 +8,16 @@
  ((name runtest)
   (deps (testSuite.exe (glob_files test_data/*)))
   (action (run ${<}))))
+
+(alias
+ ((name runtest-all)
+  (deps (testSuite.exe (glob_files test_data/*)))
+  (action (run ${<} -all))))
+
+(alias
+ ((name runtest-urlshortener)
+  (deps (testSuite.exe (glob_files test_data/*)))
+  (action (run ${<} -service urlshortener))))
+
+; TODO: add stanzas to test each service
+

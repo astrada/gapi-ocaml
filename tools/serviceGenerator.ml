@@ -41,7 +41,7 @@ open GeneratorM
 let ($) f x = f x
 
 let lift_io () =
-  perform
+  do_;
    return ()
 
 (* END Monad helpers *)
@@ -431,7 +431,7 @@ let build_schema_inner_module file_lens complex_type =
 
   let rec render_inner_module
         formatter container_name module_name is_nested inner_module_lens =
-    perform
+    do_;
       type_t <-- GapiLens.get_state (inner_module_lens
                                        |-- InnerSchemaModule.type_t);
 
@@ -505,7 +505,7 @@ let build_schema_inner_module file_lens complex_type =
     State.get_schema_module_lens
       |-- SchemaModule.get_inner_module_lens module_name
   in
-    perform
+    do_;
       (* Insert inner module into state *)
       inner_module_lens ^=! inner_module;
 
@@ -590,7 +590,7 @@ let generate_enum_module formatter
                       scalar.ScalarType.enum
                       scalar.ScalarType.enumDescriptions
   in
-    perform
+    do_;
       enum_module_lens ^=! enum_module;
 
       lift_io (
@@ -623,14 +623,13 @@ let generate_enum_module formatter
 
 let filter_parameters source methods_lens cond =
   let parameters =
-    let open GapiMonad.ListM in
-      perform
-        rest_method <-- source
-          |. methods_lens |. GapiLens.list_map GapiLens.second;
-        parameter <-- rest_method |. RestMethod.parameters;
-        let json_schema = snd parameter in
-        guard (cond json_schema);
-        return parameter;
+    GapiMonad.ListM.do_;
+      rest_method <-- (source
+        |. methods_lens |. GapiLens.list_map GapiLens.second);
+      parameter <-- (rest_method |. RestMethod.parameters);
+      let json_schema = snd parameter in
+      GapiMonad.ListM.guard (cond json_schema);
+      return parameter;
   in
     FieldSet.add_parameters_list parameters FieldSet.empty
 
@@ -643,7 +642,7 @@ let generate_enum_modules
     filter source
       (fun json_schema -> json_schema.JsonSchema.enum != [])
   in
-    perform
+    do_;
       mapM_
         (fun parameter ->
            generate_enum_module formatter inner_module_lens parameter)
@@ -742,7 +741,7 @@ let generate_parameters_module filter_parameters formatter
     else
       OCamlName.get_ocaml_name ModuleName (resource_id ^ "Parameters")
   in
-    perform
+    do_;
       (inner_module_lens
          |-- InnerServiceModule.parameters_module_name) ^=! module_name;
 
@@ -758,7 +757,7 @@ let generate_parameters_module filter_parameters formatter
 
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body methd =
-      perform
+      do_;
         parameters_module_name <--
           GapiLens.get_state (inner_module_lens
                                 |-- InnerServiceModule.parameters_module_name);
@@ -922,7 +921,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                                test_default param.JsonSchema.default)
             rest_method.RestMethod.parameters
       in
-        perform
+        do_;
           methd <-- GapiLens.get_state method_lens;
           (method_lens
              |-- Method.parameter_order) @=! List.map fst optional_parameters;
@@ -934,7 +933,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                    render parameter)
               optional_parameters
     in
-      perform
+      do_;
         (* Optional parameters with default *)
         render_optional_parameters true
           (fun { Field.ocaml_name; default; _ } ->
@@ -962,7 +961,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
           end;
           Format.fprintf formatter "session =@]@\n")
   in
-    perform
+    do_;
       type_table <-- GapiLens.get_state State.type_table;
       let methd = Method.create id
                     rest_method.RestMethod.parameters
@@ -1012,7 +1011,7 @@ let rec build_service_inner_module
     else
       current_module_lens
   in
-    perform
+    do_;
       (* Insert inner module *)
       inner_module_lens ^=! inner_module;
 
@@ -1046,7 +1045,7 @@ let rec build_api_level_service_module file_lens =
   let api_level_module_lens =
     State.get_service_module |-- ServiceModule.get_api_level_module
   in
-    perform
+    do_;
       name <-- GapiLens.get_state (State.service |-- RestDescription.name);
 
       let ocaml_name = OCamlName.get_ocaml_name ModuleName name in
@@ -1075,7 +1074,7 @@ let rec build_api_level_service_module file_lens =
 let build_module file_type generate_body =
   let file_lens = State.get_file_lens file_type in
   let formatter_lens = file_lens |-- File.formatter in
-    perform
+    do_;
       service <-- GapiLens.get_state State.service;
       let service_name = service.RestDescription.name in
       let service_version = service.RestDescription.version in
@@ -1096,7 +1095,7 @@ let build_module file_type generate_body =
 
 let build_schema_module =
   let generate_body file_lens =
-    perform
+    do_;
       file <-- GapiLens.get_state file_lens;
 
       (* Insert schema module *)
@@ -1125,7 +1124,7 @@ let build_service_module =
   in
 
   let generate_scope formatter (value, scope) =
-    perform
+    do_;
       let suffix = get_suffix value in
       let scope_id = OCamlName.get_ocaml_name ValueName suffix in
       lift_io $
@@ -1136,7 +1135,7 @@ let build_service_module =
   in
 
   let generate_header file_lens =
-    perform
+    do_;
       formatter <-- GapiLens.get_state (file_lens |-- File.formatter);
 
       schema_module_name <-- GapiLens.get_state
@@ -1161,7 +1160,7 @@ let build_service_module =
   in
 
   let generate_body file_lens =
-    perform
+    do_;
       file <-- GapiLens.get_state file_lens;
 
       (* Insert service module *)
@@ -1195,7 +1194,7 @@ let rec generate_schema_module_signature
     match type_t with
         InnerSchemaModule.Record record ->
           let fields = record.Record.fields in
-            perform
+            do_;
               formatter <-- GapiLens.get_state formatter_lens;
 
               lift_io $
@@ -1256,7 +1255,7 @@ let rec generate_schema_module_signature
                 (* module end *)
                 Format.fprintf formatter "@]@,end@\n@\n")
       | InnerSchemaModule.List inner_module ->
-          perform
+          do_;
             formatter <-- GapiLens.get_state formatter_lens;
 
             lift_io $
@@ -1285,7 +1284,7 @@ let rec generate_schema_module_signature
               (* module end *)
               Format.fprintf formatter "@]@,end@\n@\n")
       | InnerSchemaModule.Alias alias_name ->
-          perform
+          do_;
             formatter <-- GapiLens.get_state formatter_lens;
 
             lift_io $
@@ -1296,7 +1295,7 @@ let rec generate_schema_module_signature
 
 let build_schema_module_interface =
   let generate_body file_lens =
-    perform
+    do_;
       let formatter_lens = file_lens |-- File.formatter in
       formatter <-- GapiLens.get_state formatter_lens;
       service <-- GapiLens.get_state State.service;
@@ -1362,7 +1361,7 @@ let rec generate_service_module_signature
         (fun f -> f.Field.field_type.ComplexType.id)
         "" methd.Method.response
     in
-      perform
+      do_;
         base_url <-- GapiLens.get_state
                        (State.service |-- RestDescription.baseUrl);
         schema_module <-- GapiLens.get_state State.get_schema_module_lens;
@@ -1449,7 +1448,7 @@ let rec generate_service_module_signature
   (* Methods are stored in reverse order *)
   let methods = List.rev (service_module.InnerServiceModule.methods) in
   let enum_modules = service_module.InnerServiceModule.enums in
-    perform
+    do_;
       formatter <-- GapiLens.get_state (file_lens
                                           |-- File.formatter);
 
@@ -1491,7 +1490,7 @@ let build_service_module_interface =
   in
 
   let generate_body file_lens =
-    perform
+    do_;
       formatter <-- GapiLens.get_state (file_lens
                                           |-- File.formatter);
       service <-- GapiLens.get_state State.service;
@@ -1542,7 +1541,7 @@ let build_service_module_interface =
 
 let generate_code service =
   let build_all =
-    perform
+    do_;
       State.build_type_table;
       State.build_sorted_types;
       build_schema_module;

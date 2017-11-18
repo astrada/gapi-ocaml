@@ -23,16 +23,15 @@ functionalities to query the Google RESTful services.
 ### Compiling
 
 To build the generator you will need
-[pa_monad_custom](http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html).
+[ppx_monadic](https://bitbucket.org/camlspotter/ppx_monadic).
 After installing it, execute
 
-    $ ocaml setup.ml -configure --enable-generator
-    $ ocaml setup.ml -build
+    $ jbuilder build @generator
 
 ### Example
 
 This command will generate the source code of the client for the URL shortener
 service (version 1)
 
-    $ ./serviceGenerator.byte -api urlshortener -version v1
+    $ _build/default/tools/serviceGenerator.exe -api urlshortener -version v1
 

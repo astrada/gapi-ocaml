@@ -18,8 +18,7 @@ and then fill in the values obtained by the following tools.
 
 ### Build the examples
 
-    $ ocaml setup.ml -configure --enable-examples
-    $ ocaml setup.ml -build
+    $ jbuilder build @examples
 
 ### Client login
 
@@ -33,7 +32,7 @@ that request an access token to your calendar feeds.
 
  2. Run the program
 
-        $ ./clientLoginFlow.byte
+        $ _build/default/examples/auth/clientLoginFlow.exe
 
 This program will print the obtained authorization token that you can put in
 `cl_token` of the config file to run tests based on Client Login.
@@ -55,7 +54,7 @@ utility that request an access token to your calendar feeds.
 
  2. Run the server
 
-        $ ./oauth1Flow.byte
+        $ _build/default/examples/auth/oauth1Flow.exe
 
 This program will show a link to the Google authorization URL that you must
 open using a web browser, then it will start a web server listening to port
@@ -99,7 +98,7 @@ Then
 
  2. Run the server
 
-        $ ./oauth2Flow.byte
+        $ _build/default/examples/auth/oauth2Flow.exe
 
 This program will show a link to the Google authorization URL that you must
 open using a web browser, then it will start a web server listening to port

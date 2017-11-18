@@ -113,28 +113,22 @@ To build the tests you will need to install
 By default, the test suite will run the tests that don't connect to Google
 services (and don't need the authorization configuration)
 
-    $ ocaml setup.ml -configure --enable-tests
-    $ ocaml setup.ml -build
-    $ ocaml setup.ml -test
+    $ jbuilder runtest
 
 To test the interaction with the remote services, you can use the `-service`
 option to test a specific service (e.g. `urlshortener`, `tasks`, `plus`)
 
-    $ ocaml setup.ml -test -service urlshortener
+    $ jbuilder runtest-urlshortener
 
 Or, to run all the tests, you can use the `-all` switch
 
-    $ ocaml setup.ml -test -all
-
-Run this command, to obtain all the details
-
-    $ ocaml setup.ml -test -help
+    $ jbuilder runtest-all
 
 If the OAuth2 access token is expired, run this command (from the root
 directory of the project) to refresh the token contained in the configuration
 file `auth.config`
 
-    $ ./refreshOAuth2Token.byte
+    $ _build/default/examples/auth/refreshOAuth2Token.exe
 
 If there are errors in the tests, switching to `true` the `debug` value in the
 configuration file `auth.config` will activate the `ocurl` debug output, that
