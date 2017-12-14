@@ -20,6 +20,6 @@ depends: [
   "yojson"
 ]
 depopts: [
-  "ppx_monad"
+  "ppx_monadic"
 ]
 available: [ ocaml-version >= "4.02.3" ]
