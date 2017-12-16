@@ -1,5 +1,489 @@
 (* Warning! This file is generated. Modify at your own risk. *)
 
+module TeamDrive =
+struct
+  module Capabilities =
+  struct
+    type t = {
+      canAddChildren : bool;
+      canChangeTeamDriveBackground : bool;
+      canComment : bool;
+      canCopy : bool;
+      canDeleteTeamDrive : bool;
+      canDownload : bool;
+      canEdit : bool;
+      canListChildren : bool;
+      canManageMembers : bool;
+      canReadRevisions : bool;
+      canRemoveChildren : bool;
+      canRename : bool;
+      canRenameTeamDrive : bool;
+      canShare : bool;
+      
+    }
+    
+    let canAddChildren = {
+      GapiLens.get = (fun x -> x.canAddChildren);
+      GapiLens.set = (fun v x -> { x with canAddChildren = v });
+    }
+    let canChangeTeamDriveBackground = {
+      GapiLens.get = (fun x -> x.canChangeTeamDriveBackground);
+      GapiLens.set = (fun v x -> { x with canChangeTeamDriveBackground = v });
+    }
+    let canComment = {
+      GapiLens.get = (fun x -> x.canComment);
+      GapiLens.set = (fun v x -> { x with canComment = v });
+    }
+    let canCopy = {
+      GapiLens.get = (fun x -> x.canCopy);
+      GapiLens.set = (fun v x -> { x with canCopy = v });
+    }
+    let canDeleteTeamDrive = {
+      GapiLens.get = (fun x -> x.canDeleteTeamDrive);
+      GapiLens.set = (fun v x -> { x with canDeleteTeamDrive = v });
+    }
+    let canDownload = {
+      GapiLens.get = (fun x -> x.canDownload);
+      GapiLens.set = (fun v x -> { x with canDownload = v });
+    }
+    let canEdit = {
+      GapiLens.get = (fun x -> x.canEdit);
+      GapiLens.set = (fun v x -> { x with canEdit = v });
+    }
+    let canListChildren = {
+      GapiLens.get = (fun x -> x.canListChildren);
+      GapiLens.set = (fun v x -> { x with canListChildren = v });
+    }
+    let canManageMembers = {
+      GapiLens.get = (fun x -> x.canManageMembers);
+      GapiLens.set = (fun v x -> { x with canManageMembers = v });
+    }
+    let canReadRevisions = {
+      GapiLens.get = (fun x -> x.canReadRevisions);
+      GapiLens.set = (fun v x -> { x with canReadRevisions = v });
+    }
+    let canRemoveChildren = {
+      GapiLens.get = (fun x -> x.canRemoveChildren);
+      GapiLens.set = (fun v x -> { x with canRemoveChildren = v });
+    }
+    let canRename = {
+      GapiLens.get = (fun x -> x.canRename);
+      GapiLens.set = (fun v x -> { x with canRename = v });
+    }
+    let canRenameTeamDrive = {
+      GapiLens.get = (fun x -> x.canRenameTeamDrive);
+      GapiLens.set = (fun v x -> { x with canRenameTeamDrive = v });
+    }
+    let canShare = {
+      GapiLens.get = (fun x -> x.canShare);
+      GapiLens.set = (fun v x -> { x with canShare = v });
+    }
+    
+    let empty = {
+      canAddChildren = false;
+      canChangeTeamDriveBackground = false;
+      canComment = false;
+      canCopy = false;
+      canDeleteTeamDrive = false;
+      canDownload = false;
+      canEdit = false;
+      canListChildren = false;
+      canManageMembers = false;
+      canReadRevisions = false;
+      canRemoveChildren = false;
+      canRename = false;
+      canRenameTeamDrive = false;
+      canShare = false;
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_bool_value "canAddChildren" x.canAddChildren;
+        GapiJson.render_bool_value "canChangeTeamDriveBackground" x.canChangeTeamDriveBackground;
+        GapiJson.render_bool_value "canComment" x.canComment;
+        GapiJson.render_bool_value "canCopy" x.canCopy;
+        GapiJson.render_bool_value "canDeleteTeamDrive" x.canDeleteTeamDrive;
+        GapiJson.render_bool_value "canDownload" x.canDownload;
+        GapiJson.render_bool_value "canEdit" x.canEdit;
+        GapiJson.render_bool_value "canListChildren" x.canListChildren;
+        GapiJson.render_bool_value "canManageMembers" x.canManageMembers;
+        GapiJson.render_bool_value "canReadRevisions" x.canReadRevisions;
+        GapiJson.render_bool_value "canRemoveChildren" x.canRemoveChildren;
+        GapiJson.render_bool_value "canRename" x.canRename;
+        GapiJson.render_bool_value "canRenameTeamDrive" x.canRenameTeamDrive;
+        GapiJson.render_bool_value "canShare" x.canShare;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canAddChildren"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canAddChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canChangeTeamDriveBackground"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canChangeTeamDriveBackground = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canComment"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canComment = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canCopy"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canCopy = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canDeleteTeamDrive"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canDeleteTeamDrive = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canDownload"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canDownload = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canEdit"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canEdit = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canListChildren"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canListChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canManageMembers"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canManageMembers = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canReadRevisions"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canReadRevisions = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canRemoveChildren"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canRemoveChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canRename"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canRename = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canRenameTeamDrive"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canRenameTeamDrive = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canShare"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canShare = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDriveV3Model.Capabilities.parse" e x
+    
+  end
+  
+  module BackgroundImageFile =
+  struct
+    type t = {
+      id : string;
+      width : float;
+      xCoordinate : float;
+      yCoordinate : float;
+      
+    }
+    
+    let id = {
+      GapiLens.get = (fun x -> x.id);
+      GapiLens.set = (fun v x -> { x with id = v });
+    }
+    let width = {
+      GapiLens.get = (fun x -> x.width);
+      GapiLens.set = (fun v x -> { x with width = v });
+    }
+    let xCoordinate = {
+      GapiLens.get = (fun x -> x.xCoordinate);
+      GapiLens.set = (fun v x -> { x with xCoordinate = v });
+    }
+    let yCoordinate = {
+      GapiLens.get = (fun x -> x.yCoordinate);
+      GapiLens.set = (fun v x -> { x with yCoordinate = v });
+    }
+    
+    let empty = {
+      id = "";
+      width = 0.0;
+      xCoordinate = 0.0;
+      yCoordinate = 0.0;
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "id" x.id;
+        GapiJson.render_float_value "width" x.width;
+        GapiJson.render_float_value "xCoordinate" x.xCoordinate;
+        GapiJson.render_float_value "yCoordinate" x.yCoordinate;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with id = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "width"; data_type = GapiJson.Scalar },
+          `Float v) ->
+        { x with width = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "width"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with width = float_of_int v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "xCoordinate"; data_type = GapiJson.Scalar },
+          `Float v) ->
+        { x with xCoordinate = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "xCoordinate"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with xCoordinate = float_of_int v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "yCoordinate"; data_type = GapiJson.Scalar },
+          `Float v) ->
+        { x with yCoordinate = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "yCoordinate"; data_type = GapiJson.Scalar },
+          `Int v) ->
+        { x with yCoordinate = float_of_int v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDriveV3Model.BackgroundImageFile.parse" e x
+    
+  end
+  
+  type t = {
+    backgroundImageFile : BackgroundImageFile.t;
+    backgroundImageLink : string;
+    capabilities : Capabilities.t;
+    colorRgb : string;
+    createdTime : GapiDate.t;
+    id : string;
+    kind : string;
+    name : string;
+    themeId : string;
+    
+  }
+  
+  let backgroundImageFile = {
+    GapiLens.get = (fun x -> x.backgroundImageFile);
+    GapiLens.set = (fun v x -> { x with backgroundImageFile = v });
+  }
+  let backgroundImageLink = {
+    GapiLens.get = (fun x -> x.backgroundImageLink);
+    GapiLens.set = (fun v x -> { x with backgroundImageLink = v });
+  }
+  let capabilities = {
+    GapiLens.get = (fun x -> x.capabilities);
+    GapiLens.set = (fun v x -> { x with capabilities = v });
+  }
+  let colorRgb = {
+    GapiLens.get = (fun x -> x.colorRgb);
+    GapiLens.set = (fun v x -> { x with colorRgb = v });
+  }
+  let createdTime = {
+    GapiLens.get = (fun x -> x.createdTime);
+    GapiLens.set = (fun v x -> { x with createdTime = v });
+  }
+  let id = {
+    GapiLens.get = (fun x -> x.id);
+    GapiLens.set = (fun v x -> { x with id = v });
+  }
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let name = {
+    GapiLens.get = (fun x -> x.name);
+    GapiLens.set = (fun v x -> { x with name = v });
+  }
+  let themeId = {
+    GapiLens.get = (fun x -> x.themeId);
+    GapiLens.set = (fun v x -> { x with themeId = v });
+  }
+  
+  let empty = {
+    backgroundImageFile = BackgroundImageFile.empty;
+    backgroundImageLink = "";
+    capabilities = Capabilities.empty;
+    colorRgb = "";
+    createdTime = GapiDate.epoch;
+    id = "";
+    kind = "";
+    name = "";
+    themeId = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      (fun v -> GapiJson.render_object "backgroundImageFile" (BackgroundImageFile.render_content v)) x.backgroundImageFile;
+      GapiJson.render_string_value "backgroundImageLink" x.backgroundImageLink;
+      (fun v -> GapiJson.render_object "capabilities" (Capabilities.render_content v)) x.capabilities;
+      GapiJson.render_string_value "colorRgb" x.colorRgb;
+      GapiJson.render_date_value "createdTime" x.createdTime;
+      GapiJson.render_string_value "id" x.id;
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "name" x.name;
+      GapiJson.render_string_value "themeId" x.themeId;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "backgroundImageFile"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        BackgroundImageFile.parse
+        BackgroundImageFile.empty
+        (fun v -> { x with backgroundImageFile = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "backgroundImageLink"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with backgroundImageLink = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "capabilities"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        Capabilities.parse
+        Capabilities.empty
+        (fun v -> { x with capabilities = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "colorRgb"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with colorRgb = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "createdTime"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with createdTime = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with id = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with name = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "themeId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with themeId = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDriveV3Model.TeamDrive.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module TeamDriveList =
+struct
+  type t = {
+    kind : string;
+    nextPageToken : string;
+    teamDrives : TeamDrive.t list;
+    
+  }
+  
+  let kind = {
+    GapiLens.get = (fun x -> x.kind);
+    GapiLens.set = (fun v x -> { x with kind = v });
+  }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
+  let teamDrives = {
+    GapiLens.get = (fun x -> x.teamDrives);
+    GapiLens.set = (fun v x -> { x with teamDrives = v });
+  }
+  
+  let empty = {
+    kind = "";
+    nextPageToken = "";
+    teamDrives = [];
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
+      GapiJson.render_array "teamDrives" TeamDrive.render x.teamDrives;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "teamDrives"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              TeamDrive.parse
+              TeamDrive.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDriveV3Model.TeamDriveList.parse.parse_collection" e x')
+        TeamDrive.empty
+        (fun v -> { x with teamDrives = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiDriveV3Model.TeamDriveList.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module User =
 struct
   type t = {
@@ -100,6 +584,67 @@ end
 
 module About =
 struct
+  module TeamDriveThemes =
+  struct
+    type t = {
+      backgroundImageLink : string;
+      colorRgb : string;
+      id : string;
+      
+    }
+    
+    let backgroundImageLink = {
+      GapiLens.get = (fun x -> x.backgroundImageLink);
+      GapiLens.set = (fun v x -> { x with backgroundImageLink = v });
+    }
+    let colorRgb = {
+      GapiLens.get = (fun x -> x.colorRgb);
+      GapiLens.set = (fun v x -> { x with colorRgb = v });
+    }
+    let id = {
+      GapiLens.get = (fun x -> x.id);
+      GapiLens.set = (fun v x -> { x with id = v });
+    }
+    
+    let empty = {
+      backgroundImageLink = "";
+      colorRgb = "";
+      id = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "backgroundImageLink" x.backgroundImageLink;
+        GapiJson.render_string_value "colorRgb" x.colorRgb;
+        GapiJson.render_string_value "id" x.id;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "backgroundImageLink"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with backgroundImageLink = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "colorRgb"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with colorRgb = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with id = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDriveV3Model.TeamDriveThemes.parse" e x
+    
+  end
+  
   module StorageQuota =
   struct
     type t = {
@@ -181,6 +726,7 @@ struct
     maxImportSizes : (string * int64) list;
     maxUploadSize : int64;
     storageQuota : StorageQuota.t;
+    teamDriveThemes : TeamDriveThemes.t list;
     user : User.t;
     
   }
@@ -217,6 +763,10 @@ struct
     GapiLens.get = (fun x -> x.storageQuota);
     GapiLens.set = (fun v x -> { x with storageQuota = v });
   }
+  let teamDriveThemes = {
+    GapiLens.get = (fun x -> x.teamDriveThemes);
+    GapiLens.set = (fun v x -> { x with teamDriveThemes = v });
+  }
   let user = {
     GapiLens.get = (fun x -> x.user);
     GapiLens.set = (fun v x -> { x with user = v });
@@ -231,6 +781,7 @@ struct
     maxImportSizes = [];
     maxUploadSize = 0L;
     storageQuota = StorageQuota.empty;
+    teamDriveThemes = [];
     user = User.empty;
     
   }
@@ -245,6 +796,7 @@ struct
       GapiJson.render_collection "maxImportSizes" GapiJson.Object (fun (id, v) -> GapiJson.render_int64_value id v) x.maxImportSizes;
       GapiJson.render_int64_value "maxUploadSize" x.maxUploadSize;
       (fun v -> GapiJson.render_object "storageQuota" (StorageQuota.render_content v)) x.storageQuota;
+      GapiJson.render_array "teamDriveThemes" TeamDriveThemes.render x.teamDriveThemes;
       (fun v -> GapiJson.render_object "user" (User.render_content v)) x.user;
       
     ]
@@ -347,6 +899,24 @@ struct
         StorageQuota.parse
         StorageQuota.empty
         (fun v -> { x with storageQuota = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "teamDriveThemes"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              TeamDriveThemes.parse
+              TeamDriveThemes.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDriveV3Model.About.parse.parse_collection" e x')
+        TeamDriveThemes.empty
+        (fun v -> { x with teamDriveThemes = v })
         cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "user"; data_type = GapiJson.Object },
@@ -1060,8 +1630,81 @@ end
 
 module Permission =
 struct
+  module TeamDrivePermissionDetails =
+  struct
+    type t = {
+      inherited : bool;
+      inheritedFrom : string;
+      role : string;
+      teamDrivePermissionType : string;
+      
+    }
+    
+    let inherited = {
+      GapiLens.get = (fun x -> x.inherited);
+      GapiLens.set = (fun v x -> { x with inherited = v });
+    }
+    let inheritedFrom = {
+      GapiLens.get = (fun x -> x.inheritedFrom);
+      GapiLens.set = (fun v x -> { x with inheritedFrom = v });
+    }
+    let role = {
+      GapiLens.get = (fun x -> x.role);
+      GapiLens.set = (fun v x -> { x with role = v });
+    }
+    let teamDrivePermissionType = {
+      GapiLens.get = (fun x -> x.teamDrivePermissionType);
+      GapiLens.set = (fun v x -> { x with teamDrivePermissionType = v });
+    }
+    
+    let empty = {
+      inherited = false;
+      inheritedFrom = "";
+      role = "";
+      teamDrivePermissionType = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_bool_value "inherited" x.inherited;
+        GapiJson.render_string_value "inheritedFrom" x.inheritedFrom;
+        GapiJson.render_string_value "role" x.role;
+        GapiJson.render_string_value "teamDrivePermissionType" x.teamDrivePermissionType;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "inherited"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with inherited = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "inheritedFrom"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with inheritedFrom = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "role"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with role = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "teamDrivePermissionType"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with teamDrivePermissionType = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDriveV3Model.TeamDrivePermissionDetails.parse" e x
+    
+  end
+  
   type t = {
     allowFileDiscovery : bool;
+    deleted : bool;
     displayName : string;
     domain : string;
     emailAddress : string;
@@ -1070,6 +1713,7 @@ struct
     kind : string;
     photoLink : string;
     role : string;
+    teamDrivePermissionDetails : TeamDrivePermissionDetails.t list;
     _type : string;
     
   }
@@ -1077,6 +1721,10 @@ struct
   let allowFileDiscovery = {
     GapiLens.get = (fun x -> x.allowFileDiscovery);
     GapiLens.set = (fun v x -> { x with allowFileDiscovery = v });
+  }
+  let deleted = {
+    GapiLens.get = (fun x -> x.deleted);
+    GapiLens.set = (fun v x -> { x with deleted = v });
   }
   let displayName = {
     GapiLens.get = (fun x -> x.displayName);
@@ -1110,6 +1758,10 @@ struct
     GapiLens.get = (fun x -> x.role);
     GapiLens.set = (fun v x -> { x with role = v });
   }
+  let teamDrivePermissionDetails = {
+    GapiLens.get = (fun x -> x.teamDrivePermissionDetails);
+    GapiLens.set = (fun v x -> { x with teamDrivePermissionDetails = v });
+  }
   let _type = {
     GapiLens.get = (fun x -> x._type);
     GapiLens.set = (fun v x -> { x with _type = v });
@@ -1117,6 +1769,7 @@ struct
   
   let empty = {
     allowFileDiscovery = false;
+    deleted = false;
     displayName = "";
     domain = "";
     emailAddress = "";
@@ -1125,6 +1778,7 @@ struct
     kind = "";
     photoLink = "";
     role = "";
+    teamDrivePermissionDetails = [];
     _type = "";
     
   }
@@ -1132,6 +1786,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_bool_value "allowFileDiscovery" x.allowFileDiscovery;
+      GapiJson.render_bool_value "deleted" x.deleted;
       GapiJson.render_string_value "displayName" x.displayName;
       GapiJson.render_string_value "domain" x.domain;
       GapiJson.render_string_value "emailAddress" x.emailAddress;
@@ -1140,6 +1795,7 @@ struct
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "photoLink" x.photoLink;
       GapiJson.render_string_value "role" x.role;
+      GapiJson.render_array "teamDrivePermissionDetails" TeamDrivePermissionDetails.render x.teamDrivePermissionDetails;
       GapiJson.render_string_value "type" x._type;
       
     ]
@@ -1151,6 +1807,10 @@ struct
         ({ GapiJson.name = "allowFileDiscovery"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with allowFileDiscovery = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "deleted"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with deleted = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "displayName"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1183,6 +1843,24 @@ struct
         ({ GapiJson.name = "role"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with role = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "teamDrivePermissionDetails"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              TeamDrivePermissionDetails.parse
+              TeamDrivePermissionDetails.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiDriveV3Model.Permission.parse.parse_collection" e x')
+        TeamDrivePermissionDetails.empty
+        (fun v -> { x with teamDrivePermissionDetails = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1726,14 +2404,34 @@ struct
   module Capabilities =
   struct
     type t = {
+      canAddChildren : bool;
+      canChangeViewersCanCopyContent : bool;
       canComment : bool;
       canCopy : bool;
+      canDelete : bool;
+      canDownload : bool;
       canEdit : bool;
+      canListChildren : bool;
+      canMoveItemIntoTeamDrive : bool;
+      canMoveTeamDriveItem : bool;
       canReadRevisions : bool;
+      canReadTeamDrive : bool;
+      canRemoveChildren : bool;
+      canRename : bool;
       canShare : bool;
+      canTrash : bool;
+      canUntrash : bool;
       
     }
     
+    let canAddChildren = {
+      GapiLens.get = (fun x -> x.canAddChildren);
+      GapiLens.set = (fun v x -> { x with canAddChildren = v });
+    }
+    let canChangeViewersCanCopyContent = {
+      GapiLens.get = (fun x -> x.canChangeViewersCanCopyContent);
+      GapiLens.set = (fun v x -> { x with canChangeViewersCanCopyContent = v });
+    }
     let canComment = {
       GapiLens.get = (fun x -> x.canComment);
       GapiLens.set = (fun v x -> { x with canComment = v });
@@ -1742,41 +2440,113 @@ struct
       GapiLens.get = (fun x -> x.canCopy);
       GapiLens.set = (fun v x -> { x with canCopy = v });
     }
+    let canDelete = {
+      GapiLens.get = (fun x -> x.canDelete);
+      GapiLens.set = (fun v x -> { x with canDelete = v });
+    }
+    let canDownload = {
+      GapiLens.get = (fun x -> x.canDownload);
+      GapiLens.set = (fun v x -> { x with canDownload = v });
+    }
     let canEdit = {
       GapiLens.get = (fun x -> x.canEdit);
       GapiLens.set = (fun v x -> { x with canEdit = v });
+    }
+    let canListChildren = {
+      GapiLens.get = (fun x -> x.canListChildren);
+      GapiLens.set = (fun v x -> { x with canListChildren = v });
+    }
+    let canMoveItemIntoTeamDrive = {
+      GapiLens.get = (fun x -> x.canMoveItemIntoTeamDrive);
+      GapiLens.set = (fun v x -> { x with canMoveItemIntoTeamDrive = v });
+    }
+    let canMoveTeamDriveItem = {
+      GapiLens.get = (fun x -> x.canMoveTeamDriveItem);
+      GapiLens.set = (fun v x -> { x with canMoveTeamDriveItem = v });
     }
     let canReadRevisions = {
       GapiLens.get = (fun x -> x.canReadRevisions);
       GapiLens.set = (fun v x -> { x with canReadRevisions = v });
     }
+    let canReadTeamDrive = {
+      GapiLens.get = (fun x -> x.canReadTeamDrive);
+      GapiLens.set = (fun v x -> { x with canReadTeamDrive = v });
+    }
+    let canRemoveChildren = {
+      GapiLens.get = (fun x -> x.canRemoveChildren);
+      GapiLens.set = (fun v x -> { x with canRemoveChildren = v });
+    }
+    let canRename = {
+      GapiLens.get = (fun x -> x.canRename);
+      GapiLens.set = (fun v x -> { x with canRename = v });
+    }
     let canShare = {
       GapiLens.get = (fun x -> x.canShare);
       GapiLens.set = (fun v x -> { x with canShare = v });
     }
+    let canTrash = {
+      GapiLens.get = (fun x -> x.canTrash);
+      GapiLens.set = (fun v x -> { x with canTrash = v });
+    }
+    let canUntrash = {
+      GapiLens.get = (fun x -> x.canUntrash);
+      GapiLens.set = (fun v x -> { x with canUntrash = v });
+    }
     
     let empty = {
+      canAddChildren = false;
+      canChangeViewersCanCopyContent = false;
       canComment = false;
       canCopy = false;
+      canDelete = false;
+      canDownload = false;
       canEdit = false;
+      canListChildren = false;
+      canMoveItemIntoTeamDrive = false;
+      canMoveTeamDriveItem = false;
       canReadRevisions = false;
+      canReadTeamDrive = false;
+      canRemoveChildren = false;
+      canRename = false;
       canShare = false;
+      canTrash = false;
+      canUntrash = false;
       
     }
     
     let rec render_content x = 
        [
+        GapiJson.render_bool_value "canAddChildren" x.canAddChildren;
+        GapiJson.render_bool_value "canChangeViewersCanCopyContent" x.canChangeViewersCanCopyContent;
         GapiJson.render_bool_value "canComment" x.canComment;
         GapiJson.render_bool_value "canCopy" x.canCopy;
+        GapiJson.render_bool_value "canDelete" x.canDelete;
+        GapiJson.render_bool_value "canDownload" x.canDownload;
         GapiJson.render_bool_value "canEdit" x.canEdit;
+        GapiJson.render_bool_value "canListChildren" x.canListChildren;
+        GapiJson.render_bool_value "canMoveItemIntoTeamDrive" x.canMoveItemIntoTeamDrive;
+        GapiJson.render_bool_value "canMoveTeamDriveItem" x.canMoveTeamDriveItem;
         GapiJson.render_bool_value "canReadRevisions" x.canReadRevisions;
+        GapiJson.render_bool_value "canReadTeamDrive" x.canReadTeamDrive;
+        GapiJson.render_bool_value "canRemoveChildren" x.canRemoveChildren;
+        GapiJson.render_bool_value "canRename" x.canRename;
         GapiJson.render_bool_value "canShare" x.canShare;
+        GapiJson.render_bool_value "canTrash" x.canTrash;
+        GapiJson.render_bool_value "canUntrash" x.canUntrash;
         
       ]
     and render x = 
       GapiJson.render_object "" (render_content x)
     
     let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canAddChildren"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canAddChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canChangeViewersCanCopyContent"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canChangeViewersCanCopyContent = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canComment"; data_type = GapiJson.Scalar },
           `Bool v) ->
@@ -1786,17 +2556,57 @@ struct
           `Bool v) ->
         { x with canCopy = v }
       | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canDelete"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canDelete = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canDownload"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canDownload = v }
+      | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canEdit"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with canEdit = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canListChildren"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canListChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canMoveItemIntoTeamDrive"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canMoveItemIntoTeamDrive = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canMoveTeamDriveItem"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canMoveTeamDriveItem = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canReadRevisions"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with canReadRevisions = v }
       | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canReadTeamDrive"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canReadTeamDrive = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canRemoveChildren"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canRemoveChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canRename"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canRename = v }
+      | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canShare"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with canShare = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canTrash"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canTrash = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canUntrash"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canUntrash = v }
       | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = ""; data_type = GapiJson.Object },
         cs) ->
@@ -1816,6 +2626,8 @@ struct
     fileExtension : string;
     folderColorRgb : string;
     fullFileExtension : string;
+    hasAugmentedPermissions : bool;
+    hasThumbnail : bool;
     headRevisionId : string;
     iconLink : string;
     id : string;
@@ -1833,6 +2645,7 @@ struct
     ownedByMe : bool;
     owners : User.t list;
     parents : string list;
+    permissionIds : string list;
     permissions : Permission.t list;
     properties : (string * string) list;
     quotaBytesUsed : int64;
@@ -1842,8 +2655,12 @@ struct
     size : int64;
     spaces : string list;
     starred : bool;
+    teamDriveId : string;
     thumbnailLink : string;
+    thumbnailVersion : int64;
     trashed : bool;
+    trashedTime : GapiDate.t;
+    trashingUser : User.t;
     version : int64;
     videoMediaMetadata : VideoMediaMetadata.t;
     viewedByMe : bool;
@@ -1890,6 +2707,14 @@ struct
   let fullFileExtension = {
     GapiLens.get = (fun x -> x.fullFileExtension);
     GapiLens.set = (fun v x -> { x with fullFileExtension = v });
+  }
+  let hasAugmentedPermissions = {
+    GapiLens.get = (fun x -> x.hasAugmentedPermissions);
+    GapiLens.set = (fun v x -> { x with hasAugmentedPermissions = v });
+  }
+  let hasThumbnail = {
+    GapiLens.get = (fun x -> x.hasThumbnail);
+    GapiLens.set = (fun v x -> { x with hasThumbnail = v });
   }
   let headRevisionId = {
     GapiLens.get = (fun x -> x.headRevisionId);
@@ -1959,6 +2784,10 @@ struct
     GapiLens.get = (fun x -> x.parents);
     GapiLens.set = (fun v x -> { x with parents = v });
   }
+  let permissionIds = {
+    GapiLens.get = (fun x -> x.permissionIds);
+    GapiLens.set = (fun v x -> { x with permissionIds = v });
+  }
   let permissions = {
     GapiLens.get = (fun x -> x.permissions);
     GapiLens.set = (fun v x -> { x with permissions = v });
@@ -1995,13 +2824,29 @@ struct
     GapiLens.get = (fun x -> x.starred);
     GapiLens.set = (fun v x -> { x with starred = v });
   }
+  let teamDriveId = {
+    GapiLens.get = (fun x -> x.teamDriveId);
+    GapiLens.set = (fun v x -> { x with teamDriveId = v });
+  }
   let thumbnailLink = {
     GapiLens.get = (fun x -> x.thumbnailLink);
     GapiLens.set = (fun v x -> { x with thumbnailLink = v });
   }
+  let thumbnailVersion = {
+    GapiLens.get = (fun x -> x.thumbnailVersion);
+    GapiLens.set = (fun v x -> { x with thumbnailVersion = v });
+  }
   let trashed = {
     GapiLens.get = (fun x -> x.trashed);
     GapiLens.set = (fun v x -> { x with trashed = v });
+  }
+  let trashedTime = {
+    GapiLens.get = (fun x -> x.trashedTime);
+    GapiLens.set = (fun v x -> { x with trashedTime = v });
+  }
+  let trashingUser = {
+    GapiLens.get = (fun x -> x.trashingUser);
+    GapiLens.set = (fun v x -> { x with trashingUser = v });
   }
   let version = {
     GapiLens.get = (fun x -> x.version);
@@ -2046,6 +2891,8 @@ struct
     fileExtension = "";
     folderColorRgb = "";
     fullFileExtension = "";
+    hasAugmentedPermissions = false;
+    hasThumbnail = false;
     headRevisionId = "";
     iconLink = "";
     id = "";
@@ -2063,6 +2910,7 @@ struct
     ownedByMe = false;
     owners = [];
     parents = [];
+    permissionIds = [];
     permissions = [];
     properties = [];
     quotaBytesUsed = 0L;
@@ -2072,8 +2920,12 @@ struct
     size = 0L;
     spaces = [];
     starred = false;
+    teamDriveId = "";
     thumbnailLink = "";
+    thumbnailVersion = 0L;
     trashed = false;
+    trashedTime = GapiDate.epoch;
+    trashingUser = User.empty;
     version = 0L;
     videoMediaMetadata = VideoMediaMetadata.empty;
     viewedByMe = false;
@@ -2096,6 +2948,8 @@ struct
       GapiJson.render_string_value "fileExtension" x.fileExtension;
       GapiJson.render_string_value "folderColorRgb" x.folderColorRgb;
       GapiJson.render_string_value "fullFileExtension" x.fullFileExtension;
+      GapiJson.render_bool_value "hasAugmentedPermissions" x.hasAugmentedPermissions;
+      GapiJson.render_bool_value "hasThumbnail" x.hasThumbnail;
       GapiJson.render_string_value "headRevisionId" x.headRevisionId;
       GapiJson.render_string_value "iconLink" x.iconLink;
       GapiJson.render_string_value "id" x.id;
@@ -2113,6 +2967,7 @@ struct
       GapiJson.render_bool_value "ownedByMe" x.ownedByMe;
       GapiJson.render_array "owners" User.render x.owners;
       GapiJson.render_array "parents" (GapiJson.render_string_value "") x.parents;
+      GapiJson.render_array "permissionIds" (GapiJson.render_string_value "") x.permissionIds;
       GapiJson.render_array "permissions" Permission.render x.permissions;
       GapiJson.render_collection "properties" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.properties;
       GapiJson.render_int64_value "quotaBytesUsed" x.quotaBytesUsed;
@@ -2122,8 +2977,12 @@ struct
       GapiJson.render_int64_value "size" x.size;
       GapiJson.render_array "spaces" (GapiJson.render_string_value "") x.spaces;
       GapiJson.render_bool_value "starred" x.starred;
+      GapiJson.render_string_value "teamDriveId" x.teamDriveId;
       GapiJson.render_string_value "thumbnailLink" x.thumbnailLink;
+      GapiJson.render_int64_value "thumbnailVersion" x.thumbnailVersion;
       GapiJson.render_bool_value "trashed" x.trashed;
+      GapiJson.render_date_value "trashedTime" x.trashedTime;
+      (fun v -> GapiJson.render_object "trashingUser" (User.render_content v)) x.trashingUser;
       GapiJson.render_int64_value "version" x.version;
       (fun v -> GapiJson.render_object "videoMediaMetadata" (VideoMediaMetadata.render_content v)) x.videoMediaMetadata;
       GapiJson.render_bool_value "viewedByMe" x.viewedByMe;
@@ -2192,6 +3051,14 @@ struct
         ({ GapiJson.name = "fullFileExtension"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with fullFileExtension = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hasAugmentedPermissions"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with hasAugmentedPermissions = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "hasThumbnail"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with hasThumbnail = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "headRevisionId"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -2289,6 +3156,20 @@ struct
         (fun v -> { x with parents = v })
         cs
     | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "permissionIds"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              `String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiDriveV3Model.File.parse.parse_collection" e x')
+        ""
+        (fun v -> { x with permissionIds = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "permissions"; data_type = GapiJson.Array },
         cs) ->
       GapiJson.parse_collection
@@ -2363,13 +3244,33 @@ struct
         `Bool v) ->
       { x with starred = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "teamDriveId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with teamDriveId = v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "thumbnailLink"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with thumbnailLink = v }
     | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "thumbnailVersion"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with thumbnailVersion = Int64.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "trashed"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with trashed = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "trashedTime"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with trashedTime = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "trashingUser"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        User.parse
+        User.empty
+        (fun v -> { x with trashingUser = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "version"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -2426,7 +3327,10 @@ struct
     fileId : string;
     kind : string;
     removed : bool;
+    teamDrive : TeamDrive.t;
+    teamDriveId : string;
     time : GapiDate.t;
+    _type : string;
     
   }
   
@@ -2446,9 +3350,21 @@ struct
     GapiLens.get = (fun x -> x.removed);
     GapiLens.set = (fun v x -> { x with removed = v });
   }
+  let teamDrive = {
+    GapiLens.get = (fun x -> x.teamDrive);
+    GapiLens.set = (fun v x -> { x with teamDrive = v });
+  }
+  let teamDriveId = {
+    GapiLens.get = (fun x -> x.teamDriveId);
+    GapiLens.set = (fun v x -> { x with teamDriveId = v });
+  }
   let time = {
     GapiLens.get = (fun x -> x.time);
     GapiLens.set = (fun v x -> { x with time = v });
+  }
+  let _type = {
+    GapiLens.get = (fun x -> x._type);
+    GapiLens.set = (fun v x -> { x with _type = v });
   }
   
   let empty = {
@@ -2456,7 +3372,10 @@ struct
     fileId = "";
     kind = "";
     removed = false;
+    teamDrive = TeamDrive.empty;
+    teamDriveId = "";
     time = GapiDate.epoch;
+    _type = "";
     
   }
   
@@ -2466,7 +3385,10 @@ struct
       GapiJson.render_string_value "fileId" x.fileId;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_bool_value "removed" x.removed;
+      (fun v -> GapiJson.render_object "teamDrive" (TeamDrive.render_content v)) x.teamDrive;
+      GapiJson.render_string_value "teamDriveId" x.teamDriveId;
       GapiJson.render_date_value "time" x.time;
+      GapiJson.render_string_value "type" x._type;
       
     ]
   and render x = 
@@ -2493,10 +3415,26 @@ struct
         ({ GapiJson.name = "removed"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with removed = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "teamDrive"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        TeamDrive.parse
+        TeamDrive.empty
+        (fun v -> { x with teamDrive = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "teamDriveId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with teamDriveId = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "time"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with time = GapiDate.of_string v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with _type = v }
     | GapiCore.AnnotatedTree.Node
       ({ GapiJson.name = ""; data_type = GapiJson.Object },
       cs) ->
@@ -2589,6 +3527,7 @@ module PermissionList =
 struct
   type t = {
     kind : string;
+    nextPageToken : string;
     permissions : Permission.t list;
     
   }
@@ -2597,6 +3536,10 @@ struct
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
   }
+  let nextPageToken = {
+    GapiLens.get = (fun x -> x.nextPageToken);
+    GapiLens.set = (fun v x -> { x with nextPageToken = v });
+  }
   let permissions = {
     GapiLens.get = (fun x -> x.permissions);
     GapiLens.set = (fun v x -> { x with permissions = v });
@@ -2604,6 +3547,7 @@ struct
   
   let empty = {
     kind = "";
+    nextPageToken = "";
     permissions = [];
     
   }
@@ -2611,6 +3555,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "kind" x.kind;
+      GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       GapiJson.render_array "permissions" Permission.render x.permissions;
       
     ]
@@ -2622,6 +3567,10 @@ struct
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with kind = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "nextPageToken"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with nextPageToken = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "permissions"; data_type = GapiJson.Array },
         cs) ->
@@ -3028,6 +3977,7 @@ module FileList =
 struct
   type t = {
     files : File.t list;
+    incompleteSearch : bool;
     kind : string;
     nextPageToken : string;
     
@@ -3036,6 +3986,10 @@ struct
   let files = {
     GapiLens.get = (fun x -> x.files);
     GapiLens.set = (fun v x -> { x with files = v });
+  }
+  let incompleteSearch = {
+    GapiLens.get = (fun x -> x.incompleteSearch);
+    GapiLens.set = (fun v x -> { x with incompleteSearch = v });
   }
   let kind = {
     GapiLens.get = (fun x -> x.kind);
@@ -3048,6 +4002,7 @@ struct
   
   let empty = {
     files = [];
+    incompleteSearch = false;
     kind = "";
     nextPageToken = "";
     
@@ -3056,6 +4011,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_array "files" File.render x.files;
+      GapiJson.render_bool_value "incompleteSearch" x.incompleteSearch;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "nextPageToken" x.nextPageToken;
       
@@ -3078,6 +4034,10 @@ struct
         File.empty
         (fun v -> { x with files = v })
         cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "incompleteSearch"; data_type = GapiJson.Scalar },
+        `Bool v) ->
+      { x with incompleteSearch = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->

@@ -6,6 +6,164 @@
   {{:https://developers.google.com/drive/}API Documentation}.
   *)
 
+module TeamDrive :
+sig
+  module Capabilities :
+  sig
+    type t = {
+      canAddChildren : bool;
+      (** Whether the current user can add children to folders in this Team Drive. *)
+      canChangeTeamDriveBackground : bool;
+      (** Whether the current user can change the background of this Team Drive. *)
+      canComment : bool;
+      (** Whether the current user can comment on files in this Team Drive. *)
+      canCopy : bool;
+      (** Whether the current user can copy files in this Team Drive. *)
+      canDeleteTeamDrive : bool;
+      (** Whether the current user can delete this Team Drive. Attempting to delete the Team Drive may still fail if there are untrashed items inside the Team Drive. *)
+      canDownload : bool;
+      (** Whether the current user can download files in this Team Drive. *)
+      canEdit : bool;
+      (** Whether the current user can edit files in this Team Drive *)
+      canListChildren : bool;
+      (** Whether the current user can list the children of folders in this Team Drive. *)
+      canManageMembers : bool;
+      (** Whether the current user can add members to this Team Drive or remove them or change their role. *)
+      canReadRevisions : bool;
+      (** Whether the current user can read the revisions resource of files in this Team Drive. *)
+      canRemoveChildren : bool;
+      (** Whether the current user can remove children from folders in this Team Drive. *)
+      canRename : bool;
+      (** Whether the current user can rename files or folders in this Team Drive. *)
+      canRenameTeamDrive : bool;
+      (** Whether the current user can rename this Team Drive. *)
+      canShare : bool;
+      (** Whether the current user can share files or folders in this Team Drive. *)
+      
+    }
+    
+    val canAddChildren : (t, bool) GapiLens.t
+    val canChangeTeamDriveBackground : (t, bool) GapiLens.t
+    val canComment : (t, bool) GapiLens.t
+    val canCopy : (t, bool) GapiLens.t
+    val canDeleteTeamDrive : (t, bool) GapiLens.t
+    val canDownload : (t, bool) GapiLens.t
+    val canEdit : (t, bool) GapiLens.t
+    val canListChildren : (t, bool) GapiLens.t
+    val canManageMembers : (t, bool) GapiLens.t
+    val canReadRevisions : (t, bool) GapiLens.t
+    val canRemoveChildren : (t, bool) GapiLens.t
+    val canRename : (t, bool) GapiLens.t
+    val canRenameTeamDrive : (t, bool) GapiLens.t
+    val canShare : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module BackgroundImageFile :
+  sig
+    type t = {
+      id : string;
+      (** The ID of an image file in Drive to use for the background image. *)
+      width : float;
+      (** The width of the cropped image in the closed range of 0 to 1. This value represents the width of the cropped image divided by the width of the entire image. The height is computed by applying a width to height aspect ratio of 80 to 9. The resulting image must be at least 1280 pixels wide and 144 pixels high. *)
+      xCoordinate : float;
+      (** The X coordinate of the upper left corner of the cropping area in the background image. This is a value in the closed range of 0 to 1. This value represents the horizontal distance from the left side of the entire image to the left side of the cropping area divided by the width of the entire image. *)
+      yCoordinate : float;
+      (** The Y coordinate of the upper left corner of the cropping area in the background image. This is a value in the closed range of 0 to 1. This value represents the vertical distance from the top side of the entire image to the top side of the cropping area divided by the height of the entire image. *)
+      
+    }
+    
+    val id : (t, string) GapiLens.t
+    val width : (t, float) GapiLens.t
+    val xCoordinate : (t, float) GapiLens.t
+    val yCoordinate : (t, float) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    backgroundImageFile : BackgroundImageFile.t;
+    (** An image file and cropping parameters from which a background image for this Team Drive is set. This is a write only field; it can only be set on drive.teamdrives.update requests that don't set themeId. When specified, all fields of the backgroundImageFile must be set. *)
+    backgroundImageLink : string;
+    (** A short-lived link to this Team Drive's background image. *)
+    capabilities : Capabilities.t;
+    (** Capabilities the current user has on this Team Drive. *)
+    colorRgb : string;
+    (** The color of this Team Drive as an RGB hex string. It can only be set on a drive.teamdrives.update request that does not set themeId. *)
+    createdTime : GapiDate.t;
+    (** The time at which the Team Drive was created (RFC 3339 date-time). *)
+    id : string;
+    (** The ID of this Team Drive which is also the ID of the top level folder for this Team Drive. *)
+    kind : string;
+    (** Identifies what kind of resource this is. Value: the fixed string "drive#teamDrive". *)
+    name : string;
+    (** The name of this Team Drive. *)
+    themeId : string;
+    (** The ID of the theme from which the background image and color will be set. The set of possible teamDriveThemes can be retrieved from a drive.about.get response. When not specified on a drive.teamdrives.create request, a random theme is chosen from which the background image and color are set. This is a write-only field; it can only be set on requests that don't set colorRgb or backgroundImageFile. *)
+    
+  }
+  
+  val backgroundImageFile : (t, BackgroundImageFile.t) GapiLens.t
+  val backgroundImageLink : (t, string) GapiLens.t
+  val capabilities : (t, Capabilities.t) GapiLens.t
+  val colorRgb : (t, string) GapiLens.t
+  val createdTime : (t, GapiDate.t) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val themeId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module TeamDriveList :
+sig
+  type t = {
+    kind : string;
+    (** Identifies what kind of resource this is. Value: the fixed string "drive#teamDriveList". *)
+    nextPageToken : string;
+    (** The page token for the next page of Team Drives. This will be absent if the end of the Team Drives list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
+    teamDrives : TeamDrive.t list;
+    (** The list of Team Drives. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
+    
+  }
+  
+  val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
+  val teamDrives : (t, TeamDrive.t list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module User :
 sig
   type t = {
@@ -45,6 +203,30 @@ end
 
 module About :
 sig
+  module TeamDriveThemes :
+  sig
+    type t = {
+      backgroundImageLink : string;
+      (** A link to this Team Drive theme's background image. *)
+      colorRgb : string;
+      (** The color of this Team Drive theme as an RGB hex string. *)
+      id : string;
+      (** The ID of the theme. *)
+      
+    }
+    
+    val backgroundImageLink : (t, string) GapiLens.t
+    val colorRgb : (t, string) GapiLens.t
+    val id : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module StorageQuota :
   sig
     type t = {
@@ -89,6 +271,8 @@ sig
     (** The maximum upload size in bytes. *)
     storageQuota : StorageQuota.t;
     (** The user's storage quota limits and usage. All fields are measured in bytes. *)
+    teamDriveThemes : TeamDriveThemes.t list;
+    (** A list of themes that are supported for Team Drives. *)
     user : User.t;
     (** The authenticated user. *)
     
@@ -102,6 +286,7 @@ sig
   val maxImportSizes : (t, (string * int64) list) GapiLens.t
   val maxUploadSize : (t, int64) GapiLens.t
   val storageQuota : (t, StorageQuota.t) GapiLens.t
+  val teamDriveThemes : (t, TeamDriveThemes.t list) GapiLens.t
   val user : (t, User.t) GapiLens.t
   
   val empty : t
@@ -300,11 +485,11 @@ module CommentList :
 sig
   type t = {
     comments : Comment.t list;
-    (** The page of comments. *)
+    (** The list of comments. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#commentList". *)
     nextPageToken : string;
-    (** The page token for the next page of comments. This will be absent if the end of the comments list has been reached. *)
+    (** The page token for the next page of comments. This will be absent if the end of the comments list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
     
   }
   
@@ -354,9 +539,44 @@ end
 
 module Permission :
 sig
+  module TeamDrivePermissionDetails :
+  sig
+    type t = {
+      inherited : bool;
+      (** Whether this permission is inherited. This field is always populated. This is an output-only field. *)
+      inheritedFrom : string;
+      (** The ID of the item from which this permission is inherited. This is an output-only field and is only populated for members of the Team Drive. *)
+      role : string;
+      (** The primary role for this user. While new values may be added in the future, the following are currently possible:  
+- organizer 
+- writer 
+- commenter 
+- reader *)
+      teamDrivePermissionType : string;
+      (** The Team Drive permission type for this user. While new values may be added in future, the following are currently possible:  
+- file 
+- member *)
+      
+    }
+    
+    val inherited : (t, bool) GapiLens.t
+    val inheritedFrom : (t, string) GapiLens.t
+    val role : (t, string) GapiLens.t
+    val teamDrivePermissionType : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   type t = {
     allowFileDiscovery : bool;
     (** Whether the permission allows the file to be discovered through search. This is only applicable for permissions of type domain or anyone. *)
+    deleted : bool;
+    (** Whether the account associated with this permission has been deleted. This field only pertains to user and group permissions. *)
     displayName : string;
     (** A displayable name for users, groups or domains. *)
     domain : string;
@@ -364,7 +584,10 @@ sig
     emailAddress : string;
     (** The email address of the user or group to which this permission refers. *)
     expirationTime : GapiDate.t;
-    (** The time at which this permission will expire (RFC 3339 date-time). *)
+    (** The time at which this permission will expire (RFC 3339 date-time). Expiration times have the following restrictions:  
+- They can only be set on user and group permissions 
+- The time must be in the future 
+- The time cannot be more than a year in the future *)
     id : string;
     (** The ID of this permission. This is a unique identifier for the grantee, and is published in User resources as permissionId. *)
     kind : string;
@@ -372,11 +595,14 @@ sig
     photoLink : string;
     (** A link to the user's profile photo, if available. *)
     role : string;
-    (** The role granted by this permission. Valid values are:  
+    (** The role granted by this permission. While new values may be supported in the future, the following are currently allowed:  
+- organizer 
 - owner 
 - writer 
 - commenter 
 - reader *)
+    teamDrivePermissionDetails : TeamDrivePermissionDetails.t list;
+    (** Details of whether the permissions on this Team Drive item are inherited or directly on this item. This is an output-only field which is present only for Team Drive items. *)
     _type : string;
     (** The type of the grantee. Valid values are:  
 - user 
@@ -387,6 +613,7 @@ sig
   }
   
   val allowFileDiscovery : (t, bool) GapiLens.t
+  val deleted : (t, bool) GapiLens.t
   val displayName : (t, string) GapiLens.t
   val domain : (t, string) GapiLens.t
   val emailAddress : (t, string) GapiLens.t
@@ -395,6 +622,7 @@ sig
   val kind : (t, string) GapiLens.t
   val photoLink : (t, string) GapiLens.t
   val role : (t, string) GapiLens.t
+  val teamDrivePermissionDetails : (t, TeamDrivePermissionDetails.t list) GapiLens.t
   val _type : (t, string) GapiLens.t
   
   val empty : t
@@ -582,24 +810,60 @@ sig
   module Capabilities :
   sig
     type t = {
+      canAddChildren : bool;
+      (** Whether the current user can add children to this folder. This is always false when the item is not a folder. *)
+      canChangeViewersCanCopyContent : bool;
+      (** Whether the current user can change whether viewers can copy the contents of this file. *)
       canComment : bool;
-      (** Whether the user can comment on the file. *)
+      (** Whether the current user can comment on this file. *)
       canCopy : bool;
-      (** Whether the user can copy the file. *)
+      (** Whether the current user can copy this file. For a Team Drive item, whether the current user can copy non-folder descendants of this item, or this item itself if it is not a folder. *)
+      canDelete : bool;
+      (** Whether the current user can delete this file. *)
+      canDownload : bool;
+      (** Whether the current user can download this file. *)
       canEdit : bool;
-      (** Whether the user can edit the file's content. *)
+      (** Whether the current user can edit this file. *)
+      canListChildren : bool;
+      (** Whether the current user can list the children of this folder. This is always false when the item is not a folder. *)
+      canMoveItemIntoTeamDrive : bool;
+      (** Whether the current user can move this item into a Team Drive. If the item is in a Team Drive, this field is equivalent to canMoveTeamDriveItem. *)
+      canMoveTeamDriveItem : bool;
+      (** Whether the current user can move this Team Drive item by changing its parent. Note that a request to change the parent for this item may still fail depending on the new parent that is being added. Only populated for Team Drive files. *)
       canReadRevisions : bool;
-      (** Whether the current user has read access to the Revisions resource of the file. *)
+      (** Whether the current user can read the revisions resource of this file. For a Team Drive item, whether revisions of non-folder descendants of this item, or this item itself if it is not a folder, can be read. *)
+      canReadTeamDrive : bool;
+      (** Whether the current user can read the Team Drive to which this file belongs. Only populated for Team Drive files. *)
+      canRemoveChildren : bool;
+      (** Whether the current user can remove children from this folder. This is always false when the item is not a folder. *)
+      canRename : bool;
+      (** Whether the current user can rename this file. *)
       canShare : bool;
-      (** Whether the user can modify the file's permissions and sharing settings. *)
+      (** Whether the current user can modify the sharing settings for this file. *)
+      canTrash : bool;
+      (** Whether the current user can move this file to trash. *)
+      canUntrash : bool;
+      (** Whether the current user can restore this file from trash. *)
       
     }
     
+    val canAddChildren : (t, bool) GapiLens.t
+    val canChangeViewersCanCopyContent : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
     val canCopy : (t, bool) GapiLens.t
+    val canDelete : (t, bool) GapiLens.t
+    val canDownload : (t, bool) GapiLens.t
     val canEdit : (t, bool) GapiLens.t
+    val canListChildren : (t, bool) GapiLens.t
+    val canMoveItemIntoTeamDrive : (t, bool) GapiLens.t
+    val canMoveTeamDriveItem : (t, bool) GapiLens.t
     val canReadRevisions : (t, bool) GapiLens.t
+    val canReadTeamDrive : (t, bool) GapiLens.t
+    val canRemoveChildren : (t, bool) GapiLens.t
+    val canRename : (t, bool) GapiLens.t
     val canShare : (t, bool) GapiLens.t
+    val canTrash : (t, bool) GapiLens.t
+    val canUntrash : (t, bool) GapiLens.t
     
     val empty : t
     
@@ -614,7 +878,7 @@ sig
     (** A collection of arbitrary key-value pairs which are private to the requesting app.
 Entries with null values are cleared in update and copy requests. *)
     capabilities : Capabilities.t;
-    (** Capabilities the current user has on the file. *)
+    (** Capabilities the current user has on this file. Each capability corresponds to a fine-grained action that a user may take. *)
     contentHints : ContentHints.t;
     (** Additional information about the content of the file. These fields are never populated in responses. *)
     createdTime : GapiDate.t;
@@ -631,6 +895,10 @@ If an unsupported color is specified, the closest color in the palette will be u
     fullFileExtension : string;
     (** The full file extension extracted from the name field. May contain multiple concatenated extensions, such as "tar.gz". This is only available for files with binary content in Drive.
 This is automatically updated when the name field changes, however it is not cleared if the new name does not contain a valid extension. *)
+    hasAugmentedPermissions : bool;
+    (** Whether any users are granted file access directly on this file. This field is only populated for Team Drive files. *)
+    hasThumbnail : bool;
+    (** Whether this file has a thumbnail. This does not indicate whether the requesting app has access to the thumbnail. To check access, look for the presence of the thumbnailLink field. *)
     headRevisionId : string;
     (** The ID of the file's head revision. This is currently only available for files with binary content in Drive. *)
     iconLink : string;
@@ -659,25 +927,27 @@ If a file is created with a Google Doc MIME type, the uploaded content will be i
     (** The last time the file was modified by anyone (RFC 3339 date-time).
 Note that setting modifiedTime will also update modifiedByMeTime for the user. *)
     name : string;
-    (** The name of the file. This is not necessarily unique within a folder. *)
+    (** The name of the file. This is not necessarily unique within a folder. Note that for immutable items such as the top level folders of Team Drives, My Drive root folder, and Application Data folder the name is constant. *)
     originalFilename : string;
     (** The original filename of the uploaded content if available, or else the original value of the name field. This is only available for files with binary content in Drive. *)
     ownedByMe : bool;
-    (** Whether the user owns the file. *)
+    (** Whether the user owns the file. Not populated for Team Drive files. *)
     owners : User.t list;
-    (** The owners of the file. Currently, only certain legacy files may have more than one owner. *)
+    (** The owners of the file. Currently, only certain legacy files may have more than one owner. Not populated for Team Drive files. *)
     parents : string list;
     (** The IDs of the parent folders which contain the file.
 If not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values. *)
+    permissionIds : string list;
+    (** List of permission IDs for users with access to this file. *)
     permissions : Permission.t list;
-    (** The full list of permissions for the file. This is only available if the requesting user can share the file. *)
+    (** The full list of permissions for the file. This is only available if the requesting user can share the file. Not populated for Team Drive files. *)
     properties : (string * string) list;
     (** A collection of arbitrary key-value pairs which are visible to all apps.
 Entries with null values are cleared in update and copy requests. *)
     quotaBytesUsed : int64;
     (** The number of storage quota bytes used by the file. This includes the head revision as well as previous revisions with keepForever enabled. *)
     shared : bool;
-    (** Whether the file has been shared. *)
+    (** Whether the file has been shared. Not populated for Team Drive files. *)
     sharedWithMeTime : GapiDate.t;
     (** The time at which the file was shared with the user, if applicable (RFC 3339 date-time). *)
     sharingUser : User.t;
@@ -688,10 +958,18 @@ Entries with null values are cleared in update and copy requests. *)
     (** The list of spaces which contain the file. The currently supported values are 'drive', 'appDataFolder' and 'photos'. *)
     starred : bool;
     (** Whether the user has starred the file. *)
+    teamDriveId : string;
+    (** ID of the Team Drive the file resides in. *)
     thumbnailLink : string;
-    (** A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. *)
+    (** A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content. *)
+    thumbnailVersion : int64;
+    (** The thumbnail version for use in thumbnail cache invalidation. *)
     trashed : bool;
     (** Whether the file has been trashed, either explicitly or from a trashed parent folder. Only the owner may trash a file, and other users cannot see files in the owner's trash. *)
+    trashedTime : GapiDate.t;
+    (** The time that the item was trashed (RFC 3339 date-time). Only populated for Team Drive files. *)
+    trashingUser : User.t;
+    (** If the file has been explicitly trashed, the user who trashed it. Only populated for Team Drive files. *)
     version : int64;
     (** A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the user. *)
     videoMediaMetadata : VideoMediaMetadata.t;
@@ -707,7 +985,7 @@ Entries with null values are cleared in update and copy requests. *)
     webViewLink : string;
     (** A link for opening the file in a relevant Google editor or viewer in a browser. *)
     writersCanShare : bool;
-    (** Whether users with only writer permission can modify the file's permissions. *)
+    (** Whether users with only writer permission can modify the file's permissions. Not populated for Team Drive files. *)
     
   }
   
@@ -720,6 +998,8 @@ Entries with null values are cleared in update and copy requests. *)
   val fileExtension : (t, string) GapiLens.t
   val folderColorRgb : (t, string) GapiLens.t
   val fullFileExtension : (t, string) GapiLens.t
+  val hasAugmentedPermissions : (t, bool) GapiLens.t
+  val hasThumbnail : (t, bool) GapiLens.t
   val headRevisionId : (t, string) GapiLens.t
   val iconLink : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -737,6 +1017,7 @@ Entries with null values are cleared in update and copy requests. *)
   val ownedByMe : (t, bool) GapiLens.t
   val owners : (t, User.t list) GapiLens.t
   val parents : (t, string list) GapiLens.t
+  val permissionIds : (t, string list) GapiLens.t
   val permissions : (t, Permission.t list) GapiLens.t
   val properties : (t, (string * string) list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
@@ -746,8 +1027,12 @@ Entries with null values are cleared in update and copy requests. *)
   val size : (t, int64) GapiLens.t
   val spaces : (t, string list) GapiLens.t
   val starred : (t, bool) GapiLens.t
+  val teamDriveId : (t, string) GapiLens.t
   val thumbnailLink : (t, string) GapiLens.t
+  val thumbnailVersion : (t, int64) GapiLens.t
   val trashed : (t, bool) GapiLens.t
+  val trashedTime : (t, GapiDate.t) GapiLens.t
+  val trashingUser : (t, User.t) GapiLens.t
   val version : (t, int64) GapiLens.t
   val videoMediaMetadata : (t, VideoMediaMetadata.t) GapiLens.t
   val viewedByMe : (t, bool) GapiLens.t
@@ -773,15 +1058,21 @@ module Change :
 sig
   type t = {
     file : File.t;
-    (** The updated state of the file. Present if the file has not been removed. *)
+    (** The updated state of the file. Present if the type is file and the file has not been removed from this list of changes. *)
     fileId : string;
     (** The ID of the file which has changed. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#change". *)
     removed : bool;
-    (** Whether the file has been removed from the view of the changes list, for example by deletion or lost access. *)
+    (** Whether the file or Team Drive has been removed from this list of changes, for example by deletion or loss of access. *)
+    teamDrive : TeamDrive.t;
+    (** The updated state of the Team Drive. Present if the type is teamDrive, the user is still a member of the Team Drive, and the Team Drive has not been removed. *)
+    teamDriveId : string;
+    (** The ID of the Team Drive associated with this change. *)
     time : GapiDate.t;
     (** The time of this change (RFC 3339 date-time). *)
+    _type : string;
+    (** The type of the change. Possible values are file and teamDrive. *)
     
   }
   
@@ -789,7 +1080,10 @@ sig
   val fileId : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val removed : (t, bool) GapiLens.t
+  val teamDrive : (t, TeamDrive.t) GapiLens.t
+  val teamDriveId : (t, string) GapiLens.t
   val time : (t, GapiDate.t) GapiLens.t
+  val _type : (t, string) GapiLens.t
   
   val empty : t
   
@@ -809,9 +1103,9 @@ sig
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#replyList". *)
     nextPageToken : string;
-    (** The page token for the next page of replies. This will be absent if the end of the replies list has been reached. *)
+    (** The page token for the next page of replies. This will be absent if the end of the replies list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
     replies : Reply.t list;
-    (** The page of replies. *)
+    (** The list of replies. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
     
   }
   
@@ -836,12 +1130,15 @@ sig
   type t = {
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#permissionList". *)
+    nextPageToken : string;
+    (** The page token for the next page of permissions. This field will be absent if the end of the permissions list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
     permissions : Permission.t list;
-    (** The full list of permissions. *)
+    (** The list of permissions. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
     
   }
   
   val kind : (t, string) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   val permissions : (t, Permission.t list) GapiLens.t
   
   val empty : t
@@ -860,13 +1157,13 @@ module ChangeList :
 sig
   type t = {
     changes : Change.t list;
-    (** The page of changes. *)
+    (** The list of changes. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#changeList". *)
     newStartPageToken : string;
     (** The starting page token for future changes. This will be present only if the end of the current changes list has been reached. *)
     nextPageToken : string;
-    (** The page token for the next page of changes. This will be absent if the end of the current changes list has been reached. *)
+    (** The page token for the next page of changes. This will be absent if the end of the changes list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
     
   }
   
@@ -918,9 +1215,9 @@ sig
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#revisionList". *)
     nextPageToken : string;
-    (** The page token for the next page of revisions. This will be absent if the end of the revisions list has been reached. *)
+    (** The page token for the next page of revisions. This will be absent if the end of the revisions list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
     revisions : Revision.t list;
-    (** The full list of revisions. *)
+    (** The list of revisions. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
     
   }
   
@@ -993,15 +1290,18 @@ module FileList :
 sig
   type t = {
     files : File.t list;
-    (** The page of files. *)
+    (** The list of files. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched. *)
+    incompleteSearch : bool;
+    (** Whether the search process was incomplete. If true, then some search results may be missing, since all documents were not searched. This may occur when searching multiple Team Drives with the "user,allTeamDrives" corpora, but all corpora could not be searched. When this happens, it is suggested that clients narrow their query by choosing a different corpus such as "user" or "teamDrive". *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#fileList". *)
     nextPageToken : string;
-    (** The page token for the next page of files. This will be absent if the end of the files list has been reached. *)
+    (** The page token for the next page of files. This will be absent if the end of the files list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
     
   }
   
   val files : (t, File.t list) GapiLens.t
+  val incompleteSearch : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   
