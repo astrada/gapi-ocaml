@@ -267,6 +267,8 @@ let with_session
   let low_speed_limit = config.GapiConfig.low_speed_limit in
   let low_speed_time = config.GapiConfig.low_speed_time in
   let no_signal = config.GapiConfig.curl_no_signal in
+  let proxy = config.GapiConfig.proxy in
+  let ssl_verifypeer = config.GapiConfig.ssl_verifypeer in
   let curl_session =
     GapiCurl.init
       ?debug_function
@@ -278,6 +280,8 @@ let with_session
       ~low_speed_limit
       ~low_speed_time
       ~no_signal
+      ?proxy
+      ~ssl_verifypeer
       curl_state in
   let cleanup () = ignore (GapiCurl.cleanup curl_session) in
   let session =

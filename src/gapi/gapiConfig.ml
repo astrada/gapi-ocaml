@@ -68,6 +68,8 @@ type t = {
   low_speed_limit : int;
   low_speed_time : int;
   curl_no_signal : bool;
+  proxy: string option;
+  ssl_verifypeer: bool;
 }
 
 let application_name = {
@@ -118,6 +120,14 @@ let curl_no_signal = {
   GapiLens.get = (fun x -> x.curl_no_signal);
   GapiLens.set = (fun v x -> { x with curl_no_signal = v })
 }
+let proxy = {
+  GapiLens.get = (fun x -> x.proxy);
+  GapiLens.set = (fun v x -> { x with proxy = v })
+}
+let ssl_verifypeer = {
+  GapiLens.get = (fun x -> x.ssl_verifypeer);
+  GapiLens.set = (fun v x -> { x with ssl_verifypeer = v })
+}
 
 let default = {
   application_name = "gapi-ocaml";
@@ -132,6 +142,8 @@ let default = {
   low_speed_limit = 0;
   low_speed_time = 0;
   curl_no_signal = true;
+  proxy = None;
+  ssl_verifypeer = true;
 }
 
 let default_debug = {
@@ -147,5 +159,7 @@ let default_debug = {
   low_speed_limit = 0;
   low_speed_time = 0;
   curl_no_signal = true;
+  proxy = None;
+  ssl_verifypeer = true;
 }
 
