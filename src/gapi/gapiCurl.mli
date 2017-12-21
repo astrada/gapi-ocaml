@@ -22,6 +22,8 @@ val init :
   ?low_speed_limit:int ->
   ?low_speed_time:int ->
   ?no_signal:bool ->
+  ?proxy:string ->
+  ?ssl_verifypeer:bool ->
   ?options:Curl.curlOption list ->
   [ `Initialized ] t ->
   [ `Created ] t

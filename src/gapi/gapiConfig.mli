@@ -94,7 +94,12 @@ type t = {
   low_speed_time : int;
   (** It contains the time in number seconds that the transfer speed should be below the [low_speed_limit] for the library to consider it too slow and abort. Defaults to 0 (disabled). *)
   curl_no_signal : bool;
-  (** If [true], libcurl will not use any functions that install signal handlers or any functions that cause signals to be sent to the process. This option is here to allow multi-threaded unix applications to still set/use all timeout options etc, without risking getting signals. Defaults to [true] *)
+  (** If [true], libcurl will not use any functions that install signal handlers or any functions that cause signals to be sent to the process. This option is here to allow multi-threaded unix applications to still set/use all timeout options etc, without risking getting signals. Defaults to [true]. *)
+  proxy: string option;
+  (** Set the proxy to use. The parameter should be a string holding the host name or dotted numerical IP address. A numerical IPv6 address must be written within brackets. Defaults to [None].
+    To specify port number in this string, append [:port] to the end of the host name. *)
+  ssl_verifypeer: bool;
+  (** When [ssl_verifypeer] is enabled, and the verification fails to prove that the certificate is authentic, the connection fails. When the option is disabled, the peer certificate verification succeeds regardless. Defaults to [true]. *)
 }
 
 val application_name : (t, string) GapiLens.t

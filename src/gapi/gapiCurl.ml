@@ -52,6 +52,8 @@ let init
       ?(low_speed_limit = 0)
       ?(low_speed_time = 0)
       ?(no_signal = true)
+      ?proxy
+      ?(ssl_verifypeer = true)
       ?options
       (state : [`Initialized] t) : [`Created] t =
   let error_buffer = ref "" in
@@ -94,6 +96,8 @@ let init
   Curl.set_nosignal curl no_signal;
   Curl.set_errorbuffer curl error_buffer;
   Curl.set_followlocation curl follow_location;
+  Option.may (fun proxy -> Curl.set_proxy curl proxy) proxy;
+  Curl.set_sslverifypeer curl ssl_verifypeer;
   Created { curl;
             error_buffer;
             disposed = false }
