@@ -203,7 +203,12 @@ let request
     | Some (GapiCore.PostData.Fields key_value_list) ->
       GapiCurl.set_postfields key_value_list session.Session.curl
     | Some (GapiCore.PostData.Body (body, _)) ->
-      GapiCurl.set_httpbody body session.Session.curl
+      GapiCurl.set_httpbody body session.Session.curl;
+      begin match media_download, http_method with
+        | None, GapiCore.HttpMethod.PUT ->
+          GapiCurl.set_post true session.Session.curl;
+        | _ -> ()
+      end
     | None ->
       match http_method with
       | GapiCore.HttpMethod.POST ->
