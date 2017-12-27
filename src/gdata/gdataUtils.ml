@@ -97,8 +97,8 @@ let data_to_xml_string ?(buffer_size = 512) tree =
   Bytes.fill result 38 1 ' ';
   Bytes.to_string result
 
-let parse_xml next_byte parse_tree =
-  let input = Xmlm.make_input ~strip:true (`Fun next_byte) in 
+let parse_xml ?(strip=true) next_byte parse_tree =
+  let input = Xmlm.make_input ~strip (`Fun next_byte) in
   let el tag children =
     let ((namespace, name), attribute_list) = tag in
     let attrs = List.map
