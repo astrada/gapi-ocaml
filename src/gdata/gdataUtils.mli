@@ -24,6 +24,7 @@ val data_to_xml_string :
   string
 
 val parse_xml :
+  ?strip:bool ->
   (unit -> int) ->
   (GdataCore.xml_data_model -> 'a) ->
   'a
