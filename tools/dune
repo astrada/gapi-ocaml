@@ -1,0 +1,8 @@
+(executable
+ (name serviceGenerator)
+ (libraries gapi-ocaml threads)
+ (preprocess (pps ppx_monadic)))
+
+(alias
+ (name generator)
+ (deps serviceGenerator.exe))

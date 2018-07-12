@@ -14,6 +14,7 @@ sig
 
   val token : (oauth1_context, string) GapiLens.t
   (** OAuth1 token lens. *)
+
   val secret : (oauth1_context, string) GapiLens.t
   (** OAuth1 secret lens. *)
 
@@ -27,6 +28,7 @@ sig
 
   val oauth2_token : (oauth2_context, string) GapiLens.t
   (** OAuth2 token lens. *)
+
   val refresh_token : (oauth2_context, string) GapiLens.t
   (** OAuth2 refresh token lens. *)
 
@@ -43,10 +45,13 @@ sig
 
   val no_auth : (auth_context, unit option) GapiLens.t
   (** No authorization lens. *)
+
   val client_login : (auth_context, string option) GapiLens.t
   (** Client Login token lens. *)
+
   val oauth1 : (auth_context, oauth1_context option) GapiLens.t
   (** OAuth1 context lens. *)
+
   val oauth2 : (auth_context, oauth2_context option) GapiLens.t
   (** OAuth2 context lens. *)
 
@@ -66,12 +71,16 @@ sig
 
   val curl : (t, [ `Created ] GapiCurl.t) GapiLens.t
   (** Curl state lens. *)
+
   val config : (t, GapiConfig.t) GapiLens.t
   (** Configuration lens. *)
+
   val auth : (t, auth_context) GapiLens.t
   (** Authorization lens. *)
+
   val cookies : (t, string list) GapiLens.t
   (** Cookies lens. *)
+
   val etag : (t, string) GapiLens.t
   (** ETag lens. *)
 

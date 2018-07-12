@@ -1,8 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name gdata)
-  (public_name gapi-ocaml.gdata)
-  (wrapped false)
-  (libraries (gapi-ocaml xmlm))
-  (synopsis "Google Data Protocol (GData) client library")))

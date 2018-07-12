@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(library
- ((name gapi_ocaml)
-  (public_name gapi-ocaml)
-  (wrapped false)
-  (libraries (extlib netsys threads netstring curl str cryptokit yojson))
-  (flags (:standard -w -23))
-  (synopsis "Google APIs client library")))

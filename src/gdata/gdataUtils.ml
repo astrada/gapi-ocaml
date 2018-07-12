@@ -53,7 +53,7 @@ let append_namespaces ns_table tree =
 
 let render_xml buffer tree =
   let output = Xmlm.make_output (`Buffer buffer) in
-  let rec frag_of_node node =
+  let frag_of_node node =
     match node with
         GapiCore.AnnotatedTree.Leaf ([`Text], d)
       | GapiCore.AnnotatedTree.Leaf ([`Cdata], d) ->

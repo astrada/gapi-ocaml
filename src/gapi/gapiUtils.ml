@@ -84,7 +84,7 @@ let wait_exponential_backoff n =
     Unix.select [] [] [] wait_time |> ignore
 
 class bigarray_rec_out_channel buffer =
-object(self)
+object(_)
   val mutable pos = 0
 
   method output b offset len =
@@ -104,7 +104,7 @@ class bigarray_out_obj_channel buffer =
       (`Rec (new bigarray_rec_out_channel buffer)))
 
 class bigarray_rec_in_channel buffer =
-object(self)
+object(_)
   val dim = Bigarray.Array1.dim buffer
   val mutable pos = 0
 

@@ -55,7 +55,7 @@ let init
       ?proxy
       ?(ssl_verifypeer = true)
       ?options
-      (state : [`Initialized] t) : [`Created] t =
+      (_ : [`Initialized] t) : [`Created] t =
   let error_buffer = ref "" in
   let curl = Curl.init () in
   begin match debug_function with
@@ -258,7 +258,7 @@ let cleanup (state : [`Created] t) : [`Destroyed] t =
     state
 
 let global_cleanup
-      (state : [`Initialized] t) : [`Uninitialized] t =
+      (_ : [`Initialized] t) : [`Uninitialized] t =
   Curl.global_cleanup ();
   Uninitialized
 
@@ -270,4 +270,5 @@ let string_of_curl_info_type info_type =
     | Curl.DEBUGTYPE_DATA_IN -> "data in"
     | Curl.DEBUGTYPE_DATA_OUT -> "data out"
     | Curl.DEBUGTYPE_END -> "end"
+    | _ -> ""
 

@@ -48,7 +48,7 @@ let ignore = {
 
 let id = {
   get = (fun a -> a);
-  set = (fun b a -> b)
+  set = (fun b _ -> b)
 }
 
 let first = {

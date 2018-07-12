@@ -112,7 +112,7 @@ struct
 
   let get s = (s, s)
 
-  let put x s = ((), x)
+  let put x _ = ((), x)
 
 end
 

@@ -6,13 +6,15 @@ homepage: "https://github.com/astrada/gapi-ocaml"
 dev-repo: "https://github.com/astrada/gapi-ocaml.git"
 bug-reports: "https://github.com/astrada/gapi-ocaml/issues"
 build: [
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs "--profile release"]
 ]
-build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
+build-test: [
+  ["dune" "runtest" "-p" name "-j" jobs "--profile release"]
+]
 depends: [
   "cryptokit"
   ("extlib" | "extlib-compat")
-  "jbuilder" {build}
+  "dune" {build}
   "ocamlnet" {>= "4.1.4"}
   "ocurl"
   "xmlm"

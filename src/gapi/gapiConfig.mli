@@ -21,6 +21,7 @@ type client_login_config = {
 
 val username : (client_login_config, string) GapiLens.t
 (** Client Login username lens. *)
+
 val password : (client_login_config, string) GapiLens.t
 (** Client Login password lens. *)
 
@@ -36,8 +37,10 @@ type oauth1_config = {
 
 val signature_method : (oauth1_config, GapiCore.SignatureMethod.t) GapiLens.t
 (** OAuth1 signature method lens. *)
+
 val consumer_key : (oauth1_config, string) GapiLens.t
 (** OAuth1 consumer key lens. *)
+
 val consumer_secret : (oauth1_config, string) GapiLens.t
 (** OAuth1 consumer secret lens. *)
 
@@ -53,8 +56,10 @@ type oauth2_config = {
 
 val client_id : (oauth2_config, string) GapiLens.t
 (** OAuth2 client ID lens. *)
+
 val client_secret : (oauth2_config, string) GapiLens.t
 (** OAuth2 client secret lens. *)
+
 val refresh_access_token : (oauth2_config, (unit -> string) option) GapiLens.t
 (** OAuth2 optional external token refresh function lens. *)
 
@@ -104,24 +109,34 @@ type t = {
 
 val application_name : (t, string) GapiLens.t
 (** Application name lens. *)
+
 val debug : (t, debug_function option) GapiLens.t
 (** Debug function lens. *)
+
 val timeout : (t, int option) GapiLens.t
 (** Timeout lens. *)
+
 val connect_timeout : (t, int option) GapiLens.t
 (** Connection timeout lens. *)
+
 val compress : (t, bool) GapiLens.t
 (** Compression flag lens. *)
+
 val auth : (t, auth_config) GapiLens.t
 (** Authorization configuration lens. *)
+
 val upload_chunk_size : (t, int) GapiLens.t
 (** Upload chunk size lens. *)
+
 val max_send_speed : (t, int64) GapiLens.t
 (** Max send speed lens. *)
+
 val max_recv_speed : (t, int64) GapiLens.t
 (** Max receive speed lens. *)
+
 val low_speed_limit : (t, int) GapiLens.t
 (** Low speed limit lens. *)
+
 val low_speed_time : (t, int) GapiLens.t
 (** Low speed time lens. *)
 

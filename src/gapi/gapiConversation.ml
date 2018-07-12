@@ -1,5 +1,3 @@
-open GapiUtils.Infix
-
 let debug_print start_time curl info_type info =
   let time = Unix.gettimeofday () in
   let timestamp = time -. start_time in

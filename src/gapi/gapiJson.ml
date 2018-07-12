@@ -201,7 +201,7 @@ struct
   and render x = 
     render_object "" (render_content x)
   
-  let rec parse x = function
+  let parse x = function
     | GapiCore.AnnotatedTree.Leaf
         ({ name = n; data_type = Scalar },
         `String v) ->
