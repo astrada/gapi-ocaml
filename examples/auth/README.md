@@ -18,7 +18,7 @@ and then fill in the values obtained by the following tools.
 
 ### Build the examples
 
-    $ jbuilder build @examples
+    $ dune build @examples
 
 ### Client login
 

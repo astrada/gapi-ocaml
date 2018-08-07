@@ -26,7 +26,7 @@ To build the generator you will need
 [ppx_monadic](https://bitbucket.org/camlspotter/ppx_monadic).
 After installing it, execute
 
-    $ jbuilder build @generator
+    $ dune build @generator
 
 ### Example
 

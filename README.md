@@ -75,36 +75,36 @@ This project provides 2 libraries:
 
 To build the libraries, run
 
-    $ jbuilder build @install
+    $ make
 
 To install the libraries, run (as root, if your user doesn't have enough
 privileges)
 
-    $ jbuilder install
+    $ make install
 
 To build and run the tests (you will need
 [ppx_monadic](https://bitbucket.org/camlspotter/ppx_monadic)), execute
 
-    $ jbuilder runtest
+    $ make test
 
 See `src/test/README.md` for further details regarding the tests.
 
 To build the examples:
 
-    $ jbuilder build @examples
+    $ dune build @examples
 
 See `examples/README.md` for further details regarding the examples.
 
 To generate the documentation, run
 
-    $ jbuilder build @doc
+    $ make doc
 
 Then you can browse the HTML documentation starting from
 `gapi-ocaml.docdir/index.html`, but is not installed by default.
 
 To uninstall anything that was previously installed, execute
 
-    $ jbuilder uninstall
+    $ make uninstall
 
 ### Usage
 

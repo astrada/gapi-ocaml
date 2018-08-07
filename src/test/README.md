@@ -113,7 +113,7 @@ To build the tests you will need to install
 By default, the test suite will run the tests that don't connect to Google
 services (and don't need the authorization configuration)
 
-    $ jbuilder runtest
+    $ make test
 
 To test the interaction with the remote services, you can use the `-service`
 option to test a specific service (e.g. `urlshortener`, `tasks`, `plus`)
