@@ -2,7 +2,7 @@
 
 (** Service definition for PageSpeed Insights API (v1).
   
-  Lets you analyze the performance of a web page and get tailored suggestions to make that page faster..
+  Analyzes the performance of a web page and provides tailored suggestions to make that page faster..
   
   For more information about this service, see the
   {{:https://developers.google.com/speed/docs/insights/v1/getting_started}API Documentation}.

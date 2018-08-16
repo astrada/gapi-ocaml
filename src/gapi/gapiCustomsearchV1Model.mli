@@ -13,8 +13,6 @@ sig
     (**  *)
     cr : string;
     (**  *)
-    cref : string;
-    (**  *)
     cx : string;
     (**  *)
     dateRestrict : string;
@@ -88,7 +86,6 @@ sig
   
   val count : (t, int) GapiLens.t
   val cr : (t, string) GapiLens.t
-  val cref : (t, string) GapiLens.t
   val cx : (t, string) GapiLens.t
   val dateRestrict : (t, string) GapiLens.t
   val disableCnTwTranslation : (t, string) GapiLens.t

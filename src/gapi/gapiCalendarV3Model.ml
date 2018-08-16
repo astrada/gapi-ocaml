@@ -474,6 +474,126 @@ struct
   
 end
 
+module EntryPoint =
+struct
+  type t = {
+    accessCode : string;
+    entryPointType : string;
+    label : string;
+    meetingCode : string;
+    passcode : string;
+    password : string;
+    pin : string;
+    uri : string;
+    
+  }
+  
+  let accessCode = {
+    GapiLens.get = (fun x -> x.accessCode);
+    GapiLens.set = (fun v x -> { x with accessCode = v });
+  }
+  let entryPointType = {
+    GapiLens.get = (fun x -> x.entryPointType);
+    GapiLens.set = (fun v x -> { x with entryPointType = v });
+  }
+  let label = {
+    GapiLens.get = (fun x -> x.label);
+    GapiLens.set = (fun v x -> { x with label = v });
+  }
+  let meetingCode = {
+    GapiLens.get = (fun x -> x.meetingCode);
+    GapiLens.set = (fun v x -> { x with meetingCode = v });
+  }
+  let passcode = {
+    GapiLens.get = (fun x -> x.passcode);
+    GapiLens.set = (fun v x -> { x with passcode = v });
+  }
+  let password = {
+    GapiLens.get = (fun x -> x.password);
+    GapiLens.set = (fun v x -> { x with password = v });
+  }
+  let pin = {
+    GapiLens.get = (fun x -> x.pin);
+    GapiLens.set = (fun v x -> { x with pin = v });
+  }
+  let uri = {
+    GapiLens.get = (fun x -> x.uri);
+    GapiLens.set = (fun v x -> { x with uri = v });
+  }
+  
+  let empty = {
+    accessCode = "";
+    entryPointType = "";
+    label = "";
+    meetingCode = "";
+    passcode = "";
+    password = "";
+    pin = "";
+    uri = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "accessCode" x.accessCode;
+      GapiJson.render_string_value "entryPointType" x.entryPointType;
+      GapiJson.render_string_value "label" x.label;
+      GapiJson.render_string_value "meetingCode" x.meetingCode;
+      GapiJson.render_string_value "passcode" x.passcode;
+      GapiJson.render_string_value "password" x.password;
+      GapiJson.render_string_value "pin" x.pin;
+      GapiJson.render_string_value "uri" x.uri;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "accessCode"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with accessCode = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "entryPointType"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with entryPointType = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "label"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with label = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "meetingCode"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with meetingCode = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "passcode"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with passcode = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "password"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with password = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "pin"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with pin = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "uri"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with uri = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.EntryPoint.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module Error =
 struct
   type t = {
@@ -656,6 +776,159 @@ struct
   
 end
 
+module ConferenceProperties =
+struct
+  type t = {
+    allowedConferenceSolutionTypes : string list;
+    
+  }
+  
+  let allowedConferenceSolutionTypes = {
+    GapiLens.get = (fun x -> x.allowedConferenceSolutionTypes);
+    GapiLens.set = (fun v x -> { x with allowedConferenceSolutionTypes = v });
+  }
+  
+  let empty = {
+    allowedConferenceSolutionTypes = [];
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_array "allowedConferenceSolutionTypes" (GapiJson.render_string_value "") x.allowedConferenceSolutionTypes;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "allowedConferenceSolutionTypes"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = ""; data_type = GapiJson.Scalar },
+              `String v) ->
+            v
+          | e ->
+            GapiJson.unexpected "GapiCalendarV3Model.ConferenceProperties.parse.parse_collection" e x')
+        ""
+        (fun v -> { x with allowedConferenceSolutionTypes = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceProperties.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ConferenceParametersAddOnParameters =
+struct
+  type t = {
+    parameters : (string * string) list;
+    
+  }
+  
+  let parameters = {
+    GapiLens.get = (fun x -> x.parameters);
+    GapiLens.set = (fun v x -> { x with parameters = v });
+  }
+  
+  let empty = {
+    parameters = [];
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_collection "parameters" GapiJson.Object (fun (id, v) -> GapiJson.render_nullable_string_value id v) x.parameters;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Leaf
+              ({ GapiJson.name = n; data_type = GapiJson.Scalar },
+              `String v) ->
+            (n, v)
+          | e ->
+            GapiJson.unexpected "GapiCalendarV3Model.ConferenceParametersAddOnParameters.parse.parse_dictionary" e x')
+        ("", "")
+        (fun v -> { x with parameters = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceParametersAddOnParameters.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ConferenceParameters =
+struct
+  type t = {
+    addOnParameters : ConferenceParametersAddOnParameters.t;
+    
+  }
+  
+  let addOnParameters = {
+    GapiLens.get = (fun x -> x.addOnParameters);
+    GapiLens.set = (fun v x -> { x with addOnParameters = v });
+  }
+  
+  let empty = {
+    addOnParameters = ConferenceParametersAddOnParameters.empty;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      (fun v -> GapiJson.render_object "addOnParameters" (ConferenceParametersAddOnParameters.render_content v)) x.addOnParameters;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "addOnParameters"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceParametersAddOnParameters.parse
+        ConferenceParametersAddOnParameters.empty
+        (fun v -> { x with addOnParameters = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceParameters.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
 module CalendarNotification =
 struct
   type t = {
@@ -823,6 +1096,7 @@ struct
     accessRole : string;
     backgroundColor : string;
     colorId : string;
+    conferenceProperties : ConferenceProperties.t;
     defaultReminders : EventReminder.t list;
     deleted : bool;
     description : string;
@@ -852,6 +1126,10 @@ struct
   let colorId = {
     GapiLens.get = (fun x -> x.colorId);
     GapiLens.set = (fun v x -> { x with colorId = v });
+  }
+  let conferenceProperties = {
+    GapiLens.get = (fun x -> x.conferenceProperties);
+    GapiLens.set = (fun v x -> { x with conferenceProperties = v });
   }
   let defaultReminders = {
     GapiLens.get = (fun x -> x.defaultReminders);
@@ -918,6 +1196,7 @@ struct
     accessRole = "";
     backgroundColor = "";
     colorId = "";
+    conferenceProperties = ConferenceProperties.empty;
     defaultReminders = [];
     deleted = false;
     description = "";
@@ -941,6 +1220,7 @@ struct
       GapiJson.render_string_value "accessRole" x.accessRole;
       GapiJson.render_string_value "backgroundColor" x.backgroundColor;
       GapiJson.render_string_value "colorId" x.colorId;
+      (fun v -> GapiJson.render_object "conferenceProperties" (ConferenceProperties.render_content v)) x.conferenceProperties;
       GapiJson.render_array "defaultReminders" EventReminder.render x.defaultReminders;
       GapiJson.render_bool_value "deleted" x.deleted;
       GapiJson.render_string_value "description" x.description;
@@ -974,6 +1254,14 @@ struct
         ({ GapiJson.name = "colorId"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with colorId = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "conferenceProperties"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceProperties.parse
+        ConferenceProperties.empty
+        (fun v -> { x with conferenceProperties = v })
+        cs
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "defaultReminders"; data_type = GapiJson.Array },
         cs) ->
@@ -1310,6 +1598,7 @@ end
 module Calendar =
 struct
   type t = {
+    conferenceProperties : ConferenceProperties.t;
     description : string;
     etag : string;
     id : string;
@@ -1320,6 +1609,10 @@ struct
     
   }
   
+  let conferenceProperties = {
+    GapiLens.get = (fun x -> x.conferenceProperties);
+    GapiLens.set = (fun v x -> { x with conferenceProperties = v });
+  }
   let description = {
     GapiLens.get = (fun x -> x.description);
     GapiLens.set = (fun v x -> { x with description = v });
@@ -1350,6 +1643,7 @@ struct
   }
   
   let empty = {
+    conferenceProperties = ConferenceProperties.empty;
     description = "";
     etag = "";
     id = "";
@@ -1362,6 +1656,7 @@ struct
   
   let rec render_content x = 
      [
+      (fun v -> GapiJson.render_object "conferenceProperties" (ConferenceProperties.render_content v)) x.conferenceProperties;
       GapiJson.render_string_value "description" x.description;
       GapiJson.render_string_value "etag" x.etag;
       GapiJson.render_string_value "id" x.id;
@@ -1375,6 +1670,14 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "conferenceProperties"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceProperties.parse
+        ConferenceProperties.empty
+        (fun v -> { x with conferenceProperties = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "description"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -1409,6 +1712,234 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.Calendar.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ConferenceSolutionKey =
+struct
+  type t = {
+    _type : string;
+    
+  }
+  
+  let _type = {
+    GapiLens.get = (fun x -> x._type);
+    GapiLens.set = (fun v x -> { x with _type = v });
+  }
+  
+  let empty = {
+    _type = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "type" x._type;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "type"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with _type = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceSolutionKey.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ConferenceRequestStatus =
+struct
+  type t = {
+    statusCode : string;
+    
+  }
+  
+  let statusCode = {
+    GapiLens.get = (fun x -> x.statusCode);
+    GapiLens.set = (fun v x -> { x with statusCode = v });
+  }
+  
+  let empty = {
+    statusCode = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "statusCode" x.statusCode;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "statusCode"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with statusCode = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceRequestStatus.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module CreateConferenceRequest =
+struct
+  type t = {
+    conferenceSolutionKey : ConferenceSolutionKey.t;
+    requestId : string;
+    status : ConferenceRequestStatus.t;
+    
+  }
+  
+  let conferenceSolutionKey = {
+    GapiLens.get = (fun x -> x.conferenceSolutionKey);
+    GapiLens.set = (fun v x -> { x with conferenceSolutionKey = v });
+  }
+  let requestId = {
+    GapiLens.get = (fun x -> x.requestId);
+    GapiLens.set = (fun v x -> { x with requestId = v });
+  }
+  let status = {
+    GapiLens.get = (fun x -> x.status);
+    GapiLens.set = (fun v x -> { x with status = v });
+  }
+  
+  let empty = {
+    conferenceSolutionKey = ConferenceSolutionKey.empty;
+    requestId = "";
+    status = ConferenceRequestStatus.empty;
+    
+  }
+  
+  let rec render_content x = 
+     [
+      (fun v -> GapiJson.render_object "conferenceSolutionKey" (ConferenceSolutionKey.render_content v)) x.conferenceSolutionKey;
+      GapiJson.render_string_value "requestId" x.requestId;
+      (fun v -> GapiJson.render_object "status" (ConferenceRequestStatus.render_content v)) x.status;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "conferenceSolutionKey"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceSolutionKey.parse
+        ConferenceSolutionKey.empty
+        (fun v -> { x with conferenceSolutionKey = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "requestId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with requestId = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "status"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceRequestStatus.parse
+        ConferenceRequestStatus.empty
+        (fun v -> { x with status = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.CreateConferenceRequest.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ConferenceSolution =
+struct
+  type t = {
+    iconUri : string;
+    key : ConferenceSolutionKey.t;
+    name : string;
+    
+  }
+  
+  let iconUri = {
+    GapiLens.get = (fun x -> x.iconUri);
+    GapiLens.set = (fun v x -> { x with iconUri = v });
+  }
+  let key = {
+    GapiLens.get = (fun x -> x.key);
+    GapiLens.set = (fun v x -> { x with key = v });
+  }
+  let name = {
+    GapiLens.get = (fun x -> x.name);
+    GapiLens.set = (fun v x -> { x with name = v });
+  }
+  
+  let empty = {
+    iconUri = "";
+    key = ConferenceSolutionKey.empty;
+    name = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "iconUri" x.iconUri;
+      (fun v -> GapiJson.render_object "key" (ConferenceSolutionKey.render_content v)) x.key;
+      GapiJson.render_string_value "name" x.name;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "iconUri"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with iconUri = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "key"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceSolutionKey.parse
+        ConferenceSolutionKey.empty
+        (fun v -> { x with key = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "name"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with name = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceSolution.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -1808,6 +2339,141 @@ struct
       GapiJson.parse_children parse empty (fun x -> x) cs
     | e ->
       GapiJson.unexpected "GapiCalendarV3Model.EventAttachment.parse" e x
+  
+  let to_data_model = GapiJson.render_root render
+  
+  let of_data_model = GapiJson.parse_root parse empty
+  
+end
+
+module ConferenceData =
+struct
+  type t = {
+    conferenceId : string;
+    conferenceSolution : ConferenceSolution.t;
+    createRequest : CreateConferenceRequest.t;
+    entryPoints : EntryPoint.t list;
+    notes : string;
+    parameters : ConferenceParameters.t;
+    signature : string;
+    
+  }
+  
+  let conferenceId = {
+    GapiLens.get = (fun x -> x.conferenceId);
+    GapiLens.set = (fun v x -> { x with conferenceId = v });
+  }
+  let conferenceSolution = {
+    GapiLens.get = (fun x -> x.conferenceSolution);
+    GapiLens.set = (fun v x -> { x with conferenceSolution = v });
+  }
+  let createRequest = {
+    GapiLens.get = (fun x -> x.createRequest);
+    GapiLens.set = (fun v x -> { x with createRequest = v });
+  }
+  let entryPoints = {
+    GapiLens.get = (fun x -> x.entryPoints);
+    GapiLens.set = (fun v x -> { x with entryPoints = v });
+  }
+  let notes = {
+    GapiLens.get = (fun x -> x.notes);
+    GapiLens.set = (fun v x -> { x with notes = v });
+  }
+  let parameters = {
+    GapiLens.get = (fun x -> x.parameters);
+    GapiLens.set = (fun v x -> { x with parameters = v });
+  }
+  let signature = {
+    GapiLens.get = (fun x -> x.signature);
+    GapiLens.set = (fun v x -> { x with signature = v });
+  }
+  
+  let empty = {
+    conferenceId = "";
+    conferenceSolution = ConferenceSolution.empty;
+    createRequest = CreateConferenceRequest.empty;
+    entryPoints = [];
+    notes = "";
+    parameters = ConferenceParameters.empty;
+    signature = "";
+    
+  }
+  
+  let rec render_content x = 
+     [
+      GapiJson.render_string_value "conferenceId" x.conferenceId;
+      (fun v -> GapiJson.render_object "conferenceSolution" (ConferenceSolution.render_content v)) x.conferenceSolution;
+      (fun v -> GapiJson.render_object "createRequest" (CreateConferenceRequest.render_content v)) x.createRequest;
+      GapiJson.render_array "entryPoints" EntryPoint.render x.entryPoints;
+      GapiJson.render_string_value "notes" x.notes;
+      (fun v -> GapiJson.render_object "parameters" (ConferenceParameters.render_content v)) x.parameters;
+      GapiJson.render_string_value "signature" x.signature;
+      
+    ]
+  and render x = 
+    GapiJson.render_object "" (render_content x)
+  
+  let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "conferenceId"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with conferenceId = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "conferenceSolution"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceSolution.parse
+        ConferenceSolution.empty
+        (fun v -> { x with conferenceSolution = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "createRequest"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        CreateConferenceRequest.parse
+        CreateConferenceRequest.empty
+        (fun v -> { x with createRequest = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "entryPoints"; data_type = GapiJson.Array },
+        cs) ->
+      GapiJson.parse_collection
+        (fun x' -> function
+          | GapiCore.AnnotatedTree.Node
+              ({ GapiJson.name = ""; data_type = GapiJson.Object },
+              cs) ->
+            GapiJson.parse_children
+              EntryPoint.parse
+              EntryPoint.empty
+              (fun v -> v)
+              cs
+          | e ->
+            GapiJson.unexpected "GapiCalendarV3Model.ConferenceData.parse.parse_collection" e x')
+        EntryPoint.empty
+        (fun v -> { x with entryPoints = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "notes"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with notes = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "parameters"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceParameters.parse
+        ConferenceParameters.empty
+        (fun v -> { x with parameters = v })
+        cs
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "signature"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with signature = v }
+    | GapiCore.AnnotatedTree.Node
+      ({ GapiJson.name = ""; data_type = GapiJson.Object },
+      cs) ->
+      GapiJson.parse_children parse empty (fun x -> x) cs
+    | e ->
+      GapiJson.unexpected "GapiCalendarV3Model.ConferenceData.parse" e x
   
   let to_data_model = GapiJson.render_root render
   
@@ -2277,6 +2943,7 @@ struct
     attendees : EventAttendee.t list;
     attendeesOmitted : bool;
     colorId : string;
+    conferenceData : ConferenceData.t;
     created : GapiDate.t;
     creator : Creator.t;
     description : string;
@@ -2331,6 +2998,10 @@ struct
   let colorId = {
     GapiLens.get = (fun x -> x.colorId);
     GapiLens.set = (fun v x -> { x with colorId = v });
+  }
+  let conferenceData = {
+    GapiLens.get = (fun x -> x.conferenceData);
+    GapiLens.set = (fun v x -> { x with conferenceData = v });
   }
   let created = {
     GapiLens.get = (fun x -> x.created);
@@ -2467,6 +3138,7 @@ struct
     attendees = [];
     attendeesOmitted = false;
     colorId = "";
+    conferenceData = ConferenceData.empty;
     created = GapiDate.epoch;
     creator = Creator.empty;
     description = "";
@@ -2509,6 +3181,7 @@ struct
       GapiJson.render_array "attendees" EventAttendee.render x.attendees;
       GapiJson.render_bool_value "attendeesOmitted" x.attendeesOmitted;
       GapiJson.render_string_value "colorId" x.colorId;
+      (fun v -> GapiJson.render_object "conferenceData" (ConferenceData.render_content v)) x.conferenceData;
       GapiJson.render_date_value "created" x.created;
       (fun v -> GapiJson.render_object "creator" (Creator.render_content v)) x.creator;
       GapiJson.render_string_value "description" x.description;
@@ -2595,6 +3268,14 @@ struct
         ({ GapiJson.name = "colorId"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with colorId = v }
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "conferenceData"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ConferenceData.parse
+        ConferenceData.empty
+        (fun v -> { x with conferenceData = v })
+        cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "created"; data_type = GapiJson.Scalar },
         `String v) ->

@@ -1411,13 +1411,14 @@ struct
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?(useDomainAdminAccess = false)
         ~teamDriveId
         teamDrive
         session =
     let full_url = GapiUtils.add_path_to_url ["teamdrives";
       ((fun x -> x) teamDriveId)] base_url in
     let params = TeamdrivesParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ~useDomainAdminAccess () in
     let query_parameters = Option.map TeamdrivesParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters

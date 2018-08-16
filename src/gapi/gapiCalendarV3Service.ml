@@ -27,6 +27,7 @@ struct
       (* acl-specific query parameters *)
       maxResults : int;
       pageToken : string;
+      sendNotifications : bool;
       showDeleted : bool;
       syncToken : string;
       
@@ -41,6 +42,7 @@ struct
       key = "";
       maxResults = 0;
       pageToken = "";
+      sendNotifications = false;
       showDeleted = false;
       syncToken = "";
       
@@ -57,6 +59,7 @@ struct
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.maxResults) string_of_int "maxResults";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+      param (fun p -> p.sendNotifications) string_of_bool "sendNotifications";
       param (fun p -> p.showDeleted) string_of_bool "showDeleted";
       param (fun p -> p.syncToken) (fun x -> x) "syncToken";
       
@@ -66,6 +69,7 @@ struct
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(maxResults = default.maxResults)
         ?(pageToken = default.pageToken)
+        ?(sendNotifications = default.sendNotifications)
         ?(showDeleted = default.showDeleted)
         ?(syncToken = default.syncToken)
         () =
@@ -78,6 +82,7 @@ struct
         key = standard_parameters.GapiService.StandardParameters.key;
         maxResults;
         pageToken;
+        sendNotifications;
         showDeleted;
         syncToken;
         
@@ -120,6 +125,7 @@ struct
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?sendNotifications
         ~calendarId
         aclRule
         session =
@@ -127,7 +133,7 @@ struct
       ((fun x -> x) calendarId); "acl"] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = AclParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map AclParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters ?etag
@@ -157,6 +163,7 @@ struct
   let patch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?sendNotifications
         ~calendarId
         ~ruleId
         aclRule
@@ -165,7 +172,7 @@ struct
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = AclParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map AclParameters.to_key_value_list params
       in
     GapiService.patch ?query_parameters ?etag
@@ -176,6 +183,7 @@ struct
   let update
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?sendNotifications
         ~calendarId
         ~ruleId
         aclRule
@@ -184,7 +192,7 @@ struct
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = AclParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ?sendNotifications () in
     let query_parameters = Option.map AclParameters.to_key_value_list params
       in
     GapiService.put ?query_parameters ?etag
@@ -637,6 +645,7 @@ struct
       key : string;
       (* events-specific query parameters *)
       alwaysIncludeEmail : bool;
+      conferenceDataVersion : int;
       destination : string;
       iCalUID : string;
       maxAttendees : int;
@@ -669,6 +678,7 @@ struct
       userIp = "";
       key = "";
       alwaysIncludeEmail = false;
+      conferenceDataVersion = 0;
       destination = "";
       iCalUID = "";
       maxAttendees = 0;
@@ -703,6 +713,7 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.alwaysIncludeEmail) string_of_bool "alwaysIncludeEmail";
+      param (fun p -> p.conferenceDataVersion) string_of_int "conferenceDataVersion";
       param (fun p -> p.destination) (fun x -> x) "destination";
       param (fun p -> p.iCalUID) (fun x -> x) "iCalUID";
       param (fun p -> p.maxAttendees) string_of_int "maxAttendees";
@@ -730,6 +741,7 @@ struct
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(alwaysIncludeEmail = default.alwaysIncludeEmail)
+        ?(conferenceDataVersion = default.conferenceDataVersion)
         ?(destination = default.destination)
         ?(iCalUID = default.iCalUID)
         ?(maxAttendees = default.maxAttendees)
@@ -760,6 +772,7 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         alwaysIncludeEmail;
+        conferenceDataVersion;
         destination;
         iCalUID;
         maxAttendees;
@@ -828,6 +841,7 @@ struct
   let import
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?conferenceDataVersion
         ?supportsAttachments
         ~calendarId
         event
@@ -836,7 +850,8 @@ struct
       ((fun x -> x) calendarId); "events"; "import"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?supportsAttachments () in
+      ?standard_parameters:std_params ?conferenceDataVersion
+      ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -846,6 +861,7 @@ struct
   let insert
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?conferenceDataVersion
         ?maxAttendees
         ?sendNotifications
         ?supportsAttachments
@@ -856,8 +872,8 @@ struct
       ((fun x -> x) calendarId); "events"] base_url in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?maxAttendees ?sendNotifications
-      ?supportsAttachments () in
+      ?standard_parameters:std_params ?conferenceDataVersion ?maxAttendees
+      ?sendNotifications ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
@@ -894,10 +910,10 @@ struct
   let list
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?(maxResults = 250)
         ?alwaysIncludeEmail
         ?iCalUID
         ?maxAttendees
-        ?maxResults
         ?orderBy
         ?pageToken
         ?privateExtendedProperty
@@ -917,7 +933,7 @@ struct
       ((fun x -> x) calendarId); "events"] base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?iCalUID
-      ?maxAttendees ?maxResults ?orderBy ?pageToken ?privateExtendedProperty
+      ?maxAttendees ~maxResults ?orderBy ?pageToken ?privateExtendedProperty
       ?q ?sharedExtendedProperty ?showDeleted ?showHiddenInvitations
       ?singleEvents ?syncToken ?timeMax ?timeMin ?timeZone ?updatedMin () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
@@ -947,6 +963,7 @@ struct
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
         ?alwaysIncludeEmail
+        ?conferenceDataVersion
         ?maxAttendees
         ?sendNotifications
         ?supportsAttachments
@@ -959,8 +976,9 @@ struct
       in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
-      ?sendNotifications ?supportsAttachments () in
+      ?standard_parameters:std_params ?alwaysIncludeEmail
+      ?conferenceDataVersion ?maxAttendees ?sendNotifications
+      ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
@@ -987,6 +1005,7 @@ struct
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
         ?alwaysIncludeEmail
+        ?conferenceDataVersion
         ?maxAttendees
         ?sendNotifications
         ?supportsAttachments
@@ -999,8 +1018,9 @@ struct
       in
     let etag = GapiUtils.etag_option event.Event.etag in
     let params = EventsParameters.merge_parameters
-      ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
-      ?sendNotifications ?supportsAttachments () in
+      ?standard_parameters:std_params ?alwaysIncludeEmail
+      ?conferenceDataVersion ?maxAttendees ?sendNotifications
+      ?supportsAttachments () in
     let query_parameters = Option.map EventsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
@@ -1010,10 +1030,10 @@ struct
   let watch
         ?(base_url = "https://www.googleapis.com/calendar/v3/")
         ?std_params
+        ?(maxResults = 250)
         ?alwaysIncludeEmail
         ?iCalUID
         ?maxAttendees
-        ?maxResults
         ?orderBy
         ?pageToken
         ?privateExtendedProperty
@@ -1034,7 +1054,7 @@ struct
       ((fun x -> x) calendarId); "events"; "watch"] base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?iCalUID
-      ?maxAttendees ?maxResults ?orderBy ?pageToken ?privateExtendedProperty
+      ?maxAttendees ~maxResults ?orderBy ?pageToken ?privateExtendedProperty
       ?q ?sharedExtendedProperty ?showDeleted ?showHiddenInvitations
       ?singleEvents ?syncToken ?timeMax ?timeMin ?timeZone ?updatedMin () in
     let query_parameters = Option.map EventsParameters.to_key_value_list

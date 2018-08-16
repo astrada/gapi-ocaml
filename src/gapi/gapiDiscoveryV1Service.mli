@@ -2,7 +2,7 @@
 
 (** Service definition for APIs Discovery Service (v1).
   
-  Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API..
+  Provides information about other Google APIs, such as what APIs are available, the resource, and method details for each API..
   
   For more information about this service, see the
   {{:https://developers.google.com/discovery/}API Documentation}.

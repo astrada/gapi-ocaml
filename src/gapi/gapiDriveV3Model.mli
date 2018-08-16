@@ -8,13 +8,46 @@
 
 module TeamDrive :
 sig
+  module Restrictions :
+  sig
+    type t = {
+      adminManagedRestrictions : bool;
+      (** Whether administrative privileges on this Team Drive are required to modify restrictions. *)
+      copyRequiresWriterPermission : bool;
+      (** Whether the options to copy, print, or download files inside this Team Drive, should be disabled for readers and commenters. When this restriction is set to true, it will override the similarly named field to true for any file inside this Team Drive. *)
+      domainUsersOnly : bool;
+      (** Whether access to this Team Drive and items inside this Team Drive is restricted to users of the domain to which this Team Drive belongs. This restriction may be overridden by other sharing policies controlled outside of this Team Drive. *)
+      teamMembersOnly : bool;
+      (** Whether access to items inside this Team Drive is restricted to members of this Team Drive. *)
+      
+    }
+    
+    val adminManagedRestrictions : (t, bool) GapiLens.t
+    val copyRequiresWriterPermission : (t, bool) GapiLens.t
+    val domainUsersOnly : (t, bool) GapiLens.t
+    val teamMembersOnly : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
   module Capabilities :
   sig
     type t = {
       canAddChildren : bool;
       (** Whether the current user can add children to folders in this Team Drive. *)
+      canChangeCopyRequiresWriterPermissionRestriction : bool;
+      (** Whether the current user can change the copyRequiresWriterPermission restriction of this Team Drive. *)
+      canChangeDomainUsersOnlyRestriction : bool;
+      (** Whether the current user can change the domainUsersOnly restriction of this Team Drive. *)
       canChangeTeamDriveBackground : bool;
       (** Whether the current user can change the background of this Team Drive. *)
+      canChangeTeamMembersOnlyRestriction : bool;
+      (** Whether the current user can change the teamMembersOnly restriction of this Team Drive. *)
       canComment : bool;
       (** Whether the current user can comment on files in this Team Drive. *)
       canCopy : bool;
@@ -43,7 +76,10 @@ sig
     }
     
     val canAddChildren : (t, bool) GapiLens.t
+    val canChangeCopyRequiresWriterPermissionRestriction : (t, bool) GapiLens.t
+    val canChangeDomainUsersOnlyRestriction : (t, bool) GapiLens.t
     val canChangeTeamDriveBackground : (t, bool) GapiLens.t
+    val canChangeTeamMembersOnlyRestriction : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
     val canCopy : (t, bool) GapiLens.t
     val canDeleteTeamDrive : (t, bool) GapiLens.t
@@ -104,11 +140,13 @@ sig
     createdTime : GapiDate.t;
     (** The time at which the Team Drive was created (RFC 3339 date-time). *)
     id : string;
-    (** The ID of this Team Drive which is also the ID of the top level folder for this Team Drive. *)
+    (** The ID of this Team Drive which is also the ID of the top level folder of this Team Drive. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#teamDrive". *)
     name : string;
     (** The name of this Team Drive. *)
+    restrictions : Restrictions.t;
+    (** A set of restrictions that apply to this Team Drive or items inside this Team Drive. *)
     themeId : string;
     (** The ID of the theme from which the background image and color will be set. The set of possible teamDriveThemes can be retrieved from a drive.about.get response. When not specified on a drive.teamdrives.create request, a random theme is chosen from which the background image and color are set. This is a write-only field; it can only be set on requests that don't set colorRgb or backgroundImageFile. *)
     
@@ -122,6 +160,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
+  val restrictions : (t, Restrictions.t) GapiLens.t
   val themeId : (t, string) GapiLens.t
   
   val empty : t
@@ -257,6 +296,8 @@ sig
   type t = {
     appInstalled : bool;
     (** Whether the user has installed the requesting app. *)
+    canCreateTeamDrives : bool;
+    (** Whether the user can create Team Drives. *)
     exportFormats : (string * string list) list;
     (** A map of source MIME type to possible targets for all supported exports. *)
     folderColorPalette : string list;
@@ -279,6 +320,7 @@ sig
   }
   
   val appInstalled : (t, bool) GapiLens.t
+  val canCreateTeamDrives : (t, bool) GapiLens.t
   val exportFormats : (t, (string * string list) list) GapiLens.t
   val folderColorPalette : (t, string list) GapiLens.t
   val importFormats : (t, (string * string list) list) GapiLens.t
@@ -812,8 +854,10 @@ sig
     type t = {
       canAddChildren : bool;
       (** Whether the current user can add children to this folder. This is always false when the item is not a folder. *)
+      canChangeCopyRequiresWriterPermission : bool;
+      (** Whether the current user can change the copyRequiresWriterPermission restriction of this file. *)
       canChangeViewersCanCopyContent : bool;
-      (** Whether the current user can change whether viewers can copy the contents of this file. *)
+      (** Deprecated *)
       canComment : bool;
       (** Whether the current user can comment on this file. *)
       canCopy : bool;
@@ -848,6 +892,7 @@ sig
     }
     
     val canAddChildren : (t, bool) GapiLens.t
+    val canChangeCopyRequiresWriterPermission : (t, bool) GapiLens.t
     val canChangeViewersCanCopyContent : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
     val canCopy : (t, bool) GapiLens.t
@@ -881,6 +926,8 @@ Entries with null values are cleared in update and copy requests. *)
     (** Capabilities the current user has on this file. Each capability corresponds to a fine-grained action that a user may take. *)
     contentHints : ContentHints.t;
     (** Additional information about the content of the file. These fields are never populated in responses. *)
+    copyRequiresWriterPermission : bool;
+    (** Whether the options to copy, print, or download this file, should be disabled for readers and commenters. *)
     createdTime : GapiDate.t;
     (** The time at which the file was created (RFC 3339 date-time). *)
     description : string;
@@ -936,7 +983,7 @@ Note that setting modifiedTime will also update modifiedByMeTime for the user. *
     (** The owners of the file. Currently, only certain legacy files may have more than one owner. Not populated for Team Drive files. *)
     parents : string list;
     (** The IDs of the parent folders which contain the file.
-If not specified as part of a create request, the file will be placed directly in the My Drive folder. Update requests must use the addParents and removeParents parameters to modify the values. *)
+If not specified as part of a create request, the file will be placed directly in the user's My Drive folder. If not specified as part of a copy request, the file will inherit any discoverable parents of the source file. Update requests must use the addParents and removeParents parameters to modify the parents list. *)
     permissionIds : string list;
     (** List of permission IDs for users with access to this file. *)
     permissions : Permission.t list;
@@ -979,7 +1026,7 @@ Entries with null values are cleared in update and copy requests. *)
     viewedByMeTime : GapiDate.t;
     (** The last time the file was viewed by the user (RFC 3339 date-time). *)
     viewersCanCopyContent : bool;
-    (** Whether users with only reader or commenter permission can copy the file's content. This affects copy, download, and print operations. *)
+    (** Deprecated - use copyRequiresWriterPermission instead. *)
     webContentLink : string;
     (** A link for downloading the content of the file in a browser. This is only available for files with binary content in Drive. *)
     webViewLink : string;
@@ -992,6 +1039,7 @@ Entries with null values are cleared in update and copy requests. *)
   val appProperties : (t, (string * string) list) GapiLens.t
   val capabilities : (t, Capabilities.t) GapiLens.t
   val contentHints : (t, ContentHints.t) GapiLens.t
+  val copyRequiresWriterPermission : (t, bool) GapiLens.t
   val createdTime : (t, GapiDate.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val explicitlyTrashed : (t, bool) GapiLens.t

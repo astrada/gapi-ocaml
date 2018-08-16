@@ -17,6 +17,8 @@ struct
   
   let analytics_readonly = "https://www.googleapis.com/auth/analytics.readonly"
   
+  let analytics_user_deletion = "https://www.googleapis.com/auth/analytics.user.deletion"
+  
   
 end
 
@@ -778,6 +780,28 @@ struct
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response Accounts.of_data_model) session 
+      
+    
+  end
+  
+  module ClientId =
+  struct
+    let hashClientId
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          hashClientIdRequest
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management";
+        "clientId:hashClientId"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.post ?query_parameters
+        ~data_to_post:(GapiJson.render_json HashClientIdRequest.to_data_model)
+        ~data:hashClientIdRequest full_url
+        (GapiJson.parse_json_response HashClientIdResponse.of_data_model)
+        session 
       
     
   end
@@ -2271,6 +2295,201 @@ struct
     
   end
   
+  module RemarketingAudience =
+  struct
+    module RemarketingAudienceParameters =
+    struct
+      type t = {
+        (* Standard query parameters *)
+        alt : string;
+        fields : string;
+        prettyPrint : bool;
+        quotaUser : string;
+        userIp : string;
+        key : string;
+        (* remarketingAudience-specific query parameters *)
+        max_results : int;
+        start_index : int;
+        _type : string;
+        
+      }
+      
+      let default = {
+        alt = "";
+        fields = "";
+        prettyPrint = true;
+        quotaUser = "";
+        userIp = "";
+        key = "";
+        max_results = 0;
+        start_index = 0;
+        _type = "all";
+        
+      }
+      
+      let to_key_value_list qp =
+        let param get_value to_string name =
+          GapiService.build_param default qp get_value to_string name in [
+        param (fun p -> p.alt) (fun x -> x) "alt";
+        param (fun p -> p.fields) (fun x -> x) "fields";
+        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
+        param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
+        param (fun p -> p.userIp) (fun x -> x) "userIp";
+        param (fun p -> p.key) (fun x -> x) "key";
+        param (fun p -> p.max_results) string_of_int "max-results";
+        param (fun p -> p.start_index) string_of_int "start-index";
+        param (fun p -> p._type) (fun x -> x) "type";
+        
+      ] |> List.concat
+      
+      let merge_parameters
+          ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(max_results = default.max_results)
+          ?(start_index = default.start_index)
+          ?(_type = default._type)
+          () =
+        let parameters = {
+          alt = standard_parameters.GapiService.StandardParameters.alt;
+          fields = standard_parameters.GapiService.StandardParameters.fields;
+          prettyPrint = standard_parameters.GapiService.StandardParameters.prettyPrint;
+          quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
+          userIp = standard_parameters.GapiService.StandardParameters.userIp;
+          key = standard_parameters.GapiService.StandardParameters.key;
+          max_results;
+          start_index;
+          _type;
+          
+        } in
+        if parameters = default then None else Some parameters
+      
+    end
+    
+    let delete
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~remarketingAudienceId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "remarketingAudiences";
+        ((fun x -> x) remarketingAudienceId)] base_url in
+      let params = RemarketingAudienceParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        RemarketingAudienceParameters.to_key_value_list params in
+      GapiService.delete ?query_parameters full_url
+        GapiRequest.parse_empty_response session 
+      
+    let get
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?etag
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~remarketingAudienceId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "remarketingAudiences";
+        ((fun x -> x) remarketingAudienceId)] base_url in
+      let params = RemarketingAudienceParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        RemarketingAudienceParameters.to_key_value_list params in
+      GapiService.get ?query_parameters ?etag full_url
+        (GapiJson.parse_json_response RemarketingAudience.of_data_model)
+        session 
+      
+    let insert
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          remarketingAudience
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "remarketingAudiences"] base_url in
+      let params = RemarketingAudienceParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        RemarketingAudienceParameters.to_key_value_list params in
+      GapiService.post ?query_parameters
+        ~data_to_post:(GapiJson.render_json RemarketingAudience.to_data_model)
+        ~data:remarketingAudience full_url
+        (GapiJson.parse_json_response RemarketingAudience.of_data_model)
+        session 
+      
+    let list
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ?(_type = "all")
+          ?max_results
+          ?start_index
+          ~accountId
+          ~webPropertyId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "remarketingAudiences"] base_url in
+      let params = RemarketingAudienceParameters.merge_parameters
+        ?standard_parameters:std_params ?max_results ?start_index ~_type ()
+        in
+      let query_parameters = Option.map
+        RemarketingAudienceParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response RemarketingAudiences.of_data_model)
+        session 
+      
+    let patch
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~remarketingAudienceId
+          remarketingAudience
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "remarketingAudiences";
+        ((fun x -> x) remarketingAudienceId)] base_url in
+      let params = RemarketingAudienceParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        RemarketingAudienceParameters.to_key_value_list params in
+      GapiService.patch ?query_parameters
+        ~data_to_post:(GapiJson.render_json RemarketingAudience.to_data_model)
+        ~data:remarketingAudience full_url
+        (GapiJson.parse_json_response RemarketingAudience.of_data_model)
+        session 
+      
+    let update
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~remarketingAudienceId
+          remarketingAudience
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "remarketingAudiences";
+        ((fun x -> x) remarketingAudienceId)] base_url in
+      let params = RemarketingAudienceParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        RemarketingAudienceParameters.to_key_value_list params in
+      GapiService.put ?query_parameters
+        ~data_to_post:(GapiJson.render_json RemarketingAudience.to_data_model)
+        ~data:remarketingAudience full_url
+        (GapiJson.parse_json_response RemarketingAudience.of_data_model)
+        session 
+      
+    
+  end
+  
   module Segments =
   struct
     module SegmentsParameters =
@@ -2417,6 +2636,25 @@ struct
       
     end
     
+    let delete
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          ~accountId
+          ~webPropertyId
+          ~profileId
+          ~unsampledReportId
+          session =
+      let full_url = GapiUtils.add_path_to_url ["management"; "accounts";
+        ((fun x -> x) accountId); "webproperties";
+        ((fun x -> x) webPropertyId); "profiles"; ((fun x -> x) profileId);
+        "unsampledReports"; ((fun x -> x) unsampledReportId)] base_url in
+      let params = UnsampledReportsParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        UnsampledReportsParameters.to_key_value_list params in
+      GapiService.delete ?query_parameters full_url
+        GapiRequest.parse_empty_response session 
+      
     let get
           ?(base_url = "https://www.googleapis.com/analytics/v3/")
           ?etag
@@ -3166,6 +3404,50 @@ struct
       ~data:accountTicket full_url
       (GapiJson.parse_json_response AccountTicket.of_data_model) session 
     
+  let createAccountTree
+        ?(base_url = "https://www.googleapis.com/analytics/v3/")
+        ?std_params
+        accountTreeRequest
+        session =
+    let full_url = GapiUtils.add_path_to_url ["provisioning";
+      "createAccountTree"] base_url in
+    let params = GapiService.StandardParameters.merge_parameters
+      ?standard_parameters:std_params () in
+    let query_parameters = Option.map
+      GapiService.StandardParameters.to_key_value_list params in
+    GapiService.post ?query_parameters
+      ~data_to_post:(GapiJson.render_json AccountTreeRequest.to_data_model)
+      ~data:accountTreeRequest full_url
+      (GapiJson.parse_json_response AccountTreeResponse.of_data_model)
+      session 
+    
+  
+end
+
+module UserDeletionResource =
+struct
+  module UserDeletionRequest =
+  struct
+    let upsert
+          ?(base_url = "https://www.googleapis.com/analytics/v3/")
+          ?std_params
+          userDeletionRequest
+          session =
+      let full_url = GapiUtils.add_path_to_url ["userDeletion";
+        "userDeletionRequests:upsert"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.post ?query_parameters
+        ~data_to_post:(GapiJson.render_json UserDeletionRequest.to_data_model)
+        ~data:userDeletionRequest full_url
+        (GapiJson.parse_json_response UserDeletionRequest.of_data_model)
+        session 
+      
+    
+  end
+  
   
 end
 

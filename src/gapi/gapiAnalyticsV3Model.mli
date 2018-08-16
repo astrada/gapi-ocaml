@@ -57,7 +57,7 @@ sig
     dimensions : string;
     (** The dimensions for the unsampled report. *)
     downloadType : string;
-    (** The type of download you need to use for the report data file. *)
+    (** The type of download you need to use for the report data file. Possible values include `GOOGLE_DRIVE` and `GOOGLE_CLOUD_STORAGE`. If the value is `GOOGLE_DRIVE`, see the `driveDownloadDetails` field. If the value is `GOOGLE_CLOUD_STORAGE`, see the `cloudStorageDownloadDetails` field. *)
     driveDownloadDetails : DriveDownloadDetails.t;
     (** Download details for a file stored in Google Drive. *)
     end_date : string;
@@ -249,6 +249,8 @@ sig
     (** Resource type for Analytics ProfileSummary. *)
     name : string;
     (** View (profile) name. *)
+    starred : bool;
+    (** Indicates whether this view (profile) is starred or not. *)
     _type : string;
     (** View (Profile) type. Supported types: WEB or APP. *)
     
@@ -257,6 +259,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
+  val starred : (t, bool) GapiLens.t
   val _type : (t, string) GapiLens.t
   
   val empty : t
@@ -496,6 +499,55 @@ sig
   
 end
 
+module LinkedForeignAccount :
+sig
+  type t = {
+    accountId : string;
+    (** Account ID to which this linked foreign account belongs. *)
+    eligibleForSearch : bool;
+    (** Boolean indicating whether this is eligible for search. *)
+    id : string;
+    (** Entity ad account link ID. *)
+    internalWebPropertyId : string;
+    (** Internal ID for the web property to which this linked foreign account belongs. *)
+    kind : string;
+    (** Resource type for linked foreign account. *)
+    linkedAccountId : string;
+    (** The foreign account ID. For example the an AdWords `linkedAccountId` has the following format XXX-XXX-XXXX. *)
+    remarketingAudienceId : string;
+    (** Remarketing audience ID to which this linked foreign account belongs. *)
+    status : string;
+    (** The status of this foreign account link. *)
+    _type : string;
+    (** The type of the foreign account. For example, `ADWORDS_LINKS`, `DBM_LINKS`, `MCC_LINKS` or `OPTIMIZE`. *)
+    webPropertyId : string;
+    (** Web property ID of the form UA-XXXXX-YY to which this linked foreign account belongs. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val eligibleForSearch : (t, bool) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val internalWebPropertyId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val linkedAccountId : (t, string) GapiLens.t
+  val remarketingAudienceId : (t, string) GapiLens.t
+  val status : (t, string) GapiLens.t
+  val _type : (t, string) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module Segment :
 sig
   type t = {
@@ -714,6 +766,8 @@ sig
     (** Web property name. *)
     profiles : ProfileSummary.t list;
     (** List of profiles under this web property. *)
+    starred : bool;
+    (** Indicates whether this web property is starred or not. *)
     websiteUrl : string;
     (** Website url for this web property. *)
     
@@ -725,6 +779,74 @@ sig
   val level : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
   val profiles : (t, ProfileSummary.t list) GapiLens.t
+  val starred : (t, bool) GapiLens.t
+  val websiteUrl : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AccountTreeRequest :
+sig
+  module AccountSettings :
+  sig
+    type t = {
+      shareAnonymouslyWithOthers : bool;
+      (**  *)
+      shareWithGoogleProducts : bool;
+      (**  *)
+      shareWithSpecialists : bool;
+      (**  *)
+      shareWithSupport : bool;
+      (**  *)
+      
+    }
+    
+    val shareAnonymouslyWithOthers : (t, bool) GapiLens.t
+    val shareWithGoogleProducts : (t, bool) GapiLens.t
+    val shareWithSpecialists : (t, bool) GapiLens.t
+    val shareWithSupport : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountName : string;
+    (**  *)
+    accountSettings : AccountSettings.t;
+    (**  *)
+    kind : string;
+    (** Resource type for account ticket. *)
+    profileName : string;
+    (**  *)
+    timezone : string;
+    (**  *)
+    webpropertyName : string;
+    (**  *)
+    websiteUrl : string;
+    (**  *)
+    
+  }
+  
+  val accountName : (t, string) GapiLens.t
+  val accountSettings : (t, AccountSettings.t) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val profileName : (t, string) GapiLens.t
+  val timezone : (t, string) GapiLens.t
+  val webpropertyName : (t, string) GapiLens.t
   val websiteUrl : (t, string) GapiLens.t
   
   val empty : t
@@ -847,13 +969,15 @@ sig
   type t = {
     accountId : string;
     (** Account ID to which this view (profile) belongs. *)
+    botFilteringEnabled : bool;
+    (** Indicates whether bot filtering is enabled for this view (profile). *)
     childLink : ChildLink.t;
     (** Child link for this view (profile). Points to the list of goals for this view (profile). *)
     created : GapiDate.t;
     (** Time this view (profile) was created. *)
     currency : string;
     (** The currency type associated with this view (profile), defaults to USD. The supported values are:
-ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD, USD, VND, ZAR *)
+USD, JPY, EUR, GBP, AUD, KRW, BRL, CNY, DKK, RUB, SEK, NOK, PLN, TRY, TWD, HKD, THB, IDR, ARS, MXN, VND, PHP, INR, CHF, CAD, CZK, NZD, HUF, BGN, LTL, ZAR, UAH, AED, BOB, CLP, COP, EGP, HRK, ILS, MAD, MYR, PEN, PKR, RON, RSD, SAR, SGD, VEF, LVL *)
     defaultPage : string;
     (** Default page for this view (profile). *)
     eCommerceTracking : bool;
@@ -880,6 +1004,8 @@ ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, 
     (** Site search category parameters for this view (profile). *)
     siteSearchQueryParameters : string;
     (** The site search query parameters for this view (profile). *)
+    starred : bool;
+    (** Indicates whether this view (profile) is starred or not. *)
     stripSiteSearchCategoryParameters : bool;
     (** Whether or not Analytics will strip search category parameters from the URLs in your reports. *)
     stripSiteSearchQueryParameters : bool;
@@ -898,6 +1024,7 @@ ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, 
   }
   
   val accountId : (t, string) GapiLens.t
+  val botFilteringEnabled : (t, bool) GapiLens.t
   val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val currency : (t, string) GapiLens.t
@@ -914,6 +1041,7 @@ ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, 
   val selfLink : (t, string) GapiLens.t
   val siteSearchCategoryParameters : (t, string) GapiLens.t
   val siteSearchQueryParameters : (t, string) GapiLens.t
+  val starred : (t, bool) GapiLens.t
   val stripSiteSearchCategoryParameters : (t, bool) GapiLens.t
   val stripSiteSearchQueryParameters : (t, bool) GapiLens.t
   val timezone : (t, string) GapiLens.t
@@ -1003,6 +1131,13 @@ sig
     (** Child link for this web property. Points to the list of views (profiles) for this web property. *)
     created : GapiDate.t;
     (** Time this web property was created. *)
+    dataRetentionResetOnNewActivity : bool;
+    (** Set to true to reset the retention period of the user identifier with each new event from that user (thus setting the expiration date to current time plus retention period).
+Set to false to delete data associated with the user identifer automatically after the rentention period.
+This property cannot be set on insert. *)
+    dataRetentionTtl : string;
+    (** The length of time for which user and event data is retained.
+This property cannot be set on insert. *)
     defaultProfileId : int64;
     (** Default view (profile) ID. *)
     id : string;
@@ -1025,6 +1160,8 @@ sig
     (** View (Profile) count for this web property. *)
     selfLink : string;
     (** Link for this web property. *)
+    starred : bool;
+    (** Indicates whether this web property is starred or not. *)
     updated : GapiDate.t;
     (** Time this web property was last modified. *)
     websiteUrl : string;
@@ -1035,6 +1172,8 @@ sig
   val accountId : (t, string) GapiLens.t
   val childLink : (t, ChildLink.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
+  val dataRetentionResetOnNewActivity : (t, bool) GapiLens.t
+  val dataRetentionTtl : (t, string) GapiLens.t
   val defaultProfileId : (t, int64) GapiLens.t
   val id : (t, string) GapiLens.t
   val industryVertical : (t, string) GapiLens.t
@@ -1046,6 +1185,7 @@ sig
   val permissions : (t, Permissions.t) GapiLens.t
   val profileCount : (t, int) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val starred : (t, bool) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
   val websiteUrl : (t, string) GapiLens.t
   
@@ -1343,6 +1483,8 @@ sig
     (** Resource type for Analytics upload. *)
     status : string;
     (** Upload status. Possible values: PENDING, COMPLETED, FAILED, DELETING, DELETED. *)
+    uploadTime : GapiDate.t;
+    (** Time this file is uploaded. *)
     
   }
   
@@ -1352,6 +1494,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val status : (t, string) GapiLens.t
+  val uploadTime : (t, GapiDate.t) GapiLens.t
   
   val empty : t
   
@@ -1421,6 +1564,8 @@ sig
     (** Permissions the user has for this account. *)
     selfLink : string;
     (** Link for this account. *)
+    starred : bool;
+    (** Indicates whether this account is starred or not. *)
     updated : GapiDate.t;
     (** Time the account was last modified. *)
     
@@ -1433,7 +1578,69 @@ sig
   val name : (t, string) GapiLens.t
   val permissions : (t, Permissions.t) GapiLens.t
   val selfLink : (t, string) GapiLens.t
+  val starred : (t, bool) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module AccountTreeResponse :
+sig
+  module AccountSettings :
+  sig
+    type t = {
+      shareAnonymouslyWithOthers : bool;
+      (**  *)
+      shareWithGoogleProducts : bool;
+      (**  *)
+      shareWithSpecialists : bool;
+      (**  *)
+      shareWithSupport : bool;
+      (**  *)
+      
+    }
+    
+    val shareAnonymouslyWithOthers : (t, bool) GapiLens.t
+    val shareWithGoogleProducts : (t, bool) GapiLens.t
+    val shareWithSpecialists : (t, bool) GapiLens.t
+    val shareWithSupport : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    account : Account.t;
+    (** The account created. *)
+    accountSettings : AccountSettings.t;
+    (**  *)
+    kind : string;
+    (** Resource type for account ticket. *)
+    profile : Profile.t;
+    (** View (Profile) for the account. *)
+    webproperty : Webproperty.t;
+    (** Web property for the account. *)
+    
+  }
+  
+  val account : (t, Account.t) GapiLens.t
+  val accountSettings : (t, AccountSettings.t) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val profile : (t, Profile.t) GapiLens.t
+  val webproperty : (t, Webproperty.t) GapiLens.t
   
   val empty : t
   
@@ -1549,6 +1756,8 @@ sig
     (** Parent link for this custom data source. Points to the web property to which this custom data source belongs. *)
     profilesLinked : string list;
     (** IDs of views (profiles) linked to the custom data source. *)
+    schema : string list;
+    (** Collection of schema headers of the custom data source. *)
     selfLink : string;
     (** Link for this Analytics custom data source. *)
     _type : string;
@@ -1556,7 +1765,7 @@ sig
     updated : GapiDate.t;
     (** Time this custom data source was last modified. *)
     uploadType : string;
-    (**  *)
+    (** Upload type of the custom data source. *)
     webPropertyId : string;
     (** Web property ID of the form UA-XXXXX-YY to which this custom data source belongs. *)
     
@@ -1572,6 +1781,7 @@ sig
   val name : (t, string) GapiLens.t
   val parentLink : (t, ParentLink.t) GapiLens.t
   val profilesLinked : (t, string list) GapiLens.t
+  val schema : (t, string list) GapiLens.t
   val selfLink : (t, string) GapiLens.t
   val _type : (t, string) GapiLens.t
   val updated : (t, GapiDate.t) GapiLens.t
@@ -1905,6 +2115,8 @@ sig
     (** Resource type for Analytics AccountSummary. *)
     name : string;
     (** Account name. *)
+    starred : bool;
+    (** Indicates whether this account is starred or not. *)
     webProperties : WebPropertySummary.t list;
     (** List of web properties under this account. *)
     
@@ -1913,6 +2125,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
+  val starred : (t, bool) GapiLens.t
   val webProperties : (t, WebPropertySummary.t list) GapiLens.t
   
   val empty : t
@@ -1957,6 +2170,37 @@ sig
   val startIndex : (t, int) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module HashClientIdResponse :
+sig
+  type t = {
+    clientId : string;
+    (**  *)
+    hashedClientId : string;
+    (**  *)
+    kind : string;
+    (**  *)
+    webPropertyId : string;
+    (**  *)
+    
+  }
+  
+  val clientId : (t, string) GapiLens.t
+  val hashedClientId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
   
   val empty : t
   
@@ -2215,6 +2459,61 @@ sig
   
 end
 
+module UserDeletionRequest :
+sig
+  module Id :
+  sig
+    type t = {
+      _type : string;
+      (** Type of user *)
+      userId : string;
+      (** The User's id *)
+      
+    }
+    
+    val _type : (t, string) GapiLens.t
+    val userId : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    deletionRequestTime : GapiDate.t;
+    (** This marks the point in time for which all user data before should be deleted *)
+    firebaseProjectId : string;
+    (** Firebase Project Id *)
+    id : Id.t;
+    (** User ID. *)
+    kind : string;
+    (** Value is "analytics#userDeletionRequest". *)
+    webPropertyId : string;
+    (** Web property ID of the form UA-XXXXX-YY. *)
+    
+  }
+  
+  val deletionRequestTime : (t, GapiDate.t) GapiLens.t
+  val firebaseProjectId : (t, string) GapiLens.t
+  val id : (t, Id.t) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module AccountSummaries :
 sig
   type t = {
@@ -2245,6 +2544,40 @@ sig
   val startIndex : (t, int) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module IncludeConditions :
+sig
+  type t = {
+    daysToLookBack : int;
+    (** The look-back window lets you specify a time frame for evaluating the behavior that qualifies users for your audience. For example, if your filters include users from Central Asia, and Transactions Greater than 2, and you set the look-back window to 14 days, then any user from Central Asia whose cumulative transactions exceed 2 during the last 14 days is added to the audience. *)
+    isSmartList : bool;
+    (** Boolean indicating whether this segment is a smart list. https://support.google.com/analytics/answer/4628577 *)
+    kind : string;
+    (** Resource type for include conditions. *)
+    membershipDurationDays : int;
+    (** Number of days (in the range 1 to 540) a user remains in the audience. *)
+    segment : string;
+    (** The segment condition that will cause a user to be added to an audience. *)
+    
+  }
+  
+  val daysToLookBack : (t, int) GapiLens.t
+  val isSmartList : (t, bool) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val membershipDurationDays : (t, int) GapiLens.t
+  val segment : (t, string) GapiLens.t
   
   val empty : t
   
@@ -2495,6 +2828,127 @@ sig
   val selfLink : (t, string) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val totalsForAllResults : (t, (string * string) list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module RemarketingAudience :
+sig
+  module StateBasedAudienceDefinition :
+  sig
+    module ExcludeConditions :
+    sig
+      type t = {
+        exclusionDuration : string;
+        (** Whether to make the exclusion TEMPORARY or PERMANENT. *)
+        segment : string;
+        (** The segment condition that will cause a user to be removed from an audience. *)
+        
+      }
+      
+      val exclusionDuration : (t, string) GapiLens.t
+      val segment : (t, string) GapiLens.t
+      
+      val empty : t
+      
+      val render : t -> GapiJson.json_data_model list
+      
+      val parse : t -> GapiJson.json_data_model -> t
+      
+    end
+    
+    type t = {
+      excludeConditions : ExcludeConditions.t;
+      (** Defines the conditions to exclude users from the audience. *)
+      includeConditions : IncludeConditions.t;
+      (** Defines the conditions to include users to the audience. *)
+      
+    }
+    
+    val excludeConditions : (t, ExcludeConditions.t) GapiLens.t
+    val includeConditions : (t, IncludeConditions.t) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module AudienceDefinition :
+  sig
+    type t = {
+      includeConditions : IncludeConditions.t;
+      (** Defines the conditions to include users to the audience. *)
+      
+    }
+    
+    val includeConditions : (t, IncludeConditions.t) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  type t = {
+    accountId : string;
+    (** Account ID to which this remarketing audience belongs. *)
+    audienceDefinition : AudienceDefinition.t;
+    (** The simple audience definition that will cause a user to be added to an audience. *)
+    audienceType : string;
+    (** The type of audience, either SIMPLE or STATE_BASED. *)
+    created : GapiDate.t;
+    (** Time this remarketing audience was created. *)
+    description : string;
+    (** The description of this remarketing audience. *)
+    id : string;
+    (** Remarketing Audience ID. *)
+    internalWebPropertyId : string;
+    (** Internal ID for the web property to which this remarketing audience belongs. *)
+    kind : string;
+    (** Collection type. *)
+    linkedAdAccounts : LinkedForeignAccount.t list;
+    (** The linked ad accounts associated with this remarketing audience. A remarketing audience can have only one linkedAdAccount currently. *)
+    linkedViews : string list;
+    (** The views (profiles) that this remarketing audience is linked to. *)
+    name : string;
+    (** The name of this remarketing audience. *)
+    stateBasedAudienceDefinition : StateBasedAudienceDefinition.t;
+    (** A state based audience definition that will cause a user to be added or removed from an audience. *)
+    updated : GapiDate.t;
+    (** Time this remarketing audience was last modified. *)
+    webPropertyId : string;
+    (** Web property ID of the form UA-XXXXX-YY to which this remarketing audience belongs. *)
+    
+  }
+  
+  val accountId : (t, string) GapiLens.t
+  val audienceDefinition : (t, AudienceDefinition.t) GapiLens.t
+  val audienceType : (t, string) GapiLens.t
+  val created : (t, GapiDate.t) GapiLens.t
+  val description : (t, string) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val internalWebPropertyId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val linkedAdAccounts : (t, LinkedForeignAccount.t list) GapiLens.t
+  val linkedViews : (t, string list) GapiLens.t
+  val name : (t, string) GapiLens.t
+  val stateBasedAudienceDefinition : (t, StateBasedAudienceDefinition.t) GapiLens.t
+  val updated : (t, GapiDate.t) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
   
   val empty : t
   
@@ -2960,6 +3414,8 @@ sig
     (** Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request. *)
     containsSampledData : bool;
     (** Determines if Analytics data contains samples. *)
+    dataLastRefreshed : int64;
+    (** The last refreshed time in seconds for Analytics data. *)
     dataTable : DataTable.t;
     (**  *)
     id : string;
@@ -2993,6 +3449,7 @@ sig
   
   val columnHeaders : (t, ColumnHeaders.t list) GapiLens.t
   val containsSampledData : (t, bool) GapiLens.t
+  val dataLastRefreshed : (t, int64) GapiLens.t
   val dataTable : (t, DataTable.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val itemsPerPage : (t, int) GapiLens.t
@@ -3169,6 +3626,49 @@ sig
   }
   
   val items : (t, Profile.t list) GapiLens.t
+  val itemsPerPage : (t, int) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val nextLink : (t, string) GapiLens.t
+  val previousLink : (t, string) GapiLens.t
+  val startIndex : (t, int) GapiLens.t
+  val totalResults : (t, int) GapiLens.t
+  val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module RemarketingAudiences :
+sig
+  type t = {
+    items : RemarketingAudience.t list;
+    (** A list of remarketing audiences. *)
+    itemsPerPage : int;
+    (** The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter. *)
+    kind : string;
+    (** Collection type. *)
+    nextLink : string;
+    (** Link to next page for this remarketing audience collection. *)
+    previousLink : string;
+    (** Link to previous page for this view (profile) collection. *)
+    startIndex : int;
+    (** The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter. *)
+    totalResults : int;
+    (** The total number of results for the query, regardless of the number of results in the response. *)
+    username : string;
+    (** Email ID of the authenticated user *)
+    
+  }
+  
+  val items : (t, RemarketingAudience.t list) GapiLens.t
   val itemsPerPage : (t, int) GapiLens.t
   val kind : (t, string) GapiLens.t
   val nextLink : (t, string) GapiLens.t
@@ -3430,6 +3930,34 @@ sig
   val startIndex : (t, int) GapiLens.t
   val totalResults : (t, int) GapiLens.t
   val username : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module HashClientIdRequest :
+sig
+  type t = {
+    clientId : string;
+    (**  *)
+    kind : string;
+    (**  *)
+    webPropertyId : string;
+    (**  *)
+    
+  }
+  
+  val clientId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val webPropertyId : (t, string) GapiLens.t
   
   val empty : t
   

@@ -2,7 +2,7 @@
 
 (** Service definition for Calendar API (v3).
   
-  Lets you manipulate events and other calendar data..
+  Manipulates events and other calendar data..
   
   For more information about this service, see the
   {{:https://developers.google.com/google-apps/calendar/firstapp}API Documentation}.
@@ -59,11 +59,13 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param sendNotifications Whether to send notifications about the calendar sharing change. Optional. The default is True.
     @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?sendNotifications:bool ->
     calendarId:string ->
     GapiCalendarV3Model.AclRule.t ->
     GapiConversation.Session.t ->
@@ -97,12 +99,14 @@ Optional. The default is to return all entries.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param sendNotifications Whether to send notifications about the calendar sharing change. Note that there are no notifications on access removal. Optional. The default is True.
     @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param ruleId ACL rule identifier.
     *)
   val patch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?sendNotifications:bool ->
     calendarId:string ->
     ruleId:string ->
     GapiCalendarV3Model.AclRule.t ->
@@ -113,12 +117,14 @@ Optional. The default is to return all entries.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param sendNotifications Whether to send notifications about the calendar sharing change. Note that there are no notifications on access removal. Optional. The default is True.
     @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     @param ruleId ACL rule identifier.
     *)
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?sendNotifications:bool ->
     calendarId:string ->
     ruleId:string ->
     GapiCalendarV3Model.AclRule.t ->
@@ -171,7 +177,7 @@ sig
     
   end
   
-  (** Deletes an entry on the user's calendar list.
+  (** Removes a calendar from the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -184,7 +190,7 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
-  (** Returns an entry on the user's calendar list.
+  (** Returns a calendar from the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param etag Optional ETag.
@@ -199,7 +205,7 @@ sig
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t
   
-  (** Adds an entry to the user's calendar list.
+  (** Inserts an existing calendar into the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -213,7 +219,7 @@ sig
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t
   
-  (** Returns entries on the user's calendar list.
+  (** Returns the calendars on the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -240,7 +246,7 @@ Optional. The default is to return all entries.
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarList.t * GapiConversation.Session.t
   
-  (** Updates an entry on the user's calendar list. This method supports patch semantics.
+  (** Updates an existing calendar on the user's calendar list. This method supports patch semantics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -256,7 +262,7 @@ Optional. The default is to return all entries.
     GapiConversation.Session.t ->
     GapiCalendarV3Model.CalendarListEntry.t * GapiConversation.Session.t
   
-  (** Updates an entry on the user's calendar list.
+  (** Updates an existing calendar on the user's calendar list.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
@@ -487,12 +493,14 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param conferenceDataVersion Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.
     @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
     @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
     *)
   val import :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?conferenceDataVersion:int ->
     ?supportsAttachments:bool ->
     calendarId:string ->
     GapiCalendarV3Model.Event.t ->
@@ -503,6 +511,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param conferenceDataVersion Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the creation of the new event. Optional. The default is False.
     @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
@@ -511,6 +520,7 @@ sig
   val insert :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?conferenceDataVersion:int ->
     ?maxAttendees:int ->
     ?sendNotifications:bool ->
     ?supportsAttachments:bool ->
@@ -556,10 +566,10 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param maxResults Maximum number of events returned on one result page. The number of events in the resulting page may be less than this value, or none at all, even if there are more events matching the query. Incomplete pages can be detected by a non-empty nextPageToken field in the response. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param iCalUID Specifies event ID in the iCalendar format to be included in the response. Optional.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
-    @param maxResults Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
     @param privateExtendedProperty Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.
@@ -582,8 +592,8 @@ These are:
 - updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
 Learn more about incremental synchronization.
 Optional. The default is to return all entries.
-    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
-    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMin is set, timeMax must be greater than timeMin.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMax is set, timeMin must be smaller than timeMax.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
     @param updatedMin Lower bound for an event's last modification time (as a RFC3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
     @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
@@ -591,10 +601,10 @@ Optional. The default is to return all entries.
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
     ?alwaysIncludeEmail:bool ->
     ?iCalUID:string ->
     ?maxAttendees:int ->
-    ?maxResults:int ->
     ?orderBy:OrderBy.t ->
     ?pageToken:string ->
     ?privateExtendedProperty:string list ->
@@ -636,6 +646,7 @@ Optional. The default is to return all entries.
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param conferenceDataVersion Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
     @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
@@ -646,6 +657,7 @@ Optional. The default is to return all entries.
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?alwaysIncludeEmail:bool ->
+    ?conferenceDataVersion:int ->
     ?maxAttendees:int ->
     ?sendNotifications:bool ->
     ?supportsAttachments:bool ->
@@ -677,6 +689,7 @@ Optional. The default is to return all entries.
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
+    @param conferenceDataVersion Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
     @param sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
     @param supportsAttachments Whether API client performing operation supports event attachments. Optional. The default is False.
@@ -687,6 +700,7 @@ Optional. The default is to return all entries.
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?alwaysIncludeEmail:bool ->
+    ?conferenceDataVersion:int ->
     ?maxAttendees:int ->
     ?sendNotifications:bool ->
     ?supportsAttachments:bool ->
@@ -700,10 +714,10 @@ Optional. The default is to return all entries.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/calendar/v3/"]).
     @param std_params Optional standard parameters.
+    @param maxResults Maximum number of events returned on one result page. The number of events in the resulting page may be less than this value, or none at all, even if there are more events matching the query. Incomplete pages can be detected by a non-empty nextPageToken field in the response. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param alwaysIncludeEmail Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
     @param iCalUID Specifies event ID in the iCalendar format to be included in the response. Optional.
     @param maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
-    @param maxResults Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.
     @param orderBy The order of the events returned in the result. Optional. The default is an unspecified, stable order.
     @param pageToken Token specifying which result page to return. Optional.
     @param privateExtendedProperty Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.
@@ -726,8 +740,8 @@ These are:
 - updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.
 Learn more about incremental synchronization.
 Optional. The default is to return all entries.
-    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
-    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.
+    @param timeMax Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMin is set, timeMax must be greater than timeMin.
+    @param timeMin Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMax is set, timeMin must be smaller than timeMax.
     @param timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
     @param updatedMin Lower bound for an event's last modification time (as a RFC3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.
     @param calendarId Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the "primary" keyword.
@@ -735,10 +749,10 @@ Optional. The default is to return all entries.
   val watch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?maxResults:int ->
     ?alwaysIncludeEmail:bool ->
     ?iCalUID:string ->
     ?maxAttendees:int ->
-    ?maxResults:int ->
     ?orderBy:OrderBy.t ->
     ?pageToken:string ->
     ?privateExtendedProperty:string list ->

@@ -917,6 +917,7 @@ struct
   end
   
   type t = {
+    captchaResult : string;
     formattedResults : FormattedResults.t;
     id : string;
     invalidRules : string list;
@@ -930,6 +931,10 @@ struct
     
   }
   
+  let captchaResult = {
+    GapiLens.get = (fun x -> x.captchaResult);
+    GapiLens.set = (fun v x -> { x with captchaResult = v });
+  }
   let formattedResults = {
     GapiLens.get = (fun x -> x.formattedResults);
     GapiLens.set = (fun v x -> { x with formattedResults = v });
@@ -972,6 +977,7 @@ struct
   }
   
   let empty = {
+    captchaResult = "";
     formattedResults = FormattedResults.empty;
     id = "";
     invalidRules = [];
@@ -987,6 +993,7 @@ struct
   
   let rec render_content x = 
      [
+      GapiJson.render_string_value "captchaResult" x.captchaResult;
       (fun v -> GapiJson.render_object "formattedResults" (FormattedResults.render_content v)) x.formattedResults;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_array "invalidRules" (GapiJson.render_string_value "") x.invalidRules;
@@ -1003,6 +1010,10 @@ struct
     GapiJson.render_object "" (render_content x)
   
   let rec parse x = function
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "captchaResult"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with captchaResult = v }
     | GapiCore.AnnotatedTree.Node
         ({ GapiJson.name = "formattedResults"; data_type = GapiJson.Object },
         cs) ->

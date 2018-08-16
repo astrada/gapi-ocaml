@@ -5,7 +5,6 @@ struct
   type t = {
     count : int;
     cr : string;
-    cref : string;
     cx : string;
     dateRestrict : string;
     disableCnTwTranslation : string;
@@ -50,10 +49,6 @@ struct
   let cr = {
     GapiLens.get = (fun x -> x.cr);
     GapiLens.set = (fun v x -> { x with cr = v });
-  }
-  let cref = {
-    GapiLens.get = (fun x -> x.cref);
-    GapiLens.set = (fun v x -> { x with cref = v });
   }
   let cx = {
     GapiLens.get = (fun x -> x.cx);
@@ -195,7 +190,6 @@ struct
   let empty = {
     count = 0;
     cr = "";
-    cref = "";
     cx = "";
     dateRestrict = "";
     disableCnTwTranslation = "";
@@ -237,7 +231,6 @@ struct
      [
       GapiJson.render_int_value "count" x.count;
       GapiJson.render_string_value "cr" x.cr;
-      GapiJson.render_string_value "cref" x.cref;
       GapiJson.render_string_value "cx" x.cx;
       GapiJson.render_string_value "dateRestrict" x.dateRestrict;
       GapiJson.render_string_value "disableCnTwTranslation" x.disableCnTwTranslation;
@@ -286,10 +279,6 @@ struct
         ({ GapiJson.name = "cr"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with cr = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "cref"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with cref = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "cx"; data_type = GapiJson.Scalar },
         `String v) ->

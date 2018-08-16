@@ -181,7 +181,7 @@ sig
     colors : Colors.t;
     (** The colors which are included in the style. These are represented as six hexadecimal characters, similar to HTML color codes, but without the leading hash. *)
     corners : string;
-    (** The style of the corners in the ad. *)
+    (** The style of the corners in the ad (deprecated: never populated, ignored). *)
     font : Font.t;
     (** The font which is included in the style. *)
     kind : string;
@@ -272,13 +272,19 @@ module AdCode :
 sig
   type t = {
     adCode : string;
-    (** The ad code snippet. *)
+    (** The Auto ad code snippet. The ad code snippet. *)
+    ampBody : string;
+    (** The AMP Auto ad code snippet that goes in the body of an AMP page. *)
+    ampHead : string;
+    (** The AMP Auto ad code snippet that goes in the head of an AMP page. *)
     kind : string;
     (** Kind this is, in this case adsense#adCode. *)
     
   }
   
   val adCode : (t, string) GapiLens.t
+  val ampBody : (t, string) GapiLens.t
+  val ampHead : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   
   val empty : t
@@ -298,8 +304,6 @@ sig
   type t = {
     arcOptIn : bool;
     (** Whether this ad client is opted in to ARC. *)
-    arcReviewMode : string;
-    (** ARC review mode this ad client is in. Empty if the client is not opted in to ARC. Possible values: POST_REVIEW, AUTOMATIC_PRE_REVIEW. *)
     id : string;
     (** Unique identifier of this ad client. *)
     kind : string;
@@ -312,7 +316,6 @@ sig
   }
   
   val arcOptIn : (t, bool) GapiLens.t
-  val arcReviewMode : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val productCode : (t, string) GapiLens.t
@@ -469,17 +472,17 @@ sig
     code : string;
     (** Identity code of this ad unit, not necessarily unique across ad clients. *)
     contentAdsSettings : ContentAdsSettings.t;
-    (** Settings specific to content ads (AFC) and highend mobile content ads (AFMC). *)
+    (** Settings specific to content ads (AFC) and highend mobile content ads (AFMC - deprecated). *)
     customStyle : AdStyle.t;
     (** Custom style information specific to this ad unit. *)
     feedAdsSettings : FeedAdsSettings.t;
-    (** Settings specific to feed ads (AFF). *)
+    (** Settings specific to feed ads (AFF) - deprecated. *)
     id : string;
     (** Unique identifier of this ad unit. This should be considered an opaque identifier; it is not safe to rely on it being in any particular format. *)
     kind : string;
     (** Kind of resource this is, in this case adsense#adUnit. *)
     mobileContentAdsSettings : MobileContentAdsSettings.t;
-    (** Settings specific to WAP mobile content ads (AFMC). *)
+    (** Settings specific to WAP mobile content ads (AFMC) - deprecated. *)
     name : string;
     (** Name of this ad unit. *)
     savedStyleId : string;
@@ -558,7 +561,7 @@ sig
       description : string;
       (** The external description of the channel. *)
       location : string;
-      (** The locations in which ads appear. (Only valid for content and mobile content ads). Acceptable values for content ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT, MULTIPLE_LOCATIONS. Acceptable values for mobile content ads are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS. *)
+      (** The locations in which ads appear. (Only valid for content and mobile content ads (deprecated)). Acceptable values for content ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT, MULTIPLE_LOCATIONS. Acceptable values for mobile content ads (deprecated) are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS. *)
       siteLanguage : string;
       (** The language of the sites ads will be displayed on. *)
       

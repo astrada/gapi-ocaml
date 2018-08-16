@@ -2,7 +2,7 @@
 
 (** Service definition for Google OAuth2 API (v2).
   
-  Lets you access OAuth2 protocol related APIs..
+  Obtains end-user authorization grants for use with other Google APIs..
   
   For more information about this service, see the
   {{:https://developers.google.com/accounts/docs/OAuth2}API Documentation}.
@@ -11,7 +11,7 @@
 module Scope :
 sig
   val plus_login : string
-  (** Know your basic profile info and list of people in your circles. *)
+  (** Know the list of people in your circles, your age range, and language *)
   
   val plus_me : string
   (** Know who you are on Google *)

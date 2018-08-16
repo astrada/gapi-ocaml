@@ -701,6 +701,8 @@ module AdCode =
 struct
   type t = {
     adCode : string;
+    ampBody : string;
+    ampHead : string;
     kind : string;
     
   }
@@ -709,6 +711,14 @@ struct
     GapiLens.get = (fun x -> x.adCode);
     GapiLens.set = (fun v x -> { x with adCode = v });
   }
+  let ampBody = {
+    GapiLens.get = (fun x -> x.ampBody);
+    GapiLens.set = (fun v x -> { x with ampBody = v });
+  }
+  let ampHead = {
+    GapiLens.get = (fun x -> x.ampHead);
+    GapiLens.set = (fun v x -> { x with ampHead = v });
+  }
   let kind = {
     GapiLens.get = (fun x -> x.kind);
     GapiLens.set = (fun v x -> { x with kind = v });
@@ -716,6 +726,8 @@ struct
   
   let empty = {
     adCode = "";
+    ampBody = "";
+    ampHead = "";
     kind = "";
     
   }
@@ -723,6 +735,8 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "adCode" x.adCode;
+      GapiJson.render_string_value "ampBody" x.ampBody;
+      GapiJson.render_string_value "ampHead" x.ampHead;
       GapiJson.render_string_value "kind" x.kind;
       
     ]
@@ -734,6 +748,14 @@ struct
         ({ GapiJson.name = "adCode"; data_type = GapiJson.Scalar },
         `String v) ->
       { x with adCode = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "ampBody"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with ampBody = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "ampHead"; data_type = GapiJson.Scalar },
+        `String v) ->
+      { x with ampHead = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "kind"; data_type = GapiJson.Scalar },
         `String v) ->
@@ -755,7 +777,6 @@ module AdClient =
 struct
   type t = {
     arcOptIn : bool;
-    arcReviewMode : string;
     id : string;
     kind : string;
     productCode : string;
@@ -766,10 +787,6 @@ struct
   let arcOptIn = {
     GapiLens.get = (fun x -> x.arcOptIn);
     GapiLens.set = (fun v x -> { x with arcOptIn = v });
-  }
-  let arcReviewMode = {
-    GapiLens.get = (fun x -> x.arcReviewMode);
-    GapiLens.set = (fun v x -> { x with arcReviewMode = v });
   }
   let id = {
     GapiLens.get = (fun x -> x.id);
@@ -790,7 +807,6 @@ struct
   
   let empty = {
     arcOptIn = false;
-    arcReviewMode = "";
     id = "";
     kind = "";
     productCode = "";
@@ -801,7 +817,6 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_bool_value "arcOptIn" x.arcOptIn;
-      GapiJson.render_string_value "arcReviewMode" x.arcReviewMode;
       GapiJson.render_string_value "id" x.id;
       GapiJson.render_string_value "kind" x.kind;
       GapiJson.render_string_value "productCode" x.productCode;
@@ -816,10 +831,6 @@ struct
         ({ GapiJson.name = "arcOptIn"; data_type = GapiJson.Scalar },
         `Bool v) ->
       { x with arcOptIn = v }
-    | GapiCore.AnnotatedTree.Leaf
-        ({ GapiJson.name = "arcReviewMode"; data_type = GapiJson.Scalar },
-        `String v) ->
-      { x with arcReviewMode = v }
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "id"; data_type = GapiJson.Scalar },
         `String v) ->

@@ -2,7 +2,7 @@
 
 (** Service definition for Google+ API (v1).
   
-  The Google+ API enables developers to build on top of the Google+ platform..
+  Builds on top of the Google+ platform..
   
   For more information about this service, see the
   {{:https://developers.google.com/+/api/}API Documentation}.
@@ -11,7 +11,7 @@
 module Scope :
 sig
   val plus_login : string
-  (** Know your basic profile info and list of people in your circles. *)
+  (** Know the list of people in your circles, your age range, and language *)
   
   val plus_me : string
   (** Know who you are on Google *)
@@ -161,65 +161,6 @@ sig
     activityId:string ->
     GapiConversation.Session.t ->
     GapiPlusV1Model.CommentFeed.t * GapiConversation.Session.t
-  
-  
-end
-
-module MomentsResource :
-sig
-  
-  module Collection :
-  sig
-    type t =
-      | Default
-      | Vault (** The default collection for writing new moments. *)
-      
-    val to_string : t -> string
-    
-    val of_string : string -> t
-    
-  end
-  
-  (** Record a moment representing a user's action such as making a purchase or commenting on a blog.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
-    @param std_params Optional standard parameters.
-    @param debug Return the moment as written. Should be used only for debugging.
-    @param userId The ID of the user to record actions for. The only valid values are "me" and the ID of the authenticated user.
-    @param collection The collection to which to write moments.
-    *)
-  val insert :
-    ?base_url:string ->
-    ?std_params:GapiService.StandardParameters.t ->
-    ?debug:bool ->
-    userId:string ->
-    collection:Collection.t ->
-    GapiPlusV1Model.Moment.t ->
-    GapiConversation.Session.t ->
-    GapiPlusV1Model.Moment.t * GapiConversation.Session.t
-  
-  (** List all of the moments for a particular user.
-    
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/plus/v1/"]).
-    @param std_params Optional standard parameters.
-    @param maxResults The maximum number of moments to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.
-    @param pageToken The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of "nextPageToken" from the previous response.
-    @param targetUrl Only moments containing this targetUrl will be returned.
-    @param _type Only moments of this type will be returned.
-    @param userId The ID of the user to get moments for. The special value "me" can be used to indicate the authenticated user.
-    @param collection The collection of moments to list.
-    *)
-  val list :
-    ?base_url:string ->
-    ?std_params:GapiService.StandardParameters.t ->
-    ?maxResults:int ->
-    ?pageToken:string ->
-    ?targetUrl:string ->
-    ?_type:string ->
-    userId:string ->
-    collection:Collection.t ->
-    GapiConversation.Session.t ->
-    GapiPlusV1Model.MomentsFeed.t * GapiConversation.Session.t
   
   
 end

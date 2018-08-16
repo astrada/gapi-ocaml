@@ -473,7 +473,7 @@ sig
     @param std_params Optional standard parameters.
     @param supportsTeamDrives Whether the requesting application supports Team Drives.
     @param transferOwnership Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
     @param emailMessage A plain text custom message to include in the notification email.
     @param sendNotificationEmail Whether to send a notification email when sharing to users or groups. This defaults to true for users and groups, and is not allowed for other requests. It must not be disabled for ownership transfers.
     @param fileId The ID of the file or Team Drive.
@@ -496,7 +496,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
     @param fileId The ID of the file or Team Drive.
     @param permissionId The ID of the permission.
     *)
@@ -516,7 +516,7 @@ sig
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
     @param fileId The ID of the file.
     @param permissionId The ID of the permission.
     *)
@@ -536,7 +536,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
     @param pageSize The maximum number of permissions to return per page. When not set for files in a Team Drive, at most 100 results will be returned. When not set for files that are not in a Team Drive, the entire list will be returned.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.
     @param fileId The ID of the file or Team Drive.
@@ -559,7 +559,7 @@ sig
     @param removeExpiration Whether to remove the expiration date.
     @param supportsTeamDrives Whether the requesting application supports Team Drives.
     @param transferOwnership Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
     @param fileId The ID of the file or Team Drive.
     @param permissionId The ID of the permission.
     *)
@@ -787,7 +787,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the Team Drive belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the Team Drive belongs.
     @param teamDriveId The ID of the Team Drive
     *)
   val get :
@@ -804,7 +804,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param pageSize Maximum number of Team Drives to return.
-    @param useDomainAdminAccess Whether the request should be treated as if it was issued by a domain administrator; if set to true, then all Team Drives of the domain in which the requester is an administrator are returned.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then all Team Drives of the domain in which the requester is an administrator are returned.
     @param pageToken Page token for Team Drives.
     @param q Query string for searching Team Drives.
     *)
@@ -822,11 +822,13 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the Team Drive belongs.
     @param teamDriveId The ID of the Team Drive
     *)
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?useDomainAdminAccess:bool ->
     teamDriveId:string ->
     GapiDriveV3Model.TeamDrive.t ->
     GapiConversation.Session.t ->

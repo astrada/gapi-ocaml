@@ -324,6 +324,8 @@ sig
   end
   
   type t = {
+    captchaResult : string;
+    (** The captcha verify result *)
     formattedResults : FormattedResults.t;
     (** Localized PageSpeed results. Contains a ruleResults entry for each PageSpeed rule instantiated and run by the server. *)
     id : string;
@@ -347,6 +349,7 @@ sig
     
   }
   
+  val captchaResult : (t, string) GapiLens.t
   val formattedResults : (t, FormattedResults.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val invalidRules : (t, string list) GapiLens.t

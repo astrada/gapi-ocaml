@@ -2,7 +2,7 @@
 
 (** Service definition for AdSense Management API (v1.4).
   
-  Gives AdSense publishers access to their inventory and the ability to generate reports.
+  Accesses AdSense publishers' inventory and generates performance reports..
   
   For more information about this service, see the
   {{:https://developers.google.com/adsense/management/}API Documentation}.
@@ -393,6 +393,21 @@ sig
   
   module Adclients :
   sig
+    
+    (** Get Auto ad code for a given ad client.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/adsense/v1.4/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account which contains the ad client.
+      @param adClientId Ad client to get the code for.
+      *)
+    val getAdCode :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      adClientId:string ->
+      GapiConversation.Session.t ->
+      GapiAdsenseV1_4Model.AdCode.t * GapiConversation.Session.t
     
     (** List all ad clients in the specified account.
       

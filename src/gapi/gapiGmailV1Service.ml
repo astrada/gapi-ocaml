@@ -13,11 +13,17 @@ struct
   
   let gmail_labels = "https://www.googleapis.com/auth/gmail.labels"
   
+  let gmail_metadata = "https://www.googleapis.com/auth/gmail.metadata"
+  
   let gmail_modify = "https://www.googleapis.com/auth/gmail.modify"
   
   let gmail_readonly = "https://www.googleapis.com/auth/gmail.readonly"
   
   let gmail_send = "https://www.googleapis.com/auth/gmail.send"
+  
+  let gmail_settings_basic = "https://www.googleapis.com/auth/gmail.settings.basic"
+  
+  let gmail_settings_sharing = "https://www.googleapis.com/auth/gmail.settings.sharing"
   
   
 end
@@ -64,8 +70,10 @@ struct
         key : string;
         (* drafts-specific query parameters *)
         format : Format.t;
+        includeSpamTrash : bool;
         maxResults : int;
         pageToken : string;
+        q : string;
         
       }
       
@@ -77,8 +85,10 @@ struct
         userIp = "";
         key = "";
         format = Format.Default;
+        includeSpamTrash = false;
         maxResults = 100;
         pageToken = "";
+        q = "";
         
       }
       
@@ -92,16 +102,20 @@ struct
         param (fun p -> p.userIp) (fun x -> x) "userIp";
         param (fun p -> p.key) (fun x -> x) "key";
         param (fun p -> p.format) Format.to_string "format";
+        param (fun p -> p.includeSpamTrash) string_of_bool "includeSpamTrash";
         param (fun p -> p.maxResults) string_of_int "maxResults";
         param (fun p -> p.pageToken) (fun x -> x) "pageToken";
+        param (fun p -> p.q) (fun x -> x) "q";
         
       ] |> List.concat
       
       let merge_parameters
           ?(standard_parameters = GapiService.StandardParameters.default)
           ?(format = default.format)
+          ?(includeSpamTrash = default.includeSpamTrash)
           ?(maxResults = default.maxResults)
           ?(pageToken = default.pageToken)
+          ?(q = default.q)
           () =
         let parameters = {
           alt = standard_parameters.GapiService.StandardParameters.alt;
@@ -111,8 +125,10 @@ struct
           userIp = standard_parameters.GapiService.StandardParameters.userIp;
           key = standard_parameters.GapiService.StandardParameters.key;
           format;
+          includeSpamTrash;
           maxResults;
           pageToken;
+          q;
           
         } in
         if parameters = default then None else Some parameters
@@ -175,14 +191,17 @@ struct
     let list
           ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
           ?std_params
+          ?(includeSpamTrash = false)
           ?(maxResults = 100)
           ?pageToken
+          ?q
           ~userId
           session =
       let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
         "drafts"] base_url in
       let params = DraftsParameters.merge_parameters
-        ?standard_parameters:std_params ~maxResults ?pageToken () in
+        ?standard_parameters:std_params ~includeSpamTrash ~maxResults
+        ?pageToken ?q () in
       let query_parameters = Option.map DraftsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
@@ -237,6 +256,32 @@ struct
   
   module History =
   struct
+    module HistoryTypes =
+    struct
+      type t =
+        | Default
+        | LabelAdded
+        | LabelRemoved
+        | MessageAdded
+        | MessageDeleted
+        
+      let to_string = function
+        | Default -> ""
+        | LabelAdded -> "labelAdded"
+        | LabelRemoved -> "labelRemoved"
+        | MessageAdded -> "messageAdded"
+        | MessageDeleted -> "messageDeleted"
+        
+      let of_string = function
+        | "" -> Default
+        | "labelAdded" -> LabelAdded
+        | "labelRemoved" -> LabelRemoved
+        | "messageAdded" -> MessageAdded
+        | "messageDeleted" -> MessageDeleted
+        | s -> failwith ("Unexpected value for HistoryTypes:" ^ s)
+    
+    end
+    
     module HistoryParameters =
     struct
       type t = {
@@ -248,6 +293,7 @@ struct
         userIp : string;
         key : string;
         (* history-specific query parameters *)
+        historyTypes : HistoryTypes.t list;
         labelId : string;
         maxResults : int;
         pageToken : string;
@@ -262,6 +308,7 @@ struct
         quotaUser = "";
         userIp = "";
         key = "";
+        historyTypes = [];
         labelId = "";
         maxResults = 100;
         pageToken = "";
@@ -278,6 +325,7 @@ struct
         param (fun p -> p.quotaUser) (fun x -> x) "quotaUser";
         param (fun p -> p.userIp) (fun x -> x) "userIp";
         param (fun p -> p.key) (fun x -> x) "key";
+        GapiService.build_params qp (fun p -> p.historyTypes) HistoryTypes.to_string "historyTypes";
         param (fun p -> p.labelId) (fun x -> x) "labelId";
         param (fun p -> p.maxResults) string_of_int "maxResults";
         param (fun p -> p.pageToken) (fun x -> x) "pageToken";
@@ -287,6 +335,7 @@ struct
       
       let merge_parameters
           ?(standard_parameters = GapiService.StandardParameters.default)
+          ?(historyTypes = default.historyTypes)
           ?(labelId = default.labelId)
           ?(maxResults = default.maxResults)
           ?(pageToken = default.pageToken)
@@ -299,6 +348,7 @@ struct
           quotaUser = standard_parameters.GapiService.StandardParameters.quotaUser;
           userIp = standard_parameters.GapiService.StandardParameters.userIp;
           key = standard_parameters.GapiService.StandardParameters.key;
+          historyTypes;
           labelId;
           maxResults;
           pageToken;
@@ -313,6 +363,7 @@ struct
           ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
           ?std_params
           ?(maxResults = 100)
+          ?historyTypes
           ?labelId
           ?pageToken
           ?startHistoryId
@@ -321,8 +372,8 @@ struct
       let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
         "history"] base_url in
       let params = HistoryParameters.merge_parameters
-        ?standard_parameters:std_params ?labelId ~maxResults ?pageToken
-        ?startHistoryId () in
+        ?standard_parameters:std_params ?historyTypes ?labelId ~maxResults
+        ?pageToken ?startHistoryId () in
       let query_parameters = Option.map HistoryParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
@@ -612,6 +663,40 @@ struct
       
     end
     
+    let batchDelete
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          batchDeleteMessagesRequest
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "messages"; "batchDelete"] base_url in
+      let params = MessagesParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map MessagesParameters.to_key_value_list
+        params in
+      GapiService.post ?query_parameters
+        ~data_to_post:(GapiJson.render_json BatchDeleteMessagesRequest.to_data_model)
+        ~data:batchDeleteMessagesRequest full_url
+        GapiRequest.parse_empty_response session 
+      
+    let batchModify
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          batchModifyMessagesRequest
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "messages"; "batchModify"] base_url in
+      let params = MessagesParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map MessagesParameters.to_key_value_list
+        params in
+      GapiService.post ?query_parameters
+        ~data_to_post:(GapiJson.render_json BatchModifyMessagesRequest.to_data_model)
+        ~data:batchModifyMessagesRequest full_url
+        GapiRequest.parse_empty_response session 
+      
     let delete
           ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
           ?std_params
@@ -786,6 +871,488 @@ struct
         params in
       GapiService.post ?query_parameters ~data:Message.empty full_url
         (GapiJson.parse_json_response Message.of_data_model) session 
+      
+    
+  end
+  
+  module Settings =
+  struct
+    module Filters =
+    struct
+      let create
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            filter
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "filters"] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.post ?query_parameters
+          ~data_to_post:(GapiJson.render_json Filter.to_data_model)
+          ~data:filter full_url
+          (GapiJson.parse_json_response Filter.of_data_model) session 
+        
+      let delete
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            ~id
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "filters"; ((fun x -> x) id)] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.delete ?query_parameters full_url
+          GapiRequest.parse_empty_response session 
+        
+      let get
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?etag
+            ?std_params
+            ~userId
+            ~id
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "filters"; ((fun x -> x) id)] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.get ?query_parameters ?etag full_url
+          (GapiJson.parse_json_response Filter.of_data_model) session 
+        
+      let list
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "filters"] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.get ?query_parameters full_url
+          (GapiJson.parse_json_response ListFiltersResponse.of_data_model)
+          session 
+        
+      
+    end
+    
+    module ForwardingAddresses =
+    struct
+      let create
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            forwardingAddress
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "forwardingAddresses"] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.post ?query_parameters
+          ~data_to_post:(GapiJson.render_json ForwardingAddress.to_data_model)
+          ~data:forwardingAddress full_url
+          (GapiJson.parse_json_response ForwardingAddress.of_data_model)
+          session 
+        
+      let delete
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            ~forwardingEmail
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "forwardingAddresses"; ((fun x -> x) forwardingEmail)]
+          base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.delete ?query_parameters full_url
+          GapiRequest.parse_empty_response session 
+        
+      let get
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?etag
+            ?std_params
+            ~userId
+            ~forwardingEmail
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "forwardingAddresses"; ((fun x -> x) forwardingEmail)]
+          base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.get ?query_parameters ?etag full_url
+          (GapiJson.parse_json_response ForwardingAddress.of_data_model)
+          session 
+        
+      let list
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "forwardingAddresses"] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.get ?query_parameters full_url
+          (GapiJson.parse_json_response ListForwardingAddressesResponse.of_data_model)
+          session 
+        
+      
+    end
+    
+    module SendAs =
+    struct
+      module SmimeInfo =
+      struct
+        let delete
+              ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+              ?std_params
+              ~userId
+              ~sendAsEmail
+              ~id
+              session =
+          let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+            "settings"; "sendAs"; ((fun x -> x) sendAsEmail); "smimeInfo";
+            ((fun x -> x) id)] base_url in
+          let params = GapiService.StandardParameters.merge_parameters
+            ?standard_parameters:std_params () in
+          let query_parameters = Option.map
+            GapiService.StandardParameters.to_key_value_list params in
+          GapiService.delete ?query_parameters full_url
+            GapiRequest.parse_empty_response session 
+          
+        let get
+              ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+              ?etag
+              ?std_params
+              ~userId
+              ~sendAsEmail
+              ~id
+              session =
+          let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+            "settings"; "sendAs"; ((fun x -> x) sendAsEmail); "smimeInfo";
+            ((fun x -> x) id)] base_url in
+          let params = GapiService.StandardParameters.merge_parameters
+            ?standard_parameters:std_params () in
+          let query_parameters = Option.map
+            GapiService.StandardParameters.to_key_value_list params in
+          GapiService.get ?query_parameters ?etag full_url
+            (GapiJson.parse_json_response SmimeInfo.of_data_model) session 
+          
+        let insert
+              ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+              ?std_params
+              ~userId
+              ~sendAsEmail
+              smimeInfo
+              session =
+          let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+            "settings"; "sendAs"; ((fun x -> x) sendAsEmail); "smimeInfo"]
+            base_url in
+          let params = GapiService.StandardParameters.merge_parameters
+            ?standard_parameters:std_params () in
+          let query_parameters = Option.map
+            GapiService.StandardParameters.to_key_value_list params in
+          GapiService.post ?query_parameters
+            ~data_to_post:(GapiJson.render_json SmimeInfo.to_data_model)
+            ~data:smimeInfo full_url
+            (GapiJson.parse_json_response SmimeInfo.of_data_model) session 
+          
+        let list
+              ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+              ?std_params
+              ~userId
+              ~sendAsEmail
+              session =
+          let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+            "settings"; "sendAs"; ((fun x -> x) sendAsEmail); "smimeInfo"]
+            base_url in
+          let params = GapiService.StandardParameters.merge_parameters
+            ?standard_parameters:std_params () in
+          let query_parameters = Option.map
+            GapiService.StandardParameters.to_key_value_list params in
+          GapiService.get ?query_parameters full_url
+            (GapiJson.parse_json_response ListSmimeInfoResponse.of_data_model)
+            session 
+          
+        let setDefault
+              ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+              ?std_params
+              ~userId
+              ~sendAsEmail
+              ~id
+              session =
+          let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+            "settings"; "sendAs"; ((fun x -> x) sendAsEmail); "smimeInfo";
+            ((fun x -> x) id); "setDefault"] base_url in
+          let params = GapiService.StandardParameters.merge_parameters
+            ?standard_parameters:std_params () in
+          let query_parameters = Option.map
+            GapiService.StandardParameters.to_key_value_list params in
+          GapiService.post ?query_parameters ~data:() full_url
+            GapiRequest.parse_empty_response session 
+          
+        
+      end
+      
+      let create
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            sendAs
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.post ?query_parameters
+          ~data_to_post:(GapiJson.render_json SendAs.to_data_model)
+          ~data:sendAs full_url
+          (GapiJson.parse_json_response SendAs.of_data_model) session 
+        
+      let delete
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            ~sendAsEmail
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.delete ?query_parameters full_url
+          GapiRequest.parse_empty_response session 
+        
+      let get
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?etag
+            ?std_params
+            ~userId
+            ~sendAsEmail
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.get ?query_parameters ?etag full_url
+          (GapiJson.parse_json_response SendAs.of_data_model) session 
+        
+      let list
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.get ?query_parameters full_url
+          (GapiJson.parse_json_response ListSendAsResponse.of_data_model)
+          session 
+        
+      let patch
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            ~sendAsEmail
+            sendAs
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.patch ?query_parameters
+          ~data_to_post:(GapiJson.render_json SendAs.to_data_model)
+          ~data:sendAs full_url
+          (GapiJson.parse_json_response SendAs.of_data_model) session 
+        
+      let update
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            ~sendAsEmail
+            sendAs
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.put ?query_parameters
+          ~data_to_post:(GapiJson.render_json SendAs.to_data_model)
+          ~data:sendAs full_url
+          (GapiJson.parse_json_response SendAs.of_data_model) session 
+        
+      let verify
+            ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+            ?std_params
+            ~userId
+            ~sendAsEmail
+            session =
+        let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+          "settings"; "sendAs"; ((fun x -> x) sendAsEmail); "verify"]
+          base_url in
+        let params = GapiService.StandardParameters.merge_parameters
+          ?standard_parameters:std_params () in
+        let query_parameters = Option.map
+          GapiService.StandardParameters.to_key_value_list params in
+        GapiService.post ?query_parameters ~data:() full_url
+          GapiRequest.parse_empty_response session 
+        
+      
+    end
+    
+    let getAutoForwarding
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "autoForwarding"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response AutoForwarding.of_data_model) session 
+      
+    let getImap
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "imap"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response ImapSettings.of_data_model) session 
+      
+    let getPop
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "pop"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response PopSettings.of_data_model) session 
+      
+    let getVacation
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "vacation"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.get ?query_parameters full_url
+        (GapiJson.parse_json_response VacationSettings.of_data_model) session 
+      
+    let updateAutoForwarding
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          autoForwarding
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "autoForwarding"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.put ?query_parameters
+        ~data_to_post:(GapiJson.render_json AutoForwarding.to_data_model)
+        ~data:autoForwarding full_url
+        (GapiJson.parse_json_response AutoForwarding.of_data_model) session 
+      
+    let updateImap
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          imapSettings
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "imap"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.put ?query_parameters
+        ~data_to_post:(GapiJson.render_json ImapSettings.to_data_model)
+        ~data:imapSettings full_url
+        (GapiJson.parse_json_response ImapSettings.of_data_model) session 
+      
+    let updatePop
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          popSettings
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "pop"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.put ?query_parameters
+        ~data_to_post:(GapiJson.render_json PopSettings.to_data_model)
+        ~data:popSettings full_url
+        (GapiJson.parse_json_response PopSettings.of_data_model) session 
+      
+    let updateVacation
+          ?(base_url = "https://www.googleapis.com/gmail/v1/users/")
+          ?std_params
+          ~userId
+          vacationSettings
+          session =
+      let full_url = GapiUtils.add_path_to_url [((fun x -> x) userId);
+        "settings"; "vacation"] base_url in
+      let params = GapiService.StandardParameters.merge_parameters
+        ?standard_parameters:std_params () in
+      let query_parameters = Option.map
+        GapiService.StandardParameters.to_key_value_list params in
+      GapiService.put ?query_parameters
+        ~data_to_post:(GapiJson.render_json VacationSettings.to_data_model)
+        ~data:vacationSettings full_url
+        (GapiJson.parse_json_response VacationSettings.of_data_model) session 
       
     
   end

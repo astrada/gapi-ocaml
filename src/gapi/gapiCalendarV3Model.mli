@@ -32,15 +32,15 @@ module FreeBusyRequest :
 sig
   type t = {
     calendarExpansionMax : int;
-    (** Maximal number of calendars for which FreeBusy information is to be provided. Optional. *)
+    (** Maximal number of calendars for which FreeBusy information is to be provided. Optional. Maximum value is 50. *)
     groupExpansionMax : int;
-    (** Maximal number of calendar identifiers to be provided for a single group. Optional. An error will be returned for a group with more members than this value. *)
+    (** Maximal number of calendar identifiers to be provided for a single group. Optional. An error is returned for a group with more members than this value. Maximum value is 100. *)
     items : FreeBusyRequestItem.t list;
     (** List of calendars and/or groups to query. *)
     timeMax : GapiDate.t;
-    (** The end of the interval for the query. *)
+    (** The end of the interval for the query formatted as per RFC3339. *)
     timeMin : GapiDate.t;
-    (** The start of the interval for the query. *)
+    (** The start of the interval for the query formatted as per RFC3339. *)
     timeZone : string;
     (** Time zone used in the response. Optional. The default is UTC. *)
     
@@ -140,15 +140,16 @@ sig
     displayName : string;
     (** The attendee's name, if available. Optional. *)
     email : string;
-    (** The attendee's email address, if available. This field must be present when adding an attendee. It must be a valid email address as per RFC5322. *)
+    (** The attendee's email address, if available. This field must be present when adding an attendee. It must be a valid email address as per RFC5322.
+Required when adding an attendee. *)
     id : string;
-    (** The attendee's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API *)
+    (** The attendee's Profile ID, if available. It corresponds to the id field in the People collection of the Google+ API *)
     optional : bool;
     (** Whether this is an optional attendee. Optional. The default is False. *)
     organizer : bool;
     (** Whether the attendee is the organizer of the event. Read-only. The default is False. *)
     resource : bool;
-    (** Whether the attendee is a resource. Read-only. The default is False. *)
+    (** Whether the attendee is a resource. Can only be set when the attendee is added to the event for the first time. Subsequent modifications are ignored. Optional. The default is False. *)
     responseStatus : string;
     (** The attendee's response status. Possible values are:  
 - "needsAction" - The attendee has not responded to the invitation. 
@@ -170,6 +171,74 @@ sig
   val resource : (t, bool) GapiLens.t
   val responseStatus : (t, string) GapiLens.t
   val self : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module EntryPoint :
+sig
+  type t = {
+    accessCode : string;
+    (** The access code to access the conference. The maximum length is 128 characters.
+When creating new conference data, populate only the subset of \{meetingCode, accessCode, passcode, password, pin\} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed.
+Optional. *)
+    entryPointType : string;
+    (** The type of the conference entry point.
+Possible values are:  
+- "video" - joining a conference over HTTP. A conference can have zero or one video entry point.
+- "phone" - joining a conference by dialing a phone number. A conference can have zero or more phone entry points.
+- "sip" - joining a conference over SIP. A conference can have zero or one sip entry point.
+- "more" - further conference joining instructions, for example additional phone numbers. A conference can have zero or one more entry point. A conference with only a more entry point is not a valid conference. *)
+    label : string;
+    (** The label for the URI. Visible to end users. Not localized. The maximum length is 512 characters.
+Examples:  
+- for video: meet.google.com/aaa-bbbb-ccc
+- for phone: +1 123 268 2601
+- for sip: 12345678\@altostrat.com
+- for more: should not be filled  
+Optional. *)
+    meetingCode : string;
+    (** The meeting code to access the conference. The maximum length is 128 characters.
+When creating new conference data, populate only the subset of \{meetingCode, accessCode, passcode, password, pin\} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed.
+Optional. *)
+    passcode : string;
+    (** The passcode to access the conference. The maximum length is 128 characters.
+When creating new conference data, populate only the subset of \{meetingCode, accessCode, passcode, password, pin\} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed. *)
+    password : string;
+    (** The password to access the conference. The maximum length is 128 characters.
+When creating new conference data, populate only the subset of \{meetingCode, accessCode, passcode, password, pin\} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed.
+Optional. *)
+    pin : string;
+    (** The PIN to access the conference. The maximum length is 128 characters.
+When creating new conference data, populate only the subset of \{meetingCode, accessCode, passcode, password, pin\} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed.
+Optional. *)
+    uri : string;
+    (** The URI of the entry point. The maximum length is 1300 characters.
+Format:  
+- for video, http: or https: schema is required.
+- for phone, tel: schema is required. The URI should include the entire dial sequence (e.g., tel:+12345678900,,,123456789;1234).
+- for sip, sip: schema is required, e.g., sip:12345678\@myprovider.com.
+- for more, http: or https: schema is required. *)
+    
+  }
+  
+  val accessCode : (t, string) GapiLens.t
+  val entryPointType : (t, string) GapiLens.t
+  val label : (t, string) GapiLens.t
+  val meetingCode : (t, string) GapiLens.t
+  val passcode : (t, string) GapiLens.t
+  val password : (t, string) GapiLens.t
+  val pin : (t, string) GapiLens.t
+  val uri : (t, string) GapiLens.t
   
   val empty : t
   
@@ -262,20 +331,92 @@ sig
   
 end
 
+module ConferenceProperties :
+sig
+  type t = {
+    allowedConferenceSolutionTypes : string list;
+    (** The types of conference solutions that are supported for this calendar.
+The possible values are:  
+- "eventHangout" 
+- "eventNamedHangout" 
+- "hangoutsMeet"  Optional. *)
+    
+  }
+  
+  val allowedConferenceSolutionTypes : (t, string list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ConferenceParametersAddOnParameters :
+sig
+  type t = {
+    parameters : (string * string) list;
+    (**  *)
+    
+  }
+  
+  val parameters : (t, (string * string) list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ConferenceParameters :
+sig
+  type t = {
+    addOnParameters : ConferenceParametersAddOnParameters.t;
+    (** Additional add-on specific data. *)
+    
+  }
+  
+  val addOnParameters : (t, ConferenceParametersAddOnParameters.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module CalendarNotification :
 sig
   type t = {
     _method : string;
     (** The method used to deliver the notification. Possible values are:  
 - "email" - Reminders are sent via email. 
-- "sms" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. SMS reminders are only available for Google Apps for Work, Education, and Government customers. *)
+- "sms" - Reminders are sent via SMS. This value is read-only and is ignored on inserts and updates. SMS reminders are only available for G Suite customers.  
+Required when adding a notification. *)
     _type : string;
     (** The type of notification. Possible values are:  
 - "eventCreation" - Notification sent when a new event is put on the calendar. 
 - "eventChange" - Notification sent when an event is changed. 
 - "eventCancellation" - Notification sent when an event is cancelled. 
-- "eventResponse" - Notification sent when an event is changed. 
-- "agenda" - An agenda with the events of the day (sent out in the morning). *)
+- "eventResponse" - Notification sent when an attendee responds to the event invitation. 
+- "agenda" - An agenda with the events of the day (sent out in the morning).  
+Required when adding a notification. *)
     
   }
   
@@ -300,10 +441,12 @@ sig
     _method : string;
     (** The method used by this reminder. Possible values are:  
 - "email" - Reminders are sent via email. 
-- "sms" - Reminders are sent via SMS. These are only available for Google Apps for Work, Education, and Government customers. Requests to set SMS reminders for other account types are ignored. 
-- "popup" - Reminders are sent via a UI popup. *)
+- "sms" - Reminders are sent via SMS. These are only available for G Suite customers. Requests to set SMS reminders for other account types are ignored. 
+- "popup" - Reminders are sent via a UI popup.  
+Required when adding a reminder. *)
     minutes : int;
-    (** Number of minutes before the start of the event when the reminder should trigger. Valid values are between 0 and 40320 (4 weeks in minutes). *)
+    (** Number of minutes before the start of the event when the reminder should trigger. Valid values are between 0 and 40320 (4 weeks in minutes).
+Required when adding a reminder. *)
     
   }
   
@@ -353,6 +496,8 @@ sig
     (** The main color of the calendar in the hexadecimal format "#0088aa". This property supersedes the index-based colorId property. To set or change this property, you need to specify colorRgbFormat=true in the parameters of the insert, update and patch methods. Optional. *)
     colorId : string;
     (** The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). This property is superseded by the backgroundColor and foregroundColor properties and can be ignored when using these properties. Optional. *)
+    conferenceProperties : ConferenceProperties.t;
+    (** Conferencing properties for this calendar, for example what types of conferences are allowed. *)
     defaultReminders : EventReminder.t list;
     (** The default reminders that the authenticated user has for this calendar. *)
     deleted : bool;
@@ -389,6 +534,7 @@ sig
   val accessRole : (t, string) GapiLens.t
   val backgroundColor : (t, string) GapiLens.t
   val colorId : (t, string) GapiLens.t
+  val conferenceProperties : (t, ConferenceProperties.t) GapiLens.t
   val defaultReminders : (t, EventReminder.t list) GapiLens.t
   val deleted : (t, bool) GapiLens.t
   val description : (t, string) GapiLens.t
@@ -518,6 +664,8 @@ end
 module Calendar :
 sig
   type t = {
+    conferenceProperties : ConferenceProperties.t;
+    (** Conferencing properties for this calendar, for example what types of conferences are allowed. *)
     description : string;
     (** Description of the calendar. Optional. *)
     etag : string;
@@ -535,6 +683,7 @@ sig
     
   }
   
+  val conferenceProperties : (t, ConferenceProperties.t) GapiLens.t
   val description : (t, string) GapiLens.t
   val etag : (t, string) GapiLens.t
   val id : (t, string) GapiLens.t
@@ -542,6 +691,116 @@ sig
   val location : (t, string) GapiLens.t
   val summary : (t, string) GapiLens.t
   val timeZone : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ConferenceSolutionKey :
+sig
+  type t = {
+    _type : string;
+    (** The conference solution type.
+If a client encounters an unfamiliar or empty type, it should still be able to display the entry points. However, it should disallow modifications.
+The possible values are:  
+- "eventHangout" for Hangouts for consumers (http://hangouts.google.com)
+- "eventNamedHangout" for classic Hangouts for G Suite users (http://hangouts.google.com)
+- "hangoutsMeet" for Hangouts Meet (http://meet.google.com) *)
+    
+  }
+  
+  val _type : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ConferenceRequestStatus :
+sig
+  type t = {
+    statusCode : string;
+    (** The current status of the conference create request. Read-only.
+The possible values are:  
+- "pending": the conference create request is still being processed.
+- "success": the conference create request succeeded, the entry points are populated.
+- "failure": the conference create request failed, there are no entry points. *)
+    
+  }
+  
+  val statusCode : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module CreateConferenceRequest :
+sig
+  type t = {
+    conferenceSolutionKey : ConferenceSolutionKey.t;
+    (** The conference solution, such as Hangouts or Hangouts Meet. *)
+    requestId : string;
+    (** The client-generated unique ID for this request.
+Clients should regenerate this ID for every new request. If an ID provided is the same as for the previous request, the request is ignored. *)
+    status : ConferenceRequestStatus.t;
+    (** The status of the conference create request. *)
+    
+  }
+  
+  val conferenceSolutionKey : (t, ConferenceSolutionKey.t) GapiLens.t
+  val requestId : (t, string) GapiLens.t
+  val status : (t, ConferenceRequestStatus.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ConferenceSolution :
+sig
+  type t = {
+    iconUri : string;
+    (** The user-visible icon for this solution. *)
+    key : ConferenceSolutionKey.t;
+    (** The key which can uniquely identify the conference solution for this event. *)
+    name : string;
+    (** The user-visible name of this solution. Not localized. *)
+    
+  }
+  
+  val iconUri : (t, string) GapiLens.t
+  val key : (t, ConferenceSolutionKey.t) GapiLens.t
+  val name : (t, string) GapiLens.t
   
   val empty : t
   
@@ -675,7 +934,8 @@ sig
 For Google Drive files, this is the ID of the corresponding Files resource entry in the Drive API. *)
     fileUrl : string;
     (** URL link to the attachment.
-For adding Google Drive file attachments use the same format as in alternateLink property of the Files resource in the Drive API. *)
+For adding Google Drive file attachments use the same format as in alternateLink property of the Files resource in the Drive API.
+Required when adding an attachment. *)
     iconLink : string;
     (** URL link to the attachment's icon. Read-only. *)
     mimeType : string;
@@ -690,6 +950,59 @@ For adding Google Drive file attachments use the same format as in alternateLink
   val iconLink : (t, string) GapiLens.t
   val mimeType : (t, string) GapiLens.t
   val title : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ConferenceData :
+sig
+  type t = {
+    conferenceId : string;
+    (** The ID of the conference.
+Can be used by developers to keep track of conferences, should not be displayed to users.
+Values for solution types:  
+- "eventHangout": unset.
+- "eventNamedHangout": the name of the Hangout.
+- "hangoutsMeet": the 10-letter meeting code, for example "aaa-bbbb-ccc".  Optional. *)
+    conferenceSolution : ConferenceSolution.t;
+    (** The conference solution, such as Hangouts or Hangouts Meet.
+Unset for a conference with a failed create request.
+Either conferenceSolution and at least one entryPoint, or createRequest is required. *)
+    createRequest : CreateConferenceRequest.t;
+    (** A request to generate a new conference and attach it to the event. The data is generated asynchronously. To see whether the data is present check the status field.
+Either conferenceSolution and at least one entryPoint, or createRequest is required. *)
+    entryPoints : EntryPoint.t list;
+    (** Information about individual conference entry points, such as URLs or phone numbers.
+All of them must belong to the same conference.
+Either conferenceSolution and at least one entryPoint, or createRequest is required. *)
+    notes : string;
+    (** Additional notes (such as instructions from the domain administrator, legal notices) to display to the user. Can contain HTML. The maximum length is 2048 characters. Optional. *)
+    parameters : ConferenceParameters.t;
+    (** Additional properties related to a conference. An example would be a solution-specific setting for enabling video streaming. *)
+    signature : string;
+    (** The signature of the conference data.
+Genereated on server side. Must be preserved while copying the conference data between events, otherwise the conference data will not be copied.
+Unset for a conference with a failed create request.
+Optional for a conference with a pending create request. *)
+    
+  }
+  
+  val conferenceId : (t, string) GapiLens.t
+  val conferenceSolution : (t, ConferenceSolution.t) GapiLens.t
+  val createRequest : (t, CreateConferenceRequest.t) GapiLens.t
+  val entryPoints : (t, EntryPoint.t list) GapiLens.t
+  val notes : (t, string) GapiLens.t
+  val parameters : (t, ConferenceParameters.t) GapiLens.t
+  val signature : (t, string) GapiLens.t
   
   val empty : t
   
@@ -755,7 +1068,7 @@ sig
       email : string;
       (** The organizer's email address, if available. It must be a valid email address as per RFC5322. *)
       id : string;
-      (** The organizer's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API *)
+      (** The organizer's Profile ID, if available. It corresponds to the id field in the People collection of the Google+ API *)
       self : bool;
       (** Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False. *)
       
@@ -844,7 +1157,7 @@ sig
       email : string;
       (** The creator's email address, if available. *)
       id : string;
-      (** The creator's Profile ID, if available. It corresponds to theid field in the People collection of the Google+ API *)
+      (** The creator's Profile ID, if available. It corresponds to the id field in the People collection of the Google+ API *)
       self : bool;
       (** Whether the creator corresponds to the calendar on which this copy of the event appears. Read-only. The default is False. *)
       
@@ -876,6 +1189,8 @@ There can be at most 25 attachments per event, *)
     (** Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False. *)
     colorId : string;
     (** The color of the event. This is an ID referring to an entry in the event section of the colors definition (see the  colors endpoint). Optional. *)
+    conferenceData : ConferenceData.t;
+    (** The conference-related information, such as details of a Hangouts Meet conference. To create new conference details use the createRequest field. To persist your changes, remember to set the conferenceDataVersion request parameter to 1 for all event modification requests. *)
     created : GapiDate.t;
     (** Creation time of the event (as a RFC3339 timestamp). Read-only. *)
     creator : Creator.t;
@@ -921,7 +1236,7 @@ Note that the icalUID and the id are not identical and only one of them should b
     organizer : Organizer.t;
     (** The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in attendees with the organizer field set to True. To change the organizer, use the move operation. Read-only, except when importing an event. *)
     originalStartTime : EventDateTime.t;
-    (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable. *)
+    (** For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. It uniquely identifies the instance within the recurring event series even if the instance was moved to a different time. Immutable. *)
     privateCopy : bool;
     (** Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False. *)
     recurrence : string list;
@@ -940,13 +1255,19 @@ Note that the icalUID and the id are not identical and only one of them should b
     (** Status of the event. Optional. Possible values are:  
 - "confirmed" - The event is confirmed. This is the default status. 
 - "tentative" - The event is tentatively confirmed. 
-- "cancelled" - The event is cancelled. *)
+- "cancelled" - The event is cancelled (deleted). The list method returns cancelled events only on incremental sync (when syncToken or updatedMin are specified) or if the showDeleted flag is set to true. The get method always returns them.
+A cancelled status represents two different states depending on the event type:  
+- Cancelled exceptions of an uncancelled recurring event indicate that this instance should no longer be presented to the user. Clients should store these events for the lifetime of the parent recurring event.
+Cancelled exceptions are only guaranteed to have values for the id, recurringEventId and originalStartTime fields populated. The other fields might be empty.  
+- All other cancelled events represent deleted events. Clients should remove their locally synced copies. Such cancelled events will eventually disappear, so do not rely on them being available indefinitely.
+Deleted events are only guaranteed to have the id field populated.   On the organizer's calendar, cancelled events continue to expose event details (summary, location, etc.) so that they can be restored (undeleted). Similarly, the events to which the user was invited and that they manually removed continue to provide details. However, incremental sync requests with showDeleted set to false will not return these details.
+If an event changes its organizer (for example via the move operation) and the original organizer is not on the attendee list, it will leave behind a cancelled event where only the id field is guaranteed to be populated. *)
     summary : string;
     (** Title of the event. *)
     transparency : string;
     (** Whether the event blocks time on the calendar. Optional. Possible values are:  
-- "opaque" - The event blocks time on the calendar. This is the default value. 
-- "transparent" - The event does not block time on the calendar. *)
+- "opaque" - Default value. The event does block time on the calendar. This is equivalent to setting Show me as to Busy in the Calendar UI. 
+- "transparent" - The event does not block time on the calendar. This is equivalent to setting Show me as to Available in the Calendar UI. *)
     updated : GapiDate.t;
     (** Last modification time of the event (as a RFC3339 timestamp). Read-only. *)
     visibility : string;
@@ -963,6 +1284,7 @@ Note that the icalUID and the id are not identical and only one of them should b
   val attendees : (t, EventAttendee.t list) GapiLens.t
   val attendeesOmitted : (t, bool) GapiLens.t
   val colorId : (t, string) GapiLens.t
+  val conferenceData : (t, ConferenceData.t) GapiLens.t
   val created : (t, GapiDate.t) GapiLens.t
   val creator : (t, Creator.t) GapiLens.t
   val description : (t, string) GapiLens.t

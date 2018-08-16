@@ -2,7 +2,7 @@
 
 (** Service definition for Google Analytics API (v3).
   
-  View and manage your Google Analytics data.
+  Views and manages your Google Analytics data..
   
   For more information about this service, see the
   {{:https://developers.google.com/analytics/}API Documentation}.
@@ -27,6 +27,9 @@ sig
   
   val analytics_readonly : string
   (** View your Google Analytics data *)
+  
+  val analytics_user_deletion : string
+  (** Manage Google Analytics user deletion requests *)
   
   
 end
@@ -558,6 +561,25 @@ sig
   module UnsampledReports :
   sig
     
+    (** Deletes an unsampled report.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account ID to delete the unsampled report for.
+      @param webPropertyId Web property ID to delete the unsampled reports for.
+      @param profileId View (Profile) ID to delete the unsampled report for.
+      @param unsampledReportId ID of the unsampled report to be deleted.
+      *)
+    val delete :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      profileId:string ->
+      unsampledReportId:string ->
+      GapiConversation.Session.t ->
+      unit * GapiConversation.Session.t
+    
     (** Returns a single unsampled report.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
@@ -642,6 +664,120 @@ sig
     
   end
   
+  module RemarketingAudience :
+  sig
+    
+    (** Delete a remarketing audience.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId Account ID to which the remarketing audience belongs.
+      @param webPropertyId Web property ID to which the remarketing audience belongs.
+      @param remarketingAudienceId The ID of the remarketing audience to delete.
+      *)
+    val delete :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      remarketingAudienceId:string ->
+      GapiConversation.Session.t ->
+      unit * GapiConversation.Session.t
+    
+    (** Gets a remarketing audience to which the user has access.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param etag Optional ETag.
+      @param std_params Optional standard parameters.
+      @param accountId The account ID of the remarketing audience to retrieve.
+      @param webPropertyId The web property ID of the remarketing audience to retrieve.
+      @param remarketingAudienceId The ID of the remarketing audience to retrieve.
+      *)
+    val get :
+      ?base_url:string ->
+      ?etag:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      remarketingAudienceId:string ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.RemarketingAudience.t * GapiConversation.Session.t
+    
+    (** Creates a new remarketing audience.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId The account ID for which to create the remarketing audience.
+      @param webPropertyId Web property ID for which to create the remarketing audience.
+      *)
+    val insert :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      GapiAnalyticsV3Model.RemarketingAudience.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.RemarketingAudience.t * GapiConversation.Session.t
+    
+    (** Lists remarketing audiences to which the user has access.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param max_results The maximum number of remarketing audiences to include in this response.
+      @param start_index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+      @param accountId The account ID of the remarketing audiences to retrieve.
+      @param webPropertyId The web property ID of the remarketing audiences to retrieve.
+      *)
+    val list :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      ?_type:string ->
+      ?max_results:int ->
+      ?start_index:int ->
+      accountId:string ->
+      webPropertyId:string ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.RemarketingAudiences.t * GapiConversation.Session.t
+    
+    (** Updates an existing remarketing audience. This method supports patch semantics.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId The account ID of the remarketing audience to update.
+      @param webPropertyId The web property ID of the remarketing audience to update.
+      @param remarketingAudienceId The ID of the remarketing audience to update.
+      *)
+    val patch :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      remarketingAudienceId:string ->
+      GapiAnalyticsV3Model.RemarketingAudience.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.RemarketingAudience.t * GapiConversation.Session.t
+    
+    (** Updates an existing remarketing audience.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      @param accountId The account ID of the remarketing audience to update.
+      @param webPropertyId The web property ID of the remarketing audience to update.
+      @param remarketingAudienceId The ID of the remarketing audience to update.
+      *)
+    val update :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      accountId:string ->
+      webPropertyId:string ->
+      remarketingAudienceId:string ->
+      GapiAnalyticsV3Model.RemarketingAudience.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.RemarketingAudience.t * GapiConversation.Session.t
+    
+    
+  end
+  
   module Profiles :
   sig
     
@@ -667,9 +803,9 @@ sig
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
       @param etag Optional ETag.
       @param std_params Optional standard parameters.
-      @param accountId Account ID to retrieve the goal for.
-      @param webPropertyId Web property ID to retrieve the goal for.
-      @param profileId View (Profile) ID to retrieve the goal for.
+      @param accountId Account ID to retrieve the view (profile) for.
+      @param webPropertyId Web property ID to retrieve the view (profile) for.
+      @param profileId View (Profile) ID to retrieve the view (profile) for.
       *)
     val get :
       ?base_url:string ->
@@ -1027,7 +1163,7 @@ sig
       GapiConversation.Session.t ->
       GapiAnalyticsV3Model.Goals.t * GapiConversation.Session.t
     
-    (** Updates an existing view (profile). This method supports patch semantics.
+    (** Updates an existing goal. This method supports patch semantics.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
       @param std_params Optional standard parameters.
@@ -1047,7 +1183,7 @@ sig
       GapiConversation.Session.t ->
       GapiAnalyticsV3Model.Goal.t * GapiConversation.Session.t
     
-    (** Updates an existing view (profile).
+    (** Updates an existing goal.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
       @param std_params Optional standard parameters.
@@ -1521,6 +1657,24 @@ sig
     
   end
   
+  module ClientId :
+  sig
+    
+    (** Hashes the given Client ID.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      *)
+    val hashClientId :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      GapiAnalyticsV3Model.HashClientIdRequest.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.HashClientIdResponse.t * GapiConversation.Session.t
+    
+    
+  end
+  
   module Accounts :
   sig
     
@@ -1674,6 +1828,42 @@ sig
     GapiAnalyticsV3Model.AccountTicket.t ->
     GapiConversation.Session.t ->
     GapiAnalyticsV3Model.AccountTicket.t * GapiConversation.Session.t
+  
+  (** Provision account.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+    @param std_params Optional standard parameters.
+    *)
+  val createAccountTree :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    GapiAnalyticsV3Model.AccountTreeRequest.t ->
+    GapiConversation.Session.t ->
+    GapiAnalyticsV3Model.AccountTreeResponse.t * GapiConversation.Session.t
+  
+  
+end
+
+module UserDeletionResource :
+sig
+  module UserDeletionRequest :
+  sig
+    
+    (** Insert or update a user deletion requests.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/analytics/v3/"]).
+      @param std_params Optional standard parameters.
+      *)
+    val upsert :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      GapiAnalyticsV3Model.UserDeletionRequest.t ->
+      GapiConversation.Session.t ->
+      GapiAnalyticsV3Model.UserDeletionRequest.t * GapiConversation.Session.t
+    
+    
+  end
+  
   
   
 end

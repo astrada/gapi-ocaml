@@ -2,7 +2,7 @@
 
 (** Service definition for Gmail API (v1).
   
-  The Gmail REST API..
+  Access Gmail mailboxes including sending user email..
   
   For more information about this service, see the
   {{:https://developers.google.com/gmail/api/}API Documentation}.
@@ -11,7 +11,7 @@
 module Scope :
 sig
   val mail_google_com : string
-  (** View and manage your mail *)
+  (** Read, send, delete, and manage your email *)
   
   val gmail_compose : string
   (** Manage drafts and send emails *)
@@ -22,14 +22,23 @@ sig
   val gmail_labels : string
   (** Manage mailbox labels *)
   
+  val gmail_metadata : string
+  (** View your email message metadata such as labels and headers, but not the email body *)
+  
   val gmail_modify : string
   (** View and modify but not delete your email *)
   
   val gmail_readonly : string
-  (** View your emails messages and settings *)
+  (** View your email messages and settings *)
   
   val gmail_send : string
   (** Send email on your behalf *)
+  
+  val gmail_settings_basic : string
+  (** Manage your basic mail settings *)
+  
+  val gmail_settings_sharing : string
+  (** Manage your sensitive mail settings, including who can manage your mail *)
   
   
 end
@@ -98,7 +107,7 @@ sig
       @param maxResults Maximum number of threads to return.
       @param labelIds Only return threads with labels that match all of the specified label IDs.
       @param pageToken Page token to retrieve a specific page of results in the list.
-      @param q Only return threads matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid: is:unread".
+      @param q Only return threads matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid: is:unread". Parameter cannot be used when accessing the api using the gmail.metadata scope.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
     val list :
@@ -162,6 +171,468 @@ sig
     
   end
   
+  module Settings :
+  sig
+    module SendAs :
+    sig
+      module SmimeInfo :
+      sig
+        
+        (** Deletes the specified S/MIME config for the specified send-as alias.
+          
+          @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+          @param std_params Optional standard parameters.
+          @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+          @param sendAsEmail The email address that appears in the "From:" header for mail sent using this alias.
+          @param id The immutable ID for the SmimeInfo.
+          *)
+        val delete :
+          ?base_url:string ->
+          ?std_params:GapiService.StandardParameters.t ->
+          userId:string ->
+          sendAsEmail:string ->
+          id:string ->
+          GapiConversation.Session.t ->
+          unit * GapiConversation.Session.t
+        
+        (** Gets the specified S/MIME config for the specified send-as alias.
+          
+          @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+          @param etag Optional ETag.
+          @param std_params Optional standard parameters.
+          @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+          @param sendAsEmail The email address that appears in the "From:" header for mail sent using this alias.
+          @param id The immutable ID for the SmimeInfo.
+          *)
+        val get :
+          ?base_url:string ->
+          ?etag:string ->
+          ?std_params:GapiService.StandardParameters.t ->
+          userId:string ->
+          sendAsEmail:string ->
+          id:string ->
+          GapiConversation.Session.t ->
+          GapiGmailV1Model.SmimeInfo.t * GapiConversation.Session.t
+        
+        (** Insert (upload) the given S/MIME config for the specified send-as alias. Note that pkcs12 format is required for the key.
+          
+          @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+          @param std_params Optional standard parameters.
+          @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+          @param sendAsEmail The email address that appears in the "From:" header for mail sent using this alias.
+          *)
+        val insert :
+          ?base_url:string ->
+          ?std_params:GapiService.StandardParameters.t ->
+          userId:string ->
+          sendAsEmail:string ->
+          GapiGmailV1Model.SmimeInfo.t ->
+          GapiConversation.Session.t ->
+          GapiGmailV1Model.SmimeInfo.t * GapiConversation.Session.t
+        
+        (** Lists S/MIME configs for the specified send-as alias.
+          
+          @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+          @param std_params Optional standard parameters.
+          @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+          @param sendAsEmail The email address that appears in the "From:" header for mail sent using this alias.
+          *)
+        val list :
+          ?base_url:string ->
+          ?std_params:GapiService.StandardParameters.t ->
+          userId:string ->
+          sendAsEmail:string ->
+          GapiConversation.Session.t ->
+          GapiGmailV1Model.ListSmimeInfoResponse.t * GapiConversation.Session.t
+        
+        (** Sets the default S/MIME config for the specified send-as alias.
+          
+          @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+          @param std_params Optional standard parameters.
+          @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+          @param sendAsEmail The email address that appears in the "From:" header for mail sent using this alias.
+          @param id The immutable ID for the SmimeInfo.
+          *)
+        val setDefault :
+          ?base_url:string ->
+          ?std_params:GapiService.StandardParameters.t ->
+          userId:string ->
+          sendAsEmail:string ->
+          id:string ->
+          GapiConversation.Session.t ->
+          unit * GapiConversation.Session.t
+        
+        
+      end
+      
+      
+      (** Creates a custom "from" send-as alias. If an SMTP MSA is specified, Gmail will attempt to connect to the SMTP service to validate the configuration before creating the alias. If ownership verification is required for the alias, a message will be sent to the email address and the resource's verification status will be set to pending; otherwise, the resource will be created with verification status set to accepted. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.
+
+This method is only available to service account clients that have been delegated domain-wide authority.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        *)
+      val create :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        GapiGmailV1Model.SendAs.t ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.SendAs.t * GapiConversation.Session.t
+      
+      (** Deletes the specified send-as alias. Revokes any verification that may have been required for using it.
+
+This method is only available to service account clients that have been delegated domain-wide authority.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param sendAsEmail The send-as alias to be deleted.
+        *)
+      val delete :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        sendAsEmail:string ->
+        GapiConversation.Session.t ->
+        unit * GapiConversation.Session.t
+      
+      (** Gets the specified send-as alias. Fails with an HTTP 404 error if the specified address is not a member of the collection.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param etag Optional ETag.
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param sendAsEmail The send-as alias to be retrieved.
+        *)
+      val get :
+        ?base_url:string ->
+        ?etag:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        sendAsEmail:string ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.SendAs.t * GapiConversation.Session.t
+      
+      (** Lists the send-as aliases for the specified account. The result includes the primary send-as address associated with the account as well as any custom "from" aliases.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        *)
+      val list :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.ListSendAsResponse.t * GapiConversation.Session.t
+      
+      (** Updates a send-as alias. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.
+
+Addresses other than the primary address for the account can only be updated by service account clients that have been delegated domain-wide authority. This method supports patch semantics.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param sendAsEmail The send-as alias to be updated.
+        *)
+      val patch :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        sendAsEmail:string ->
+        GapiGmailV1Model.SendAs.t ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.SendAs.t * GapiConversation.Session.t
+      
+      (** Updates a send-as alias. If a signature is provided, Gmail will sanitize the HTML before saving it with the alias.
+
+Addresses other than the primary address for the account can only be updated by service account clients that have been delegated domain-wide authority.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param sendAsEmail The send-as alias to be updated.
+        *)
+      val update :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        sendAsEmail:string ->
+        GapiGmailV1Model.SendAs.t ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.SendAs.t * GapiConversation.Session.t
+      
+      (** Sends a verification email to the specified send-as alias address. The verification status must be pending.
+
+This method is only available to service account clients that have been delegated domain-wide authority.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param sendAsEmail The send-as alias to be verified.
+        *)
+      val verify :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        sendAsEmail:string ->
+        GapiConversation.Session.t ->
+        unit * GapiConversation.Session.t
+      
+      
+    end
+    
+    module ForwardingAddresses :
+    sig
+      
+      (** Creates a forwarding address. If ownership verification is required, a message will be sent to the recipient and the resource's verification status will be set to pending; otherwise, the resource will be created with verification status set to accepted.
+
+This method is only available to service account clients that have been delegated domain-wide authority.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        *)
+      val create :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        GapiGmailV1Model.ForwardingAddress.t ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.ForwardingAddress.t * GapiConversation.Session.t
+      
+      (** Deletes the specified forwarding address and revokes any verification that may have been required.
+
+This method is only available to service account clients that have been delegated domain-wide authority.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param forwardingEmail The forwarding address to be deleted.
+        *)
+      val delete :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        forwardingEmail:string ->
+        GapiConversation.Session.t ->
+        unit * GapiConversation.Session.t
+      
+      (** Gets the specified forwarding address.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param etag Optional ETag.
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param forwardingEmail The forwarding address to be retrieved.
+        *)
+      val get :
+        ?base_url:string ->
+        ?etag:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        forwardingEmail:string ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.ForwardingAddress.t * GapiConversation.Session.t
+      
+      (** Lists the forwarding addresses for the specified account.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        *)
+      val list :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.ListForwardingAddressesResponse.t * GapiConversation.Session.t
+      
+      
+    end
+    
+    module Filters :
+    sig
+      
+      (** Creates a filter.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        *)
+      val create :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        GapiGmailV1Model.Filter.t ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.Filter.t * GapiConversation.Session.t
+      
+      (** Deletes a filter.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param id The ID of the filter to be deleted.
+        *)
+      val delete :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        id:string ->
+        GapiConversation.Session.t ->
+        unit * GapiConversation.Session.t
+      
+      (** Gets a filter.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param etag Optional ETag.
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        @param id The ID of the filter to be fetched.
+        *)
+      val get :
+        ?base_url:string ->
+        ?etag:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        id:string ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.Filter.t * GapiConversation.Session.t
+      
+      (** Lists the message filters of a Gmail user.
+        
+        @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+        @param std_params Optional standard parameters.
+        @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+        *)
+      val list :
+        ?base_url:string ->
+        ?std_params:GapiService.StandardParameters.t ->
+        userId:string ->
+        GapiConversation.Session.t ->
+        GapiGmailV1Model.ListFiltersResponse.t * GapiConversation.Session.t
+      
+      
+    end
+    
+    
+    (** Gets the auto-forwarding setting for the specified account.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val getAutoForwarding :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.AutoForwarding.t * GapiConversation.Session.t
+    
+    (** Gets IMAP settings.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val getImap :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.ImapSettings.t * GapiConversation.Session.t
+    
+    (** Gets POP settings.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val getPop :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.PopSettings.t * GapiConversation.Session.t
+    
+    (** Gets vacation responder settings.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val getVacation :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.VacationSettings.t * GapiConversation.Session.t
+    
+    (** Updates the auto-forwarding setting for the specified account. A verified forwarding address must be specified when auto-forwarding is enabled.
+
+This method is only available to service account clients that have been delegated domain-wide authority.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val updateAutoForwarding :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiGmailV1Model.AutoForwarding.t ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.AutoForwarding.t * GapiConversation.Session.t
+    
+    (** Updates IMAP settings.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val updateImap :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiGmailV1Model.ImapSettings.t ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.ImapSettings.t * GapiConversation.Session.t
+    
+    (** Updates POP settings.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val updatePop :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiGmailV1Model.PopSettings.t ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.PopSettings.t * GapiConversation.Session.t
+    
+    (** Updates vacation responder settings.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId User's email address. The special value "me" can be used to indicate the authenticated user.
+      *)
+    val updateVacation :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiGmailV1Model.VacationSettings.t ->
+      GapiConversation.Session.t ->
+      GapiGmailV1Model.VacationSettings.t * GapiConversation.Session.t
+    
+    
+  end
+  
   module Messages :
   sig
     module Attachments :
@@ -218,6 +689,34 @@ sig
       
     end
     
+    (** Deletes many messages by message ID. Provides no guarantees that messages were not already deleted or even existed at all.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+      *)
+    val batchDelete :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiGmailV1Model.BatchDeleteMessagesRequest.t ->
+      GapiConversation.Session.t ->
+      unit * GapiConversation.Session.t
+    
+    (** Modifies the labels on the specified messages.
+      
+      @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
+      @param std_params Optional standard parameters.
+      @param userId The user's email address. The special value me can be used to indicate the authenticated user.
+      *)
+    val batchModify :
+      ?base_url:string ->
+      ?std_params:GapiService.StandardParameters.t ->
+      userId:string ->
+      GapiGmailV1Model.BatchModifyMessagesRequest.t ->
+      GapiConversation.Session.t ->
+      unit * GapiConversation.Session.t
+    
     (** Immediately and permanently deletes the specified message. This operation cannot be undone. Prefer messages.trash instead.
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
@@ -258,7 +757,7 @@ sig
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param std_params Optional standard parameters.
-      @param deleted Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.
+      @param deleted Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.
       @param internalDateSource Source for Gmail's internal date of the message.
       @param neverMarkSpam Ignore the Gmail spam classifier decision and never mark this email as SPAM in the mailbox.
       @param processForCalendar Process calendar invites in the email and add any extracted meetings to the Google Calendar for this user.
@@ -281,7 +780,7 @@ sig
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param std_params Optional standard parameters.
-      @param deleted Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.
+      @param deleted Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.
       @param internalDateSource Source for Gmail's internal date of the message.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
@@ -304,7 +803,7 @@ sig
       @param maxResults Maximum number of messages to return.
       @param labelIds Only return messages with labels that match all of the specified label IDs.
       @param pageToken Page token to retrieve a specific page of results in the list.
-      @param q Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid: is:unread".
+      @param q Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid:<somemsgid@example.com> is:unread". Parameter cannot be used when accessing the api using the gmail.metadata scope.
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
     val list :
@@ -483,11 +982,27 @@ sig
   module History :
   sig
     
+    module HistoryTypes :
+    sig
+      type t =
+        | Default
+        | LabelAdded (**  *)
+        | LabelRemoved (**  *)
+        | MessageAdded (**  *)
+        | MessageDeleted (**  *)
+        
+      val to_string : t -> string
+      
+      val of_string : string -> t
+      
+    end
+    
     (** Lists the history of all changes to the given mailbox. History results are returned in chronological order (increasing historyId).
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param std_params Optional standard parameters.
       @param maxResults The maximum number of history records to return.
+      @param historyTypes History types to be returned by the function
       @param labelId Only return messages with a label matching the ID.
       @param pageToken Page token to retrieve a specific page of results in the list.
       @param startHistoryId Required. Returns history records after the specified startHistoryId. The supplied startHistoryId should be obtained from the historyId of a message, thread, or previous list response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date startHistoryId typically returns an HTTP 404 error code. A historyId is typically valid for at least a week, but in some rare circumstances may be valid for only a few hours. If you receive an HTTP 404 error response, your application should perform a full sync. If you receive no nextPageToken in the response, there are no updates to retrieve and you can store the returned historyId for a future request.
@@ -497,6 +1012,7 @@ sig
       ?base_url:string ->
       ?std_params:GapiService.StandardParameters.t ->
       ?maxResults:int ->
+      ?historyTypes:HistoryTypes.t list ->
       ?labelId:string ->
       ?pageToken:string ->
       ?startHistoryId:string ->
@@ -578,15 +1094,19 @@ sig
       
       @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/gmail/v1/users/"]).
       @param std_params Optional standard parameters.
+      @param includeSpamTrash Include drafts from SPAM and TRASH in the results.
       @param maxResults Maximum number of drafts to return.
       @param pageToken Page token to retrieve a specific page of results in the list.
+      @param q Only return draft messages matching the specified query. Supports the same query format as the Gmail search box. For example, "from:someuser@example.com rfc822msgid: is:unread".
       @param userId The user's email address. The special value me can be used to indicate the authenticated user.
       *)
     val list :
       ?base_url:string ->
       ?std_params:GapiService.StandardParameters.t ->
+      ?includeSpamTrash:bool ->
       ?maxResults:int ->
       ?pageToken:string ->
+      ?q:string ->
       userId:string ->
       GapiConversation.Session.t ->
       GapiGmailV1Model.ListDraftsResponse.t * GapiConversation.Session.t

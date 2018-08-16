@@ -2,7 +2,7 @@
 
 (** Service definition for Google Site Verification API (v1).
   
-  Lets you programatically verify ownership of websites or domains with Google..
+  Verifies ownership of websites or domains with Google..
   
   For more information about this service, see the
   {{:https://developers.google.com/site-verification/}API Documentation}.
