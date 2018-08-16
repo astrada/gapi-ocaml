@@ -6,10 +6,10 @@ homepage: "https://github.com/astrada/gapi-ocaml"
 dev-repo: "https://github.com/astrada/gapi-ocaml.git"
 bug-reports: "https://github.com/astrada/gapi-ocaml/issues"
 build: [
-  ["dune" "build" "-p" name "-j" jobs "--profile release"]
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 build-test: [
-  ["dune" "runtest" "-p" name "-j" jobs "--profile release"]
+  ["dune" "runtest" "-p" name "-j" jobs]
 ]
 depends: [
   "cryptokit"
