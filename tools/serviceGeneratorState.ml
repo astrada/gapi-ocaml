@@ -15,7 +15,16 @@ type name_type =
 
 module OCamlName =
 struct
-  let keywords = ["type"; "method"; "private"; "end"; "ref"; "object"; "open"]
+  let keywords = [
+    "type";
+    "method";
+    "private";
+    "end";
+    "ref";
+    "object";
+    "open";
+    "to";
+  ]
 
   let is_first_character_valid s =
     match s.[0] with
