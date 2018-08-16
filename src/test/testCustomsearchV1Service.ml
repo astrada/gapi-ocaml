@@ -16,7 +16,6 @@ let test_list_cse () =
          CseResource.list
            ~std_params
            ~q:"calendar"
-           ~cref:"http://code.google.com/cse/googlecode-context.xml"
            session
        in
          assert_equal
