@@ -1,4 +1,5 @@
 open OUnit
+open GapiUtils.Infix
 open GapiLens.Infix
 open GapiDriveV3Model
 
