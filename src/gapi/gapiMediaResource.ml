@@ -253,8 +253,7 @@ let update_upload_state range_header upload_state =
       GapiUtils.string_after_char '-' range_header
         |> Int64.of_string
         |> Int64.succ
-    with Not_found ->
-      failwith ("Cannot parse Range header: " ^ range_header)
+    with Not_found -> 0L
   in
   if current_offset >= upload_state.resource.content_length then
     failwith (Printf.sprintf "Cannot updata upload state: \
