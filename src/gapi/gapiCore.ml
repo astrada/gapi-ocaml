@@ -142,43 +142,44 @@ struct
     if String.contains full_header ':' then
       let (key, v) = ExtString.String.split full_header ":" in
       let value = ExtString.String.strip v in
-        match key with
-            "Content-Type" ->
-              ContentType value
-          | "Location" ->
-              Location value
-          | "Authorization" ->
-              Authorization value
-          | "ETag" ->
-              ETag value
-          | "If-None-Match" ->
-              IfNoneMatch value
-          | "If-Match" ->
-              IfMatch value
-          | "GData-Version" ->
-              GdataVersion value
-          | "Content-Range" ->
-              ContentRange value
-          | "Range" ->
-              Range value
-          | "X-Upload-Content-Type" ->
-              UploadContentType value
-          | "X-Upload-Content-Length" ->
-              UploadContentLength value
-          | "Slug" ->
-              Slug value
-          | "Content-Length" ->
-              ContentLength value
-          | _ ->
-              KeyValueHeader (key, value)
+      let lowercase_key = String.lowercase key in
+      match lowercase_key with
+      | "content-type" ->
+        ContentType value
+      | "location" ->
+        Location value
+      | "authorization" ->
+        Authorization value
+      | "etag" ->
+        ETag value
+      | "if-none-match" ->
+        IfNoneMatch value
+      | "if-match" ->
+        IfMatch value
+      | "gdata-version" ->
+        GdataVersion value
+      | "content-range" ->
+        ContentRange value
+      | "range" ->
+        Range value
+      | "x-upload-content-type" ->
+        UploadContentType value
+      | "x-upload-content-length" ->
+        UploadContentLength value
+      | "slug" ->
+        Slug value
+      | "content-length" ->
+        ContentLength value
+      | _ ->
+        KeyValueHeader (key, value)
     else
       let stripped_header = ExtString.String.strip full_header in
-        if ExtString.String.starts_with stripped_header "HTTP" then
-          Scanf.sscanf stripped_header "HTTP/%s %d %s@!"
-            (fun version code reason ->
-               HttpStatus (version, code, reason))
-        else
-          OtherHeader stripped_header
+      if ExtString.String.starts_with stripped_header "HTTP" then
+        Scanf.sscanf stripped_header "HTTP/%s %d %s@!"
+          (fun version code reason ->
+             HttpStatus (version, code, reason))
+      else
+        OtherHeader stripped_header
 
 end
 
