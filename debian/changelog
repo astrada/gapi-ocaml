@@ -1,0 +1,194 @@
+gapi-ocaml (0.3.8-0ubuntu2) cosmic; urgency=low
+
+  * Fix dependencies (jbuilder -> dune)
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Wed, 21 Nov 2018 01:50:31 +0100
+
+gapi-ocaml (0.3.8-0ubuntu1) cosmic; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Wed, 21 Nov 2018 00:16:33 +0100
+
+gapi-ocaml (0.3.6-0ubuntu3) cosmic; urgency=medium
+
+  * No-change port to cosmic
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 06 Aug 2018 10:43:12 +0200
+
+gapi-ocaml (0.3.6-0ubuntu2) bionic; urgency=medium
+
+  * No-change port to bionic
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sat, 13 Jan 2018 12:37:31 +0100
+
+gapi-ocaml (0.3.6-0ubuntu1) artful; urgency=low
+
+  * Add TeamDrive support.
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 17 Dec 2017 21:16:58 +0100
+
+gapi-ocaml (0.3.4-0ubuntu3) artful; urgency=low
+
+  * Add ocamlbuild source dependency.
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 10 Aug 2017 15:00:31 +0200
+
+gapi-ocaml (0.3.4-0ubuntu2) artful; urgency=low
+
+  * No change port to artful.
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 10 Aug 2017 13:37:50 +0200
+
+gapi-ocaml (0.3.4-0ubuntu1) zesty; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sat, 10 Jun 2017 18:26:11 +0200
+
+gapi-ocaml (0.3.3-0ubuntu2) zesty; urgency=low
+
+  * No change port to zesty.
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Tue, 25 Apr 2017 11:10:09 +0200
+
+gapi-ocaml (0.3.3-0ubuntu1) yakkety; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 09 Jan 2017 20:03:51 +0100
+
+gapi-ocaml (0.3.2-0ubuntu1) yakkety; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Fri, 06 Jan 2017 13:17:41 +0100
+
+gapi-ocaml (0.3.1-0ubuntu1) yakkety; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 04 Dec 2016 19:31:57 +0100
+
+gapi-ocaml (0.3.0-0ubuntu1) yakkety; urgency=low
+
+  * Bump minor version number
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 28 Nov 2016 23:30:12 +0100
+
+gapi-ocaml (0.2.14-0ubuntu1) yakkety; urgency=low
+
+  * Add Drive API v3
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sat, 19 Nov 2016 18:16:21 +0100
+
+gapi-ocaml (0.2.13-0ubuntu1) yakkety; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 16 Oct 2016 23:32:13 +0200
+
+gapi-ocaml (0.2.10-0ubuntu2) xenial; urgency=low
+
+  * No-change port to xenial
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 11 Apr 2016 22:53:48 +0200
+
+gapi-ocaml (0.2.10-0ubuntu1) wily; urgency=low
+
+  * Bugfix release 
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 17 Mar 2016 21:41:51 +0100
+
+gapi-ocaml (0.2.8-0ubuntu2) wily; urgency=low
+
+  * Fix deb packaging
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Tue, 15 Dec 2015 00:18:03 +0100
+
+gapi-ocaml (0.2.8-0ubuntu1) wily; urgency=low
+
+  * Fix libcurl multi-threading issues
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 14 Dec 2015 23:35:09 +0100
+
+gapi-ocaml (0.2.8-0ubuntu1) wily; urgency=low
+
+  * Fix libcurl multi-threading issues
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 14 Dec 2015 23:35:09 +0100
+
+gapi-ocaml (0.2.7-0ubuntu1) wily; urgency=low
+
+  * Add AdSense API v1.4
+  * Update generated services
+  * Add curl options to control bandwidth usage
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 07 Dec 2015 23:55:09 +0100
+
+gapi-ocaml (0.2.6-0ubuntu4) wily; urgency=low
+
+  * No-change port to wily
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 29 Nov 2015 21:28:10 +0100
+
+gapi-ocaml (0.2.6-0ubuntu3) vivid; urgency=low
+
+  * No-change port to vivid
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 10 Nov 2014 23:35:47 +0100
+
+gapi-ocaml (0.2.6-0ubuntu2) utopic; urgency=low
+
+  * No-change port to utopic
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 10 Nov 2014 23:35:47 +0100
+
+gapi-ocaml (0.2.6-0ubuntu1) trusty; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Wed, 01 Oct 2014 19:41:36 +0200
+
+gapi-ocaml (0.2.5-0ubuntu1) trusty; urgency=low
+
+  * Better error handling
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 21 Sep 2014 23:20:29 +0200
+
+gapi-ocaml (0.2.4-0ubuntu1) trusty; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Wed, 03 Sep 2014 00:04:03 +0200
+
+gapi-ocaml (0.2.3-0ubuntu1) trusty; urgency=low
+
+  * Add Gmail API V1
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Tue, 26 Aug 2014 16:56:33 +0200
+
+gapi-ocaml (0.2.1-0ubuntu3) trusty; urgency=low
+
+  * No-change port to trusty
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sat, 05 Apr 2014 12:06:07 +0200
+
+gapi-ocaml (0.2.1-0ubuntu2) saucy; urgency=low
+
+  * No-change port to saucy
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Fri, 18 Oct 2013 18:39:45 +0200
+
+gapi-ocaml (0.2.1-0ubuntu1) raring; urgency=low
+
+  * Add HEAD http method.
+  * Update generated service modules.
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 07 Oct 2013 23:25:48 +0200
+
+gapi-ocaml (0.2-0ubuntu1) raring; urgency=low
+
+  * Initial release.
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Fri, 06 Sep 2013 15:44:56 +0200

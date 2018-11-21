@@ -1,0 +1,14 @@
+@OCamlStdlibDir@/gapi-ocaml/*.cmi
+@OCamlStdlibDir@/gapi-ocaml/*.cmt
+@OCamlStdlibDir@/gapi-ocaml/*.cmti
+@OCamlStdlibDir@/gapi-ocaml/*.cmx
+@OCamlStdlibDir@/gapi-ocaml/*.mli
+@OCamlStdlibDir@/gapi-ocaml/gdata/*.cmi
+@OCamlStdlibDir@/gapi-ocaml/gdata/*.cmt
+@OCamlStdlibDir@/gapi-ocaml/gdata/*.cmti
+@OCamlStdlibDir@/gapi-ocaml/gdata/*.cmx
+@OCamlStdlibDir@/gapi-ocaml/gdata/*.mli
+OPT: @OCamlStdlibDir@/gapi-ocaml/*.cmxa
+OPT: @OCamlStdlibDir@/gapi-ocaml/*.a
+OPT: @OCamlStdlibDir@/gapi-ocaml/gdata/*.cmxa
+OPT: @OCamlStdlibDir@/gapi-ocaml/gdata/*.a

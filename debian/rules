@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+#export DH_OPTIONS=-v
+
+DESTDIR=$(CURDIR)/debian/tmp
+
+include /usr/share/ocaml/ocamlvars.mk
+
+OCAMLFIND_DESTDIR=$(DESTDIR)/$(OCAML_STDLIB_DIR)
+export OCAMLFIND_DESTDIR
+OCAMLFIND_LDCONF=ignore
+export OCAMLFIND_LDCONF
+
+%:
+	dh $@ --with ocaml
+
+.PHONY: override_dh_auto_build
+override_dh_auto_build:
+	dune build @install
+
+.PHONY: override_dh_auto_test
+override_dh_auto_test:
+	true
+
+.PHONY: override_dh_auto_install
+override_dh_auto_install:
+	mkdir -p '$(OCAMLFIND_DESTDIR)'
+	cp -rLv _build/install/default/lib/gapi-ocaml '$(OCAMLFIND_DESTDIR)'
+	find '$(OCAMLFIND_DESTDIR)' -name '*.ml' -delete
+	find '$(OCAMLFIND_DESTDIR)' -name '*.dune' -delete
+
+.PHONY: override_dh_install
+override_dh_install:
+	dh_install --fail-missing
+
+.PHONY: override_dh_auto_clean
+override_dh_auto_clean:
+	rm -rf _build/
+

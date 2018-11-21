@@ -1,0 +1,6 @@
+@OCamlStdlibDir@/gapi-ocaml/META
+@OCamlStdlibDir@/gapi-ocaml/opam
+@OCamlStdlibDir@/gapi-ocaml/*.cm[ao]
+@OCamlStdlibDir@/gapi-ocaml/gdata/*.cm[ao]
+DYN: @OCamlStdlibDir@/gapi-ocaml/*.cmxs
+DYN: @OCamlStdlibDir@/gapi-ocaml/gdata/*.cmxs
