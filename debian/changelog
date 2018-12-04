@@ -1,3 +1,9 @@
+gapi-ocaml (0.3.9-0ubuntu1) cosmic; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Wed, 05 Dec 2018 00:07:54 +0100
+
 gapi-ocaml (0.3.8-0ubuntu2) cosmic; urgency=low
 
   * Fix dependencies (jbuilder -> dune)
