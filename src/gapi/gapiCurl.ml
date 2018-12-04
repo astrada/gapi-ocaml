@@ -21,18 +21,23 @@ let set_curl_options option_list curl =
     option_list
 
 (* private *)
-let reader netchannel bytes =
+let reader ?(close_if_at_eof = fun () -> ()) netchannel bytes =
   let result = Bytes.create bytes in
   let result =
     try
       let len = netchannel#input result 0 bytes in
-      if len = bytes then
-        result
-      else
-        Bytes.sub result 0 len
-    with End_of_file ->
+      let result =
+        if len = bytes then
+          result
+        else
+          Bytes.sub result 0 len
+      in
+      close_if_at_eof ();
+      result
+    with End_of_file -> begin
       netchannel#close_in ();
       Bytes.create 0
+    end
   in
   (* TODO: remove when Curl.set_readfunction is modified in: int -> bytes *)
   Bytes.to_string result
@@ -162,23 +167,32 @@ let set_upload flag (state : [`Created] t) =
 let set_httpbody body (state : [`Created] t) =
   with_curl
     (fun curl ->
-       let (ch, length) =
+       let (ch, length, close_if_at_eof) =
          match body with
              GapiCore.PostData.String content ->
-               (new Netchannels.input_string content, String.length content)
+               (new Netchannels.input_string content,
+                String.length content,
+                None)
            | GapiCore.PostData.File (path, chunk_size, offset) ->
                let in_ch = open_in_bin path in
-               let length = min chunk_size (in_channel_length in_ch) in
+               let in_ch_len = in_channel_length in_ch in
+               let length = min chunk_size in_ch_len in
                LargeFile.seek_in in_ch offset;
                let net_in_ch = new Netchannels.input_channel in_ch in
-               (((new Netstream.input_stream ~len:length net_in_ch) :>
-                   Netchannels.in_obj_channel),
-                length)
+               let stream = new Netstream.input_stream ~len:length
+                 ~block_size:8192 net_in_ch in
+               ((stream :> Netchannels.in_obj_channel),
+                length,
+                Some (fun () ->
+                    if stream#window_at_eof then begin
+                      net_in_ch#close_in ();
+                    end
+                  ))
            | GapiCore.PostData.Buffer buffer ->
                let length = Bigarray.Array1.dim buffer in
-               (new GapiUtils.bigarray_in_obj_channel buffer, length)
+               (new GapiUtils.bigarray_in_obj_channel buffer, length, None)
        in
-       let readfunction = reader ch in
+       let readfunction = reader ?close_if_at_eof ch in
        Curl.set_postfieldsize curl length;
        Curl.set_readfunction curl readfunction
     )

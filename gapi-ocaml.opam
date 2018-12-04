@@ -32,4 +32,3 @@ Speed Online API v1, Blogger API v2, Site Verification API v1, AdSense
 Management API v1.4, BigQuery API v2, Drive API v2, Drive API v3,
 Gmail API v1. Google Data Protocol APIs (GData): Google Documents List
 API v3."""
-flags: light-uninstall
