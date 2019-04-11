@@ -176,7 +176,9 @@ let set_httpbody body (state : [`Created] t) =
            | GapiCore.PostData.File (path, chunk_size, offset) ->
                let in_ch = open_in_bin path in
                let in_ch_len = in_channel_length in_ch in
-               let length = min chunk_size in_ch_len in
+               let remaining_bytes =
+                 Int64.sub (Int64.of_int in_ch_len) offset in
+               let length = min chunk_size (Int64.to_int remaining_bytes) in
                LargeFile.seek_in in_ch offset;
                let net_in_ch = new Netchannels.input_channel in_ch in
                let stream = new Netstream.input_stream ~len:length
