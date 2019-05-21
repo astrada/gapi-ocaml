@@ -770,7 +770,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             List.map
               (fun p ->
                  if ExtString.String.starts_with p "{" then
-                   let id = String.sub p 1 (String.length p - 2) in
+                   let id = String.sub p 1 ((String.index p '}') - 1) in
                    let { Field.ocaml_name; to_string_function; _ } =
                      methd |. Method.get_parameter_lens id
                    in
