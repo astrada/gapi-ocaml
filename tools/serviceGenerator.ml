@@ -1216,25 +1216,29 @@ let rec generate_schema_module_signature
                 schema_module.InnerSchemaModule.inner_modules;
 
               lift_io (
-                (* Type t *)
-                Format.fprintf formatter "@[<v 2>type t = {@,";
-                List.iter
-                  (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-                     if ComplexType.is_enum field_type then begin
-                       Format.fprintf formatter
-                         "%s : string;@,(** %s *)@,"
-                         ocaml_name
-                         (clean_doc (ComplexType.get_description field_type))
-                     end else begin
-                       Format.fprintf formatter
-                         "%s : %s;@,(** %s *)@,"
-                         ocaml_name
-                         ocaml_type
-                         (clean_doc (ComplexType.get_description field_type))
-                     end)
-                  fields;
-                Format.fprintf formatter
-                  "@]@,}@\n@\n";
+                (match fields with
+                | [] -> Format.fprintf formatter "@[<v 2>type t = unit@,";
+                | _ -> begin
+                  (* Type t *)
+                  Format.fprintf formatter "@[<v 2>type t = {@,";
+                  List.iter
+                    (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
+                       if ComplexType.is_enum field_type then begin
+                         Format.fprintf formatter
+                           "%s : string;@,(** %s *)@,"
+                           ocaml_name
+                           (clean_doc (ComplexType.get_description field_type))
+                       end else begin
+                         Format.fprintf formatter
+                           "%s : %s;@,(** %s *)@,"
+                           ocaml_name
+                           ocaml_type
+                           (clean_doc (ComplexType.get_description field_type))
+                       end)
+                    fields;
+                  Format.fprintf formatter
+                    "@]@,}@\n@\n"
+                end);
 
                 (* Lenses *)
                 List.iter
