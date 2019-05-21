@@ -778,11 +778,17 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             List.map
               (fun p ->
                  if ExtString.String.starts_with p "{" then
-                   let id = String.sub p 1 ((String.index p '}') - 1) in
+                   let id = String.sub p 1 ((String.index p '}') - 1) and
+                       suffix =
+                         try Some (String.sub p (String.index p ':') ((String.length p) - (String.index p ':')))
+                         with Not_found -> None
+                   in
                    let { Field.ocaml_name; to_string_function; _ } =
                      methd |. Method.get_parameter_lens id
                    in
-                     Printf.sprintf "(%s %s)" to_string_function ocaml_name
+                     match suffix with
+                     | None -> Printf.sprintf "(%s %s)" to_string_function ocaml_name
+                     | Some s -> Printf.sprintf "(%s %s ^ \"%s\")" to_string_function ocaml_name s
                  else
                    "\"" ^ p ^ "\"")
               splitted_path
