@@ -115,21 +115,25 @@ let close_file oc formatter =
 
 let build_schema_inner_module file_lens complex_type =
   let render_type_t formatter fields =
-    Format.fprintf formatter "@[<v 2>type t = {@,";
-    List.iter
-      (fun { Field.ocaml_name; ocaml_type; field_type; _ } ->
-         if ComplexType.is_enum field_type then begin
-           Format.fprintf formatter
-             "%s : string;@,"
-             ocaml_name
-         end else begin
-           Format.fprintf formatter
-             "%s : %s;@,"
-             ocaml_name
-             ocaml_type
-         end)
-      fields;
-    Format.fprintf formatter "@]@,}@,"
+    match fields with
+    | [] -> Format.fprintf formatter "@[<v 2>type t = unit@,";
+    | _ -> begin
+      Format.fprintf formatter "@[<v 2>type t = {@,";
+      List.iter
+        (fun { Field.ocaml_name; ocaml_type; field_type; _ } ->
+           if ComplexType.is_enum field_type then begin
+             Format.fprintf formatter
+               "%s : string;@,"
+               ocaml_name
+           end else begin
+             Format.fprintf formatter
+               "%s : %s;@,"
+               ocaml_name
+               ocaml_type
+           end)
+        fields;
+      Format.fprintf formatter "@]@,}@,"
+    end
   in
 
   let render_lenses formatter fields =
@@ -146,21 +150,25 @@ let build_schema_inner_module file_lens complex_type =
   in
 
   let render_empty formatter fields =
-    Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
-    List.iter
-      (fun { Field.ocaml_name; field_type; empty_value; _ } ->
-         if ComplexType.is_enum field_type then begin
-           Format.fprintf formatter
-             "%s = \"\";@,"
-             ocaml_name
-         end else begin
-           Format.fprintf formatter
-             "%s = %s;@,"
-             ocaml_name
-             empty_value
-         end)
-      fields;
-    Format.fprintf formatter "@]@,}@,"
+    match fields with
+    | [] -> Format.fprintf formatter "@,@,@[<v 2>let empty = ()@,";
+    | _ -> begin
+      Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
+      List.iter
+        (fun { Field.ocaml_name; field_type; empty_value; _ } ->
+           if ComplexType.is_enum field_type then begin
+             Format.fprintf formatter
+               "%s = \"\";@,"
+               ocaml_name
+           end else begin
+             Format.fprintf formatter
+               "%s = %s;@,"
+               ocaml_name
+               empty_value
+           end)
+        fields;
+      Format.fprintf formatter "@]@,}@,"
+    end
   in
 
   let render_render_function formatter fields =
@@ -770,11 +778,17 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
             List.map
               (fun p ->
                  if ExtString.String.starts_with p "{" then
-                   let id = String.sub p 1 (String.length p - 2) in
+                   let id = String.sub p 1 ((String.index p '}') - 1) and
+                       suffix =
+                         try Some (String.sub p (String.index p ':') ((String.length p) - (String.index p ':')))
+                         with Not_found -> None
+                   in
                    let { Field.ocaml_name; to_string_function; _ } =
                      methd |. Method.get_parameter_lens id
                    in
-                     Printf.sprintf "(%s %s)" to_string_function ocaml_name
+                     match suffix with
+                     | None -> Printf.sprintf "(%s %s)" to_string_function ocaml_name
+                     | Some s -> Printf.sprintf "(%s %s ^ \"%s\")" to_string_function ocaml_name s
                  else
                    "\"" ^ p ^ "\"")
               splitted_path
@@ -1208,25 +1222,29 @@ let rec generate_schema_module_signature
                 schema_module.InnerSchemaModule.inner_modules;
 
               lift_io (
-                (* Type t *)
-                Format.fprintf formatter "@[<v 2>type t = {@,";
-                List.iter
-                  (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-                     if ComplexType.is_enum field_type then begin
-                       Format.fprintf formatter
-                         "%s : string;@,(** %s *)@,"
-                         ocaml_name
-                         (clean_doc (ComplexType.get_description field_type))
-                     end else begin
-                       Format.fprintf formatter
-                         "%s : %s;@,(** %s *)@,"
-                         ocaml_name
-                         ocaml_type
-                         (clean_doc (ComplexType.get_description field_type))
-                     end)
-                  fields;
-                Format.fprintf formatter
-                  "@]@,}@\n@\n";
+                (match fields with
+                | [] -> Format.fprintf formatter "@[<v 2>type t = unit@,";
+                | _ -> begin
+                  (* Type t *)
+                  Format.fprintf formatter "@[<v 2>type t = {@,";
+                  List.iter
+                    (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
+                       if ComplexType.is_enum field_type then begin
+                         Format.fprintf formatter
+                           "%s : string;@,(** %s *)@,"
+                           ocaml_name
+                           (clean_doc (ComplexType.get_description field_type))
+                       end else begin
+                         Format.fprintf formatter
+                           "%s : %s;@,(** %s *)@,"
+                           ocaml_name
+                           ocaml_type
+                           (clean_doc (ComplexType.get_description field_type))
+                       end)
+                    fields;
+                  Format.fprintf formatter
+                    "@]@,}@\n@\n"
+                end);
 
                 (* Lenses *)
                 List.iter
