@@ -71,7 +71,6 @@ let do_request
       interact
       handle_exception =
   let state = GapiCurl.global_init () in
-  let cleanup () = ignore (GapiCurl.global_cleanup state) in
   let rec try_request () =
     try
       GapiConversation.with_session
@@ -97,9 +96,7 @@ let do_request
   in
     try
       try_request ();
-      cleanup ()
     with e ->
-      cleanup ();
       raise e
 
 let test_request
