@@ -302,19 +302,11 @@ let with_curl
     config
     interact =
   let curl_state = GapiCurl.global_init () in
-  let cleanup () = ignore (GapiCurl.global_cleanup curl_state) in
-  try
-    let result =
-      with_session
-        ?auth_context
-        config
-        curl_state
-        interact in
-    cleanup ();
-    result
-  with e ->
-    cleanup ();
-    raise e
+  with_session
+    ?auth_context
+    config
+    curl_state
+    interact
 
 let read_all ?(auto_close = true) pipe =
   let result = GapiPipe.OcamlnetPipe.read_all pipe in

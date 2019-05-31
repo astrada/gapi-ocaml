@@ -42,8 +42,11 @@ let reader ?(close_if_at_eof = fun () -> ()) netchannel bytes =
   (* TODO: remove when Curl.set_readfunction is modified in: int -> bytes *)
   Bytes.to_string result
 
-let global_init () : [`Initialized] t =
+let () =
   Curl.global_init Curl.CURLINIT_GLOBALALL;
+  at_exit (fun () -> Curl.global_cleanup ())
+
+let global_init () : [`Initialized] t =
   Initialized
 
 let init
@@ -272,11 +275,6 @@ let cleanup (state : [`Created] t) : [`Destroyed] t =
        Destroyed
     )
     state
-
-let global_cleanup
-      (_ : [`Initialized] t) : [`Uninitialized] t =
-  Curl.global_cleanup ();
-  Uninitialized
 
 let string_of_curl_info_type info_type =
   match info_type with
