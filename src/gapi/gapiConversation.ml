@@ -286,7 +286,7 @@ let with_session
       ?proxy
       ~ssl_verifypeer
       curl_state in
-  let cleanup () = ignore (GapiCurl.cleanup curl_session) in
+  Gc.finalise (fun _ -> ignore (GapiCurl.cleanup curl_session)) curl_session;
   let session =
     { Session.curl = curl_session;
       config = config;
@@ -295,32 +295,18 @@ let with_session
       etag = ""
     }
   in
-  try
-    let result = interact session in
-    cleanup ();
-    result
-  with e ->
-    cleanup ();
-    raise e
+  interact session
 
 let with_curl
     ?auth_context
     config
     interact =
   let curl_state = GapiCurl.global_init () in
-  let cleanup () = ignore (GapiCurl.global_cleanup curl_state) in
-  try
-    let result =
-      with_session
-        ?auth_context
-        config
-        curl_state
-        interact in
-    cleanup ();
-    result
-  with e ->
-    cleanup ();
-    raise e
+  with_session
+    ?auth_context
+    config
+    curl_state
+    interact
 
 let read_all ?(auto_close = true) pipe =
   let result = GapiPipe.OcamlnetPipe.read_all pipe in
