@@ -276,6 +276,10 @@ let cleanup (state : [`Created] t) : [`Destroyed] t =
     )
     state
 
+let global_cleanup
+      (_ : [`Initialized] t) : [`Uninitialized] t =
+  Uninitialized
+
 let string_of_curl_info_type info_type =
   match info_type with
       Curl.DEBUGTYPE_TEXT -> "info"

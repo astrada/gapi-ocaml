@@ -66,5 +66,7 @@ val get_responsecode : [ `Created ] t -> int
 
 val cleanup : [ `Created ] t -> [ `Destroyed ] t
 
+val global_cleanup : [ `Initialized ] t -> [ `Uninitialized ] t
+
 val string_of_curl_info_type : Curl.curlDebugType -> string
 
