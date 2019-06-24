@@ -286,7 +286,7 @@ let with_session
       ?proxy
       ~ssl_verifypeer
       curl_state in
-  Gc.finalise (fun _ -> ignore (GapiCurl.cleanup curl_session)) curl_session;
+  let cleanup () = ignore (GapiCurl.cleanup curl_session) in
   let session =
     { Session.curl = curl_session;
       config = config;
@@ -295,7 +295,13 @@ let with_session
       etag = ""
     }
   in
-  interact session
+  try
+    let result = interact session in
+    cleanup ();
+    result
+  with e ->
+    cleanup ();
+    raise e
 
 let with_curl
     ?auth_context
