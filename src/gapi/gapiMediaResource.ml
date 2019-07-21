@@ -177,11 +177,11 @@ let get_content_type filename =
   | "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation"
   | _ -> "application/octect-stream"
 
-let create_file_resource filename =
+let create_file_resource ?content_type filename =
   let source = File filename in
   { source;
     name = get_basename filename;
-    content_type = get_content_type filename;
+    content_type = Option.default (get_content_type filename) content_type;
     content_length = get_resource_length source;
   }
 

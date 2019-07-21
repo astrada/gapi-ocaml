@@ -63,6 +63,7 @@ val chunk_size : (upload_state, int) GapiLens.t
 val current_offset : (upload_state, int64) GapiLens.t
 
 val create_file_resource :
+  ?content_type:string ->
   string -> t
 
 val setup_upload :
