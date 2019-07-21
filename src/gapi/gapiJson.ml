@@ -86,8 +86,9 @@ let render_array name render xs =
   render_collection name Array render xs
 
 let render_root render x =
-  render x
-    |> List.hd
+  match render x with
+  | [] -> AnnotatedTree.Node ({ name = "empty"; data_type = Object }, [])
+  | xs -> List.hd xs
 
 let parse_children parse_child empty_element update cs =
   let element = List.fold_left
