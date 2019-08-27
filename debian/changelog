@@ -1,3 +1,39 @@
+gapi-ocaml (0.3.14-0ubuntu1) eoan; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Tue, 27 Aug 2019 19:54:07 +0200
+
+gapi-ocaml (0.3.13-0ubuntu1) eoan; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 21 Jul 2019 13:42:09 +0200
+
+gapi-ocaml (0.3.12-0ubuntu1) eoan; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 24 Jun 2019 22:41:08 +0200
+
+gapi-ocaml (0.3.11-0ubuntu1) disco; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 20 Jun 2019 20:41:51 +0200
+
+gapi-ocaml (0.3.10-0ubuntu1) disco; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 11 Apr 2019 21:41:47 +0200
+
+gapi-ocaml (0.3.9-0ubuntu2) disco; urgency=low
+
+  * No change port to disco
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 28 Mar 2019 21:52:32 +0100
+
 gapi-ocaml (0.3.9-0ubuntu1) cosmic; urgency=low
 
   * Bugfix release

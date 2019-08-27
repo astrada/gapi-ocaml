@@ -1,3 +1,4 @@
+@OCamlStdlibDir@/gapi-ocaml/dune-package
 @OCamlStdlibDir@/gapi-ocaml/*.cmi
 @OCamlStdlibDir@/gapi-ocaml/*.cmt
 @OCamlStdlibDir@/gapi-ocaml/*.cmti
