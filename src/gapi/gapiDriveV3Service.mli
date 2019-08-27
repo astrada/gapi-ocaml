@@ -11,7 +11,7 @@
 module Scope :
 sig
   val drive : string
-  (** View and manage the files in your Google Drive *)
+  (** See, edit, create, and delete all of your Google Drive files *)
   
   val drive_appdata : string
   (** View and manage its own configuration data in your Google Drive *)
@@ -29,7 +29,7 @@ sig
   (** View the photos, videos and albums in your Google Photos *)
   
   val drive_readonly : string
-  (** View the files in your Google Drive *)
+  (** See and download all your Google Drive files *)
   
   val drive_scripts : string
   (** Modify your Google Apps Script scripts' behavior *)
@@ -64,41 +64,51 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param teamDriveId The ID of the Team Drive for which the starting pageToken for listing future changes from that Team Drive will be returned.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param driveId The ID of the shared drive for which the starting pageToken for listing future changes from that shared drive will be returned.
+    @param teamDriveId Deprecated use driveId instead.
     *)
   val getStartPageToken :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
+    ?driveId:string ->
     ?teamDriveId:string ->
     GapiConversation.Session.t ->
     GapiDriveV3Model.StartPageToken.t * GapiConversation.Session.t
   
-  (** Lists the changes for a user or Team Drive.
+  (** Lists the changes for a user or shared drive.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param includeCorpusRemovals Whether changes should include the file resource if the file is still accessible by the user at the time of the request, even when a file was removed from the list of changes and there will be no further change entries for this file.
+    @param includeItemsFromAllDrives Deprecated - Whether both My Drive and shared drive items should be included in results. This parameter will only be effective until June 1, 2020. Afterwards shared drive items will be included in the results.
     @param includeRemoved Whether to include changes indicating that items have been removed from the list of changes, for example by deletion or loss of access.
-    @param includeTeamDriveItems Whether Team Drive files or changes should be included in results.
+    @param includeTeamDriveItems Deprecated use includeItemsFromAllDrives instead.
     @param pageSize The maximum number of changes to return per page.
     @param restrictToMyDrive Whether to restrict the results to changes inside the My Drive hierarchy. This omits changes to files such as those in the Application Data folder or shared files which have not been added to My Drive.
     @param spaces A comma-separated list of spaces to query within the user corpus. Supported values are 'drive', 'appDataFolder' and 'photos'.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param teamDriveId The Team Drive from which changes will be returned. If specified the change IDs will be reflective of the Team Drive; use the combined Team Drive ID and change ID as an identifier.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param driveId The shared drive from which changes will be returned. If specified the change IDs will be reflective of the shared drive; use the combined drive ID and change ID as an identifier.
+    @param teamDriveId Deprecated use driveId instead.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?includeCorpusRemovals:bool ->
+    ?includeItemsFromAllDrives:bool ->
     ?includeRemoved:bool ->
     ?includeTeamDriveItems:bool ->
     ?pageSize:int ->
     ?restrictToMyDrive:bool ->
     ?spaces:string ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
+    ?driveId:string ->
     ?teamDriveId:string ->
     pageToken:string ->
     GapiConversation.Session.t ->
@@ -109,25 +119,31 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param includeCorpusRemovals Whether changes should include the file resource if the file is still accessible by the user at the time of the request, even when a file was removed from the list of changes and there will be no further change entries for this file.
+    @param includeItemsFromAllDrives Deprecated - Whether both My Drive and shared drive items should be included in results. This parameter will only be effective until June 1, 2020. Afterwards shared drive items will be included in the results.
     @param includeRemoved Whether to include changes indicating that items have been removed from the list of changes, for example by deletion or loss of access.
-    @param includeTeamDriveItems Whether Team Drive files or changes should be included in results.
+    @param includeTeamDriveItems Deprecated use includeItemsFromAllDrives instead.
     @param pageSize The maximum number of changes to return per page.
     @param restrictToMyDrive Whether to restrict the results to changes inside the My Drive hierarchy. This omits changes to files such as those in the Application Data folder or shared files which have not been added to My Drive.
     @param spaces A comma-separated list of spaces to query within the user corpus. Supported values are 'drive', 'appDataFolder' and 'photos'.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param teamDriveId The Team Drive from which changes will be returned. If specified the change IDs will be reflective of the Team Drive; use the combined Team Drive ID and change ID as an identifier.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param driveId The shared drive from which changes will be returned. If specified the change IDs will be reflective of the shared drive; use the combined drive ID and change ID as an identifier.
+    @param teamDriveId Deprecated use driveId instead.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.
     *)
   val watch :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?includeCorpusRemovals:bool ->
+    ?includeItemsFromAllDrives:bool ->
     ?includeRemoved:bool ->
     ?includeTeamDriveItems:bool ->
     ?pageSize:int ->
     ?restrictToMyDrive:bool ->
     ?spaces:string ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
+    ?driveId:string ->
     ?teamDriveId:string ->
     pageToken:string ->
     GapiDriveV3Model.Channel.t ->
@@ -246,6 +262,117 @@ sig
   
 end
 
+module DrivesResource :
+sig
+  
+  (** Creates a new shared drive.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param requestId An ID, such as a random UUID, which uniquely identifies this user's request for idempotent creation of a shared drive. A repeated request by the same user and with the same request ID will avoid creating duplicates by attempting to create the same shared drive. If the shared drive already exists a 409 error will be returned.
+    *)
+  val create :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    requestId:string ->
+    GapiDriveV3Model.Drive.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.Drive.t * GapiConversation.Session.t
+  
+  (** Permanently deletes a shared drive for which the user is an organizer. The shared drive cannot contain any untrashed items.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param driveId The ID of the shared drive.
+    *)
+  val delete :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    driveId:string ->
+    GapiConversation.Session.t ->
+    unit * GapiConversation.Session.t
+  
+  (** Gets a shared drive's metadata by ID.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param etag Optional ETag.
+    @param std_params Optional standard parameters.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.
+    @param driveId The ID of the shared drive.
+    *)
+  val get :
+    ?base_url:string ->
+    ?etag:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?useDomainAdminAccess:bool ->
+    driveId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.Drive.t * GapiConversation.Session.t
+  
+  (** Hides a shared drive from the default view.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param driveId The ID of the shared drive.
+    *)
+  val hide :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    driveId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.Drive.t * GapiConversation.Session.t
+  
+  (** Lists the user's shared drives.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param pageSize Maximum number of shared drives to return.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then all shared drives of the domain in which the requester is an administrator are returned.
+    @param pageToken Page token for shared drives.
+    @param q Query string for searching shared drives.
+    *)
+  val list :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?pageSize:int ->
+    ?useDomainAdminAccess:bool ->
+    ?pageToken:string ->
+    ?q:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.DriveList.t * GapiConversation.Session.t
+  
+  (** Restores a shared drive to the default view.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param driveId The ID of the shared drive.
+    *)
+  val unhide :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    driveId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.Drive.t * GapiConversation.Session.t
+  
+  (** Updates the metadate for a shared drive.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.
+    @param driveId The ID of the shared drive.
+    *)
+  val update :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?useDomainAdminAccess:bool ->
+    driveId:string ->
+    GapiDriveV3Model.Drive.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.Drive.t * GapiConversation.Session.t
+  
+  
+end
+
 module FilesResource :
 sig
   
@@ -267,8 +394,9 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param ignoreDefaultVisibility Whether to ignore the domain's default visibility settings for the created file. Domain administrators can choose to make all uploaded files visible to the domain by default; this parameter bypasses that behavior for the request. Permissions are still inherited from parent folders.
-    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Drive.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
     @param fileId The ID of the file.
     *)
@@ -277,6 +405,7 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?ignoreDefaultVisibility:bool ->
     ?keepRevisionForever:bool ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?ocrLanguage:string ->
     fileId:string ->
@@ -289,8 +418,9 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param ignoreDefaultVisibility Whether to ignore the domain's default visibility settings for the created file. Domain administrators can choose to make all uploaded files visible to the domain by default; this parameter bypasses that behavior for the request. Permissions are still inherited from parent folders.
-    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Drive.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param useContentAsIndexableText Whether to use the uploaded content as indexable text.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
     *)
@@ -300,6 +430,7 @@ sig
     ?media_source:GapiMediaResource.t ->
     ?ignoreDefaultVisibility:bool ->
     ?keepRevisionForever:bool ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?useContentAsIndexableText:bool ->
     ?ocrLanguage:string ->
@@ -307,16 +438,18 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.File.t * GapiConversation.Session.t
   
-  (** Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a Team Drive the user must be an organizer on the parent. If the target is a folder, all descendants owned by the user are also deleted.
+  (** Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a shared drive the user must be an organizer on the parent. If the target is a folder, all descendants owned by the user are also deleted.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param fileId The ID of the file.
     *)
   val delete :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     fileId:string ->
     GapiConversation.Session.t ->
@@ -370,7 +503,8 @@ sig
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param fileId The ID of the file.
     *)
   val get :
@@ -379,6 +513,7 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?media_download:GapiMediaResource.download ->
     ?acknowledgeAbuse:bool ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     fileId:string ->
     GapiConversation.Session.t ->
@@ -388,26 +523,32 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param includeTeamDriveItems Whether Team Drive items should be included in results.
+    @param includeItemsFromAllDrives Deprecated - Whether both My Drive and shared drive items should be included in results. This parameter will only be effective until June 1, 2020. Afterwards shared drive items will be included in the results.
+    @param includeTeamDriveItems Deprecated use includeItemsFromAllDrives instead.
     @param pageSize The maximum number of files to return per page. Partial or empty result pages are possible even before the end of the files list has been reached.
     @param spaces A comma-separated list of spaces to query within the corpus. Supported values are 'drive', 'appDataFolder' and 'photos'.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param corpora Comma-separated list of bodies of items (files/documents) to which the query applies. Supported bodies are 'user', 'domain', 'teamDrive' and 'allTeamDrives'. 'allTeamDrives' must be combined with 'user'; all other values must be used in isolation. Prefer 'user' or 'teamDrive' to 'allTeamDrives' for efficiency.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param corpora Bodies of items (files/documents) to which the query applies. Supported bodies are 'user', 'domain', 'drive' and 'allDrives'. Prefer 'user' or 'drive' to 'allDrives' for efficiency.
     @param corpus The source of files to list. Deprecated: use 'corpora' instead.
+    @param driveId ID of the shared drive to search.
     @param orderBy A comma-separated list of sort keys. Valid keys are 'createdTime', 'folder', 'modifiedByMeTime', 'modifiedTime', 'name', 'name_natural', 'quotaBytesUsed', 'recency', 'sharedWithMeTime', 'starred', and 'viewedByMeTime'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedTime desc,name. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.
     @param q A query for filtering the file results. See the "Search for Files" guide for supported syntax.
-    @param teamDriveId ID of Team Drive to search.
+    @param teamDriveId Deprecated use driveId instead.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?includeItemsFromAllDrives:bool ->
     ?includeTeamDriveItems:bool ->
     ?pageSize:int ->
     ?spaces:string ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?corpora:string ->
     ?corpus:Corpus.t ->
+    ?driveId:string ->
     ?orderBy:string ->
     ?pageToken:string ->
     ?q:string ->
@@ -419,8 +560,9 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Drive.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param useContentAsIndexableText Whether to use the uploaded content as indexable text.
     @param addParents A comma-separated list of parent IDs to add.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
@@ -432,6 +574,7 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?media_source:GapiMediaResource.t ->
     ?keepRevisionForever:bool ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?useContentAsIndexableText:bool ->
     ?addParents:string ->
@@ -447,7 +590,8 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param fileId The ID of the file.
     *)
   val watch :
@@ -455,6 +599,7 @@ sig
     ?std_params:GapiService.StandardParameters.t ->
     ?media_download:GapiMediaResource.download ->
     ?acknowledgeAbuse:bool ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     fileId:string ->
     GapiDriveV3Model.Channel.t ->
@@ -467,20 +612,22 @@ end
 module PermissionsResource :
 sig
   
-  (** Creates a permission for a file or Team Drive.
+  (** Creates a permission for a file or shared drive.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param transferOwnership Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect.
-    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.
     @param emailMessage A plain text custom message to include in the notification email.
     @param sendNotificationEmail Whether to send a notification email when sharing to users or groups. This defaults to true for users and groups, and is not allowed for other requests. It must not be disabled for ownership transfers.
-    @param fileId The ID of the file or Team Drive.
+    @param fileId The ID of the file or shared drive.
     *)
   val create :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?transferOwnership:bool ->
     ?useDomainAdminAccess:bool ->
@@ -495,14 +642,16 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
-    @param fileId The ID of the file or Team Drive.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.
+    @param fileId The ID of the file or shared drive.
     @param permissionId The ID of the permission.
     *)
   val delete :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?useDomainAdminAccess:bool ->
     fileId:string ->
@@ -515,8 +664,9 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.
     @param fileId The ID of the file.
     @param permissionId The ID of the permission.
     *)
@@ -524,6 +674,7 @@ sig
     ?base_url:string ->
     ?etag:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?useDomainAdminAccess:bool ->
     fileId:string ->
@@ -531,19 +682,21 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.Permission.t * GapiConversation.Session.t
   
-  (** Lists a file's or Team Drive's permissions.
+  (** Lists a file's or shared drive's permissions.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
-    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
-    @param pageSize The maximum number of permissions to return per page. When not set for files in a Team Drive, at most 100 results will be returned. When not set for files that are not in a Team Drive, the entire list will be returned.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.
+    @param pageSize The maximum number of permissions to return per page. When not set for files in a shared drive, at most 100 results will be returned. When not set for files that are not in a shared drive, the entire list will be returned.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.
-    @param fileId The ID of the file or Team Drive.
+    @param fileId The ID of the file or shared drive.
     *)
   val list :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?useDomainAdminAccess:bool ->
     ?pageSize:int ->
@@ -557,16 +710,18 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param removeExpiration Whether to remove the expiration date.
-    @param supportsTeamDrives Whether the requesting application supports Team Drives.
+    @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
+    @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param transferOwnership Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect.
-    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.
-    @param fileId The ID of the file or Team Drive.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.
+    @param fileId The ID of the file or shared drive.
     @param permissionId The ID of the permission.
     *)
   val update :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?removeExpiration:bool ->
+    ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?transferOwnership:bool ->
     ?useDomainAdminAccess:bool ->
@@ -681,7 +836,7 @@ end
 module RevisionsResource :
 sig
   
-  (** Permanently deletes a revision. This method is only applicable to files with binary content in Drive.
+  (** Permanently deletes a file version. You can only delete revisions for files with binary content in Google Drive, like images or videos. Revisions for other files, like Google Docs or Sheets, and the last remaining file version can't be deleted.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -755,7 +910,7 @@ end
 module TeamdrivesResource :
 sig
   
-  (** Creates a new Team Drive.
+  (** Deprecated use drives.create instead.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -769,7 +924,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.TeamDrive.t * GapiConversation.Session.t
   
-  (** Permanently deletes a Team Drive for which the user is an organizer. The Team Drive cannot contain any untrashed items.
+  (** Deprecated use drives.delete instead.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -782,7 +937,7 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
-  (** Gets a Team Drive's metadata by ID.
+  (** Deprecated use drives.get instead.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param etag Optional ETag.
@@ -799,7 +954,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.TeamDrive.t * GapiConversation.Session.t
   
-  (** Lists the user's Team Drives.
+  (** Deprecated use drives.list instead.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -818,7 +973,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.TeamDriveList.t * GapiConversation.Session.t
   
-  (** Updates a Team Drive's metadata
+  (** Deprecated use drives.update instead
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
