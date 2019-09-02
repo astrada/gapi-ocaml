@@ -2,30 +2,74 @@ open GapiUtils.Infix
 
 let build_client_login_auth test_config =
   let get = Config.get test_config in
-    (GapiConfig.ClientLogin
-       { GapiConfig.username = get "cl_user";
-         password = get "cl_pass" },
-     GapiConversation.Session.ClientLogin (get "cl_token"))
+  (GapiConfig.ClientLogin
+     { GapiConfig.username = get "cl_user";
+       password = get "cl_pass" },
+   GapiConversation.Session.ClientLogin (get "cl_token"))
 
 let build_oauth1_auth test_config =
   let get = Config.get test_config in
-    (GapiConfig.OAuth1
-      { GapiConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
-        consumer_key = get "oa1_cons_key";
-        consumer_secret = get "oa1_cons_secret" },
-     GapiConversation.Session.OAuth1
-       { GapiConversation.Session.token = get "oa1_token";
-         secret = get "oa1_secret" })
+  (GapiConfig.OAuth1
+     { GapiConfig.signature_method = GapiCore.SignatureMethod.HMAC_SHA1;
+       consumer_key = get "oa1_cons_key";
+       consumer_secret = get "oa1_cons_secret" },
+   GapiConversation.Session.OAuth1
+     { GapiConversation.Session.token = get "oa1_token";
+       secret = get "oa1_secret" })
 
 let build_oauth2_auth test_config =
   let get = Config.get test_config in
-    (GapiConfig.OAuth2
-       { GapiConfig.client_id = get "oa2_id";
-         client_secret = get "oa2_secret";
-         refresh_access_token = None },
-     GapiConversation.Session.OAuth2
-       { GapiConversation.Session.oauth2_token = get "oa2_token";
-         refresh_token = get "oa2_refresh" })
+  (GapiConfig.OAuth2
+     { GapiConfig.client_id = get "oa2_id";
+       client_secret = get "oa2_secret";
+       refresh_access_token = None },
+   GapiConversation.Session.OAuth2
+     { GapiConversation.Session.oauth2_token = get "oa2_token";
+       refresh_token = get "oa2_refresh" })
+
+let build_oauth2_service_account_auth test_config =
+  let get = Config.get test_config in
+  let service_account_credentials_path =
+    "../../config/service-account-key.json" in
+  let service_account_credentials_json =
+    let in_ch = open_in service_account_credentials_path in
+    let b = Buffer.create 512 in
+    begin try
+        while true do
+          Buffer.add_string b (input_line in_ch)
+        done;
+      with End_of_file -> ()
+    end;
+    close_in in_ch;
+    Buffer.contents b
+  in
+  let scopes =
+    let scopes_string = get "oa2_scopes" in
+    let rec loop s accu =
+      if String.contains s ' ' then
+        let space_index = String.index s ' ' in
+        let scope = String.sub s 0 space_index in
+        let s' =
+          String.sub s (space_index + 1) (String.length s - space_index - 1) in
+        loop s' (scope :: accu)
+      else
+        s :: accu
+    in
+    loop scopes_string [] |> List.rev
+  in
+  let user_to_impersonate =
+    match get "oa2_user_to_impersonate" with
+    | "" -> None
+    | u -> Some u
+  in
+  (GapiConfig.OAuth2ServiceAccount
+     { GapiConfig.service_account_credentials_json;
+       scopes;
+       user_to_impersonate;
+       refresh_service_account_access_token = None },
+   GapiConversation.Session.OAuth2
+     { GapiConversation.Session.oauth2_token = get "oa2_token";
+       refresh_token = "" })
 
 let build_no_auth _ =
   (GapiConfig.NoAuth,
@@ -232,4 +276,13 @@ let assert_exists msg pred xs =
 
 let assert_not_exists msg pred xs =
   OUnit.assert_bool msg (not (List.exists pred xs))
+
+let id x = x
+
+let string_to_hex s =
+  let b = Buffer.create ((String.length s) * 2) in
+  String.iter
+    (fun c -> Buffer.add_string b (Printf.sprintf "%2.2x" (Char.code c)))
+    s;
+  Buffer.contents b
 

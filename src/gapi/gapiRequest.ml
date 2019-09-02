@@ -130,42 +130,60 @@ let parse_response
 let build_auth_data session =
   match session.GapiConversation.Session.config.GapiConfig.auth with
   | GapiConfig.NoAuth ->
-      GapiAuth.NoAuth
+    GapiAuth.NoAuth
   | GapiConfig.ClientLogin _ ->
-      let token = session
-        |. GapiConversation.Session.auth
-        |. GapiConversation.Session.client_login
-        |. GapiLens.option_get
-      in
-      GapiAuth.ClientLogin token
+    let token = session
+                |. GapiConversation.Session.auth
+                |. GapiConversation.Session.client_login
+                |. GapiLens.option_get
+    in
+    GapiAuth.ClientLogin token
   | GapiConfig.OAuth1 { GapiConfig.signature_method;
                         consumer_key;
                         consumer_secret } ->
-      let { GapiConversation.Session.token;
-              secret } = session
-        |. GapiConversation.Session.auth
-        |. GapiConversation.Session.oauth1
-        |. GapiLens.option_get
-      in
-      GapiAuth.OAuth1 { GapiAuth.signature_method;
-                        consumer_key;
-                        consumer_secret;
-                        token;
-                        secret }
+    let { GapiConversation.Session.token;
+          secret } = session
+                     |. GapiConversation.Session.auth
+                     |. GapiConversation.Session.oauth1
+                     |. GapiLens.option_get
+    in
+    GapiAuth.OAuth1 { GapiAuth.signature_method;
+                      consumer_key;
+                      consumer_secret;
+                      token;
+                      secret }
   | GapiConfig.OAuth2 { GapiConfig.client_id;
                         client_secret;
                         refresh_access_token } ->
-      let { GapiConversation.Session.oauth2_token;
-              refresh_token } = session
-        |. GapiConversation.Session.auth
-        |. GapiConversation.Session.oauth2
-        |. GapiLens.option_get
-      in
-      GapiAuth.OAuth2 { GapiAuth.client_id;
-                        client_secret;
-                        oauth2_token;
-                        refresh_token;
-                        refresh_access_token }
+    let { GapiConversation.Session.oauth2_token;
+          refresh_token } = session
+                            |. GapiConversation.Session.auth
+                            |. GapiConversation.Session.oauth2
+                            |. GapiLens.option_get
+    in
+    GapiAuth.OAuth2 { GapiAuth.client_id;
+                      client_secret;
+                      oauth2_token;
+                      refresh_token;
+                      refresh_access_token }
+  | GapiConfig.OAuth2ServiceAccount {
+      GapiConfig.service_account_credentials_json;
+      scopes;
+      user_to_impersonate;
+      refresh_service_account_access_token } ->
+    let { GapiConversation.Session.oauth2_token;
+          _ } = session
+                |. GapiConversation.Session.auth
+                |. GapiConversation.Session.oauth2
+                |. GapiLens.option_get
+    in
+    GapiAuth.OAuth2ServiceAccount {
+      GapiAuth.service_account_credentials_json;
+      scopes;
+      user_to_impersonate;
+      oauth2_service_account_token = oauth2_token;
+      refresh_service_account_access_token;
+    }
 
 let single_request
       ?post_data
@@ -195,7 +213,8 @@ let single_request
     match auth_data with
     | GapiAuth.NoAuth
     | GapiAuth.ClientLogin _
-    | GapiAuth.OAuth2 _ ->
+    | GapiAuth.OAuth2 _
+    | GapiAuth.OAuth2ServiceAccount _ ->
         None
     | GapiAuth.OAuth1 _ ->
         let post_fields_to_sign =
@@ -255,42 +274,76 @@ let single_request
 
 let refresh_oauth2_token session =
   let auth_data = build_auth_data session in
-    match auth_data with
-    | GapiAuth.OAuth2 { GapiAuth.client_id;
-                         client_secret;
-                         refresh_token;
-                         refresh_access_token; _ } ->
-        if (client_id = "" ||
-              client_secret = "" ||
-              refresh_token = "") &&
-            refresh_access_token = None then
-          raise (RefreshTokenFailed session);
-        let (access_token, new_session) =
-          match refresh_access_token with
-          | None ->
-              let (response, new_session) =
-                GapiOAuth2.refresh_access_token
-                  ~client_id
-                  ~client_secret
-                  ~refresh_token
-                  session in
-              begin match response with
-                | GapiAuthResponse.OAuth2AccessToken token ->
-                    (token.GapiAuthResponse.OAuth2.access_token,
-                     new_session)
-                | _ -> failwith "Not supported OAuth2 response"
-              end
-          | Some refresh ->
-              let access_token = refresh () in
-              (access_token, session)
-        in
-          new_session
-            |> GapiConversation.Session.auth
-            ^%= GapiConversation.Session.oauth2
-            ^%= GapiLens.option_get
-            ^%= GapiConversation.Session.oauth2_token ^= access_token
-    | _ ->
-        failwith "Bug: refresh_oauth2_token"
+  match auth_data with
+  | GapiAuth.OAuth2 { GapiAuth.client_id;
+                      client_secret;
+                      refresh_token;
+                      refresh_access_token; _ } ->
+    if (client_id = "" ||
+        client_secret = "" ||
+        refresh_token = "") &&
+       refresh_access_token = None then
+      raise (RefreshTokenFailed session);
+    let (access_token, new_session) =
+      match refresh_access_token with
+      | None ->
+        let (response, new_session) =
+          GapiOAuth2.refresh_access_token
+            ~client_id
+            ~client_secret
+            ~refresh_token
+            session in
+        begin match response with
+          | GapiAuthResponse.OAuth2AccessToken token ->
+            (token.GapiAuthResponse.OAuth2.access_token,
+             new_session)
+          | _ -> failwith "Not supported OAuth2 response"
+        end
+      | Some refresh ->
+        let access_token = refresh () in
+        (access_token, session)
+    in
+    new_session
+    |> GapiConversation.Session.auth
+       ^%= GapiConversation.Session.oauth2
+       ^%= GapiLens.option_get
+       ^%= GapiConversation.Session.oauth2_token ^= access_token
+  | GapiAuth.OAuth2ServiceAccount {
+      GapiAuth.service_account_credentials_json;
+      scopes;
+      user_to_impersonate;
+      refresh_service_account_access_token; _ } ->
+    if (service_account_credentials_json = "" ||
+        (List.length scopes = 0)) &&
+       refresh_service_account_access_token = None then
+      raise (RefreshTokenFailed session);
+    let (access_token, new_session) =
+      match refresh_service_account_access_token with
+      | None ->
+        let (response, new_session) =
+          GapiOAuth2ServiceAccount.get_access_token
+            ?user_to_impersonate
+            ~service_account_credentials_json
+            ~scopes
+            session in
+        begin match response with
+          | GapiAuthResponse.OAuth2AccessToken token ->
+            (token.GapiAuthResponse.OAuth2.access_token,
+             new_session)
+          | _ ->
+            failwith "Not supported OAuth2 (for service accounts) response"
+        end
+      | Some refresh ->
+        let access_token = refresh () in
+        (access_token, session)
+    in
+    new_session
+    |> GapiConversation.Session.auth
+       ^%= GapiConversation.Session.oauth2
+       ^%= GapiLens.option_get
+       ^%= GapiConversation.Session.oauth2_token ^= access_token
+  | _ ->
+    failwith "Bug: refresh_oauth2_token"
 
 let gapi_request
       ?post_data

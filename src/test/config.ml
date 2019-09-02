@@ -1,4 +1,4 @@
-let default_config_file = "config/auth.config"
+let default_config_file = "../../config/auth.config"
 
 type t = (string, string) Hashtbl.t
 

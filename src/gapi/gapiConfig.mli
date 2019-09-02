@@ -63,9 +63,37 @@ val client_secret : (oauth2_config, string) GapiLens.t
 val refresh_access_token : (oauth2_config, (unit -> string) option) GapiLens.t
 (** OAuth2 optional external token refresh function lens. *)
 
+(** OAuth 2 (for service accounts) parameters. *)
+type oauth2_service_account_config = {
+  service_account_credentials_json : string;
+  (** Service account credentials JSON file content. *)
+  scopes : string list;
+  (** List of scopes that the application requests. *)
+  user_to_impersonate : string option;
+  (** Optional user to impersonate (for G Suite domains). *)
+  refresh_service_account_access_token : (unit -> string) option
+  (** Optional external function used to get new access tokens. *)
+}
+
+val service_account_credentials_json :
+  (oauth2_service_account_config, string) GapiLens.t
+(** OAuth2 service account credentials JSON file content (lens). *)
+
+val scopes :
+  (oauth2_service_account_config, string list) GapiLens.t
+(** List of scopes that the application requests (lens). *)
+
+val user_to_impersonate :
+  (oauth2_service_account_config, string option) GapiLens.t
+(** Optional user to impersonate (lens). *)
+
+val refresh_service_account_access_token :
+  (oauth2_service_account_config, (unit -> string) option) GapiLens.t
+(** Optional external function used to get new access tokens (lens). *)
+
 (** Authorization method. *)
 type auth_config =
-    NoAuth
+  | NoAuth
     (** No authorization. *)
   | ClientLogin of client_login_config
     (** Client Login. *)
@@ -73,6 +101,8 @@ type auth_config =
     (** OAuth1. *)
   | OAuth2 of oauth2_config
     (** OAuth2. *)
+  | OAuth2ServiceAccount of oauth2_service_account_config
+    (** OAuth2 for service accounts. *)
 
 (** Library configuration. *)
 type t = {

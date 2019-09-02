@@ -1,5 +1,5 @@
 type debug_function =
-    Standard
+  | Standard
   | Custom of (Curl.t -> Curl.curlDebugType -> string -> unit)
 
 type client_login_config = {
@@ -14,6 +14,7 @@ let password = {
   GapiLens.get = (fun x -> x.password);
   GapiLens.set = (fun v x -> { x with password = v })
 }
+
 type oauth1_config = {
   signature_method : GapiCore.SignatureMethod.t;
   consumer_key : string;
@@ -31,6 +32,7 @@ let consumer_secret = {
   GapiLens.get = (fun x -> x.consumer_secret);
   GapiLens.set = (fun v x -> { x with consumer_secret = v })
 }
+
 type oauth2_config = {
   client_id : string;
   client_secret : string;
@@ -48,11 +50,36 @@ let refresh_access_token = {
   GapiLens.get = (fun x -> x.refresh_access_token);
   GapiLens.set = (fun v x -> { x with refresh_access_token = v })
 }
+
+type oauth2_service_account_config = {
+  service_account_credentials_json : string;
+  scopes : string list;
+  user_to_impersonate : string option;
+  refresh_service_account_access_token : (unit -> string) option
+}
+let service_account_credentials_json = {
+  GapiLens.get = (fun x -> x.service_account_credentials_json);
+  GapiLens.set = (fun v x -> { x with service_account_credentials_json = v })
+}
+let scopes = {
+  GapiLens.get = (fun x -> x.scopes);
+  GapiLens.set = (fun v x -> { x with scopes = v })
+}
+let user_to_impersonate = {
+  GapiLens.get = (fun x -> x.user_to_impersonate);
+  GapiLens.set = (fun v x -> { x with user_to_impersonate = v })
+}
+let refresh_service_account_access_token = {
+  GapiLens.get = (fun x -> x.refresh_service_account_access_token);
+  GapiLens.set = (fun v x -> { x with refresh_service_account_access_token = v })
+}
+
 type auth_config =
     NoAuth
   | ClientLogin of client_login_config
   | OAuth1 of oauth1_config
   | OAuth2 of oauth2_config
+  | OAuth2ServiceAccount of oauth2_service_account_config
 
 (* TODO: proxy config? ip, port, user+pwd *)
 type t = {

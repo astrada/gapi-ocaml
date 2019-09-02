@@ -21,6 +21,8 @@ let model_tests =
    TestDriveV2Model.suite;
    TestDriveV3Model.suite;
    TestError.suite;
+   TestServiceAccountCredentials.suite;
+   TestJwtServiceAccount.suite;
   ]
 
 let service_tests = 
@@ -42,32 +44,34 @@ let service_tests =
    TestBigqueryV2Service.suite;
    TestDocumentsV3Service.suite;
    TestDriveV2Service.suite;
+   TestOAuth2ServiceAccount.suite;
   ]
 
 let build_service_test_list service =
   let service_suite =
     match service with
-        "auth" -> [TestAuth.suite]
-      | "calendar" -> [TestCalendarService.suite;
-                       TestMonadic.suite]
-      | "calendar-v3" -> [TestCalendarV3Service.suite]
-      | "plus" -> [TestPlusV1Service.suite]
-      | "tasks" -> [TestTasksV1Service.suite]
-      | "discovery" -> [TestDiscoveryV1Service.suite]
-      | "urlshortener" -> [TestUrlshortenerV1Service.suite]
-      | "oauth2" -> [TestOauth2V2Service.suite]
-      | "customsearch" -> [TestCustomsearchV1Service.suite]
-      | "analytics" -> [TestAnalyticsV3Service.suite]
-      | "pagespeedonline" -> [TestPagespeedonlineV1Service.suite]
-      | "blogger" -> [TestBloggerV2Service.suite]
-      | "siteVerification" -> [TestSiteVerificationV1Service.suite]
-      | "adsense" -> [TestAdsenseV1_1Service.suite]
-      | "bigquery" -> [TestBigqueryV2Service.suite]
-      | "documents" -> [TestDocumentsV3Service.suite]
-      | "drive" -> [TestDriveV2Service.suite]
-      | _ -> failwith ("Service not supported: " ^ service)
+    | "auth" -> [TestAuth.suite]
+    | "calendar" -> [TestCalendarService.suite;
+                     TestMonadic.suite]
+    | "calendar-v3" -> [TestCalendarV3Service.suite]
+    | "plus" -> [TestPlusV1Service.suite]
+    | "tasks" -> [TestTasksV1Service.suite]
+    | "discovery" -> [TestDiscoveryV1Service.suite]
+    | "urlshortener" -> [TestUrlshortenerV1Service.suite]
+    | "oauth2" -> [TestOauth2V2Service.suite]
+    | "customsearch" -> [TestCustomsearchV1Service.suite]
+    | "analytics" -> [TestAnalyticsV3Service.suite]
+    | "pagespeedonline" -> [TestPagespeedonlineV1Service.suite]
+    | "blogger" -> [TestBloggerV2Service.suite]
+    | "siteVerification" -> [TestSiteVerificationV1Service.suite]
+    | "adsense" -> [TestAdsenseV1_1Service.suite]
+    | "bigquery" -> [TestBigqueryV2Service.suite]
+    | "documents" -> [TestDocumentsV3Service.suite]
+    | "drive" -> [TestDriveV2Service.suite]
+    | "oa2serv" -> [TestOAuth2ServiceAccount.suite;]
+    | _ -> failwith ("Service not supported: " ^ service)
   in
-    model_tests @ service_suite
+  service_suite
 
 let build_suite_from_list test_list =
   "Google API OCaml client test suite" >::: 
@@ -90,7 +94,7 @@ let _ =
       ["-service",
          Arg.String (fun service ->
                        test_list := build_service_test_list service),
-         "svc Google service to test (auth, calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline, blogger, siteVerification, adsense, bigquery, documents)";
+         "svc Google service to test (auth, oa2serv, calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline, blogger, siteVerification, adsense, bigquery, documents)";
        "-all",
          Arg.Unit (fun () -> test_list := model_tests @ service_tests),
          " Run all tests"]) in
