@@ -1,4 +1,3 @@
-@OCamlStdlibDir@/gapi-ocaml/dune-package
 @OCamlStdlibDir@/gapi-ocaml/*.cmi
 @OCamlStdlibDir@/gapi-ocaml/*.cmt
 @OCamlStdlibDir@/gapi-ocaml/*.cmti
@@ -9,6 +8,7 @@
 @OCamlStdlibDir@/gapi-ocaml/gdata/*.cmti
 @OCamlStdlibDir@/gapi-ocaml/gdata/*.cmx
 @OCamlStdlibDir@/gapi-ocaml/gdata/*.mli
+OPT: @OCamlStdlibDir@/gapi-ocaml/dune-package
 OPT: @OCamlStdlibDir@/gapi-ocaml/*.cmxa
 OPT: @OCamlStdlibDir@/gapi-ocaml/*.a
 OPT: @OCamlStdlibDir@/gapi-ocaml/gdata/*.cmxa
