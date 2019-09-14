@@ -78,7 +78,7 @@ sig
 end
 
 type t =
-    ClientLoginAuthToken of ClientLogin.auth_token
+  | ClientLoginAuthToken of ClientLogin.auth_token
   | ClientLoginCaptcha of ClientLogin.captcha
   | OAuth1RequestToken of OAuth1.request_token
   | OAuth1AuthorizeToken of OAuth1.auth_token

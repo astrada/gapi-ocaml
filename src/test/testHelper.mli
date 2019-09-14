@@ -14,6 +14,10 @@ val build_oauth2_service_account_auth :
   Config.t ->
   GapiConfig.auth_config * GapiConversation.Session.auth_context
 
+val build_oauth2_devices_auth :
+  Config.t ->
+  GapiConfig.auth_config * GapiConversation.Session.auth_context
+
 val build_no_auth :
   Config.t ->
   GapiConfig.auth_config * GapiConversation.Session.auth_context

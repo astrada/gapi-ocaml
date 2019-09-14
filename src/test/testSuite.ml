@@ -45,6 +45,7 @@ let service_tests =
    TestDocumentsV3Service.suite;
    TestDriveV2Service.suite;
    TestOAuth2ServiceAccount.suite;
+   TestOAuth2Devices.suite;
   ]
 
 let build_service_test_list service =
@@ -69,6 +70,7 @@ let build_service_test_list service =
     | "documents" -> [TestDocumentsV3Service.suite]
     | "drive" -> [TestDriveV2Service.suite]
     | "oa2serv" -> [TestOAuth2ServiceAccount.suite;]
+    | "oa2devices" -> [TestOAuth2Devices.suite;]
     | _ -> failwith ("Service not supported: " ^ service)
   in
   service_suite

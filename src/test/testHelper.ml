@@ -71,6 +71,16 @@ let build_oauth2_service_account_auth test_config =
      { GapiConversation.Session.oauth2_token = get "oa2_token";
        refresh_token = "" })
 
+let build_oauth2_devices_auth test_config =
+  let get = Config.get test_config in
+  (GapiConfig.OAuth2
+     { GapiConfig.client_id = get "oa2_devices_id";
+       client_secret = get "oa2_devices_secret";
+       refresh_access_token = None },
+   GapiConversation.Session.OAuth2
+     { GapiConversation.Session.oauth2_token = get "oa2_token";
+       refresh_token = get "oa2_refresh" })
+
 let build_no_auth _ =
   (GapiConfig.NoAuth,
    GapiConversation.Session.NoAuth)

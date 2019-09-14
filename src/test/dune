@@ -32,5 +32,12 @@
    (glob_files ../../config/*))
  (action (run ./testSuite.exe -service oa2serv)))
 
+(alias
+ (name runtest-oa2devices)
+ (deps
+   testSuite.exe
+   (glob_files ../../config/*))
+ (action (run ./testSuite.exe -service oa2devices)))
+
 ; TODO: add stanzas to test each service
 
