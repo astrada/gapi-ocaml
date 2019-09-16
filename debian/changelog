@@ -1,3 +1,9 @@
+gapi-ocaml (0.3.16-0ubuntu1) eoan; urgency=low
+
+  * Enable OAuth 2.0 for Devices
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Mon, 16 Sep 2019 21:45:45 +0200
+
 gapi-ocaml (0.3.15-0ubuntu1) eoan; urgency=low
 
   * Enable OAuth 2.0 for Server to Server Applications
