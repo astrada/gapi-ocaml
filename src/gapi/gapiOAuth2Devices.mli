@@ -1,5 +1,8 @@
-(** OAuth2 for TV and limited devices.
-  * @see https://developers.google.com/identity/protocols/OAuth2ForDevices*)
+(**
+ OAuth2 for TV and limited devices.
+
+ @see <https://developers.google.com/identity/protocols/OAuth2ForDevices>
+*)
 
 module AuthorizationCode :
 sig

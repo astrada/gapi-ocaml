@@ -79,18 +79,36 @@ struct
 
   type error_response = {
     error_code : string;
+    error : string;
+    error_description : string;
   }
 
   let error_response = {
     GapiLens.get = (fun x -> x.error_code);
-    GapiLens.set = (fun v x -> { error_code = v })
+    GapiLens.set = (fun v x -> { x with error_code = v })
+  }
+  let error = {
+    GapiLens.get = (fun x -> x.error);
+    GapiLens.set = (fun v x -> { x with error = v })
+  }
+  let error_description = {
+    GapiLens.get = (fun x -> x.error_description);
+    GapiLens.set = (fun v x -> { x with error_description = v })
   }
 
   let parse_error_response x = function
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "error_code"; data_type = GapiJson.Scalar },
          `String v) ->
-      { error_code = v }
+      { x with error_code = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "error"; data_type = GapiJson.Scalar },
+         `String v) ->
+      { x with error = v }
+    | GapiCore.AnnotatedTree.Leaf
+        ({ GapiJson.name = "error_description"; data_type = GapiJson.Scalar },
+         `String v) ->
+      { x with error_description = v }
     | e ->
       GapiJson.unexpected
         "GapiOAuth2Devices.AuthorizationCode.parse_error_response" e x
@@ -100,14 +118,19 @@ let parse_error_response pipe response_code =
   let error_response =
     GapiJson.parse_json_response
       (GapiJson.parse_root AuthorizationCode.parse_error_response
-         { AuthorizationCode.error_code = "" }) pipe in
+         { AuthorizationCode.error_code = "";
+           error = "";
+           error_description = "";
+         }) pipe in
   let error_code = error_response.AuthorizationCode.error_code in
   if error_code = "rate_limit_exceeded" then
     raise AuthorizationCode.RateLimitExceeded
   else
     failwith (
       Printf.sprintf "OAuth2 for devices error: %s (HTTP response code: %d)"
-        error_code
+        (if error_code <> ""
+         then error_code
+         else error_response.AuthorizationCode.error_description)
         response_code)
 
 let parse_success_response =
