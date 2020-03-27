@@ -49,8 +49,6 @@ You will need the following libraries:
 * [ExtLib][] >= 1.5.1
 * [Yojson][] >= 1.0.2
 * [Xmlm][] >= 1.0.2
-* [ppx_monadic][] >= 2.2.2 (PPX syntax extension for monadic bind syntactic
-  sugar)
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
 This library was developed and tested on Ubuntu LTS (64-bit).
@@ -63,7 +61,6 @@ This library was developed and tested on Ubuntu LTS (64-bit).
 [ExtLib]: https://github.com/ygrek/ocaml-extlib
 [Yojson]: http://mjambon.com/yojson.html
 [Xmlm]: http://erratique.ch/software/xmlm
-[ppx_monadic]: https://bitbucket.org/camlspotter/ppx_monadic
 [OUnit]: http://ounit.forge.ocamlcore.org/
 
 ### Configuration and installation
@@ -82,8 +79,7 @@ privileges)
 
     $ make install
 
-To build and run the tests (you will need
-[ppx_monadic](https://bitbucket.org/camlspotter/ppx_monadic)), execute
+To build and run the tests, execute
 
     $ make test
 

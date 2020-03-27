@@ -22,9 +22,7 @@ functionalities to query the Google RESTful services.
 
 ### Compiling
 
-To build the generator you will need
-[ppx_monadic](https://bitbucket.org/camlspotter/ppx_monadic).
-After installing it, execute
+To build the generator, execute
 
     $ dune build @generator
 
