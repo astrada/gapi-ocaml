@@ -1,4 +1,5 @@
-(* Warning! This file is generated. Modify at your own risk. *)
+(* Warning! This file is generated. Modify at your own risk.
+        *)
 
 open GapiUtils.Infix
 open GapiDriveV3Model
@@ -644,6 +645,7 @@ struct
       corpus : Corpus.t;
       count : int;
       driveId : string;
+      enforceSingleParent : bool;
       ignoreDefaultVisibility : bool;
       includeItemsFromAllDrives : bool;
       includeTeamDriveItems : bool;
@@ -677,6 +679,7 @@ struct
       corpus = Corpus.Default;
       count = 10;
       driveId = "";
+      enforceSingleParent = false;
       ignoreDefaultVisibility = false;
       includeItemsFromAllDrives = false;
       includeTeamDriveItems = false;
@@ -712,6 +715,7 @@ struct
       param (fun p -> p.corpus) Corpus.to_string "corpus";
       param (fun p -> p.count) string_of_int "count";
       param (fun p -> p.driveId) (fun x -> x) "driveId";
+      param (fun p -> p.enforceSingleParent) string_of_bool "enforceSingleParent";
       param (fun p -> p.ignoreDefaultVisibility) string_of_bool "ignoreDefaultVisibility";
       param (fun p -> p.includeItemsFromAllDrives) string_of_bool "includeItemsFromAllDrives";
       param (fun p -> p.includeTeamDriveItems) string_of_bool "includeTeamDriveItems";
@@ -740,6 +744,7 @@ struct
         ?(corpus = default.corpus)
         ?(count = default.count)
         ?(driveId = default.driveId)
+        ?(enforceSingleParent = default.enforceSingleParent)
         ?(ignoreDefaultVisibility = default.ignoreDefaultVisibility)
         ?(includeItemsFromAllDrives = default.includeItemsFromAllDrives)
         ?(includeTeamDriveItems = default.includeTeamDriveItems)
@@ -771,6 +776,7 @@ struct
         corpus;
         count;
         driveId;
+        enforceSingleParent;
         ignoreDefaultVisibility;
         includeItemsFromAllDrives;
         includeTeamDriveItems;
@@ -797,6 +803,7 @@ struct
   let copy
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?(enforceSingleParent = false)
         ?(ignoreDefaultVisibility = false)
         ?(keepRevisionForever = false)
         ?(supportsAllDrives = false)
@@ -808,9 +815,9 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "copy"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~ignoreDefaultVisibility
-      ~keepRevisionForever ?ocrLanguage ~supportsAllDrives
-      ~supportsTeamDrives () in
+      ?standard_parameters:std_params ~enforceSingleParent
+      ~ignoreDefaultVisibility ~keepRevisionForever ?ocrLanguage
+      ~supportsAllDrives ~supportsTeamDrives () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
@@ -821,6 +828,7 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
         ?media_source
+        ?(enforceSingleParent = false)
         ?(ignoreDefaultVisibility = false)
         ?(keepRevisionForever = false)
         ?(supportsAllDrives = false)
@@ -835,9 +843,9 @@ struct
       else base_path in
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~ignoreDefaultVisibility
-      ~keepRevisionForever ?ocrLanguage ~supportsAllDrives
-      ~supportsTeamDrives ~useContentAsIndexableText () in
+      ?standard_parameters:std_params ~enforceSingleParent
+      ~ignoreDefaultVisibility ~keepRevisionForever ?ocrLanguage
+      ~supportsAllDrives ~supportsTeamDrives ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?media_source
@@ -956,6 +964,7 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
         ?media_source
+        ?(enforceSingleParent = false)
         ?(keepRevisionForever = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
@@ -973,9 +982,9 @@ struct
       else base_path in
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ?addParents ~keepRevisionForever
-      ?ocrLanguage ?removeParents ~supportsAllDrives ~supportsTeamDrives
-      ~useContentAsIndexableText () in
+      ?standard_parameters:std_params ?addParents ~enforceSingleParent
+      ~keepRevisionForever ?ocrLanguage ?removeParents ~supportsAllDrives
+      ~supportsTeamDrives ~useContentAsIndexableText () in
     let query_parameters = Option.map FilesParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?media_source
@@ -1021,6 +1030,8 @@ struct
       key : string;
       (* permissions-specific query parameters *)
       emailMessage : string;
+      enforceSingleParent : bool;
+      moveToNewOwnersRoot : bool;
       pageSize : int;
       pageToken : string;
       removeExpiration : bool;
@@ -1040,6 +1051,8 @@ struct
       userIp = "";
       key = "";
       emailMessage = "";
+      enforceSingleParent = false;
+      moveToNewOwnersRoot = false;
       pageSize = 0;
       pageToken = "";
       removeExpiration = false;
@@ -1061,6 +1074,8 @@ struct
       param (fun p -> p.userIp) (fun x -> x) "userIp";
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.emailMessage) (fun x -> x) "emailMessage";
+      param (fun p -> p.enforceSingleParent) string_of_bool "enforceSingleParent";
+      param (fun p -> p.moveToNewOwnersRoot) string_of_bool "moveToNewOwnersRoot";
       param (fun p -> p.pageSize) string_of_int "pageSize";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
       param (fun p -> p.removeExpiration) string_of_bool "removeExpiration";
@@ -1075,6 +1090,8 @@ struct
     let merge_parameters
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(emailMessage = default.emailMessage)
+        ?(enforceSingleParent = default.enforceSingleParent)
+        ?(moveToNewOwnersRoot = default.moveToNewOwnersRoot)
         ?(pageSize = default.pageSize)
         ?(pageToken = default.pageToken)
         ?(removeExpiration = default.removeExpiration)
@@ -1092,6 +1109,8 @@ struct
         userIp = standard_parameters.GapiService.StandardParameters.userIp;
         key = standard_parameters.GapiService.StandardParameters.key;
         emailMessage;
+        enforceSingleParent;
+        moveToNewOwnersRoot;
         pageSize;
         pageToken;
         removeExpiration;
@@ -1109,6 +1128,8 @@ struct
   let create
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?(enforceSingleParent = false)
+        ?(moveToNewOwnersRoot = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?(transferOwnership = false)
@@ -1121,9 +1142,9 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "permissions"] base_url in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params ?emailMessage ?sendNotificationEmail
-      ~supportsAllDrives ~supportsTeamDrives ~transferOwnership
-      ~useDomainAdminAccess () in
+      ?standard_parameters:std_params ?emailMessage ~enforceSingleParent
+      ~moveToNewOwnersRoot ?sendNotificationEmail ~supportsAllDrives
+      ~supportsTeamDrives ~transferOwnership ~useDomainAdminAccess () in
     let query_parameters = Option.map PermissionsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters

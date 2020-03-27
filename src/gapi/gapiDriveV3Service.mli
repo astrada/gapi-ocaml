@@ -1,4 +1,5 @@
-(* Warning! This file is generated. Modify at your own risk. *)
+(* Warning! This file is generated. Modify at your own risk.
+        *)
 
 (** Service definition for Drive API (v3).
   
@@ -393,8 +394,9 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param enforceSingleParent Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. Requests that specify more than one parent will fail.
     @param ignoreDefaultVisibility Whether to ignore the domain's default visibility settings for the created file. Domain administrators can choose to make all uploaded files visible to the domain by default; this parameter bypasses that behavior for the request. Permissions are still inherited from parent folders.
-    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.
+    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.
     @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
@@ -403,6 +405,7 @@ sig
   val copy :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?enforceSingleParent:bool ->
     ?ignoreDefaultVisibility:bool ->
     ?keepRevisionForever:bool ->
     ?supportsAllDrives:bool ->
@@ -417,8 +420,9 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param enforceSingleParent Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. Requests that specify more than one parent will fail.
     @param ignoreDefaultVisibility Whether to ignore the domain's default visibility settings for the created file. Domain administrators can choose to make all uploaded files visible to the domain by default; this parameter bypasses that behavior for the request. Permissions are still inherited from parent folders.
-    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.
+    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.
     @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param useContentAsIndexableText Whether to use the uploaded content as indexable text.
@@ -428,6 +432,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?media_source:GapiMediaResource.t ->
+    ?enforceSingleParent:bool ->
     ?ignoreDefaultVisibility:bool ->
     ?keepRevisionForever:bool ->
     ?supportsAllDrives:bool ->
@@ -482,7 +487,7 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
-  (** Generates a set of file IDs which can be provided in create requests.
+  (** Generates a set of file IDs which can be provided in create or copy requests.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -560,7 +565,8 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
-    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.
+    @param enforceSingleParent Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If the item's owner makes a request to add a single parent, the item will be removed from all current folders and placed in the requested folder. Other requests that increase the number of parents will fail, except when the canAddMyDriveParent file capability is true and a single parent is being added.
+    @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.
     @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param useContentAsIndexableText Whether to use the uploaded content as indexable text.
@@ -573,6 +579,7 @@ sig
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?media_source:GapiMediaResource.t ->
+    ?enforceSingleParent:bool ->
     ?keepRevisionForever:bool ->
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
@@ -616,6 +623,8 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param enforceSingleParent Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. See moveToNewOwnersRoot for details.
+    @param moveToNewOwnersRoot This parameter will only take effect if the item is not in a shared drive and the request is attempting to transfer the ownership of the item. When set to true, the item will be moved to the new owner's My Drive root folder and all prior parents removed. If set to false, when enforceSingleParent=true, parents are not changed. If set to false, when enforceSingleParent=false, existing parents are not changed; however, the file will be added to the new owner's My Drive root folder, unless it is already in the new owner's My Drive.
     @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param transferOwnership Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect.
@@ -627,6 +636,8 @@ sig
   val create :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
+    ?enforceSingleParent:bool ->
+    ?moveToNewOwnersRoot:bool ->
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?transferOwnership:bool ->
