@@ -1,3 +1,21 @@
+gapi-ocaml (0.3.18-0ubuntu1) focal; urgency=low
+
+  * Add support for shortcuts
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Thu, 02 Apr 2020 20:19:03 +0200
+
+gapi-ocaml (0.3.17-0ubuntu2) focal; urgency=low
+
+  * No change port to focal
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 01 Mar 2020 16:49:01 +0100
+
+gapi-ocaml (0.3.17-0ubuntu1) eoan; urgency=low
+
+  * Bugfix release
+
+ -- Alessandro Strada <alessandro.strada@gmail.com>  Sun, 09 Feb 2020 23:07:08 +0100
+
 gapi-ocaml (0.3.16-0ubuntu1) eoan; urgency=low
 
   * Enable OAuth 2.0 for Devices
