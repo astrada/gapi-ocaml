@@ -1,8 +1,7 @@
 (executable
  (name serviceGenerator)
  (libraries threads gapi-ocaml)
- (flags (:standard -w -3-9-23-27-32-33-39))
- (preprocess (pps ppx_monadic)))
+ (flags (:standard -w -3-9-23-27-32-33-39)))
 
 (alias
  (name generator)

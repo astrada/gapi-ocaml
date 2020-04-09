@@ -1,4 +1,5 @@
-(* Warning! This file is generated. Modify at your own risk. *)
+(* Warning! This file is generated. Modify at your own risk.
+        *)
 
 module TeamDrive =
 struct
@@ -2309,6 +2310,56 @@ struct
     
   end
   
+  module ShortcutDetails =
+  struct
+    type t = {
+      targetId : string;
+      targetMimeType : string;
+      
+    }
+    
+    let targetId = {
+      GapiLens.get = (fun x -> x.targetId);
+      GapiLens.set = (fun v x -> { x with targetId = v });
+    }
+    let targetMimeType = {
+      GapiLens.get = (fun x -> x.targetMimeType);
+      GapiLens.set = (fun v x -> { x with targetMimeType = v });
+    }
+    
+    let empty = {
+      targetId = "";
+      targetMimeType = "";
+      
+    }
+    
+    let rec render_content x = 
+       [
+        GapiJson.render_string_value "targetId" x.targetId;
+        GapiJson.render_string_value "targetMimeType" x.targetMimeType;
+        
+      ]
+    and render x = 
+      GapiJson.render_object "" (render_content x)
+    
+    let rec parse x = function
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "targetId"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with targetId = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "targetMimeType"; data_type = GapiJson.Scalar },
+          `String v) ->
+        { x with targetMimeType = v }
+      | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = ""; data_type = GapiJson.Object },
+        cs) ->
+        GapiJson.parse_children parse empty (fun x -> x) cs
+      | e ->
+        GapiJson.unexpected "GapiDriveV3Model.ShortcutDetails.parse" e x
+    
+  end
+  
   module ImageMediaMetadata =
   struct
     module Location =
@@ -2773,6 +2824,7 @@ struct
   struct
     type t = {
       canAddChildren : bool;
+      canAddMyDriveParent : bool;
       canChangeCopyRequiresWriterPermission : bool;
       canChangeViewersCanCopyContent : bool;
       canComment : bool;
@@ -2782,6 +2834,7 @@ struct
       canDownload : bool;
       canEdit : bool;
       canListChildren : bool;
+      canModifyContent : bool;
       canMoveChildrenOutOfDrive : bool;
       canMoveChildrenOutOfTeamDrive : bool;
       canMoveChildrenWithinDrive : bool;
@@ -2796,6 +2849,7 @@ struct
       canReadRevisions : bool;
       canReadTeamDrive : bool;
       canRemoveChildren : bool;
+      canRemoveMyDriveParent : bool;
       canRename : bool;
       canShare : bool;
       canTrash : bool;
@@ -2807,6 +2861,10 @@ struct
     let canAddChildren = {
       GapiLens.get = (fun x -> x.canAddChildren);
       GapiLens.set = (fun v x -> { x with canAddChildren = v });
+    }
+    let canAddMyDriveParent = {
+      GapiLens.get = (fun x -> x.canAddMyDriveParent);
+      GapiLens.set = (fun v x -> { x with canAddMyDriveParent = v });
     }
     let canChangeCopyRequiresWriterPermission = {
       GapiLens.get = (fun x -> x.canChangeCopyRequiresWriterPermission);
@@ -2843,6 +2901,10 @@ struct
     let canListChildren = {
       GapiLens.get = (fun x -> x.canListChildren);
       GapiLens.set = (fun v x -> { x with canListChildren = v });
+    }
+    let canModifyContent = {
+      GapiLens.get = (fun x -> x.canModifyContent);
+      GapiLens.set = (fun v x -> { x with canModifyContent = v });
     }
     let canMoveChildrenOutOfDrive = {
       GapiLens.get = (fun x -> x.canMoveChildrenOutOfDrive);
@@ -2900,6 +2962,10 @@ struct
       GapiLens.get = (fun x -> x.canRemoveChildren);
       GapiLens.set = (fun v x -> { x with canRemoveChildren = v });
     }
+    let canRemoveMyDriveParent = {
+      GapiLens.get = (fun x -> x.canRemoveMyDriveParent);
+      GapiLens.set = (fun v x -> { x with canRemoveMyDriveParent = v });
+    }
     let canRename = {
       GapiLens.get = (fun x -> x.canRename);
       GapiLens.set = (fun v x -> { x with canRename = v });
@@ -2923,6 +2989,7 @@ struct
     
     let empty = {
       canAddChildren = false;
+      canAddMyDriveParent = false;
       canChangeCopyRequiresWriterPermission = false;
       canChangeViewersCanCopyContent = false;
       canComment = false;
@@ -2932,6 +2999,7 @@ struct
       canDownload = false;
       canEdit = false;
       canListChildren = false;
+      canModifyContent = false;
       canMoveChildrenOutOfDrive = false;
       canMoveChildrenOutOfTeamDrive = false;
       canMoveChildrenWithinDrive = false;
@@ -2946,6 +3014,7 @@ struct
       canReadRevisions = false;
       canReadTeamDrive = false;
       canRemoveChildren = false;
+      canRemoveMyDriveParent = false;
       canRename = false;
       canShare = false;
       canTrash = false;
@@ -2957,6 +3026,7 @@ struct
     let rec render_content x = 
        [
         GapiJson.render_bool_value "canAddChildren" x.canAddChildren;
+        GapiJson.render_bool_value "canAddMyDriveParent" x.canAddMyDriveParent;
         GapiJson.render_bool_value "canChangeCopyRequiresWriterPermission" x.canChangeCopyRequiresWriterPermission;
         GapiJson.render_bool_value "canChangeViewersCanCopyContent" x.canChangeViewersCanCopyContent;
         GapiJson.render_bool_value "canComment" x.canComment;
@@ -2966,6 +3036,7 @@ struct
         GapiJson.render_bool_value "canDownload" x.canDownload;
         GapiJson.render_bool_value "canEdit" x.canEdit;
         GapiJson.render_bool_value "canListChildren" x.canListChildren;
+        GapiJson.render_bool_value "canModifyContent" x.canModifyContent;
         GapiJson.render_bool_value "canMoveChildrenOutOfDrive" x.canMoveChildrenOutOfDrive;
         GapiJson.render_bool_value "canMoveChildrenOutOfTeamDrive" x.canMoveChildrenOutOfTeamDrive;
         GapiJson.render_bool_value "canMoveChildrenWithinDrive" x.canMoveChildrenWithinDrive;
@@ -2980,6 +3051,7 @@ struct
         GapiJson.render_bool_value "canReadRevisions" x.canReadRevisions;
         GapiJson.render_bool_value "canReadTeamDrive" x.canReadTeamDrive;
         GapiJson.render_bool_value "canRemoveChildren" x.canRemoveChildren;
+        GapiJson.render_bool_value "canRemoveMyDriveParent" x.canRemoveMyDriveParent;
         GapiJson.render_bool_value "canRename" x.canRename;
         GapiJson.render_bool_value "canShare" x.canShare;
         GapiJson.render_bool_value "canTrash" x.canTrash;
@@ -2995,6 +3067,10 @@ struct
           ({ GapiJson.name = "canAddChildren"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with canAddChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canAddMyDriveParent"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canAddMyDriveParent = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canChangeCopyRequiresWriterPermission"; data_type = GapiJson.Scalar },
           `Bool v) ->
@@ -3031,6 +3107,10 @@ struct
           ({ GapiJson.name = "canListChildren"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with canListChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canModifyContent"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canModifyContent = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canMoveChildrenOutOfDrive"; data_type = GapiJson.Scalar },
           `Bool v) ->
@@ -3087,6 +3167,10 @@ struct
           ({ GapiJson.name = "canRemoveChildren"; data_type = GapiJson.Scalar },
           `Bool v) ->
         { x with canRemoveChildren = v }
+      | GapiCore.AnnotatedTree.Leaf
+          ({ GapiJson.name = "canRemoveMyDriveParent"; data_type = GapiJson.Scalar },
+          `Bool v) ->
+        { x with canRemoveMyDriveParent = v }
       | GapiCore.AnnotatedTree.Leaf
           ({ GapiJson.name = "canRename"; data_type = GapiJson.Scalar },
           `Bool v) ->
@@ -3155,6 +3239,7 @@ struct
     shared : bool;
     sharedWithMeTime : GapiDate.t;
     sharingUser : User.t;
+    shortcutDetails : ShortcutDetails.t;
     size : int64;
     spaces : string list;
     starred : bool;
@@ -3327,6 +3412,10 @@ struct
     GapiLens.get = (fun x -> x.sharingUser);
     GapiLens.set = (fun v x -> { x with sharingUser = v });
   }
+  let shortcutDetails = {
+    GapiLens.get = (fun x -> x.shortcutDetails);
+    GapiLens.set = (fun v x -> { x with shortcutDetails = v });
+  }
   let size = {
     GapiLens.get = (fun x -> x.size);
     GapiLens.set = (fun v x -> { x with size = v });
@@ -3435,6 +3524,7 @@ struct
     shared = false;
     sharedWithMeTime = GapiDate.epoch;
     sharingUser = User.empty;
+    shortcutDetails = ShortcutDetails.empty;
     size = 0L;
     spaces = [];
     starred = false;
@@ -3495,6 +3585,7 @@ struct
       GapiJson.render_bool_value "shared" x.shared;
       GapiJson.render_date_value "sharedWithMeTime" x.sharedWithMeTime;
       (fun v -> GapiJson.render_object "sharingUser" (User.render_content v)) x.sharingUser;
+      (fun v -> GapiJson.render_object "shortcutDetails" (ShortcutDetails.render_content v)) x.shortcutDetails;
       GapiJson.render_int64_value "size" x.size;
       GapiJson.render_array "spaces" (GapiJson.render_string_value "") x.spaces;
       GapiJson.render_bool_value "starred" x.starred;
@@ -3763,6 +3854,14 @@ struct
         User.parse
         User.empty
         (fun v -> { x with sharingUser = v })
+        cs
+    | GapiCore.AnnotatedTree.Node
+        ({ GapiJson.name = "shortcutDetails"; data_type = GapiJson.Object },
+        cs) ->
+      GapiJson.parse_children
+        ShortcutDetails.parse
+        ShortcutDetails.empty
+        (fun v -> { x with shortcutDetails = v })
         cs
     | GapiCore.AnnotatedTree.Leaf
         ({ GapiJson.name = "size"; data_type = GapiJson.Scalar },

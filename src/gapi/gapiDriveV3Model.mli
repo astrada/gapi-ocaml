@@ -1,4 +1,5 @@
-(* Warning! This file is generated. Modify at your own risk. *)
+(* Warning! This file is generated. Modify at your own risk.
+        *)
 
 (** Data definition for Drive API (v3).
   
@@ -446,7 +447,7 @@ sig
 - resolve 
 - reopen *)
     author : User.t;
-    (** The user who created the reply. *)
+    (** The author of the reply. The author's email address and permission ID will not be populated. *)
     content : string;
     (** The plain text content of the reply. This field is used for setting the content, while htmlContent should be displayed. This is required on creates if no action is specified. *)
     createdTime : GapiDate.t;
@@ -513,7 +514,7 @@ sig
     anchor : string;
     (** A region of the document represented as a JSON string. See anchor documentation for details on how to define and interpret anchor properties. *)
     author : User.t;
-    (** The user who created the comment. *)
+    (** The author of the comment. The author's email address and permission ID will not be populated. *)
     content : string;
     (** The plain text content of the comment. This field is used for setting the content, while htmlContent should be displayed. *)
     createdTime : GapiDate.t;
@@ -653,7 +654,7 @@ sig
       inherited : bool;
       (** Whether this permission is inherited. This field is always populated. This is an output-only field. *)
       inheritedFrom : string;
-      (** The ID of the item from which this permission is inherited. This is an output-only field and is only populated for members of the shared drive. *)
+      (** The ID of the item from which this permission is inherited. This is an output-only field. *)
       permissionType : string;
       (** The permission type for this user. While new values may be added in future, the following are currently possible:  
 - file 
@@ -687,7 +688,11 @@ sig
     deleted : bool;
     (** Whether the account associated with this permission has been deleted. This field only pertains to user and group permissions. *)
     displayName : string;
-    (** A displayable name for users, groups or domains. *)
+    (** The "pretty" name of the value of the permission. The following is a list of examples for each type of permission:  
+- user - User's full name, as defined for their Google account, such as "Joe Smith." 
+- group - Name of the Google Group, such as "The Company Administrators." 
+- domain - String domain name, such as "thecompany.com." 
+- anyone - No displayName is present. *)
     domain : string;
     (** The domain to which this permission refers. *)
     emailAddress : string;
@@ -698,7 +703,7 @@ sig
 - The time must be in the future 
 - The time cannot be more than a year in the future *)
     id : string;
-    (** The ID of this permission. This is a unique identifier for the grantee, and is published in User resources as permissionId. *)
+    (** The ID of this permission. This is a unique identifier for the grantee, and is published in User resources as permissionId. IDs should be treated as opaque values. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#permission". *)
     permissionDetails : PermissionDetails.t list;
@@ -720,7 +725,7 @@ sig
 - user 
 - group 
 - domain 
-- anyone *)
+- anyone  When creating a permission, if type is user or group, you must provide an emailAddress for the user or group. When type is domain, you must provide a domain. There isn't extra information required for a anyone type. *)
     
   }
   
@@ -767,6 +772,27 @@ sig
     val durationMillis : (t, int64) GapiLens.t
     val height : (t, int) GapiLens.t
     val width : (t, int) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module ShortcutDetails :
+  sig
+    type t = {
+      targetId : string;
+      (** The ID of the file that this shortcut points to. *)
+      targetMimeType : string;
+      (** The MIME type of the file that this shortcut points to. The value of this field is a snapshot of the target's MIME type, captured when the shortcut is created. *)
+      
+    }
+    
+    val targetId : (t, string) GapiLens.t
+    val targetMimeType : (t, string) GapiLens.t
     
     val empty : t
     
@@ -925,6 +951,8 @@ sig
     type t = {
       canAddChildren : bool;
       (** Whether the current user can add children to this folder. This is always false when the item is not a folder. *)
+      canAddMyDriveParent : bool;
+      (** Whether the current user can add a parent for the item without removing an existing parent in the same request. Not populated for shared drive files. *)
       canChangeCopyRequiresWriterPermission : bool;
       (** Whether the current user can change the copyRequiresWriterPermission restriction of this file. *)
       canChangeViewersCanCopyContent : bool;
@@ -940,9 +968,11 @@ sig
       canDownload : bool;
       (** Whether the current user can download this file. *)
       canEdit : bool;
-      (** Whether the current user can edit this file. *)
+      (** Whether the current user can edit this file. Other factors may limit the type of changes a user can make to a file. For example, see canChangeCopyRequiresWriterPermission or canModifyContent. *)
       canListChildren : bool;
       (** Whether the current user can list the children of this folder. This is always false when the item is not a folder. *)
+      canModifyContent : bool;
+      (** Whether the current user can modify the content of this file. *)
       canMoveChildrenOutOfDrive : bool;
       (** Whether the current user can move children of this folder outside of the shared drive. This is false when the item is not a folder. Only populated for items in shared drives. *)
       canMoveChildrenOutOfTeamDrive : bool;
@@ -971,6 +1001,8 @@ sig
       (** Deprecated - use canReadDrive instead. *)
       canRemoveChildren : bool;
       (** Whether the current user can remove children from this folder. This is always false when the item is not a folder. For a folder in a shared drive, use canDeleteChildren or canTrashChildren instead. *)
+      canRemoveMyDriveParent : bool;
+      (** Whether the current user can remove a parent from the item without adding another parent in the same request. Not populated for shared drive files. *)
       canRename : bool;
       (** Whether the current user can rename this file. *)
       canShare : bool;
@@ -985,6 +1017,7 @@ sig
     }
     
     val canAddChildren : (t, bool) GapiLens.t
+    val canAddMyDriveParent : (t, bool) GapiLens.t
     val canChangeCopyRequiresWriterPermission : (t, bool) GapiLens.t
     val canChangeViewersCanCopyContent : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
@@ -994,6 +1027,7 @@ sig
     val canDownload : (t, bool) GapiLens.t
     val canEdit : (t, bool) GapiLens.t
     val canListChildren : (t, bool) GapiLens.t
+    val canModifyContent : (t, bool) GapiLens.t
     val canMoveChildrenOutOfDrive : (t, bool) GapiLens.t
     val canMoveChildrenOutOfTeamDrive : (t, bool) GapiLens.t
     val canMoveChildrenWithinDrive : (t, bool) GapiLens.t
@@ -1008,6 +1042,7 @@ sig
     val canReadRevisions : (t, bool) GapiLens.t
     val canReadTeamDrive : (t, bool) GapiLens.t
     val canRemoveChildren : (t, bool) GapiLens.t
+    val canRemoveMyDriveParent : (t, bool) GapiLens.t
     val canRename : (t, bool) GapiLens.t
     val canShare : (t, bool) GapiLens.t
     val canTrash : (t, bool) GapiLens.t
@@ -1051,7 +1086,7 @@ If an unsupported color is specified, the closest color in the palette will be u
     (** The full file extension extracted from the name field. May contain multiple concatenated extensions, such as "tar.gz". This is only available for files with binary content in Google Drive.
 This is automatically updated when the name field changes, however it is not cleared if the new name does not contain a valid extension. *)
     hasAugmentedPermissions : bool;
-    (** Whether any users are granted file access directly on this file. This field is only populated for shared drive files. *)
+    (** Whether there are permissions directly on this file. This field is only populated for items in shared drives. *)
     hasThumbnail : bool;
     (** Whether this file has a thumbnail. This does not indicate whether the requesting app has access to the thumbnail. To check access, look for the presence of the thumbnailLink field. *)
     headRevisionId : string;
@@ -1107,6 +1142,8 @@ Entries with null values are cleared in update and copy requests. *)
     (** The time at which the file was shared with the user, if applicable (RFC 3339 date-time). *)
     sharingUser : User.t;
     (** The user who shared the file with the requesting user, if applicable. *)
+    shortcutDetails : ShortcutDetails.t;
+    (** Shortcut file details. Only populated for shortcut files, which have the mimeType field set to application/vnd.google-apps.shortcut. *)
     size : int64;
     (** The size of the file's content in bytes. This is only applicable to files with binary content in Google Drive. *)
     spaces : string list;
@@ -1182,6 +1219,7 @@ Entries with null values are cleared in update and copy requests. *)
   val shared : (t, bool) GapiLens.t
   val sharedWithMeTime : (t, GapiDate.t) GapiLens.t
   val sharingUser : (t, User.t) GapiLens.t
+  val shortcutDetails : (t, ShortcutDetails.t) GapiLens.t
   val size : (t, int64) GapiLens.t
   val spaces : (t, string list) GapiLens.t
   val starred : (t, bool) GapiLens.t
@@ -1589,7 +1627,7 @@ sig
     id : string;
     (** A UUID or similar unique string that identifies this channel. *)
     kind : string;
-    (** Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string "api#channel". *)
+    (** Identifies this as a notification channel used to watch for changes to a resource, which is "api#channel". *)
     params : (string * string) list;
     (** Additional parameters controlling delivery channel behavior. Optional. *)
     payload : bool;
