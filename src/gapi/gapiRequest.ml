@@ -466,8 +466,6 @@ let gapi_request
             0
             target
             new_session
-      | NotFound (new_session, _, _) as e ->
-          retry_on_error 4 true e (fun s -> s) new_session
       | InternalServerError (new_session, response_code, pipe)
       | BadGateway (new_session, response_code, pipe)
       | ServiceUnavailable (new_session, response_code, pipe)
