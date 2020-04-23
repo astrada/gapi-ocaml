@@ -1,4 +1,4 @@
-let library_version = "0.3.19"
+let library_version = "0.3.20"
 
 module AnnotatedTree = struct
   type ('a, 'b) t =
