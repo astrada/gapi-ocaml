@@ -31,11 +31,11 @@ let test_lenses_get () =
   let summ = calendar_list |. second_item_summary in
   let min = calendar_list |. second_item_first_defaultReminder_minutes in
     assert_equal
-      ~printer:Std.identity
+      ~printer:Fun.id
       "America/Los_Angeles"
       tz;
     assert_equal
-      ~printer:Std.identity
+      ~printer:Fun.id
       "calendarListEntrySummary"
       summ;
     assert_equal
@@ -53,11 +53,11 @@ let test_lenses_set () =
   let summ = calendar_list' |. second_item_summary in
   let min = calendar_list' |. second_item_first_defaultReminder_minutes in
     assert_equal
-      ~printer:Std.identity
+      ~printer:Fun.id
       "New TZ"
       tz;
     assert_equal
-      ~printer:Std.identity
+      ~printer:Fun.id
       "New Summary"
       summ;
     assert_equal
@@ -77,7 +77,7 @@ let test_lenses_modify () =
     |. CalendarListEntry.summary
   in
     assert_equal
-      ~printer:Std.identity
+      ~printer:Fun.id
       "Updated Summary"
       summ
 

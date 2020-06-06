@@ -11,7 +11,7 @@ let test_render_file () =
   let json = GapiJson.data_model_to_json tree in
   let json_string = Yojson.Safe.to_string json in
   assert_equal
-    ~printer:Std.identity
+    ~printer:Fun.id
     "{\"appProperties\":{\"test\":null}}"
     json_string
 
@@ -21,7 +21,7 @@ let test_render_empty_file () =
   let json = GapiJson.data_model_to_json tree in
   let json_string = Yojson.Safe.to_string json in
   assert_equal
-    ~printer:Std.identity
+    ~printer:Fun.id
     "{}"
     json_string
 

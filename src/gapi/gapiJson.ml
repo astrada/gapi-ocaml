@@ -114,7 +114,7 @@ let parse_root parse_object empty_object tree =
         parse_children
           parse_object
           empty_object
-          Std.identity
+          Fun.id
           cs
     | e ->
         unexpected "GapiJson.parse_root" e empty_object

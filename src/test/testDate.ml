@@ -13,7 +13,7 @@ let test_to_string () =
         zone = 120;
   } in
   let s = GapiDate.to_string t in
-    assert_equal ~printer:Std.identity "2011-10-14T10:30:00.010+02:00" s
+    assert_equal ~printer:Fun.id "2011-10-14T10:30:00.010+02:00" s
 
 let test_to_string_with_one_millisecond () =
   let t = {
@@ -27,7 +27,7 @@ let test_to_string_with_one_millisecond () =
         zone = 120;
   } in
   let s = GapiDate.to_string t in
-    assert_equal ~printer:Std.identity "2011-10-14T10:30:00.001+02:00" s
+    assert_equal ~printer:Fun.id "2011-10-14T10:30:00.001+02:00" s
 
 let test_of_string () =
   let t = GapiDate.of_string "2011-10-14T10:30:00.000+02:00" in

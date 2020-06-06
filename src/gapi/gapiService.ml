@@ -138,12 +138,12 @@ struct
     let param get_value to_string name =
       build_param default qp get_value to_string name
     in
-      [param (fun p -> p.alt) Std.identity "alt";
-       param (fun p -> p.fields) Std.identity "fields";
+      [param (fun p -> p.alt) Fun.id "alt";
+       param (fun p -> p.fields) Fun.id "fields";
        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-       param (fun p -> p.quotaUser) Std.identity "quotaUser";
-       param (fun p -> p.userIp) Std.identity "userIp";
-       param (fun p -> p.key) Std.identity "key"]
+       param (fun p -> p.quotaUser) Fun.id "quotaUser";
+       param (fun p -> p.userIp) Fun.id "userIp";
+       param (fun p -> p.key) Fun.id "key"]
       |> List.concat
 
   let merge_parameters ?standard_parameters () =

@@ -271,7 +271,7 @@ struct
             GdataAtom.parse_children
               parse_commentsFeedLink
               empty
-              Std.identity
+              Fun.id
               cs
         | e ->
             GdataUtils.unexpected e
