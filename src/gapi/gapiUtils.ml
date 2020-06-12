@@ -87,7 +87,7 @@ let divide_string s c =
 
 let strip_string s =
   let leading_trailing_whitespace =
-    Str.regexp "\\(^[ \t\n]+\\|[ \t\n]+$\\)"
+    Str.regexp "\\(^[ \t\r\n]+\\|[ \t\r\n]+$\\)"
   in
   Str.global_replace leading_trailing_whitespace "" s
 
@@ -167,4 +167,3 @@ let option_map_default f default v =
 (* Initialize random number generator *)
 let () =
   Random.self_init ()
-

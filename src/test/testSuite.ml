@@ -1,5 +1,9 @@
 open OUnit
 
+let core_tests =
+  [TestCore.suite;
+  ]
+
 let model_tests =
   [TestCalendarModel.suite;
    TestDate.suite;
@@ -80,7 +84,7 @@ let build_suite_from_list test_list =
     test_list
 
 let _ =
-  let test_list = ref model_tests in
+  let test_list = ref (core_tests @ model_tests) in
   let ounit_specs =
     ["-verbose",
        Arg.Unit (fun _ -> ()),
@@ -98,7 +102,8 @@ let _ =
                        test_list := build_service_test_list service),
          "svc Google service to test (auth, oa2serv, calendar, calendar-v3, plus, tasks, discovery, urlshortener, oauth2, customsearch, analytics, pagespeedonline, blogger, siteVerification, adsense, bigquery, documents)";
        "-all",
-         Arg.Unit (fun () -> test_list := model_tests @ service_tests),
+         Arg.Unit (fun () ->
+           test_list := core_tests @ model_tests @ service_tests),
          " Run all tests"]) in
   let _ =
     Arg.parse
@@ -110,4 +115,3 @@ let _ =
     Arg.current := 0 in
   let suite = build_suite_from_list !test_list in
     OUnit.run_test_tt_main ~arg_specs suite
-
