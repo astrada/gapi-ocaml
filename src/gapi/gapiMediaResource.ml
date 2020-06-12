@@ -56,7 +56,7 @@ let generate_download_headers download =
   | spec -> [GapiCore.Header.Range spec]
 
 let generate_range_spec ranges =
-  let n_to_s = Option.map_default Int64.to_string "" in
+  let n_to_s = GapiUtils.option_map_default Int64.to_string "" in
   let range_strings =
     List.map
       (fun (range_start, range_end) ->

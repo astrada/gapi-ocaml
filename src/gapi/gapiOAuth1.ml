@@ -265,7 +265,7 @@ let get_request_token
                                oauth_signature_method in
   let post_fields_to_sign =
     ("scope", scope) ::
-    (Option.map_default
+    (GapiUtils.option_map_default
        (fun displayname -> [("xoauth_displayname", displayname)])
        []
        xoauth_displayname)

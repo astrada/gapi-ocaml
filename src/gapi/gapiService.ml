@@ -28,7 +28,7 @@ let service_request
       parse_response
       session =
   let query_url =
-    Option.map_default
+    GapiUtils.option_map_default
       (fun params -> GapiUtils.merge_query_string params url)
       url
       query_parameters
@@ -89,7 +89,7 @@ let download_resource
       media_destination
       session =
   let range_spec =
-    Option.map_default GapiMediaResource.generate_range_spec "" ranges in
+    GapiUtils.option_map_default GapiMediaResource.generate_range_spec "" ranges in
   let media_download = {
     GapiMediaResource.destination = media_destination;
     range_spec;

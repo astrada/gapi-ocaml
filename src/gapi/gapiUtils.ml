@@ -130,6 +130,9 @@ class bigarray_in_obj_channel buffer =
     (Netchannels.lift_in ~buffered:false
       (`Rec (new bigarray_rec_in_channel buffer)))
 
+let option_map_default f default v =
+  Option.(map f v |> value ~default)
+
 (* Initialize random number generator *)
 let () =
   Random.self_init ()

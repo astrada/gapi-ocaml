@@ -30,7 +30,7 @@ let get_adclient_id session =
 
 let get_adclient_id_in_account session =
   let (account_id, session') = get_account_id session in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun accountId ->
          let (adclients, session'') =
            AccountsResource.Adclients.list
@@ -50,7 +50,7 @@ let get_adunit_id_in_account session =
   let (account_id, adclient_id, session') =
     get_adclient_id_in_account session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let accountId = Option.get account_id in
          let (adunits, session'') =
@@ -73,7 +73,7 @@ let get_adunit_id_in_adclient session =
   let (adclient_id, session') =
     get_adclient_id session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let (adunits, session'') =
            AdunitsResource.list
@@ -94,7 +94,7 @@ let get_customchannel_id_in_account session =
   let (account_id, adclient_id, session') =
     get_adclient_id_in_account session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let accountId = Option.get account_id in
          let (customchannels, session'') =
@@ -119,7 +119,7 @@ let get_customchannel_id_in_adclient session =
   let (adclient_id, session') =
     get_adclient_id session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let (customchannels, session'') =
            CustomchannelsResource.list

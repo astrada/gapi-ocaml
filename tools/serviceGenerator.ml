@@ -255,7 +255,7 @@ let build_schema_inner_module file_lens complex_type =
                  ComplexType.Reference _
                | ComplexType.AnonymousObject _ when is_option ->
                    Format.fprintf formatter
-                     "Option.map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
+                     "GapiUtils.option_map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
                      original_name
                      ocaml_name;
                | _ ->
@@ -826,7 +826,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
 
     (* Get etag *)
     let is_etag_present =
-      Option.map_default
+      GapiUtils.option_map_default
         (fun { Field.field_type; _ } ->
            match field_type.ComplexType.data_type with
              ComplexType.Object properties ->
@@ -1362,11 +1362,11 @@ let rec generate_service_module_signature
 
   let render_method formatter methd =
     let request_ref =
-      Option.map_default
+      GapiUtils.option_map_default
         (fun f -> f.Field.field_type.ComplexType.id)
         "" methd.Method.request in
     let response_ref =
-      Option.map_default
+      GapiUtils.option_map_default
         (fun f -> f.Field.field_type.ComplexType.id)
         "" methd.Method.response
     in

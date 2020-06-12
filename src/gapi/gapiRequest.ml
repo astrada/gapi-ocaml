@@ -251,12 +251,12 @@ let single_request
     |> List.filter Option.is_some
     |> List.map Option.get in
   let upload_headers =
-    Option.map_default
+    GapiUtils.option_map_default
       (GapiMediaResource.generate_upload_headers http_method)
       []
       upload_state in
   let download_headers =
-    Option.map_default
+    GapiUtils.option_map_default
       GapiMediaResource.generate_download_headers
       []
       media_download in

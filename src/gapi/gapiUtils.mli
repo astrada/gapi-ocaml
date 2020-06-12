@@ -24,6 +24,8 @@ val string_before_char : char -> string -> string
 
 val wait_exponential_backoff : int -> unit
 
+val option_map_default : ('a -> 'b) -> 'b -> 'a option -> 'b
+
 class bigarray_out_obj_channel :
   (char,
    Bigarray.int8_unsigned_elt,
