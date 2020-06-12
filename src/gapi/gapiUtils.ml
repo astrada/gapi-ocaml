@@ -77,10 +77,6 @@ let string_before_char c s =
     Str.string_before s first_occurrence
   with Not_found -> s
 
-(** [divide_string s c] splits [s] into [(before, after)], where
-    [before] is the substring of [s] preceding [c] and [after] is the
-    substring of [s] following [c]. [before] is [""] and [after] is [s]
-    if [sep] doesn't occur in [s]. *)
 let divide_string s c =
   match String.index_opt s c with
   | None -> "", s

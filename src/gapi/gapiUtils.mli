@@ -22,6 +22,10 @@ val string_after_char : char -> string -> string
 
 val string_before_char : char -> string -> string
 
+(** [divide_string s c] splits [s] into [(before, after)], where
+    [before] is the substring of [s] preceding [c] and [after] is the
+    substring of [s] following [c]. [before] is [""] and [after] is [s]
+    if [sep] doesn't occur in [s]. *)
 val divide_string : string -> char -> (string * string)
 
 val strip_string : string -> string
