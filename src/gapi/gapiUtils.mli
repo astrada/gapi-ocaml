@@ -22,6 +22,14 @@ val string_after_char : char -> string -> string
 
 val string_before_char : char -> string -> string
 
+val divide_string : string -> char -> (string * string)
+
+val strip_string : string -> string
+
+val string_starts_with : string -> string -> bool
+
+val string_ends_with : string -> string -> bool
+
 val wait_exponential_backoff : int -> unit
 
 val option_map_default : ('a -> 'b) -> 'b -> 'a option -> 'b

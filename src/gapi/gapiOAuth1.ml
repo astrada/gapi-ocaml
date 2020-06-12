@@ -210,7 +210,7 @@ let parse_token_info pipe =
   let rec parse_next_line response pipe =
     try
       let line = GapiPipe.OcamlnetPipe.read_line pipe in
-      let (key, value) = ExtString.String.split line "=" in
+      let (key, value) = GapiUtils.divide_string line '=' in
         match key with
             "Target" ->
               GapiConversation.Continue

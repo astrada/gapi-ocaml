@@ -255,12 +255,16 @@ let test_create_quick_add_event () =
                      session);
            assert_bool
              "startTime"
-             (ExtString.String.exists
-                (GapiDate.to_string w.GdataCalendar.When.startTime) "15:00:00");
+             (Str.string_match
+                (Str.regexp_string "15:00:00")
+                (GapiDate.to_string w.GdataCalendar.When.startTime)
+                0);
            assert_bool
              "endTime"
-             (ExtString.String.exists
-                (GapiDate.to_string w.GdataCalendar.When.endTime) "15:30:00"))
+             (Str.string_match
+                (Str.regexp_string "15:30:00")
+                (GapiDate.to_string w.GdataCalendar.When.endTime)
+                0))
 
 let test_create_recurring_event () =
   let ch = open_in "test_data/recurrence.xml" in

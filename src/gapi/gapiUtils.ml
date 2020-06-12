@@ -77,6 +77,41 @@ let string_before_char c s =
     Str.string_before s first_occurrence
   with Not_found -> s
 
+(** [divide_string s c] splits [s] into [(before, after)], where
+    [before] is the substring of [s] preceding [c] and [after] is the
+    substring of [s] following [c]. [before] is [""] and [after] is [s]
+    if [sep] doesn't occur in [s]. *)
+let divide_string s c =
+  match String.index_opt s c with
+  | None -> "", s
+  | Some i ->
+    let len = String.length s in
+    let j = i + 1 in
+    String.sub s 0 i, String.sub s j (len - j)
+
+let strip_string s =
+  let leading_trailing_whitespace =
+    Str.regexp "\\(^[ \t\n]+\\|[ \t\n]+$\\)"
+  in
+  Str.global_replace leading_trailing_whitespace "" s
+
+let string_starts_with s prefix =
+  let prefix_len = String.length prefix in
+  if prefix_len > String.length s then
+    false
+  else
+    let start = String.sub s 0 prefix_len  in
+    String.equal start prefix
+
+let string_ends_with s suffix =
+  let len = String.length s in
+  let suffix_len = String.length suffix in
+  if suffix_len > len then
+    false
+  else
+    let ending = String.sub s (len - suffix_len) suffix_len in
+    String.equal ending suffix
+
 let wait_exponential_backoff n =
   let seconds = 1 lsl n in
   let milliseconds = Random.float 1.0 in

@@ -140,8 +140,8 @@ struct
 
   let parse full_header =
     if String.contains full_header ':' then
-      let (key, v) = ExtString.String.split full_header ":" in
-      let value = ExtString.String.strip v in
+      let (key, v) = GapiUtils.divide_string full_header ':' in
+      let value = GapiUtils.strip_string v in
       let lowercase_key = String.lowercase key in
       match lowercase_key with
       | "content-type" ->
@@ -173,8 +173,8 @@ struct
       | _ ->
         KeyValueHeader (key, value)
     else
-      let stripped_header = ExtString.String.strip full_header in
-      if ExtString.String.starts_with stripped_header "HTTP" then
+      let stripped_header = GapiUtils.strip_string full_header in
+      if GapiUtils.string_starts_with stripped_header "HTTP" then
         Scanf.sscanf stripped_header "HTTP/%s %d %s@!"
           (fun version code reason ->
              HttpStatus (version, code, reason))
