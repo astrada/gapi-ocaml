@@ -987,7 +987,7 @@ struct
     let descriptions =
       let n = List.length enum_descriptions - List.length enums in
       if n = 0 then enum_descriptions
-      else enum_descriptions @ (ExtList.List.make (-n) "")
+      else enum_descriptions @ (List.init (-n) (fun _ -> ""))
     in
     let values =
       List.map2
