@@ -8,7 +8,7 @@ let authorization_code_url
       ~response_type
       client_id =
   let scope_param =
-    Option.map_default (fun s -> [("state", s)]) [] state in
+    GapiUtils.option_map_default (fun s -> [("state", s)]) [] state in
   let scope_string = String.concat " " scope in
   let fields =
     [("client_id", client_id);

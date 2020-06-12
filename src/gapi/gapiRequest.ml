@@ -246,7 +246,7 @@ let single_request
         | Create ->
             None
     ) etag
-      |> Option.default None in
+      |> Option.value ~default:None in
   let headers = [authorization_header; version_header; etag_header]
     |> List.filter Option.is_some
     |> List.map Option.get in
