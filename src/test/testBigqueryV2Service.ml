@@ -83,7 +83,7 @@ let test_insert_dataset () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let (_, session) =
                 DatasetsResource.insert
@@ -115,7 +115,7 @@ let test_update_dataset () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let (dataset, session) =
                 DatasetsResource.insert
@@ -156,7 +156,7 @@ let test_list_jobs () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let (jobs, session) =
                 JobsResource.list
@@ -202,7 +202,7 @@ let test_async_query () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let (job, session) =
                 JobsResource.insert
@@ -233,7 +233,7 @@ let test_sync_query () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let query_request =
                 { QueryRequest.empty with
@@ -338,7 +338,7 @@ let test_insert_table () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let (_, session) =
                 DatasetsResource.insert
@@ -395,7 +395,7 @@ let test_update_table () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (project_id, session) = get_project_id session in
-         Option.may
+         Option.iter
            (fun projectId ->
               let (_, session) =
                 DatasetsResource.insert

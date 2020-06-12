@@ -64,13 +64,13 @@ struct
 
   let end_reading p =
     p.netpipe#close_in ();
-    Option.may (fun ch -> ch#close_in ()) p.infilter;
-    Option.may (fun ch -> ch#close_in ()) p.inchannel
+    Option.iter (fun ch -> ch#close_in ()) p.infilter;
+    Option.iter (fun ch -> ch#close_in ()) p.inchannel
 
   let end_writing p =
     p.netpipe#close_out ();
-    Option.may (fun ch -> ch#close_out ()) p.outfilter;
-    Option.may (fun ch -> ch#close_out ()) p.outchannel
+    Option.iter (fun ch -> ch#close_out ()) p.outfilter;
+    Option.iter (fun ch -> ch#close_out ()) p.outchannel
 
 end
 
