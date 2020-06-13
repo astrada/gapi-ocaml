@@ -121,7 +121,7 @@ struct
     let params = PagespeedapiParameters.merge_parameters
       ?standard_parameters:std_params ~filter_third_party_resources ?locale
       ?rule ~screenshot ?strategy ~url () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       PagespeedapiParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Result.of_data_model) session 

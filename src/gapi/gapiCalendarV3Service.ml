@@ -101,7 +101,7 @@ struct
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -117,7 +117,7 @@ struct
       ((fun x -> x) calendarId); "acl"; ((fun x -> x) ruleId)] base_url in
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response AclRule.of_data_model) session 
@@ -134,7 +134,7 @@ struct
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params ?sendNotifications () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
@@ -155,7 +155,7 @@ struct
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken ?showDeleted
       ?syncToken () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Acl.of_data_model) session 
@@ -173,7 +173,7 @@ struct
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params ?sendNotifications () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
@@ -193,7 +193,7 @@ struct
     let etag = GapiUtils.etag_option aclRule.AclRule.etag in
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params ?sendNotifications () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json AclRule.to_data_model)
@@ -215,7 +215,7 @@ struct
     let params = AclParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken ?showDeleted
       ?syncToken () in
-    let query_parameters = Option.map AclParameters.to_key_value_list params
+    let query_parameters = GapiOption.map AclParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
@@ -349,7 +349,7 @@ struct
       ((fun x -> x) calendarId)] base_url in
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -364,7 +364,7 @@ struct
       ((fun x -> x) calendarId)] base_url in
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response CalendarListEntry.of_data_model) session 
@@ -381,7 +381,7 @@ struct
       in
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params ?colorRgbFormat () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json CalendarListEntry.to_data_model)
@@ -403,7 +403,7 @@ struct
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?minAccessRole ?pageToken
       ?showDeleted ?showHidden ?syncToken () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response CalendarList.of_data_model) session 
@@ -421,7 +421,7 @@ struct
       in
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params ?colorRgbFormat () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json CalendarListEntry.to_data_model)
@@ -441,7 +441,7 @@ struct
       in
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params ?colorRgbFormat () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json CalendarListEntry.to_data_model)
@@ -464,7 +464,7 @@ struct
     let params = CalendarListParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?minAccessRole ?pageToken
       ?showDeleted ?showHidden ?syncToken () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CalendarListParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
@@ -485,7 +485,7 @@ struct
       ((fun x -> x) calendarId); "clear"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ~data:() full_url
       GapiRequest.parse_empty_response session 
@@ -499,7 +499,7 @@ struct
       ((fun x -> x) calendarId)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -514,7 +514,7 @@ struct
       ((fun x -> x) calendarId)] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Calendar.of_data_model) session 
@@ -528,7 +528,7 @@ struct
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Calendar.to_data_model)
@@ -546,7 +546,7 @@ struct
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Calendar.to_data_model)
@@ -564,7 +564,7 @@ struct
     let etag = GapiUtils.etag_option calendar.Calendar.etag in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Calendar.to_data_model)
@@ -584,7 +584,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["channels"; "stop"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
@@ -603,7 +603,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["colors"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Colors.of_data_model) session 
@@ -812,7 +812,7 @@ struct
       in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?sendNotifications () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -833,7 +833,7 @@ struct
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
       ?timeZone () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Event.of_data_model) session 
@@ -852,7 +852,7 @@ struct
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?conferenceDataVersion
       ?supportsAttachments () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Event.to_data_model) ~data:event
@@ -874,7 +874,7 @@ struct
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?conferenceDataVersion ?maxAttendees
       ?sendNotifications ?supportsAttachments () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Event.to_data_model) ~data:event
@@ -902,7 +902,7 @@ struct
       ?standard_parameters:std_params ?alwaysIncludeEmail ?maxAttendees
       ?maxResults ?originalStart ?pageToken ?showDeleted ?timeMax ?timeMin
       ?timeZone () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Events.of_data_model) session 
@@ -936,7 +936,7 @@ struct
       ?maxAttendees ~maxResults ?orderBy ?pageToken ?privateExtendedProperty
       ?q ?sharedExtendedProperty ?showDeleted ?showHiddenInvitations
       ?singleEvents ?syncToken ?timeMax ?timeMin ?timeZone ?updatedMin () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Events.of_data_model) session 
@@ -954,7 +954,7 @@ struct
       base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ~destination ?sendNotifications () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Event.empty full_url
       (GapiJson.parse_json_response Event.of_data_model) session 
@@ -979,7 +979,7 @@ struct
       ?standard_parameters:std_params ?alwaysIncludeEmail
       ?conferenceDataVersion ?maxAttendees ?sendNotifications
       ?supportsAttachments () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Event.to_data_model) ~data:event
@@ -996,7 +996,7 @@ struct
       ((fun x -> x) calendarId); "events"; "quickAdd"] base_url in
     let params = EventsParameters.merge_parameters
       ?standard_parameters:std_params ?sendNotifications ~text () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Event.empty full_url
       (GapiJson.parse_json_response Event.of_data_model) session 
@@ -1021,7 +1021,7 @@ struct
       ?standard_parameters:std_params ?alwaysIncludeEmail
       ?conferenceDataVersion ?maxAttendees ?sendNotifications
       ?supportsAttachments () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Event.to_data_model) ~data:event
@@ -1057,7 +1057,7 @@ struct
       ?maxAttendees ~maxResults ?orderBy ?pageToken ?privateExtendedProperty
       ?q ?sharedExtendedProperty ?showDeleted ?showHiddenInvitations
       ?singleEvents ?syncToken ?timeMax ?timeMin ?timeZone ?updatedMin () in
-    let query_parameters = Option.map EventsParameters.to_key_value_list
+    let query_parameters = GapiOption.map EventsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
@@ -1077,7 +1077,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["freeBusy"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json FreeBusyRequest.to_data_model)
@@ -1166,7 +1166,7 @@ struct
       ((fun x -> x) setting)] base_url in
     let params = SettingsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map SettingsParameters.to_key_value_list
+    let query_parameters = GapiOption.map SettingsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Setting.of_data_model) session 
@@ -1182,7 +1182,7 @@ struct
       base_url in
     let params = SettingsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken ?syncToken () in
-    let query_parameters = Option.map SettingsParameters.to_key_value_list
+    let query_parameters = GapiOption.map SettingsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Settings.of_data_model) session 
@@ -1199,7 +1199,7 @@ struct
       "watch"] base_url in
     let params = SettingsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken ?syncToken () in
-    let query_parameters = Option.map SettingsParameters.to_key_value_list
+    let query_parameters = GapiOption.map SettingsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)

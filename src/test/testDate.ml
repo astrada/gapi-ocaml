@@ -1,5 +1,7 @@
 open OUnit
 
+module Fun = GapiFun
+
 let test_to_string () =
   let t = {
     GapiDate.epoch with

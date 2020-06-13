@@ -22,10 +22,6 @@ Supported RESTful APIs:
 * Drive API v3
 * Gmail API v1
 
-Google Data Protocol APIs (GData):
-
-* Google Documents List API v3 (supports Google Drive)
-
 ### Features
 
 * Monadic interface
@@ -63,16 +59,11 @@ This library was developed and tested on Ubuntu LTS (64-bit).
 
 ### Configuration and installation
 
-This project provides 2 libraries:
-
-* `gapi-ocaml`: Google APIs client library
-* `gapi-ocaml.gdata`: Google Data Protocol client library
-
-To build the libraries, run
+To build the library, run
 
     $ make
 
-To install the libraries, run (as root, if your user doesn't have enough
+To install the library, run (as root, if your user doesn't have enough
 privileges)
 
     $ make install

@@ -31,7 +31,7 @@ struct
           base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters ?etag full_url
           (GapiJson.parse_json_response Userinfoplus.of_data_model) session 
@@ -51,7 +51,7 @@ struct
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Userinfoplus.of_data_model) session 
@@ -134,7 +134,7 @@ let getCertForOpenIdConnect
     in
   let params = Oauth2Parameters.merge_parameters
     ?standard_parameters:std_params () in
-  let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
+  let query_parameters = GapiOption.map Oauth2Parameters.to_key_value_list params
     in
   GapiService.get ?query_parameters full_url
     (GapiJson.parse_json_response Jwk.of_data_model) session 
@@ -151,7 +151,7 @@ let tokeninfo
   let params = Oauth2Parameters.merge_parameters
     ?standard_parameters:std_params ?access_token ?id_token ?token_handle ()
     in
-  let query_parameters = Option.map Oauth2Parameters.to_key_value_list params
+  let query_parameters = GapiOption.map Oauth2Parameters.to_key_value_list params
     in
   GapiService.post ?query_parameters ~data:Tokeninfo.empty full_url
     (GapiJson.parse_json_response Tokeninfo.of_data_model) session 

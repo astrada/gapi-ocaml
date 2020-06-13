@@ -1,7 +1,0 @@
-(library
- (name gdata)
- (public_name gapi-ocaml.gdata)
- (wrapped false)
- (libraries gapi-ocaml xmlm)
- (flags (:standard -w -3-23-27-32-33-50))
- (synopsis "Google Data Protocol (GData) client library"))

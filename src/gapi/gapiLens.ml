@@ -1,5 +1,7 @@
 open GapiUtils.Infix
 
+module Option = GapiOption
+
 type ('a, 'b) t = {
   get : 'a -> 'b;
   set : 'b -> 'a -> 'a

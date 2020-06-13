@@ -85,7 +85,7 @@ struct
         ((fun x -> x) accountId); "adclients"] base_url in
       let params = AdclientsParameters.merge_parameters
         ?standard_parameters:std_params ?maxResults ?pageToken () in
-      let query_parameters = Option.map AdclientsParameters.to_key_value_list
+      let query_parameters = GapiOption.map AdclientsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response AdClients.of_data_model) session 
@@ -169,7 +169,7 @@ struct
           "adunits"; ((fun x -> x) adUnitId); "customchannels"] base_url in
         let params = CustomchannelsParameters.merge_parameters
           ?standard_parameters:std_params ?maxResults ?pageToken () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           CustomchannelsParameters.to_key_value_list params in
         GapiService.get ?query_parameters full_url
           (GapiJson.parse_json_response CustomChannels.of_data_model) session 
@@ -253,7 +253,7 @@ struct
         "adunits"; ((fun x -> x) adUnitId)] base_url in
       let params = AdunitsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map AdunitsParameters.to_key_value_list
+      let query_parameters = GapiOption.map AdunitsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response AdUnit.of_data_model) session 
@@ -273,7 +273,7 @@ struct
       let params = AdunitsParameters.merge_parameters
         ?standard_parameters:std_params ?includeInactive ?maxResults
         ?pageToken () in
-      let query_parameters = Option.map AdunitsParameters.to_key_value_list
+      let query_parameters = GapiOption.map AdunitsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response AdUnits.of_data_model) session 
@@ -365,7 +365,7 @@ struct
         let params = AdunitsParameters.merge_parameters
           ?standard_parameters:std_params ?includeInactive ?maxResults
           ?pageToken () in
-        let query_parameters = Option.map AdunitsParameters.to_key_value_list
+        let query_parameters = GapiOption.map AdunitsParameters.to_key_value_list
           params in
         GapiService.get ?query_parameters full_url
           (GapiJson.parse_json_response AdUnits.of_data_model) session 
@@ -444,7 +444,7 @@ struct
         "customchannels"; ((fun x -> x) customChannelId)] base_url in
       let params = CustomchannelsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         CustomchannelsParameters.to_key_value_list params in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response CustomChannel.of_data_model) session 
@@ -462,7 +462,7 @@ struct
         "customchannels"] base_url in
       let params = CustomchannelsParameters.merge_parameters
         ?standard_parameters:std_params ?maxResults ?pageToken () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         CustomchannelsParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response CustomChannels.of_data_model) session 
@@ -590,7 +590,7 @@ struct
       let params = ReportsParameters.merge_parameters
         ?standard_parameters:std_params ?currency ?dimension ~endDate ?filter
         ?locale ?maxResults ?metric ?sort ~startDate ?startIndex () in
-      let query_parameters = Option.map ReportsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ReportsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response AdsenseReportsGenerateResponse.of_data_model)
@@ -672,7 +672,7 @@ struct
         "urlchannels"] base_url in
       let params = UrlchannelsParameters.merge_parameters
         ?standard_parameters:std_params ?maxResults ?pageToken () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         UrlchannelsParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response UrlChannels.of_data_model) session 
@@ -754,7 +754,7 @@ struct
       ((fun x -> x) accountId)] base_url in
     let params = AccountsParameters.merge_parameters
       ?standard_parameters:std_params ?tree () in
-    let query_parameters = Option.map AccountsParameters.to_key_value_list
+    let query_parameters = GapiOption.map AccountsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Account.of_data_model) session 
@@ -768,7 +768,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["accounts"] base_url in
     let params = AccountsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map AccountsParameters.to_key_value_list
+    let query_parameters = GapiOption.map AccountsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Accounts.of_data_model) session 
@@ -845,7 +845,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["adclients"] base_url in
     let params = AdclientsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map AdclientsParameters.to_key_value_list
+    let query_parameters = GapiOption.map AdclientsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response AdClients.of_data_model) session 
@@ -928,7 +928,7 @@ struct
         "customchannels"] base_url in
       let params = CustomchannelsParameters.merge_parameters
         ?standard_parameters:std_params ?maxResults ?pageToken () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         CustomchannelsParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response CustomChannels.of_data_model) session 
@@ -1011,7 +1011,7 @@ struct
       in
     let params = AdunitsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map AdunitsParameters.to_key_value_list
+    let query_parameters = GapiOption.map AdunitsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response AdUnit.of_data_model) session 
@@ -1029,7 +1029,7 @@ struct
     let params = AdunitsParameters.merge_parameters
       ?standard_parameters:std_params ?includeInactive ?maxResults ?pageToken
       () in
-    let query_parameters = Option.map AdunitsParameters.to_key_value_list
+    let query_parameters = GapiOption.map AdunitsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response AdUnits.of_data_model) session 
@@ -1119,7 +1119,7 @@ struct
       let params = AdunitsParameters.merge_parameters
         ?standard_parameters:std_params ?includeInactive ?maxResults
         ?pageToken () in
-      let query_parameters = Option.map AdunitsParameters.to_key_value_list
+      let query_parameters = GapiOption.map AdunitsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response AdUnits.of_data_model) session 
@@ -1197,7 +1197,7 @@ struct
       ((fun x -> x) customChannelId)] base_url in
     let params = CustomchannelsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CustomchannelsParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response CustomChannel.of_data_model) session 
@@ -1213,7 +1213,7 @@ struct
       ((fun x -> x) adClientId); "customchannels"] base_url in
     let params = CustomchannelsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       CustomchannelsParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response CustomChannels.of_data_model) session 
@@ -1346,7 +1346,7 @@ struct
       ?standard_parameters:std_params ?accountId ?currency ?dimension
       ~endDate ?filter ?locale ?maxResults ?metric ?sort ~startDate
       ?startIndex () in
-    let query_parameters = Option.map ReportsParameters.to_key_value_list
+    let query_parameters = GapiOption.map ReportsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response AdsenseReportsGenerateResponse.of_data_model)
@@ -1426,7 +1426,7 @@ struct
       ((fun x -> x) adClientId); "urlchannels"] base_url in
     let params = UrlchannelsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map UrlchannelsParameters.to_key_value_list
+    let query_parameters = GapiOption.map UrlchannelsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response UrlChannels.of_data_model) session 

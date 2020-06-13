@@ -1,3 +1,5 @@
+module Option = GapiOption
+
 module OcamlnetPipe =
 struct
   type t = {

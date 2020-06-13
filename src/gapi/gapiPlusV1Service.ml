@@ -142,7 +142,7 @@ struct
       ((fun x -> x) activityId)] base_url in
     let params = ActivitiesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map ActivitiesParameters.to_key_value_list
+    let query_parameters = GapiOption.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Activity.of_data_model) session 
@@ -160,7 +160,7 @@ struct
       base_url in
     let params = ActivitiesParameters.merge_parameters
       ?standard_parameters:std_params ~maxResults ?pageToken () in
-    let query_parameters = Option.map ActivitiesParameters.to_key_value_list
+    let query_parameters = GapiOption.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response ActivityFeed.of_data_model) session 
@@ -178,7 +178,7 @@ struct
     let params = ActivitiesParameters.merge_parameters
       ?standard_parameters:std_params ~language ~maxResults ~orderBy
       ?pageToken ~query () in
-    let query_parameters = Option.map ActivitiesParameters.to_key_value_list
+    let query_parameters = GapiOption.map ActivitiesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response ActivityFeed.of_data_model) session 
@@ -285,7 +285,7 @@ struct
       ((fun x -> x) commentId)] base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map CommentsParameters.to_key_value_list
+    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
@@ -302,7 +302,7 @@ struct
       ((fun x -> x) activityId); "comments"] base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params ~maxResults ?pageToken ~sortOrder () in
-    let query_parameters = Option.map CommentsParameters.to_key_value_list
+    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response CommentFeed.of_data_model) session 
@@ -445,7 +445,7 @@ struct
       ((fun x -> x) userId)] base_url in
     let params = PeopleParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map PeopleParameters.to_key_value_list
+    let query_parameters = GapiOption.map PeopleParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Person.of_data_model) session 
@@ -464,7 +464,7 @@ struct
       base_url in
     let params = PeopleParameters.merge_parameters
       ?standard_parameters:std_params ~maxResults ?orderBy ?pageToken () in
-    let query_parameters = Option.map PeopleParameters.to_key_value_list
+    let query_parameters = GapiOption.map PeopleParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response PeopleFeed.of_data_model) session 
@@ -482,7 +482,7 @@ struct
       base_url in
     let params = PeopleParameters.merge_parameters
       ?standard_parameters:std_params ~maxResults ?pageToken () in
-    let query_parameters = Option.map PeopleParameters.to_key_value_list
+    let query_parameters = GapiOption.map PeopleParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response PeopleFeed.of_data_model) session 
@@ -499,7 +499,7 @@ struct
     let params = PeopleParameters.merge_parameters
       ?standard_parameters:std_params ~language ~maxResults ?pageToken ~query
       () in
-    let query_parameters = Option.map PeopleParameters.to_key_value_list
+    let query_parameters = GapiOption.map PeopleParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response PeopleFeed.of_data_model) session 

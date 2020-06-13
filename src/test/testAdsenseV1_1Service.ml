@@ -4,6 +4,9 @@ open GapiLens.Infix
 open GapiAdsenseV1_1Model
 open GapiAdsenseV1_1Service
 
+module Option = GapiOption
+module Fun = GapiFun
+
 let get_account_id session =
   let (accounts, session') =
     AccountsResource.list

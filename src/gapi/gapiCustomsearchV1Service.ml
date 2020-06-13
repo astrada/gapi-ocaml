@@ -593,7 +593,7 @@ struct
         ?highRange ?hl ?hq ?imgColorType ?imgDominantColor ?imgSize ?imgType
         ?linkSite ?lowRange ?lr ~num ?orTerms ~q ?relatedSite ?rights ~safe
         ?searchType ?siteSearch ?siteSearchFilter ?sort ?start () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         SiterestrictParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response Search.of_data_model) session 
@@ -1189,7 +1189,7 @@ struct
       ?hl ?hq ?imgColorType ?imgDominantColor ?imgSize ?imgType ?linkSite
       ?lowRange ?lr ~num ?orTerms ~q ?relatedSite ?rights ~safe ?searchType
       ?siteSearch ?siteSearchFilter ?sort ?start () in
-    let query_parameters = Option.map CseParameters.to_key_value_list params
+    let query_parameters = GapiOption.map CseParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Search.of_data_model) session 

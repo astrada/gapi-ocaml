@@ -1,5 +1,7 @@
 open GapiUtils.Infix
 
+module Option = GapiOption
+
 type curl_context = {
   curl : Curl.t;
   error_buffer : string ref;

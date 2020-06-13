@@ -145,12 +145,12 @@ struct
       let base_path = [((fun x -> x) userId); "drafts"] in
       let media_path = [""; "resumable"; "upload"; "gmail"; "v1"; "users";
         ((fun x -> x) userId); "drafts"] in
-      let path_to_add = if Option.is_some media_source then media_path
+      let path_to_add = if GapiOption.is_some media_source then media_path
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = DraftsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map DraftsParameters.to_key_value_list
+      let query_parameters = GapiOption.map DraftsParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
         ~data_to_post:(GapiJson.render_json Draft.to_data_model) ~data:draft
@@ -166,7 +166,7 @@ struct
         "drafts"; ((fun x -> x) id)] base_url in
       let params = DraftsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map DraftsParameters.to_key_value_list
+      let query_parameters = GapiOption.map DraftsParameters.to_key_value_list
         params in
       GapiService.delete ?query_parameters full_url
         GapiRequest.parse_empty_response session 
@@ -183,7 +183,7 @@ struct
         "drafts"; ((fun x -> x) id)] base_url in
       let params = DraftsParameters.merge_parameters
         ?standard_parameters:std_params ~format () in
-      let query_parameters = Option.map DraftsParameters.to_key_value_list
+      let query_parameters = GapiOption.map DraftsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response Draft.of_data_model) session 
@@ -202,7 +202,7 @@ struct
       let params = DraftsParameters.merge_parameters
         ?standard_parameters:std_params ~includeSpamTrash ~maxResults
         ?pageToken ?q () in
-      let query_parameters = Option.map DraftsParameters.to_key_value_list
+      let query_parameters = GapiOption.map DraftsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response ListDraftsResponse.of_data_model)
@@ -218,12 +218,12 @@ struct
       let base_path = [((fun x -> x) userId); "drafts"; "send"] in
       let media_path = [""; "resumable"; "upload"; "gmail"; "v1"; "users";
         ((fun x -> x) userId); "drafts"; "send"] in
-      let path_to_add = if Option.is_some media_source then media_path
+      let path_to_add = if GapiOption.is_some media_source then media_path
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = DraftsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map DraftsParameters.to_key_value_list
+      let query_parameters = GapiOption.map DraftsParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
         ~data_to_post:(GapiJson.render_json Draft.to_data_model) ~data:draft
@@ -240,12 +240,12 @@ struct
       let base_path = [((fun x -> x) userId); "drafts"; ((fun x -> x) id)] in
       let media_path = [""; "resumable"; "upload"; "gmail"; "v1"; "users";
         ((fun x -> x) userId); "drafts"; ((fun x -> x) id)] in
-      let path_to_add = if Option.is_some media_source then media_path
+      let path_to_add = if GapiOption.is_some media_source then media_path
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = DraftsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map DraftsParameters.to_key_value_list
+      let query_parameters = GapiOption.map DraftsParameters.to_key_value_list
         params in
       GapiService.put ?query_parameters ?media_source
         ~data_to_post:(GapiJson.render_json Draft.to_data_model) ~data:draft
@@ -374,7 +374,7 @@ struct
       let params = HistoryParameters.merge_parameters
         ?standard_parameters:std_params ?historyTypes ?labelId ~maxResults
         ?pageToken ?startHistoryId () in
-      let query_parameters = Option.map HistoryParameters.to_key_value_list
+      let query_parameters = GapiOption.map HistoryParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response ListHistoryResponse.of_data_model)
@@ -395,7 +395,7 @@ struct
         "labels"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.post ?query_parameters
         ~data_to_post:(GapiJson.render_json Label.to_data_model) ~data:label
@@ -411,7 +411,7 @@ struct
         "labels"; ((fun x -> x) id)] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.delete ?query_parameters full_url
         GapiRequest.parse_empty_response session 
@@ -427,7 +427,7 @@ struct
         "labels"; ((fun x -> x) id)] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response Label.of_data_model) session 
@@ -441,7 +441,7 @@ struct
         "labels"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response ListLabelsResponse.of_data_model)
@@ -458,7 +458,7 @@ struct
         "labels"; ((fun x -> x) id)] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.patch ?query_parameters
         ~data_to_post:(GapiJson.render_json Label.to_data_model) ~data:label
@@ -475,7 +475,7 @@ struct
         "labels"; ((fun x -> x) id)] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.put ?query_parameters
         ~data_to_post:(GapiJson.render_json Label.to_data_model) ~data:label
@@ -501,7 +501,7 @@ struct
           ((fun x -> x) id)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters ?etag full_url
           (GapiJson.parse_json_response MessagePartBody.of_data_model)
@@ -673,7 +673,7 @@ struct
         "messages"; "batchDelete"] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters
         ~data_to_post:(GapiJson.render_json BatchDeleteMessagesRequest.to_data_model)
@@ -690,7 +690,7 @@ struct
         "messages"; "batchModify"] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters
         ~data_to_post:(GapiJson.render_json BatchModifyMessagesRequest.to_data_model)
@@ -707,7 +707,7 @@ struct
         "messages"; ((fun x -> x) id)] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.delete ?query_parameters full_url
         GapiRequest.parse_empty_response session 
@@ -725,7 +725,7 @@ struct
         "messages"; ((fun x -> x) id)] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params ~format ?metadataHeaders () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response Message.of_data_model) session 
@@ -744,13 +744,13 @@ struct
       let base_path = [((fun x -> x) userId); "messages"; "import"] in
       let media_path = [""; "resumable"; "upload"; "gmail"; "v1"; "users";
         ((fun x -> x) userId); "messages"; "import"] in
-      let path_to_add = if Option.is_some media_source then media_path
+      let path_to_add = if GapiOption.is_some media_source then media_path
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params ~deleted ~internalDateSource
         ~neverMarkSpam ~processForCalendar () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
         ~data_to_post:(GapiJson.render_json Message.to_data_model)
@@ -769,12 +769,12 @@ struct
       let base_path = [((fun x -> x) userId); "messages"] in
       let media_path = [""; "resumable"; "upload"; "gmail"; "v1"; "users";
         ((fun x -> x) userId); "messages"] in
-      let path_to_add = if Option.is_some media_source then media_path
+      let path_to_add = if GapiOption.is_some media_source then media_path
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params ~deleted ~internalDateSource () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
         ~data_to_post:(GapiJson.render_json Message.to_data_model)
@@ -796,7 +796,7 @@ struct
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params ~includeSpamTrash ?labelIds
         ~maxResults ?pageToken ?q () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response ListMessagesResponse.of_data_model)
@@ -813,7 +813,7 @@ struct
         "messages"; ((fun x -> x) id); "modify"] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters
         ~data_to_post:(GapiJson.render_json ModifyMessageRequest.to_data_model)
@@ -830,12 +830,12 @@ struct
       let base_path = [((fun x -> x) userId); "messages"; "send"] in
       let media_path = [""; "resumable"; "upload"; "gmail"; "v1"; "users";
         ((fun x -> x) userId); "messages"; "send"] in
-      let path_to_add = if Option.is_some media_source then media_path
+      let path_to_add = if GapiOption.is_some media_source then media_path
         else base_path in
       let full_url = GapiUtils.add_path_to_url path_to_add base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ?media_source
         ~data_to_post:(GapiJson.render_json Message.to_data_model)
@@ -852,7 +852,7 @@ struct
         "messages"; ((fun x -> x) id); "trash"] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ~data:Message.empty full_url
         (GapiJson.parse_json_response Message.of_data_model) session 
@@ -867,7 +867,7 @@ struct
         "messages"; ((fun x -> x) id); "untrash"] base_url in
       let params = MessagesParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map MessagesParameters.to_key_value_list
+      let query_parameters = GapiOption.map MessagesParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ~data:Message.empty full_url
         (GapiJson.parse_json_response Message.of_data_model) session 
@@ -889,7 +889,7 @@ struct
           "settings"; "filters"] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.post ?query_parameters
           ~data_to_post:(GapiJson.render_json Filter.to_data_model)
@@ -906,7 +906,7 @@ struct
           "settings"; "filters"; ((fun x -> x) id)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.delete ?query_parameters full_url
           GapiRequest.parse_empty_response session 
@@ -922,7 +922,7 @@ struct
           "settings"; "filters"; ((fun x -> x) id)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters ?etag full_url
           (GapiJson.parse_json_response Filter.of_data_model) session 
@@ -936,7 +936,7 @@ struct
           "settings"; "filters"] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters full_url
           (GapiJson.parse_json_response ListFiltersResponse.of_data_model)
@@ -957,7 +957,7 @@ struct
           "settings"; "forwardingAddresses"] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.post ?query_parameters
           ~data_to_post:(GapiJson.render_json ForwardingAddress.to_data_model)
@@ -976,7 +976,7 @@ struct
           base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.delete ?query_parameters full_url
           GapiRequest.parse_empty_response session 
@@ -993,7 +993,7 @@ struct
           base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters ?etag full_url
           (GapiJson.parse_json_response ForwardingAddress.of_data_model)
@@ -1008,7 +1008,7 @@ struct
           "settings"; "forwardingAddresses"] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters full_url
           (GapiJson.parse_json_response ListForwardingAddressesResponse.of_data_model)
@@ -1033,7 +1033,7 @@ struct
             ((fun x -> x) id)] base_url in
           let params = GapiService.StandardParameters.merge_parameters
             ?standard_parameters:std_params () in
-          let query_parameters = Option.map
+          let query_parameters = GapiOption.map
             GapiService.StandardParameters.to_key_value_list params in
           GapiService.delete ?query_parameters full_url
             GapiRequest.parse_empty_response session 
@@ -1051,7 +1051,7 @@ struct
             ((fun x -> x) id)] base_url in
           let params = GapiService.StandardParameters.merge_parameters
             ?standard_parameters:std_params () in
-          let query_parameters = Option.map
+          let query_parameters = GapiOption.map
             GapiService.StandardParameters.to_key_value_list params in
           GapiService.get ?query_parameters ?etag full_url
             (GapiJson.parse_json_response SmimeInfo.of_data_model) session 
@@ -1068,7 +1068,7 @@ struct
             base_url in
           let params = GapiService.StandardParameters.merge_parameters
             ?standard_parameters:std_params () in
-          let query_parameters = Option.map
+          let query_parameters = GapiOption.map
             GapiService.StandardParameters.to_key_value_list params in
           GapiService.post ?query_parameters
             ~data_to_post:(GapiJson.render_json SmimeInfo.to_data_model)
@@ -1086,7 +1086,7 @@ struct
             base_url in
           let params = GapiService.StandardParameters.merge_parameters
             ?standard_parameters:std_params () in
-          let query_parameters = Option.map
+          let query_parameters = GapiOption.map
             GapiService.StandardParameters.to_key_value_list params in
           GapiService.get ?query_parameters full_url
             (GapiJson.parse_json_response ListSmimeInfoResponse.of_data_model)
@@ -1104,7 +1104,7 @@ struct
             ((fun x -> x) id); "setDefault"] base_url in
           let params = GapiService.StandardParameters.merge_parameters
             ?standard_parameters:std_params () in
-          let query_parameters = Option.map
+          let query_parameters = GapiOption.map
             GapiService.StandardParameters.to_key_value_list params in
           GapiService.post ?query_parameters ~data:() full_url
             GapiRequest.parse_empty_response session 
@@ -1122,7 +1122,7 @@ struct
           "settings"; "sendAs"] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.post ?query_parameters
           ~data_to_post:(GapiJson.render_json SendAs.to_data_model)
@@ -1139,7 +1139,7 @@ struct
           "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.delete ?query_parameters full_url
           GapiRequest.parse_empty_response session 
@@ -1155,7 +1155,7 @@ struct
           "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters ?etag full_url
           (GapiJson.parse_json_response SendAs.of_data_model) session 
@@ -1169,7 +1169,7 @@ struct
           "settings"; "sendAs"] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.get ?query_parameters full_url
           (GapiJson.parse_json_response ListSendAsResponse.of_data_model)
@@ -1186,7 +1186,7 @@ struct
           "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.patch ?query_parameters
           ~data_to_post:(GapiJson.render_json SendAs.to_data_model)
@@ -1204,7 +1204,7 @@ struct
           "settings"; "sendAs"; ((fun x -> x) sendAsEmail)] base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.put ?query_parameters
           ~data_to_post:(GapiJson.render_json SendAs.to_data_model)
@@ -1222,7 +1222,7 @@ struct
           base_url in
         let params = GapiService.StandardParameters.merge_parameters
           ?standard_parameters:std_params () in
-        let query_parameters = Option.map
+        let query_parameters = GapiOption.map
           GapiService.StandardParameters.to_key_value_list params in
         GapiService.post ?query_parameters ~data:() full_url
           GapiRequest.parse_empty_response session 
@@ -1239,7 +1239,7 @@ struct
         "settings"; "autoForwarding"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response AutoForwarding.of_data_model) session 
@@ -1253,7 +1253,7 @@ struct
         "settings"; "imap"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response ImapSettings.of_data_model) session 
@@ -1267,7 +1267,7 @@ struct
         "settings"; "pop"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response PopSettings.of_data_model) session 
@@ -1281,7 +1281,7 @@ struct
         "settings"; "vacation"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response VacationSettings.of_data_model) session 
@@ -1296,7 +1296,7 @@ struct
         "settings"; "autoForwarding"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.put ?query_parameters
         ~data_to_post:(GapiJson.render_json AutoForwarding.to_data_model)
@@ -1313,7 +1313,7 @@ struct
         "settings"; "imap"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.put ?query_parameters
         ~data_to_post:(GapiJson.render_json ImapSettings.to_data_model)
@@ -1330,7 +1330,7 @@ struct
         "settings"; "pop"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.put ?query_parameters
         ~data_to_post:(GapiJson.render_json PopSettings.to_data_model)
@@ -1347,7 +1347,7 @@ struct
         "settings"; "vacation"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.put ?query_parameters
         ~data_to_post:(GapiJson.render_json VacationSettings.to_data_model)
@@ -1479,7 +1479,7 @@ struct
         "threads"; ((fun x -> x) id)] base_url in
       let params = ThreadsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map ThreadsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ThreadsParameters.to_key_value_list
         params in
       GapiService.delete ?query_parameters full_url
         GapiRequest.parse_empty_response session 
@@ -1497,7 +1497,7 @@ struct
         "threads"; ((fun x -> x) id)] base_url in
       let params = ThreadsParameters.merge_parameters
         ?standard_parameters:std_params ~format ?metadataHeaders () in
-      let query_parameters = Option.map ThreadsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ThreadsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters ?etag full_url
         (GapiJson.parse_json_response Thread.of_data_model) session 
@@ -1517,7 +1517,7 @@ struct
       let params = ThreadsParameters.merge_parameters
         ?standard_parameters:std_params ~includeSpamTrash ?labelIds
         ~maxResults ?pageToken ?q () in
-      let query_parameters = Option.map ThreadsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ThreadsParameters.to_key_value_list
         params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response ListThreadsResponse.of_data_model)
@@ -1534,7 +1534,7 @@ struct
         "threads"; ((fun x -> x) id); "modify"] base_url in
       let params = ThreadsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map ThreadsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ThreadsParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters
         ~data_to_post:(GapiJson.render_json ModifyThreadRequest.to_data_model)
@@ -1551,7 +1551,7 @@ struct
         "threads"; ((fun x -> x) id); "trash"] base_url in
       let params = ThreadsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map ThreadsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ThreadsParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ~data:Thread.empty full_url
         (GapiJson.parse_json_response Thread.of_data_model) session 
@@ -1566,7 +1566,7 @@ struct
         "threads"; ((fun x -> x) id); "untrash"] base_url in
       let params = ThreadsParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map ThreadsParameters.to_key_value_list
+      let query_parameters = GapiOption.map ThreadsParameters.to_key_value_list
         params in
       GapiService.post ?query_parameters ~data:Thread.empty full_url
         (GapiJson.parse_json_response Thread.of_data_model) session 
@@ -1583,7 +1583,7 @@ struct
       "profile"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Profile.of_data_model) session 
@@ -1597,7 +1597,7 @@ struct
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters ~data:() full_url
       GapiRequest.parse_empty_response session 
@@ -1612,7 +1612,7 @@ struct
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json WatchRequest.to_data_model)

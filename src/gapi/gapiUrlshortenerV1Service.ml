@@ -112,7 +112,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["url"] base_url in
     let params = UrlParameters.merge_parameters
       ?standard_parameters:std_params ?projection ~shortUrl () in
-    let query_parameters = Option.map UrlParameters.to_key_value_list params
+    let query_parameters = GapiOption.map UrlParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Url.of_data_model) session 
@@ -125,7 +125,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["url"] base_url in
     let params = UrlParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map UrlParameters.to_key_value_list params
+    let query_parameters = GapiOption.map UrlParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Url.to_data_model) ~data:url
@@ -140,7 +140,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["url"; "history"] base_url in
     let params = UrlParameters.merge_parameters
       ?standard_parameters:std_params ?projection ?start_token () in
-    let query_parameters = Option.map UrlParameters.to_key_value_list params
+    let query_parameters = GapiOption.map UrlParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response UrlHistory.of_data_model) session 

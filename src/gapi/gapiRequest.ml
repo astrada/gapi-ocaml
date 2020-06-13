@@ -1,6 +1,8 @@
 open GapiUtils.Infix
 open GapiLens.Infix
 
+module Option = GapiOption
+
 exception Redirect of string * GapiConversation.Session.t
 exception NotModified of GapiConversation.Session.t
 exception BadRequest of GapiConversation.Session.t * int *

@@ -426,7 +426,7 @@ struct
 
       let create_array () =
         Array (schema.JsonSchema.items
-                 |> Option.get
+                 |> GapiOption.get
                  |> inner_create container_id)
       in
 
@@ -836,7 +836,7 @@ struct
                             (id, Field.create (id, complex_type)))
                        rest_parameters in
     let request =
-      Option.map (fun req ->
+      GapiOption.map (fun req ->
                     let name = req.Field.ocaml_name in
                       if List.mem name (List.map fst parameters) then
                         req |> Field.ocaml_name ^= name ^ "'"

@@ -80,7 +80,7 @@ struct
       ((fun x -> x) id)] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -95,7 +95,7 @@ struct
       ((fun x -> x) id)] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response SiteVerificationWebResourceResource.of_data_model)
@@ -109,7 +109,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["token"] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json SiteVerificationWebResourceGettokenRequest.to_data_model)
@@ -126,7 +126,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["webResource"] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params ~verificationMethod () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json SiteVerificationWebResourceResource.to_data_model)
@@ -141,7 +141,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["webResource"] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response SiteVerificationWebResourceListResponse.of_data_model)
@@ -157,7 +157,7 @@ struct
       ((fun x -> x) id)] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters
       ~data_to_post:(GapiJson.render_json SiteVerificationWebResourceResource.to_data_model)
@@ -175,7 +175,7 @@ struct
       ((fun x -> x) id)] base_url in
     let params = WebResourceParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map WebResourceParameters.to_key_value_list
+    let query_parameters = GapiOption.map WebResourceParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters
       ~data_to_post:(GapiJson.render_json SiteVerificationWebResourceResource.to_data_model)

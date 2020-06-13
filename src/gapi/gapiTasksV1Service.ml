@@ -85,7 +85,7 @@ struct
       ((fun x -> x) tasklist)] base_url in
     let params = TasklistsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasklistsParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasklistsParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -100,7 +100,7 @@ struct
       ((fun x -> x) tasklist)] base_url in
     let params = TasklistsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasklistsParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasklistsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response TaskList.of_data_model) session 
@@ -115,7 +115,7 @@ struct
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasklistsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasklistsParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasklistsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json TaskList.to_data_model)
@@ -132,7 +132,7 @@ struct
       base_url in
     let params = TasklistsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map TasklistsParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasklistsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response TaskLists.of_data_model) session 
@@ -148,7 +148,7 @@ struct
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasklistsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasklistsParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasklistsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json TaskList.to_data_model)
@@ -166,7 +166,7 @@ struct
     let etag = GapiUtils.etag_option taskList.TaskList.etag in
     let params = TasklistsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasklistsParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasklistsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json TaskList.to_data_model)
@@ -299,7 +299,7 @@ struct
       ((fun x -> x) tasklist); "clear"] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:() full_url
       GapiRequest.parse_empty_response session 
@@ -314,7 +314,7 @@ struct
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -330,7 +330,7 @@ struct
       ((fun x -> x) tasklist); "tasks"; ((fun x -> x) task)] base_url in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Task.of_data_model) session 
@@ -348,7 +348,7 @@ struct
     let etag = GapiUtils.etag_option task.Task.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params ?parent ?previous () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Task.to_data_model) ~data:task
@@ -375,7 +375,7 @@ struct
       ?standard_parameters:std_params ?completedMax ?completedMin ?dueMax
       ?dueMin ?maxResults ?pageToken ?showCompleted ?showDeleted ?showHidden
       ?updatedMin () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response Tasks.of_data_model) session 
@@ -393,7 +393,7 @@ struct
       in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params ?parent ?previous () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ~data:Task.empty full_url
       (GapiJson.parse_json_response Task.of_data_model) session 
@@ -410,7 +410,7 @@ struct
     let etag = GapiUtils.etag_option task'.Task.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Task.to_data_model) ~data:task'
@@ -428,7 +428,7 @@ struct
     let etag = GapiUtils.etag_option task'.Task.etag in
     let params = TasksParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TasksParameters.to_key_value_list
+    let query_parameters = GapiOption.map TasksParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Task.to_data_model) ~data:task'

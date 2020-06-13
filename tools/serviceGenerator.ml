@@ -810,7 +810,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         Format.fprintf formatter
           "@[<hov 2>let base_path =@ [%a]@ in@]@\n\
            @[<hov 2>let media_path =@ [%a]@ in@]@\n\
-           @[<hov 2>let path_to_add =@ if Option.is_some media_source then media_path@ else base_path@ in@]@\n\
+           @[<hov 2>let path_to_add =@ if GapiOption.is_some media_source then media_path@ else base_path@ in@]@\n\
            @[<hov 2>let full_url =@ GapiUtils.add_path_to_url@ path_to_add@ base_url@ in@]@\n"
           print_path_list base_path_list
           print_path_list media_path_list;
@@ -859,7 +859,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
                parameter.Field.ocaml_name)
         rest_method.RestMethod.parameters;
       Format.fprintf formatter
-        "()@ in@]@\n@[<hov 2>let query_parameters =@ Option.map@ %s.to_key_value_list@ params@ in@]@\n"
+        "()@ in@]@\n@[<hov 2>let query_parameters =@ GapiOption.map@ %s.to_key_value_list@ params@ in@]@\n"
         parameters_module_name) >>= fun () ->
 
     (* Invoke service function *)
@@ -886,13 +886,13 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       if rest_method.RestMethod.supportsMediaDownload then begin
         Format.fprintf formatter "?media_download@ ";
       end;
-      if Option.is_some request_parameter then begin
+      if GapiOption.is_some request_parameter then begin
         Format.fprintf formatter
           "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
           (request_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name)
           (request_parameter |. GapiLens.option_get |. Field.ocaml_name);
       end else if rest_method.RestMethod.httpMethod = "POST" then begin
-        if Option.is_some response_module then
+        if GapiOption.is_some response_module then
           Format.fprintf formatter
             "~data:%s.empty@ "
             (response_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name)
@@ -904,7 +904,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       end) >>= fun () ->
     lift_io (
       Format.fprintf formatter "full_url@ ";
-      if Option.is_some response_module then begin
+      if GapiOption.is_some response_module then begin
         Format.fprintf formatter
           "(GapiJson.parse_json_response %s.of_data_model)@ "
           (response_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name)
@@ -965,7 +965,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
            Format.fprintf formatter "~%s@ " parameter.Field.ocaml_name)
         rest_method.RestMethod.parameterOrder;
       (* Request parameter *)
-      if Option.is_some methd.Method.request then begin
+      if GapiOption.is_some methd.Method.request then begin
         Format.fprintf formatter "%s@ "
           (methd.Method.request |. GapiLens.option_get |. Field.ocaml_name);
       end;
@@ -1436,7 +1436,7 @@ let rec generate_service_module_signature
 
     lift_io (
       (* Request *)
-      if Option.is_some request_module then begin
+      if GapiOption.is_some request_module then begin
         Format.fprintf formatter "%s.%s.t ->@,"
           schema_module.SchemaModule.ocaml_name
           (request_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name);
@@ -1445,7 +1445,7 @@ let rec generate_service_module_signature
       Format.fprintf formatter
         "GapiConversation.Session.t ->@,";
       (* Response *)
-      if Option.is_some response_module then begin
+      if GapiOption.is_some response_module then begin
         Format.fprintf formatter "%s.%s.t"
           schema_module.SchemaModule.ocaml_name
           (response_module |. GapiLens.option_get |. InnerSchemaModule.ocaml_name);

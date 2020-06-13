@@ -1,5 +1,7 @@
 open GapiUtils.Infix
 
+module Fun = GapiFun
+
 let build_client_login_auth test_config =
   let get = Config.get test_config in
   (GapiConfig.ClientLogin
@@ -183,75 +185,6 @@ let test_request_noauth
 let print_exception e =
   print_endline (Printexc.to_string e);
   Printexc.print_backtrace stdout
-
-let print_xml_data_model ?(print_string = print_string) tree =
-  let tab_string tabs =
-    String.make (tabs * 2) ' '
-  in
-  let print_name meta =
-    let prefix = try GdataCore.Metadata.prefix meta with Not_found -> "" in
-    let name = GdataCore.Metadata.name meta in
-    let namespace = try GdataCore.Metadata.namespace meta with Not_found -> "" in
-      if prefix <> "" then begin
-        print_string prefix;
-        print_string ":"
-      end;
-      if namespace <> "" then begin
-        print_string "[";
-        print_string namespace;
-        print_string "]"
-      end;
-      print_string name
-  in
-  let print_value = print_string in
-  let print_node meta children tabs =
-    begin match GdataCore.Metadata.node_type meta with
-        `Element ->
-          let ts = tab_string tabs in
-            print_string ts;
-            print_name meta;
-            print_string ": {\n";
-            ignore (List.fold_right (fun k _ -> k (tabs + 1)) children tabs);
-            print_string ts;
-            print_string "}\n"
-      | _ ->
-          failwith "Only elements allowed as nodes"
-    end;
-    tabs
-  in
-  let print_leaf meta value tabs =
-    print_string (tab_string tabs);
-    begin match GdataCore.Metadata.node_type meta with
-        `Text ->
-          print_string "text(";
-          print_value value;
-          print_string ")\n"
-      | `Cdata ->
-          print_string "<![CDATA[";
-          print_value value;
-          print_string "]]>";
-          print_string "\n"
-      | `Attribute ->
-          print_string "@";
-          print_name meta;
-          print_string "=";
-          print_value value;
-          print_string "\n"
-      | `Element ->
-          failwith "Cannot have XML element as leaf"
-      | _ ->
-          assert false
-    end;
-    tabs
-  in
-    GapiCore.AnnotatedTree.fold print_node print_leaf tree 0
-
-let string_of_xml_data_model tree =
-  let buffer = Buffer.create 256 in
-  let _ = print_xml_data_model
-            ~print_string:(Buffer.add_string buffer)
-            tree in
-    Buffer.contents buffer
 
 (* We should add a delay to let Google persist the new entry, after a write
  * operation, otherwise DELETE will return a 503 HTTP error (Service

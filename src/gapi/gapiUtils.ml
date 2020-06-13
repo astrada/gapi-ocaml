@@ -1,3 +1,5 @@
+module Option = GapiOption
+
 module Infix = struct
   let (|>) x f = f x
 

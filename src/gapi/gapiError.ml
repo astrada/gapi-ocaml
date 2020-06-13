@@ -1,6 +1,9 @@
 open GapiCore
 open GapiJson
 
+module Option = GapiOption
+module Fun = GapiFun
+
 module SingleError =
 struct
   type t = {

@@ -3,6 +3,8 @@ open GapiCalendarV3Model
 open GapiLens.Infix
 open GapiUtils.Infix
 
+module Fun = GapiFun
+
 let first_item_timeZone =
   CalendarList.items
     |-- GapiLens.head

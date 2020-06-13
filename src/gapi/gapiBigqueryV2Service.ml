@@ -108,7 +108,7 @@ struct
       base_url in
     let params = DatasetsParameters.merge_parameters
       ?standard_parameters:std_params ?deleteContents () in
-    let query_parameters = Option.map DatasetsParameters.to_key_value_list
+    let query_parameters = GapiOption.map DatasetsParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -125,7 +125,7 @@ struct
       base_url in
     let params = DatasetsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map DatasetsParameters.to_key_value_list
+    let query_parameters = GapiOption.map DatasetsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Dataset.of_data_model) session 
@@ -141,7 +141,7 @@ struct
     let etag = GapiUtils.etag_option dataset.Dataset.etag in
     let params = DatasetsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map DatasetsParameters.to_key_value_list
+    let query_parameters = GapiOption.map DatasetsParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Dataset.to_data_model)
@@ -160,7 +160,7 @@ struct
       ((fun x -> x) projectId); "datasets"] base_url in
     let params = DatasetsParameters.merge_parameters
       ?standard_parameters:std_params ?all ?maxResults ?pageToken () in
-    let query_parameters = Option.map DatasetsParameters.to_key_value_list
+    let query_parameters = GapiOption.map DatasetsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response DatasetList.of_data_model) session 
@@ -178,7 +178,7 @@ struct
     let etag = GapiUtils.etag_option dataset.Dataset.etag in
     let params = DatasetsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map DatasetsParameters.to_key_value_list
+    let query_parameters = GapiOption.map DatasetsParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Dataset.to_data_model)
@@ -198,7 +198,7 @@ struct
     let etag = GapiUtils.etag_option dataset.Dataset.etag in
     let params = DatasetsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map DatasetsParameters.to_key_value_list
+    let query_parameters = GapiOption.map DatasetsParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Dataset.to_data_model)
@@ -351,7 +351,7 @@ struct
       base_url in
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
+    let query_parameters = GapiOption.map JobsParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters ~data:JobCancelResponse.empty full_url
       (GapiJson.parse_json_response JobCancelResponse.of_data_model) session 
@@ -367,7 +367,7 @@ struct
       ((fun x -> x) projectId); "jobs"; ((fun x -> x) jobId)] base_url in
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
+    let query_parameters = GapiOption.map JobsParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Job.of_data_model) session 
@@ -387,7 +387,7 @@ struct
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken ?startIndex
       ?timeoutMs () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
+    let query_parameters = GapiOption.map JobsParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response GetQueryResultsResponse.of_data_model)
@@ -403,13 +403,13 @@ struct
     let base_path = ["projects"; ((fun x -> x) projectId); "jobs"] in
     let media_path = [""; "resumable"; "upload"; "bigquery"; "v2";
       "projects"; ((fun x -> x) projectId); "jobs"] in
-    let path_to_add = if Option.is_some media_source then media_path
+    let path_to_add = if GapiOption.is_some media_source then media_path
       else base_path in
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let etag = GapiUtils.etag_option job.Job.etag in
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
+    let query_parameters = GapiOption.map JobsParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters ?etag ?media_source
       ~data_to_post:(GapiJson.render_json Job.to_data_model) ~data:job
@@ -430,7 +430,7 @@ struct
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params ?allUsers ?maxResults ?pageToken
       ?projection ?stateFilter () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
+    let query_parameters = GapiOption.map JobsParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response JobList.of_data_model) session 
@@ -445,7 +445,7 @@ struct
       ((fun x -> x) projectId); "queries"] base_url in
     let params = JobsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map JobsParameters.to_key_value_list params
+    let query_parameters = GapiOption.map JobsParameters.to_key_value_list params
       in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json QueryRequest.to_data_model)
@@ -528,7 +528,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["projects"] base_url in
     let params = ProjectsParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map ProjectsParameters.to_key_value_list
+    let query_parameters = GapiOption.map ProjectsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response ProjectList.of_data_model) session 
@@ -618,7 +618,7 @@ struct
       "tables"; ((fun x -> x) tableId); "insertAll"] base_url in
     let params = TabledataParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TabledataParameters.to_key_value_list
+    let query_parameters = GapiOption.map TabledataParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json TableDataInsertAllRequest.to_data_model)
@@ -642,7 +642,7 @@ struct
     let params = TabledataParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken ?startIndex ()
       in
-    let query_parameters = Option.map TabledataParameters.to_key_value_list
+    let query_parameters = GapiOption.map TabledataParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response TableDataList.of_data_model) session 
@@ -726,7 +726,7 @@ struct
       "tables"; ((fun x -> x) tableId)] base_url in
     let params = TablesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TablesParameters.to_key_value_list
+    let query_parameters = GapiOption.map TablesParameters.to_key_value_list
       params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
@@ -744,7 +744,7 @@ struct
       "tables"; ((fun x -> x) tableId)] base_url in
     let params = TablesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TablesParameters.to_key_value_list
+    let query_parameters = GapiOption.map TablesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Table.of_data_model) session 
@@ -762,7 +762,7 @@ struct
     let etag = GapiUtils.etag_option table.Table.etag in
     let params = TablesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TablesParameters.to_key_value_list
+    let query_parameters = GapiOption.map TablesParameters.to_key_value_list
       params in
     GapiService.post ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Table.to_data_model) ~data:table
@@ -781,7 +781,7 @@ struct
       "tables"] base_url in
     let params = TablesParameters.merge_parameters
       ?standard_parameters:std_params ?maxResults ?pageToken () in
-    let query_parameters = Option.map TablesParameters.to_key_value_list
+    let query_parameters = GapiOption.map TablesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response TableList.of_data_model) session 
@@ -800,7 +800,7 @@ struct
     let etag = GapiUtils.etag_option table.Table.etag in
     let params = TablesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TablesParameters.to_key_value_list
+    let query_parameters = GapiOption.map TablesParameters.to_key_value_list
       params in
     GapiService.patch ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Table.to_data_model) ~data:table
@@ -820,7 +820,7 @@ struct
     let etag = GapiUtils.etag_option table.Table.etag in
     let params = TablesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map TablesParameters.to_key_value_list
+    let query_parameters = GapiOption.map TablesParameters.to_key_value_list
       params in
     GapiService.put ?query_parameters ?etag
       ~data_to_post:(GapiJson.render_json Table.to_data_model) ~data:table

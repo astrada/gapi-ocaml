@@ -1,5 +1,7 @@
 open GapiUtils.Infix
 
+module Option = GapiOption
+
 type destination =
   | TargetFile of string
   | StringBuffer of Buffer.t

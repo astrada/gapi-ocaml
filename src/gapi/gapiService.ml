@@ -1,5 +1,8 @@
 open GapiUtils.Infix
 
+module Option = GapiOption
+module Fun = GapiFun
+
 exception ServiceError of GapiConversation.Session.t * GapiError.RequestError.t
 
 let parse_error pipe response_code session =

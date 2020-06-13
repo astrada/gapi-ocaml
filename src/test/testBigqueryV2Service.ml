@@ -4,6 +4,9 @@ open GapiLens.Infix
 open GapiBigqueryV2Model
 open GapiBigqueryV2Service
 
+module Option = GapiOption
+module Fun = GapiFun
+
 let get_project_id session =
   let (projects, session) =
     ProjectsResource.list

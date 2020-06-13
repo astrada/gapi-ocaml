@@ -1,6 +1,8 @@
 open GapiCore
 open GapiUtils.Infix
 
+module Fun = GapiFun
+
 type json_data_type =
     Object
   | Array

@@ -5,8 +5,7 @@ let core_tests =
   ]
 
 let model_tests =
-  [TestCalendarModel.suite;
-   TestDate.suite;
+  [TestDate.suite;
    TestCalendarV3Model.suite;
    TestPlusV1Model.suite;
    TestTasksV1Model.suite;
@@ -20,7 +19,6 @@ let model_tests =
    TestSiteVerificationV1Model.suite;
    TestAdsenseV1_1Model.suite;
    TestBigqueryV2Model.suite;
-   TestDocumentsV3Model.suite;
    TestMediaResource.suite;
    TestDriveV2Model.suite;
    TestDriveV3Model.suite;
@@ -31,8 +29,6 @@ let model_tests =
 
 let service_tests = 
   [TestAuth.suite;
-   TestCalendarService.suite;
-   TestMonadic.suite;
    TestCalendarV3Service.suite;
    TestPlusV1Service.suite;
    TestTasksV1Service.suite;
@@ -46,7 +42,6 @@ let service_tests =
    TestSiteVerificationV1Service.suite;
    TestAdsenseV1_1Service.suite;
    TestBigqueryV2Service.suite;
-   TestDocumentsV3Service.suite;
    TestDriveV2Service.suite;
    TestOAuth2ServiceAccount.suite;
    TestOAuth2Devices.suite;
@@ -56,8 +51,6 @@ let build_service_test_list service =
   let service_suite =
     match service with
     | "auth" -> [TestAuth.suite]
-    | "calendar" -> [TestCalendarService.suite;
-                     TestMonadic.suite]
     | "calendar-v3" -> [TestCalendarV3Service.suite]
     | "plus" -> [TestPlusV1Service.suite]
     | "tasks" -> [TestTasksV1Service.suite]
@@ -71,7 +64,6 @@ let build_service_test_list service =
     | "siteVerification" -> [TestSiteVerificationV1Service.suite]
     | "adsense" -> [TestAdsenseV1_1Service.suite]
     | "bigquery" -> [TestBigqueryV2Service.suite]
-    | "documents" -> [TestDocumentsV3Service.suite]
     | "drive" -> [TestDriveV2Service.suite]
     | "oa2serv" -> [TestOAuth2ServiceAccount.suite;]
     | "oa2devices" -> [TestOAuth2Devices.suite;]

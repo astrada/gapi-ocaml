@@ -22,7 +22,7 @@ struct
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Blog.of_data_model) session 
@@ -117,7 +117,7 @@ struct
       base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map CommentsParameters.to_key_value_list
+    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
@@ -137,7 +137,7 @@ struct
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params ?fetchBodies ?maxResults ?pageToken
       ?startDate () in
-    let query_parameters = Option.map CommentsParameters.to_key_value_list
+    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response CommentList.of_data_model) session 
@@ -215,7 +215,7 @@ struct
       "pages"; ((fun x -> x) pageId)] base_url in
     let params = PagesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map PagesParameters.to_key_value_list
+    let query_parameters = GapiOption.map PagesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Page.of_data_model) session 
@@ -230,7 +230,7 @@ struct
       "pages"] base_url in
     let params = PagesParameters.merge_parameters
       ?standard_parameters:std_params ?fetchBodies () in
-    let query_parameters = Option.map PagesParameters.to_key_value_list
+    let query_parameters = GapiOption.map PagesParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response PageList.of_data_model) session 
@@ -323,7 +323,7 @@ struct
       "posts"; ((fun x -> x) postId)] base_url in
     let params = PostsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map PostsParameters.to_key_value_list
+    let query_parameters = GapiOption.map PostsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Post.of_data_model) session 
@@ -342,7 +342,7 @@ struct
     let params = PostsParameters.merge_parameters
       ?standard_parameters:std_params ?fetchBodies ?maxResults ?pageToken
       ?startDate () in
-    let query_parameters = Option.map PostsParameters.to_key_value_list
+    let query_parameters = GapiOption.map PostsParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response PostList.of_data_model) session 
@@ -363,7 +363,7 @@ struct
         ((fun x -> x) userId); "blogs"] base_url in
       let params = GapiService.StandardParameters.merge_parameters
         ?standard_parameters:std_params () in
-      let query_parameters = Option.map
+      let query_parameters = GapiOption.map
         GapiService.StandardParameters.to_key_value_list params in
       GapiService.get ?query_parameters full_url
         (GapiJson.parse_json_response BlogList.of_data_model) session 
@@ -381,7 +381,7 @@ struct
       base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map
+    let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response User.of_data_model) session 

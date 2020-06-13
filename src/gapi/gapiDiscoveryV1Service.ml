@@ -77,7 +77,7 @@ struct
       ((fun x -> x) version); "rest"] base_url in
     let params = ApisParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = Option.map ApisParameters.to_key_value_list params
+    let query_parameters = GapiOption.map ApisParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response RestDescription.of_data_model) session 
@@ -91,7 +91,7 @@ struct
     let full_url = GapiUtils.add_path_to_url ["apis"] base_url in
     let params = ApisParameters.merge_parameters
       ?standard_parameters:std_params ?name ~preferred () in
-    let query_parameters = Option.map ApisParameters.to_key_value_list params
+    let query_parameters = GapiOption.map ApisParameters.to_key_value_list params
       in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response DirectoryList.of_data_model) session 

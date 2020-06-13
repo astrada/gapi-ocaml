@@ -2,6 +2,8 @@ open OUnit
 open GapiLens.Infix
 open GapiDriveV3Model
 
+module Fun = GapiFun
+
 let test_render_file () =
   let file = File.empty
              |> File.appProperties ^= [
