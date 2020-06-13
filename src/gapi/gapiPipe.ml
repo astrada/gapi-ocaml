@@ -27,8 +27,8 @@ struct
     }
 
   let in_ch p =
-    Option.default
-      (p.netpipe :> Netchannels.in_obj_channel)
+    Option.value
+      ~default:(p.netpipe :> Netchannels.in_obj_channel)
       p.infilter
 
   let read_byte p =
@@ -50,8 +50,8 @@ struct
     Netchannels.string_of_in_obj_channel ch
 
   let out_ch p =
-    Option.default
-      (p.netpipe :> Netchannels.out_obj_channel)
+    Option.value
+      ~default:(p.netpipe :> Netchannels.out_obj_channel)
       p.outfilter
 
   let write_byte p b =
@@ -64,13 +64,13 @@ struct
 
   let end_reading p =
     p.netpipe#close_in ();
-    Option.may (fun ch -> ch#close_in ()) p.infilter;
-    Option.may (fun ch -> ch#close_in ()) p.inchannel
+    Option.iter (fun ch -> ch#close_in ()) p.infilter;
+    Option.iter (fun ch -> ch#close_in ()) p.inchannel
 
   let end_writing p =
     p.netpipe#close_out ();
-    Option.may (fun ch -> ch#close_out ()) p.outfilter;
-    Option.may (fun ch -> ch#close_out ()) p.outchannel
+    Option.iter (fun ch -> ch#close_out ()) p.outfilter;
+    Option.iter (fun ch -> ch#close_out ()) p.outchannel
 
 end
 

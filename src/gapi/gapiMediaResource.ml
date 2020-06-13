@@ -56,7 +56,7 @@ let generate_download_headers download =
   | spec -> [GapiCore.Header.Range spec]
 
 let generate_range_spec ranges =
-  let n_to_s = Option.map_default Int64.to_string "" in
+  let n_to_s = GapiUtils.option_map_default Int64.to_string "" in
   let range_strings =
     List.map
       (fun (range_start, range_end) ->
@@ -181,7 +181,7 @@ let create_file_resource ?content_type filename =
   let source = File filename in
   { source;
     name = get_basename filename;
-    content_type = Option.default (get_content_type filename) content_type;
+    content_type = Option.value ~default:(get_content_type filename) content_type;
     content_length = get_resource_length source;
   }
 

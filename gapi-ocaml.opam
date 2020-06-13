@@ -12,7 +12,6 @@ build: [
 depends: [
   "ocaml" {>= "4.02.3"}
   "cryptokit"
-  ("extlib" | "extlib-compat")
   "dune"
   "ocamlnet" {>= "4.1.4"}
   "ocurl"

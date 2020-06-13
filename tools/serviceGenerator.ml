@@ -255,7 +255,7 @@ let build_schema_inner_module file_lens complex_type =
                  ComplexType.Reference _
                | ComplexType.AnonymousObject _ when is_option ->
                    Format.fprintf formatter
-                     "Option.map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
+                     "GapiUtils.option_map_default (fun v -> GapiJson.render_object \"%s\" (render_content v)) [] x.%s;@,"
                      original_name
                      ocaml_name;
                | _ ->
@@ -759,6 +759,8 @@ let generate_parameters_module filter_parameters formatter
       Format.fprintf formatter "@]@\nend@\n@\n"
     end)
 
+let forward_slash_regxp = Str.regexp_string "/"
+
 let generate_rest_method formatter inner_module_lens (id, rest_method) =
   let generate_method_body methd =
     GapiLens.get_state
@@ -768,11 +770,11 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
     (* Build complete url *)
     let build_path_to_add path =
       let splitted_path =
-        ExtString.String.nsplit path "/"
+        Str.split forward_slash_regxp path
       in
       List.map
         (fun p ->
-           if ExtString.String.starts_with p "{" then
+           if GapiUtils.string_starts_with p "{" then
              let id = String.sub p 1 ((String.index p '}') - 1) and
              suffix =
                                                                   try Some (String.sub p (String.index p ':') ((String.length p) - (String.index p ':')))
@@ -826,7 +828,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
 
     (* Get etag *)
     let is_etag_present =
-      Option.map_default
+      GapiUtils.option_map_default
         (fun { Field.field_type; _ } ->
            match field_type.ComplexType.data_type with
              ComplexType.Object properties ->
@@ -1362,11 +1364,11 @@ let rec generate_service_module_signature
 
   let render_method formatter methd =
     let request_ref =
-      Option.map_default
+      GapiUtils.option_map_default
         (fun f -> f.Field.field_type.ComplexType.id)
         "" methd.Method.request in
     let response_ref =
-      Option.map_default
+      GapiUtils.option_map_default
         (fun f -> f.Field.field_type.ComplexType.id)
         "" methd.Method.response
     in

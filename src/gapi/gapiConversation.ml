@@ -150,7 +150,7 @@ let request
       GapiCore.library_version
       Sys.os_type in
   let request_headers =
-    let hl = Option.default [] header_list in
+    let hl = Option.value ~default:[] header_list in
     let set_content_type_if_not_present ct =
       let new_content_type = GapiCore.Header.ContentType ct in
       if List.exists

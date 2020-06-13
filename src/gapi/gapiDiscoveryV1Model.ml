@@ -293,7 +293,7 @@ struct
   let rec render_content x = 
      [
       GapiJson.render_string_value "$ref" x._ref;
-      Option.map_default (fun v -> GapiJson.render_object "additionalProperties" (render_content v)) [] x.additionalProperties;
+      GapiUtils.option_map_default (fun v -> GapiJson.render_object "additionalProperties" (render_content v)) [] x.additionalProperties;
       (fun v -> GapiJson.render_object "annotations" (Annotations.render_content v)) x.annotations;
       GapiJson.render_string_value "default" x.default;
       GapiJson.render_string_value "description" x.description;
@@ -301,7 +301,7 @@ struct
       GapiJson.render_array "enumDescriptions" (GapiJson.render_string_value "") x.enumDescriptions;
       GapiJson.render_string_value "format" x.format;
       GapiJson.render_string_value "id" x.id;
-      Option.map_default (fun v -> GapiJson.render_object "items" (render_content v)) [] x.items;
+      GapiUtils.option_map_default (fun v -> GapiJson.render_object "items" (render_content v)) [] x.items;
       GapiJson.render_string_value "location" x.location;
       GapiJson.render_string_value "maximum" x.maximum;
       GapiJson.render_string_value "minimum" x.minimum;

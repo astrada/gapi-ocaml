@@ -260,7 +260,7 @@ struct
             GdataAtom.parse_children
               RecurrenceExceptionEntry.of_xml_data_model
               RecurrenceExceptionEntry.empty
-              Std.identity
+              Fun.id
               cs
         | e ->
             GdataUtils.unexpected e

@@ -34,7 +34,7 @@ struct
       | _ -> false
 
   let replace_invalid_characters s =
-    ExtString.String.map
+    String.map
       (fun c ->
          match c with
              'a'..'z'
@@ -987,7 +987,7 @@ struct
     let descriptions =
       let n = List.length enum_descriptions - List.length enums in
       if n = 0 then enum_descriptions
-      else enum_descriptions @ (ExtList.List.make (-n) "")
+      else enum_descriptions @ (List.init (-n) (fun _ -> ""))
     in
     let values =
       List.map2
@@ -1157,7 +1157,7 @@ end
 (* File description *)
 
 let get_full_path output_path file_name =
-  if ExtString.String.ends_with output_path "/" then
+  if GapiUtils.string_ends_with output_path "/" then
     output_path ^ file_name
   else
     output_path ^ "/" ^ file_name

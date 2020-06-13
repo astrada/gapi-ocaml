@@ -30,7 +30,7 @@ let get_adclient_id session =
 
 let get_adclient_id_in_account session =
   let (account_id, session') = get_account_id session in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun accountId ->
          let (adclients, session'') =
            AccountsResource.Adclients.list
@@ -50,7 +50,7 @@ let get_adunit_id_in_account session =
   let (account_id, adclient_id, session') =
     get_adclient_id_in_account session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let accountId = Option.get account_id in
          let (adunits, session'') =
@@ -73,7 +73,7 @@ let get_adunit_id_in_adclient session =
   let (adclient_id, session') =
     get_adclient_id session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let (adunits, session'') =
            AdunitsResource.list
@@ -94,7 +94,7 @@ let get_customchannel_id_in_account session =
   let (account_id, adclient_id, session') =
     get_adclient_id_in_account session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let accountId = Option.get account_id in
          let (customchannels, session'') =
@@ -119,7 +119,7 @@ let get_customchannel_id_in_adclient session =
   let (adclient_id, session') =
     get_adclient_id session
   in
-    Option.map_default
+    GapiUtils.option_map_default
       (fun adClientId ->
          let (customchannels, session'') =
            CustomchannelsResource.list
@@ -161,7 +161,7 @@ let test_get_account () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (account_id, session) = get_account_id session in
-         Option.may
+         Option.iter
            (fun accountId ->
               let (account, _) =
                 AccountsResource.get
@@ -181,7 +181,7 @@ let test_list_adclients_in_account () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (account_id, session) = get_account_id session in
-         Option.may
+         Option.iter
            (fun accountId ->
               let (adclients, _) =
                 AccountsResource.Adclients.list
@@ -204,7 +204,7 @@ let test_generate_report_in_account () =
     TestHelper.build_oauth2_auth
     (fun session ->
        let (account_id, session) = get_account_id session in
-         Option.may
+         Option.iter
            (fun aid ->
               let (report, _) =
                 ReportsResource.generate
@@ -229,7 +229,7 @@ let test_list_adunits_in_account () =
        let (account_id, adclient_id, session) =
          get_adclient_id_in_account session
        in
-         Option.may
+         Option.iter
            (fun adClientId ->
               let accountId = Option.get account_id in
               let (adunits, _) =
@@ -255,7 +255,7 @@ let test_get_adunit_in_account () =
     (fun session ->
        let (account_id, adclient_id, adunit_id, session) =
          get_adunit_id_in_account session in
-       Option.may
+       Option.iter
          (fun adUnitId ->
             let accountId = Option.get account_id in
             let adClientId = Option.get adclient_id in
@@ -280,7 +280,7 @@ let test_list_customchannels_in_adunit () =
     (fun session ->
        let (account_id, adclient_id, adunit_id, session) =
          get_adunit_id_in_account session in
-       Option.may
+       Option.iter
          (fun adUnitId ->
             let accountId = Option.get account_id in
             let adClientId = Option.get adclient_id in
@@ -308,7 +308,7 @@ let test_get_adunit_in_adclient () =
     (fun session ->
        let (adclient_id, adunit_id, session) =
          get_adunit_id_in_adclient session in
-       Option.may
+       Option.iter
          (fun adUnitId ->
             let adClientId = Option.get adclient_id in
             let (adunit, _) =
@@ -332,7 +332,7 @@ let test_list_customchannels_in_account () =
        let (account_id, adclient_id, session) =
          get_adclient_id_in_account session
        in
-         Option.may
+         Option.iter
            (fun adClientId ->
               let accountId = Option.get account_id in
               let (customchannels, _) =
@@ -359,7 +359,7 @@ let test_list_urlchannels_in_account () =
        let (account_id, adclient_id, session) =
          get_adclient_id_in_account session
        in
-         Option.may
+         Option.iter
            (fun adClientId ->
               let accountId = Option.get account_id in
               let (urlchannels, _) =
@@ -385,7 +385,7 @@ let test_get_customchannel_in_account () =
     (fun session ->
        let (account_id, adclient_id, customchannel_id, session) =
          get_customchannel_id_in_account session in
-       Option.may
+       Option.iter
          (fun customChannelId ->
             let accountId = Option.get account_id in
             let adClientId = Option.get adclient_id in
@@ -410,7 +410,7 @@ let test_list_adunits_in_customchannel () =
     (fun session ->
        let (account_id, adclient_id, customchannel_id, session) =
          get_customchannel_id_in_account session in
-       Option.may
+       Option.iter
          (fun customChannelId ->
             let accountId = Option.get account_id in
             let adClientId = Option.get adclient_id in
@@ -457,7 +457,7 @@ let test_list_adunits_in_adclient () =
        let (adclient_id, session) =
          get_adclient_id session
        in
-         Option.may
+         Option.iter
            (fun adClientId ->
               let (adunits, _) =
                 AdunitsResource.list
@@ -482,7 +482,7 @@ let test_list_customchannels_in_adclient () =
        let (adclient_id, session) =
          get_adclient_id session
        in
-         Option.may
+         Option.iter
            (fun adClientId ->
               let (customchannels, _) =
                 CustomchannelsResource.list
@@ -506,7 +506,7 @@ let test_get_customchannel_in_adclient () =
     (fun session ->
        let (adclient_id, customchannel_id, session) =
          get_customchannel_id_in_adclient session in
-       Option.may
+       Option.iter
          (fun customChannelId ->
             let adClientId = Option.get adclient_id in
             let (customchannel, _) =
@@ -530,7 +530,7 @@ let test_list_urlchannels_in_adclient () =
        let (adclient_id, session) =
          get_adclient_id session
        in
-         Option.may
+         Option.iter
            (fun adClientId ->
               let (urlchannels, _) =
                 UrlchannelsResource.list
@@ -554,7 +554,7 @@ let test_list_customchannels_in_adunit_in_adclient () =
     (fun session ->
        let (adclient_id, adunit_id, session) =
          get_adunit_id_in_adclient session in
-       Option.may
+       Option.iter
          (fun adUnitId ->
             let adClientId = Option.get adclient_id in
             let (customchannels, _) =
@@ -580,7 +580,7 @@ let test_list_adunits_in_customchannel_in_adclient () =
     (fun session ->
        let (adclient_id, customchannel_id, session) =
          get_customchannel_id_in_adclient session in
-       Option.may
+       Option.iter
          (fun customChannelId ->
             let adClientId = Option.get adclient_id in
             let (adunits, _) =

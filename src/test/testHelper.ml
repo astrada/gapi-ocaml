@@ -134,9 +134,8 @@ let do_request
         interact
     with
         Failure message as e ->
-          if ExtString.String.exists
-               message "CURLE_OPERATION_TIMEOUTED" then
-            try_request ()
+        if Str.string_match (Str.regexp_string "CURL_OPERATION_TIMEOUTED") message 0 then
+          try_request ()
           else
             handle_exception e
       | GapiService.ServiceError (_, e) ->
@@ -279,7 +278,7 @@ let assert_equal_file file_name s =
     with End_of_file ->
       Buffer.contents buffer
   in
-    OUnit.assert_equal ~printer:Std.identity file_content s
+    OUnit.assert_equal ~printer:Fun.id file_content s
 
 let assert_exists msg pred xs =
   OUnit.assert_bool msg (List.exists pred xs)

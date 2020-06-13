@@ -210,7 +210,7 @@ let parse_token_info pipe =
   let rec parse_next_line response pipe =
     try
       let line = GapiPipe.OcamlnetPipe.read_line pipe in
-      let (key, value) = ExtString.String.split line "=" in
+      let (key, value) = GapiUtils.divide_string line '=' in
         match key with
             "Target" ->
               GapiConversation.Continue
@@ -265,7 +265,7 @@ let get_request_token
                                oauth_signature_method in
   let post_fields_to_sign =
     ("scope", scope) ::
-    (Option.map_default
+    (GapiUtils.option_map_default
        (fun displayname -> [("xoauth_displayname", displayname)])
        []
        xoauth_displayname)

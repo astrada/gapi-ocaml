@@ -66,7 +66,7 @@ let data_model_to_entry
           parse_children
             entry_of_xml_data_model
             empty_entry
-            Std.identity
+            Fun.id
             cs
       | e ->
           GdataUtils.unexpected e
@@ -927,7 +927,7 @@ struct
             parse_children
               of_xml_data_model
               empty
-              Std.identity
+              Fun.id
               cs
         | e ->
             GdataUtils.unexpected e
@@ -1117,7 +1117,7 @@ struct
 
   let of_xml_data_model extensions tree = tree :: extensions
 
-  let to_xml_data_model = Std.identity
+  let to_xml_data_model = Fun.id
 
 end
 

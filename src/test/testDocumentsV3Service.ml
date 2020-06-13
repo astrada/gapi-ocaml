@@ -118,7 +118,7 @@ let test_query_text_documents () =
            "All the entries should be of type document"
            (List.for_all
               (fun entry ->
-                 ExtString.String.starts_with
+                 GapiUtils.string_starts_with
                    entry.Document.Entry.resourceId
                    "document")
               feed.Document.Feed.entries);

@@ -246,17 +246,17 @@ let single_request
         | Create ->
             None
     ) etag
-      |> Option.default None in
+      |> Option.value ~default:None in
   let headers = [authorization_header; version_header; etag_header]
     |> List.filter Option.is_some
     |> List.map Option.get in
   let upload_headers =
-    Option.map_default
+    GapiUtils.option_map_default
       (GapiMediaResource.generate_upload_headers http_method)
       []
       upload_state in
   let download_headers =
-    Option.map_default
+    GapiUtils.option_map_default
       GapiMediaResource.generate_download_headers
       []
       media_download in

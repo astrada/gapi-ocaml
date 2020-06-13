@@ -28,7 +28,7 @@ let service_request
       parse_response
       session =
   let query_url =
-    Option.map_default
+    GapiUtils.option_map_default
       (fun params -> GapiUtils.merge_query_string params url)
       url
       query_parameters
@@ -89,7 +89,7 @@ let download_resource
       media_destination
       session =
   let range_spec =
-    Option.map_default GapiMediaResource.generate_range_spec "" ranges in
+    GapiUtils.option_map_default GapiMediaResource.generate_range_spec "" ranges in
   let media_download = {
     GapiMediaResource.destination = media_destination;
     range_spec;
@@ -138,12 +138,12 @@ struct
     let param get_value to_string name =
       build_param default qp get_value to_string name
     in
-      [param (fun p -> p.alt) Std.identity "alt";
-       param (fun p -> p.fields) Std.identity "fields";
+      [param (fun p -> p.alt) Fun.id "alt";
+       param (fun p -> p.fields) Fun.id "fields";
        param (fun p -> p.prettyPrint) string_of_bool "prettyPrint";
-       param (fun p -> p.quotaUser) Std.identity "quotaUser";
-       param (fun p -> p.userIp) Std.identity "userIp";
-       param (fun p -> p.key) Std.identity "key"]
+       param (fun p -> p.quotaUser) Fun.id "quotaUser";
+       param (fun p -> p.userIp) Fun.id "userIp";
+       param (fun p -> p.key) Fun.id "key"]
       |> List.concat
 
   let merge_parameters ?standard_parameters () =

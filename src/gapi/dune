@@ -2,6 +2,6 @@
  (name gapi_ocaml)
  (public_name gapi-ocaml)
  (wrapped false)
- (libraries extlib netsys threads netstring curl str cryptokit yojson)
+ (libraries netsys threads netstring curl str cryptokit yojson)
  (flags (:standard -w -3-23-27-32-33))
  (synopsis "Google APIs client library"))

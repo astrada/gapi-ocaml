@@ -91,7 +91,7 @@ struct
           parse_children
             parse
             empty
-            Std.identity
+            Fun.id
             cs
       | e ->
           unexpected "GapiService.SingleError.parse" e x
@@ -156,7 +156,7 @@ struct
           parse_children
             parse
             empty
-            Std.identity
+            Fun.id
             cs
       | AnnotatedTree.Node
           ({ name = ""; data_type = Object },
@@ -164,7 +164,7 @@ struct
           parse_children
             parse
             empty
-            Std.identity
+            Fun.id
             cs
       | e ->
           unexpected "GapiService.RequestError.parse" e x

@@ -61,26 +61,26 @@ struct
         else
           []
     in
-      [param (fun p -> p.author) Std.identity "author";
-       param (fun p -> p.fields) Std.identity "fields";
+      [param (fun p -> p.author) Fun.id "author";
+       param (fun p -> p.fields) Fun.id "fields";
        param (fun p -> p.max_results) string_of_int "max-results";
        param (fun p -> p.published_min) GapiDate.to_string "published-min";
        param (fun p -> p.published_max) GapiDate.to_string "published-max";
-       param (fun p -> p.q) Std.identity "q";
+       param (fun p -> p.q) Fun.id "q";
        param (fun p -> p.start_index) string_of_int "start-index";
        param (fun p -> p.strict) string_of_bool "strict";
        param (fun p -> p.updated_min) GapiDate.to_string "updated-min";
        param (fun p -> p.updated_max) GapiDate.to_string "updated-max";
-       param (fun p -> p.ctz) Std.identity "ctz";
+       param (fun p -> p.ctz) Fun.id "ctz";
        param (fun p -> p.future_events) string_of_bool "future-events";
        param (fun p -> p.max_attendees) string_of_int "max-attendees";
-       param (fun p -> p.orderby) Std.identity "orderby";
+       param (fun p -> p.orderby) Fun.id "orderby";
        param (fun p -> p.recurrence_expansion_start) GapiDate.to_string "recurrence-expansion-start";
        param (fun p -> p.recurrence_expansion_end) GapiDate.to_string "recurrence-expansion-end";
        param (fun p -> p.singleevents) string_of_bool "singleevents";
        param (fun p -> p.showdeleted) string_of_bool "showdeleted";
        param (fun p -> p.showhidden) string_of_bool "showhidden";
-       param (fun p -> p.sortorder) Std.identity "sortorder";
+       param (fun p -> p.sortorder) Fun.id "sortorder";
        param (fun p -> p.start_min) GapiDate.to_string "start-min";
        param (fun p -> p.start_max) GapiDate.to_string "start-max"]
       |> List.concat

@@ -104,7 +104,7 @@ let get_auth_token
   let rec parse_next_line pipe =
     try
       let line = GapiPipe.OcamlnetPipe.read_line pipe in
-      let (key, value) = ExtString.String.split line "=" in
+      let (key, value) = GapiUtils.divide_string line '=' in
         match key with
             "Auth" ->
               GapiConversation.Done (GapiAuthResponse.ClientLoginAuthToken
