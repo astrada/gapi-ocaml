@@ -339,4 +339,3 @@ let rec loop continue input =
   | Done output -> output
   | Error message -> raise (ConversationException message)
   | Continue k -> loop k input
-

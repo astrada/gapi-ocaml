@@ -37,6 +37,13 @@ type request_type =
   | Patch
   | Delete
   | QueryMeta
+let string_of_request_type = function
+    Query -> "Query"
+  | Create -> "Create"
+  | Update -> "Update"
+  | Patch -> "Patch"
+  | Delete -> "Delete"
+  | QueryMeta -> "QueryMeta"
 
 let parse_empty_response _ =
   ()
@@ -431,7 +438,7 @@ let gapi_request
         parse_error
         verified_session
     with
-        Redirect (target, new_session) ->
+      | Redirect (target, new_session) ->
           if url <> target then
             request_loop
               ?post_data

@@ -237,7 +237,7 @@ let set_useragent value (state : [`Created] t) =
 let set_cookies cookies (state : [`Created] t) =
   with_curl
     (fun curl ->
-       List.iter (Curl.set_cookielist curl) cookies)
+       List.iter (Curl.set_cookie curl) cookies)
     state
 
 let reset_all_cookies (state : [`Created] t) =
@@ -290,4 +290,3 @@ let string_of_curl_info_type info_type =
     | Curl.DEBUGTYPE_DATA_OUT -> "data out"
     | Curl.DEBUGTYPE_END -> "end"
     | _ -> ""
-
