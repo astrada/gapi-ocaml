@@ -78,12 +78,13 @@ let string_before_char c s =
   with Not_found -> s
 
 let divide_string s c =
-  match String.index_opt s c with
-  | None -> "", s
-  | Some i ->
+  try
+    let i = String.index s c in
     let len = String.length s in
     let j = i + 1 in
     String.sub s 0 i, String.sub s j (len - j)
+  with
+  | Invalid_argument _ -> "", s
 
 let strip_string s =
   let leading_trailing_whitespace =
@@ -97,7 +98,7 @@ let string_starts_with s prefix =
     false
   else
     let start = String.sub s 0 prefix_len  in
-    String.equal start prefix
+    String.compare start prefix == 0
 
 let string_ends_with s suffix =
   let len = String.length s in
@@ -106,7 +107,7 @@ let string_ends_with s suffix =
     false
   else
     let ending = String.sub s (len - suffix_len) suffix_len in
-    String.equal ending suffix
+    String.compare ending suffix == 0
 
 let wait_exponential_backoff n =
   let seconds = 1 lsl n in
