@@ -16,6 +16,8 @@ exception RequestTimeout of GapiConversation.Session.t
 exception Conflict of GapiConversation.Session.t
 exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
+exception TooManyRequests of GapiConversation.Session.t * int *
+                             GapiPipe.OcamlnetPipe.t
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
 exception StartUpload of string * GapiConversation.Session.t
 exception InternalServerError of GapiConversation.Session.t * int *
@@ -119,6 +121,8 @@ let parse_response
       raise (Gone session)
   | 412 (* Precondition Failed *) ->
       raise (PreconditionFailed session)
+  | 429 (* Too many requests *) ->
+      raise (TooManyRequests  (session, response_code, pipe))
   | 500 (* Internal Server Error *) ->
       raise (InternalServerError (session, response_code, pipe))
   | 502 (* Bad Gateway *) ->
@@ -496,4 +500,3 @@ let gapi_request
     0
     url
     session
-

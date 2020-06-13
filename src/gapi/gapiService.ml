@@ -46,11 +46,12 @@ let service_request
       parse_response
       session
   with
-      GapiRequest.BadRequest (session, response_code, pipe)
+    | GapiRequest.BadRequest (session, response_code, pipe)
     | GapiRequest.Unauthorized (session, response_code, pipe)
     | GapiRequest.Forbidden (session, response_code, pipe)
     | GapiRequest.NotFound (session, response_code, pipe)
-    | GapiRequest.InternalServerError (session, response_code, pipe) ->
+    | GapiRequest.InternalServerError (session, response_code, pipe)
+    | GapiRequest.TooManyRequests (session, response_code, pipe) ->
         parse_error pipe response_code session
 
 let service_request_with_data
@@ -298,4 +299,3 @@ let delete
     url
     (fun pipe _ -> parse_response pipe)
     session
-

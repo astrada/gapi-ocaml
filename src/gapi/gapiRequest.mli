@@ -15,6 +15,8 @@ exception RequestTimeout of GapiConversation.Session.t
 exception Conflict of GapiConversation.Session.t
 exception Gone of GapiConversation.Session.t
 exception PreconditionFailed of GapiConversation.Session.t
+exception TooManyRequests of GapiConversation.Session.t * int *
+                             GapiPipe.OcamlnetPipe.t
 exception InternalServerError of GapiConversation.Session.t * int *
                                  GapiPipe.OcamlnetPipe.t
 exception ServiceUnavailable of GapiConversation.Session.t * int *
@@ -44,4 +46,3 @@ val gapi_request :
   (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
-
