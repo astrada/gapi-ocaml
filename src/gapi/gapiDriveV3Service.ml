@@ -838,7 +838,7 @@ struct
         file
         session =
     let base_path = ["files"] in
-    let media_path = [""; "resumable"; "upload"; "drive"; "v3"; "files"] in
+    let media_path = ["resumable"; "upload"; "drive"; "v3"; "files"] in
     let path_to_add = if Option.is_some media_source then media_path
       else base_path in
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
@@ -976,7 +976,7 @@ struct
         file
         session =
     let base_path = ["files"; ((fun x -> x) fileId)] in
-    let media_path = [""; "resumable"; "upload"; "drive"; "v3"; "files";
+    let media_path = ["resumable"; "upload"; "drive"; "v3"; "files";
       ((fun x -> x) fileId)] in
     let path_to_add = if Option.is_some media_source then media_path
       else base_path in
