@@ -74,7 +74,10 @@ let parse_response
   | 204 (* No Content *)
   | 206 (* Partial Content *) ->
       parse_output pipe headers
-  | 302 (* Found *) ->
+  | 301 (* Moved Permanently *)
+  | 302 (* Found *)
+  | 303 (* See Other *)
+  | 307 (* Temporary Redirect *) ->
       let url = get_location () in
       raise (Redirect (url, session))
   | 304 (* Not Modified *) ->
