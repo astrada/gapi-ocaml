@@ -338,8 +338,8 @@ struct
       "comments"] base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      CommentsParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Comment.to_data_model)
       ~data:comment full_url
@@ -355,8 +355,8 @@ struct
       "comments"; ((fun x -> x) commentId)] base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      CommentsParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -372,8 +372,8 @@ struct
       "comments"; ((fun x -> x) commentId)] base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params ~includeDeleted () in
-    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      CommentsParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
     
@@ -391,8 +391,8 @@ struct
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params ~includeDeleted ~pageSize ?pageToken
       ?startModifiedTime () in
-    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      CommentsParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response CommentList.of_data_model) session 
     
@@ -407,8 +407,8 @@ struct
       "comments"; ((fun x -> x) commentId)] base_url in
     let params = CommentsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map CommentsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      CommentsParameters.to_key_value_list params in
     GapiService.patch ?query_parameters
       ~data_to_post:(GapiJson.render_json Comment.to_data_model)
       ~data:comment full_url
@@ -1145,8 +1145,8 @@ struct
       ?standard_parameters:std_params ?emailMessage ~enforceSingleParent
       ~moveToNewOwnersRoot ?sendNotificationEmail ~supportsAllDrives
       ~supportsTeamDrives ~transferOwnership ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map PermissionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      PermissionsParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json Permission.to_data_model)
       ~data:permission full_url
@@ -1166,8 +1166,8 @@ struct
     let params = PermissionsParameters.merge_parameters
       ?standard_parameters:std_params ~supportsAllDrives ~supportsTeamDrives
       ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map PermissionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      PermissionsParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -1186,8 +1186,8 @@ struct
     let params = PermissionsParameters.merge_parameters
       ?standard_parameters:std_params ~supportsAllDrives ~supportsTeamDrives
       ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map PermissionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      PermissionsParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
     
@@ -1206,8 +1206,8 @@ struct
     let params = PermissionsParameters.merge_parameters
       ?standard_parameters:std_params ?pageSize ?pageToken ~supportsAllDrives
       ~supportsTeamDrives ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map PermissionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      PermissionsParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response PermissionList.of_data_model) session 
     
@@ -1228,8 +1228,8 @@ struct
     let params = PermissionsParameters.merge_parameters
       ?standard_parameters:std_params ~removeExpiration ~supportsAllDrives
       ~supportsTeamDrives ~transferOwnership ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map PermissionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      PermissionsParameters.to_key_value_list params in
     GapiService.patch ?query_parameters
       ~data_to_post:(GapiJson.render_json Permission.to_data_model)
       ~data:permission full_url
@@ -1480,8 +1480,8 @@ struct
       "revisions"; ((fun x -> x) revisionId)] base_url in
     let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map RevisionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      RevisionsParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -1498,8 +1498,8 @@ struct
       "revisions"; ((fun x -> x) revisionId)] base_url in
     let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params ~acknowledgeAbuse () in
-    let query_parameters = GapiOption.map RevisionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      RevisionsParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag ?media_download full_url
       (GapiJson.parse_json_response Revision.of_data_model) session 
     
@@ -1514,8 +1514,8 @@ struct
       "revisions"] base_url in
     let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params ~pageSize ?pageToken () in
-    let query_parameters = GapiOption.map RevisionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      RevisionsParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response RevisionList.of_data_model) session 
     
@@ -1530,8 +1530,8 @@ struct
       "revisions"; ((fun x -> x) revisionId)] base_url in
     let params = RevisionsParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map RevisionsParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      RevisionsParameters.to_key_value_list params in
     GapiService.patch ?query_parameters
       ~data_to_post:(GapiJson.render_json Revision.to_data_model)
       ~data:revision full_url
@@ -1628,8 +1628,8 @@ struct
     let full_url = GapiUtils.add_path_to_url ["teamdrives"] base_url in
     let params = TeamdrivesParameters.merge_parameters
       ?standard_parameters:std_params ~requestId () in
-    let query_parameters = GapiOption.map TeamdrivesParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      TeamdrivesParameters.to_key_value_list params in
     GapiService.post ?query_parameters
       ~data_to_post:(GapiJson.render_json TeamDrive.to_data_model)
       ~data:teamDrive full_url
@@ -1644,8 +1644,8 @@ struct
       ((fun x -> x) teamDriveId)] base_url in
     let params = TeamdrivesParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map TeamdrivesParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      TeamdrivesParameters.to_key_value_list params in
     GapiService.delete ?query_parameters full_url
       GapiRequest.parse_empty_response session 
     
@@ -1660,8 +1660,8 @@ struct
       ((fun x -> x) teamDriveId)] base_url in
     let params = TeamdrivesParameters.merge_parameters
       ?standard_parameters:std_params ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map TeamdrivesParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      TeamdrivesParameters.to_key_value_list params in
     GapiService.get ?query_parameters ?etag full_url
       (GapiJson.parse_json_response TeamDrive.of_data_model) session 
     
@@ -1677,8 +1677,8 @@ struct
     let params = TeamdrivesParameters.merge_parameters
       ?standard_parameters:std_params ~pageSize ?pageToken ?q
       ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map TeamdrivesParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      TeamdrivesParameters.to_key_value_list params in
     GapiService.get ?query_parameters full_url
       (GapiJson.parse_json_response TeamDriveList.of_data_model) session 
     
@@ -1693,8 +1693,8 @@ struct
       ((fun x -> x) teamDriveId)] base_url in
     let params = TeamdrivesParameters.merge_parameters
       ?standard_parameters:std_params ~useDomainAdminAccess () in
-    let query_parameters = GapiOption.map TeamdrivesParameters.to_key_value_list
-      params in
+    let query_parameters = GapiOption.map
+      TeamdrivesParameters.to_key_value_list params in
     GapiService.patch ?query_parameters
       ~data_to_post:(GapiJson.render_json TeamDrive.to_data_model)
       ~data:teamDrive full_url
