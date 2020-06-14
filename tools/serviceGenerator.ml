@@ -737,7 +737,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
     >>= fun parameters_module_name ->
     (* Build complete url *)
     let build_path_to_add path =
-      let splitted_path = Str.split forward_slash_regxp path in
+      let splitted_path = Str.split_delim forward_slash_regxp path in
       List.map
         (fun p ->
           if GapiUtils.string_starts_with p "{" then
