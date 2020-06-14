@@ -5,11 +5,8 @@
 
 val library_version : string
 
-module AnnotatedTree :
-sig
-  type ('a, 'b) t =
-      Leaf of 'a * 'b
-    | Node of 'a * ('a, 'b) t list
+module AnnotatedTree : sig
+  type ('a, 'b) t = Leaf of 'a * 'b | Node of 'a * ('a, 'b) t list
 
   val map : ('a -> 'b) -> 'a list -> 'b list
 
@@ -25,49 +22,30 @@ sig
     ('a, 'c) t ->
     'b
 
-  val fold :
-    ('a -> 'b list -> 'b) ->
-    ('a -> 'c -> 'b) ->
-    ('a, 'c) t ->
-    'b
-
+  val fold : ('a -> 'b list -> 'b) -> ('a -> 'c -> 'b) -> ('a, 'c) t -> 'b
 end
 
-module HttpMethod :
-sig
-  type t =
-      GET
-    | POST
-    | PUT
-    | DELETE
-    | PATCH
-    | HEAD
+module HttpMethod : sig
+  type t = GET | POST | PUT | DELETE | PATCH | HEAD
 
   val to_string : t -> string
-
 end
 
-module PostData :
-sig
+module PostData : sig
   type body =
-      String of string
+    | String of string
     | File of string * int * int64
-    | Buffer of (char,
-                 Bigarray.int8_unsigned_elt,
-                 Bigarray.c_layout) Bigarray.Array1.t
+    | Buffer of
+        (char, Bigarray.int8_unsigned_elt, Bigarray.c_layout) Bigarray.Array1.t
 
-  type t =
-      Fields of (string * string) list
-    | Body of body * string
+  type t = Fields of (string * string) list | Body of body * string
 
   val empty : t
-
 end
 
-module Header :
-sig
+module Header : sig
   type t =
-      HttpStatus of string * int * string
+    | HttpStatus of string * int * string
     | ContentType of string
     | Location of string
     | Authorization of string
@@ -87,16 +65,10 @@ sig
   val to_string : t -> string
 
   val parse : string -> t
-
 end
 
-module SignatureMethod :
-sig
-  type t =
-      RSA_SHA1
-    | HMAC_SHA1
-  
+module SignatureMethod : sig
+  type t = RSA_SHA1 | HMAC_SHA1
+
   val to_string : t -> string
-
 end
-

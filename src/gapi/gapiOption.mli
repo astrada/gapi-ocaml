@@ -12,4 +12,3 @@ val is_none : 'a option -> bool
 val value : 'a option -> default:'a -> 'a
 
 val get : 'a option -> 'a
-

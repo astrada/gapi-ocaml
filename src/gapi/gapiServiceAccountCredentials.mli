@@ -12,18 +12,29 @@ type t = {
 }
 
 val _type : (t, string) GapiLens.t
+
 val project_id : (t, string) GapiLens.t
+
 val private_key_id : (t, string) GapiLens.t
+
 val private_key : (t, string) GapiLens.t
+
 val client_email : (t, string) GapiLens.t
+
 val client_id : (t, string) GapiLens.t
+
 val auth_uri : (t, string) GapiLens.t
+
 val token_uri : (t, string) GapiLens.t
+
 val auth_provider_x509_cert_url : (t, string) GapiLens.t
+
 val client_x509_cert_url : (t, string) GapiLens.t
 
 val to_data_model : t -> GapiJson.json_data_model
-val to_json : t -> Yojson.Safe.json
-val parse_json : string -> t
-val parse_json_file : string -> t
 
+val to_json : t -> Yojson.Safe.json
+
+val parse_json : string -> t
+
+val parse_json_file : string -> t

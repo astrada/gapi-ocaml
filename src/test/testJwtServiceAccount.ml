@@ -21,43 +21,27 @@ let private_key =
 
 let test_parse_private_key () =
   let rsa_key = parse_private_key private_key in
-  assert_equal
-    ~printer:string_of_int
-    1024
-    rsa_key.Cryptokit.RSA.size;
-  assert_equal
-    ~printer:Char.escaped
-    '\xe2'
-    rsa_key.Cryptokit.RSA.n.[0];
-  assert_equal
-    ~printer:Char.escaped
-    '\x2d'
-    rsa_key.Cryptokit.RSA.n.[127];
-  assert_equal
-    ~printer:Char.escaped
-    '\x01'
-    rsa_key.Cryptokit.RSA.e.[0];
-  assert_equal
-    ~printer:Char.escaped
-    '\x00'
-    rsa_key.Cryptokit.RSA.e.[1];
-  assert_equal
-    ~printer:Char.escaped
-    '\x01'
-    rsa_key.Cryptokit.RSA.e.[2]
+  assert_equal ~printer:string_of_int 1024 rsa_key.Cryptokit.RSA.size;
+  assert_equal ~printer:Char.escaped '\xe2' rsa_key.Cryptokit.RSA.n.[0];
+  assert_equal ~printer:Char.escaped '\x2d' rsa_key.Cryptokit.RSA.n.[127];
+  assert_equal ~printer:Char.escaped '\x01' rsa_key.Cryptokit.RSA.e.[0];
+  assert_equal ~printer:Char.escaped '\x00' rsa_key.Cryptokit.RSA.e.[1];
+  assert_equal ~printer:Char.escaped '\x01' rsa_key.Cryptokit.RSA.e.[2]
 
 let test_get_encoded_claim () =
-  let jwt_claim = {
-    JwtClaim.iss = "761326798069-r5mljlln1rd4lrbhg75efgigp36m78j5@developer.gserviceaccount.com";
-    scope = "https://www.googleapis.com/auth/prediction";
-    aud = "https://www.googleapis.com/oauth2/v4/token";
-    exp = 1328554385.0;
-    iat = 1328550785.0;
-    sub = "";
-  } in
+  let jwt_claim =
+    {
+      JwtClaim.iss =
+        "761326798069-r5mljlln1rd4lrbhg75efgigp36m78j5@developer.gserviceaccount.com";
+      scope = "https://www.googleapis.com/auth/prediction";
+      aud = "https://www.googleapis.com/oauth2/v4/token";
+      exp = 1328554385.0;
+      iat = 1328550785.0;
+      sub = "";
+    }
+  in
   let encoded_claim = get_encoded_claim jwt_claim in
-  assert_equal
-    ~printer:TestHelper.id
+  assert_equal ~printer:TestHelper.id
     "eyJpc3MiOiI3NjEzMjY3OTgwNjktcjVtbGpsbG4xcmQ0bHJiaGc3NWVmZ2lncDM2bTc4ajVAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvcHJlZGljdGlvbiIsImF1ZCI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92NC90b2tlbiIsImV4cCI6MTMyODU1NDM4NS4wLCJpYXQiOjEzMjg1NTA3ODUuMH0"
     encoded_claim
 
@@ -89,18 +73,19 @@ let test_rsasp1 () =
 
 let test_get_signature () =
   let encoded_jwt_claim =
-    "eyJpc3MiOiI3NjEzMjY3OTgwNjktcjVtbGpsbG4xcmQ0bHJiaGc3NWVmZ2lncDM2bTc4ajVAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvcHJlZGljdGlvbiIsImF1ZCI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92NC90b2tlbiIsImV4cCI6MTMyODU1NDM4NS4wLCJpYXQiOjEzMjg1NTA3ODUuMH0" in
+    "eyJpc3MiOiI3NjEzMjY3OTgwNjktcjVtbGpsbG4xcmQ0bHJiaGc3NWVmZ2lncDM2bTc4ajVAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvcHJlZGljdGlvbiIsImF1ZCI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92NC90b2tlbiIsImV4cCI6MTMyODU1NDM4NS4wLCJpYXQiOjEzMjg1NTA3ODUuMH0"
+  in
   let signature = get_signature encoded_jwt_claim private_key in
-  assert_equal
-    ~printer:TestHelper.id
+  assert_equal ~printer:TestHelper.id
     "X1sq8hTgNYbOeZHx7GR39WPmCm5fH3SgBbbL_NZX8ELrXq2ftNf9CmU4d_p-zPj5E8_uuSDNkGPxigDBLc_5pBKUhUDbA_OsLwuk553wMedmoaJwdQrKBOBcu5GMTMPHDuk2P57N1iwkRQLHofl9tOye1etfBDQQ6yvWMrh2GZE"
     signature
 
-let suite = "JWT helper module for service accounts test" >:::
-  ["test_parse_private_key" >:: test_parse_private_key;
-   "test_get_encoded_claim" >:: test_get_encoded_claim;
-   (* "test_emsa_pkcs1_v1_5_encode" >:: test_emsa_pkcs1_v1_5_encode;
-   "test_rsasp1" >:: test_rsasp1; *)
-   "test_get_signature" >:: test_get_signature;
-  ]
-
+let suite =
+  "JWT helper module for service accounts test"
+  >::: [
+         "test_parse_private_key" >:: test_parse_private_key;
+         "test_get_encoded_claim" >:: test_get_encoded_claim;
+         (* "test_emsa_pkcs1_v1_5_encode" >:: test_emsa_pkcs1_v1_5_encode;
+            "test_rsasp1" >:: test_rsasp1; *)
+         "test_get_signature" >:: test_get_signature;
+       ]

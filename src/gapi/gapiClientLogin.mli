@@ -1,10 +1,9 @@
 (** Client Login authorization API implementation.
   *)
 
-module Error :
-sig
+module Error : sig
   type t =
-      BadAuthentication
+    | BadAuthentication
     | NotVerified
     | TermsNotAgreed
     | CaptchaRequired
@@ -18,13 +17,11 @@ sig
   val of_string : string -> t
 
   val description : t -> string
-
 end
 
-module Service :
-sig
+module Service : sig
   type t =
-      GoogleAnalytics
+    | GoogleAnalytics
     | GoogleApps
     | GoogleBase
     | GoogleSites
@@ -47,7 +44,6 @@ sig
     | OtherService of string
 
   val string_of : t -> string
-
 end
 
 exception LoginException of Error.t
@@ -61,4 +57,3 @@ val get_auth_token :
   service:Service.t ->
   GapiConversation.Session.t ->
   GapiAuthResponse.t * GapiConversation.Session.t
-

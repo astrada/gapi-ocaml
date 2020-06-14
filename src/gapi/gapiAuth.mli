@@ -39,7 +39,4 @@ type authentication =
   | OAuth2ServiceAccount of oauth2_service_account_data
 
 val generate_authorization_header :
-  ?oauth1_params:oauth1_params ->
-  authentication ->
-  string option
-
+  ?oauth1_params:oauth1_params -> authentication -> string option

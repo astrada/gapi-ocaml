@@ -37,7 +37,11 @@ val get_request_token :
 
 val authorize_token_url :
   ?base_url:string ->
-  ?hd:string -> ?hl:string -> ?mobile:bool -> string -> string
+  ?hd:string ->
+  ?hl:string ->
+  ?mobile:bool ->
+  string ->
+  string
 
 val get_access_token :
   ?url:string ->
@@ -75,4 +79,3 @@ val revoke_token :
   oauth_secret:string ->
   GapiConversation.Session.t ->
   unit * GapiConversation.Session.t
-

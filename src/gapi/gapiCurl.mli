@@ -3,11 +3,7 @@
 
 type curl_context
 
-type 'a t =
-    Initialized
-  | Created of curl_context
-  | Destroyed
-  | Uninitialized
+type 'a t = Initialized | Created of curl_context | Destroyed | Uninitialized
 
 val global_init : unit -> [ `Initialized ] t
 
@@ -69,4 +65,3 @@ val cleanup : [ `Created ] t -> [ `Destroyed ] t
 val global_cleanup : [ `Initialized ] t -> [ `Uninitialized ] t
 
 val string_of_curl_info_type : Curl.curlDebugType -> string
-

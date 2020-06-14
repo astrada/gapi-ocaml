@@ -1,11 +1,9 @@
 (** OAuth 2.0 authorization API implementation.
   *)
 
-val parse_token_info :
-  GapiPipe.OcamlnetPipe.t -> GapiAuthResponse.t
+val parse_token_info : GapiPipe.OcamlnetPipe.t -> GapiAuthResponse.t
 
-val parse_error :
-  GapiPipe.OcamlnetPipe.t -> int -> 'a
+val parse_error : GapiPipe.OcamlnetPipe.t -> int -> 'a
 
 val authorization_code_url :
   ?base_url:string ->
@@ -42,4 +40,3 @@ val revoke_token :
   refresh_token:string ->
   GapiConversation.Session.t ->
   unit * GapiConversation.Session.t
-

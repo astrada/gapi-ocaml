@@ -4,8 +4,7 @@
  @see <https://developers.google.com/identity/protocols/OAuth2ForDevices>
 *)
 
-module AuthorizationCode :
-sig
+module AuthorizationCode : sig
   exception RateLimitExceeded
 
   type t = {
@@ -17,11 +16,14 @@ sig
   }
 
   val device_code : (t, string) GapiLens.t
-  val user_code : (t, string) GapiLens.t
-  val verification_url : (t, string) GapiLens.t
-  val expires_in : (t, int) GapiLens.t
-  val interval : (t, int) GapiLens.t
 
+  val user_code : (t, string) GapiLens.t
+
+  val verification_url : (t, string) GapiLens.t
+
+  val expires_in : (t, int) GapiLens.t
+
+  val interval : (t, int) GapiLens.t
 end
 
 val request_code :
@@ -32,11 +34,17 @@ val request_code :
   AuthorizationCode.t * GapiConversation.Session.t
 
 exception AccessDenied of GapiConversation.Session.t
+
 exception AuthorizationPending of GapiConversation.Session.t
+
 exception SlowDown of GapiConversation.Session.t
+
 exception InvalidClient of GapiConversation.Session.t
+
 exception InvalidGrant of GapiConversation.Session.t
+
 exception InvalidRequest of GapiConversation.Session.t
+
 exception UnsupportedGrantType of GapiConversation.Session.t
 
 val get_access_token :
@@ -56,4 +64,3 @@ val poll_authorization_server :
   authorization_code:AuthorizationCode.t ->
   GapiConversation.Session.t ->
   GapiAuthResponse.t * GapiConversation.Session.t
-

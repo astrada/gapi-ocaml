@@ -1,7 +1,6 @@
 module Option = GapiOption
 
-module OcamlnetPipe =
-struct
+module OcamlnetPipe = struct
   type t = {
     netpipe : Netchannels.pipe;
     outchannel : Netchannels.out_obj_channel option;
@@ -15,13 +14,13 @@ struct
     let outfilter =
       Option.map
         (fun ch -> new Netchannels.output_filter netpipe ch)
-        out_channel in
-    let infilter =
-      Option.map
-        (fun ch -> new Netchannels.input_filter ch netpipe)
-        in_channel
+        out_channel
     in
-    { netpipe;
+    let infilter =
+      Option.map (fun ch -> new Netchannels.input_filter ch netpipe) in_channel
+    in
+    {
+      netpipe;
       outchannel = out_channel;
       outfilter;
       inchannel = in_channel;
@@ -29,9 +28,7 @@ struct
     }
 
   let in_ch p =
-    Option.value
-      ~default:(p.netpipe :> Netchannels.in_obj_channel)
-      p.infilter
+    Option.value ~default:(p.netpipe :> Netchannels.in_obj_channel) p.infilter
 
   let read_byte p =
     let ch = in_ch p in
@@ -52,9 +49,7 @@ struct
     Netchannels.string_of_in_obj_channel ch
 
   let out_ch p =
-    Option.value
-      ~default:(p.netpipe :> Netchannels.out_obj_channel)
-      p.outfilter
+    Option.value ~default:(p.netpipe :> Netchannels.out_obj_channel) p.outfilter
 
   let write_byte p b =
     let ch = out_ch p in
@@ -73,6 +68,4 @@ struct
     p.netpipe#close_out ();
     Option.iter (fun ch -> ch#close_out ()) p.outfilter;
     Option.iter (fun ch -> ch#close_out ()) p.outchannel
-
 end
-

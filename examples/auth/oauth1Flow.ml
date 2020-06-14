@@ -2,58 +2,49 @@ open GapiLens.Infix
 
 (* Load the configuration file and read the OAuth1 values *)
 let test_config = Config.parse ()
+
 let get = Config.get test_config
+
 let xoauth_displayname = get "oa1_displayname"
+
 let consumer_secret = get "oa1_cons_secret"
+
 let oauth_consumer_key = get "oa1_cons_key"
+
 let oauth_callback = get "oa1_callback"
 
 (* Exchange the authorized request token for an access token *)
-let get_access_token
-      oauth_token
-      oauth_secret
-      oauth_verifier
-      (cgi : Netcgi.cgi_activation) =
+let get_access_token oauth_token oauth_secret oauth_verifier
+    (cgi : Netcgi.cgi_activation) =
   (* Start a new session *)
-  Common.do_request
-    (fun session ->
+  Common.do_request (fun session ->
+      try
+        (* Request the access token *)
+        let response, _ =
+          GapiOAuth1.get_access_token ~consumer_secret ~oauth_consumer_key
+            ~oauth_token ~oauth_verifier ~oauth_secret session
+        in
 
-       try
-         (* Request the access token *)
-         let (response, _) =
-           GapiOAuth1.get_access_token
-             ~consumer_secret
-             ~oauth_consumer_key
-             ~oauth_token
-             ~oauth_verifier
-             ~oauth_secret
-             session in
+        (* Read the response *)
+        let { GapiAuthResponse.OAuth1.access_token; access_token_secret } =
+          response |. GapiAuthResponse.oauth1_get_access_token
+          |. GapiLens.option_get
+        in
 
-         (* Read the response *)
-         let { GapiAuthResponse.OAuth1.access_token;
-               access_token_secret } = response
-           |. GapiAuthResponse.oauth1_get_access_token
-           |. GapiLens.option_get in
-
-         (* Generate the HTML output page *)
-         let output =
-           Printf.sprintf
-             "<form method=\"post\" action=\"\">\
-                <fieldset>\
-                  <legend>OAuth1 token:</legend>\
-                  oa1_token: <input type=\"text\" name=\"oa1_token\" value=\"%s\" size=\"50\" /><br />\
-                  oa1_secret: <input type=\"text\" name=\"oa1_secret\" value=\"%s\" size=\"50\" /><br />\
-                  <input type=\"submit\" name=\"save\" value=\"Save\" />\
-                </fieldset>\
-              </form>"
-             access_token
-             access_token_secret
-         in
-           Common.output_page "OAuth1 Flow" "Success" output cgi
-
-       with Failure error ->
-         (* Generate the HTML error page *)
-         Common.output_error_page "OAuth1 Flow" error cgi)
+        (* Generate the HTML output page *)
+        let output =
+          Printf.sprintf
+            "<form method=\"post\" action=\"\"><fieldset><legend>OAuth1 \
+             token:</legend>oa1_token: <input type=\"text\" name=\"oa1_token\" \
+             value=\"%s\" size=\"50\" /><br />oa1_secret: <input type=\"text\" \
+             name=\"oa1_secret\" value=\"%s\" size=\"50\" /><br /><input \
+             type=\"submit\" name=\"save\" value=\"Save\" /></fieldset></form>"
+            access_token access_token_secret
+        in
+        Common.output_page "OAuth1 Flow" "Success" output cgi
+      with Failure error ->
+        (* Generate the HTML error page *)
+        Common.output_error_page "OAuth1 Flow" error cgi)
 
 let save (cgi : Netcgi.cgi_activation) =
   (* Read the values from the request *)
@@ -62,13 +53,13 @@ let save (cgi : Netcgi.cgi_activation) =
 
   (* Save the new values to a temporary configuration file *)
   let filename = "/tmp/auth.config" in
-    Config.set test_config "oa1_token" oa1_token;
-    Config.set test_config "oa1_secret" oa1_secret;
-    Config.save ~filename test_config;
-    (* Acknowledge the user *)
-    Common.output_page "OAuth1 Flow" "Success"
-      ("<p>OAuth1 token saved to " ^ filename ^ "</p>")
-      cgi
+  Config.set test_config "oa1_token" oa1_token;
+  Config.set test_config "oa1_secret" oa1_secret;
+  Config.save ~filename test_config;
+  (* Acknowledge the user *)
+  Common.output_page "OAuth1 Flow" "Success"
+    ("<p>OAuth1 token saved to " ^ filename ^ "</p>")
+    cgi
 
 (* Nethttpd handler *)
 let oauth1_callback oauth_secret (cgi : Netcgi.cgi_activation) =
@@ -80,39 +71,32 @@ let oauth1_callback oauth_secret (cgi : Netcgi.cgi_activation) =
      * obtained values from the query string and requesting the access token *)
     let oauth_token = cgi#argument_value "oauth_token" in
     let oauth_verifier = cgi#argument_value "oauth_verifier" in
-      get_access_token oauth_token oauth_secret oauth_verifier cgi
+    get_access_token oauth_token oauth_secret oauth_verifier cgi
 
 (* Ask Google OAuth1 endpoint for the request token *)
 let get_request_token () =
   (* Start a new session *)
-  Common.do_request
-    (fun session ->
+  Common.do_request (fun session ->
+      (* Request the unauthorized token *)
+      let response, _ =
+        GapiOAuth1.get_request_token ~xoauth_displayname ~consumer_secret
+          ~oauth_consumer_key ~scope:"http://www.google.com/calendar/feeds"
+          ~oauth_callback session
+      in
 
-       (* Request the unauthorized token *)
-       let (response, _) =
-         GapiOAuth1.get_request_token
-           ~xoauth_displayname
-           ~consumer_secret
-           ~oauth_consumer_key
-           ~scope:"http://www.google.com/calendar/feeds"
-           ~oauth_callback
-           session in
+      (* Read the response *)
+      let { GapiAuthResponse.OAuth1.request_token; request_token_secret } =
+        response |. GapiAuthResponse.oauth1_request_token |. GapiLens.option_get
+      in
 
-       (* Read the response *)
-       let { GapiAuthResponse.OAuth1.request_token;
-             request_token_secret } = response
-         |. GapiAuthResponse.oauth1_request_token
-         |. GapiLens.option_get in
+      (* Generate and print out the URL used to authorize the token *)
+      let url =
+        GapiOAuth1.authorize_token_url ~hd:"default" ~hl:"en" request_token
+      in
+      print_endline ("Open this URL in a web browser:\n" ^ url);
 
-       (* Generate and print out the URL used to authorize the token *)
-       let url = GapiOAuth1.authorize_token_url
-                   ~hd:"default"
-                   ~hl:"en"
-                   request_token in
-         print_endline ("Open this URL in a web browser:\n" ^ url);
-
-         (* Start the web server and wait for the Google callback *)
-         Common.start_netplex (oauth1_callback request_token_secret))
+      (* Start the web server and wait for the Google callback *)
+      Common.start_netplex (oauth1_callback request_token_secret))
 
 let _ =
   (* Ignore SIGPIPE (required by nethttpd) *)
@@ -120,4 +104,3 @@ let _ =
 
   (* Start the OAuth1 flow *)
   get_request_token ()
-

@@ -1,32 +1,25 @@
 val build_client_login_auth :
-  Config.t ->
-  GapiConfig.auth_config * GapiConversation.Session.auth_context
+  Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context
 
 val build_oauth1_auth :
-  Config.t ->
-  GapiConfig.auth_config * GapiConversation.Session.auth_context
+  Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context
 
 val build_oauth2_auth :
-  Config.t ->
-  GapiConfig.auth_config * GapiConversation.Session.auth_context
+  Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context
 
 val build_oauth2_service_account_auth :
-  Config.t ->
-  GapiConfig.auth_config * GapiConversation.Session.auth_context
+  Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context
 
 val build_oauth2_devices_auth :
-  Config.t ->
-  GapiConfig.auth_config * GapiConversation.Session.auth_context
+  Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context
 
 val build_no_auth :
-  Config.t ->
-  GapiConfig.auth_config * GapiConversation.Session.auth_context
+  Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context
 
 val test_request :
   ?configfile:string ->
   ?handle_exception:(exn -> unit) ->
-  (Config.t ->
-     GapiConfig.auth_config * GapiConversation.Session.auth_context) ->
+  (Config.t -> GapiConfig.auth_config * GapiConversation.Session.auth_context) ->
   (GapiConversation.Session.t -> unit) ->
   unit
 
@@ -38,9 +31,7 @@ val test_request_noauth :
 
 val print_exception : exn -> unit
 
-val string_of_json_data_model :
-  GapiJson.json_data_model ->
-  string
+val string_of_json_data_model : GapiJson.json_data_model -> string
 
 val delay : ?seconds:int -> unit -> unit
 
@@ -57,4 +48,3 @@ val assert_not_exists : string -> ('a -> bool) -> 'a list -> unit
 val id : 'a -> 'a
 
 val string_to_hex : string -> string
-

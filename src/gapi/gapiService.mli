@@ -1,7 +1,7 @@
 (** Common operations for services. *)
 
-(** Wraps a server error *)
 exception ServiceError of GapiConversation.Session.t * GapiError.RequestError.t
+(** Wraps a server error *)
 
 val service_request :
   ?post_data:GapiCore.PostData.t ->
@@ -40,28 +40,24 @@ val download_resource :
   unit * GapiConversation.Session.t
 
 val build_param :
-  'a -> 'a -> ('a -> 'b) -> ('b -> string) -> string ->
-  (string * string) list
+  'a -> 'a -> ('a -> 'b) -> ('b -> string) -> string -> (string * string) list
 
 val build_params :
-  'a -> ('a -> 'b list) -> ('b -> string) -> string ->
-  (string * string) list
+  'a -> ('a -> 'b list) -> ('b -> string) -> string -> (string * string) list
 
-module StandardParameters :
-sig
+module StandardParameters : sig
   type t = {
-    alt : string;
-    (** Data format for the response. *)
+    alt : string;  (** Data format for the response. *)
     fields : string;
-    (** Selector specifying which fields to include in a partial response. *)
+        (** Selector specifying which fields to include in a partial response. *)
     prettyPrint : bool;
-    (** Returns response with indentations and line breaks. *)
+        (** Returns response with indentations and line breaks. *)
     quotaUser : string;
-    (** Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided. *)
+        (** Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided. *)
     userIp : string;
-    (** IP address of the site where the request originates. Use this if you want to enforce per-user limits. *)
+        (** IP address of the site where the request originates. Use this if you want to enforce per-user limits. *)
     key : string;
-    (** API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token. *)
+        (** API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token. *)
   }
 
   val default : t
@@ -69,7 +65,6 @@ sig
   val to_key_value_list : t -> (string * string) list
 
   val merge_parameters : ?standard_parameters:t -> unit -> t option
-
 end
 
 val head :
@@ -153,4 +148,3 @@ val delete :
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GapiConversation.Session.t ->
   'a * GapiConversation.Session.t
-
