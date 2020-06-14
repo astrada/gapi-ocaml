@@ -1,7 +1,8 @@
 (executables
  (names oauth2Flow oauth1Flow clientLoginFlow)
- (flags (:standard -w -9))
- (libraries threads gapi-ocaml.gdata nethttpd))
+ (flags
+  (:standard -w -9))
+ (libraries threads gapi-ocaml nethttpd))
 
 (alias
  (name examples)

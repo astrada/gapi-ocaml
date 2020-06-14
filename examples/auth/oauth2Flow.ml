@@ -94,7 +94,6 @@ let main () =
           GapiAdsenseV1_1Service.Scope.adsense;
           GapiBigqueryV2Service.Scope.bigquery;
           GapiDriveV2Service.Scope.drive;
-          GdataDocumentsV3Service.all_scopes;
         ]
       ~response_type:"code" client_id
   in
