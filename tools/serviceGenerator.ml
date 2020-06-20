@@ -1318,16 +1318,24 @@ let rec generate_service_module_signature omit_declaration file_lens
     State.find_inner_schema_module response_ref >>= fun response_module ->
     lift_io
       ( (* Documentation *)
+        Format.fprintf formatter "@[<hov 2>(** %s@\n@\n"
+          (clean_doc methd.Method.description);
+        if methd.Method.supports_media_download then
+          Format.fprintf formatter
+            "If [std_params] includes setting [alt=\"media\"], the file \
+             content is@\n\
+             downloaded as per [media_download].@\n\
+             @\n";
         Format.fprintf formatter
-          "@[<hov 2>(** %s@\n\
-           @\n\
-           @@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n"
-          (clean_doc methd.Method.description)
+          "@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n"
           base_url;
         if methd.Method.original_name = "get" then
           Format.fprintf formatter "@@param etag Optional ETag.@\n";
         Format.fprintf formatter
           "@@param std_params Optional standard parameters.@\n";
+        if methd.Method.supports_media_download then
+          Format.fprintf formatter
+            "@@param media_download Location where the content will be saved.@\n";
         List.iter
           (fun id ->
             let { Field.ocaml_name; field_type; _ } =
