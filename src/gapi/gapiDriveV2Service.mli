@@ -483,7 +483,7 @@ sig
   
   (** Exports a Google Doc as the requested MIME type to the location specified by [media_download]. Please note that the exported content is limited to 10MB.
 
-    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v2/"]).
     @param std_params Optional standard parameters.
     @param media_download Location where the exported file will be saved.
     @param fileId The ID of the file.
