@@ -471,10 +471,11 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
-  (** Exports a Google Doc to the requested MIME type and returns the exported content. Please note that the exported content is limited to 10MB.
-    
+  (** Exports a Google Doc as the requested MIME type to the location specified by [media_download]. Please note that the exported content is limited to 10MB.
+
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param media_download Location where the exported file will be saved.
     @param fileId The ID of the file.
     @param mimeType The MIME type of the format requested for this export.
     *)
@@ -503,10 +504,14 @@ sig
     GapiDriveV3Model.GeneratedIds.t * GapiConversation.Session.t
   
   (** Gets a file's metadata or content by ID.
+
+    If [std_params] includes setting [alt = "media"], the file content is
+    downloaded as per [media_download].
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
+    @param media_download Location where downloaded data will be saved.
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
     @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
@@ -596,6 +601,7 @@ sig
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
+    @param media_download Location where downloaded data will be saved.
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
     @param supportsAllDrives Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
@@ -867,6 +873,7 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param etag Optional ETag.
     @param std_params Optional standard parameters.
+    @param media_download Location where the downloaded data will be saved.
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
     @param fileId The ID of the file.
     @param revisionId The ID of the revision.
