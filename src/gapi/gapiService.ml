@@ -19,8 +19,8 @@ let parse_error pipe response_code session =
          response_code)
 
 let service_request ?post_data ?version ?etag ?query_parameters ?media_source
-    ?media_download ?(request_type = GapiRequest.Query) url parse_response
-    session =
+    ?media_download ?(request_type = GapiRequest.Query) ?custom_headers url
+    parse_response session =
   let query_url =
     GapiUtils.option_map_default
       (fun params -> GapiUtils.merge_query_string params url)
@@ -28,7 +28,8 @@ let service_request ?post_data ?version ?etag ?query_parameters ?media_source
   in
   try
     GapiRequest.gapi_request ?post_data ?version ?etag ?media_source
-      ?media_download ~parse_error request_type query_url parse_response session
+      ?media_download ?custom_headers ~parse_error request_type query_url
+      parse_response session
   with
   | GapiRequest.BadRequest (session, response_code, pipe)
   | GapiRequest.Unauthorized (session, response_code, pipe)
@@ -40,16 +41,16 @@ let service_request ?post_data ?version ?etag ?query_parameters ?media_source
     parse_error pipe response_code session
 
 let service_request_with_data request_type data_to_post ?version ?etag
-    ?query_parameters ?media_source ?media_download data url parse_response
-    session =
+    ?query_parameters ?media_source ?media_download ?custom_headers data url
+    parse_response session =
   let post_data = data_to_post data in
   try
     service_request ~post_data ?version ?etag ?query_parameters ?media_source
       ?media_download ~request_type url parse_response session
   with GapiRequest.NotModified new_session -> (data, new_session)
 
-let download_resource ?version ?query_parameters ?ranges url media_destination
-    session =
+let download_resource ?version ?query_parameters ?ranges ?custom_headers url
+    media_destination session =
   let range_spec =
     GapiUtils.option_map_default GapiMediaResource.generate_range_spec "" ranges
   in
@@ -57,7 +58,7 @@ let download_resource ?version ?query_parameters ?ranges url media_destination
     { GapiMediaResource.destination = media_destination; range_spec }
   in
   service_request ?query_parameters ~media_download ?version
-    ~request_type:GapiRequest.Query url
+    ~request_type:GapiRequest.Query ?custom_headers url
     (fun pipe _ -> GapiRequest.parse_empty_response pipe)
     session
 
@@ -106,58 +107,61 @@ module StandardParameters = struct
   let merge_parameters ?standard_parameters () = standard_parameters
 end
 
-let head ?etag ?query_parameters ?media_download url parse_headers session =
-  service_request ?etag ?query_parameters ?media_download
+let head ?etag ?query_parameters ?media_download ?custom_headers url
+    parse_headers session =
+  service_request ?etag ?query_parameters ?media_download ?custom_headers
     ~request_type:GapiRequest.QueryMeta url
     (fun _ headers -> parse_headers headers)
     session
 
-let get ?etag ?query_parameters ?media_download url parse_response session =
-  service_request ?etag ?query_parameters ?media_download
+let get ?etag ?query_parameters ?media_download ?custom_headers url
+    parse_response session =
+  service_request ?etag ?query_parameters ?media_download ?custom_headers
     ~request_type:GapiRequest.Query url
     (fun pipe _ -> parse_response pipe)
     session
 
 let post ?etag ?query_parameters ?media_source ?media_download
-    ?(data_to_post = fun _ -> GapiCore.PostData.empty) ~data url parse_response
-    session =
+    ?(data_to_post = fun _ -> GapiCore.PostData.empty) ?custom_headers ~data url
+    parse_response session =
   let post_data = data_to_post data in
   service_request ~post_data ?etag ?query_parameters ?media_source
-    ?media_download ~request_type:GapiRequest.Create url
+    ?media_download ~request_type:GapiRequest.Create ?custom_headers url
     (fun pipe _ -> parse_response pipe)
     session
 
-let put ?etag ?query_parameters ?media_source ~data_to_post ~data url
-    parse_response session =
+let put ?etag ?query_parameters ?media_source ?custom_headers ~data_to_post
+    ~data url parse_response session =
   service_request_with_data GapiRequest.Update data_to_post ?etag
-    ?query_parameters ?media_source data url
+    ?query_parameters ?media_source ?custom_headers data url
     (fun pipe _ -> parse_response pipe)
     session
 
-let put' ?etag ?query_parameters ?media_source ~data_to_post ~data url
-    parse_response session =
+let put' ?etag ?query_parameters ?media_source ?custom_headers ~data_to_post
+    ~data url parse_response session =
   let post_data = data_to_post data in
   service_request ~post_data ?etag ?query_parameters ?media_source
-    ~request_type:GapiRequest.Update url
+    ~request_type:GapiRequest.Update ?custom_headers url
     (fun pipe _ -> parse_response pipe)
     session
 
-let patch ?etag ?query_parameters ?media_source ~data_to_post ~data url
-    parse_response session =
+let patch ?etag ?query_parameters ?media_source ?custom_headers ~data_to_post
+    ~data url parse_response session =
   service_request_with_data GapiRequest.Patch data_to_post ?etag
-    ?query_parameters ?media_source data url
+    ?query_parameters ?media_source ?custom_headers data url
     (fun pipe _ -> parse_response pipe)
     session
 
-let patch' ?etag ?query_parameters ?media_source ~data_to_post ~data url
-    parse_response session =
+let patch' ?etag ?query_parameters ?media_source ?custom_headers ~data_to_post
+    ~data url parse_response session =
   let post_data = data_to_post data in
   service_request ~post_data ?etag ?query_parameters ?media_source
-    ~request_type:GapiRequest.Patch url
+    ~request_type:GapiRequest.Patch ?custom_headers url
     (fun pipe _ -> parse_response pipe)
     session
 
-let delete ?etag ?query_parameters url parse_response session =
-  service_request ?etag ?query_parameters ~request_type:GapiRequest.Delete url
+let delete ?etag ?query_parameters ?custom_headers url parse_response session =
+  service_request ?etag ?query_parameters ~request_type:GapiRequest.Delete
+    ?custom_headers url
     (fun pipe _ -> parse_response pipe)
     session

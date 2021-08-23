@@ -47,6 +47,7 @@ val gapi_request :
   ?etag:string ->
   ?media_source:GapiMediaResource.t ->
   ?media_download:GapiMediaResource.download ->
+  ?custom_headers:GapiCore.Header.t list ->
   ?parse_error:
     (GapiPipe.OcamlnetPipe.t -> int -> GapiConversation.Session.t -> 'a) ->
   request_type ->

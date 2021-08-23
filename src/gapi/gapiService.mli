@@ -11,6 +11,7 @@ val service_request :
   ?media_source:GapiMediaResource.t ->
   ?media_download:GapiMediaResource.download ->
   ?request_type:GapiRequest.request_type ->
+  ?custom_headers:GapiCore.Header.t list ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->
   GapiConversation.Session.t ->
@@ -24,6 +25,7 @@ val service_request_with_data :
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
   ?media_download:GapiMediaResource.download ->
+  ?custom_headers:GapiCore.Header.t list ->
   'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> GapiCore.Header.t list -> 'a) ->
@@ -34,6 +36,7 @@ val download_resource :
   ?version:string ->
   ?query_parameters:(string * string) list ->
   ?ranges:(int64 option * int64 option) list ->
+  ?custom_headers:GapiCore.Header.t list ->
   string ->
   GapiMediaResource.destination ->
   GapiConversation.Session.t ->
@@ -71,6 +74,7 @@ val head :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_download:GapiMediaResource.download ->
+  ?custom_headers:GapiCore.Header.t list ->
   string ->
   (GapiCore.Header.t list -> 'a) ->
   GapiConversation.Session.t ->
@@ -80,6 +84,7 @@ val get :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_download:GapiMediaResource.download ->
+  ?custom_headers:GapiCore.Header.t list ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GapiConversation.Session.t ->
@@ -91,6 +96,7 @@ val post :
   ?media_source:GapiMediaResource.t ->
   ?media_download:GapiMediaResource.download ->
   ?data_to_post:('a -> GapiCore.PostData.t) ->
+  ?custom_headers:GapiCore.Header.t list ->
   data:'a ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'b) ->
@@ -101,6 +107,7 @@ val put :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?custom_headers:GapiCore.Header.t list ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -112,6 +119,7 @@ val put' :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?custom_headers:GapiCore.Header.t list ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -123,6 +131,7 @@ val patch :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?custom_headers:GapiCore.Header.t list ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -134,6 +143,7 @@ val patch' :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
   ?media_source:GapiMediaResource.t ->
+  ?custom_headers:GapiCore.Header.t list ->
   data_to_post:('a -> GapiCore.PostData.t) ->
   data:'a ->
   string ->
@@ -144,6 +154,7 @@ val patch' :
 val delete :
   ?etag:string ->
   ?query_parameters:(string * string) list ->
+  ?custom_headers:GapiCore.Header.t list ->
   string ->
   (GapiPipe.OcamlnetPipe.t -> 'a) ->
   GapiConversation.Session.t ->

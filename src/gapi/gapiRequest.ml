@@ -84,8 +84,10 @@ let parse_response parse_output parse_error pipe response_code headers session =
       else raise (StartUpload (location, session))
   | 201 (* Created *) | 204 (* No Content *) | 206 (* Partial Content *) ->
       parse_output pipe headers
-  | 301 (* Moved Permanently *) | 302 (* Found *) | 303 (* See Other *) | 307
-  (* Temporary Redirect *) ->
+  | 301 (* Moved Permanently *)
+  | 302 (* Found *)
+  | 303 (* See Other *)
+  | 307 (* Temporary Redirect *) ->
       let url = get_location () in
       raise (Redirect (url, session))
   | 304 (* Not Modified *) -> raise (NotModified session)
@@ -109,7 +111,7 @@ let parse_response parse_output parse_error pipe response_code headers session =
            * phrase, when a document cannot be accessed by the current
            * user. *)
           raise (PermissionDenied session)
-      | _ -> raise (Unauthorized (session, response_code, pipe)) )
+      | _ -> raise (Unauthorized (session, response_code, pipe)))
   | 403 (* Forbidden *) -> raise (Forbidden (session, response_code, pipe))
   | 404 (* Not Found *) -> raise (NotFound (session, response_code, pipe))
   | 408 (* Request Timeout *) -> raise (RequestTimeout session)
@@ -185,14 +187,14 @@ let build_auth_data session =
         }
 
 let single_request ?post_data ?version ?etag ?upload_state ?media_download
-    request_type url parse_output parse_error session =
+    ?(custom_headers = []) request_type url parse_output parse_error session =
   let auth_data = build_auth_data session in
   let http_method =
     match request_type with
     | Query -> (
         match post_data with
         | None -> GapiCore.HttpMethod.GET
-        | Some _ -> GapiCore.HttpMethod.POST )
+        | Some _ -> GapiCore.HttpMethod.POST)
     | Create -> GapiCore.HttpMethod.POST
     | Update -> GapiCore.HttpMethod.PUT
     | Patch -> GapiCore.HttpMethod.PATCH
@@ -245,7 +247,9 @@ let single_request ?post_data ?version ?etag ?upload_state ?media_download
     GapiUtils.option_map_default GapiMediaResource.generate_download_headers []
       media_download
   in
-  let header_list = headers @ upload_headers @ download_headers in
+  let header_list =
+    headers @ upload_headers @ download_headers @ custom_headers
+  in
   GapiConversation.request ~header_list ?post_data ?media_download http_method
     session url
     (parse_response parse_output parse_error)
@@ -275,7 +279,7 @@ let refresh_oauth2_token session =
             match response with
             | GapiAuthResponse.OAuth2AccessToken token ->
                 (token.GapiAuthResponse.OAuth2.access_token, new_session)
-            | _ -> failwith "Not supported OAuth2 response" )
+            | _ -> failwith "Not supported OAuth2 response")
         | Some refresh ->
             let access_token = refresh () in
             (access_token, session)
@@ -307,8 +311,7 @@ let refresh_oauth2_token session =
             | GapiAuthResponse.OAuth2AccessToken token ->
                 (token.GapiAuthResponse.OAuth2.access_token, new_session)
             | _ ->
-                failwith "Not supported OAuth2 (for service accounts) response"
-            )
+                failwith "Not supported OAuth2 (for service accounts) response")
         | Some refresh ->
             let access_token = refresh () in
             (access_token, session)
@@ -320,8 +323,8 @@ let refresh_oauth2_token session =
   | _ -> failwith "Bug: refresh_oauth2_token"
 
 let gapi_request ?post_data ?version ?etag ?media_source ?media_download
-    ?(parse_error = GapiConversation.parse_error) request_type url parse_output
-    session =
+    ?custom_headers ?(parse_error = GapiConversation.parse_error) request_type
+    url parse_output session =
   let rec request_loop ?post_data ?current_upload_state request_type
       request_number url session =
     let retry_on_error max_request_number exponential_backoff current_exception
@@ -343,7 +346,7 @@ let gapi_request ?post_data ?version ?etag ?media_source ?media_download
           | Some u -> (
               match u.GapiMediaResource.state with
               | GapiMediaResource.Error -> None
-              | _ -> post_data )
+              | _ -> post_data)
           | _ -> post_data
         in
         if exponential_backoff then
@@ -362,8 +365,8 @@ let gapi_request ?post_data ?version ?etag ?media_source ?media_download
         | _ -> session
       in
       single_request ?post_data ?version ?etag
-        ?upload_state:current_upload_state ?media_download request_type url
-        parse_output parse_error verified_session
+        ?upload_state:current_upload_state ?media_download ?custom_headers
+        request_type url parse_output parse_error verified_session
     with
     | Redirect (target, new_session) ->
         if url <> target then
