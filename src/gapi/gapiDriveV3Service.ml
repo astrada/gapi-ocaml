@@ -31,13 +31,14 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?custom_headers
         session =
     let full_url = GapiUtils.add_path_to_url ["about"] base_url in
     let params = GapiService.StandardParameters.merge_parameters
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?custom_headers full_url
       (GapiJson.parse_json_response About.of_data_model) session 
     
   
@@ -59,6 +60,7 @@ struct
       driveId : string;
       includeCorpusRemovals : bool;
       includeItemsFromAllDrives : bool;
+      includePermissionsForView : string;
       includeRemoved : bool;
       includeTeamDriveItems : bool;
       pageSize : int;
@@ -81,6 +83,7 @@ struct
       driveId = "";
       includeCorpusRemovals = false;
       includeItemsFromAllDrives = false;
+      includePermissionsForView = "";
       includeRemoved = true;
       includeTeamDriveItems = false;
       pageSize = 100;
@@ -105,6 +108,7 @@ struct
       param (fun p -> p.driveId) (fun x -> x) "driveId";
       param (fun p -> p.includeCorpusRemovals) string_of_bool "includeCorpusRemovals";
       param (fun p -> p.includeItemsFromAllDrives) string_of_bool "includeItemsFromAllDrives";
+      param (fun p -> p.includePermissionsForView) (fun x -> x) "includePermissionsForView";
       param (fun p -> p.includeRemoved) string_of_bool "includeRemoved";
       param (fun p -> p.includeTeamDriveItems) string_of_bool "includeTeamDriveItems";
       param (fun p -> p.pageSize) string_of_int "pageSize";
@@ -122,6 +126,7 @@ struct
         ?(driveId = default.driveId)
         ?(includeCorpusRemovals = default.includeCorpusRemovals)
         ?(includeItemsFromAllDrives = default.includeItemsFromAllDrives)
+        ?(includePermissionsForView = default.includePermissionsForView)
         ?(includeRemoved = default.includeRemoved)
         ?(includeTeamDriveItems = default.includeTeamDriveItems)
         ?(pageSize = default.pageSize)
@@ -142,6 +147,7 @@ struct
         driveId;
         includeCorpusRemovals;
         includeItemsFromAllDrives;
+        includePermissionsForView;
         includeRemoved;
         includeTeamDriveItems;
         pageSize;
@@ -160,6 +166,7 @@ struct
   let getStartPageToken
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?driveId
@@ -172,12 +179,13 @@ struct
       ~supportsTeamDrives ?teamDriveId () in
     let query_parameters = GapiOption.map ChangesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response StartPageToken.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(includeCorpusRemovals = false)
         ?(includeItemsFromAllDrives = false)
         ?(includeRemoved = true)
@@ -188,23 +196,25 @@ struct
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?driveId
+        ?includePermissionsForView
         ?teamDriveId
         ~pageToken
         session =
     let full_url = GapiUtils.add_path_to_url ["changes"] base_url in
     let params = ChangesParameters.merge_parameters
       ?standard_parameters:std_params ?driveId ~includeCorpusRemovals
-      ~includeItemsFromAllDrives ~includeRemoved ~includeTeamDriveItems
-      ~pageSize ~pageToken ~restrictToMyDrive ~spaces ~supportsAllDrives
-      ~supportsTeamDrives ?teamDriveId () in
+      ~includeItemsFromAllDrives ?includePermissionsForView ~includeRemoved
+      ~includeTeamDriveItems ~pageSize ~pageToken ~restrictToMyDrive ~spaces
+      ~supportsAllDrives ~supportsTeamDrives ?teamDriveId () in
     let query_parameters = GapiOption.map ChangesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response ChangeList.of_data_model) session 
     
   let watch
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(includeCorpusRemovals = false)
         ?(includeItemsFromAllDrives = false)
         ?(includeRemoved = true)
@@ -215,6 +225,7 @@ struct
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?driveId
+        ?includePermissionsForView
         ?teamDriveId
         ~pageToken
         channel
@@ -222,12 +233,12 @@ struct
     let full_url = GapiUtils.add_path_to_url ["changes"; "watch"] base_url in
     let params = ChangesParameters.merge_parameters
       ?standard_parameters:std_params ?driveId ~includeCorpusRemovals
-      ~includeItemsFromAllDrives ~includeRemoved ~includeTeamDriveItems
-      ~pageSize ~pageToken ~restrictToMyDrive ~spaces ~supportsAllDrives
-      ~supportsTeamDrives ?teamDriveId () in
+      ~includeItemsFromAllDrives ?includePermissionsForView ~includeRemoved
+      ~includeTeamDriveItems ~pageSize ~pageToken ~restrictToMyDrive ~spaces
+      ~supportsAllDrives ~supportsTeamDrives ?teamDriveId () in
     let query_parameters = GapiOption.map ChangesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
       ~data:channel full_url
       (GapiJson.parse_json_response Channel.of_data_model) session 
@@ -240,6 +251,7 @@ struct
   let stop
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         channel
         session =
     let full_url = GapiUtils.add_path_to_url ["channels"; "stop"] base_url in
@@ -247,7 +259,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       GapiService.StandardParameters.to_key_value_list params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
       ~data:channel full_url GapiRequest.parse_empty_response session 
     
@@ -331,6 +343,7 @@ struct
   let create
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         comment
         session =
@@ -340,7 +353,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       CommentsParameters.to_key_value_list params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Comment.to_data_model)
       ~data:comment full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
@@ -348,6 +361,7 @@ struct
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~commentId
         session =
@@ -357,13 +371,14 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       CommentsParameters.to_key_value_list params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?custom_headers
         ?(includeDeleted = false)
         ~fileId
         ~commentId
@@ -374,12 +389,13 @@ struct
       ?standard_parameters:std_params ~includeDeleted () in
     let query_parameters = GapiOption.map
       CommentsParameters.to_key_value_list params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?custom_headers full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(includeDeleted = false)
         ?(pageSize = 20)
         ?pageToken
@@ -393,12 +409,13 @@ struct
       ?startModifiedTime () in
     let query_parameters = GapiOption.map
       CommentsParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response CommentList.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~commentId
         comment
@@ -409,7 +426,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       CommentsParameters.to_key_value_list params in
-    GapiService.patch ?query_parameters
+    GapiService.patch ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Comment.to_data_model)
       ~data:comment full_url
       (GapiJson.parse_json_response Comment.of_data_model) session 
@@ -499,6 +516,7 @@ struct
   let create
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~requestId
         drive
         session =
@@ -507,13 +525,14 @@ struct
       ?standard_parameters:std_params ~requestId () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Drive.to_data_model) ~data:drive
       full_url (GapiJson.parse_json_response Drive.of_data_model) session 
     
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~driveId
         session =
     let full_url = GapiUtils.add_path_to_url ["drives";
@@ -522,13 +541,14 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?custom_headers
         ?(useDomainAdminAccess = false)
         ~driveId
         session =
@@ -538,12 +558,13 @@ struct
       ?standard_parameters:std_params ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?custom_headers full_url
       (GapiJson.parse_json_response Drive.of_data_model) session 
     
   let hide
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~driveId
         session =
     let full_url = GapiUtils.add_path_to_url ["drives";
@@ -552,12 +573,13 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters ~data:Drive.empty full_url
-      (GapiJson.parse_json_response Drive.of_data_model) session 
+    GapiService.post ?query_parameters ?custom_headers ~data:Drive.empty
+      full_url (GapiJson.parse_json_response Drive.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(pageSize = 10)
         ?(useDomainAdminAccess = false)
         ?pageToken
@@ -569,12 +591,13 @@ struct
       ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response DriveList.of_data_model) session 
     
   let unhide
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~driveId
         session =
     let full_url = GapiUtils.add_path_to_url ["drives";
@@ -583,12 +606,13 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters ~data:Drive.empty full_url
-      (GapiJson.parse_json_response Drive.of_data_model) session 
+    GapiService.post ?query_parameters ?custom_headers ~data:Drive.empty
+      full_url (GapiJson.parse_json_response Drive.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(useDomainAdminAccess = false)
         ~driveId
         drive
@@ -599,7 +623,7 @@ struct
       ?standard_parameters:std_params ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map DrivesParameters.to_key_value_list
       params in
-    GapiService.patch ?query_parameters
+    GapiService.patch ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Drive.to_data_model) ~data:drive
       full_url (GapiJson.parse_json_response Drive.of_data_model) session 
     
@@ -648,6 +672,7 @@ struct
       enforceSingleParent : bool;
       ignoreDefaultVisibility : bool;
       includeItemsFromAllDrives : bool;
+      includePermissionsForView : string;
       includeTeamDriveItems : bool;
       keepRevisionForever : bool;
       mimeType : string;
@@ -662,6 +687,7 @@ struct
       supportsAllDrives : bool;
       supportsTeamDrives : bool;
       teamDriveId : string;
+      _type : string;
       useContentAsIndexableText : bool;
       
     }
@@ -682,6 +708,7 @@ struct
       enforceSingleParent = false;
       ignoreDefaultVisibility = false;
       includeItemsFromAllDrives = false;
+      includePermissionsForView = "";
       includeTeamDriveItems = false;
       keepRevisionForever = false;
       mimeType = "";
@@ -696,6 +723,7 @@ struct
       supportsAllDrives = false;
       supportsTeamDrives = false;
       teamDriveId = "";
+      _type = "files";
       useContentAsIndexableText = false;
       
     }
@@ -718,6 +746,7 @@ struct
       param (fun p -> p.enforceSingleParent) string_of_bool "enforceSingleParent";
       param (fun p -> p.ignoreDefaultVisibility) string_of_bool "ignoreDefaultVisibility";
       param (fun p -> p.includeItemsFromAllDrives) string_of_bool "includeItemsFromAllDrives";
+      param (fun p -> p.includePermissionsForView) (fun x -> x) "includePermissionsForView";
       param (fun p -> p.includeTeamDriveItems) string_of_bool "includeTeamDriveItems";
       param (fun p -> p.keepRevisionForever) string_of_bool "keepRevisionForever";
       param (fun p -> p.mimeType) (fun x -> x) "mimeType";
@@ -732,6 +761,7 @@ struct
       param (fun p -> p.supportsAllDrives) string_of_bool "supportsAllDrives";
       param (fun p -> p.supportsTeamDrives) string_of_bool "supportsTeamDrives";
       param (fun p -> p.teamDriveId) (fun x -> x) "teamDriveId";
+      param (fun p -> p._type) (fun x -> x) "type";
       param (fun p -> p.useContentAsIndexableText) string_of_bool "useContentAsIndexableText";
       
     ] |> List.concat
@@ -747,6 +777,7 @@ struct
         ?(enforceSingleParent = default.enforceSingleParent)
         ?(ignoreDefaultVisibility = default.ignoreDefaultVisibility)
         ?(includeItemsFromAllDrives = default.includeItemsFromAllDrives)
+        ?(includePermissionsForView = default.includePermissionsForView)
         ?(includeTeamDriveItems = default.includeTeamDriveItems)
         ?(keepRevisionForever = default.keepRevisionForever)
         ?(mimeType = default.mimeType)
@@ -761,6 +792,7 @@ struct
         ?(supportsAllDrives = default.supportsAllDrives)
         ?(supportsTeamDrives = default.supportsTeamDrives)
         ?(teamDriveId = default.teamDriveId)
+        ?(_type = default._type)
         ?(useContentAsIndexableText = default.useContentAsIndexableText)
         () =
       let parameters = {
@@ -779,6 +811,7 @@ struct
         enforceSingleParent;
         ignoreDefaultVisibility;
         includeItemsFromAllDrives;
+        includePermissionsForView;
         includeTeamDriveItems;
         keepRevisionForever;
         mimeType;
@@ -793,6 +826,7 @@ struct
         supportsAllDrives;
         supportsTeamDrives;
         teamDriveId;
+        _type;
         useContentAsIndexableText;
         
       } in
@@ -803,11 +837,13 @@ struct
   let copy
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(enforceSingleParent = false)
         ?(ignoreDefaultVisibility = false)
         ?(keepRevisionForever = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
+        ?includePermissionsForView
         ?ocrLanguage
         ~fileId
         file
@@ -816,11 +852,12 @@ struct
       "copy"] base_url in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~enforceSingleParent
-      ~ignoreDefaultVisibility ~keepRevisionForever ?ocrLanguage
-      ~supportsAllDrives ~supportsTeamDrives () in
+      ~ignoreDefaultVisibility ?includePermissionsForView
+      ~keepRevisionForever ?ocrLanguage ~supportsAllDrives
+      ~supportsTeamDrives () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json File.to_data_model) ~data:file
       full_url (GapiJson.parse_json_response File.of_data_model) session 
     
@@ -828,12 +865,14 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
         ?media_source
+        ?custom_headers
         ?(enforceSingleParent = false)
         ?(ignoreDefaultVisibility = false)
         ?(keepRevisionForever = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?(useContentAsIndexableText = false)
+        ?includePermissionsForView
         ?ocrLanguage
         file
         session =
@@ -844,17 +883,20 @@ struct
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ~enforceSingleParent
-      ~ignoreDefaultVisibility ~keepRevisionForever ?ocrLanguage
-      ~supportsAllDrives ~supportsTeamDrives ~useContentAsIndexableText () in
+      ~ignoreDefaultVisibility ?includePermissionsForView
+      ~keepRevisionForever ?ocrLanguage ~supportsAllDrives
+      ~supportsTeamDrives ~useContentAsIndexableText () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters ?media_source
+    GapiService.post ?query_parameters ?media_source ?custom_headers
       ~data_to_post:(GapiJson.render_json File.to_data_model) ~data:file
       full_url (GapiJson.parse_json_response File.of_data_model) session 
     
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
+        ?(enforceSingleParent = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ~fileId
@@ -862,29 +904,32 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId)]
       base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~supportsAllDrives ~supportsTeamDrives
-      () in
+      ?standard_parameters:std_params ~enforceSingleParent ~supportsAllDrives
+      ~supportsTeamDrives () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let emptyTrash
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
+        ?(enforceSingleParent = false)
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; "trash"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params () in
+      ?standard_parameters:std_params ~enforceSingleParent () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let export
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
         ?media_download
+        ?custom_headers
         ~fileId
         ~mimeType
         session =
@@ -894,22 +939,24 @@ struct
       ?standard_parameters:std_params ~mimeType () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters ?media_download full_url
-      GapiRequest.parse_empty_response session 
+    GapiService.get ?query_parameters ?media_download ?custom_headers
+      full_url GapiRequest.parse_empty_response session 
     
   let generateIds
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(count = 10)
         ?(space = "drive")
+        ?(_type = "files")
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; "generateIds"]
       base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~count ~space () in
+      ?standard_parameters:std_params ~count ~space ~_type () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response GeneratedIds.of_data_model) session 
     
   let get
@@ -917,24 +964,27 @@ struct
         ?etag
         ?std_params
         ?media_download
+        ?custom_headers
         ?(acknowledgeAbuse = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
+        ?includePermissionsForView
         ~fileId
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId)]
       base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~acknowledgeAbuse ~supportsAllDrives
-      ~supportsTeamDrives () in
+      ?standard_parameters:std_params ~acknowledgeAbuse
+      ?includePermissionsForView ~supportsAllDrives ~supportsTeamDrives () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters ?etag ?media_download full_url
-      (GapiJson.parse_json_response File.of_data_model) session 
+    GapiService.get ?query_parameters ?etag ?media_download ?custom_headers
+      full_url (GapiJson.parse_json_response File.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(includeItemsFromAllDrives = false)
         ?(includeTeamDriveItems = false)
         ?(pageSize = 100)
@@ -944,6 +994,7 @@ struct
         ?corpora
         ?corpus
         ?driveId
+        ?includePermissionsForView
         ?orderBy
         ?pageToken
         ?q
@@ -952,24 +1003,26 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"] base_url in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ?corpora ?corpus ?driveId
-      ~includeItemsFromAllDrives ~includeTeamDriveItems ?orderBy ~pageSize
-      ?pageToken ?q ~spaces ~supportsAllDrives ~supportsTeamDrives
-      ?teamDriveId () in
+      ~includeItemsFromAllDrives ?includePermissionsForView
+      ~includeTeamDriveItems ?orderBy ~pageSize ?pageToken ?q ~spaces
+      ~supportsAllDrives ~supportsTeamDrives ?teamDriveId () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response FileList.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
         ?media_source
+        ?custom_headers
         ?(enforceSingleParent = false)
         ?(keepRevisionForever = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?(useContentAsIndexableText = false)
         ?addParents
+        ?includePermissionsForView
         ?ocrLanguage
         ?removeParents
         ~fileId
@@ -983,11 +1036,12 @@ struct
     let full_url = GapiUtils.add_path_to_url path_to_add base_url in
     let params = FilesParameters.merge_parameters
       ?standard_parameters:std_params ?addParents ~enforceSingleParent
-      ~keepRevisionForever ?ocrLanguage ?removeParents ~supportsAllDrives
-      ~supportsTeamDrives ~useContentAsIndexableText () in
+      ?includePermissionsForView ~keepRevisionForever ?ocrLanguage
+      ?removeParents ~supportsAllDrives ~supportsTeamDrives
+      ~useContentAsIndexableText () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.patch ?query_parameters ?media_source
+    GapiService.patch ?query_parameters ?media_source ?custom_headers
       ~data_to_post:(GapiJson.render_json File.to_data_model) ~data:file
       full_url (GapiJson.parse_json_response File.of_data_model) session 
     
@@ -995,20 +1049,22 @@ struct
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
         ?media_download
+        ?custom_headers
         ?(acknowledgeAbuse = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
+        ?includePermissionsForView
         ~fileId
         channel
         session =
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "watch"] base_url in
     let params = FilesParameters.merge_parameters
-      ?standard_parameters:std_params ~acknowledgeAbuse ~supportsAllDrives
-      ~supportsTeamDrives () in
+      ?standard_parameters:std_params ~acknowledgeAbuse
+      ?includePermissionsForView ~supportsAllDrives ~supportsTeamDrives () in
     let query_parameters = GapiOption.map FilesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters ?media_download
+    GapiService.post ?query_parameters ?media_download ?custom_headers
       ~data_to_post:(GapiJson.render_json Channel.to_data_model)
       ~data:channel full_url
       (GapiJson.parse_json_response Channel.of_data_model) session 
@@ -1031,6 +1087,7 @@ struct
       (* permissions-specific query parameters *)
       emailMessage : string;
       enforceSingleParent : bool;
+      includePermissionsForView : string;
       moveToNewOwnersRoot : bool;
       pageSize : int;
       pageToken : string;
@@ -1052,6 +1109,7 @@ struct
       key = "";
       emailMessage = "";
       enforceSingleParent = false;
+      includePermissionsForView = "";
       moveToNewOwnersRoot = false;
       pageSize = 0;
       pageToken = "";
@@ -1075,6 +1133,7 @@ struct
       param (fun p -> p.key) (fun x -> x) "key";
       param (fun p -> p.emailMessage) (fun x -> x) "emailMessage";
       param (fun p -> p.enforceSingleParent) string_of_bool "enforceSingleParent";
+      param (fun p -> p.includePermissionsForView) (fun x -> x) "includePermissionsForView";
       param (fun p -> p.moveToNewOwnersRoot) string_of_bool "moveToNewOwnersRoot";
       param (fun p -> p.pageSize) string_of_int "pageSize";
       param (fun p -> p.pageToken) (fun x -> x) "pageToken";
@@ -1091,6 +1150,7 @@ struct
         ?(standard_parameters = GapiService.StandardParameters.default)
         ?(emailMessage = default.emailMessage)
         ?(enforceSingleParent = default.enforceSingleParent)
+        ?(includePermissionsForView = default.includePermissionsForView)
         ?(moveToNewOwnersRoot = default.moveToNewOwnersRoot)
         ?(pageSize = default.pageSize)
         ?(pageToken = default.pageToken)
@@ -1110,6 +1170,7 @@ struct
         key = standard_parameters.GapiService.StandardParameters.key;
         emailMessage;
         enforceSingleParent;
+        includePermissionsForView;
         moveToNewOwnersRoot;
         pageSize;
         pageToken;
@@ -1128,6 +1189,7 @@ struct
   let create
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(enforceSingleParent = false)
         ?(moveToNewOwnersRoot = false)
         ?(supportsAllDrives = false)
@@ -1147,7 +1209,7 @@ struct
       ~supportsTeamDrives ~transferOwnership ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       PermissionsParameters.to_key_value_list params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Permission.to_data_model)
       ~data:permission full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
@@ -1155,6 +1217,7 @@ struct
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?(useDomainAdminAccess = false)
@@ -1168,13 +1231,14 @@ struct
       ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       PermissionsParameters.to_key_value_list params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?custom_headers
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?(useDomainAdminAccess = false)
@@ -1188,15 +1252,17 @@ struct
       ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       PermissionsParameters.to_key_value_list params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?custom_headers full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
         ?(useDomainAdminAccess = false)
+        ?includePermissionsForView
         ?pageSize
         ?pageToken
         ~fileId
@@ -1204,16 +1270,18 @@ struct
     let full_url = GapiUtils.add_path_to_url ["files"; ((fun x -> x) fileId);
       "permissions"] base_url in
     let params = PermissionsParameters.merge_parameters
-      ?standard_parameters:std_params ?pageSize ?pageToken ~supportsAllDrives
-      ~supportsTeamDrives ~useDomainAdminAccess () in
+      ?standard_parameters:std_params ?includePermissionsForView ?pageSize
+      ?pageToken ~supportsAllDrives ~supportsTeamDrives ~useDomainAdminAccess
+      () in
     let query_parameters = GapiOption.map
       PermissionsParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response PermissionList.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(removeExpiration = false)
         ?(supportsAllDrives = false)
         ?(supportsTeamDrives = false)
@@ -1230,7 +1298,7 @@ struct
       ~supportsTeamDrives ~transferOwnership ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       PermissionsParameters.to_key_value_list params in
-    GapiService.patch ?query_parameters
+    GapiService.patch ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Permission.to_data_model)
       ~data:permission full_url
       (GapiJson.parse_json_response Permission.of_data_model) session 
@@ -1310,6 +1378,7 @@ struct
   let create
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~commentId
         reply
@@ -1320,13 +1389,14 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map RepliesParameters.to_key_value_list
       params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Reply.to_data_model) ~data:reply
       full_url (GapiJson.parse_json_response Reply.of_data_model) session 
     
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~commentId
         ~replyId
@@ -1338,13 +1408,14 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map RepliesParameters.to_key_value_list
       params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?custom_headers
         ?(includeDeleted = false)
         ~fileId
         ~commentId
@@ -1357,12 +1428,13 @@ struct
       ?standard_parameters:std_params ~includeDeleted () in
     let query_parameters = GapiOption.map RepliesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?custom_headers full_url
       (GapiJson.parse_json_response Reply.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(includeDeleted = false)
         ?(pageSize = 20)
         ?pageToken
@@ -1376,12 +1448,13 @@ struct
       in
     let query_parameters = GapiOption.map RepliesParameters.to_key_value_list
       params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response ReplyList.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~commentId
         ~replyId
@@ -1394,7 +1467,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map RepliesParameters.to_key_value_list
       params in
-    GapiService.patch ?query_parameters
+    GapiService.patch ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Reply.to_data_model) ~data:reply
       full_url (GapiJson.parse_json_response Reply.of_data_model) session 
     
@@ -1473,6 +1546,7 @@ struct
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~revisionId
         session =
@@ -1482,7 +1556,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       RevisionsParameters.to_key_value_list params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let get
@@ -1490,6 +1564,7 @@ struct
         ?etag
         ?std_params
         ?media_download
+        ?custom_headers
         ?(acknowledgeAbuse = false)
         ~fileId
         ~revisionId
@@ -1500,12 +1575,13 @@ struct
       ?standard_parameters:std_params ~acknowledgeAbuse () in
     let query_parameters = GapiOption.map
       RevisionsParameters.to_key_value_list params in
-    GapiService.get ?query_parameters ?etag ?media_download full_url
-      (GapiJson.parse_json_response Revision.of_data_model) session 
+    GapiService.get ?query_parameters ?etag ?media_download ?custom_headers
+      full_url (GapiJson.parse_json_response Revision.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(pageSize = 200)
         ?pageToken
         ~fileId
@@ -1516,12 +1592,13 @@ struct
       ?standard_parameters:std_params ~pageSize ?pageToken () in
     let query_parameters = GapiOption.map
       RevisionsParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response RevisionList.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~fileId
         ~revisionId
         revision
@@ -1532,7 +1609,7 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       RevisionsParameters.to_key_value_list params in
-    GapiService.patch ?query_parameters
+    GapiService.patch ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json Revision.to_data_model)
       ~data:revision full_url
       (GapiJson.parse_json_response Revision.of_data_model) session 
@@ -1622,6 +1699,7 @@ struct
   let create
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~requestId
         teamDrive
         session =
@@ -1630,7 +1708,7 @@ struct
       ?standard_parameters:std_params ~requestId () in
     let query_parameters = GapiOption.map
       TeamdrivesParameters.to_key_value_list params in
-    GapiService.post ?query_parameters
+    GapiService.post ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json TeamDrive.to_data_model)
       ~data:teamDrive full_url
       (GapiJson.parse_json_response TeamDrive.of_data_model) session 
@@ -1638,6 +1716,7 @@ struct
   let delete
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ~teamDriveId
         session =
     let full_url = GapiUtils.add_path_to_url ["teamdrives";
@@ -1646,13 +1725,14 @@ struct
       ?standard_parameters:std_params () in
     let query_parameters = GapiOption.map
       TeamdrivesParameters.to_key_value_list params in
-    GapiService.delete ?query_parameters full_url
+    GapiService.delete ?query_parameters ?custom_headers full_url
       GapiRequest.parse_empty_response session 
     
   let get
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?etag
         ?std_params
+        ?custom_headers
         ?(useDomainAdminAccess = false)
         ~teamDriveId
         session =
@@ -1662,12 +1742,13 @@ struct
       ?standard_parameters:std_params ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       TeamdrivesParameters.to_key_value_list params in
-    GapiService.get ?query_parameters ?etag full_url
+    GapiService.get ?query_parameters ?etag ?custom_headers full_url
       (GapiJson.parse_json_response TeamDrive.of_data_model) session 
     
   let list
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(pageSize = 10)
         ?(useDomainAdminAccess = false)
         ?pageToken
@@ -1679,12 +1760,13 @@ struct
       ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       TeamdrivesParameters.to_key_value_list params in
-    GapiService.get ?query_parameters full_url
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response TeamDriveList.of_data_model) session 
     
   let update
         ?(base_url = "https://www.googleapis.com/drive/v3/")
         ?std_params
+        ?custom_headers
         ?(useDomainAdminAccess = false)
         ~teamDriveId
         teamDrive
@@ -1695,7 +1777,7 @@ struct
       ?standard_parameters:std_params ~useDomainAdminAccess () in
     let query_parameters = GapiOption.map
       TeamdrivesParameters.to_key_value_list params in
-    GapiService.patch ?query_parameters
+    GapiService.patch ?query_parameters ?custom_headers
       ~data_to_post:(GapiJson.render_json TeamDrive.to_data_model)
       ~data:teamDrive full_url
       (GapiJson.parse_json_response TeamDrive.of_data_model) session 

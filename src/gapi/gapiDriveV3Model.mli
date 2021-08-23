@@ -384,7 +384,7 @@ module Revision :
 sig
   type t = {
     exportLinks : (string * string) list;
-    (** Links for exporting Google Docs to specific formats. *)
+    (** Links for exporting Docs Editors files to specific formats. *)
     id : string;
     (** The ID of the revision. *)
     keepForever : bool;
@@ -403,11 +403,13 @@ This field is only applicable to files with binary content in Drive. *)
     originalFilename : string;
     (** The original filename used to create this revision. This is only applicable to files with binary content in Drive. *)
     publishAuto : bool;
-    (** Whether subsequent revisions will be automatically republished. This is only applicable to Google Docs. *)
+    (** Whether subsequent revisions will be automatically republished. This is only applicable to Docs Editors files. *)
     published : bool;
-    (** Whether this revision is published. This is only applicable to Google Docs. *)
+    (** Whether this revision is published. This is only applicable to Docs Editors files. *)
+    publishedLink : string;
+    (** A link to the published revision. This is only populated for Google Sites files. *)
     publishedOutsideDomain : bool;
-    (** Whether this revision is published outside the domain. This is only applicable to Google Docs. *)
+    (** Whether this revision is published outside the domain. This is only applicable to Docs Editors files. *)
     size : int64;
     (** The size of the revision's content in bytes. This is only applicable to files with binary content in Drive. *)
     
@@ -424,6 +426,7 @@ This field is only applicable to files with binary content in Drive. *)
   val originalFilename : (t, string) GapiLens.t
   val publishAuto : (t, bool) GapiLens.t
   val published : (t, bool) GapiLens.t
+  val publishedLink : (t, string) GapiLens.t
   val publishedOutsideDomain : (t, bool) GapiLens.t
   val size : (t, int64) GapiLens.t
   
@@ -512,7 +515,7 @@ sig
   
   type t = {
     anchor : string;
-    (** A region of the document represented as a JSON string. See anchor documentation for details on how to define and interpret anchor properties. *)
+    (** A region of the document represented as a JSON string. For details on defining anchor properties, refer to  Add comments and replies. *)
     author : User.t;
     (** The author of the comment. The author's email address and permission ID will not be populated. *)
     content : string;
@@ -606,6 +609,40 @@ sig
   val ids : (t, string list) GapiLens.t
   val kind : (t, string) GapiLens.t
   val space : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ContentRestriction :
+sig
+  type t = {
+    readOnly : bool;
+    (** Whether the content of the file is read-only. If a file is read-only, a new revision of the file may not be added, comments may not be added or modified, and the title of the file may not be modified. *)
+    reason : string;
+    (** Reason for why the content of the file is restricted. This is only mutable on requests that also set readOnly=true. *)
+    restrictingUser : User.t;
+    (** The user who set the content restriction. Only populated if readOnly is true. *)
+    restrictionTime : GapiDate.t;
+    (** The time at which the content restriction was set (formatted RFC 3339 timestamp). Only populated if readOnly is true. *)
+    _type : string;
+    (** The type of the content restriction. Currently the only possible value is globalContentRestriction. *)
+    
+  }
+  
+  val readOnly : (t, bool) GapiLens.t
+  val reason : (t, string) GapiLens.t
+  val restrictingUser : (t, User.t) GapiLens.t
+  val restrictionTime : (t, GapiDate.t) GapiLens.t
+  val _type : (t, string) GapiLens.t
   
   val empty : t
   
@@ -726,6 +763,8 @@ sig
 - group 
 - domain 
 - anyone  When creating a permission, if type is user or group, you must provide an emailAddress for the user or group. When type is domain, you must provide a domain. There isn't extra information required for a anyone type. *)
+    view : string;
+    (** Indicates the view for this permission. Only populated for permissions that belong to a view. published is the only supported value. *)
     
   }
   
@@ -742,6 +781,7 @@ sig
   val role : (t, string) GapiLens.t
   val teamDrivePermissionDetails : (t, TeamDrivePermissionDetails.t list) GapiLens.t
   val _type : (t, string) GapiLens.t
+  val view : (t, string) GapiLens.t
   
   val empty : t
   
@@ -788,11 +828,35 @@ sig
       (** The ID of the file that this shortcut points to. *)
       targetMimeType : string;
       (** The MIME type of the file that this shortcut points to. The value of this field is a snapshot of the target's MIME type, captured when the shortcut is created. *)
+      targetResourceKey : string;
+      (** The ResourceKey for the target file. *)
       
     }
     
     val targetId : (t, string) GapiLens.t
     val targetMimeType : (t, string) GapiLens.t
+    val targetResourceKey : (t, string) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module LinkShareMetadata :
+  sig
+    type t = {
+      securityUpdateEligible : bool;
+      (** Whether the file is eligible for security update. *)
+      securityUpdateEnabled : bool;
+      (** Whether the security update is enabled for this file. *)
+      
+    }
+    
+    val securityUpdateEligible : (t, bool) GapiLens.t
+    val securityUpdateEnabled : (t, bool) GapiLens.t
     
     val empty : t
     
@@ -860,7 +924,7 @@ sig
       meteringMode : string;
       (** The metering mode used to create the photo. *)
       rotation : int;
-      (** The rotation in clockwise degrees from the image's original orientation. *)
+      (** The number of clockwise 90 degree rotations applied from the image's original orientation. *)
       sensor : string;
       (** The type of sensor used to create the photo. *)
       subjectDistance : int;
@@ -951,10 +1015,14 @@ sig
     type t = {
       canAddChildren : bool;
       (** Whether the current user can add children to this folder. This is always false when the item is not a folder. *)
+      canAddFolderFromAnotherDrive : bool;
+      (** Whether the current user can add a folder from another drive (different shared drive or My Drive) to this folder. This is false when the item is not a folder. Only populated for items in shared drives. *)
       canAddMyDriveParent : bool;
       (** Whether the current user can add a parent for the item without removing an existing parent in the same request. Not populated for shared drive files. *)
       canChangeCopyRequiresWriterPermission : bool;
       (** Whether the current user can change the copyRequiresWriterPermission restriction of this file. *)
+      canChangeSecurityUpdateEnabled : bool;
+      (** Whether the current user can change the securityUpdateEnabled field on link share metadata. *)
       canChangeViewersCanCopyContent : bool;
       (** Deprecated *)
       canComment : bool;
@@ -973,12 +1041,14 @@ sig
       (** Whether the current user can list the children of this folder. This is always false when the item is not a folder. *)
       canModifyContent : bool;
       (** Whether the current user can modify the content of this file. *)
+      canModifyContentRestriction : bool;
+      (** Whether the current user can modify restrictions on content of this file. *)
       canMoveChildrenOutOfDrive : bool;
       (** Whether the current user can move children of this folder outside of the shared drive. This is false when the item is not a folder. Only populated for items in shared drives. *)
       canMoveChildrenOutOfTeamDrive : bool;
       (** Deprecated - use canMoveChildrenOutOfDrive instead. *)
       canMoveChildrenWithinDrive : bool;
-      (** Whether the current user can move children of this folder within the shared drive. This is false when the item is not a folder. Only populated for items in shared drives. *)
+      (** Whether the current user can move children of this folder within this drive. This is false when the item is not a folder. Note that a request to move the child may still fail depending on the current user's access to the child and to the destination folder. *)
       canMoveChildrenWithinTeamDrive : bool;
       (** Deprecated - use canMoveChildrenWithinDrive instead. *)
       canMoveItemIntoTeamDrive : bool;
@@ -988,7 +1058,7 @@ sig
       canMoveItemOutOfTeamDrive : bool;
       (** Deprecated - use canMoveItemOutOfDrive instead. *)
       canMoveItemWithinDrive : bool;
-      (** Whether the current user can move this item within this shared drive. Note that a request to change the parent of the item may still fail depending on the new parent that is being added. Only populated for items in shared drives. *)
+      (** Whether the current user can move this item within this drive. Note that a request to change the parent of the item may still fail depending on the new parent that is being added and the parent that is being removed. *)
       canMoveItemWithinTeamDrive : bool;
       (** Deprecated - use canMoveItemWithinDrive instead. *)
       canMoveTeamDriveItem : bool;
@@ -1017,8 +1087,10 @@ sig
     }
     
     val canAddChildren : (t, bool) GapiLens.t
+    val canAddFolderFromAnotherDrive : (t, bool) GapiLens.t
     val canAddMyDriveParent : (t, bool) GapiLens.t
     val canChangeCopyRequiresWriterPermission : (t, bool) GapiLens.t
+    val canChangeSecurityUpdateEnabled : (t, bool) GapiLens.t
     val canChangeViewersCanCopyContent : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
     val canCopy : (t, bool) GapiLens.t
@@ -1028,6 +1100,7 @@ sig
     val canEdit : (t, bool) GapiLens.t
     val canListChildren : (t, bool) GapiLens.t
     val canModifyContent : (t, bool) GapiLens.t
+    val canModifyContentRestriction : (t, bool) GapiLens.t
     val canMoveChildrenOutOfDrive : (t, bool) GapiLens.t
     val canMoveChildrenOutOfTeamDrive : (t, bool) GapiLens.t
     val canMoveChildrenWithinDrive : (t, bool) GapiLens.t
@@ -1060,11 +1133,13 @@ sig
   type t = {
     appProperties : (string * string) list;
     (** A collection of arbitrary key-value pairs which are private to the requesting app.
-Entries with null values are cleared in update and copy requests. *)
+Entries with null values are cleared in update and copy requests. These properties can only be retrieved using an authenticated request. An authenticated request uses an access token obtained with a OAuth 2 client ID. You cannot use an API key to retrieve private properties. *)
     capabilities : Capabilities.t;
     (** Capabilities the current user has on this file. Each capability corresponds to a fine-grained action that a user may take. *)
     contentHints : ContentHints.t;
     (** Additional information about the content of the file. These fields are never populated in responses. *)
+    contentRestrictions : ContentRestriction.t list;
+    (** Restrictions for accessing the content of the file. Only populated if such a restriction exists. *)
     copyRequiresWriterPermission : bool;
     (** Whether the options to copy, print, or download this file, should be disabled for readers and commenters. *)
     createdTime : GapiDate.t;
@@ -1076,11 +1151,11 @@ Entries with null values are cleared in update and copy requests. *)
     explicitlyTrashed : bool;
     (** Whether the file has been explicitly trashed, as opposed to recursively trashed from a parent folder. *)
     exportLinks : (string * string) list;
-    (** Links for exporting Google Docs to specific formats. *)
+    (** Links for exporting Docs Editors files to specific formats. *)
     fileExtension : string;
     (** The final component of fullFileExtension. This is only available for files with binary content in Google Drive. *)
     folderColorRgb : string;
-    (** The color for a folder as an RGB hex string. The supported colors are published in the folderColorPalette field of the About resource.
+    (** The color for a folder or shortcut to a folder as an RGB hex string. The supported colors are published in the folderColorPalette field of the About resource.
 If an unsupported color is specified, the closest color in the palette will be used instead. *)
     fullFileExtension : string;
     (** The full file extension extracted from the name field. May contain multiple concatenated extensions, such as "tar.gz". This is only available for files with binary content in Google Drive.
@@ -1103,6 +1178,8 @@ This is automatically updated when the name field changes, however it is not cle
     (** Identifies what kind of resource this is. Value: the fixed string "drive#file". *)
     lastModifyingUser : User.t;
     (** The last user to modify the file. *)
+    linkShareMetadata : LinkShareMetadata.t;
+    (** Contains details about the link URLs that clients are using to refer to this item. *)
     md5Checksum : string;
     (** The MD5 checksum for the content of the file. This is only applicable to files with binary content in Google Drive. *)
     mimeType : string;
@@ -1123,7 +1200,7 @@ Note that setting modifiedTime will also update modifiedByMeTime for the user. *
     ownedByMe : bool;
     (** Whether the user owns the file. Not populated for items in shared drives. *)
     owners : User.t list;
-    (** The owners of the file. Currently, only certain legacy files may have more than one owner. Not populated for items in shared drives. *)
+    (** The owner of this file. Only certain legacy files may have more than one owner. This field isn't populated for items in shared drives. *)
     parents : string list;
     (** The IDs of the parent folders which contain the file.
 If not specified as part of a create request, the file will be placed directly in the user's My Drive folder. If not specified as part of a copy request, the file will inherit any discoverable parents of the source file. Update requests must use the addParents and removeParents parameters to modify the parents list. *)
@@ -1136,6 +1213,8 @@ If not specified as part of a create request, the file will be placed directly i
 Entries with null values are cleared in update and copy requests. *)
     quotaBytesUsed : int64;
     (** The number of storage quota bytes used by the file. This includes the head revision as well as previous revisions with keepForever enabled. *)
+    resourceKey : string;
+    (** A key needed to access the item via a shared link. *)
     shared : bool;
     (** Whether the file has been shared. Not populated for items in shared drives. *)
     sharedWithMeTime : GapiDate.t;
@@ -1145,7 +1224,7 @@ Entries with null values are cleared in update and copy requests. *)
     shortcutDetails : ShortcutDetails.t;
     (** Shortcut file details. Only populated for shortcut files, which have the mimeType field set to application/vnd.google-apps.shortcut. *)
     size : int64;
-    (** The size of the file's content in bytes. This is only applicable to files with binary content in Google Drive. *)
+    (** The size of the file's content in bytes. This is applicable to binary files in Google Drive and Google Docs files. *)
     spaces : string list;
     (** The list of spaces which contain the file. The currently supported values are 'drive', 'appDataFolder' and 'photos'. *)
     starred : bool;
@@ -1153,11 +1232,11 @@ Entries with null values are cleared in update and copy requests. *)
     teamDriveId : string;
     (** Deprecated - use driveId instead. *)
     thumbnailLink : string;
-    (** A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content. *)
+    (** A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content. If the file isn't shared publicly, the URL returned in Files.thumbnailLink must be fetched using a credentialed request. *)
     thumbnailVersion : int64;
     (** The thumbnail version for use in thumbnail cache invalidation. *)
     trashed : bool;
-    (** Whether the file has been trashed, either explicitly or from a trashed parent folder. Only the owner may trash a file, and other users cannot see files in the owner's trash. *)
+    (** Whether the file has been trashed, either explicitly or from a trashed parent folder. Only the owner may trash a file. The trashed item is excluded from all files.list responses returned for any user who does not own the file. However, all users with access to the file can see the trashed item metadata in an API response. All users with access can copy, download, export, and share the file. *)
     trashedTime : GapiDate.t;
     (** The time that the item was trashed (RFC 3339 date-time). Only populated for items in shared drives. *)
     trashingUser : User.t;
@@ -1184,6 +1263,7 @@ Entries with null values are cleared in update and copy requests. *)
   val appProperties : (t, (string * string) list) GapiLens.t
   val capabilities : (t, Capabilities.t) GapiLens.t
   val contentHints : (t, ContentHints.t) GapiLens.t
+  val contentRestrictions : (t, ContentRestriction.t list) GapiLens.t
   val copyRequiresWriterPermission : (t, bool) GapiLens.t
   val createdTime : (t, GapiDate.t) GapiLens.t
   val description : (t, string) GapiLens.t
@@ -1202,6 +1282,7 @@ Entries with null values are cleared in update and copy requests. *)
   val isAppAuthorized : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
   val lastModifyingUser : (t, User.t) GapiLens.t
+  val linkShareMetadata : (t, LinkShareMetadata.t) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
   val mimeType : (t, string) GapiLens.t
   val modifiedByMe : (t, bool) GapiLens.t
@@ -1216,6 +1297,7 @@ Entries with null values are cleared in update and copy requests. *)
   val permissions : (t, Permission.t list) GapiLens.t
   val properties : (t, (string * string) list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
+  val resourceKey : (t, string) GapiLens.t
   val shared : (t, bool) GapiLens.t
   val sharedWithMeTime : (t, GapiDate.t) GapiLens.t
   val sharingUser : (t, User.t) GapiLens.t
@@ -1639,7 +1721,7 @@ sig
     token : string;
     (** An arbitrary string delivered to the target address with each notification delivered over this channel. Optional. *)
     _type : string;
-    (** The type of delivery mechanism used for this channel. *)
+    (** The type of delivery mechanism used for this channel. Valid values are "web_hook" (or "webhook"). Both values refer to a channel where Http requests are used to deliver messages. *)
     
   }
   
