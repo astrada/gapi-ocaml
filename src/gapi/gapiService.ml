@@ -46,7 +46,7 @@ let service_request_with_data request_type data_to_post ?version ?etag
   let post_data = data_to_post data in
   try
     service_request ~post_data ?version ?etag ?query_parameters ?media_source
-      ?media_download ~request_type url parse_response session
+      ?media_download ?custom_headers ~request_type url parse_response session
   with GapiRequest.NotModified new_session -> (data, new_session)
 
 let download_resource ?version ?query_parameters ?ranges ?custom_headers url
