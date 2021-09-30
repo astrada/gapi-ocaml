@@ -1,25 +1,24 @@
 {
-  "etag": "etag",
+  "kind": "calendar#acl",
   "items": [
     {
-      "id": "rule1Id",
       "kind": "calendar#aclRule",
+      "id": "rule1Id",
       "role": "owner",
       "scope": {
-        "type": "user",
-        "value": "userEmail"
+        "value": "userEmail",
+        "type": "user"
       }
     },
     {
-      "id": "rule2Id",
       "kind": "calendar#aclRule",
+      "id": "rule2Id",
       "role": "reader",
       "scope": {
-        "type": "domain",
-        "value": "domainName"
+        "value": "domainName",
+        "type": "domain"
       }
     }
   ],
-  "kind": "calendar#acl"
+  "etag": "etag"
 }
-

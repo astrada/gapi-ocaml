@@ -1,4 +1,5 @@
 {
+  "updated": "2011-09-21T00:00:00.000Z",
   "calendar": {
     "1": {
       "background": "#ac725e",
@@ -97,6 +98,7 @@
       "foreground": "#1d1d1d"
     }
   },
+  "kind": "calendar#colors",
   "event": {
     "1": {
       "background": "#a4bdfc",
@@ -130,8 +132,5 @@
       "background": "#e1e1e1",
       "foreground": "#1d1d1d"
     }
-  },
-  "kind": "calendar#colors",
-  "updated": "2011-09-21T00:00:00.000Z"
+  }
 }
-

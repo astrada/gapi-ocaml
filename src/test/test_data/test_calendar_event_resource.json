@@ -1,4 +1,20 @@
 {
+  "location": "Somewhere",
+  "reminders": {
+    "useDefault": true
+  },
+  "htmlLink": "https://www.google.com/calendar/event?eid=eventEid",
+  "updated": "2011-07-11T20:35:20.000Z",
+  "guestsCanInviteOthers": true,
+  "iCalUID": "eventUID",
+  "guestsCanSeeOtherGuests": true,
+  "status": "confirmed",
+  "organizer": {
+    "email": "organizerEmail",
+    "displayName": "organizerDisplayName"
+  },
+  "id": "hnsq57lde03gpv5a4kup057ja0",
+  "kind": "calendar#event",
   "attendees": [
     {
       "displayName": "attendeeDisplayName",
@@ -16,30 +32,13 @@
   "creator": {
     "email": "userEmail"
   },
-  "end": {
-    "dateTime": "2011-06-03T10:25:00.000-07:00",
-    "timeZone": "America/Los_Angeles"
-  },
-  "guestsCanInviteOthers": true,
-  "guestsCanSeeOtherGuests": true,
-  "htmlLink": "https://www.google.com/calendar/event?eid=eventEid",
-  "iCalUID": "eventUID",
-  "id": "hnsq57lde03gpv5a4kup057ja0",
-  "kind": "calendar#event",
-  "location": "Somewhere",
-  "organizer": {
-    "displayName": "organizerDisplayName",
-    "email": "organizerEmail"
-  },
-  "reminders": {
-    "useDefault": true
-  },
-  "start": {
-    "dateTime": "2011-06-03T10:00:00.000-07:00",
-    "timeZone": "America/Los_Angeles"
-  },
-  "status": "confirmed",
   "summary": "Appointment",
-  "updated": "2011-07-11T20:35:20.000Z"
+  "start": {
+    "timeZone": "America/Los_Angeles",
+    "dateTime": "2011-06-03T10:00:00.000-07:00"
+  },
+  "end": {
+    "timeZone": "America/Los_Angeles",
+    "dateTime": "2011-06-03T10:25:00.000-07:00"
+  }
 }
-

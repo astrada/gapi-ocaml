@@ -1,17 +1,18 @@
 {
-  "etag": "calendarListEtag",
   "items": [
     {
-      "accessRole": "reader",
-      "colorId": "1",
-      "description": "Week numbers displayed weekly",
-      "id": "e_2_en#weeknum@group.v.calendar.google.com",
       "kind": "calendar#calendarListEntry",
+      "accessRole": "reader",
+      "description": "Week numbers displayed weekly",
+      "timeZone": "America/Los_Angeles",
+      "colorId": "1",
       "summary": "Week Numbers",
-      "timeZone": "America/Los_Angeles"
+      "id": "e_2_en#weeknum@group.v.calendar.google.com"
     },
     {
+      "kind": "calendar#calendarListEntry",
       "accessRole": "owner",
+      "timeZone": "America/Los_Angeles",
       "colorId": "calendarListEntryColorId",
       "defaultReminders": [
         {
@@ -19,12 +20,11 @@
           "minutes": 10
         }
       ],
-      "id": "calendarListEntryId",
-      "kind": "calendar#calendarListEntry",
       "summary": "calendarListEntrySummary",
-      "timeZone": "America/Los_Angeles"
+      "id": "calendarListEntryId"
     }
   ],
+  "nextPageToken": "nextPageToken",
   "kind": "calendar#calendarList",
-  "nextPageToken": "nextPageToken"
+  "etag": "calendarListEtag"
 }
