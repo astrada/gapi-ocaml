@@ -1,4 +1,5 @@
-(* Warning! This file is generated. Modify at your own risk. *)
+(* Warning! This file is generated. Modify at your own risk.
+        *)
 
 open GapiUtils.Infix
 open GapiDiscoveryV1Model
@@ -67,9 +68,25 @@ struct
     
   end
   
+  let list
+        ?(base_url = "https://www.googleapis.com/discovery/v1/")
+        ?std_params
+        ?custom_headers
+        ?(preferred = false)
+        ?name
+        session =
+    let full_url = GapiUtils.add_path_to_url ["apis"] base_url in
+    let params = ApisParameters.merge_parameters
+      ?standard_parameters:std_params ~preferred ?name () in
+    let query_parameters = GapiOption.map ApisParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters ?custom_headers full_url
+      (GapiJson.parse_json_response DirectoryList.of_data_model) session 
+    
   let getRest
         ?(base_url = "https://www.googleapis.com/discovery/v1/")
         ?std_params
+        ?custom_headers
         ~api
         ~version
         session =
@@ -77,24 +94,10 @@ struct
       ((fun x -> x) version); "rest"] base_url in
     let params = ApisParameters.merge_parameters
       ?standard_parameters:std_params () in
-    let query_parameters = GapiOption.map ApisParameters.to_key_value_list params
-      in
-    GapiService.get ?query_parameters full_url
+    let query_parameters = GapiOption.map ApisParameters.to_key_value_list
+      params in
+    GapiService.get ?query_parameters ?custom_headers full_url
       (GapiJson.parse_json_response RestDescription.of_data_model) session 
-    
-  let list
-        ?(base_url = "https://www.googleapis.com/discovery/v1/")
-        ?std_params
-        ?(preferred = false)
-        ?name
-        session =
-    let full_url = GapiUtils.add_path_to_url ["apis"] base_url in
-    let params = ApisParameters.merge_parameters
-      ?standard_parameters:std_params ?name ~preferred () in
-    let query_parameters = GapiOption.map ApisParameters.to_key_value_list params
-      in
-    GapiService.get ?query_parameters full_url
-      (GapiJson.parse_json_response DirectoryList.of_data_model) session 
     
   
 end
