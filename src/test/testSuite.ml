@@ -76,11 +76,11 @@ let build_suite_from_list test_list =
 
 let _ =
   let test_list = ref (core_tests @ model_tests) in
-  let ounit_specs =
+  let ounit2_specs =
     [
-      ("-verbose", Arg.Unit (fun _ -> ()), "See oUnit doc");
-      ("-only-test", Arg.String (fun _ -> ()), "See oUnit doc");
-      ("-list-test", Arg.String (fun _ -> ()), "See oUnit doc");
+      ("-verbose", Arg.Unit (fun _ -> ()), "See ounit2 doc");
+      ("-only-test", Arg.String (fun _ -> ()), "See ounit2 doc");
+      ("-list-test", Arg.String (fun _ -> ()), "See ounit2 doc");
     ]
   in
   let arg_specs =
@@ -100,9 +100,9 @@ let _ =
       ]
   in
   let _ =
-    Arg.parse (arg_specs @ ounit_specs)
+    Arg.parse (arg_specs @ ounit2_specs)
       (fun _ -> ())
-      ("Usage: " ^ Sys.argv.(0) ^ " [-service svc] [-all] [oUnit arguments]")
+      ("Usage: " ^ Sys.argv.(0) ^ " [-service svc] [-all] [ounit2 arguments]")
   in
   let _ =
     (* Reset argument counter, to let OUnit reparse arguments *)

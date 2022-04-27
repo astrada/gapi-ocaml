@@ -1,7 +1,7 @@
 (executable
  (name testSuite)
  (flags (:standard -w -3-6-23-27-32-33-50))
- (libraries threads oUnit gapi-ocaml))
+ (libraries threads ounit2 gapi-ocaml))
 
 (alias
  (name runtest)
