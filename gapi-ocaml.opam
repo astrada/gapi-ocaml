@@ -16,7 +16,7 @@ depends: [
   "ocamlnet" {>= "4.1.4"}
   "ocurl"
   "ounit2" {with-test}
-  "yojson"
+  "yojson" {>= "1.6.0"}
 ]
 synopsis: "A simple OCaml client for Google Services"
 description: """

@@ -42,7 +42,7 @@ You will need the following libraries:
 * [Ocamlnet][] >= 4.1.4
 * [Ocurl][] >= 0.5.3
 * [Cryptokit][] >= 1.3.14
-* [Yojson][] >= 1.0.2
+* [Yojson][] >= 1.6.0
 * [Xmlm][] >= 1.0.2
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
@@ -53,7 +53,7 @@ This library was developed and tested on Ubuntu LTS (64-bit).
 [Ocamlnet]: http://projects.camlcity.org/projects/ocamlnet.html
 [Ocurl]: http://ygrek.org.ua/p/ocurl/
 [Cryptokit]: https://github.com/xavierleroy/cryptokit
-[Yojson]: http://mjambon.com/yojson.html
+[Yojson]: https://github.com/ocaml-community/yojson
 [Xmlm]: http://erratique.ch/software/xmlm
 [OUnit]: http://ounit.forge.ocamlcore.org/
 
