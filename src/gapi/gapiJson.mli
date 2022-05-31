@@ -10,12 +10,12 @@ type json_metadata = { name : string; data_type : json_data_type }
 val metadata_description : json_metadata -> string
 
 type json_data_model =
-  (json_metadata, Yojson.Safe.json) GapiCore.AnnotatedTree.t
+  (json_metadata, Yojson.Safe.t) GapiCore.AnnotatedTree.t
 
 val unexpected : string -> json_data_model -> 'a -> 'a
 
 val render_value :
-  string -> Yojson.Safe.json -> Yojson.Safe.json -> json_data_model list
+  string -> Yojson.Safe.t -> Yojson.Safe.t -> json_data_model list
 
 val render_string_value :
   ?default:string -> string -> string -> json_data_model list
@@ -78,9 +78,9 @@ val parse_string_element : string -> json_data_model -> string
 val parse_dictionary_entry :
   string * string -> json_data_model -> string * string
 
-val json_to_data_model : Yojson.Safe.json -> json_data_model
+val json_to_data_model : Yojson.Safe.t -> json_data_model
 
-val data_model_to_json : json_data_model -> Yojson.Safe.json
+val data_model_to_json : json_data_model -> Yojson.Safe.t
 
 val parse_json_response :
   (json_data_model -> 'a) -> GapiPipe.OcamlnetPipe.t -> 'a

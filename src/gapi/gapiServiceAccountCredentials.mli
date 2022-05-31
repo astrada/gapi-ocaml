@@ -33,7 +33,7 @@ val client_x509_cert_url : (t, string) GapiLens.t
 
 val to_data_model : t -> GapiJson.json_data_model
 
-val to_json : t -> Yojson.Safe.json
+val to_json : t -> Yojson.Safe.t
 
 val parse_json : string -> t
 

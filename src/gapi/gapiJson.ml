@@ -14,7 +14,7 @@ type json_metadata = { name : string; data_type : json_data_type }
 let metadata_description { name = n; data_type = dt } =
   Printf.sprintf "name=%s data_type=%s" n (json_data_type_to_string dt)
 
-type json_data_model = (json_metadata, Yojson.Safe.json) AnnotatedTree.t
+type json_data_model = (json_metadata, Yojson.Safe.t) AnnotatedTree.t
 
 let unexpected r e x =
   ( match e with
