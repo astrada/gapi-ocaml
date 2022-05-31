@@ -147,7 +147,7 @@ let get_resource_length = function
 
 let get_content_type filename =
   let extension =
-    try GapiUtils.string_after_char '.' filename |> String.lowercase
+    try GapiUtils.string_after_char '.' filename |> String.lowercase [@warning "-3"]
     with Not_found -> ""
   in
   match extension with
