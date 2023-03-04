@@ -7,7 +7,6 @@ open ServiceGeneratorState
 (* Configuration *)
 
 let output_path = ref "generated/"
-
 let no_overwrite = ref false
 
 (* END Configuration *)
@@ -15,7 +14,6 @@ let no_overwrite = ref false
 (* Docs *)
 
 let to_escape_regexp = Str.regexp "[][@{}]"
-
 let clean_doc s = Str.global_replace to_escape_regexp "\\\\\\0" s
 
 (* END Docs *)
@@ -39,7 +37,6 @@ open GeneratorM.Infix
 (* Monad helpers *)
 
 let ( $ ) f x = f x
-
 let lift_io () = return ()
 
 (* END Monad helpers *)
@@ -773,8 +770,8 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          let media_path =
            rest_method |. RestMethod.mediaUpload
            |. RestMethod.MediaUpload.protocols
-           |. RestMethod.MediaUpload.Protocols.resumable
-           |. RestMethod.MediaUpload.Protocols.Resumable.path
+           |. RestMethod.MediaUpload.Protocols.simple
+           |. RestMethod.MediaUpload.Protocols.Simple.path
          in
          let media_path_list = build_path_to_add media_path in
          Format.fprintf formatter
@@ -852,7 +849,12 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
     in
 
     lift_io
-      (Format.fprintf formatter "@[<hov 2>GapiService.%s%s@ ?query_parameters@ "
+      (if rest_method.RestMethod.supportsMediaUpload then
+         Format.fprintf formatter
+           "@[<hov 2>let query_parameters =@ GapiOption.map@ (fun xs ->@ if \
+            GapiOption.is_some media_source then@ (\"uploadType\",@ \
+            \"resumable\")@ :: xs@ else xs)@ query_parameters@ in@]@\n";
+       Format.fprintf formatter "@[<hov 2>GapiService.%s%s@ ?query_parameters@ "
          function_to_call apostrophe;
        if is_etag_present || id = "get" then Format.fprintf formatter "?etag@ ";
        if rest_method.RestMethod.supportsMediaUpload then
