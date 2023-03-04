@@ -7,6 +7,49 @@
   {{:https://developers.google.com/drive/}API Documentation}.
   *)
 
+module LabelFieldModification :
+sig
+  type t = {
+    fieldId : string;
+    (** The ID of the Field to be modified. *)
+    kind : string;
+    (** This is always drive#labelFieldModification. *)
+    setDateValues : GapiDate.t list;
+    (** Replaces a dateString field with these new values. The values must be strings in the RFC 3339 full-date format: YYYY-MM-DD. *)
+    setIntegerValues : int64 list;
+    (** Replaces an integer field with these new values. *)
+    setSelectionValues : string list;
+    (** Replaces a selection field with these new values. *)
+    setTextValues : string list;
+    (** Replaces a text field with these new values. *)
+    setUserValues : string list;
+    (** Replaces a user field with these new values. The values must be valid email addresses. *)
+    unsetValues : bool;
+    (** Unsets the values for this field. *)
+    
+  }
+  
+  val fieldId : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val setDateValues : (t, GapiDate.t list) GapiLens.t
+  val setIntegerValues : (t, int64 list) GapiLens.t
+  val setSelectionValues : (t, string list) GapiLens.t
+  val setTextValues : (t, string list) GapiLens.t
+  val setUserValues : (t, string list) GapiLens.t
+  val unsetValues : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module TeamDrive :
 sig
   module Restrictions :
@@ -18,6 +61,8 @@ sig
       (** Whether the options to copy, print, or download files inside this Team Drive, should be disabled for readers and commenters. When this restriction is set to true, it will override the similarly named field to true for any file inside this Team Drive. *)
       domainUsersOnly : bool;
       (** Whether access to this Team Drive and items inside this Team Drive is restricted to users of the domain to which this Team Drive belongs. This restriction may be overridden by other sharing policies controlled outside of this Team Drive. *)
+      sharingFoldersRequiresOrganizerPermission : bool;
+      (** If true, only users with the organizer role can share folders. If false, users with either the organizer role or the file organizer role can share folders. *)
       teamMembersOnly : bool;
       (** Whether access to items inside this Team Drive is restricted to members of this Team Drive. *)
       
@@ -26,6 +71,7 @@ sig
     val adminManagedRestrictions : (t, bool) GapiLens.t
     val copyRequiresWriterPermission : (t, bool) GapiLens.t
     val domainUsersOnly : (t, bool) GapiLens.t
+    val sharingFoldersRequiresOrganizerPermission : (t, bool) GapiLens.t
     val teamMembersOnly : (t, bool) GapiLens.t
     
     val empty : t
@@ -45,6 +91,8 @@ sig
       (** Whether the current user can change the copyRequiresWriterPermission restriction of this Team Drive. *)
       canChangeDomainUsersOnlyRestriction : bool;
       (** Whether the current user can change the domainUsersOnly restriction of this Team Drive. *)
+      canChangeSharingFoldersRequiresOrganizerPermissionRestriction : bool;
+      (** Whether the current user can change the sharingFoldersRequiresOrganizerPermission restriction of this Team Drive. *)
       canChangeTeamDriveBackground : bool;
       (** Whether the current user can change the background of this Team Drive. *)
       canChangeTeamMembersOnlyRestriction : bool;
@@ -73,6 +121,8 @@ sig
       (** Whether the current user can rename files or folders in this Team Drive. *)
       canRenameTeamDrive : bool;
       (** Whether the current user can rename this Team Drive. *)
+      canResetTeamDriveRestrictions : bool;
+      (** Whether the current user can reset the Team Drive restrictions to defaults. *)
       canShare : bool;
       (** Whether the current user can share files or folders in this Team Drive. *)
       canTrashChildren : bool;
@@ -83,6 +133,7 @@ sig
     val canAddChildren : (t, bool) GapiLens.t
     val canChangeCopyRequiresWriterPermissionRestriction : (t, bool) GapiLens.t
     val canChangeDomainUsersOnlyRestriction : (t, bool) GapiLens.t
+    val canChangeSharingFoldersRequiresOrganizerPermissionRestriction : (t, bool) GapiLens.t
     val canChangeTeamDriveBackground : (t, bool) GapiLens.t
     val canChangeTeamMembersOnlyRestriction : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
@@ -97,6 +148,7 @@ sig
     val canRemoveChildren : (t, bool) GapiLens.t
     val canRename : (t, bool) GapiLens.t
     val canRenameTeamDrive : (t, bool) GapiLens.t
+    val canResetTeamDriveRestrictions : (t, bool) GapiLens.t
     val canShare : (t, bool) GapiLens.t
     val canTrashChildren : (t, bool) GapiLens.t
     
@@ -152,6 +204,8 @@ sig
     (** Identifies what kind of resource this is. Value: the fixed string "drive#teamDrive". *)
     name : string;
     (** The name of this Team Drive. *)
+    orgUnitId : string;
+    (** The organizational unit of this shared drive. This field is only populated on drives.list responses when the useDomainAdminAccess parameter is set to true. *)
     restrictions : Restrictions.t;
     (** A set of restrictions that apply to this Team Drive or items inside this Team Drive. *)
     themeId : string;
@@ -167,6 +221,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
+  val orgUnitId : (t, string) GapiLens.t
   val restrictions : (t, Restrictions.t) GapiLens.t
   val themeId : (t, string) GapiLens.t
   
@@ -367,6 +422,113 @@ sig
   val storageQuota : (t, StorageQuota.t) GapiLens.t
   val teamDriveThemes : (t, TeamDriveThemes.t list) GapiLens.t
   val user : (t, User.t) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module LabelField :
+sig
+  type t = {
+    dateString : GapiDate.t list;
+    (** Only present if valueType is dateString. RFC 3339 formatted date: YYYY-MM-DD. *)
+    id : string;
+    (** The identifier of this field. *)
+    integer : int64 list;
+    (** Only present if valueType is integer. *)
+    kind : string;
+    (** This is always drive#labelField. *)
+    selection : string list;
+    (** Only present if valueType is selection. *)
+    text : string list;
+    (** Only present if valueType is text. *)
+    user : User.t list;
+    (** Only present if valueType is user. *)
+    valueType : string;
+    (** The field type. While new values may be supported in the future, the following are currently allowed:  
+- dateString 
+- integer 
+- selection 
+- text 
+- user *)
+    
+  }
+  
+  val dateString : (t, GapiDate.t list) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val integer : (t, int64 list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val selection : (t, string list) GapiLens.t
+  val text : (t, string list) GapiLens.t
+  val user : (t, User.t list) GapiLens.t
+  val valueType : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module Label :
+sig
+  type t = {
+    fields : (string * LabelField.t) list;
+    (** A map of the label's fields keyed by the field ID. *)
+    id : string;
+    (** The ID of the label. *)
+    kind : string;
+    (** This is always drive#label *)
+    revisionId : string;
+    (** The revision ID of the label. *)
+    
+  }
+  
+  val fields : (t, (string * LabelField.t) list) GapiLens.t
+  val id : (t, string) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val revisionId : (t, string) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module LabelList :
+sig
+  type t = {
+    kind : string;
+    (** This is always drive#labelList *)
+    labels : Label.t list;
+    (** The list of labels. *)
+    nextPageToken : string;
+    (** The page token for the next page of labels. This field will be absent if the end of the list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results. *)
+    
+  }
+  
+  val kind : (t, string) GapiLens.t
+  val labels : (t, Label.t list) GapiLens.t
+  val nextPageToken : (t, string) GapiLens.t
   
   val empty : t
   
@@ -693,11 +855,11 @@ sig
       inheritedFrom : string;
       (** The ID of the item from which this permission is inherited. This is an output-only field. *)
       permissionType : string;
-      (** The permission type for this user. While new values may be added in future, the following are currently possible:  
+      (** The permission type for this user. While new values may be added in future, the following are currently allowed:  
 - file 
 - member *)
       role : string;
-      (** The primary role for this user. While new values may be added in the future, the following are currently possible:  
+      (** The primary role for this user. While new values may be added in the future, the following are currently allowed:  
 - organizer 
 - fileOrganizer 
 - writer 
@@ -726,25 +888,30 @@ sig
     (** Whether the account associated with this permission has been deleted. This field only pertains to user and group permissions. *)
     displayName : string;
     (** The "pretty" name of the value of the permission. The following is a list of examples for each type of permission:  
-- user - User's full name, as defined for their Google account, such as "Joe Smith." 
+- user - User's full name, as defined for their Google Account, such as "Joe Smith." 
 - group - Name of the Google Group, such as "The Company Administrators." 
-- domain - String domain name, such as "thecompany.com." 
+- domain - String domain name, such as "your-company.com." 
 - anyone - No displayName is present. *)
     domain : string;
-    (** The domain to which this permission refers. *)
+    (** The domain to which this permission refers. The following options are currently allowed:  
+- The entire domain, such as "your-company.com." 
+- A target audience, such as "ID.audience.googledomains.com." *)
     emailAddress : string;
     (** The email address of the user or group to which this permission refers. *)
     expirationTime : GapiDate.t;
     (** The time at which this permission will expire (RFC 3339 date-time). Expiration times have the following restrictions:  
-- They can only be set on user and group permissions 
-- The time must be in the future 
-- The time cannot be more than a year in the future *)
+- They cannot be set on shared drive items. 
+- They can only be set on user and group permissions. 
+- The time must be in the future. 
+- The time cannot be more than one year in the future. *)
     id : string;
     (** The ID of this permission. This is a unique identifier for the grantee, and is published in User resources as permissionId. IDs should be treated as opaque values. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#permission". *)
+    pendingOwner : bool;
+    (** Whether the account associated with this permission is a pending owner. Only populated for user type permissions for files that aren't in a shared drive. *)
     permissionDetails : PermissionDetails.t list;
-    (** Details of whether the permissions on this shared drive item are inherited or directly on this item. This is an output-only field which is present only for shared drive items. *)
+    (** Details of whether the permissions on this shared drive item are inherited or are directly on this item. This is an output-only field that's present only for shared drive items. *)
     photoLink : string;
     (** A link to the user's profile photo, if available. *)
     role : string;
@@ -762,7 +929,7 @@ sig
 - user 
 - group 
 - domain 
-- anyone  When creating a permission, if type is user or group, you must provide an emailAddress for the user or group. When type is domain, you must provide a domain. There isn't extra information required for a anyone type. *)
+- anyone  When creating a permission, if type is user or group, you must provide an emailAddress for the user or group. When type is domain, you must provide a domain. There isn't extra information required for the anyone type. *)
     view : string;
     (** Indicates the view for this permission. Only populated for permissions that belong to a view. published is the only supported value. *)
     
@@ -776,6 +943,7 @@ sig
   val expirationTime : (t, GapiDate.t) GapiLens.t
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val pendingOwner : (t, bool) GapiLens.t
   val permissionDetails : (t, PermissionDetails.t list) GapiLens.t
   val photoLink : (t, string) GapiLens.t
   val role : (t, string) GapiLens.t
@@ -857,6 +1025,24 @@ sig
     
     val securityUpdateEligible : (t, bool) GapiLens.t
     val securityUpdateEnabled : (t, bool) GapiLens.t
+    
+    val empty : t
+    
+    val render : t -> GapiJson.json_data_model list
+    
+    val parse : t -> GapiJson.json_data_model -> t
+    
+  end
+  
+  module LabelInfo :
+  sig
+    type t = {
+      labels : Label.t list;
+      (** The set of labels on the file as requested by the label IDs in the includeLabels parameter. By default, no labels are returned. *)
+      
+    }
+    
+    val labels : (t, Label.t list) GapiLens.t
     
     val empty : t
     
@@ -993,7 +1179,7 @@ sig
     
     type t = {
       indexableText : string;
-      (** Text to be indexed for the file to improve fullText queries. This is limited to 128KB in length and may contain HTML elements. *)
+      (** Text to be indexed for the file to improve fullText queries. This is limited to 128 KB in length and may contain HTML elements. For more information, see Manage file metadata. *)
       thumbnail : Thumbnail.t;
       (** A thumbnail for the file. This will only be used if Google Drive cannot generate a standard thumbnail. *)
       
@@ -1013,6 +1199,8 @@ sig
   module Capabilities :
   sig
     type t = {
+      canAcceptOwnership : bool;
+      (** Whether the current user is the pending owner of the file. Not populated for shared drive files. *)
       canAddChildren : bool;
       (** Whether the current user can add children to this folder. This is always false when the item is not a folder. *)
       canAddFolderFromAnotherDrive : bool;
@@ -1043,6 +1231,8 @@ sig
       (** Whether the current user can modify the content of this file. *)
       canModifyContentRestriction : bool;
       (** Whether the current user can modify restrictions on content of this file. *)
+      canModifyLabels : bool;
+      (** Whether the current user can modify the labels on this file. *)
       canMoveChildrenOutOfDrive : bool;
       (** Whether the current user can move children of this folder outside of the shared drive. This is false when the item is not a folder. Only populated for items in shared drives. *)
       canMoveChildrenOutOfTeamDrive : bool;
@@ -1065,8 +1255,10 @@ sig
       (** Deprecated - use canMoveItemWithinDrive or canMoveItemOutOfDrive instead. *)
       canReadDrive : bool;
       (** Whether the current user can read the shared drive to which this file belongs. Only populated for items in shared drives. *)
+      canReadLabels : bool;
+      (** Whether the current user can read the labels on this file. *)
       canReadRevisions : bool;
-      (** Whether the current user can read the revisions resource of this file. For a shared drive item, whether revisions of non-folder descendants of this item, or this item itself if it is not a folder, can be read. *)
+      (** Whether the current user can read the revisions resource of this file. For a shared drive item, whether revisions of non-folder descendants of this item, or this item itself if it isn't a folder, can be read. *)
       canReadTeamDrive : bool;
       (** Deprecated - use canReadDrive instead. *)
       canRemoveChildren : bool;
@@ -1086,6 +1278,7 @@ sig
       
     }
     
+    val canAcceptOwnership : (t, bool) GapiLens.t
     val canAddChildren : (t, bool) GapiLens.t
     val canAddFolderFromAnotherDrive : (t, bool) GapiLens.t
     val canAddMyDriveParent : (t, bool) GapiLens.t
@@ -1101,6 +1294,7 @@ sig
     val canListChildren : (t, bool) GapiLens.t
     val canModifyContent : (t, bool) GapiLens.t
     val canModifyContentRestriction : (t, bool) GapiLens.t
+    val canModifyLabels : (t, bool) GapiLens.t
     val canMoveChildrenOutOfDrive : (t, bool) GapiLens.t
     val canMoveChildrenOutOfTeamDrive : (t, bool) GapiLens.t
     val canMoveChildrenWithinDrive : (t, bool) GapiLens.t
@@ -1112,6 +1306,7 @@ sig
     val canMoveItemWithinTeamDrive : (t, bool) GapiLens.t
     val canMoveTeamDriveItem : (t, bool) GapiLens.t
     val canReadDrive : (t, bool) GapiLens.t
+    val canReadLabels : (t, bool) GapiLens.t
     val canReadRevisions : (t, bool) GapiLens.t
     val canReadTeamDrive : (t, bool) GapiLens.t
     val canRemoveChildren : (t, bool) GapiLens.t
@@ -1159,7 +1354,7 @@ Entries with null values are cleared in update and copy requests. These properti
 If an unsupported color is specified, the closest color in the palette will be used instead. *)
     fullFileExtension : string;
     (** The full file extension extracted from the name field. May contain multiple concatenated extensions, such as "tar.gz". This is only available for files with binary content in Google Drive.
-This is automatically updated when the name field changes, however it is not cleared if the new name does not contain a valid extension. *)
+This is automatically updated when the name field changes, however it isn't cleared if the new name does not contain a valid extension. *)
     hasAugmentedPermissions : bool;
     (** Whether there are permissions directly on this file. This field is only populated for items in shared drives. *)
     hasThumbnail : bool;
@@ -1176,6 +1371,8 @@ This is automatically updated when the name field changes, however it is not cle
     (** Whether the file was created or opened by the requesting app. *)
     kind : string;
     (** Identifies what kind of resource this is. Value: the fixed string "drive#file". *)
+    labelInfo : LabelInfo.t;
+    (** An overview of the labels on the file. *)
     lastModifyingUser : User.t;
     (** The last user to modify the file. *)
     linkShareMetadata : LinkShareMetadata.t;
@@ -1215,6 +1412,10 @@ Entries with null values are cleared in update and copy requests. *)
     (** The number of storage quota bytes used by the file. This includes the head revision as well as previous revisions with keepForever enabled. *)
     resourceKey : string;
     (** A key needed to access the item via a shared link. *)
+    sha1Checksum : string;
+    (** The SHA1 checksum associated with this file, if available. This field is only populated for files with content stored in Google Drive; it isn't populated for Docs Editors or shortcut files. *)
+    sha256Checksum : string;
+    (** The SHA256 checksum associated with this file, if available. This field is only populated for files with content stored in Google Drive; it isn't populated for Docs Editors or shortcut files. *)
     shared : bool;
     (** Whether the file has been shared. Not populated for items in shared drives. *)
     sharedWithMeTime : GapiDate.t;
@@ -1224,7 +1425,7 @@ Entries with null values are cleared in update and copy requests. *)
     shortcutDetails : ShortcutDetails.t;
     (** Shortcut file details. Only populated for shortcut files, which have the mimeType field set to application/vnd.google-apps.shortcut. *)
     size : int64;
-    (** The size of the file's content in bytes. This is applicable to binary files in Google Drive and Google Docs files. *)
+    (** The size of the file's content in bytes. This field is populated for files with binary content stored in Google Drive and for Docs Editors files; it is not populated for shortcuts or folders. *)
     spaces : string list;
     (** The list of spaces which contain the file. The currently supported values are 'drive', 'appDataFolder' and 'photos'. *)
     starred : bool;
@@ -1281,6 +1482,7 @@ Entries with null values are cleared in update and copy requests. *)
   val imageMediaMetadata : (t, ImageMediaMetadata.t) GapiLens.t
   val isAppAuthorized : (t, bool) GapiLens.t
   val kind : (t, string) GapiLens.t
+  val labelInfo : (t, LabelInfo.t) GapiLens.t
   val lastModifyingUser : (t, User.t) GapiLens.t
   val linkShareMetadata : (t, LinkShareMetadata.t) GapiLens.t
   val md5Checksum : (t, string) GapiLens.t
@@ -1298,6 +1500,8 @@ Entries with null values are cleared in update and copy requests. *)
   val properties : (t, (string * string) list) GapiLens.t
   val quotaBytesUsed : (t, int64) GapiLens.t
   val resourceKey : (t, string) GapiLens.t
+  val sha1Checksum : (t, string) GapiLens.t
+  val sha256Checksum : (t, string) GapiLens.t
   val shared : (t, bool) GapiLens.t
   val sharedWithMeTime : (t, GapiDate.t) GapiLens.t
   val sharingUser : (t, User.t) GapiLens.t
@@ -1345,6 +1549,8 @@ sig
       (** Whether access to this shared drive and items inside this shared drive is restricted to users of the domain to which this shared drive belongs. This restriction may be overridden by other sharing policies controlled outside of this shared drive. *)
       driveMembersOnly : bool;
       (** Whether access to items inside this shared drive is restricted to its members. *)
+      sharingFoldersRequiresOrganizerPermission : bool;
+      (** If true, only users with the organizer role can share folders. If false, users with either the organizer role or the file organizer role can share folders. *)
       
     }
     
@@ -1352,6 +1558,7 @@ sig
     val copyRequiresWriterPermission : (t, bool) GapiLens.t
     val domainUsersOnly : (t, bool) GapiLens.t
     val driveMembersOnly : (t, bool) GapiLens.t
+    val sharingFoldersRequiresOrganizerPermission : (t, bool) GapiLens.t
     
     val empty : t
     
@@ -1374,6 +1581,8 @@ sig
       (** Whether the current user can change the background of this shared drive. *)
       canChangeDriveMembersOnlyRestriction : bool;
       (** Whether the current user can change the driveMembersOnly restriction of this shared drive. *)
+      canChangeSharingFoldersRequiresOrganizerPermissionRestriction : bool;
+      (** Whether the current user can change the sharingFoldersRequiresOrganizerPermission restriction of this shared drive. *)
       canComment : bool;
       (** Whether the current user can comment on files in this shared drive. *)
       canCopy : bool;
@@ -1396,6 +1605,8 @@ sig
       (** Whether the current user can rename files or folders in this shared drive. *)
       canRenameDrive : bool;
       (** Whether the current user can rename this shared drive. *)
+      canResetDriveRestrictions : bool;
+      (** Whether the current user can reset the shared drive restrictions to defaults. *)
       canShare : bool;
       (** Whether the current user can share files or folders in this shared drive. *)
       canTrashChildren : bool;
@@ -1408,6 +1619,7 @@ sig
     val canChangeDomainUsersOnlyRestriction : (t, bool) GapiLens.t
     val canChangeDriveBackground : (t, bool) GapiLens.t
     val canChangeDriveMembersOnlyRestriction : (t, bool) GapiLens.t
+    val canChangeSharingFoldersRequiresOrganizerPermissionRestriction : (t, bool) GapiLens.t
     val canComment : (t, bool) GapiLens.t
     val canCopy : (t, bool) GapiLens.t
     val canDeleteChildren : (t, bool) GapiLens.t
@@ -1419,6 +1631,7 @@ sig
     val canReadRevisions : (t, bool) GapiLens.t
     val canRename : (t, bool) GapiLens.t
     val canRenameDrive : (t, bool) GapiLens.t
+    val canResetDriveRestrictions : (t, bool) GapiLens.t
     val canShare : (t, bool) GapiLens.t
     val canTrashChildren : (t, bool) GapiLens.t
     
@@ -1476,6 +1689,8 @@ sig
     (** Identifies what kind of resource this is. Value: the fixed string "drive#drive". *)
     name : string;
     (** The name of this shared drive. *)
+    orgUnitId : string;
+    (** The organizational unit of this shared drive. This field is only populated on drives.list responses when the useDomainAdminAccess parameter is set to true. *)
     restrictions : Restrictions.t;
     (** A set of restrictions that apply to this shared drive or items inside this shared drive. *)
     themeId : string;
@@ -1492,6 +1707,7 @@ sig
   val id : (t, string) GapiLens.t
   val kind : (t, string) GapiLens.t
   val name : (t, string) GapiLens.t
+  val orgUnitId : (t, string) GapiLens.t
   val restrictions : (t, Restrictions.t) GapiLens.t
   val themeId : (t, string) GapiLens.t
   
@@ -1587,6 +1803,62 @@ sig
   
 end
 
+module LabelModification :
+sig
+  type t = {
+    fieldModifications : LabelFieldModification.t list;
+    (** The list of modifications to this label's fields. *)
+    kind : string;
+    (** This is always drive#labelModification. *)
+    labelId : string;
+    (** The ID of the label to modify. *)
+    removeLabel : bool;
+    (** If true, the label will be removed from the file. *)
+    
+  }
+  
+  val fieldModifications : (t, LabelFieldModification.t list) GapiLens.t
+  val kind : (t, string) GapiLens.t
+  val labelId : (t, string) GapiLens.t
+  val removeLabel : (t, bool) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ModifyLabelsRequest :
+sig
+  type t = {
+    kind : string;
+    (** This is always drive#modifyLabelsRequest *)
+    labelModifications : LabelModification.t list;
+    (** The list of modifications to apply to the labels on the file. *)
+    
+  }
+  
+  val kind : (t, string) GapiLens.t
+  val labelModifications : (t, LabelModification.t list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
 module PermissionList :
 sig
   type t = {
@@ -1602,6 +1874,31 @@ sig
   val kind : (t, string) GapiLens.t
   val nextPageToken : (t, string) GapiLens.t
   val permissions : (t, Permission.t list) GapiLens.t
+  
+  val empty : t
+  
+  val render : t -> GapiJson.json_data_model list
+  
+  val parse : t -> GapiJson.json_data_model -> t
+  
+  val to_data_model : t -> GapiJson.json_data_model
+  
+  val of_data_model : GapiJson.json_data_model -> t
+  
+end
+
+module ModifyLabelsResponse :
+sig
+  type t = {
+    kind : string;
+    (** This is always drive#modifyLabelsResponse *)
+    modifiedLabels : Label.t list;
+    (** The list of labels which were added or updated by the request. *)
+    
+  }
+  
+  val kind : (t, string) GapiLens.t
+  val modifiedLabels : (t, Label.t list) GapiLens.t
   
   val empty : t
   

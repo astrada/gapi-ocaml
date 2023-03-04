@@ -95,10 +95,11 @@ sig
     @param includeTeamDriveItems Deprecated use includeItemsFromAllDrives instead.
     @param pageSize The maximum number of changes to return per page.
     @param restrictToMyDrive Whether to restrict the results to changes inside the My Drive hierarchy. This omits changes to files such as those in the Application Data folder or shared files which have not been added to My Drive.
-    @param spaces A comma-separated list of spaces to query within the user corpus. Supported values are 'drive', 'appDataFolder' and 'photos'.
+    @param spaces A comma-separated list of spaces to query within the corpora. Supported values are 'drive' and 'appDataFolder'.
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param driveId The shared drive from which changes are returned. If specified the change IDs will be reflective of the shared drive; use the combined drive ID and change ID as an identifier.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param teamDriveId Deprecated use driveId instead.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.
@@ -117,13 +118,14 @@ sig
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?driveId:string ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     ?teamDriveId:string ->
     pageToken:string ->
     GapiConversation.Session.t ->
     GapiDriveV3Model.ChangeList.t * GapiConversation.Session.t
   
-  (** Subscribes to changes for a user.
+  (** Subscribes to changes for a user. To use this method, you must include the pageToken query parameter.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -134,10 +136,11 @@ sig
     @param includeTeamDriveItems Deprecated use includeItemsFromAllDrives instead.
     @param pageSize The maximum number of changes to return per page.
     @param restrictToMyDrive Whether to restrict the results to changes inside the My Drive hierarchy. This omits changes to files such as those in the Application Data folder or shared files which have not been added to My Drive.
-    @param spaces A comma-separated list of spaces to query within the user corpus. Supported values are 'drive', 'appDataFolder' and 'photos'.
+    @param spaces A comma-separated list of spaces to query within the corpora. Supported values are 'drive' and 'appDataFolder'.
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param driveId The shared drive from which changes are returned. If specified the change IDs will be reflective of the shared drive; use the combined drive ID and change ID as an identifier.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param teamDriveId Deprecated use driveId instead.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.
@@ -156,6 +159,7 @@ sig
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?driveId:string ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     ?teamDriveId:string ->
     pageToken:string ->
@@ -189,7 +193,7 @@ end
 module CommentsResource :
 sig
   
-  (** Creates a new comment on a file.
+  (** Creates a comment on a file.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -290,7 +294,7 @@ end
 module DrivesResource :
 sig
   
-  (** Creates a new shared drive.
+  (** Creates a shared drive.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -311,12 +315,16 @@ sig
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
     @param custom_headers Optional HTTP custom headers.
+    @param allowItemDeletion Whether any items inside the shared drive should also be deleted. This option is only supported when useDomainAdminAccess is also set to true.
+    @param useDomainAdminAccess Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.
     @param driveId The ID of the shared drive.
     *)
   val delete :
     ?base_url:string ->
     ?std_params:GapiService.StandardParameters.t ->
     ?custom_headers:GapiCore.Header.t list ->
+    ?allowItemDeletion:bool ->
+    ?useDomainAdminAccess:bool ->
     driveId:string ->
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
@@ -438,6 +446,7 @@ sig
     @param keepRevisionForever Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
     @param fileId The ID of the file.
@@ -451,6 +460,7 @@ sig
     ?keepRevisionForever:bool ->
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     ?ocrLanguage:string ->
     fileId:string ->
@@ -458,7 +468,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.File.t * GapiConversation.Session.t
   
-  (** Creates a new file.
+  (** Creates a file.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -469,6 +479,7 @@ sig
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param useContentAsIndexableText Whether to use the uploaded content as indexable text.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
     *)
@@ -483,6 +494,7 @@ sig
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
     ?useContentAsIndexableText:bool ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     ?ocrLanguage:string ->
     GapiDriveV3Model.File.t ->
@@ -525,7 +537,7 @@ sig
     GapiConversation.Session.t ->
     unit * GapiConversation.Session.t
   
-  (** Exports a Google Doc to the requested MIME type and returns the exported content. Please note that the exported content is limited to 10MB.
+  (** Exports a Google Workspace document to the requested MIME type and returns exported byte content. Note that the exported content is limited to 10MB.
     
     If [std_params] includes setting [alt="media"], the file content is
     downloaded as per [media_download].
@@ -579,6 +591,7 @@ sig
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param fileId The ID of the file.
     *)
@@ -591,6 +604,7 @@ sig
     ?acknowledgeAbuse:bool ->
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     fileId:string ->
     GapiConversation.Session.t ->
@@ -604,12 +618,13 @@ sig
     @param includeItemsFromAllDrives Whether both My Drive and shared drive items should be included in results.
     @param includeTeamDriveItems Deprecated use includeItemsFromAllDrives instead.
     @param pageSize The maximum number of files to return per page. Partial or empty result pages are possible even before the end of the files list has been reached.
-    @param spaces A comma-separated list of spaces to query within the corpus. Supported values are 'drive' and 'appDataFolder'.
+    @param spaces A comma-separated list of spaces to query within the corpora. Supported values are 'drive' and 'appDataFolder'.
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param corpora Groupings of files to which the query applies. Supported groupings are: 'user' (files created by, opened by, or shared directly with the user), 'drive' (files in the specified shared drive as indicated by the 'driveId'), 'domain' (files shared to the user's domain), and 'allDrives' (A combination of 'user' and 'drive' for all drives where the user is a member). When able, use 'user' or 'drive', instead of 'allDrives', for efficiency.
     @param corpus The source of files to list. Deprecated: use 'corpora' instead.
     @param driveId ID of the shared drive to search.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param orderBy A comma-separated list of sort keys. Valid keys are 'createdTime', 'folder', 'modifiedByMeTime', 'modifiedTime', 'name', 'name_natural', 'quotaBytesUsed', 'recency', 'sharedWithMeTime', 'starred', and 'viewedByMeTime'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedTime desc,name. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.
     @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.
@@ -629,6 +644,7 @@ sig
     ?corpora:string ->
     ?corpus:Corpus.t ->
     ?driveId:string ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     ?orderBy:string ->
     ?pageToken:string ->
@@ -637,7 +653,42 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.FileList.t * GapiConversation.Session.t
   
-  (** Updates a file's metadata and/or content. This method supports patch semantics.
+  (** Lists the labels on a file.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param custom_headers Optional HTTP custom headers.
+    @param maxResults The maximum number of labels to return per page. When not set, this defaults to 100.
+    @param pageToken The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.
+    @param fileId The ID of the file.
+    *)
+  val listLabels :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?custom_headers:GapiCore.Header.t list ->
+    ?maxResults:int ->
+    ?pageToken:string ->
+    fileId:string ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.LabelList.t * GapiConversation.Session.t
+  
+  (** Modifies the set of labels on a file.
+    
+    @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
+    @param std_params Optional standard parameters.
+    @param custom_headers Optional HTTP custom headers.
+    @param fileId The ID of the file for which the labels are modified.
+    *)
+  val modifyLabels :
+    ?base_url:string ->
+    ?std_params:GapiService.StandardParameters.t ->
+    ?custom_headers:GapiCore.Header.t list ->
+    fileId:string ->
+    GapiDriveV3Model.ModifyLabelsRequest.t ->
+    GapiConversation.Session.t ->
+    GapiDriveV3Model.ModifyLabelsResponse.t * GapiConversation.Session.t
+  
+  (** Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might change automatically, such as modifiedDate. This method supports patch semantics.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -648,6 +699,7 @@ sig
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
     @param useContentAsIndexableText Whether to use the uploaded content as indexable text.
     @param addParents A comma-separated list of parent IDs to add.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param ocrLanguage A language hint for OCR processing during image import (ISO 639-1 code).
     @param removeParents A comma-separated list of parent IDs to remove.
@@ -664,6 +716,7 @@ sig
     ?supportsTeamDrives:bool ->
     ?useContentAsIndexableText:bool ->
     ?addParents:string ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     ?ocrLanguage:string ->
     ?removeParents:string ->
@@ -672,7 +725,7 @@ sig
     GapiConversation.Session.t ->
     GapiDriveV3Model.File.t * GapiConversation.Session.t
   
-  (** Subscribes to changes to a file
+  (** Subscribes to changes to a file. While you can establish a channel for changes to a file on a shared drive, a change to a shared drive file won't create a notification.
     
     If [std_params] includes setting [alt="media"], the file content is
     downloaded as per [media_download].
@@ -684,6 +737,7 @@ sig
     @param acknowledgeAbuse Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when alt=media.
     @param supportsAllDrives Whether the requesting application supports both My Drives and shared drives.
     @param supportsTeamDrives Deprecated use supportsAllDrives instead.
+    @param includeLabels A comma-separated list of IDs of labels to include in the labelInfo part of the response.
     @param includePermissionsForView Specifies which additional view's permissions to include in the response. Only 'published' is supported.
     @param fileId The ID of the file.
     *)
@@ -695,6 +749,7 @@ sig
     ?acknowledgeAbuse:bool ->
     ?supportsAllDrives:bool ->
     ?supportsTeamDrives:bool ->
+    ?includeLabels:string ->
     ?includePermissionsForView:string ->
     fileId:string ->
     GapiDriveV3Model.Channel.t ->
@@ -707,7 +762,7 @@ end
 module PermissionsResource :
 sig
   
-  (** Creates a permission for a file or shared drive.
+  (** Creates a permission for a file or shared drive. For more information on creating permissions, see Share files, folders & drives.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
@@ -848,7 +903,7 @@ end
 module RepliesResource :
 sig
   
-  (** Creates a new reply to a comment.
+  (** Creates a reply to a comment.
     
     @param base_url Service endpoint base URL (defaults to ["https://www.googleapis.com/drive/v3/"]).
     @param std_params Optional standard parameters.
