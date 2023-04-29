@@ -3,37 +3,37 @@
  (flags (:standard -w -3-6-23-27-32-33-50))
  (libraries threads ounit2 gapi-ocaml))
 
-(alias
- (name runtest)
+(rule
+ (alias runtest)
  (deps
    testSuite.exe
    (glob_files test_data/*))
  (action (run ./testSuite.exe)))
 
-(alias
- (name runtest-all)
+(rule
+ (alias runtest-all)
  (deps
    testSuite.exe
    (glob_files test_data/*)
    (glob_files ../../config/*))
  (action (run ./testSuite.exe -all)))
 
-(alias
- (name runtest-urlshortener)
+(rule
+ (alias runtest-urlshortener)
  (deps
    testSuite.exe
    (glob_files ../../config/*))
  (action (run ./testSuite.exe -service urlshortener)))
 
-(alias
- (name runtest-oa2serv)
+(rule
+ (alias runtest-oa2serv)
  (deps
    testSuite.exe
    (glob_files ../../config/*))
  (action (run ./testSuite.exe -service oa2serv)))
 
-(alias
- (name runtest-oa2devices)
+(rule
+ (alias runtest-oa2devices)
  (deps
    testSuite.exe
    (glob_files ../../config/*))

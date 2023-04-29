@@ -1,0 +1,10 @@
+(library
+ (name netsys_local)
+ (public_name gapi-ocaml.netsys-local)
+ (wrapped false)
+ (foreign_stubs (language c) (names netsys_c))
+ (flags (:standard -w -6-7-8-27-32-33-34-35-36-37-39-50-52))
+ (preprocess
+   (action
+     (run %{bin:cppo} -V OCAML:%{ocaml_version} -D HAVE_BYTES -D HAVE_O_SHARE_DELETE -D HAVE_O_CLOEXEC -D HAVE_O_KEEPEXEC -D "DEPRECATED(arg) [@@deprecated arg] (** @deprecated arg *)" -D "STRING_COPY (fun s -> s)" -D "STRING_LOWERCASE String.lowercase_ascii" -D "STRING_UPPERCASE String.uppercase_ascii" -D "STRING_CAPITALIZE String.capitalize_ascii" -D "CHAR_LOWERCASE Char.lowercase_ascii" -D "CHAR_UPPERCASE Char.uppercase_ascii" -D HAVE_EXTENSIBLE_VARIANTS -D HAVE_UNIX_MAP_FILE -D "NOALLOC [@@noalloc]" %{input-file})))
+ (synopsis "Local fork of netsys"))
