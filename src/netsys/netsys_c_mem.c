@@ -350,6 +350,7 @@ CAMLprim value netsys_hdr_address(value objv)
     return caml_copy_nativeint((intnat) Hp_val(objv));
 }
 
+/*
 CAMLprim value netsys_color(value objv)
 {
     return Val_int(Color_hd(Hd_val(objv)) >> 8);
@@ -362,6 +363,7 @@ CAMLprim value netsys_set_color(value objv, value colv)
     Hd_val(objv) = Whitehd_hd(Hd_val(objv)) | (col << 8);
     return Val_unit;
 }
+*/
 
 /**********************************************************************/
 /* I/O with Bigarrays                                                 */
@@ -543,6 +545,7 @@ CAMLprim value netsys_as_value(value memv, value offv)
     return (value) (b->data + Long_val(offv));
 }
 
+#if 0
 CAMLprim value netsys_value_area_add(value memv) 
 {
 #ifdef FANCY_PAGE_TABLES
@@ -572,6 +575,7 @@ CAMLprim value netsys_value_area_remove(value memv)
     caml_invalid_argument("Netsys_mem.value_area");
 #endif
 }
+#endif
 
 CAMLprim value netsys_init_header(value memv, value offv, value tagv,
 				  value sizev)
@@ -673,6 +677,7 @@ extern uintnat caml_allocated_words;
      2 = copy them to buffer memory
 */
 
+#if 0
 int netsys_init_value_1(struct htab *t,
 			struct nqueue *q,
 			char *dest,
@@ -1136,6 +1141,7 @@ int netsys_init_value_1(struct htab *t,
 
     return 0;
 }
+#endif
 
 
 static int init_value_flags[] = { 1, 2, 4, 8, 16, 32 };
@@ -1200,6 +1206,7 @@ static void unprep_stat_queue(void)
 	netsys_queue_free(stat_queue);
 }
 
+#if 0
 value netsys_init_value(value memv, 
 			value offv, 
 			value orig,  
@@ -1535,3 +1542,4 @@ value netsys_is_bigarray(value v) {
 
     CAMLreturn(r);
 }
+#endif

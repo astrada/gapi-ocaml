@@ -2,7 +2,8 @@
  (name netsys_local)
  (public_name gapi-ocaml.netsys-local)
  (wrapped false)
- (foreign_stubs (language c) (names netsys_c netsys_c_clock netsys_c_event netsys_c_fadvise netsys_c_fallocate netsys_c_gprof netsys_c_htab netsys_c_ioprio netsys_c_ip6 netsys_c_locale netsys_c_mem netsys_c_multicast netsys_c_outofheap netsys_c_poll netsys_c_queue netsys_c_sem netsys_c_shm netsys_c_spawn netsys_c_subprocess netsys_c_syslog netsys_c_win32 netsys_c_xdr))
+ (libraries unix)
+ (foreign_stubs (language c) (names netsys_c netsys_c_clock netsys_c_event netsys_c_fadvise netsys_c_fallocate netsys_c_gprof netsys_c_htab netsys_c_ioprio netsys_c_ip6 netsys_c_locale netsys_c_mem netsys_c_multicast netsys_c_poll netsys_c_queue netsys_c_sem netsys_c_shm netsys_c_spawn netsys_c_subprocess netsys_c_syslog netsys_c_win32 netsys_c_xdr))
  (flags (:standard -w -6-7-8-27-32-33-34-35-36-37-39-50-52))
  (preprocess
    (action

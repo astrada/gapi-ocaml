@@ -900,7 +900,7 @@ let connect_check fd =
     else
       true in
   if do_check then (
-    let e_code = Unix.getsockopt_int fd Unix.SO_ERROR in
+    let e_opt = Unix.getsockopt_error fd in
     try
       ignore(getpeername fd); 
       ()
@@ -911,8 +911,13 @@ let connect_check fd =
 	      let own_addr = Unix.getsockname fd in
 	      string_of_sockaddr own_addr
 	    with _ -> "n/a" in
-	  raise(Unix.Unix_error(unix_error_of_code e_code,
-				"connect_check", detail))
+      match e_opt with
+      | Some e ->
+              raise(Unix.Unix_error(e,
+                "connect_check", detail))
+      | None ->
+              raise(Unix.Unix_error(Unix.ENOTCONN,
+                "connect_check", detail))
   )
 
 external mcast_set_loop : Unix.file_descr -> bool -> unit 

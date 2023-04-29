@@ -105,3 +105,12 @@ lenses within the state monad.
 See `tools/README.md` for the instructions of how to build and run the service
 generator utility.
 
+### Ocamlnet
+
+To support OCaml 5, I removed the direct dependency on Ocamlnet. To do so, I
+imported (in the `src` directory) the `netstring` and `netsys` libraries from
+[upstream](https://gitlab.com/gerdstolpmann/lib-ocamlnet3/-/tree/4d1a8401bd40c17632128545e2aa4c880535e208),
+applied the patches from this
+[PR](https://gitlab.com/gerdstolpmann/lib-ocamlnet3/-/merge_requests/21), and
+further patched the code to compile and run correctly.
+

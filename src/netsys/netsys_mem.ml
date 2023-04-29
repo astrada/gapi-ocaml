@@ -117,6 +117,7 @@ external as_value : memory -> int -> 'a
 
 let as_obj mem offs = Obj.repr(as_value mem offs)
 
+(*
 external netsys_value_area_add : memory -> unit 
   = "netsys_value_area_add"
 
@@ -127,6 +128,7 @@ let value_area m =
   netsys_value_area_add m;
   Gc.finalise netsys_value_area_remove m;
   ()
+  *)
 
 external obj_address : Obj.t -> nativeint
   = "netsys_obj_address"
@@ -219,6 +221,7 @@ type init_value_flag =
 
 type custom_ops = nativeint
 
+(*
 external netsys_init_value : 
   memory -> int -> 'a -> init_value_flag list -> nativeint -> 
   (string * custom_ops) list -> ((int*int) list) -> (int * int)
@@ -247,9 +250,11 @@ external get_custom_ops : 'a -> string * custom_ops
 
 external copy_value : init_value_flag list -> 'a -> 'a
   = "netsys_copy_value"
+  *)
 
 type color = White | Gray | Blue | Black
 
+(*
 external color : Obj.t -> color
   = "netsys_color"
 
@@ -258,6 +263,7 @@ external set_color : Obj.t -> color -> unit
 
 external is_bigarray : Obj.t -> bool
   = "netsys_is_bigarray"
+  *)
 
 external netsys_mem_read : Unix.file_descr -> memory -> int -> int -> int
   = "netsys_mem_read"

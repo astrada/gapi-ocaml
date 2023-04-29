@@ -105,7 +105,7 @@ module Header = struct
     if String.contains full_header ':' then
       let key, v = GapiUtils.divide_string full_header ':' in
       let value = GapiUtils.strip_string v in
-      let lowercase_key = String.lowercase key [@warning "-3"] in
+      let lowercase_key = String.lowercase_ascii key [@warning "-3"] in
       match lowercase_key with
       | "content-type" -> ContentType value
       | "location" -> Location value

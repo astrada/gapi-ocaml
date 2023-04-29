@@ -159,10 +159,14 @@ CAMLextern struct caml_ref_table caml_ref_table;
 
 /* Stuff from major_gc.h */
 
-extern int caml_gc_phase;
+/*
+extern gc_phase_t caml_gc_phase;
+*/
 #define Phase_mark 0
 
-extern void caml_darken (value, value *);
+/*
+extern void caml_darken (void *, value, volatile value *);
+*/
 
 #endif
 

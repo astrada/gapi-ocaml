@@ -205,6 +205,7 @@ val as_value : memory -> int -> 'a
 val as_obj : memory -> int -> Obj.t
   (** Same as [as_value] but returns the value as [Obj.t] *)
 
+(*
 val value_area : memory -> unit
   (** Marks the memory block as value area. This enables that the
       value primitives (polymorphic equality, marshalling, hashing)
@@ -215,6 +216,7 @@ val value_area : memory -> unit
 
       This function is first available since O'Caml 3.11.
    *)
+  *)
 
 val obj_address : Obj.t -> nativeint
 val hdr_address : Obj.t -> nativeint
@@ -317,6 +319,7 @@ type init_value_flag =
   | Copy_conditionally
   | Keep_atom
 
+  (*
 val init_value : 
       ?targetaddr:nativeint -> 
       ?target_custom_ops:(string * custom_ops) list ->
@@ -409,10 +412,12 @@ val copy_value : init_value_flag list -> 'a -> 'a
 
       Cyclic input values are supported. [Copy_simulate] is ignored.
    *)
+  *)
 
 type color = White | Gray | Blue | Black
     (** GC colors *)
 
+(*
 val color : Obj.t -> color
   (** Return the GC color *)
 
@@ -421,6 +426,7 @@ val set_color : Obj.t -> color -> unit
 
 val is_bigarray : Obj.t -> bool
   (** Checks whether the objects ia actually a bigarray *)
+  *)
 
 
 (** {2 I/O using [memory] as buffers} *)
