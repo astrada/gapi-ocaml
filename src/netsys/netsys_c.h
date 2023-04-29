@@ -68,6 +68,7 @@
 #include "caml/custom.h"
 #include "caml/callback.h"
 #include "caml/bigarray.h"
+#include "caml/unixsupport.h"
 #include "caml/version.h"
 
 #ifndef Bytes_val
@@ -171,25 +172,8 @@ extern void caml_darken (value, value *);
 /* From unixsupport.h                                                 */
 /**********************************************************************/
 
-#define Nothing ((value) 0)
-
 #ifdef _WIN32
-#include "caml/unixsupport.h"
 #define netsysw32_win_alloc_handle win_alloc_handle
-#else
-
-/* POSIX */
-
-/* Since OCaml 3.10 there is unixsupport.h, and we could also include
-   this file.
-*/
-
-extern value unix_error_of_code (int errcode);
-extern void unix_error (int errcode, char * cmdname, value arg) Noreturn;
-extern void uerror (char * cmdname, value arg) Noreturn;
-
-#define DIR_Val(v) *((DIR **) &Field(v, 0))
-
 #endif
 
 /**********************************************************************/
