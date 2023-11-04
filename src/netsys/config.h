@@ -2,7 +2,6 @@
 #define FANCY_PAGE_TABLES
 #define HAVE_NEW_MODIFY
 #define WEAK_MODIFY
-#define HAVE_POSIX_SHM
 #define HAVE_POSIX_SEM_ANON
 #define HAVE_POSIX_SEM_NAMED
 #define HAVE_POSIX_SPAWN
@@ -19,7 +18,6 @@
 #define HAVE_PTY_OPENPT
 #define HAVE_INITGROUPS
 #define HAVE_CLOCK
-#define HAVE_POSIX_TIMER
 #define HAVE_EVENTFD
 #define HAVE_TIMERFD
 #define HAVE_EPOLL
