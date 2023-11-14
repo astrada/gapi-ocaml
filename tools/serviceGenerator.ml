@@ -57,9 +57,14 @@ let get_service_description api version nocache =
     Printf.printf "Downloading %s %s service description to file %s...%!" api
       version file_name;
     let document =
-      do_request (fun session ->
-          GapiDiscoveryV1Service.ApisResource.getRest ~api ~version session
-          |> fst)
+      try
+        do_request (fun session ->
+            GapiDiscoveryV1Service.ApisResource.getRest ~api ~version session
+            |> fst)
+      with GapiService.ServiceError (session, error) ->
+        failwith
+          (Printf.sprintf "Error: %s (HTTP response code: %d)" error.message
+             error.code)
     in
     let () = print_endline "Done" in
     let tree = RestDescription.to_data_model document in
