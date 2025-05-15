@@ -1,4 +1,4 @@
-let library_version = "0.4.5"
+let library_version = "0.4.6"
 
 module AnnotatedTree = struct
   type ('a, 'b) t = Leaf of 'a * 'b | Node of 'a * ('a, 'b) t list
@@ -21,12 +21,12 @@ module AnnotatedTree = struct
   let xfold nf lf tree =
     kfold
       (fun a ks t k ->
-        let rec loop l cont =
-          match l with
-          | [] -> cont []
-          | kh :: kt -> loop kt (fun acc -> kh (fun h -> cont (h :: acc)))
-        in
-        loop ks (fun xs -> k (nf a xs t)))
+         let rec loop l cont =
+           match l with
+           | [] -> cont []
+           | kh :: kt -> loop kt (fun acc -> kh (fun h -> cont (h :: acc)))
+         in
+         loop ks (fun xs -> k (nf a xs t)))
       (fun a x t k -> k (lf a x t))
       tree
 
@@ -84,7 +84,7 @@ module Header = struct
   let to_string h =
     match h with
     | HttpStatus (version, code, reason) ->
-        Printf.sprintf "HTTP/%s %d %s" version code reason
+      Printf.sprintf "HTTP/%s %d %s" version code reason
     | ContentType value -> "Content-Type: " ^ value
     | Location value -> "Location: " ^ value
     | Authorization value -> "Authorization: " ^ value
