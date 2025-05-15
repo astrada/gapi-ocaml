@@ -146,6 +146,5 @@ module RequestError = struct
     | e -> unexpected "GapiService.RequestError.parse" e x
 
   let to_data_model = render_root render
-
   let of_data_model = parse_root parse empty
 end

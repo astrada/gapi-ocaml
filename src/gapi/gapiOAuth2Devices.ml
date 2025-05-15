@@ -82,7 +82,6 @@ module AuthorizationCode = struct
     | e -> GapiJson.unexpected "GapiOAuth2Devices.AuthorizationCode.parse" e x
 
   let to_data_model = GapiJson.render_root render
-
   let of_data_model = GapiJson.parse_root parse empty
 
   type error_response = {
@@ -143,8 +142,8 @@ let parse_error_response pipe response_code =
   else
     failwith
       (Printf.sprintf "OAuth2 for devices error: %s (HTTP response code: %d)"
-         ( if error_code <> "" then error_code
-         else error_response.AuthorizationCode.error_description )
+         (if error_code <> "" then error_code
+          else error_response.AuthorizationCode.error_description)
          response_code)
 
 let parse_success_response =
@@ -164,17 +163,11 @@ let request_code ?(url = "https://accounts.google.com/o/oauth2/device/code")
     (parse_response parse_success_response)
 
 exception AccessDenied of GapiConversation.Session.t
-
 exception AuthorizationPending of GapiConversation.Session.t
-
 exception SlowDown of GapiConversation.Session.t
-
 exception InvalidClient of GapiConversation.Session.t
-
 exception InvalidGrant of GapiConversation.Session.t
-
 exception InvalidRequest of GapiConversation.Session.t
-
 exception UnsupportedGrantType of GapiConversation.Session.t
 
 type authorization_error = { error : string; error_description : string }

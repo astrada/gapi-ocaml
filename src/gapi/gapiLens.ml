@@ -9,11 +9,8 @@ let modify l f a =
   l.set new_value a
 
 let _get a l = l.get a
-
 let _set v a l = l.set v a
-
 let _modify f l = modify l f
-
 let compose l1 l2 = { get = l2.get |- l1.get; set = l1.set |- modify l2 }
 
 let pair l1 l2 =
@@ -30,21 +27,13 @@ let cond pred lt lf =
   }
 
 let get_state l a = (_get a l, a)
-
 let put_state l v a = ((), _set v a l)
-
 let modify_state l f a = ((), _modify f l a)
-
 let ignore = { get = ignore; set = (fun _ a -> a) }
-
 let id = { get = (fun a -> a); set = (fun b _ -> b) }
-
 let first = { get = fst; set = (fun v a -> (v, snd a)) }
-
 let second = { get = snd; set = (fun v a -> (fst a, v)) }
-
 let head = { get = List.hd; set = (fun v xs -> v :: List.tl xs) }
-
 let tail = { get = List.tl; set = (fun v xs -> List.hd xs :: v) }
 
 let for_hash key =
@@ -95,7 +84,6 @@ let for_list i =
   }
 
 let option_get = { get = Option.get; set = (fun v _ -> Some v) }
-
 let list_map l = { get = List.map l.get; set = List.map2 l.set }
 
 (* TODO: array_map *)
@@ -104,28 +92,18 @@ let xmap f g l = { get = l.get |- f; set = g |- l.set }
 
 module Infix = struct
   let ( |. ) = _get
-
   let ( ^= ) l v a = _set v a l
-
   let ( ^%= ) = modify
-
   let ( |-- ) l1 l2 = compose l2 l1
-
   let ( --| ) = compose
-
   let ( *** ) l1 l2 = pair l1 l2
-
   let ( += ) l v = _modify (( + ) v) l
-
   let ( -= ) l v = _modify (( - ) v) l
 end
 
 module StateInfix = struct
   let ( ^=! ) l v = put_state l v
-
   let ( +=! ) l v = modify_state l (( + ) v)
-
   let ( -=! ) l v = modify_state l (( - ) v)
-
   let ( @=! ) l v = modify_state l (fun a -> a @ v)
 end

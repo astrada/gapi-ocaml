@@ -2,11 +2,8 @@ open GapiLens.Infix
 
 (* Load the configuration file and read the client login values *)
 let test_config = Config.parse ()
-
 let get = Config.get test_config
-
 let email = get "cl_user"
-
 let password = get "cl_pass"
 
 let _ =

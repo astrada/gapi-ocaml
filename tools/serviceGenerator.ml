@@ -21,8 +21,8 @@ let clean_doc s = Str.global_replace to_escape_regexp "\\\\\\0" s
 (* State monad implementation *)
 
 module GeneratorStateMonad = GapiMonad.MakeStateMonad (struct
-    type s = State.t
-  end)
+  type s = State.t
+end)
 
 module GeneratorM = struct
   include GeneratorStateMonad
@@ -106,24 +106,24 @@ let build_schema_inner_module file_lens complex_type =
     match fields with
     | [] -> Format.fprintf formatter "@[<v 2>type t = unit@,"
     | _ ->
-      Format.fprintf formatter "@[<v 2>type t = {@,";
-      List.iter
-        (fun { Field.ocaml_name; ocaml_type; field_type; _ } ->
-           if ComplexType.is_enum field_type then
-             Format.fprintf formatter "%s : string;@," ocaml_name
-           else Format.fprintf formatter "%s : %s;@," ocaml_name ocaml_type)
-        fields;
-      Format.fprintf formatter "@]@,}@,"
+        Format.fprintf formatter "@[<v 2>type t = {@,";
+        List.iter
+          (fun { Field.ocaml_name; ocaml_type; field_type; _ } ->
+            if ComplexType.is_enum field_type then
+              Format.fprintf formatter "%s : string;@," ocaml_name
+            else Format.fprintf formatter "%s : %s;@," ocaml_name ocaml_type)
+          fields;
+        Format.fprintf formatter "@]@,}@,"
   in
 
   let render_lenses formatter fields =
     List.iter
       (fun { Field.ocaml_name; field_type; _ } ->
-         Format.fprintf formatter "@,@[<v 2>let %s = {@," ocaml_name;
-         Format.fprintf formatter "GapiLens.get = (fun x -> x.%s);@," ocaml_name;
-         Format.fprintf formatter
-           "GapiLens.set = (fun v x -> { x with %s = v });" ocaml_name;
-         Format.fprintf formatter "@]@,}")
+        Format.fprintf formatter "@,@[<v 2>let %s = {@," ocaml_name;
+        Format.fprintf formatter "GapiLens.get = (fun x -> x.%s);@," ocaml_name;
+        Format.fprintf formatter
+          "GapiLens.set = (fun v x -> { x with %s = v });" ocaml_name;
+        Format.fprintf formatter "@]@,}")
       fields
   in
 
@@ -131,14 +131,14 @@ let build_schema_inner_module file_lens complex_type =
     match fields with
     | [] -> Format.fprintf formatter "@,@,@[<v 2>let empty = ()@,"
     | _ ->
-      Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
-      List.iter
-        (fun { Field.ocaml_name; field_type; empty_value; _ } ->
-           if ComplexType.is_enum field_type then
-             Format.fprintf formatter "%s = \"\";@," ocaml_name
-           else Format.fprintf formatter "%s = %s;@," ocaml_name empty_value)
-        fields;
-      Format.fprintf formatter "@]@,}@,"
+        Format.fprintf formatter "@,@,@[<v 2>let empty = {@,";
+        List.iter
+          (fun { Field.ocaml_name; field_type; empty_value; _ } ->
+            if ComplexType.is_enum field_type then
+              Format.fprintf formatter "%s = \"\";@," ocaml_name
+            else Format.fprintf formatter "%s = %s;@," ocaml_name empty_value)
+          fields;
+        Format.fprintf formatter "@]@,}@,"
   in
 
   let render_render_function formatter fields =
@@ -146,79 +146,79 @@ let build_schema_inner_module file_lens complex_type =
         (name, prefix, field_type, in_dictionary) =
       match field_type.ComplexType.data_type with
       | ComplexType.Scalar scalar ->
-        (match scalar.ScalarType.data_type with
-         | ScalarType.String ->
-           if in_dictionary then
-             Format.fprintf formatter "GapiJson.render_nullable_string_value"
-           else Format.fprintf formatter "GapiJson.render_string_value"
-         | ScalarType.Boolean ->
-           Format.fprintf formatter "GapiJson.render_bool_value"
-         | ScalarType.Integer ->
-           Format.fprintf formatter "GapiJson.render_int_value"
-         | ScalarType.Int64 ->
-           Format.fprintf formatter "GapiJson.render_int64_value"
-         | ScalarType.Float ->
-           Format.fprintf formatter "GapiJson.render_float_value"
-         | ScalarType.DateTime | ScalarType.Date ->
-           Format.fprintf formatter "GapiJson.render_date_value");
-        Format.fprintf formatter " %s" name
+          (match scalar.ScalarType.data_type with
+          | ScalarType.String ->
+              if in_dictionary then
+                Format.fprintf formatter "GapiJson.render_nullable_string_value"
+              else Format.fprintf formatter "GapiJson.render_string_value"
+          | ScalarType.Boolean ->
+              Format.fprintf formatter "GapiJson.render_bool_value"
+          | ScalarType.Integer ->
+              Format.fprintf formatter "GapiJson.render_int_value"
+          | ScalarType.Int64 ->
+              Format.fprintf formatter "GapiJson.render_int64_value"
+          | ScalarType.Float ->
+              Format.fprintf formatter "GapiJson.render_float_value"
+          | ScalarType.DateTime | ScalarType.Date ->
+              Format.fprintf formatter "GapiJson.render_date_value");
+          Format.fprintf formatter " %s" name
       | ComplexType.Array { ComplexType.data_type = ComplexType.Reference _; _ }
       | ComplexType.Array
           { ComplexType.data_type = ComplexType.AnonymousObject _; _ } ->
-        Format.fprintf formatter "GapiJson.render_array %s %srender" name
-          prefix
+          Format.fprintf formatter "GapiJson.render_array %s %srender" name
+            prefix
       | ComplexType.Array inner_type ->
-        Format.fprintf formatter "GapiJson.render_array %s (%a)" name
-          render_curried_function
-          ("\"\"", prefix, inner_type, false)
+          Format.fprintf formatter "GapiJson.render_array %s (%a)" name
+            render_curried_function
+            ("\"\"", prefix, inner_type, false)
       | ComplexType.Dictionary
           ({ ComplexType.data_type = ComplexType.Reference _; _ } as inner_type)
       | ComplexType.Dictionary
           ({ ComplexType.data_type = ComplexType.AnonymousObject _; _ } as
            inner_type) ->
-        Format.fprintf formatter
-          "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a \
-           v)"
-          name render_curried_function
-          ("id", prefix, inner_type, true)
+          Format.fprintf formatter
+            "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a \
+             v)"
+            name render_curried_function
+            ("id", prefix, inner_type, true)
       | ComplexType.Dictionary inner_type ->
-        Format.fprintf formatter
-          "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a \
-           v)"
-          name render_curried_function
-          ("id", prefix, inner_type, true)
+          Format.fprintf formatter
+            "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a \
+             v)"
+            name render_curried_function
+            ("id", prefix, inner_type, true)
       | ComplexType.Reference _ | ComplexType.AnonymousObject _ ->
-        Format.fprintf formatter
-          "(fun v -> GapiJson.render_object %s (%srender_content v))" name
-          prefix
+          Format.fprintf formatter
+            "(fun v -> GapiJson.render_object %s (%srender_content v))" name
+            prefix
       | _ -> failwith "Unexpected complex type in render_curried_function"
     in
     Format.fprintf formatter "@,@[<v 2>let rec render_content x = @,@[<v 2> [@,";
     List.iter
       (fun {
-         Field.ocaml_name;
-         original_name;
-         ocaml_type_module;
-         field_type;
-         is_recursive;
-         is_option;
-         _;
-       } ->
-         let name = "\"" ^ original_name ^ "\"" in
-         let prefix =
-           if is_recursive || is_option then "" else ocaml_type_module ^ "."
-         in
-         match field_type.ComplexType.data_type with
-         | (ComplexType.Reference _ | ComplexType.AnonymousObject _)
-           when is_option ->
-           Format.fprintf formatter
-             "GapiUtils.option_map_default (fun v -> GapiJson.render_object \
-              \"%s\" (render_content v)) [] x.%s;@,"
-             original_name ocaml_name
-         | _ ->
-           Format.fprintf formatter "%a x.%s;@," render_curried_function
-             (name, prefix, field_type, false)
-             ocaml_name)
+             Field.ocaml_name;
+             original_name;
+             ocaml_type_module;
+             field_type;
+             is_recursive;
+             is_option;
+             _;
+           } ->
+        let name = "\"" ^ original_name ^ "\"" in
+        let prefix =
+          if is_recursive || is_option then "" else ocaml_type_module ^ "."
+        in
+        match field_type.ComplexType.data_type with
+        | (ComplexType.Reference _ | ComplexType.AnonymousObject _)
+          when is_option ->
+            Format.fprintf formatter
+              "GapiUtils.option_map_default (fun v -> GapiJson.render_object \
+               \"%s\" (render_content v)) [] x.%s;@,"
+              original_name ocaml_name
+        | _ ->
+            Format.fprintf formatter "%a x.%s;@," render_curried_function
+              (name, prefix, field_type, false)
+              ocaml_name)
       fields;
     Format.fprintf formatter "@]@,@]]@,";
     Format.fprintf formatter
@@ -230,146 +230,146 @@ let build_schema_inner_module file_lens complex_type =
     let render_pattern formatter (name, field_type) =
       match field_type.ComplexType.data_type with
       | ComplexType.Scalar scalar ->
-        Format.fprintf formatter
-          "| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = %s; \
-           data_type = GapiJson.Scalar },@ %s v) ->@]@,"
-          name
-          (ScalarType.get_json_type scalar.ScalarType.data_type)
+          Format.fprintf formatter
+            "| @[<hv 2>GapiCore.AnnotatedTree.Leaf@ ({ GapiJson.name = %s; \
+             data_type = GapiJson.Scalar },@ %s v) ->@]@,"
+            name
+            (ScalarType.get_json_type scalar.ScalarType.data_type)
       | ComplexType.Array _ ->
-        Format.fprintf formatter
-          "| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = %s; \
-           data_type = GapiJson.Array },@ cs) ->@]@,"
-          name
+          Format.fprintf formatter
+            "| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = %s; \
+             data_type = GapiJson.Array },@ cs) ->@]@,"
+            name
       | ComplexType.Reference _ | ComplexType.AnonymousObject _
       | ComplexType.Dictionary _ ->
-        Format.fprintf formatter
-          "| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = %s; \
-           data_type = GapiJson.Object },@ cs) ->@]@,"
-          name
+          Format.fprintf formatter
+            "| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = %s; \
+             data_type = GapiJson.Object },@ cs) ->@]@,"
+            name
       | _ -> failwith "Unexpected complex type in render_pattern"
     in
 
     let render_empty formatter (prefix, field_type) =
       match field_type.ComplexType.data_type with
       | ComplexType.Reference _ | ComplexType.AnonymousObject _ ->
-        Format.fprintf formatter "%sempty" prefix
+          Format.fprintf formatter "%sempty" prefix
       | ComplexType.Array _ | ComplexType.Dictionary _ ->
-        Format.fprintf formatter "[]"
+          Format.fprintf formatter "[]"
       | ComplexType.Scalar scalar ->
-        Format.fprintf formatter "%s" scalar.ScalarType.empty_value
+          Format.fprintf formatter "%s" scalar.ScalarType.empty_value
       | _ -> failwith "Unexpected complex type in render_empty"
     in
 
     let rec render_nested_parse formatter (name, prefix, field_type) =
       match field_type.ComplexType.data_type with
       | ComplexType.Reference _ | ComplexType.AnonymousObject _ ->
-        Format.fprintf formatter "%sparse" prefix
+          Format.fprintf formatter "%sparse" prefix
       | ComplexType.Array inner_type ->
-        Format.fprintf formatter
-          "@[<hv 2>(fun x' -> function@,\
-           %a@[<hv 2>| e ->@ GapiJson.unexpected \
-           \"%s.%s.parse.parse_collection\" e x')@]@]"
-          render_parse_element
-          ( name,
-            prefix,
-            inner_type,
-            ComplexType.get_convert_function inner_type ^ "v" )
-          container_name module_name
+          Format.fprintf formatter
+            "@[<hv 2>(fun x' -> function@,\
+             %a@[<hv 2>| e ->@ GapiJson.unexpected \
+             \"%s.%s.parse.parse_collection\" e x')@]@]"
+            render_parse_element
+            ( name,
+              prefix,
+              inner_type,
+              ComplexType.get_convert_function inner_type ^ "v" )
+            container_name module_name
       | ComplexType.Dictionary inner_type ->
-        Format.fprintf formatter
-          "@[<hv 2>(fun x' -> function@,\
-           %a@[<hv 2>| e ->@ GapiJson.unexpected \
-           \"%s.%s.parse.parse_dictionary\" e x')@]@]"
-          render_parse_element
-          ( "n",
-            prefix,
-            inner_type,
-            "(n, " ^ ComplexType.get_convert_function inner_type ^ "v)" )
-          container_name module_name
+          Format.fprintf formatter
+            "@[<hv 2>(fun x' -> function@,\
+             %a@[<hv 2>| e ->@ GapiJson.unexpected \
+             \"%s.%s.parse.parse_dictionary\" e x')@]@]"
+            render_parse_element
+            ( "n",
+              prefix,
+              inner_type,
+              "(n, " ^ ComplexType.get_convert_function inner_type ^ "v)" )
+            container_name module_name
       | ComplexType.Scalar scalar ->
-        Format.fprintf formatter
-          "@[<hv 2>(fun x' -> function@,\
-           %a@[<hv 2>| e ->@ GapiJson.unexpected \
-           \"%s.%s.parse.parse_scalar\" e x')@]@]"
-          render_parse_element
-          ( name,
-            prefix,
-            field_type,
-            ScalarType.get_convert_function scalar.ScalarType.data_type ^ "v"
-          )
-          container_name module_name
+          Format.fprintf formatter
+            "@[<hv 2>(fun x' -> function@,\
+             %a@[<hv 2>| e ->@ GapiJson.unexpected \
+             \"%s.%s.parse.parse_scalar\" e x')@]@]"
+            render_parse_element
+            ( name,
+              prefix,
+              field_type,
+              ScalarType.get_convert_function scalar.ScalarType.data_type ^ "v"
+            )
+            container_name module_name
       | _ -> failwith "Unexpected complex type in render_nested_parse"
     and render_parse_element formatter (name, prefix, field_type, cont) =
       match field_type.ComplexType.data_type with
       | ComplexType.Scalar scalar ->
-        Format.fprintf formatter "@[<v 2>%a%s@]@," render_pattern
-          (name, field_type) cont
+          Format.fprintf formatter "@[<v 2>%a%s@]@," render_pattern
+            (name, field_type) cont
       | ComplexType.Array inner_type ->
-        Format.fprintf formatter
-          "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ %a@ %a@ (fun v -> \
-           %s)@ cs@]@]@,"
-          render_pattern (name, field_type) render_nested_parse
-          ("\"\"", prefix, field_type)
-          render_empty (prefix, inner_type) cont
+          Format.fprintf formatter
+            "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ %a@ %a@ (fun v -> \
+             %s)@ cs@]@]@,"
+            render_pattern (name, field_type) render_nested_parse
+            ("\"\"", prefix, field_type)
+            render_empty (prefix, inner_type) cont
       | ComplexType.Dictionary inner_type ->
-        Format.fprintf formatter
-          "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ %a@ (\"\", %a)@ (fun \
-           v -> %s)@ cs@]@]@,"
-          render_pattern (name, field_type) render_nested_parse
-          (name, prefix, field_type) render_empty (prefix, inner_type) cont
+          Format.fprintf formatter
+            "@[<v 2>%a@[<hv 2>GapiJson.parse_collection@ %a@ (\"\", %a)@ (fun \
+             v -> %s)@ cs@]@]@,"
+            render_pattern (name, field_type) render_nested_parse
+            (name, prefix, field_type) render_empty (prefix, inner_type) cont
       | ComplexType.Reference _ | ComplexType.AnonymousObject _ ->
-        Format.fprintf formatter
-          "@[<v 2>%a@[<hv 2>GapiJson.parse_children@ %sparse@ %sempty@ (fun \
-           v -> %s)@ cs@]@]@,"
-          render_pattern (name, field_type) prefix prefix cont
+          Format.fprintf formatter
+            "@[<v 2>%a@[<hv 2>GapiJson.parse_children@ %sparse@ %sempty@ (fun \
+             v -> %s)@ cs@]@]@,"
+            render_pattern (name, field_type) prefix prefix cont
       | _ -> failwith "Unexpected complex type in render_parse_element"
     in
 
     Format.fprintf formatter "@,@[<v 2>let rec parse x = function@,";
     List.iter
       (fun {
-         Field.ocaml_name;
-         original_name;
-         ocaml_type_module;
-         field_type;
-         is_recursive;
-         is_option;
-         _;
-       } ->
-         let name = "\"" ^ original_name ^ "\"" in
-         let prefix =
-           if is_recursive || is_option then "" else ocaml_type_module ^ "."
-         in
-         match field_type.ComplexType.data_type with
-         | ComplexType.Scalar scalar ->
-           render_parse_element formatter
-             ( name,
-               prefix,
-               field_type,
-               "{ x with " ^ ocaml_name ^ " = "
-               ^ ScalarType.get_convert_function scalar.ScalarType.data_type
-               ^ "v }" );
-           if scalar.ScalarType.data_type = ScalarType.Float then
-             (* Float type includes integral literals *)
-             render_parse_element formatter
-               ( name,
-                 prefix,
-                 field_type
-                 |> ComplexType.data_type
-                    ^= ComplexType.Scalar
-                      (scalar |> ScalarType.data_type ^= ScalarType.Integer),
-                 "{ x with " ^ ocaml_name ^ " = float_of_int v }" )
-         | _ when is_option ->
-           render_parse_element formatter
-             ( name,
-               prefix,
-               field_type,
-               "{ x with " ^ ocaml_name ^ " = Some v }" )
-         | ComplexType.Reference _ | ComplexType.AnonymousObject _
-         | ComplexType.Array _ | ComplexType.Dictionary _ ->
-           render_parse_element formatter
-             (name, prefix, field_type, "{ x with " ^ ocaml_name ^ " = v }")
-         | _ -> failwith "Unexpected complex type rendering parse function")
+             Field.ocaml_name;
+             original_name;
+             ocaml_type_module;
+             field_type;
+             is_recursive;
+             is_option;
+             _;
+           } ->
+        let name = "\"" ^ original_name ^ "\"" in
+        let prefix =
+          if is_recursive || is_option then "" else ocaml_type_module ^ "."
+        in
+        match field_type.ComplexType.data_type with
+        | ComplexType.Scalar scalar ->
+            render_parse_element formatter
+              ( name,
+                prefix,
+                field_type,
+                "{ x with " ^ ocaml_name ^ " = "
+                ^ ScalarType.get_convert_function scalar.ScalarType.data_type
+                ^ "v }" );
+            if scalar.ScalarType.data_type = ScalarType.Float then
+              (* Float type includes integral literals *)
+              render_parse_element formatter
+                ( name,
+                  prefix,
+                  field_type
+                  |> ComplexType.data_type
+                     ^= ComplexType.Scalar
+                          (scalar |> ScalarType.data_type ^= ScalarType.Integer),
+                  "{ x with " ^ ocaml_name ^ " = float_of_int v }" )
+        | _ when is_option ->
+            render_parse_element formatter
+              ( name,
+                prefix,
+                field_type,
+                "{ x with " ^ ocaml_name ^ " = Some v }" )
+        | ComplexType.Reference _ | ComplexType.AnonymousObject _
+        | ComplexType.Array _ | ComplexType.Dictionary _ ->
+            render_parse_element formatter
+              (name, prefix, field_type, "{ x with " ^ ocaml_name ^ " = v }")
+        | _ -> failwith "Unexpected complex type rendering parse function")
       fields;
     Format.fprintf formatter
       "@[<v 2>| GapiCore.AnnotatedTree.Node@,\
@@ -401,61 +401,61 @@ let build_schema_inner_module file_lens complex_type =
     GapiLens.get_state inner_module_lens >>= fun inner_module ->
     lift_io
       (match type_t with
-       | InnerSchemaModule.Alias alias_name ->
-         Format.fprintf formatter "module %s = %s@\n\n"
-           inner_module.InnerSchemaModule.ocaml_name alias_name
-       | _ ->
-         Format.fprintf formatter "module %s =@\n@[<v 2>struct@,"
-           inner_module.InnerSchemaModule.ocaml_name)
+      | InnerSchemaModule.Alias alias_name ->
+          Format.fprintf formatter "module %s = %s@\n\n"
+            inner_module.InnerSchemaModule.ocaml_name alias_name
+      | _ ->
+          Format.fprintf formatter "module %s =@\n@[<v 2>struct@,"
+            inner_module.InnerSchemaModule.ocaml_name)
     >>= fun () ->
     let inner_modules = inner_module.InnerSchemaModule.inner_modules in
     mapM_
       (fun (id, inner_module) ->
-         render_inner_module formatter container_name id true
-           (inner_module_lens |-- InnerSchemaModule.get_inner_module_lens id))
+        render_inner_module formatter container_name id true
+          (inner_module_lens |-- InnerSchemaModule.get_inner_module_lens id))
       inner_modules
     >>= fun () ->
     lift_io
       (match type_t with
-       | InnerSchemaModule.Record record ->
-         let fields = record |. Record.field_list in
-         render_type_t formatter fields;
-         render_lenses formatter fields;
-         render_empty formatter fields;
-         render_render_function formatter fields;
-         render_parse_function formatter fields container_name module_name;
-         render_footer formatter is_nested
-       | InnerSchemaModule.List inner_module ->
-         (* type t *)
-         Format.fprintf formatter "type t = %s.t list@\n@\n"
-           inner_module.InnerSchemaModule.ocaml_name;
+      | InnerSchemaModule.Record record ->
+          let fields = record |. Record.field_list in
+          render_type_t formatter fields;
+          render_lenses formatter fields;
+          render_empty formatter fields;
+          render_render_function formatter fields;
+          render_parse_function formatter fields container_name module_name;
+          render_footer formatter is_nested
+      | InnerSchemaModule.List inner_module ->
+          (* type t *)
+          Format.fprintf formatter "type t = %s.t list@\n@\n"
+            inner_module.InnerSchemaModule.ocaml_name;
 
-         (* empty *)
-         Format.fprintf formatter "let empty = []@\n@\n";
+          (* empty *)
+          Format.fprintf formatter "let empty = []@\n@\n";
 
-         (* render *)
-         Format.fprintf formatter
-           "@[<v 2>let rec render x = @,\
-            GapiJson.render_array \"\" %s.render x@]@\n\
-            @\n"
-           inner_module.InnerSchemaModule.ocaml_name;
+          (* render *)
+          Format.fprintf formatter
+            "@[<v 2>let rec render x = @,\
+             GapiJson.render_array \"\" %s.render x@]@\n\
+             @\n"
+            inner_module.InnerSchemaModule.ocaml_name;
 
-         (* parse *)
-         Format.fprintf formatter "@[<v 2>let rec parse x = function@,";
-         Format.fprintf formatter
-           "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \
-            \"\"; data_type = GapiJson.Array },@ cs) ->@]@,\
-            @[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> \
-            xs )@ cs@]@]@,"
-           inner_module.InnerSchemaModule.ocaml_name
-           inner_module.InnerSchemaModule.ocaml_name;
-         Format.fprintf formatter
-           "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
-           container_name module_name;
+          (* parse *)
+          Format.fprintf formatter "@[<v 2>let rec parse x = function@,";
+          Format.fprintf formatter
+            "@[<v 2>| @[<hv 2>GapiCore.AnnotatedTree.Node@ ({ GapiJson.name = \
+             \"\"; data_type = GapiJson.Array },@ cs) ->@]@,\
+             @[<hv 2>GapiJson.parse_collection@ %s.parse@ %s.empty@ (fun xs -> \
+             xs )@ cs@]@]@,"
+            inner_module.InnerSchemaModule.ocaml_name
+            inner_module.InnerSchemaModule.ocaml_name;
+          Format.fprintf formatter
+            "@[<v 2>| e ->@,GapiJson.unexpected \"%s.%s.parse\" e x@]@]"
+            container_name module_name;
 
-         (* footer *)
-         render_footer formatter false
-       | _ -> ())
+          (* footer *)
+          render_footer formatter false
+      | _ -> ())
   in
 
   let module_name =
@@ -480,10 +480,10 @@ let build_schema_inner_module file_lens complex_type =
 
 module FieldSet = struct
   include Set.Make (struct
-      type t = string * Field.t
+    type t = string * Field.t
 
-      let compare (id1, _) (id2, _) = compare id1 id2
-    end)
+    let compare (id1, _) (id2, _) = compare id1 id2
+  end)
 
   let merge element s =
     if mem element s then
@@ -510,7 +510,7 @@ module FieldSet = struct
         let new_enum, new_enum_descriptions =
           List.fold_left2
             (fun ((es, ds) as r) e d ->
-               if List.mem e es then r else (e :: es, d :: ds))
+              if List.mem e es then r else (e :: es, d :: ds))
             ([], []) (old_enum @ enum)
             (old_enum_descriptions @ enum_descriptions)
         in
@@ -531,10 +531,10 @@ module FieldSet = struct
   let add_parameters_list xs s =
     List.fold_left
       (fun s' (id, parameter) ->
-         let complex_type = ComplexType.create id parameter in
-         let field = Field.create (id, complex_type) in
-         let element = (id, field) in
-         merge element s')
+        let complex_type = ComplexType.create id parameter in
+        let field = Field.create (id, complex_type) in
+        let element = (id, field) in
+        merge element s')
       s xs
 end
 
@@ -559,19 +559,19 @@ let generate_enum_module formatter inner_module_lens
        enum_module.EnumModule.ocaml_name;
      List.iter
        (fun (_, { EnumModule.constructor; _ }) ->
-          Format.fprintf formatter "| %s@," constructor)
+         Format.fprintf formatter "| %s@," constructor)
        enum_module.EnumModule.values;
      Format.fprintf formatter
        "@]@\n@[<v 2>let to_string = function@,| Default -> \"\"@,";
      List.iter
        (fun (_, { EnumModule.constructor; value; _ }) ->
-          Format.fprintf formatter "| %s -> \"%s\"@," constructor value)
+         Format.fprintf formatter "| %s -> \"%s\"@," constructor value)
        enum_module.EnumModule.values;
      Format.fprintf formatter
        "@]@\n@[<v 2>let of_string = function@,| \"\" -> Default@,";
      List.iter
        (fun (_, { EnumModule.constructor; value; _ }) ->
-          Format.fprintf formatter "| \"%s\" -> %s@," value constructor)
+         Format.fprintf formatter "| \"%s\" -> %s@," value constructor)
        enum_module.EnumModule.values;
      Format.fprintf formatter
        "| s -> failwith (\"Unexpected value for %s:\" ^ s)@]@]@\n@\nend@\n@\n"
@@ -598,7 +598,7 @@ let generate_enum_modules formatter inner_module_lens filter source =
   in
   mapM_
     (fun parameter ->
-       generate_enum_module formatter inner_module_lens parameter)
+      generate_enum_module formatter inner_module_lens parameter)
     (FieldSet.elements enum_parameters_set)
 
 let generate_parameters_module filter_parameters formatter inner_module_lens
@@ -617,10 +617,10 @@ let generate_parameters_module filter_parameters formatter inner_module_lens
       resource_id;
     FieldSet.iter
       (fun (id, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-         let list_type =
-           if ComplexType.is_repeated field_type then " list" else ""
-         in
-         Format.fprintf formatter "%s : %s%s;@," ocaml_name ocaml_type list_type)
+        let list_type =
+          if ComplexType.is_repeated field_type then " list" else ""
+        in
+        Format.fprintf formatter "%s : %s%s;@," ocaml_name ocaml_type list_type)
       parameters;
     Format.fprintf formatter "@]@,}@,"
   in
@@ -637,9 +637,9 @@ let generate_parameters_module filter_parameters formatter inner_module_lens
        key = \"\";@,";
     FieldSet.iter
       (fun (id, { Field.ocaml_name; default; field_type; _ }) ->
-         if ComplexType.is_repeated field_type then
-           Format.fprintf formatter "%s = [];@," ocaml_name
-         else Format.fprintf formatter "%s = %s;@," ocaml_name default)
+        if ComplexType.is_repeated field_type then
+          Format.fprintf formatter "%s = [];@," ocaml_name
+        else Format.fprintf formatter "%s = %s;@," ocaml_name default)
       parameters;
     Format.fprintf formatter "@]@,}@,"
   in
@@ -683,8 +683,8 @@ let generate_parameters_module filter_parameters formatter inner_module_lens
        ?(standard_parameters = GapiService.StandardParameters.default)@,";
     FieldSet.iter
       (fun (id, field) ->
-         Format.fprintf formatter "?(%s = default.%s)@," field.Field.ocaml_name
-           field.Field.ocaml_name)
+        Format.fprintf formatter "?(%s = default.%s)@," field.Field.ocaml_name
+          field.Field.ocaml_name)
       parameters;
     Format.fprintf formatter
       "() =@]@,\
@@ -699,7 +699,7 @@ let generate_parameters_module filter_parameters formatter inner_module_lens
        key = standard_parameters.GapiService.StandardParameters.key;@,";
     FieldSet.iter
       (fun (id, field) ->
-         Format.fprintf formatter "%s;@," field.Field.ocaml_name)
+        Format.fprintf formatter "%s;@," field.Field.ocaml_name)
       parameters;
     Format.fprintf formatter
       "@]@,} in@,if parameters = default then None else Some parameters@]@,"
@@ -718,12 +718,12 @@ let generate_parameters_module filter_parameters formatter inner_module_lens
   >>= fun () ->
   lift_io
     (if parameters <> FieldSet.empty then (
-        Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
-        render_type_t formatter parameters;
-        render_default formatter parameters;
-        render_to_key_value_list formatter parameters;
-        render_merge_parameters formatter parameters;
-        Format.fprintf formatter "@]@\nend@\n@\n"))
+       Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+       render_type_t formatter parameters;
+       render_default formatter parameters;
+       render_to_key_value_list formatter parameters;
+       render_merge_parameters formatter parameters;
+       Format.fprintf formatter "@]@\nend@\n@\n"))
 
 let forward_slash_regxp = Str.regexp_string "/"
 
@@ -737,31 +737,31 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       let splitted_path = Str.split_delim forward_slash_regxp path in
       List.map
         (fun p ->
-           if GapiUtils.string_starts_with p "{" then
-             let id = String.sub p 1 (String.index p '}' - 1)
-             and suffix =
-               try
-                 Some
-                   (String.sub p (String.index p ':')
-                      (String.length p - String.index p ':'))
-               with Not_found -> None
-             in
-             let { Field.ocaml_name; to_string_function; _ } =
-               methd |. Method.get_parameter_lens id
-             in
-             match suffix with
-             | None -> Printf.sprintf "(%s %s)" to_string_function ocaml_name
-             | Some s ->
-               Printf.sprintf "(%s %s ^ \"%s\")" to_string_function ocaml_name
-                 s
-           else "\"" ^ p ^ "\"")
+          if GapiUtils.string_starts_with p "{" then
+            let id = String.sub p 1 (String.index p '}' - 1)
+            and suffix =
+              try
+                Some
+                  (String.sub p (String.index p ':')
+                     (String.length p - String.index p ':'))
+              with Not_found -> None
+            in
+            let { Field.ocaml_name; to_string_function; _ } =
+              methd |. Method.get_parameter_lens id
+            in
+            match suffix with
+            | None -> Printf.sprintf "(%s %s)" to_string_function ocaml_name
+            | Some s ->
+                Printf.sprintf "(%s %s ^ \"%s\")" to_string_function ocaml_name
+                  s
+          else "\"" ^ p ^ "\"")
         splitted_path
     in
     let print_path_list formatter pl =
       List.iter
         (fun p ->
-           if p == List.hd pl then Format.fprintf formatter "%s" p
-           else Format.fprintf formatter ";@ %s" p)
+          if p == List.hd pl then Format.fprintf formatter "%s" p
+          else Format.fprintf formatter ";@ %s" p)
         pl
     in
     lift_io
@@ -798,10 +798,10 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
     let is_etag_present =
       GapiUtils.option_map_default
         (fun { Field.field_type; _ } ->
-           match field_type.ComplexType.data_type with
-           | ComplexType.Object properties ->
-             List.exists (fun (id, _) -> id = "etag") properties
-           | _ -> false)
+          match field_type.ComplexType.data_type with
+          | ComplexType.Object properties ->
+              List.exists (fun (id, _) -> id = "etag") properties
+          | _ -> false)
         false request_parameter
     in
 
@@ -811,7 +811,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
            "@[<hov 2>let etag =@ GapiUtils.etag_option %s.%s.etag@ in@]@\n"
            (request_parameter |. GapiLens.option_get |. Field.ocaml_name)
            (request_module |. GapiLens.option_get
-            |. InnerSchemaModule.ocaml_name);
+          |. InnerSchemaModule.ocaml_name);
        (* Build query parameters *)
        Format.fprintf formatter
          "@[<hov 2>let params =@ %s.merge_parameters@ \
@@ -819,15 +819,15 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          parameters_module_name;
        List.iter
          (fun (id, json_schema) ->
-            let parameter = methd |. Method.get_parameter_lens id in
-            if json_schema.JsonSchema.location = "query" then
-              Format.fprintf formatter "%s%s@ "
-                (if
+           let parameter = methd |. Method.get_parameter_lens id in
+           if json_schema.JsonSchema.location = "query" then
+             Format.fprintf formatter "%s%s@ "
+               (if
                   json_schema.JsonSchema.required
                   || json_schema.JsonSchema.default <> ""
-                 then "~"
-                 else "?")
-                parameter.Field.ocaml_name)
+                then "~"
+                else "?")
+               parameter.Field.ocaml_name)
          rest_method.RestMethod.parameters;
        Format.fprintf formatter
          "()@ in@]@\n\
@@ -836,13 +836,15 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          parameters_module_name)
     >>= fun () ->
     (* Invoke service function *)
-    let function_to_call = String.lowercase_ascii rest_method.RestMethod.httpMethod in
+    let function_to_call =
+      String.lowercase_ascii rest_method.RestMethod.httpMethod
+    in
 
     (* Use put' or patch' if request type is different from response type *)
     let apostrophe =
       if
         (rest_method.RestMethod.httpMethod = "PUT"
-         || rest_method.RestMethod.httpMethod = "PATCH")
+        || rest_method.RestMethod.httpMethod = "PATCH")
         && request_module <> response_module
       then "'"
       else ""
@@ -866,13 +868,13 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          Format.fprintf formatter
            "~data_to_post:(GapiJson.render_json %s.to_data_model)@ ~data:%s@ "
            (request_module |. GapiLens.option_get
-            |. InnerSchemaModule.ocaml_name)
+          |. InnerSchemaModule.ocaml_name)
            (request_parameter |. GapiLens.option_get |. Field.ocaml_name)
        else if rest_method.RestMethod.httpMethod = "POST" then
          if GapiOption.is_some response_module then
            Format.fprintf formatter "~data:%s.empty@ "
              (response_module |. GapiLens.option_get
-              |. InnerSchemaModule.ocaml_name)
+            |. InnerSchemaModule.ocaml_name)
          else Format.fprintf formatter "~data:()@ "
        else if rest_method.RestMethod.httpMethod = "PUT" then
          Format.fprintf formatter
@@ -884,7 +886,7 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          Format.fprintf formatter
            "(GapiJson.parse_json_response %s.of_data_model)@ "
            (response_module |. GapiLens.option_get
-            |. InnerSchemaModule.ocaml_name)
+          |. InnerSchemaModule.ocaml_name)
        else Format.fprintf formatter "GapiRequest.parse_empty_response@ ";
        Format.fprintf formatter "session@ @]@\n")
   in
@@ -901,9 +903,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
         in
         List.filter
           (fun (_, param) ->
-             (not param.JsonSchema.required)
-             && param.JsonSchema.location = "query"
-             && test_default param.JsonSchema.default)
+            (not param.JsonSchema.required)
+            && param.JsonSchema.location = "query"
+            && test_default param.JsonSchema.default)
           rest_method.RestMethod.parameters
       in
       GapiLens.get_state method_lens >>= fun methd ->
@@ -912,10 +914,10 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
       >>= fun () ->
       lift_io
       $ List.iter
-        (fun (id, _) ->
-           let parameter = methd |. Method.get_parameter_lens id in
-           render parameter)
-        optional_parameters
+          (fun (id, _) ->
+            let parameter = methd |. Method.get_parameter_lens id in
+            render parameter)
+          optional_parameters
     in
     (* Optional parameters with default *)
     render_optional_parameters true (fun { Field.ocaml_name; default; _ } ->
@@ -933,8 +935,8 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
     lift_io
       (List.iter
          (fun id ->
-            let parameter = methd |. Method.get_parameter_lens id in
-            Format.fprintf formatter "~%s@ " parameter.Field.ocaml_name)
+           let parameter = methd |. Method.get_parameter_lens id in
+           Format.fprintf formatter "~%s@ " parameter.Field.ocaml_name)
          rest_method.RestMethod.parameterOrder;
        (* Request parameter *)
        if GapiOption.is_some methd.Method.request then
@@ -989,7 +991,7 @@ let rec build_service_inner_module file_lens current_module_lens is_nested
   >>= fun () ->
   mapM_
     (fun (id, r) ->
-       build_service_inner_module file_lens inner_module_lens true (id, r))
+      build_service_inner_module file_lens inner_module_lens true (id, r))
     resource.RestResource.resources
   >>= fun () ->
   generate_enum_modules formatter inner_module_lens filter_resource_parameters
@@ -1000,7 +1002,7 @@ let rec build_service_inner_module file_lens current_module_lens is_nested
   >>= fun () ->
   mapM_
     (fun rest_method ->
-       generate_rest_method formatter inner_module_lens rest_method)
+      generate_rest_method formatter inner_module_lens rest_method)
     resource.RestResource.methods
   >>= fun () -> lift_io $ Format.fprintf formatter "@]@\nend@\n@\n"
 
@@ -1028,7 +1030,7 @@ let rec build_api_level_service_module file_lens =
   >>= fun methods ->
   mapM_
     (fun rest_method ->
-       generate_rest_method formatter api_level_module_lens rest_method)
+      generate_rest_method formatter api_level_module_lens rest_method)
     methods
 
 (* END Generate service inner modules *)
@@ -1045,16 +1047,16 @@ let build_module file_type generate_body =
   file_lens ^=! file >>= fun () ->
   lift_io
   $ Printf.printf "Building %s %s (%s)...%!"
-    (string_of_file_type file_type)
-    file.File.module_name file.File.file_name
+      (string_of_file_type file_type)
+      file.File.module_name file.File.file_name
   >>= fun () ->
   let oc, formatter = open_file file.File.file_name in
   formatter_lens ^=! formatter >>= fun () ->
   lift_io
   $ Format.fprintf formatter
-    "(* Warning! This file is generated. Modify at your own risk.\n\
-    \        *)@\n\
-     @\n"
+      "(* Warning! This file is generated. Modify at your own risk.\n\
+      \        *)@\n\
+       @\n"
   >>= fun () ->
   generate_body file_lens >>= fun () ->
   return
@@ -1101,7 +1103,7 @@ let build_service_module =
     >>= fun schema_module_name ->
     lift_io
     $ Format.fprintf formatter "open GapiUtils.Infix@\nopen %s@\n@\n"
-      schema_module_name
+        schema_module_name
     >>= fun () ->
     GapiLens.get_state
       RestDescription.(
@@ -1126,10 +1128,10 @@ let build_service_module =
     >>= fun resources ->
     mapM_
       (fun (resource_id, resource) ->
-         build_service_inner_module file_lens
-           (State.get_service_module
-            |-- ServiceModule.get_inner_module_lens resource_id)
-           false (resource_id, resource))
+        build_service_inner_module file_lens
+          (State.get_service_module
+          |-- ServiceModule.get_inner_module_lens resource_id)
+          false (resource_id, resource))
       resources
     >>= fun () -> build_api_level_service_module file_lens
   in
@@ -1140,29 +1142,29 @@ let build_service_module =
 (* Generate schema module interface *)
 
 let rec generate_schema_module_signature formatter_lens schema_module is_nested
-  =
+    =
   let type_t = schema_module.InnerSchemaModule.type_t in
   match type_t with
   | InnerSchemaModule.Record record ->
-    let fields = record.Record.fields in
-    GapiLens.get_state formatter_lens >>= fun formatter ->
-    lift_io
-    $ Format.fprintf formatter "module %s :@\n@[<v 2>sig@,"
-      schema_module.InnerSchemaModule.ocaml_name
-    >>= fun () ->
-    mapM_
-      (fun (_, inner_module) ->
-         generate_schema_module_signature formatter_lens inner_module true)
-      schema_module.InnerSchemaModule.inner_modules
-    >>= fun () ->
-    lift_io
-      ((match fields with
-          | [] -> Format.fprintf formatter "@[<v 2>type t = unit@,"
-          | _ ->
-            (* Type t *)
-            Format.fprintf formatter "@[<v 2>type t = {@,";
-            List.iter
-              (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
+      let fields = record.Record.fields in
+      GapiLens.get_state formatter_lens >>= fun formatter ->
+      lift_io
+      $ Format.fprintf formatter "module %s :@\n@[<v 2>sig@,"
+          schema_module.InnerSchemaModule.ocaml_name
+      >>= fun () ->
+      mapM_
+        (fun (_, inner_module) ->
+          generate_schema_module_signature formatter_lens inner_module true)
+        schema_module.InnerSchemaModule.inner_modules
+      >>= fun () ->
+      lift_io
+        ((match fields with
+         | [] -> Format.fprintf formatter "@[<v 2>type t = unit@,"
+         | _ ->
+             (* Type t *)
+             Format.fprintf formatter "@[<v 2>type t = {@,";
+             List.iter
+               (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
                  if ComplexType.is_enum field_type then
                    Format.fprintf formatter "%s : string;@,(** %s *)@,"
                      ocaml_name
@@ -1171,77 +1173,77 @@ let rec generate_schema_module_signature formatter_lens schema_module is_nested
                    Format.fprintf formatter "%s : %s;@,(** %s *)@," ocaml_name
                      ocaml_type
                      (clean_doc (ComplexType.get_description field_type)))
-              fields;
-            Format.fprintf formatter "@]@,}@\n@\n");
+               fields;
+             Format.fprintf formatter "@]@,}@\n@\n");
 
-       (* Lenses *)
-       List.iter
-         (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
-            if ComplexType.is_enum field_type then
-              Format.fprintf formatter "val %s : (t, string) GapiLens.t@,"
-                ocaml_name
-            else
-              Format.fprintf formatter "val %s : (t, %s) GapiLens.t@,"
-                ocaml_name ocaml_type)
-         fields;
+         (* Lenses *)
+         List.iter
+           (fun (_, { Field.ocaml_name; ocaml_type; field_type; _ }) ->
+             if ComplexType.is_enum field_type then
+               Format.fprintf formatter "val %s : (t, string) GapiLens.t@,"
+                 ocaml_name
+             else
+               Format.fprintf formatter "val %s : (t, %s) GapiLens.t@,"
+                 ocaml_name ocaml_type)
+           fields;
 
-       (* empty, render, parse *)
-       Format.fprintf formatter
-         "@,\
-          val empty : t@,\
-          @,\
-          val render : t -> GapiJson.json_data_model list@,\
-          @,\
-          val parse : t -> GapiJson.json_data_model -> t@,";
+         (* empty, render, parse *)
+         Format.fprintf formatter
+           "@,\
+            val empty : t@,\
+            @,\
+            val render : t -> GapiJson.json_data_model list@,\
+            @,\
+            val parse : t -> GapiJson.json_data_model -> t@,";
 
-       if not is_nested then
+         if not is_nested then
+           (* of_data_model, to_data_model *)
+           Format.fprintf formatter
+             "@,\
+              val to_data_model : t -> GapiJson.json_data_model@,\
+              @,\
+              val of_data_model : GapiJson.json_data_model -> t@,";
+         (* module end *)
+         Format.fprintf formatter "@]@,end@\n@\n")
+  | InnerSchemaModule.List inner_module ->
+      GapiLens.get_state formatter_lens >>= fun formatter ->
+      lift_io
+      $ Format.fprintf formatter "module %s :@\n@[<v 2>sig@,"
+          schema_module.InnerSchemaModule.ocaml_name
+      >>= fun () ->
+      mapM_
+        (fun (_, inner_module) ->
+          generate_schema_module_signature formatter_lens inner_module true)
+        schema_module.InnerSchemaModule.inner_modules
+      >>= fun () ->
+      lift_io
+        ((* Type t *)
+         Format.fprintf formatter "type t = %s.t list@\n"
+           inner_module.InnerSchemaModule.original_name;
+
+         (* empty, render, parse *)
+         Format.fprintf formatter
+           "@,\
+            val empty : t@,\
+            @,\
+            val render : t -> GapiJson.json_data_model list@,\
+            @,\
+            val parse : t -> GapiJson.json_data_model -> t@,";
+
          (* of_data_model, to_data_model *)
          Format.fprintf formatter
            "@,\
             val to_data_model : t -> GapiJson.json_data_model@,\
             @,\
             val of_data_model : GapiJson.json_data_model -> t@,";
-       (* module end *)
-       Format.fprintf formatter "@]@,end@\n@\n")
-  | InnerSchemaModule.List inner_module ->
-    GapiLens.get_state formatter_lens >>= fun formatter ->
-    lift_io
-    $ Format.fprintf formatter "module %s :@\n@[<v 2>sig@,"
-      schema_module.InnerSchemaModule.ocaml_name
-    >>= fun () ->
-    mapM_
-      (fun (_, inner_module) ->
-         generate_schema_module_signature formatter_lens inner_module true)
-      schema_module.InnerSchemaModule.inner_modules
-    >>= fun () ->
-    lift_io
-      ((* Type t *)
-        Format.fprintf formatter "type t = %s.t list@\n"
-          inner_module.InnerSchemaModule.original_name;
 
-        (* empty, render, parse *)
-        Format.fprintf formatter
-          "@,\
-           val empty : t@,\
-           @,\
-           val render : t -> GapiJson.json_data_model list@,\
-           @,\
-           val parse : t -> GapiJson.json_data_model -> t@,";
-
-        (* of_data_model, to_data_model *)
-        Format.fprintf formatter
-          "@,\
-           val to_data_model : t -> GapiJson.json_data_model@,\
-           @,\
-           val of_data_model : GapiJson.json_data_model -> t@,";
-
-        (* module end *)
-        Format.fprintf formatter "@]@,end@\n@\n")
+         (* module end *)
+         Format.fprintf formatter "@]@,end@\n@\n")
   | InnerSchemaModule.Alias alias_name ->
-    GapiLens.get_state formatter_lens >>= fun formatter ->
-    lift_io
-    $ Format.fprintf formatter "module %s : module type of %s@\n@\n"
-      schema_module.InnerSchemaModule.ocaml_name alias_name
+      GapiLens.get_state formatter_lens >>= fun formatter ->
+      lift_io
+      $ Format.fprintf formatter "module %s : module type of %s@\n@\n"
+          schema_module.InnerSchemaModule.ocaml_name alias_name
 
 let build_schema_module_interface =
   let generate_body file_lens =
@@ -1267,7 +1269,7 @@ let build_schema_module_interface =
     >>= fun schema_modules ->
     mapM_
       (fun (_, schema_module) ->
-         generate_schema_module_signature formatter_lens schema_module false)
+        generate_schema_module_signature formatter_lens schema_module false)
       (List.rev schema_modules)
   in
 
@@ -1285,8 +1287,8 @@ let rec generate_service_module_signature omit_declaration file_lens
       enum_module.EnumModule.ocaml_name;
     List.iter
       (fun (_, { EnumModule.constructor; EnumModule.description; _ }) ->
-         Format.fprintf formatter "| %s (** %s *)@," constructor
-           (clean_doc description))
+        Format.fprintf formatter "| %s (** %s *)@," constructor
+          (clean_doc description))
       enum_module.EnumModule.values;
     Format.fprintf formatter
       "@]@,\
@@ -1321,82 +1323,82 @@ let rec generate_service_module_signature omit_declaration file_lens
     State.find_inner_schema_module response_ref >>= fun response_module ->
     lift_io
       ((* Documentation *)
-        Format.fprintf formatter "@[<hov 2>(** %s@\n@\n"
-          (clean_doc methd.Method.description);
-        if methd.Method.supports_media_download then
-          Format.fprintf formatter
-            "If [std_params] includes setting [alt=\"media\"], the file content \
-             is@\n\
-             downloaded as per [media_download].@\n\
-             @\n";
-        Format.fprintf formatter
-          "@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n"
-          base_url;
-        if methd.Method.original_name = "get" then
-          Format.fprintf formatter "@@param etag Optional ETag.@\n";
-        Format.fprintf formatter
-          "@@param std_params Optional standard parameters.@\n";
-        if methd.Method.supports_media_download then
-          Format.fprintf formatter
-            "@@param media_download Location where the content will be saved.@\n";
-        Format.fprintf formatter
-          "@@param custom_headers Optional HTTP custom headers.@\n";
-        List.iter
-          (fun id ->
-             let { Field.ocaml_name; field_type; _ } =
-               List.assoc id methd.Method.parameters
-             in
-             let description = ComplexType.get_description field_type in
-             if description <> "" then
-               Format.fprintf formatter "@@param %s %s@\n" ocaml_name description)
-          methd.Method.parameter_order;
-        Format.fprintf formatter "*)@]@\n";
-        (* Declaration *)
-        Format.fprintf formatter "@[<hv 2>val %s :@ ?base_url:string ->@ "
-          methd.Method.ocaml_name;
-        if methd.Method.original_name = "get" then
-          Format.fprintf formatter "?etag:string ->@ ";
-        Format.fprintf formatter
-          "?std_params:GapiService.StandardParameters.t ->@ ";
-        if methd.Method.supports_media_upload then
-          Format.fprintf formatter "?media_source:GapiMediaResource.t ->@ ";
-        if methd.Method.supports_media_download then
-          Format.fprintf formatter
-            "?media_download:GapiMediaResource.download ->@ ";
-        Format.fprintf formatter "?custom_headers:GapiCore.Header.t list ->@ ";
-        (* Parameters *)
-        List.iter
-          (fun id ->
-             let { Field.ocaml_name; ocaml_type; field_type; _ } =
-               List.assoc id methd.Method.parameters
-             in
-             Format.fprintf formatter "%s%s:%s%s ->@,"
-               (if
-                 ComplexType.is_required field_type
-                 || ComplexType.get_location field_type = ScalarType.Path
-                then ""
-                else "?")
-               ocaml_name ocaml_type
-               (if ComplexType.is_repeated field_type then " list" else ""))
-          methd.Method.parameter_order)
+       Format.fprintf formatter "@[<hov 2>(** %s@\n@\n"
+         (clean_doc methd.Method.description);
+       if methd.Method.supports_media_download then
+         Format.fprintf formatter
+           "If [std_params] includes setting [alt=\"media\"], the file content \
+            is@\n\
+            downloaded as per [media_download].@\n\
+            @\n";
+       Format.fprintf formatter
+         "@@param base_url Service endpoint base URL (defaults to [\"%s\"]).@\n"
+         base_url;
+       if methd.Method.original_name = "get" then
+         Format.fprintf formatter "@@param etag Optional ETag.@\n";
+       Format.fprintf formatter
+         "@@param std_params Optional standard parameters.@\n";
+       if methd.Method.supports_media_download then
+         Format.fprintf formatter
+           "@@param media_download Location where the content will be saved.@\n";
+       Format.fprintf formatter
+         "@@param custom_headers Optional HTTP custom headers.@\n";
+       List.iter
+         (fun id ->
+           let { Field.ocaml_name; field_type; _ } =
+             List.assoc id methd.Method.parameters
+           in
+           let description = ComplexType.get_description field_type in
+           if description <> "" then
+             Format.fprintf formatter "@@param %s %s@\n" ocaml_name description)
+         methd.Method.parameter_order;
+       Format.fprintf formatter "*)@]@\n";
+       (* Declaration *)
+       Format.fprintf formatter "@[<hv 2>val %s :@ ?base_url:string ->@ "
+         methd.Method.ocaml_name;
+       if methd.Method.original_name = "get" then
+         Format.fprintf formatter "?etag:string ->@ ";
+       Format.fprintf formatter
+         "?std_params:GapiService.StandardParameters.t ->@ ";
+       if methd.Method.supports_media_upload then
+         Format.fprintf formatter "?media_source:GapiMediaResource.t ->@ ";
+       if methd.Method.supports_media_download then
+         Format.fprintf formatter
+           "?media_download:GapiMediaResource.download ->@ ";
+       Format.fprintf formatter "?custom_headers:GapiCore.Header.t list ->@ ";
+       (* Parameters *)
+       List.iter
+         (fun id ->
+           let { Field.ocaml_name; ocaml_type; field_type; _ } =
+             List.assoc id methd.Method.parameters
+           in
+           Format.fprintf formatter "%s%s:%s%s ->@,"
+             (if
+                ComplexType.is_required field_type
+                || ComplexType.get_location field_type = ScalarType.Path
+              then ""
+              else "?")
+             ocaml_name ocaml_type
+             (if ComplexType.is_repeated field_type then " list" else ""))
+         methd.Method.parameter_order)
     >>= fun () ->
     lift_io
       ((* Request *)
-        if GapiOption.is_some request_module then
-          Format.fprintf formatter "%s.%s.t ->@,"
-            schema_module.SchemaModule.ocaml_name
-            (request_module |. GapiLens.option_get
-             |. InnerSchemaModule.ocaml_name);
-        (* Session *)
-        Format.fprintf formatter "GapiConversation.Session.t ->@,";
-        (* Response *)
-        if GapiOption.is_some response_module then
-          Format.fprintf formatter "%s.%s.t"
-            schema_module.SchemaModule.ocaml_name
-            (response_module |. GapiLens.option_get
-             |. InnerSchemaModule.ocaml_name)
-        else Format.fprintf formatter "unit";
-        Format.fprintf formatter " * GapiConversation.Session.t@]@\n@\n")
+       if GapiOption.is_some request_module then
+         Format.fprintf formatter "%s.%s.t ->@,"
+           schema_module.SchemaModule.ocaml_name
+           (request_module |. GapiLens.option_get
+          |. InnerSchemaModule.ocaml_name);
+       (* Session *)
+       Format.fprintf formatter "GapiConversation.Session.t ->@,";
+       (* Response *)
+       if GapiOption.is_some response_module then
+         Format.fprintf formatter "%s.%s.t"
+           schema_module.SchemaModule.ocaml_name
+           (response_module |. GapiLens.option_get
+          |. InnerSchemaModule.ocaml_name)
+       else Format.fprintf formatter "unit";
+       Format.fprintf formatter " * GapiConversation.Session.t@]@\n@\n")
   in
 
   (* Methods are stored in reverse order *)
@@ -1426,7 +1428,7 @@ let build_service_module_interface =
   let render_scope formatter scopes =
     List.iter
       (fun (id, scope) ->
-         Format.fprintf formatter "val %s : string@\n(** %s *)@\n@\n" id scope)
+        Format.fprintf formatter "val %s : string@\n(** %s *)@\n@\n" id scope)
       scopes
   in
 
@@ -1452,16 +1454,16 @@ let build_service_module_interface =
     >>= fun scopes ->
     lift_io
       (if List.length scopes > 0 then (
-          Format.fprintf formatter "module Scope :@\n@[<v 2>sig@\n";
-          render_scope formatter (List.rev scopes);
-          Format.fprintf formatter "@]@,end@\n(** Service Auth Scopes *)@\n@\n"))
+         Format.fprintf formatter "module Scope :@\n@[<v 2>sig@\n";
+         render_scope formatter (List.rev scopes);
+         Format.fprintf formatter "@]@,end@\n(** Service Auth Scopes *)@\n@\n"))
     >>= fun () ->
     (* Service modules are stored in reverse order *)
     GapiLens.get_state (State.get_service_module |-- ServiceModule.inner_modules)
     >>= fun service_modules ->
     mapM_
       (fun (_, service_module) ->
-         generate_service_module_signature false file_lens service_module)
+        generate_service_module_signature false file_lens service_module)
       (List.rev service_modules)
     >>= fun () ->
     GapiLens.get_state

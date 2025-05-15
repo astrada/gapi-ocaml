@@ -17,7 +17,7 @@ let metadata_description { name = n; data_type = dt } =
 type json_data_model = (json_metadata, Yojson.Safe.t) AnnotatedTree.t
 
 let unexpected r e x =
-  ( match e with
+  (match e with
   | AnnotatedTree.Leaf (metadata, _) ->
       Printf.eprintf "\nWarning: Unexpected leaf: %s in %s\n%!"
         (metadata_description metadata)
@@ -25,7 +25,7 @@ let unexpected r e x =
   | AnnotatedTree.Node (metadata, _) ->
       Printf.eprintf "\nWarning: Unexpected node: %s in %s\n%!"
         (metadata_description metadata)
-        r );
+        r);
   x
 
 let render_value name default value =
@@ -160,6 +160,5 @@ module StringDictionary = struct
     | e -> unexpected "GapiJson.StringDictionary.parse" e x
 
   let to_data_model = render_root render
-
   let of_data_model = parse_root parse empty
 end

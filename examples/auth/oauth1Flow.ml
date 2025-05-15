@@ -2,15 +2,10 @@ open GapiLens.Infix
 
 (* Load the configuration file and read the OAuth1 values *)
 let test_config = Config.parse ()
-
 let get = Config.get test_config
-
 let xoauth_displayname = get "oa1_displayname"
-
 let consumer_secret = get "oa1_cons_secret"
-
 let oauth_consumer_key = get "oa1_cons_key"
-
 let oauth_callback = get "oa1_callback"
 
 (* Exchange the authorized request token for an access token *)

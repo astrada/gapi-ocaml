@@ -43,11 +43,11 @@ let build_oauth2_service_account_auth test_config =
   let service_account_credentials_json =
     let in_ch = open_in service_account_credentials_path in
     let b = Buffer.create 512 in
-    ( try
-        while true do
-          Buffer.add_string b (input_line in_ch)
-        done
-      with End_of_file -> () );
+    (try
+       while true do
+         Buffer.add_string b (input_line in_ch)
+       done
+     with End_of_file -> ());
     close_in in_ch;
     Buffer.contents b
   in
@@ -143,8 +143,8 @@ let do_request config auth_session interact handle_exception =
     | GapiService.ServiceError (_, e) ->
         let e' =
           Failure
-            ( e |> GapiError.RequestError.to_data_model
-            |> string_of_json_data_model )
+            (e |> GapiError.RequestError.to_data_model
+           |> string_of_json_data_model)
         in
         handle_exception e'
     | e -> handle_exception e
@@ -173,9 +173,7 @@ let print_exception e =
  * operation, otherwise DELETE will return a 503 HTTP error (Service
  * Unavailable) *)
 let delay ?(seconds = 5) () = Unix.sleep seconds
-
 let assert_false msg b = OUnit.assert_bool msg (not b)
-
 let assert_not_empty msg s = OUnit.assert_bool msg (s <> "")
 
 let assert_equal_file file_name s =

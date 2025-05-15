@@ -2,7 +2,6 @@ module Option = GapiOption
 
 module ClientLogin = struct
   type auth_token = string
-
   type captcha = { url : string; token : string }
 
   let url =

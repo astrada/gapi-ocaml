@@ -1,5 +1,4 @@
-(** Basic request to services.
-  *)
+(** Basic request to services. *)
 
 exception NotModified of GapiConversation.Session.t
 
@@ -15,13 +14,9 @@ exception
   Forbidden of GapiConversation.Session.t * int * GapiPipe.OcamlnetPipe.t
 
 exception NotFound of GapiConversation.Session.t * int * GapiPipe.OcamlnetPipe.t
-
 exception RequestTimeout of GapiConversation.Session.t
-
 exception Conflict of GapiConversation.Session.t
-
 exception Gone of GapiConversation.Session.t
-
 exception PreconditionFailed of GapiConversation.Session.t
 
 exception

@@ -79,7 +79,7 @@ let test_get_comment () =
           | Some commentId ->
               let comment, _ = CommentsResource.get ~commentId session in
               assert_equal "plus#comment" comment.Comment.kind;
-              assert_equal commentId comment.Comment.id ))
+              assert_equal commentId comment.Comment.id))
 
 (* People *)
 

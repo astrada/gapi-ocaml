@@ -3,7 +3,6 @@ open GapiLens.Infix
 module Option = GapiOption
 
 exception Redirect of string * GapiConversation.Session.t
-
 exception NotModified of GapiConversation.Session.t
 
 exception
@@ -18,20 +17,15 @@ exception
   Forbidden of GapiConversation.Session.t * int * GapiPipe.OcamlnetPipe.t
 
 exception NotFound of GapiConversation.Session.t * int * GapiPipe.OcamlnetPipe.t
-
 exception RequestTimeout of GapiConversation.Session.t
-
 exception Conflict of GapiConversation.Session.t
-
 exception Gone of GapiConversation.Session.t
-
 exception PreconditionFailed of GapiConversation.Session.t
 
 exception
   TooManyRequests of GapiConversation.Session.t * int * GapiPipe.OcamlnetPipe.t
 
 exception ResumeIncomplete of string * string * GapiConversation.Session.t
-
 exception StartUpload of string * GapiConversation.Session.t
 
 exception

@@ -1,5 +1,4 @@
-(** OAuth 1.0a authorization API implementation.
-  *)
+(** OAuth 1.0a authorization API implementation. *)
 
 val generate_signature :
   GapiCore.HttpMethod.t ->

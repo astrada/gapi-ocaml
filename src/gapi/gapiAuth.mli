@@ -1,5 +1,4 @@
-(** Stores data used to authorize requests.
-  *)
+(** Stores data used to authorize requests. *)
 
 type oauth1_data = {
   signature_method : GapiCore.SignatureMethod.t;

@@ -21,12 +21,12 @@ module AnnotatedTree = struct
   let xfold nf lf tree =
     kfold
       (fun a ks t k ->
-         let rec loop l cont =
-           match l with
-           | [] -> cont []
-           | kh :: kt -> loop kt (fun acc -> kh (fun h -> cont (h :: acc)))
-         in
-         loop ks (fun xs -> k (nf a xs t)))
+        let rec loop l cont =
+          match l with
+          | [] -> cont []
+          | kh :: kt -> loop kt (fun acc -> kh (fun h -> cont (h :: acc)))
+        in
+        loop ks (fun xs -> k (nf a xs t)))
       (fun a x t k -> k (lf a x t))
       tree
 
@@ -84,7 +84,7 @@ module Header = struct
   let to_string h =
     match h with
     | HttpStatus (version, code, reason) ->
-      Printf.sprintf "HTTP/%s %d %s" version code reason
+        Printf.sprintf "HTTP/%s %d %s" version code reason
     | ContentType value -> "Content-Type: " ^ value
     | Location value -> "Location: " ^ value
     | Authorization value -> "Authorization: " ^ value
@@ -105,7 +105,7 @@ module Header = struct
     if String.contains full_header ':' then
       let key, v = GapiUtils.divide_string full_header ':' in
       let value = GapiUtils.strip_string v in
-      let lowercase_key = String.lowercase_ascii key [@warning "-3"] in
+      let lowercase_key = (String.lowercase_ascii key [@warning "-3"]) in
       match lowercase_key with
       | "content-type" -> ContentType value
       | "location" -> Location value

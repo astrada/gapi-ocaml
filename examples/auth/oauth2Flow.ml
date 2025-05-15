@@ -2,13 +2,9 @@ open GapiLens.Infix
 
 (* Load the configuration file and read the OAuth2 values *)
 let test_config = Config.parse ()
-
 let get = Config.get test_config
-
 let client_id = get "oa2_id"
-
 let client_secret = get "oa2_secret"
-
 let redirect_uri = get "oa2_uri"
 
 (* Obtain an Access Token from the Google Authorization Server *)

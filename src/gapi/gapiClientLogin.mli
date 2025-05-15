@@ -1,5 +1,4 @@
-(** Client Login authorization API implementation.
-  *)
+(** Client Login authorization API implementation. *)
 
 module Error : sig
   type t =
@@ -15,7 +14,6 @@ module Error : sig
     | GenericError of string
 
   val of_string : string -> t
-
   val description : t -> string
 end
 
