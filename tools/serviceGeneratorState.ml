@@ -43,9 +43,9 @@ module OCamlName = struct
     let name_with_proper_first_letter_case =
       match name_type with
       | ModuleName | ConstructorName ->
-          String.capitalize name_with_valid_first_character
+          String.uppercase_ascii name_with_valid_first_character
       | TypeName | ValueName | ParameterName | FieldName ->
-          String.uncapitalize name_with_valid_first_character
+          String.lowercase_ascii name_with_valid_first_character
     in
     if List.mem name_with_proper_first_letter_case keywords then
       "_" ^ name_with_proper_first_letter_case
@@ -219,13 +219,13 @@ module ScalarType = struct
       | "boolean" -> Boolean
       | "integer" -> Integer
       | "number" -> (
-          match format with FloatFormat | DoubleFormat -> Float | _ -> String )
+          match format with FloatFormat | DoubleFormat -> Float | _ -> String)
       | "string" -> (
           match format with
           | DateTimeFormat -> DateTime
           | DateFormat -> Date
           | Int64Format -> Int64
-          | _ -> String )
+          | _ -> String)
       | "any" -> String
       | _ -> failwith ("Unexpected original type: " ^ original_type)
     in
@@ -383,8 +383,8 @@ module ComplexType = struct
 
       let create_array () =
         Array
-          ( schema.JsonSchema.items |> GapiOption.get
-          |> inner_create container_id )
+          (schema.JsonSchema.items |> GapiOption.get
+         |> inner_create container_id)
       in
 
       let create_complex () =
@@ -677,9 +677,7 @@ module Record = struct
     }
 
   let field id = GapiLens.for_assoc id
-
   let field_list = fields |-- GapiLens.list_map GapiLens.second
-
   let get_field id = fields |-- field id |-- GapiLens.option_get
 
   let create module_name properties =
@@ -903,8 +901,8 @@ module InnerSchemaModule = struct
         }
     | _ ->
         failwith
-          ( "Unsupported complex_type in Record.create (id = "
-          ^ complex_type.ComplexType.id ^ ")" )
+          ("Unsupported complex_type in Record.create (id = "
+         ^ complex_type.ComplexType.id ^ ")")
 end
 
 (* END Inner schema module description *)
@@ -1006,13 +1004,9 @@ module InnerServiceModule = struct
     }
 
   let _method id = GapiLens.for_assoc id
-
   let inner_module id = GapiLens.for_assoc id
-
   let enum id = GapiLens.for_assoc id
-
   let get_method_lens id = methods |-- _method id |-- GapiLens.option_get
-
   let get_enum_lens id = enums |-- enum id |-- GapiLens.option_get
 
   let get_inner_module_lens id =
@@ -1096,14 +1090,12 @@ module ServiceModule = struct
     }
 
   let inner_module id = GapiLens.for_assoc id
-
   let scope id = GapiLens.for_assoc id
 
   let get_inner_module_lens id =
     inner_modules |-- inner_module id |-- GapiLens.option_get
 
   let get_scope_lens id = scopes |-- scope id |-- GapiLens.option_get
-
   let get_api_level_module = api_level_module |-- GapiLens.option_get
 
   let create name =
@@ -1182,7 +1174,7 @@ module File = struct
     }
 
   let create service_name service_version output_path file_type =
-    let base_name = service_name ^ String.capitalize service_version in
+    let base_name = service_name ^ String.uppercase_ascii service_version in
     let ocaml_name = OCamlName.get_ocaml_name ModuleName base_name in
     let module_base_name = "Gapi" ^ ocaml_name in
     let module_name =
@@ -1196,7 +1188,7 @@ module File = struct
       | SchemaModuleInterface | ServiceModuleInterface -> ".mli"
     in
     let file_name =
-      get_full_path output_path (String.uncapitalize module_name ^ extension)
+      get_full_path output_path (String.lowercase_ascii module_name ^ extension)
     in
     {
       file_type;
@@ -1226,7 +1218,6 @@ module TypeTable = struct
   type t = (string, ComplexType.t) Hashtbl.t
 
   let create () = Hashtbl.create 64
-
   let fold f v table = Hashtbl.fold f table v
 
   let build complex_types =
@@ -1318,11 +1309,8 @@ module State = struct
     }
 
   let file file_type = GapiLens.for_hash file_type
-
   let get_schema_module_lens = schema_module |-- GapiLens.option_get
-
   let get_service_module = service_module |-- GapiLens.option_get
-
   let get_file_lens file_type = files |-- file file_type |-- GapiLens.option_get
 
   let create service =

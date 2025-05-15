@@ -836,7 +836,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          parameters_module_name)
     >>= fun () ->
     (* Invoke service function *)
-    let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
+    let function_to_call =
+      String.uppercase_ascii rest_method.RestMethod.httpMethod
+    in
 
     (* Use put' or patch' if request type is different from response type *)
     let apostrophe =
