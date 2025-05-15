@@ -31,5 +31,5 @@ To build the generator, execute
 This command will generate the source code of the client for the URL shortener
 service (version 1)
 
-    $ _build/default/tools/serviceGenerator.exe -api urlshortener -version v1
+    $ dune exec -- tools/serviceGenerator.exe -api urlshortener -version v1
 
