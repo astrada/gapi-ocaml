@@ -175,7 +175,7 @@ let build_schema_inner_module file_lens complex_type =
           ({ ComplexType.data_type = ComplexType.Reference _; _ } as inner_type)
       | ComplexType.Dictionary
           ({ ComplexType.data_type = ComplexType.AnonymousObject _; _ } as
-          inner_type) ->
+           inner_type) ->
           Format.fprintf formatter
             "GapiJson.render_collection %s GapiJson.Object (fun (id, v) -> %a \
              v)"
@@ -718,12 +718,12 @@ let generate_parameters_module filter_parameters formatter inner_module_lens
   >>= fun () ->
   lift_io
     (if parameters <> FieldSet.empty then (
-     Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
-     render_type_t formatter parameters;
-     render_default formatter parameters;
-     render_to_key_value_list formatter parameters;
-     render_merge_parameters formatter parameters;
-     Format.fprintf formatter "@]@\nend@\n@\n"))
+       Format.fprintf formatter "module %s =@\n@[<v 2>struct@," module_name;
+       render_type_t formatter parameters;
+       render_default formatter parameters;
+       render_to_key_value_list formatter parameters;
+       render_merge_parameters formatter parameters;
+       Format.fprintf formatter "@]@\nend@\n@\n"))
 
 let forward_slash_regxp = Str.regexp_string "/"
 
@@ -823,10 +823,10 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
            if json_schema.JsonSchema.location = "query" then
              Format.fprintf formatter "%s%s@ "
                (if
-                json_schema.JsonSchema.required
-                || json_schema.JsonSchema.default <> ""
-               then "~"
-               else "?")
+                  json_schema.JsonSchema.required
+                  || json_schema.JsonSchema.default <> ""
+                then "~"
+                else "?")
                parameter.Field.ocaml_name)
          rest_method.RestMethod.parameters;
        Format.fprintf formatter
@@ -836,7 +836,9 @@ let generate_rest_method formatter inner_module_lens (id, rest_method) =
          parameters_module_name)
     >>= fun () ->
     (* Invoke service function *)
-    let function_to_call = String.lowercase rest_method.RestMethod.httpMethod in
+    let function_to_call =
+      String.lowercase_ascii rest_method.RestMethod.httpMethod
+    in
 
     (* Use put' or patch' if request type is different from response type *)
     let apostrophe =
@@ -1109,7 +1111,7 @@ let build_service_module =
     >>= fun scopes ->
     lift_io
       (if List.length scopes > 0 then
-       Format.fprintf formatter "module Scope =@\n@[<v 2>struct@\n")
+         Format.fprintf formatter "module Scope =@\n@[<v 2>struct@\n")
     >>= fun () ->
     mapM_ (generate_scope formatter) scopes >>= fun () ->
     lift_io
@@ -1372,10 +1374,10 @@ let rec generate_service_module_signature omit_declaration file_lens
            in
            Format.fprintf formatter "%s%s:%s%s ->@,"
              (if
-              ComplexType.is_required field_type
-              || ComplexType.get_location field_type = ScalarType.Path
-             then ""
-             else "?")
+                ComplexType.is_required field_type
+                || ComplexType.get_location field_type = ScalarType.Path
+              then ""
+              else "?")
              ocaml_name ocaml_type
              (if ComplexType.is_repeated field_type then " list" else ""))
          methd.Method.parameter_order)
@@ -1406,8 +1408,8 @@ let rec generate_service_module_signature omit_declaration file_lens
   (* Module declaration *)
   lift_io
     (if not omit_declaration then
-     Format.fprintf formatter "module %s :@\n@[<v 2>sig@,"
-       service_module.InnerServiceModule.ocaml_name)
+       Format.fprintf formatter "module %s :@\n@[<v 2>sig@,"
+         service_module.InnerServiceModule.ocaml_name)
   >>= fun () ->
   mapM_
     (fun (id, m) -> generate_service_module_signature false file_lens m)
@@ -1452,9 +1454,9 @@ let build_service_module_interface =
     >>= fun scopes ->
     lift_io
       (if List.length scopes > 0 then (
-       Format.fprintf formatter "module Scope :@\n@[<v 2>sig@\n";
-       render_scope formatter (List.rev scopes);
-       Format.fprintf formatter "@]@,end@\n(** Service Auth Scopes *)@\n@\n"))
+         Format.fprintf formatter "module Scope :@\n@[<v 2>sig@\n";
+         render_scope formatter (List.rev scopes);
+         Format.fprintf formatter "@]@,end@\n(** Service Auth Scopes *)@\n@\n"))
     >>= fun () ->
     (* Service modules are stored in reverse order *)
     GapiLens.get_state (State.get_service_module |-- ServiceModule.inner_modules)

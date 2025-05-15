@@ -19,5 +19,4 @@ let save ?(filename = default_config_file) table =
   close_out out_ch
 
 let get table key = Hashtbl.find table key
-
 let set table key value = Hashtbl.replace table key value

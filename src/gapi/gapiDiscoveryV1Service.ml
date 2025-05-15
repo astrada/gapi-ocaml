@@ -77,7 +77,7 @@ struct
         session =
     let full_url = GapiUtils.add_path_to_url ["apis"] base_url in
     let params = ApisParameters.merge_parameters
-      ?standard_parameters:std_params ~preferred ?name () in
+      ?standard_parameters:std_params ?name ~preferred () in
     let query_parameters = GapiOption.map ApisParameters.to_key_value_list
       params in
     GapiService.get ?query_parameters ?custom_headers full_url

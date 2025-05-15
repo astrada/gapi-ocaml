@@ -1,5 +1,4 @@
-(** OAuth 2.0 authorization API implementation for service accounts.
-  *)
+(** OAuth 2.0 authorization API implementation for service accounts. *)
 
 val get_access_token :
   ?url:string ->
@@ -10,20 +9,20 @@ val get_access_token :
   scopes:string list ->
   GapiConversation.Session.t ->
   GapiAuthResponse.t * GapiConversation.Session.t
-(**
- [get_access_token path scopes]: returns the access token for the service
- account. [service_account_data_path] is the path of the JSON file
- containing the account data (client id, private key, etc.), [scopes] is a
- list of the permissions that the application requests.
- 
- @param url URL of the auth endpoint (defaults to
- https://www.googleapis.com/oauth2/v4/token).
- @param assertion_timestamp The time (Unix Epoch) the assertion is issued
- (defaults to now).
- @param assertion_expiration The time (Unix Epoch) the assertion expires
- (defaults to now + 1 hour).
- @param user_to_impersonate Email of the user to impersonate (for G Suite
- domains).
- 
- @see <https://developers.google.com/identity/protocols/OAuth2ServiceAccount>
+(** [get_access_token path scopes]: returns the access token for the service
+    account. [service_account_data_path] is the path of the JSON file containing
+    the account data (client id, private key, etc.), [scopes] is a list of the
+    permissions that the application requests.
+
+    @param url
+      URL of the auth endpoint (defaults to
+      https://www.googleapis.com/oauth2/v4/token).
+    @param assertion_timestamp
+      The time (Unix Epoch) the assertion is issued (defaults to now).
+    @param assertion_expiration
+      The time (Unix Epoch) the assertion expires (defaults to now + 1 hour).
+    @param user_to_impersonate
+      Email of the user to impersonate (for G Suite domains).
+
+    @see <https://developers.google.com/identity/protocols/OAuth2ServiceAccount>
 *)

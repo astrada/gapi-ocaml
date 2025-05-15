@@ -12,8 +12,8 @@ let test_list_webresources () =
           TestHelper.assert_not_empty "Web resource ID should not be empty"
             webresource.SiteVerificationWebResourceResource.id;
           assert_bool "Web resource should have at least 1 owner"
-            ( List.length webresource.SiteVerificationWebResourceResource.owners
-            > 0 ))
+            (List.length webresource.SiteVerificationWebResourceResource.owners
+            > 0))
         webresources.SiteVerificationWebResourceListResponse.items)
 
 let test_get_token () =

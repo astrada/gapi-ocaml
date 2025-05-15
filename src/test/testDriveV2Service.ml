@@ -59,7 +59,7 @@ let test_list_revisions () =
         let revisions, session = RevisionsResource.list file.File.id session in
         assert_equal "drive#revisionList" revisions.RevisionList.kind;
         TestHelper.assert_not_empty "ETag should not be empty"
-          session.GapiConversation.Session.etag ))
+          session.GapiConversation.Session.etag))
 
 let test_download_revision () =
   TestHelper.test_request TestHelper.build_oauth2_auth (fun session ->
@@ -310,7 +310,7 @@ let test_insert_permission () =
         assert_bool "Created permission id not found in permission list"
           (List.exists
              (fun p -> p.Permission.id = permissionId)
-             permissions.PermissionList.items) ))
+             permissions.PermissionList.items)))
 
 let test_update_permission () =
   TestHelper.test_request TestHelper.build_oauth2_auth (fun session ->
@@ -336,7 +336,7 @@ let test_update_permission () =
         in
         ignore (PermissionsResource.delete ~fileId ~permissionId session);
         assert_equal updated_permission.Permission.role
-          server_updated_permission.Permission.role ))
+          server_updated_permission.Permission.role))
 
 let suite =
   "Drive service test"

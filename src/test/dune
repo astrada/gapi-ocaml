@@ -3,6 +3,11 @@
  (flags (:standard -w -3-6-23-27-32-33-50))
  (libraries threads ounit2 gapi-ocaml))
 
+(executable
+ (name refreshOAuth2Token)
+ (flags (:standard -w -3-6-23-27-32-33-50))
+ (libraries threads ounit2 gapi-ocaml))
+
 (rule
  (alias runtest)
  (deps
@@ -38,6 +43,13 @@
    testSuite.exe
    (glob_files ../../config/*))
  (action (run ./testSuite.exe -service oa2devices)))
+
+(rule
+ (alias runtest-sheets)
+ (deps
+   testSuite.exe
+   (glob_files ../../config/*))
+ (action (run ./testSuite.exe -service sheets)))
 
 ; TODO: add stanzas to test each service
 

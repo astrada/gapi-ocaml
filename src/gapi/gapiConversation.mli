@@ -1,7 +1,6 @@
 (** Server conversation manager. *)
 
-(** Defines the session that stores the current state of a conversation.
-  *)
+(** Defines the session that stores the current state of a conversation. *)
 module Session : sig
   type oauth1_context = {
     token : string;  (** OAuth1 authorized token. *)
@@ -89,25 +88,30 @@ val with_session :
   'a
 (** Initializes a new session and executes a batch of requests to the server.
 
- [with_session config curl interact] initializes a new session using [config] as configuration and [curl] as the initialized Ocurl wrapper, and executes [interact] in the context of the created session. Then it disposes the session, and returns the result of [interact].
+    [with_session config curl interact] initializes a new session using [config]
+    as configuration and [curl] as the initialized Ocurl wrapper, and executes
+    [interact] in the context of the created session. Then it disposes the
+    session, and returns the result of [interact].
 
- @param auth_context Optional current authorization context. Defaults to [NoAuth].
- *)
+    @param auth_context
+      Optional current authorization context. Defaults to [NoAuth]. *)
 
 val with_curl :
   ?auth_context:Session.auth_context -> GapiConfig.t -> (Session.t -> 'a) -> 'a
 (** Initializes a new connection to the server and executes a batch of requests.
 
- [with_curl config interact] initializes a new connection using [config] as configuration, and executes [interact] in the context of the created connection. Then it disposes the connection, and returns the result of [interact].
+    [with_curl config interact] initializes a new connection using [config] as
+    configuration, and executes [interact] in the context of the created
+    connection. Then it disposes the connection, and returns the result of
+    [interact].
 
- @param auth_context Optional current authorization context. Defaults to [NoAuth].
- *)
+    @param auth_context
+      Optional current authorization context. Defaults to [NoAuth]. *)
 
 val read_all : ?auto_close:bool -> GapiPipe.OcamlnetPipe.t -> string
 (** Reads a pipe until EOF.
- 
- @param auto_close Closes the pipe after reading. Defaults to [true].
-  *)
+
+    @param auto_close Closes the pipe after reading. Defaults to [true]. *)
 
 val parse_error : GapiPipe.OcamlnetPipe.t -> int -> Session.t -> 'a
 

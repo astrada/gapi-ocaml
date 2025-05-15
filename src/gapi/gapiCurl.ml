@@ -42,25 +42,25 @@ let init ?debug_function ?timeout ?connect_timeout ?(follow_location = false)
     =
   let error_buffer = ref "" in
   let curl = Curl.init () in
-  ( match debug_function with
+  (match debug_function with
   | None -> Curl.set_verbose curl false
   | Some f ->
       Curl.set_verbose curl true;
-      Curl.set_debugfunction curl f );
+      Curl.set_debugfunction curl f);
   (match timeout with None -> () | Some ms -> Curl.set_timeoutms curl ms);
-  ( match connect_timeout with
+  (match connect_timeout with
   | None -> ()
-  | Some ms -> Curl.set_connecttimeoutms curl ms );
-  ( match compress with
+  | Some ms -> Curl.set_connecttimeoutms curl ms);
+  (match compress with
   | false -> Curl.set_encoding curl Curl.CURL_ENCODING_NONE
-  | true -> Curl.set_encoding curl Curl.CURL_ENCODING_DEFLATE );
+  | true -> Curl.set_encoding curl Curl.CURL_ENCODING_DEFLATE);
   if max_send_speed > 0L then Curl.set_maxsendspeedlarge curl max_send_speed;
   if max_recv_speed > 0L then Curl.set_maxrecvspeedlarge curl max_recv_speed;
   if low_speed_limit > 0 then Curl.set_lowspeedlimit curl low_speed_limit;
   if low_speed_time > 0 then Curl.set_lowspeedtime curl low_speed_time;
-  ( match options with
+  (match options with
   | None -> ()
-  | Some option_list -> set_curl_options option_list curl );
+  | Some option_list -> set_curl_options option_list curl);
   Curl.set_nosignal curl no_signal;
   Curl.set_errorbuffer curl error_buffer;
   Curl.set_followlocation curl follow_location;

@@ -16,7 +16,6 @@ let application_name = "YOUR_APPLICATION_NAME"
 (* The clientId and clientSecret are copied from the API Access tab on
  * the Google APIs Console *)
 let client_id = "YOUR_CLIENT_ID"
-
 let client_secret = "YOUR_CLIENT_SECRET"
 
 let configuration =
@@ -28,7 +27,6 @@ let configuration =
 
 (* Or your redirect URL for web based applications. *)
 let redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
-
 let scope = [ GapiAnalyticsV3Service.scope_readonly ]
 
 (* Step 1: Authorize --> *)
@@ -43,7 +41,6 @@ let () =
 
 (* Read the authorization code from the standard input stream. *)
 let () = print_endline "What is the authorization code?"
-
 let code = input_line stdin
 
 (* End of Step 1 <-- *)
@@ -243,7 +240,7 @@ let () =
               Printf.printf "Step Number: %d\n" step.StepsData.number;
               Printf.printf "Name: %s\n" step.StepsData.name;
               Printf.printf "URL: %s\n" step.StepsData.url)
-            destination.UrlDestinationDetailsData.steps )
+            destination.UrlDestinationDetailsData.steps)
         else print_endline "No steps configured"
       in
 
@@ -283,13 +280,13 @@ let () =
                 Printf.printf "Comparison Type: %s\n"
                   conditions.EventConditionsData.comparisonType;
                 Printf.printf "Comparison Value: %s\n"
-                  conditions.EventConditionsData.comparisonValue )
+                  conditions.EventConditionsData.comparisonValue)
               else (
                 Printf.printf "matchType: %s\n"
                   conditions.EventConditionsData.matchType;
                 Printf.printf "expression: %s\n"
-                  conditions.EventConditionsData.expression ))
-            event.EventDetailsData.eventConditions )
+                  conditions.EventConditionsData.expression))
+            event.EventDetailsData.eventConditions)
       in
 
       List.iter
@@ -329,7 +326,7 @@ let () =
             Printf.printf "Advanced Segment Created: %s\n"
               (GapiDate.to_string segment.Segment.created);
             Printf.printf "Advanced Segment Updated: %s\n"
-              (GapiDate.to_string segment.Segment.updated) ))
+              (GapiDate.to_string segment.Segment.updated)))
         segments.Segments.items;
 
       (*** Retrieving Analytics data ***)
@@ -367,8 +364,8 @@ let () =
             (fun header ->
               let open GaData in
               Printf.printf "%-32s"
-                ( header.ColumnHeadersData.name ^ "("
-                ^ header.ColumnHeadersData.dataType ^ ")" ))
+                (header.ColumnHeadersData.name ^ "("
+               ^ header.ColumnHeadersData.dataType ^ ")"))
             data.GaData.columnHeaders;
           print_newline ();
 
@@ -377,7 +374,7 @@ let () =
             (fun row_values ->
               List.iter (fun value -> Printf.printf "%-32s" value) row_values;
               print_newline ())
-            data.GaData.rows )
+            data.GaData.rows)
         else print_endline "No data"
       in
 

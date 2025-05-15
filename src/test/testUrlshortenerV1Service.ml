@@ -16,8 +16,8 @@ let test_get_url () =
       assert_equal "http://www.google.com/" entry.Url.longUrl;
       assert_equal google_url_id entry.Url.id;
       assert_bool "All time long url clicks should be greater than 0"
-        ( entry.Url.analytics.AnalyticsSummary.allTime
-            .AnalyticsSnapshot.longUrlClicks > 0L ))
+        (entry.Url.analytics.AnalyticsSummary.allTime
+           .AnalyticsSnapshot.longUrlClicks > 0L))
 
 let new_url = { Url.empty with Url.longUrl = "http://www.google.com/" }
 

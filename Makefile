@@ -22,5 +22,5 @@ generator:
 	dune build tools/serviceGenerator.exe
 
 drivev3: generator
-	_build/default/tools/serviceGenerator.exe -api drive -version v3
+	dune exec -- tools/serviceGenerator.exe -api drive -version v3
 	

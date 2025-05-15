@@ -2,9 +2,7 @@ module Option = GapiOption
 
 module Infix = struct
   let ( |> ) x f = f x
-
   let ( -| ) f g x = f (g x)
-
   let ( |- ) f g x = g (f x)
 end
 
@@ -113,7 +111,6 @@ class bigarray_rec_out_channel buffer =
       len
 
     method flush () = ()
-
     method close_out () = ()
   end
 
@@ -125,7 +122,6 @@ class bigarray_out_obj_channel buffer =
 class bigarray_rec_in_channel buffer =
   object
     val dim = Bigarray.Array1.dim buffer
-
     val mutable pos = 0
 
     method input b offset len =

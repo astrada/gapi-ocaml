@@ -58,8 +58,8 @@ let generate_authorization_header ?oauth1_params auth_data =
       let base_url = Neturl.string_of_url base_neturl in
       let signature =
         GapiOAuth1.generate_signature params.http_method base_url
-          ( oauth_fields_to_sign @ get_fields_to_sign
-          @ params.post_fields_to_sign )
+          (oauth_fields_to_sign @ get_fields_to_sign
+         @ params.post_fields_to_sign)
           signature_method consumer_secret secret
       in
       Some (GapiOAuth1.generate_oauth_header oauth_fields_to_sign signature)

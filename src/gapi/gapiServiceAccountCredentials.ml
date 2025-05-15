@@ -148,9 +148,7 @@ let parse x = function
   | e -> GapiJson.unexpected "GapiServiceAccountCredentials.parse" e x
 
 let to_data_model = GapiJson.render_root render
-
 let of_data_model = GapiJson.parse_root parse empty
-
 let to_json x = to_data_model x |> GapiJson.data_model_to_json
 
 let parse_json json_string =

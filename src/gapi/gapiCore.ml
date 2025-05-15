@@ -1,4 +1,4 @@
-let library_version = "0.4.5"
+let library_version = "0.4.6"
 
 module AnnotatedTree = struct
   type ('a, 'b) t = Leaf of 'a * 'b | Node of 'a * ('a, 'b) t list
@@ -105,7 +105,7 @@ module Header = struct
     if String.contains full_header ':' then
       let key, v = GapiUtils.divide_string full_header ':' in
       let value = GapiUtils.strip_string v in
-      let lowercase_key = String.lowercase_ascii key [@warning "-3"] in
+      let lowercase_key = (String.lowercase_ascii key [@warning "-3"]) in
       match lowercase_key with
       | "content-type" -> ContentType value
       | "location" -> Location value

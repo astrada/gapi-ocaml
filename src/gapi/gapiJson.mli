@@ -1,5 +1,4 @@
-(** Utilities to manipulate JSON documents.
-  *)
+(** Utilities to manipulate JSON documents. *)
 
 type json_data_type = Object | Array | Scalar
 
@@ -9,8 +8,7 @@ type json_metadata = { name : string; data_type : json_data_type }
 
 val metadata_description : json_metadata -> string
 
-type json_data_model =
-  (json_metadata, Yojson.Safe.t) GapiCore.AnnotatedTree.t
+type json_data_model = (json_metadata, Yojson.Safe.t) GapiCore.AnnotatedTree.t
 
 val unexpected : string -> json_data_model -> 'a -> 'a
 
@@ -72,37 +70,28 @@ val parse_collection :
   'b
 
 val parse_root : ('a -> json_data_model -> 'a) -> 'a -> json_data_model -> 'a
-
 val parse_string_element : string -> json_data_model -> string
 
 val parse_dictionary_entry :
   string * string -> json_data_model -> string * string
 
 val json_to_data_model : Yojson.Safe.t -> json_data_model
-
 val data_model_to_json : json_data_model -> Yojson.Safe.t
 
 val parse_json_response :
   (json_data_model -> 'a) -> GapiPipe.OcamlnetPipe.t -> 'a
 
 val parse_json_string : (json_data_model -> 'a) -> string -> 'a
-
 val default_content_type : string
-
 val render_json : ('a -> json_data_model) -> 'a -> GapiCore.PostData.t
 
 module StringDictionary : sig
   type t = (string * string) list
 
   val empty : t
-
   val render : t -> json_data_model list
-
   val render_content : t -> json_data_model list list
-
   val parse : t -> json_data_model -> t
-
   val to_data_model : t -> json_data_model
-
   val of_data_model : json_data_model -> t
 end

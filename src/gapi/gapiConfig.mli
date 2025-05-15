@@ -1,8 +1,6 @@
 (** Configuration module.
 
-  Configures Ocurl and authorization method.
-
-  *)
+    Configures Ocurl and authorization method. *)
 
 (** Curl debug function used to log server interactions. *)
 type debug_function =
@@ -25,7 +23,8 @@ val password : (client_login_config, string) GapiLens.t
 
 type oauth1_config = {
   signature_method : GapiCore.SignatureMethod.t;
-      (** Signature method used to sign requests. ([HMAC_SHA1] is the only supported method) *)
+      (** Signature method used to sign requests. ([HMAC_SHA1] is the only
+          supported method) *)
   consumer_key : string;  (** Consumer key. *)
   consumer_secret : string;  (** Consumer secret. *)
 }
@@ -96,29 +95,50 @@ type t = {
   application_name : string;
       (** Application name, used to build User-Agent HTTP header. *)
   debug : debug_function option;
-      (** Debug function used to dump HTTP session. Use [None] to disable debug output. *)
+      (** Debug function used to dump HTTP session. Use [None] to disable debug
+          output. *)
   timeout : int option;  (** Global timeout. [None] defaults to no timeout. *)
   connect_timeout : int option;
       (** Connection timeout. [None] defaults to 300 seconds. *)
   compress : bool;  (** Compress requests. (Not yet supported) *)
   auth : auth_config;  (** Authorization configuration. *)
   upload_chunk_size : int;
-      (** Chunk default size (in bytes) used by resumable upload. Should be a multiple of 512KB. *)
+      (** Chunk default size (in bytes) used by resumable upload. Should be a
+          multiple of 512KB. *)
   max_send_speed : int64;
-      (** If an upload exceeds this speed (counted in bytes per second) on cumulative average during the transfer, the transfer will pause to keep the average rate less than or equal to the parameter value. Defaults to unlimited speed. *)
+      (** If an upload exceeds this speed (counted in bytes per second) on
+          cumulative average during the transfer, the transfer will pause to
+          keep the average rate less than or equal to the parameter value.
+          Defaults to unlimited speed. *)
   max_recv_speed : int64;
-      (** If a download exceeds this speed (counted in bytes per second) on cumulative average during the transfer, the transfer will pause to keep the average rate less than or equal to the parameter value. Defaults to unlimited speed. *)
+      (** If a download exceeds this speed (counted in bytes per second) on
+          cumulative average during the transfer, the transfer will pause to
+          keep the average rate less than or equal to the parameter value.
+          Defaults to unlimited speed. *)
   low_speed_limit : int;
-      (** It contains the average transfer speed in bytes per second that the transfer should be below during [low_speed_time] seconds for libcurl to consider it to be too slow and abort. Defaults to 0 (disabled). *)
+      (** It contains the average transfer speed in bytes per second that the
+          transfer should be below during [low_speed_time] seconds for libcurl
+          to consider it to be too slow and abort. Defaults to 0 (disabled). *)
   low_speed_time : int;
-      (** It contains the time in number seconds that the transfer speed should be below the [low_speed_limit] for the library to consider it too slow and abort. Defaults to 0 (disabled). *)
+      (** It contains the time in number seconds that the transfer speed should
+          be below the [low_speed_limit] for the library to consider it too slow
+          and abort. Defaults to 0 (disabled). *)
   curl_no_signal : bool;
-      (** If [true], libcurl will not use any functions that install signal handlers or any functions that cause signals to be sent to the process. This option is here to allow multi-threaded unix applications to still set/use all timeout options etc, without risking getting signals. Defaults to [true]. *)
+      (** If [true], libcurl will not use any functions that install signal
+          handlers or any functions that cause signals to be sent to the
+          process. This option is here to allow multi-threaded unix applications
+          to still set/use all timeout options etc, without risking getting
+          signals. Defaults to [true]. *)
   proxy : string option;
-      (** Set the proxy to use. The parameter should be a string holding the host name or dotted numerical IP address. A numerical IPv6 address must be written within brackets. Defaults to [None].
-    To specify port number in this string, append [:port] to the end of the host name. *)
+      (** Set the proxy to use. The parameter should be a string holding the
+          host name or dotted numerical IP address. A numerical IPv6 address
+          must be written within brackets. Defaults to [None]. To specify port
+          number in this string, append [:port] to the end of the host name. *)
   ssl_verifypeer : bool;
-      (** When [ssl_verifypeer] is enabled, and the verification fails to prove that the certificate is authentic, the connection fails. When the option is disabled, the peer certificate verification succeeds regardless. Defaults to [true]. *)
+      (** When [ssl_verifypeer] is enabled, and the verification fails to prove
+          that the certificate is authentic, the connection fails. When the
+          option is disabled, the peer certificate verification succeeds
+          regardless. Defaults to [true]. *)
 }
 (** Library configuration. *)
 
@@ -158,37 +178,41 @@ val low_speed_time : (t, int) GapiLens.t
 val default : t
 (** Default configuration.
 
- {[let default = {
-  application_name = "gapi-ocaml";
-  debug = None;
-  timeout = None;
-  connect_timeout = None;
-  compress = true;
-  auth = NoAuth;
-  upload_chunk_size = 10485760; (* 10MB *)
-  max_send_speed = 0L;
-  max_recv_speed = 0L;
-  low_speed_limit = 0;
-  low_speed_time = 0;
- }]}
-
-*)
+    {[
+      let default =
+        {
+          application_name = "gapi-ocaml";
+          debug = None;
+          timeout = None;
+          connect_timeout = None;
+          compress = true;
+          auth = NoAuth;
+          upload_chunk_size = 10485760;
+          (* 10MB *)
+          max_send_speed = 0L;
+          max_recv_speed = 0L;
+          low_speed_limit = 0;
+          low_speed_time = 0;
+        }
+    ]} *)
 
 val default_debug : t
 (** Default configuration with debug output enabled.
 
- {[let default_debug = {
-  application_name = "gapi-ocaml";
-  debug = Some Standard;
-  timeout = None;
-  connect_timeout = None;
-  compress = false;
-  auth = NoAuth;
-  upload_chunk_size = 10485760; (* 10MB *)
-  max_send_speed = 0L;
-  max_recv_speed = 0L;
-  low_speed_limit = 0;
-  low_speed_time = 0;
- }]}
-
-*)
+    {[
+      let default_debug =
+        {
+          application_name = "gapi-ocaml";
+          debug = Some Standard;
+          timeout = None;
+          connect_timeout = None;
+          compress = false;
+          auth = NoAuth;
+          upload_chunk_size = 10485760;
+          (* 10MB *)
+          max_send_speed = 0L;
+          max_recv_speed = 0L;
+          low_speed_limit = 0;
+          low_speed_time = 0;
+        }
+    ]} *)

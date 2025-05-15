@@ -1,87 +1,20 @@
 {
+  "protocol": "rest",
+  "kind": "discovery#restDescription",
   "documentationLink": "http://code.google.com/apis/discovery",
-  "name": "discovery",
-  "resources": {
-    "apis": {
-      "methods": {
-        "getRest": {
-          "description": "Retrieve the description of a particular version of an api.",
-          "response": {
-            "$ref": "RestDescription"
-          },
-          "id": "discovery.apis.getRest",
-          "parameters": {
-            "api": {
-              "location": "path",
-              "type": "string",
-              "required": true,
-              "description": "The name of the API."
-            },
-            "version": {
-              "location": "path",
-              "type": "string",
-              "required": true,
-              "description": "The version of the API."
-            }
-          },
-          "parameterOrder": [
-            "api",
-            "version"
-          ],
-          "httpMethod": "GET",
-          "path": "apis/{api}/{version}/rest"
-        },
-        "list": {
-          "description": "Retrieve the list of APIs supported at this endpoint.",
-          "response": {
-            "$ref": "DirectoryList"
-          },
-          "id": "discovery.apis.list",
-          "parameters": {
-            "label": {
-              "location": "query",
-              "enum": [
-                "deprecated",
-                "graduated",
-                "labs"
-              ],
-              "type": "string",
-              "description": "Only include APIs with a matching label, such as 'graduated' or 'labs'.",
-              "enumDescriptions": [
-                "APIs that have been deprecated.",
-                "Supported APIs that have graduated from labs.",
-                "APIs that are experimental"
-              ]
-            },
-            "name": {
-              "location": "query",
-              "type": "string",
-              "description": "Only include APIs with the given name."
-            },
-            "preferred": {
-              "location": "query",
-              "type": "boolean",
-              "default": "false",
-              "description": "Return only the preferred version of an API."
-            }
-          },
-          "httpMethod": "GET",
-          "path": "apis"
-        }
-      }
-    }
-  },
+  "labels": [
+    "labs"
+  ],
+  "id": "discovery:v1",
   "basePath": "/discovery/v1/",
-  "icons": {
-    "x16": "http://www.google.com/images/icons/feature/filing_cabinet_search-g16.png",
-    "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png"
-  },
+  "description": "Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API",
+  "name": "discovery",
   "schemas": {
     "DirectoryList": {
       "type": "object",
-      "id": "DirectoryList",
       "properties": {
         "items": {
+          "type": "array",
           "items": {
             "type": "object",
             "properties": {
@@ -121,10 +54,10 @@
                 "description": "The kind for this response."
               },
               "labels": {
+                "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "type": "array",
                 "description": "Labels for the status of this API, such as labs or deprecated."
               },
               "name": {
@@ -145,7 +78,6 @@
               }
             }
           },
-          "type": "array",
           "description": "The individual directory entries. One entry per api/version pair."
         },
         "kind": {
@@ -153,11 +85,11 @@
           "default": "discovery#directoryList",
           "description": "The kind for this response."
         }
-      }
+      },
+      "id": "DirectoryList"
     },
     "JsonSchema": {
       "type": "object",
-      "id": "JsonSchema",
       "properties": {
         "$ref": {
           "type": "string",
@@ -176,17 +108,17 @@
           "description": "A description of this object."
         },
         "enum": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": "array",
           "description": "Values this parameter may take (if it is an enum)."
         },
         "enumDescriptions": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": "array",
           "description": "The descriptions for the enums. Each position maps to the corresponding value in the \"enum\" array."
         },
         "format": {
@@ -236,11 +168,11 @@
           "type": "string",
           "description": "The value type for this schema. A list of values can be found here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1"
         }
-      }
+      },
+      "id": "JsonSchema"
     },
     "RestDescription": {
       "type": "object",
-      "id": "RestDescription",
       "properties": {
         "auth": {
           "type": "object",
@@ -281,10 +213,10 @@
           "description": "A link to human readable documentation for the API."
         },
         "features": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": "array",
           "description": "A list of supported features for this API."
         },
         "icons": {
@@ -311,10 +243,10 @@
           "description": "The kind for this response."
         },
         "labels": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": "array",
           "description": "Labels for the status of this API, such as labs or deprecated."
         },
         "methods": {
@@ -362,11 +294,11 @@
           "type": "string",
           "description": "The version of this API."
         }
-      }
+      },
+      "id": "RestDescription"
     },
     "RestMethod": {
       "type": "object",
-      "id": "RestMethod",
       "properties": {
         "description": {
           "type": "string",
@@ -385,10 +317,10 @@
           "description": "Media upload parameters.",
           "properties": {
             "accept": {
+              "type": "array",
               "items": {
                 "type": "string"
               },
-              "type": "array",
               "description": "MIME Media Ranges for acceptable media uploads to this method."
             },
             "maxSize": {
@@ -434,10 +366,10 @@
           }
         },
         "parameterOrder": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": "array",
           "description": "Ordered list of required parameters, serves as a hint to clients on how to structure their method signatures. The array is ordered such that the \"most-significant\" parameter appears first."
         },
         "parameters": {
@@ -472,17 +404,17 @@
           }
         },
         "scopes": {
+          "type": "array",
           "items": {
             "type": "string"
           },
-          "type": "array",
           "description": "OAuth 2.0 scopes applicable to this method."
         }
-      }
+      },
+      "id": "RestMethod"
     },
     "RestResource": {
       "type": "object",
-      "id": "RestResource",
       "properties": {
         "methods": {
           "type": "object",
@@ -498,61 +430,129 @@
             "$ref": "RestResource"
           }
         }
+      },
+      "id": "RestResource"
+    }
+  },
+  "icons": {
+    "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png",
+    "x16": "http://www.google.com/images/icons/feature/filing_cabinet_search-g16.png"
+  },
+  "version": "v1",
+  "resources": {
+    "apis": {
+      "methods": {
+        "getRest": {
+          "id": "discovery.apis.getRest",
+          "parameterOrder": [
+            "api",
+            "version"
+          ],
+          "httpMethod": "GET",
+          "description": "Retrieve the description of a particular version of an api.",
+          "response": {
+            "$ref": "RestDescription"
+          },
+          "path": "apis/{api}/{version}/rest",
+          "parameters": {
+            "api": {
+              "type": "string",
+              "required": true,
+              "location": "path",
+              "description": "The name of the API."
+            },
+            "version": {
+              "type": "string",
+              "required": true,
+              "location": "path",
+              "description": "The version of the API."
+            }
+          }
+        },
+        "list": {
+          "id": "discovery.apis.list",
+          "httpMethod": "GET",
+          "description": "Retrieve the list of APIs supported at this endpoint.",
+          "response": {
+            "$ref": "DirectoryList"
+          },
+          "path": "apis",
+          "parameters": {
+            "label": {
+              "type": "string",
+              "enumDescriptions": [
+                "APIs that have been deprecated.",
+                "Supported APIs that have graduated from labs.",
+                "APIs that are experimental"
+              ],
+              "location": "query",
+              "description": "Only include APIs with a matching label, such as 'graduated' or 'labs'.",
+              "enum": [
+                "deprecated",
+                "graduated",
+                "labs"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "location": "query",
+              "description": "Only include APIs with the given name."
+            },
+            "preferred": {
+              "type": "boolean",
+              "location": "query",
+              "default": "false",
+              "description": "Return only the preferred version of an API."
+            }
+          }
+        }
       }
     }
   },
-  "description": "Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API",
-  "labels": [
-    "labs"
-  ],
-  "version": "v1",
-  "kind": "discovery#restDescription",
-  "title": "APIs Discovery Service",
   "parameters": {
     "alt": {
-      "location": "query",
-      "enum": [
-        "json"
-      ],
       "type": "string",
-      "default": "json",
-      "description": "Data format for the response.",
       "enumDescriptions": [
         "Responses with Content-Type of application/json"
+      ],
+      "location": "query",
+      "default": "json",
+      "description": "Data format for the response.",
+      "enum": [
+        "json"
       ]
     },
     "fields": {
-      "location": "query",
       "type": "string",
+      "location": "query",
       "description": "Selector specifying which fields to include in a partial response."
     },
     "key": {
-      "location": "query",
       "type": "string",
+      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token."
     },
     "oauth_token": {
-      "location": "query",
       "type": "string",
+      "location": "query",
       "description": "OAuth 2.0 token for the current user."
     },
     "prettyPrint": {
-      "location": "query",
       "type": "boolean",
+      "location": "query",
       "default": "true",
       "description": "Returns response with indentations and line breaks."
     },
     "quotaUser": {
-      "location": "query",
       "type": "string",
+      "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided."
     },
     "userIp": {
-      "location": "query",
       "type": "string",
+      "location": "query",
       "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits."
     }
   },
-  "id": "discovery:v1",
-  "protocol": "rest"
+  "title": "APIs Discovery Service"
 }

@@ -1,5 +1,4 @@
-(** Data definition of server errors.
-  *)
+(** Data definition of server errors. *)
 
 (** A single server error *)
 module SingleError : sig
@@ -13,21 +12,13 @@ module SingleError : sig
   }
 
   val domain : (t, string) GapiLens.t
-
   val reason : (t, string) GapiLens.t
-
   val message : (t, string) GapiLens.t
-
   val locationType : (t, string) GapiLens.t
-
   val location : (t, string) GapiLens.t
-
   val extendedHelp : (t, string) GapiLens.t
-
   val empty : t
-
   val render : t -> GapiJson.json_data_model list
-
   val parse : t -> GapiJson.json_data_model -> t
 end
 
@@ -40,18 +31,11 @@ module RequestError : sig
   }
 
   val errors : (t, SingleError.t list) GapiLens.t
-
   val code : (t, int) GapiLens.t
-
   val message : (t, string) GapiLens.t
-
   val empty : t
-
   val render : t -> GapiJson.json_data_model list
-
   val parse : t -> GapiJson.json_data_model -> t
-
   val to_data_model : t -> GapiJson.json_data_model
-
   val of_data_model : GapiJson.json_data_model -> t
 end

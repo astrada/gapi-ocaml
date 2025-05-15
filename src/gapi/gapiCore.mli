@@ -1,7 +1,7 @@
 (** Common types used throughout the library.
-  
-  This module defines the data types used to represent the data model of JSON and XML documents, and some utility types related to HTTP protocol.
-  *)
+
+    This module defines the data types used to represent the data model of JSON
+    and XML documents, and some utility types related to HTTP protocol. *)
 
 val library_version : string
 
@@ -63,7 +63,6 @@ module Header : sig
     | OtherHeader of string
 
   val to_string : t -> string
-
   val parse : string -> t
 end
 

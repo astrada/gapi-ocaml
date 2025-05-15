@@ -141,13 +141,15 @@ let get_resource_length = function
         result
       with e ->
         close_in ch;
-        raise e )
+        raise e)
   | String str -> str |> String.length |> Int64.of_int
   | Buffer arr -> arr |> Bigarray.Array1.dim |> Int64.of_int
 
 let get_content_type filename =
   let extension =
-    try GapiUtils.string_after_char '.' filename |> String.lowercase_ascii [@warning "-3"]
+    try
+      GapiUtils.string_after_char '.' filename
+      |> (String.lowercase_ascii [@warning "-3"])
     with Not_found -> ""
   in
   match extension with
@@ -232,7 +234,7 @@ let generate_upload_headers http_method upload_state =
       | _ ->
           failwith
             "Cannot generate upload headers if the HTTP method is not POST or \
-             PUT" )
+             PUT")
   | Uploading -> generate_upload_chunk_headers upload_state
   | Error -> generate_resume_put_headers upload_state
   | Done -> []

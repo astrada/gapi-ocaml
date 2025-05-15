@@ -80,15 +80,12 @@ module JwtClaim = struct
     | e -> GapiJson.unexpected "GapiJwtServiceAccount.JwtClaim.parse" e x
 
   let to_data_model = GapiJson.render_root render
-
   let of_data_model = GapiJson.parse_root parse empty
-
   let to_json x = to_data_model x |> GapiJson.data_model_to_json
 end
 
 (* {"alg":"RS256","typ":"JWT"} *)
 let header_base64 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9"
-
 let jwt_separator = "."
 
 let base64_url_encode str =

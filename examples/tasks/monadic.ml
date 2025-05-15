@@ -18,7 +18,6 @@ let application_name = "YOUR_APPLICATION_NAME"
 (* The clientId and clientSecret are copied from the API Access tab on
  * the Google APIs Console *)
 let client_id = "YOUR_CLIENT_ID"
-
 let client_secret = "YOUR_CLIENT_SECRET"
 
 let configuration =
@@ -29,7 +28,6 @@ let configuration =
 
 (* Or your redirect URL for web based applications. *)
 let redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
-
 let scope = [ GapiTasksV1Service.scope ]
 
 (* Step 1: Authorize --> *)
@@ -44,7 +42,6 @@ let () =
 
 (* Read the authorization code from the standard input stream. *)
 let () = print_endline "What is the authorization code?"
-
 let code = input_line stdin
 
 (* End of Step 1 <-- *)

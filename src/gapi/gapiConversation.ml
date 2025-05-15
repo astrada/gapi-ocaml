@@ -170,7 +170,7 @@ let request ?header_list ?post_data ?media_download http_method session url
   in
   GapiCurl.set_headerfunction parse_header session.Session.curl;
   GapiCurl.set_writefunction writer session.Session.curl;
-  ( match http_method with
+  (match http_method with
   | GapiCore.HttpMethod.GET -> GapiCurl.set_httpget true session.Session.curl
   | GapiCore.HttpMethod.POST -> GapiCurl.set_post true session.Session.curl
   | GapiCore.HttpMethod.PUT | GapiCore.HttpMethod.PATCH -> (
@@ -178,14 +178,14 @@ let request ?header_list ?post_data ?media_download http_method session url
       | Some _ -> GapiCurl.set_upload true session.Session.curl
       | None ->
           GapiCurl.set_upload false session.Session.curl;
-          GapiCurl.set_nobody true session.Session.curl )
+          GapiCurl.set_nobody true session.Session.curl)
   | GapiCore.HttpMethod.DELETE ->
       GapiCurl.set_upload false session.Session.curl;
       GapiCurl.set_nobody true session.Session.curl
   | GapiCore.HttpMethod.HEAD ->
       GapiCurl.set_upload false session.Session.curl;
-      GapiCurl.set_nobody true session.Session.curl );
-  ( match http_method with
+      GapiCurl.set_nobody true session.Session.curl);
+  (match http_method with
   | GapiCore.HttpMethod.PATCH | GapiCore.HttpMethod.DELETE ->
       GapiCurl.set_customrequest
         (GapiCore.HttpMethod.to_string http_method)
@@ -194,8 +194,8 @@ let request ?header_list ?post_data ?media_download http_method session url
       (* FIXME: reset curl custom request *)
       GapiCurl.set_customrequest
         (GapiCore.HttpMethod.to_string http_method)
-        session.Session.curl );
-  ( match post_data with
+        session.Session.curl);
+  (match post_data with
   | Some (GapiCore.PostData.Fields key_value_list) ->
       GapiCurl.set_postfields key_value_list session.Session.curl
   | Some (GapiCore.PostData.Body (body, _)) -> (
@@ -203,7 +203,7 @@ let request ?header_list ?post_data ?media_download http_method session url
       match (media_download, http_method) with
       | None, GapiCore.HttpMethod.PUT ->
           GapiCurl.set_post true session.Session.curl
-      | _ -> () )
+      | _ -> ())
   | None -> (
       match http_method with
       | GapiCore.HttpMethod.POST ->
@@ -212,7 +212,7 @@ let request ?header_list ?post_data ?media_download http_method session url
           GapiCurl.set_upload false session.Session.curl;
           GapiCurl.set_post true session.Session.curl;
           GapiCurl.set_postfields [] session.Session.curl
-      | _ -> () ) );
+      | _ -> ()));
   GapiCurl.set_useragent user_agent_header session.Session.curl;
   GapiCurl.set_httpheader request_headers session.Session.curl;
   GapiCurl.set_cookies session.Session.cookies session.Session.curl;
