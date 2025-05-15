@@ -1,9 +1,12 @@
 (executables
- (names oauth2Flow oauth1Flow clientLoginFlow)
+ (names oauth2Flow)
  (flags
   (:standard -w -9))
- (libraries threads gapi-ocaml nethttpd))
+ (libraries threads gapi-ocaml tiny_httpd))
 
 (alias
  (name examples)
- (deps oauth2Flow.exe oauth1Flow.exe clientLoginFlow.exe))
+ (deps
+   oauth2Flow.exe
+   (glob_files ../../config/*)))
+   

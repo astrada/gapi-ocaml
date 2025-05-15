@@ -8,33 +8,6 @@ instead of your real Google account (to avoid unpleasant side effects).
 How to obtain credentials
 -------------------------
 
-### Client login
-
-This authentication method uses username and password of the Google Account to
-obtain a long lived token. This method should be used only for testing
-purposes because leaking a token may give full read/write access to a
-maliciuos user.
-
-See `../../examples/auth/README.md` for instructions on how to obtain an
-authorization token.
-
-See [ClientLogin for Installed Applications](http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html) for all the details.
-
-### OAuth 1.0
-
-If you don't have a registered Web Application, you can use the default
-consumer key/secret: `anonymous/anonymous`. Otherwise, see [Registration for Web-Based Applications](http://code.google.com/apis/accounts/docs/RegistrationForWebAppsAuto.html)
-for details on how to obtain your pair of consumer key/secret.
-
-See `../../examples/auth/README.md` for instructions on how to obtain an
-access token.
-
-See [OAuth 1.0 for Web Applications](http://code.google.com/apis/accounts/docs/OAuth.html) for all the details.
-
-See [OAuth Playground](http://googlecodesamples.com/oauth_playground/) for an
-alternative way to obtain access tokens and to further experiment with the
-Google OAuth 1.0 endpoint.
-
 ### OAuth 2.0
 
 See `../../examples/auth/README.md` for instructions on how to obtain a
@@ -57,21 +30,6 @@ credentials of the test account. So, create the configuration file
     $ cp auth.config.template auth.config
 
 Then edit this file, and fill in the following fields:
-
-Client login:
-
-    cl_user=Google username
-    cl_pass=Google password
-    cl_token=client login long lived token
-
-OAuth1:
-
-    oa1_displayname=displayname
-    oa1_cons_secret=consumer secret
-    oa1_cons_key=consumer key
-    oa1_callback=callback URI
-    oa1_token=token
-    oa1_secret=secret
 
 OAuth2:
 
@@ -108,8 +66,6 @@ Additional parameters:
 Running the tests
 -----------------
 
-To build the tests you will need to install
-[pa_monad_custom](http://opam.ocamlpro.com/pkg/pa_monad_custom.v6.0.0.html).
 By default, the test suite will run the tests that don't connect to Google
 services (and don't need the authorization configuration)
 
@@ -118,30 +74,20 @@ services (and don't need the authorization configuration)
 To test the interaction with the remote services, you can use the `-service`
 option to test a specific service (e.g. `urlshortener`, `tasks`, `plus`)
 
-    $ jbuilder runtest-urlshortener
+    $ dune build @runtest-urlshortener
 
 Or, to run all the tests, you can use the `-all` switch
 
-    $ jbuilder runtest-all
+    $ dune build @runtest-all
 
 If the OAuth2 access token is expired, run this command (from the root
 directory of the project) to refresh the token contained in the configuration
 file `auth.config`
 
-    $ _build/default/examples/auth/refreshOAuth2Token.exe
+    $ cd src/test
+    $ dune build ./refreshOAuth2Token.exe
+    $ dune exec -- ./refreshOAuth2Token.exe
 
 If there are errors in the tests, switching to `true` the `debug` value in the
 configuration file `auth.config` will activate the `ocurl` debug output, that
 will trace all the HTTP interactions with Google services.
-
-**Note:** At the moment, some of the API are not activable directly from the
-API Console, so if are going to use these APIs (or to run test against them),
-you will need to follow specific instructions to activate them. In particuar:
-
-* Blogger API is in Public Preview. To activate it, you will have to
-  explicitly request access filling the form linked in the API Console (under
-  Services)
-* BigQuery is available by invitation only. If you are interested in signing
-  up, follow the instructions you can find
-  [here](https://developers.google.com/bigquery/docs/getting-started)
-

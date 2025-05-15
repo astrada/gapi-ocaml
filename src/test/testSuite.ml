@@ -67,6 +67,7 @@ let build_service_test_list service =
     | "drive" -> [ TestDriveV2Service.suite ]
     | "oa2serv" -> [ TestOAuth2ServiceAccount.suite ]
     | "oa2devices" -> [ TestOAuth2Devices.suite ]
+    | "sheets" -> [ TestSheetsV4Service.suite ]
     | _ -> failwith ("Service not supported: " ^ service)
   in
   service_suite
@@ -92,7 +93,7 @@ let _ =
           "svc Google service to test (auth, oa2serv, calendar, calendar-v3, \
            plus, tasks, discovery, urlshortener, oauth2, customsearch, \
            analytics, pagespeedonline, blogger, siteVerification, adsense, \
-           bigquery, documents)" );
+           bigquery, documents, sheets)" );
         ( "-all",
           Arg.Unit
             (fun () -> test_list := core_tests @ model_tests @ service_tests),
