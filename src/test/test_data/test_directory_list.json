@@ -2,532 +2,532 @@
   "kind": "discovery#directoryList",
   "items": [
     {
+      "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
+      "name": "adsense",
+      "documentationLink": "https://code.google.com/apis/adsense/management/",
+      "version": "v1",
       "title": "AdSense Management API",
+      "kind": "discovery#directoryItem",
       "id": "adsense:v1",
+      "discoveryLink": "./apis/adsense/v1/rest",
       "labels": [
         "labs"
       ],
-      "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/adsense-16.png",
-        "x32": "http://www.google.com/images/icons/product/adsense-32.png"
-      },
-      "name": "adsense",
-      "kind": "discovery#directoryItem",
-      "documentationLink": "https://code.google.com/apis/adsense/management/",
-      "discoveryLink": "./apis/adsense/v1/rest",
-      "version": "v1"
+        "x32": "http://www.google.com/images/icons/product/adsense-32.png",
+        "x16": "http://www.google.com/images/icons/product/adsense-16.png"
+      }
     },
     {
-      "title": "AdSense Management API",
-      "id": "adsense:v1.1",
-      "labels": [
-        "labs"
-      ],
       "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/product/adsense-16.png",
-        "x32": "http://www.google.com/images/icons/product/adsense-32.png"
-      },
       "name": "adsense",
-      "kind": "discovery#directoryItem",
       "documentationLink": "https://code.google.com/apis/adsense/management/",
+      "version": "v1.1",
+      "title": "AdSense Management API",
+      "kind": "discovery#directoryItem",
+      "id": "adsense:v1.1",
       "discoveryLink": "./apis/adsense/v1.1/rest",
       "preferred": true,
-      "version": "v1.1"
+      "labels": [
+        "labs"
+      ],
+      "icons": {
+        "x32": "http://www.google.com/images/icons/product/adsense-32.png",
+        "x16": "http://www.google.com/images/icons/product/adsense-16.png"
+      }
     },
     {
+      "description": "View and manage your Google Analytics data",
+      "name": "analytics",
+      "documentationLink": "http://code.google.com/apis/analytics",
+      "version": "v2.4",
       "title": "Google Analytics API",
+      "kind": "discovery#directoryItem",
       "id": "analytics:v2.4",
+      "discoveryLink": "./apis/analytics/v2.4/rest",
       "labels": [
         "labs"
       ],
-      "description": "View and manage your Google Analytics data",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/analytics-16.png",
-        "x32": "http://www.google.com/images/icons/product/analytics-32.png"
-      },
-      "name": "analytics",
-      "kind": "discovery#directoryItem",
-      "documentationLink": "http://code.google.com/apis/analytics",
-      "discoveryLink": "./apis/analytics/v2.4/rest",
-      "version": "v2.4"
+        "x32": "http://www.google.com/images/icons/product/analytics-32.png",
+        "x16": "http://www.google.com/images/icons/product/analytics-16.png"
+      }
     },
     {
-      "title": "Google Analytics API",
-      "id": "analytics:v3",
-      "labels": [
-        "labs"
-      ],
       "description": "View and manage your Google Analytics data",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/product/analytics-16.png",
-        "x32": "http://www.google.com/images/icons/product/analytics-32.png"
-      },
       "name": "analytics",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/analytics",
+      "version": "v3",
+      "title": "Google Analytics API",
+      "kind": "discovery#directoryItem",
+      "id": "analytics:v3",
       "discoveryLink": "./apis/analytics/v3/rest",
       "preferred": true,
-      "version": "v3"
-    },
-    {
-      "title": "Enterprise Audit API",
-      "id": "audit:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you access user activities in your enterprise made through various applications.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/analytics-32.png",
+        "x16": "http://www.google.com/images/icons/product/analytics-16.png"
+      }
+    },
+    {
+      "description": "Lets you access user activities in your enterprise made through various applications.",
       "name": "audit",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/googleapps/domain/audit_admin/v1/getting_started.html",
+      "version": "v1",
+      "title": "Enterprise Audit API",
+      "kind": "discovery#directoryItem",
+      "id": "audit:v1",
       "discoveryLink": "./apis/audit/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Blogger API",
-      "id": "blogger:v2",
       "labels": [
         "labs"
       ],
-      "description": "API for access to the data within Blogger.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/blogger-16.png",
-        "x32": "http://www.google.com/images/icons/product/blogger-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "API for access to the data within Blogger.",
       "name": "blogger",
-      "kind": "discovery#directoryItem",
       "documentationLink": "https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html",
+      "version": "v2",
+      "title": "Blogger API",
+      "kind": "discovery#directoryItem",
+      "id": "blogger:v2",
       "discoveryLink": "./apis/blogger/v2/rest",
       "preferred": true,
-      "version": "v2"
-    },
-    {
-      "title": "Books API",
-      "id": "books:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you search for books and manage your Google Books library.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/ebooks-16.png",
-        "x32": "http://www.google.com/images/icons/product/ebooks-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/blogger-32.png",
+        "x16": "http://www.google.com/images/icons/product/blogger-16.png"
+      }
+    },
+    {
+      "description": "Lets you search for books and manage your Google Books library.",
       "name": "books",
-      "kind": "discovery#directoryItem",
       "documentationLink": "https://code.google.com/apis/books/docs/v1/getting_started.html",
+      "version": "v1",
+      "title": "Books API",
+      "kind": "discovery#directoryItem",
+      "id": "books:v1",
       "discoveryLink": "./apis/books/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Calendar API",
-      "id": "calendar:v3",
       "labels": [
         "labs"
       ],
-      "description": "Lets you manipulate events and other calendar data.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/calendar-16.png",
-        "x32": "http://www.google.com/images/icons/product/calendar-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/ebooks-32.png",
+        "x16": "http://www.google.com/images/icons/product/ebooks-16.png"
+      }
+    },
+    {
+      "description": "Lets you manipulate events and other calendar data.",
       "name": "calendar",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/calendar/v3/using.html",
+      "version": "v3",
+      "title": "Calendar API",
+      "kind": "discovery#directoryItem",
+      "id": "calendar:v3",
       "discoveryLink": "./apis/calendar/v3/rest",
       "preferred": true,
-      "version": "v3"
-    },
-    {
-      "title": "CustomSearch API",
-      "id": "customsearch:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you search over a website or collection of websites",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/calendar-32.png",
+        "x16": "http://www.google.com/images/icons/product/calendar-16.png"
+      }
+    },
+    {
+      "description": "Lets you search over a website or collection of websites",
       "name": "customsearch",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/customsearch/v1/using_rest.html",
+      "version": "v1",
+      "title": "CustomSearch API",
+      "kind": "discovery#directoryItem",
+      "id": "customsearch:v1",
       "discoveryLink": "./apis/customsearch/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "APIs Discovery Service",
-      "id": "discovery:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API",
       "icons": {
-        "x16": "http://www.google.com/images/icons/feature/filing_cabinet_search-g16.png",
-        "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API",
       "name": "discovery",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/discovery",
+      "version": "v1",
+      "title": "APIs Discovery Service",
+      "kind": "discovery#directoryItem",
+      "id": "discovery:v1",
       "discoveryLink": "./apis/discovery/v1/rest",
       "preferred": true,
-      "version": "v1"
+      "labels": [
+        "labs"
+      ],
+      "icons": {
+        "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png",
+        "x16": "http://www.google.com/images/icons/feature/filing_cabinet_search-g16.png"
+      }
     },
     {
+      "description": "Lets you access the Freebase repository of open data.",
+      "name": "freebase",
+      "documentationLink": "http://wiki.freebase.com/wiki/New_Freebase_API",
+      "version": "v1-sandbox",
       "title": "Freebase API",
+      "kind": "discovery#directoryItem",
       "id": "freebase:v1-sandbox",
+      "discoveryLink": "./apis/freebase/v1-sandbox/rest",
       "labels": [
         "labs"
       ],
-      "description": "Lets you access the Freebase repository of open data.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/freebase-16.png",
-        "x32": "http://www.google.com/images/icons/product/freebase-32.png"
-      },
-      "name": "freebase",
-      "kind": "discovery#directoryItem",
-      "documentationLink": "http://wiki.freebase.com/wiki/New_Freebase_API",
-      "discoveryLink": "./apis/freebase/v1-sandbox/rest",
-      "version": "v1-sandbox"
+        "x32": "http://www.google.com/images/icons/product/freebase-32.png",
+        "x16": "http://www.google.com/images/icons/product/freebase-16.png"
+      }
     },
     {
-      "title": "Freebase API",
-      "id": "freebase:v1",
-      "labels": [
-        "labs"
-      ],
       "description": "Lets you access the Freebase repository of open data.",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/product/freebase-16.png",
-        "x32": "http://www.google.com/images/icons/product/freebase-32.png"
-      },
       "name": "freebase",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://wiki.freebase.com/wiki/New_Freebase_API",
+      "version": "v1",
+      "title": "Freebase API",
+      "kind": "discovery#directoryItem",
+      "id": "freebase:v1",
       "discoveryLink": "./apis/freebase/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "id": "groupssettings:v1",
       "labels": [
         "labs"
       ],
-      "description": "Groups Settings Api",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/freebase-32.png",
+        "x16": "http://www.google.com/images/icons/product/freebase-16.png"
+      }
+    },
+    {
+      "description": "Groups Settings Api",
       "name": "groupssettings",
+      "version": "v1",
       "kind": "discovery#directoryItem",
+      "id": "groupssettings:v1",
       "discoveryLink": "./apis/groupssettings/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Google Latitude API",
-      "id": "latitude:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you read and update your current location and work with your location history",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Lets you read and update your current location and work with your location history",
       "name": "latitude",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/latitude/v1/using_rest.html",
+      "version": "v1",
+      "title": "Google Latitude API",
+      "kind": "discovery#directoryItem",
+      "id": "latitude:v1",
       "discoveryLink": "./apis/latitude/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Moderator API",
-      "id": "moderator:v1",
       "labels": [
         "labs"
       ],
-      "description": "Moderator API",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/moderator-32.png",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Moderator API",
       "name": "moderator",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/moderator/v1/using_rest.html",
+      "version": "v1",
+      "title": "Moderator API",
+      "kind": "discovery#directoryItem",
+      "id": "moderator:v1",
       "discoveryLink": "./apis/moderator/v1/rest",
       "preferred": true,
-      "version": "v1"
+      "labels": [
+        "labs"
+      ],
+      "icons": {
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/moderator-32.png"
+      }
     },
     {
+      "description": "OAuth2 API",
+      "name": "oauth2",
+      "version": "v1",
+      "kind": "discovery#directoryItem",
       "id": "oauth2:v1",
+      "discoveryLink": "./apis/oauth2/v1/rest",
       "labels": [
         "labs"
       ],
-      "description": "OAuth2 API",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
-      "name": "oauth2",
-      "kind": "discovery#directoryItem",
-      "discoveryLink": "./apis/oauth2/v1/rest",
-      "version": "v1"
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
     },
     {
-      "id": "oauth2:v2",
-      "labels": [
-        "labs"
-      ],
       "description": "OAuth2 API",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
       "name": "oauth2",
+      "version": "v2",
       "kind": "discovery#directoryItem",
+      "id": "oauth2:v2",
       "discoveryLink": "./apis/oauth2/v2/rest",
       "preferred": true,
-      "version": "v2"
-    },
-    {
-      "title": "Orkut API",
-      "id": "orkut:v2",
       "labels": [
         "labs"
       ],
-      "description": "Lets you manage activities, comments and badges in Orkut. More stuff coming in time.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/orkut-16.png",
-        "x32": "http://www.google.com/images/icons/product/orkut-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Lets you manage activities, comments and badges in Orkut. More stuff coming in time.",
       "name": "orkut",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/orkut/v2/reference.html",
+      "version": "v2",
+      "title": "Orkut API",
+      "kind": "discovery#directoryItem",
+      "id": "orkut:v2",
       "discoveryLink": "./apis/orkut/v2/rest",
       "preferred": true,
-      "version": "v2"
-    },
-    {
-      "title": "Page Speed Online API",
-      "id": "pagespeedonline:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/pagespeed-16.png",
-        "x32": "http://www.google.com/images/icons/product/pagespeed-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/orkut-32.png",
+        "x16": "http://www.google.com/images/icons/product/orkut-16.png"
+      }
+    },
+    {
+      "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
       "name": "pagespeedonline",
-      "kind": "discovery#directoryItem",
       "documentationLink": "https://code.google.com/apis/pagespeedonline/v1/getting_started.html",
+      "version": "v1",
+      "title": "Page Speed Online API",
+      "kind": "discovery#directoryItem",
+      "id": "pagespeedonline:v1",
       "discoveryLink": "./apis/pagespeedonline/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Google+ API",
-      "id": "plus:v1",
       "labels": [
         "labs"
       ],
-      "description": "The Google+ API enables developers to build on top of the Google+ platform.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/gplus-16.png",
-        "x32": "http://www.google.com/images/icons/product/gplus-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/pagespeed-32.png",
+        "x16": "http://www.google.com/images/icons/product/pagespeed-16.png"
+      }
+    },
+    {
+      "description": "The Google+ API enables developers to build on top of the Google+ platform.",
       "name": "plus",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://developers.google.com/+/api/",
+      "version": "v1",
+      "title": "Google+ API",
+      "kind": "discovery#directoryItem",
+      "id": "plus:v1",
       "discoveryLink": "./apis/plus/v1/rest",
       "preferred": true,
-      "version": "v1"
+      "labels": [
+        "labs"
+      ],
+      "icons": {
+        "x32": "http://www.google.com/images/icons/product/gplus-32.png",
+        "x16": "http://www.google.com/images/icons/product/gplus-16.png"
+      }
     },
     {
+      "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
+      "name": "prediction",
+      "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
+      "version": "v1.2",
       "title": "Prediction API",
+      "kind": "discovery#directoryItem",
       "id": "prediction:v1.2",
-      "labels": [
-        "labs"
-      ],
-      "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-        "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
-      },
-      "name": "prediction",
-      "kind": "discovery#directoryItem",
-      "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
       "discoveryLink": "./apis/prediction/v1.2/rest",
-      "version": "v1.2"
+      "labels": [
+        "labs"
+      ],
+      "icons": {
+        "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png",
+        "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png"
+      }
     },
     {
+      "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
+      "name": "prediction",
+      "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
+      "version": "v1.3",
       "title": "Prediction API",
+      "kind": "discovery#directoryItem",
       "id": "prediction:v1.3",
+      "discoveryLink": "./apis/prediction/v1.3/rest",
       "labels": [
         "labs"
       ],
-      "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
       "icons": {
-        "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-        "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
-      },
-      "name": "prediction",
-      "kind": "discovery#directoryItem",
-      "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
-      "discoveryLink": "./apis/prediction/v1.3/rest",
-      "version": "v1.3"
+        "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png",
+        "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png"
+      }
     },
     {
-      "title": "Prediction API",
-      "id": "prediction:v1.4",
-      "labels": [
-        "labs"
-      ],
       "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-        "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
-      },
       "name": "prediction",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
+      "version": "v1.4",
+      "title": "Prediction API",
+      "kind": "discovery#directoryItem",
+      "id": "prediction:v1.4",
       "discoveryLink": "./apis/prediction/v1.4/rest",
       "preferred": true,
-      "version": "v1.4"
-    },
-    {
-      "title": "Search API for Shopping",
-      "id": "shopping:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you search over product data",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png",
+        "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png"
+      }
+    },
+    {
+      "description": "Lets you search over product data",
       "name": "shopping",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/shopping/search/v1/getting_started.html",
+      "version": "v1",
+      "title": "Search API for Shopping",
+      "kind": "discovery#directoryItem",
+      "id": "shopping:v1",
       "discoveryLink": "./apis/shopping/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Google Site Verification API",
-      "id": "siteVerification:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you programatically verify ownership of websites or domains with Google.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Lets you programatically verify ownership of websites or domains with Google.",
       "name": "siteVerification",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/siteverification/",
+      "version": "v1",
+      "title": "Google Site Verification API",
+      "kind": "discovery#directoryItem",
+      "id": "siteVerification:v1",
       "discoveryLink": "./apis/siteVerification/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "TaskQueue API",
-      "id": "taskqueue:v1beta1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you access a Google App Engine Pull Task Queue over REST.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Lets you access a Google App Engine Pull Task Queue over REST.",
       "name": "taskqueue",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/appengine/docs/python/taskqueue/rest.html",
+      "version": "v1bet1",
+      "title": "TaskQueue API",
+      "kind": "discovery#directoryItem",
+      "id": "taskqueue:v1beta1",
       "discoveryLink": "./apis/taskqueue/v1beta1/rest",
       "preferred": true,
-      "version": "v1bet1"
-    },
-    {
-      "title": "Tasks API",
-      "id": "tasks:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you manage your tasks and task lists.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/tasks-16.png",
-        "x32": "http://www.google.com/images/icons/product/tasks-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "Lets you manage your tasks and task lists.",
       "name": "tasks",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/tasks/v1/using.html",
+      "version": "v1",
+      "title": "Tasks API",
+      "kind": "discovery#directoryItem",
+      "id": "tasks:v1",
       "discoveryLink": "./apis/tasks/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Translate API",
-      "id": "translate:v2",
       "labels": [
         "labs"
       ],
-      "description": "Lets you translate text from one language to another",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/translate-16.png",
-        "x32": "http://www.google.com/images/icons/product/translate-32.png"
-      },
+        "x32": "http://www.google.com/images/icons/product/tasks-32.png",
+        "x16": "http://www.google.com/images/icons/product/tasks-16.png"
+      }
+    },
+    {
+      "description": "Lets you translate text from one language to another",
       "name": "translate",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/language/translate/v2/using_rest.html",
+      "version": "v2",
+      "title": "Translate API",
+      "kind": "discovery#directoryItem",
+      "id": "translate:v2",
       "discoveryLink": "./apis/translate/v2/rest",
       "preferred": true,
-      "version": "v2"
-    },
-    {
-      "title": "URL Shortener API",
-      "id": "urlshortener:v1",
       "labels": [
         "labs"
       ],
-      "description": "Lets you create, inspect, and manage goo.gl short URLs",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/search-16.gif",
-        "x32": "http://www.google.com/images/icons/product/search-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/translate-32.png",
+        "x16": "http://www.google.com/images/icons/product/translate-16.png"
+      }
+    },
+    {
+      "description": "Lets you create, inspect, and manage goo.gl short URLs",
       "name": "urlshortener",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/urlshortener/v1/getting_started.html",
+      "version": "v1",
+      "title": "URL Shortener API",
+      "kind": "discovery#directoryItem",
+      "id": "urlshortener:v1",
       "discoveryLink": "./apis/urlshortener/v1/rest",
       "preferred": true,
-      "version": "v1"
-    },
-    {
-      "title": "Google Web Fonts Developer API",
-      "id": "webfonts:v1",
       "labels": [
         "labs"
       ],
-      "description": "The Google Web Fonts Developer API.",
       "icons": {
-        "x16": "http://www.google.com/images/icons/feature/font_api-16.png",
-        "x32": "http://www.google.com/images/icons/feature/font_api-32.gif"
-      },
+        "x32": "http://www.google.com/images/icons/product/search-32.gif",
+        "x16": "http://www.google.com/images/icons/product/search-16.gif"
+      }
+    },
+    {
+      "description": "The Google Web Fonts Developer API.",
       "name": "webfonts",
-      "kind": "discovery#directoryItem",
       "documentationLink": "http://code.google.com/apis/webfonts/docs/developer_api.html",
+      "version": "v1",
+      "title": "Google Web Fonts Developer API",
+      "kind": "discovery#directoryItem",
+      "id": "webfonts:v1",
       "discoveryLink": "./apis/webfonts/v1/rest",
       "preferred": true,
-      "version": "v1"
+      "labels": [
+        "labs"
+      ],
+      "icons": {
+        "x32": "http://www.google.com/images/icons/feature/font_api-32.gif",
+        "x16": "http://www.google.com/images/icons/feature/font_api-16.png"
+      }
     }
   ]
 }
