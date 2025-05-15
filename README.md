@@ -21,6 +21,7 @@ Supported RESTful APIs:
 * Drive API v2
 * Drive API v3
 * Gmail API v1
+* Sheets API v4
 
 ### Features
 
@@ -38,23 +39,17 @@ Building gapi-ocaml
 You will need the following libraries:
 
 * [OCaml][] >= 4.02.3
-* [Findlib][] >= 1.2.7
-* [Ocamlnet][] >= 4.1.4
 * [Ocurl][] >= 0.5.3
 * [Cryptokit][] >= 1.3.14
 * [Yojson][] >= 1.6.0
-* [Xmlm][] >= 1.0.2
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
 This library was developed and tested on Ubuntu LTS (64-bit).
 
 [OCaml]: http://www.ocaml.org/docs/install.html
-[Findlib]: http://projects.camlcity.org/projects/findlib.html/
-[Ocamlnet]: http://projects.camlcity.org/projects/ocamlnet.html
 [Ocurl]: https://ygrek.org/p/ocurl/
 [Cryptokit]: https://github.com/xavierleroy/cryptokit
 [Yojson]: https://github.com/ocaml-community/yojson
-[Xmlm]: http://erratique.ch/software/xmlm
 [OUnit]: http://ounit.forge.ocamlcore.org/
 
 ### Configuration and installation
