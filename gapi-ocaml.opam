@@ -19,6 +19,7 @@ depends: [
   "camlp-streams"
   "cppo" {>= "1.1.0"}
 ]
+available: [ os != "win32" & os != "macos" & os != "freebsd" ]
 synopsis: "A simple OCaml client for Google Services"
 description: """
 gapi-ocaml is a simple, unofficial, OCaml client for Google Services.
