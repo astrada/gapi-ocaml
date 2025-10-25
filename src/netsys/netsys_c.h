@@ -219,7 +219,7 @@ union sock_addr_union {
 /* bigarrays                                                          */
 /**********************************************************************/
 
-extern int caml_ba_element_size[];
+// extern int caml_ba_element_size[];
 
 
 #endif
