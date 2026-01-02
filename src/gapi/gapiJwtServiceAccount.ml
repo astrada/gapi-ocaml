@@ -187,7 +187,8 @@ let parse_private_key private_key_ascii_armor =
         let dp = V.get_int_repr exponent1 |> skip_sign_byte in
         let dq = V.get_int_repr exponent2 |> skip_sign_byte in
         let qinv = V.get_int_repr coefficient |> skip_sign_byte in
-        { Cryptokit.RSA.size; n; e; d; p; q; dp; dq; qinv }
+        { Cryptokit.RSA.size; n; d; p; q; dp; dq; qinv },
+        { Cryptokit.RSA.size; n; e }
     | _ -> failwith "parse_private_key: unexpected RSA key DER content"
   in
   rsa_key
@@ -199,7 +200,7 @@ let get_encoded_claim jwt_claim =
 
 let get_signature encoded_jwt_claim private_key =
   let to_sign = header_base64 ^ jwt_separator ^ encoded_jwt_claim in
-  let rsa_key = parse_private_key private_key in
+  let rsa_key, _ = parse_private_key private_key in
   let em = emsa_pkcs1_v1_5_encode to_sign (rsa_key.Cryptokit.RSA.size / 8) in
   rsasp1 rsa_key em
 
