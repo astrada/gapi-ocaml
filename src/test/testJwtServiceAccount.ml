@@ -20,13 +20,13 @@ let private_key =
    -----END PRIVATE KEY-----"
 
 let test_parse_private_key () =
-  let rsa_key = parse_private_key private_key in
+  let rsa_key, rsa_public_key = parse_private_key private_key in
   assert_equal ~printer:string_of_int 1024 rsa_key.Cryptokit.RSA.size;
   assert_equal ~printer:Char.escaped '\xe2' rsa_key.Cryptokit.RSA.n.[0];
   assert_equal ~printer:Char.escaped '\x2d' rsa_key.Cryptokit.RSA.n.[127];
-  assert_equal ~printer:Char.escaped '\x01' rsa_key.Cryptokit.RSA.e.[0];
-  assert_equal ~printer:Char.escaped '\x00' rsa_key.Cryptokit.RSA.e.[1];
-  assert_equal ~printer:Char.escaped '\x01' rsa_key.Cryptokit.RSA.e.[2]
+  assert_equal ~printer:Char.escaped '\x01' rsa_public_key.Cryptokit.RSA.e.[0];
+  assert_equal ~printer:Char.escaped '\x00' rsa_public_key.Cryptokit.RSA.e.[1];
+  assert_equal ~printer:Char.escaped '\x01' rsa_public_key.Cryptokit.RSA.e.[2]
 
 let test_get_encoded_claim () =
   let jwt_claim =

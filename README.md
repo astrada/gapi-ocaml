@@ -40,7 +40,7 @@ You will need the following libraries:
 
 * [OCaml][] >= 4.02.3
 * [Ocurl][] >= 0.5.3
-* [Cryptokit][] >= 1.3.14
+* [Cryptokit][] >= 1.21.1
 * [Yojson][] >= 1.6.0
 * [OUnit][] >= 1.1.0 (to build and run the tests, optional)
 
