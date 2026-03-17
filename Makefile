@@ -1,10 +1,13 @@
-.PHONY: build clean test doc generator drivev3
+.PHONY: build clean test doc format generator drivev3
 
 build:
 	dune build @install
 
 test:
 	dune runtest
+
+format:
+	./format_ocaml
 
 install:
 	dune install
