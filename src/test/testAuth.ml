@@ -112,9 +112,7 @@ let test_invalid_oauth2_access_token () =
       let client_id = get "oa2_id" in
       let client_secret = get "oa2_secret" in
       let redirect_uri = get "oa2_uri" in
-      assert_raises
-        (Failure "OAuth2 error: invalid_grant (HTTP response code: 400)")
-        (fun () ->
+      assert_raises (GapiOAuth2.InvalidGrant session) (fun () ->
           GapiOAuth2.get_access_token ~client_id ~client_secret
             ~code:"dummy code" ~redirect_uri session))
 
@@ -151,12 +149,13 @@ let suite =
   "Auth Service test"
   >::: [
          (* "test_client_login" >:: test_client_login;
-            disabled to avoid creating too many long-lived tokens *)
-         "test_oauth1_request_token" >:: test_oauth1_request_token;
+            disabled because Client Login is no longer supported *)
+         (* "test_oauth1_request_token" >:: test_oauth1_request_token;
          "test_oauth1_authorize_url" >:: test_oauth1_authorize_url;
          "test_invalid_oauth1_access_token" >:: test_invalid_oauth1_access_token;
          "test_oauth1_token_info" >:: test_oauth1_token_info;
          "test_oauth1_revoke_invalid_token" >:: test_oauth1_revoke_invalid_token;
+            disabled because OAuth1 is no longer supported *)
          "test_oauth2_authorization_url" >:: test_oauth2_authorization_url;
          "test_invalid_oauth2_access_token" >:: test_invalid_oauth2_access_token;
          "test_oauth2_refresh_token" >:: test_oauth2_refresh_token;
